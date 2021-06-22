@@ -1,0 +1,63 @@
+{
+    "name": "ludows/adminify",
+    "description": "A little admin package extremely extendable",
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^7.3|^8.0",
+        "artesaos/seotools": "^0.20.0",
+        "diglactic/laravel-breadcrumbs": "^6.1",
+        "fideloper/proxy": "^4.4",
+        "fruitcake/laravel-cors": "^2.0",
+        "guzzlehttp/guzzle": "^7.0.1",
+        "kris/laravel-form-builder": "^1.40",
+        "laracasts/flash": "^3.2",
+        "laravel-frontend-presets/argon": "^1.1",
+        "laravel/framework": "^8.12",
+        "laravel/tinker": "^2.5",
+        "laravel/ui": "^3.1",
+        "mratiebatie/laravel-repositories": "^1.0",
+        "nadar/quill-delta-parser": "^2.6",
+        "silviolleite/laravelpwa": "^2.0",
+        "spatie/laravel-backup": "^6.15",
+        "spatie/laravel-menu": "^3.7",
+        "spatie/laravel-permission": "^3.18",
+        "spatie/laravel-searchable": "^1.9",
+        "spatie/laravel-translatable": "^4.6",
+        "spatie/menu": "^2.10",
+        "thunderer/shortcode": "^0.7",
+        "unisharp/laravel-filemanager": "^2.2",
+        "van-ons/laraberg": "^1.1",
+        "ycs77/laravel-form-builder-bs4": "^1.0",
+        "zerospam/laravel-gettext": "^8.0"
+    },
+    "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.5",
+        "facade/ignition": "^2.5",
+        "laracasts/generators": "^2.0",
+        "phpunit/phpunit": "^9.3.3"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ludows\\Adminify\\AdminifyServiceProvider"            
+            ],
+            "aliases": {
+                "Adminify": "Ludows\\Adminify\\Facades\\Adminify"
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Ludows\\Adminify\\" : "src/"    
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ludows\\Adminify\\Tests\\": "tests/"
+        }
+    }
+}

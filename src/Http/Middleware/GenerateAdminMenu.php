@@ -1,0 +1,72 @@
+<?php
+
+namespace Ludows\Adminify\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Spatie\Menu\Laravel\Menu;
+use Spatie\Menu\Laravel\Link;
+
+
+class GenerateAdminMenu
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle(Request $request, Closure $next)
+    {
+
+        // dd($request->user()->hasPermissionTo('create_posts'));
+
+        $user = $request->user();
+        $multilang = config('site-settings.multilang');
+        $lang = $request->lang;
+
+        $menuAdmin = Menu::new()
+                ->setActiveClass('active')
+                ->setActiveClassOnLink()
+                ->setAttribute('role', 'navigation')
+                ->addClass('navbar-nav')
+                ->wrap('div', ['class' => 'navigation-area'])
+                ->prepend('<h6 class="navbar-heading text-muted">Navigation</h6>');
+                $menuAdmin->add( Link::to( $multilang ? '/admin/dashboard?lang='.$lang : '/admin/dashboard', '<i class="ni ni-tv-2 text-primary"></i> '._i('home.dashboard'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+                if($user->hasPermissionTo('create_posts')) {
+                    $menuAdmin->add( Link::to( $multilang ? '/admin/posts?lang='.$lang : '/admin/posts', '<i class="ni ni-single-copy-04"></i> '._i('posts.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+                }
+                if($user->hasPermissionTo('upload_media')) {
+                    $menuAdmin->add( Link::to( $multilang ? '/admin/medias?lang='.$lang : '/admin/medias', '<i class="ni ni-image"></i> '._i('medias.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+                }
+                if($user->hasPermissionTo('create_categories')) {
+                    $menuAdmin->add( Link::to( $multilang ? '/admin/categories?lang='.$lang : '/admin/categories', '<i class="ni ni-collection"></i> '._i('categories.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+                }
+                if($user->hasPermissionTo('create_pages')) {
+                    $menuAdmin->add( Link::to( $multilang ? '/admin/pages?lang='.$lang : '/admin/pages', '<i class="ni ni-collection"></i> '._i('pages.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+                }
+                if($user->hasPermissionTo('create_menus')) {
+                    $menuAdmin->add( Link::to( $multilang ? '/admin/menus?lang='.$lang : '/admin/menus', '<i class="ni ni-collection"></i> '._i('menus.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+                }
+                if($user->hasPermissionTo('manage_comments')) {
+                    $menuAdmin->add( Link::to( $multilang ? '/admin/comments?lang='.$lang : '/admin/comments', '<i class="ni ni-collection"></i> '._i('comments.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+                }
+                if($user->hasPermissionTo('manage_settings')) {
+                    $menuAdmin->add( Link::to( $multilang ? '/admin/settings?lang='.$lang : '/admin/settings', '<i class="ni ni-collection"></i> '._i('settings.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+                }
+                if($user->hasPermissionTo('create_users')) {
+                    $menuAdmin->add( Link::to( $multilang ? '/admin/users?lang='.$lang : '/admin/users', '<i class="ni ni-circle-08"></i> '._i('users.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+                }
+                if($user->hasPermissionTo('create_translations')) {
+                    $menuAdmin->add( Link::to( $multilang ? '/admin/traductions?lang='.$lang : '/admin/traductions', '<i class="ni ni-circle-08"></i> '._i('traductions.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+                }
+                if($user->hasRole('subscriber')) {
+                    $menuAdmin->add( Link::to($multilang ? '/admin/users'.'/'.$user->id. '/edit?lang='.$lang : '/admin/users'.'/'.$user->id. '/edit', '<i class="ni ni-circle-08"></i> '._i('users.edit'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+                }
+
+        view()->share('menuAdmin', $menuAdmin->toHtml());
+
+        return $next($request);
+    }
+}

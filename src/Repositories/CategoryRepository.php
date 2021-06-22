@@ -1,0 +1,114 @@
+<?php
+
+namespace Ludows\Adminify\Repositories;
+
+use MrAtiebatie\Repository;
+use Ludows\Adminify\Models\Category; // Don't forget to update the model's namespace
+
+class CategoryRepository
+{
+    use Repository;
+
+    /**
+     * The model being queried.
+     *
+     * @var Model
+     */
+    protected $model;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        // Don't forget to update the model's name
+        $this->model = app(Category::class);
+    }
+    public function create($form, $request) {
+
+        $request = request();
+        $formValues = $form->getFieldValues();
+        $multilang = $request->useMultilang;
+
+        if($multilang) {
+            $lang = $request->lang;
+            $category = new Category();
+            $multilangsFields = $category->getMultilangTranslatableSwitch();
+            $fields = $category->getFieldsExceptTranslatables();
+            foreach ($multilangsFields as $multilangsField) {
+                # code...
+                if(isset($formValues[$multilangsField])) {
+                    $category->setTranslation($multilangsField, $lang, $formValues[$multilangsField]);
+                    unset($formValues[$multilangsField]);
+                }
+
+            }
+            foreach ($fields as $field) {
+                if(isset($formValues[$field])) {
+                    $category->{$field} = $formValues[$field];
+                }
+            }
+            // call boot method to save slug
+            $category::booted();
+
+            $category->save();
+
+        }
+        else {
+            // create entity
+            $category = Category::create($formValues);
+        }
+
+
+
+
+        return $category;
+    }
+    public function update($form, $request, $model) {
+
+        $request = request();
+        $formValues = $form->getFieldValues();
+        $multilang = $request->useMultilang;
+
+        if($multilang) {
+            $lang = $request->lang;
+
+            $multilangsFields = $model->getMultilangTranslatableSwitch();
+            $fields = $model->getFieldsExceptTranslatables();
+            foreach ($multilangsFields as $multilangsField) {
+                # code...
+                if(isset($formValues[$multilangsField])) {
+                    $model->setTranslation($multilangsField, $lang, $formValues[$multilangsField]);
+                    unset($formValues[$multilangsField]);
+                }
+
+            }
+            foreach ($fields as $field) {
+                if(isset($formValues[$field])) {
+                    $model->{$field} = $formValues[$field];
+                }
+            }
+            // call boot method to save slug
+            $model::booted();
+        }
+        else {
+            $model->fill($formValues);
+        }
+
+        $model->save();
+    }
+    public function delete($model) {
+
+        $check_for_parent_id = Category::where('parent_id', '=', $model->id)->get();
+        $childCatArr = $check_for_parent_id->all();
+
+        foreach ($childCatArr as $childCat) {
+            # code...
+            // restore to default
+            $childCat->fill(['parent_id' => 0]);
+            $childCat->save();
+        }
+
+        $model->delete();
+    }
+}
