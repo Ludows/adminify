@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use Ludows\Adminify\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller

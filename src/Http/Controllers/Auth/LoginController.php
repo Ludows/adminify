@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use Ludows\Adminify\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
