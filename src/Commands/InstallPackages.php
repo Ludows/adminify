@@ -167,5 +167,4 @@ class InstallPackages extends Command
         }
         
     }
-    public 
 }
