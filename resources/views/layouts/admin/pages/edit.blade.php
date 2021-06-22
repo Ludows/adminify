@@ -8,7 +8,7 @@
 @if(view()->exists('layouts.admin.edit.pages.'.$name))
     @include('layouts.admin.edit.pages.'.$name)
 @else
-    @include('layouts.admin.edit.pages.default')
+    @include('adminify::layouts.admin.edit.pages.default')
 @endif
 @endsection
 

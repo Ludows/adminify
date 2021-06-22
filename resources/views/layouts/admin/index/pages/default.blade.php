@@ -40,16 +40,16 @@
                                             $slugBlade = Str::slug($th);
                                         @endphp
                                         @if(view()->exists('layouts.admin.index.blocks.'.$name.'-'.$slugBlade))
-                                            @include('layouts.admin.index.blocks.'.$name.'-'.$slugBlade, ['data' => $data[$th] ,'model' => $data ])
+                                            @include('adminify::layouts.admin.index.blocks.'.$name.'-'.$slugBlade, ['data' => $data[$th] ,'model' => $data ])
                                         @elseif(view()->exists('layouts.admin.index.blocks'.$slugBlade))
-                                            @include('layouts.admin.index.blocks.'.$slugBlade, ['data' => $data[$th] ,'model' => $data])
+                                            @include('adminify::layouts.admin.index.blocks.'.$slugBlade, ['data' => $data[$th] ,'model' => $data])
                                         @else
                                             <td>{{ $data[$th] }}</td>
                                         @endif
                                     @endforeach
                                     <td>
                                         @isset($actions)
-                                            @include('layouts.admin.index.blocks.dropdown-actions', ['action' => $actions[$loop->index]])
+                                            @include('adminify::layouts.admin.index.blocks.dropdown-actions', ['action' => $actions[$loop->index]])
                                         @endisset
                                     </td>
                                 </tr>

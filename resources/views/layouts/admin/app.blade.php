@@ -27,16 +27,16 @@
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
-            @include('layouts.admin.navbars.sidebar')
+            @include('adminify::layouts.admin.navbars.sidebar')
         @endauth
 
         <div class="main-content">
-            @include('layouts.admin.navbars.navbar')
+            @include('adminify::layouts.admin.navbars.navbar')
             @yield('content')
         </div>
 
         @guest()
-            @include('layouts.admin.footers.guest')
+            @include('adminify::layouts.admin.footers.guest')
         @endguest
 
         {{--  <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>  --}}
@@ -44,7 +44,7 @@
         <script src="{{ asset('argon') }}/js/extensions.js"></script>
         {{--  <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>  --}}
 
-        @include('layouts.admin.modales.globalSearch')
+        @include('adminify::layouts.admin.modales.globalSearch')
         @stack('modales')
         @stack('js')
 

@@ -20,9 +20,9 @@
         <ul class="navbar-nav align-items-center d-none d-md-flex">
             <li class="nav-item dropdown">
                 <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    @include('layouts.admin.navbars.navs.avatar', ['withName' => true])
+                    @include('adminify::layouts.admin.navbars.navs.avatar', ['withName' => true])
                 </a>
-                @include('layouts.admin.navbars.navs.dropdown-user')
+                @include('adminify::layouts.admin.navbars.navs.dropdown-user')
             </li>
         </ul>
         @if($useMultilang)
@@ -32,7 +32,7 @@
                     <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ $currentLang }}
                     </a>
-                    @include('layouts.admin.navbars.navs.dropdown-lang')
+                    @include('adminify::layouts.admin.navbars.navs.dropdown-lang')
                 </li>
             </ul>
         @endif

@@ -1,7 +1,7 @@
 @extends('layouts.admin.app')
 
 @section('content')
-    @include('layouts.admin.headers.topPageListing')
+    @include('adminify::layouts.admin.headers.topPageListing')
 
     <div class="container-fluid mt--7">
 
@@ -13,7 +13,7 @@
             @endforeach
         </div>
 
-        @include('layouts.admin.footers.auth')
+        @include('adminify::layouts.admin.footers.auth')
     </div>
 @endsection
 

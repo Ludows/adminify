@@ -1,3 +1,3 @@
 <footer class="footer">
-    @include('layouts.admin.footers.nav')
+    @include('adminify::layouts.admin.footers.nav')
 </footer>

@@ -45,7 +45,7 @@
     <ul style="width:80%; border: 1px solid transparent;" id="nested-sortable-{{ $identifier }}" class="nested_sortable list-group">
         @if(isset($item->childs))
             @foreach($item->childs as $child)
-                @include('layouts.admin.menubuilder.menu-item', ['item' => $child])
+                @include('adminify::layouts.admin.menubuilder.menu-item', ['item' => $child])
             @endforeach
         @endif
     </ul>
