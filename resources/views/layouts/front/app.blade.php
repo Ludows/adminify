@@ -26,10 +26,10 @@
     <body class="{{ $class ?? '' }}">
         <main id="app">
             <div id="swup">
-                @include('layouts.front.navbars.navbar')
+                @include('adminify::layouts.front.navbars.navbar')
                 @yield('content')
 
-                @include('layouts.front.footers.nav')
+                @include('adminify::layouts.front.footers.nav')
             </div>
         </main>
         {{--  <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>  --}}

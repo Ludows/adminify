@@ -12,9 +12,9 @@
         <ul class="nav align-items-center d-md-none">
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    @include('layouts.admin.navbars.navs.avatar', ['withName' => false])
+                    @include('adminify::layouts.admin.navbars.navs.avatar', ['withName' => false])
                 </a>
-                @include('layouts.admin.navbars.navs.dropdown-user')
+                @include('adminify::layouts.admin.navbars.navs.dropdown-user')
             </li>
         </ul>
         <!-- Collapse -->

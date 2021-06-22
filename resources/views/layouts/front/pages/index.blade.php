@@ -7,9 +7,9 @@
         $name = Str::slug(request()->route()->getName(), '-');
     @endphp
     @if(view()->exists('layouts.front.pages.'.$name))
-        @include('layouts.front.pages.'.$name)
+        @include('adminify::layouts.front.pages.'.$name)
     @else
-        @include('layouts.front.pages.default')
+        @include('adminify::layouts.front.pages.default')
     @endif
     @if($type == "Post")
         <a href="/test-insert-post-second">test-insert-post-second</a>

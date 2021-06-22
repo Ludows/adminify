@@ -19,9 +19,9 @@
         <ul class="navbar-nav align-items-center d-none d-md-flex">
             <li class="nav-item dropdown">
                 <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    @include('layouts.front.navbars.navs.avatar', ['withName' => true])
+                    @include('adminify::layouts.front.navbars.navs.avatar', ['withName' => true])
                 </a>
-                @include('layouts.front.navbars.navs.dropdown-user')
+                @include('adminify::layouts.front.navbars.navs.dropdown-user')
             </li>
         </ul>
     </div>
