@@ -36,77 +36,105 @@ class InstallPackages extends Command
         
         $this->packages = array(
             (object) array(
+                'beforePublish' => [],
                 'name' => 'artesaos/seotools',
                 'publishes' => ['Artesaos\SEOTools\Providers\SEOToolsServiceProvider'],
-                'config' => '../config/seotools'
+                'config' => '../config/seotools',
+                'afterPublish' => [],
             ),
             (object) array(
+                'beforePublish' => [],
                 'name' => 'diglactic/laravel-breadcrumbs',
                 'publishes' => null,
-                'config' => '../config/breadcrumbs'
+                'config' => '../config/breadcrumbs',
+                'afterPublish' => [],
             ),
             (object) array(
+                'beforePublish' => [],
                 'name' => 'kris/laravel-form-builder',
                 'publishes' => null,
-                'config' => '../config/laravel-form-builder'
+                'config' => '../config/laravel-form-builder',
+                'afterPublish' => [],
             ),
             (object) array(
+                'beforePublish' => [],
                 'name' => 'laracasts/flash',
                 'publishes' => ['Laracasts\Flash\FlashServiceProvider'],
-                'config' => null
+                'config' => null,
+                'afterPublish' => [],
             ),
             (object) array(
+                'beforePublish' => [],
                 'name' => 'mratiebatie/laravel-repositories',
                 'publishes' => null,
-                'config' => null
+                'config' => null,
+                'afterPublish' => [],
             ),
             (object) array(
+                'beforePublish' => [],
                 'name' => 'nadar/quill-delta-parser',
                 'publishes' => null,
-                'config' => null
+                'config' => null,
+                'afterPublish' => [],
             ),
             (object) array(
+                'beforePublish' => [],
                 'name' => 'silviolleite/laravelpwa',
                 'publishes' => ['LaravelPWA\Providers\LaravelPWAServiceProvider'],
-                'config' => null
+                'config' => null,
+                'afterPublish' => [],
             ),
             (object) array(
+                'beforePublish' => [],
                 'name' => 'spatie/laravel-backup',
                 'publishes' => ['Spatie\Backup\BackupServiceProvider'],
-                'config' => null
+                'config' => null,
+                'afterPublish' => [],
             ),
             (object) array(
+                'beforePublish' => [],
                 'name' => 'spatie/laravel-menu',
                 'publishes' => ['Spatie\Menu\Laravel\MenuServiceProvider'],
-                'config' => null
+                'config' => null,
+                'afterPublish' => [],
             ),
             (object) array(
+                'beforePublish' => [],
                 'name' => 'spatie/laravel-permission',
                 'publishes' => ['Spatie\Permission\PermissionServiceProvider'],
-                'config' => '../config/permission'
+                'config' => '../config/permission',
+                'afterPublish' => [],
             ),
             (object) array(
+                'beforePublish' => [],
                 'name' => 'spatie/laravel-searchable',
                 'publishes' => null,
-                'config' => null
+                'config' => null,
+                'afterPublish' => [],
             ),
             (object) array(
+                'beforePublish' => [],
                 'name' => 'spatie/laravel-translatable',
                 'publishes' => ['Spatie\Translatable\TranslatableServiceProvider'],
-                'config' => '../config/translatable'
+                'config' => '../config/translatable',
+                'afterPublish' => [],
             ),
             (object) array(
+                'beforePublish' => [],
                 'name' => 'spatie/menu',
                 'publishes' => ['Spatie\Menu\Laravel\MenuServiceProvider'],
-                'config' => null
+                'config' => null,
+                'afterPublish' => [],
             ),
             (object) array(
+                'beforePublish' => [],
                 'name' => 'thunderer/shortcode',
                 'publishes' => null,
-                'config' => null
+                'config' => null,
+                'afterPublish' => [],
             ),
             (object) array(
-                'beforeInstall' => [],
+                'beforePublish' => [],
                 'name' => 'unisharp/laravel-filemanager',
                 'publishes' => null,
                 'config' => null,
@@ -117,21 +145,21 @@ class InstallPackages extends Command
                 ],
             ),
             (object) array(
-                'beforeInstall' => [],
+                'beforePublish' => [],
                 'name' => 'van-ons/laraberg',
                 'publishes' => ['VanOns\Laraberg\LarabergServiceProvider'],
                 'config' => '../config/laraberg',
                 'afterInstall' => [],
             ),
             (object) array(
-                'beforeInstall' => [],
+                'beforePublish' => [],
                 'name' => 'ycs77/laravel-form-builder-bs4',
                 'publishes' => ['laravel-form-builder-bs4'],
                 'config' => '../config/laraberg',
                 'afterInstall' => [],
             ),
             (object) array(
-                'beforeInstall' => [],
+                'beforePublish' => [],
                 'name' => 'zerospam/laravel-gettext',
                 'publishes' => null,
                 'config' => '../config/laravel-gettext',
@@ -148,21 +176,21 @@ class InstallPackages extends Command
      */
     public function handle()
     {
-        $currentCommandInstall = 'composer require '.$this->packages[0]->name;
+        $currentPublishInstall = 'php artisan vendor:publish --provider="'.$this->packages[0]->name.'"';
 
-        Event::listen('Illuminate\Console\Events\CommandFinished', function ($event) use ($currentCommandInstall) {
-            if ($event->command == $currentCommandInstall) {
+        Event::listen('Illuminate\Console\Events\CommandFinished', function ($event) use ($currentPublishInstall) {
+            if ($event->command == $currentPublishInstall) {
                 // do stuff on finish
             }
         });
 
         foreach ($this->packages as $dependency) {
             # code...
-            $this->info('Running console command:  '. $currentCommandInstall);
+            $this->info('Running console command:  '. $currentPublishInstall);
 
-            $installationPackage = Artisan::call('composer require '.$dependency->name, []);
+            // $installationPackage = Artisan::call('composer require '.$dependency->name, []);
 
-            $currentCommandInstall = 'composer require '.$dependency->name;
+            $currentPublishInstall = 'composer require '.$dependency->name;
 
         }
         
