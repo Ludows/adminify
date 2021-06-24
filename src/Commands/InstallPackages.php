@@ -34,7 +34,7 @@ class InstallPackages extends Command
     {
         parent::__construct();
         //@todo aliases and autoregister services providers..
-        
+
         $this->packages = require_once(__DIR__.'/../../config/packagelist.php');
     }
     /**
@@ -44,16 +44,24 @@ class InstallPackages extends Command
      */
     public function handle()
     {
-        $command = $this->handlePackageInstall($this->packages[0]);
-
-        // run first command and execute all then after..
-        exec($command);
-
         foreach ($this->packages as $dependency) {
             # code...
+
+
             $command = $this->handlePackageInstall($dependency);
-            
-            exec($command);
+
+            // handle beforePublish
+            $this->handleHook($dependency, 'beforePublish');
+            //first exec command package
+            if($command != null) {
+                exec($command);
+            }
+
+            // handle afterPublish
+            $this->handleHook($dependency, 'afterPublish');
+
+            //second publish my preconfigured files config
+            $this->handleConfig($dependency);
 
         }
 
@@ -66,26 +74,55 @@ class InstallPackages extends Command
         $this->publishes([
             __DIR__.'/../../config/site-settings.php' => config_path('site-settings.php'),
         ]);
-        
+
+    }
+    public function handleHook($package, $key, $log = true) {
+        $commands = $package->{$key};
+        if(count($commands) > 0) {
+
+            foreach ($commands as $command) {
+                # code...
+                if($log) {
+                    $this->info('Handle '. $key .' hook command:  '. $command);
+                }
+                exec($command);
+            }
+
+        }
     }
     public function handlePackageInstall($package, $log = true) {
         $firstPackagePublish = $package->publish;
 
-        $handlePublish = '--provider="'.$firstPackagePublish->sibling.'';
+        $currentPublishInstall = null;
 
-        if($firstPackagePublish->tag) {
-            $handlePublish = '--tag="'.$firstPackagePublish->sibling.'';
-        }
+        if($firstPackagePublish != null) {
+            $handlePublish = '--provider="'.$firstPackagePublish->sibling.'';
 
-        $currentPublishInstall = 'php artisan vendor:publish '. $handlePublish .'';
+            if($firstPackagePublish->tag) {
+                $handlePublish = '--tag="'.$firstPackagePublish->sibling.'';
+            }
 
-        if($log) {
-            $this->info('Handle console command:  '. $currentPublishInstall);
+            $currentPublishInstall = 'php artisan vendor:publish '. $handlePublish .'';
+
+            if($log) {
+                $this->info('Handle console command:  '. $currentPublishInstall);
+            }
         }
 
         return $currentPublishInstall;
     }
     public function handleConfig($package, $log = true) {
+        $firstPackageConfig = $package->config;
 
+        if($firstPackageConfig != null) {
+
+            $this->publishes([
+                __DIR__.$firstPackageConfig->file => config_path($firstPackageConfig->name.'.php'),
+            ]);
+
+            if($log) {
+                $this->info('Handle published config:  '. $firstPackageConfig->name);
+            }
+        }
     }
 }

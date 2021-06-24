@@ -14,7 +14,10 @@ return array(
                 'middlewares' => [],
                 'aliases' => []
             ],
-            'config' => '../config/seotools',
+            'config' => (object) [
+                'file' => '/../../config/seotools',
+                'name' => 'seotools',
+            ],
             'afterPublish' => [],
         ),
         (object) array(
@@ -26,7 +29,10 @@ return array(
                 'middlewares' => [],
                 'aliases' => []
             ],
-            'config' => '../config/breadcrumbs',
+            'config' => (object) [
+                'file' => '/../../config/breadcrumbs',
+                'name' => 'breadcrumbs',
+            ],
             'afterPublish' => [],
         ),
         (object) array(
@@ -38,7 +44,10 @@ return array(
                 'middlewares' => [],
                 'aliases' => []
             ],
-            'config' => '../config/laravel-form-builder',
+            'config' => (object) [
+                'file' => '/../../config/laravel-form-builder',
+                'name' => 'laravel-form-builder',
+            ],
             'afterPublish' => [],
         ),
         (object) array(
@@ -107,7 +116,10 @@ return array(
                 'middlewares' => [],
                 'aliases' => []
             ],
-            'config' => '../config/backup',
+            'config' => (object) [
+                'file' => '/../../config/backup',
+                'name' => 'backup',
+            ],
             'afterPublish' => [],
         ),
         (object) array(
@@ -137,7 +149,10 @@ return array(
                 'middlewares' => [],
                 'aliases' => []
             ],
-            'config' => '../config/permission',
+            'config' => (object) [
+                'file' => '/../../config/permission',
+                'name' => 'permission',
+            ],
             'afterPublish' => [],
         ),
         (object) array(
@@ -168,7 +183,10 @@ return array(
                 'middlewares' => [],
                 'aliases' => []
             ],
-            'config' => '../config/translatable',
+            'config' => (object) [
+                'file' => '/../../config/translatable',
+                'name' => 'translatable',
+            ],
             'afterPublish' => [],
         ),
         (object) array(
@@ -202,7 +220,10 @@ return array(
             'beforePublish' => [],
             'name' => 'unisharp/laravel-filemanager',
             'publish' => null,
-            'config' => '../config/lfm',
+            'config' => (object) [
+                'file' => '/../../config/lfm',
+                'name' => 'lfm',
+            ],
             'afterInstall' => [
                 'php artisan vendor:publish --tag=lfm_config',
                 'php artisan vendor:publish --tag=lfm_public',
@@ -221,7 +242,10 @@ return array(
                 'middlewares' => [],
                 'aliases' => []
             ],
-            'config' => '../config/laraberg',
+            'config' => (object) [
+                'file' => '/../../config/laraberg',
+                'name' => 'laraberg',
+            ],
             'afterInstall' => [],
         ),
         (object) array(
@@ -248,7 +272,10 @@ return array(
                 'middlewares' => [],
                 'aliases' => []
             ],
-            'config' => '../config/laravel-gettext',
+            'config' => (object) [
+                'file' => '/../../config/laravel-gettext',
+                'name' => 'laravel-gettext',
+            ],
             'afterInstall' => [],
         )
     );
