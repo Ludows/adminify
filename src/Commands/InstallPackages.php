@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Artisan;
 // use Illuminate\Support\Facades\Event;
+use File;
 
 
 class InstallPackages extends Command
@@ -66,14 +67,9 @@ class InstallPackages extends Command
         }
 
         //publishes check-permissions and site-settings
-
-        $this->publishes([
-            __DIR__.'/../../config/check-permissions.php' => config_path('check-permissions.php'),
-        ]);
-
-        $this->publishes([
-            __DIR__.'/../../config/site-settings.php' => config_path('site-settings.php'),
-        ]);
+        \File::copy( __DIR__.'/../../config/check-permissions.php' , config_path('check-permissions.php'));
+        
+        \File::copy( __DIR__.'/../../config/site-settings.php' , config_path('site-settings.php'));
 
     }
     public function handleHook($package, $key, $log = true) {
@@ -116,9 +112,7 @@ class InstallPackages extends Command
 
         if($firstPackageConfig != null) {
 
-            $this->publishes([
-                __DIR__.$firstPackageConfig->file => config_path($firstPackageConfig->name.'.php'),
-            ]);
+            \File::copy( __DIR__.$firstPackageConfig->file , config_path($firstPackageConfig->name.'.php'));
 
             if($log) {
                 $this->info('Handle published config:  '. $firstPackageConfig->name);
