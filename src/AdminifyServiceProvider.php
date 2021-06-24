@@ -26,6 +26,9 @@ class AdminifyServiceProvider extends ServiceProvider {
         //     $this->bootForConsole();
         // }
 
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/site-settings.php', 'adminify'
+        );
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'adminify');
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'adminify');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');

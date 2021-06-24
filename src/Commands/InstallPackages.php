@@ -56,6 +56,16 @@ class InstallPackages extends Command
             Artisan::call($command, []);
 
         }
+
+        //publishes check-permissions and site-settings
+
+        $this->publishes([
+            __DIR__.'/../../config/check-permissions.php' => config_path('check-permissions.php'),
+        ]);
+
+        $this->publishes([
+            __DIR__.'/../../config/site-settings.php' => config_path('site-settings.php'),
+        ]);
         
     }
     public function handlePackageInstall($package, $log = true) {
@@ -74,5 +84,8 @@ class InstallPackages extends Command
         }
 
         return $currentPublishInstall;
+    }
+    public function handleConfig($package, $log = true) {
+
     }
 }
