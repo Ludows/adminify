@@ -22,7 +22,7 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         $packages = require_once(__DIR__.'/../config/packagelist.php');
 
-        dd($packages);
+        //dd($packages);
 
         // Publishing is only necessary when using the CLI.
         // if ($this->app->runningInConsole()) {

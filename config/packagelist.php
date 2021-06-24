@@ -10,9 +10,19 @@ return array(
                 'sibling' => 'Artesaos\SEOTools\Providers\SEOToolsServiceProvider'
             ],
             'autoload' => (object) [
-                'providers' => [],
+                'providers' => [
+                    Artesaos\SEOTools\Providers\SEOToolsServiceProvider::class,
+                ],
                 'middlewares' => [],
-                'aliases' => []
+                'aliases' => [
+                    'SEOMeta'       => Artesaos\SEOTools\Facades\SEOMeta::class,
+                    'OpenGraph'     => Artesaos\SEOTools\Facades\OpenGraph::class,
+                    'Twitter'       => Artesaos\SEOTools\Facades\TwitterCard::class,
+                    'JsonLd'        => Artesaos\SEOTools\Facades\JsonLd::class,
+                    'JsonLdMulti'   => Artesaos\SEOTools\Facades\JsonLdMulti::class,
+                    // or
+                    'SEO' => Artesaos\SEOTools\Facades\SEOTools::class,
+                ]
             ],
             'config' => (object) [
                 'file' => '/../../config/seotools',
@@ -40,9 +50,13 @@ return array(
             'name' => 'kris/laravel-form-builder',
             'publish' => null,
             'autoload' => (object) [
-                'providers' => [],
+                'providers' => [
+                    Kris\LaravelFormBuilder\FormBuilderServiceProvider::class
+                ],
                 'middlewares' => [],
-                'aliases' => []
+                'aliases' => [
+                    'FormBuilder' => Kris\LaravelFormBuilder\Facades\FormBuilder::class,
+                ]
             ],
             'config' => (object) [
                 'file' => '/../../config/laravel-form-builder',
@@ -130,9 +144,13 @@ return array(
                 'sibling' => 'Spatie\Menu\Laravel\MenuServiceProvider'
             ],
             'autoload' => (object) [
-                'providers' => [],
+                'providers' => [
+                    Spatie\Menu\Laravel\MenuServiceProvider::class,
+                ],
                 'middlewares' => [],
-                'aliases' => []
+                'aliases' => [
+                    'SpatieMenuGenerator' => Spatie\Menu\Laravel\Facades\Menu::class,
+                ]
             ],
             'config' => null,
             'afterPublish' => [],
@@ -145,7 +163,9 @@ return array(
                 'sibling' => 'Spatie\Permission\PermissionServiceProvider'
             ],
             'autoload' => (object) [
-                'providers' => [],
+                'providers' => [
+                    Spatie\Permission\PermissionServiceProvider::class,
+                ],
                 'middlewares' => [],
                 'aliases' => []
             ],
@@ -158,10 +178,7 @@ return array(
         (object) array(
             'beforePublish' => [],
             'name' => 'spatie/laravel-searchable',
-            'publish' => (object) [
-                'tag' => false,
-                'sibling' => 'Spatie\Permission\PermissionServiceProvider'
-            ],
+            'publish' => null,
             'autoload' => (object) [
                 'providers' => [],
                 'middlewares' => [],
@@ -269,7 +286,11 @@ return array(
             'publish' => null,
             'autoload' => (object) [
                 'providers' => [],
-                'middlewares' => [],
+                'middlewares' => [
+                    'web' => [
+                        \Xinax\LaravelGettext\Middleware\GettextMiddleware::class,
+                    ],
+                ],
                 'aliases' => []
             ],
             'config' => (object) [
