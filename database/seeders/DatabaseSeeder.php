@@ -1,5 +1,5 @@
 <?php
-namespace Database\Seeders;
+namespace Ludows\Adminify\Database\Seeders;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
