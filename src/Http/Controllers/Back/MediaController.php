@@ -56,7 +56,7 @@ class MediaController extends Controller
             }
 
             // dd($forms);
-            return view("layouts.admin.pages.index", ["datas" => $medias, 'thead' => $fillables, 'actions' => $actions,  'forms' => collect($forms) ]);
+            return view("adminify::layouts.admin.pages.index", ["datas" => $medias, 'thead' => $fillables, 'actions' => $actions,  'forms' => collect($forms) ]);
         }
 
         /**
@@ -71,7 +71,7 @@ class MediaController extends Controller
                 'url' => route('medias.store')
             ]);
             //
-            return view("layouts.admin.pages.create", ['form' => $form]);
+            return view("adminify::layouts.admin.pages.create", ['form' => $form]);
         }
 
         /**
@@ -125,7 +125,7 @@ class MediaController extends Controller
                 'model' => $media
             ]);
 
-            return view("layouts.admin.pages.edit", ['form' => $form]);
+            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
         }
 
         /**

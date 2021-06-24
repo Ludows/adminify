@@ -11,7 +11,7 @@ use Ludows\Adminify\Traits\Helpers;
 
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
-class Traduction extends Model implements Searchable
+class Translations extends Model implements Searchable
 {
     use HasFactory;
     use HasTranslations;

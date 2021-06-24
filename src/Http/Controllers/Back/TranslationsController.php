@@ -6,7 +6,7 @@ use Ludows\Adminify\Forms\CreateTranslation as FormsCreateTranslation;
 use Ludows\Adminify\Forms\UpdateTranslation;
 use Illuminate\Http\Request;
 use Ludows\Adminify\Http\Requests\CreateTranslation;
-use Ludows\Adminify\Models\Traduction as Traductions;
+use Ludows\Adminify\Models\Translations as Traductions;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;

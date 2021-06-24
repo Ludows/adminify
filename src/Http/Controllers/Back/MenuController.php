@@ -68,7 +68,7 @@ class MenuController extends Controller
                 $menus[0]->flashForMissing();
             }
 
-            return view("layouts.admin.pages.index", ["datas" => $menus, 'actions' => $actions, 'thead' => $fillables]);
+            return view("adminify::layouts.admin.pages.index", ["datas" => $menus, 'actions' => $actions, 'thead' => $fillables]);
         }
 
         /**
@@ -80,7 +80,7 @@ class MenuController extends Controller
         {
 
 
-            return view("layouts.admin.pages.create", ['menuBuilder' => $menuBuilder]);
+            return view("adminify::layouts.admin.pages.create", ['menuBuilder' => $menuBuilder]);
         }
 
         /**
@@ -134,7 +134,7 @@ class MenuController extends Controller
             $menuBuilder->setModel($menu);
             // dd($menuBuilder);
 
-            return view("layouts.admin.pages.edit", ['menuBuilder' => $menuBuilder]);
+            return view("adminify::layouts.admin.pages.edit", ['menuBuilder' => $menuBuilder]);
         }
 
         public function checkEntity(Request $request) {

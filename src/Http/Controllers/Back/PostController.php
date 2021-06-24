@@ -71,7 +71,7 @@ class PostController extends Controller
             }
 
 
-            return view("layouts.admin.pages.index", ["datas" => $posts, 'actions' => $actions,  'thead' => $fillables]);
+            return view("adminify::layouts.admin.pages.index", ["datas" => $posts, 'actions' => $actions,  'thead' => $fillables]);
         }
 
         /**
@@ -87,7 +87,7 @@ class PostController extends Controller
                 'url' => route('posts.store')
             ]);
 
-            return view("layouts.admin.pages.create", ['form' => $form]);
+            return view("adminify::layouts.admin.pages.create", ['form' => $form]);
         }
 
         /**
@@ -152,7 +152,7 @@ class PostController extends Controller
                 ]);
             }
 
-            return view("layouts.admin.pages.edit", ['form' => $form]);
+            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
         }
 
         /**

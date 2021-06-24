@@ -11,12 +11,12 @@ class SearchController extends Controller
 {
     public function index(Request $request) {
         $searchResults = (new Search())
-            ->registerModel(\App\Models\User::class, 'name')
-            ->registerModel(\App\Models\Category::class, 'title')
-            ->registerModel(\App\Models\Menu::class, 'title')
-            ->registerModel(\App\Models\Page::class, 'title')
-            ->registerModel(\App\Models\Post::class, 'title')
-            ->registerModel(\App\Models\Traduction::class, 'text')
+            ->registerModel(\Ludows\Adminify\Models\User::class, 'name')
+            ->registerModel(\Ludows\Adminify\Models\Category::class, 'title')
+            ->registerModel(\Ludows\Adminify\Models\Menu::class, 'title')
+            ->registerModel(\Ludows\Adminify\Models\Page::class, 'title')
+            ->registerModel(\Ludows\Adminify\Models\Post::class, 'title')
+            ->registerModel(\Ludows\Adminify\Models\Translations::class, 'text')
             ->limitAspectResults(5)
             ->search($request->input('query'));
 

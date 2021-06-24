@@ -60,7 +60,7 @@ class CategoryController extends Controller
                 $categories[0]->flashForMissing();
             }
 
-            return view("layouts.admin.pages.index", ["datas" => $categories, 'thead' => $fillables, 'editParam' => 'category', 'forms' => $forms ]);
+            return view("adminify::layouts.admin.pages.index", ["datas" => $categories, 'thead' => $fillables, 'editParam' => 'category', 'forms' => $forms ]);
         }
 
         /**
@@ -84,7 +84,7 @@ class CategoryController extends Controller
             // view()->share('formCreateCategory', $formCreateCategory);
 
 
-            return view("layouts.admin.pages.create", ['form' => $form]);
+            return view("adminify::layouts.admin.pages.create", ['form' => $form]);
         }
 
         /**
@@ -140,7 +140,7 @@ class CategoryController extends Controller
                 'model' => $category
             ]);
 
-            return view("layouts.admin.pages.edit", ['form' => $form]);
+            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
         }
 
         /**

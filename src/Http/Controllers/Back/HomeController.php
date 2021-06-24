@@ -55,6 +55,6 @@ class HomeController extends Controller
         //dd($user, $config, $blocks);
 
 
-        return view('layouts.admin.pages.dashboard', ['blocks' => $blocks]);
+        return view('adminify::layouts.admin.pages.dashboard', ['blocks' => $blocks]);
     }
 }

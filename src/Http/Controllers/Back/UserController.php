@@ -52,7 +52,7 @@ class UserController extends Controller
                 ]);
             }
 
-            return view("layouts.admin.pages.index", ["datas" => $users,  'thead' => $fillables, 'actions' => $actions]);
+            return view("adminify::layouts.admin.pages.index", ["datas" => $users,  'thead' => $fillables, 'actions' => $actions]);
     }
     /**
             * Show the form for creating a new resource.
@@ -67,7 +67,7 @@ class UserController extends Controller
                     'url' => route('users.store')
                 ]);
 
-                return view("layouts.admin.pages.create", ['form' => $form]);
+                return view("adminify::layouts.admin.pages.create", ['form' => $form]);
             }
 
             /**
@@ -107,7 +107,7 @@ class UserController extends Controller
                     'model' => $user
                 ]);
 
-                return view("layouts.admin.pages.edit", ['form' => $form]);
+                return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
             }
         /**
             * Update the specified resource in storage.

@@ -67,7 +67,7 @@ class PageController extends Controller
             if(isset($pages) && count($pages) > 0) {
                 $pages[0]->flashForMissing();
             }
-            return view("layouts.admin.pages.index", ["datas" => $pages, 'actions' => $actions, 'thead' => $fillables]);
+            return view("adminify::layouts.admin.pages.index", ["datas" => $pages, 'actions' => $actions, 'thead' => $fillables]);
         }
 
         /**
@@ -82,7 +82,7 @@ class PageController extends Controller
                 'url' => route('pages.store')
             ]);
             //
-            return view("layouts.admin.pages.create", ['form' => $form]);
+            return view("adminify::layouts.admin.pages.create", ['form' => $form]);
         }
 
         /**
@@ -148,7 +148,7 @@ class PageController extends Controller
             }
 
 
-            return view("layouts.admin.pages.edit", ['form' => $form]);
+            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
         }
 
         /**

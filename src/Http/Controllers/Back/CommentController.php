@@ -51,7 +51,7 @@ class CommentController extends Controller
                 ]);
             }
 
-            return view("layouts.admin.pages.index", ["datas" => $comments, 'actions' => $actions,  'thead' => $fillables]);
+            return view("adminify::layouts.admin.pages.index", ["datas" => $comments, 'actions' => $actions,  'thead' => $fillables]);
         }
 
         /**
@@ -95,7 +95,7 @@ class CommentController extends Controller
                 'model' => $comment
             ]);
 
-            return view("layouts.admin.pages.edit", ['form' => $form]);
+            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
         }
 
         /**

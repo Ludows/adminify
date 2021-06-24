@@ -27,7 +27,7 @@ class SettingsController extends Controller
                 'url' => route('settings.store'),
             ]);
 
-            return view("layouts.admin.pages.index", ['form' => $form]);
+            return view("adminify::layouts.admin.pages.index", ['form' => $form]);
         }
 
         /**
