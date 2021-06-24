@@ -237,6 +237,11 @@ return array(
             'beforePublish' => [],
             'name' => 'unisharp/laravel-filemanager',
             'publish' => null,
+            'autoload' => (object) [
+                'providers' => [],
+                'middlewares' => [],
+                'aliases' => []
+            ],
             'config' => (object) [
                 'file' => '/../../config/lfm',
                 'name' => 'lfm',
