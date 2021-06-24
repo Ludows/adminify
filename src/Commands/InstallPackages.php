@@ -47,13 +47,13 @@ class InstallPackages extends Command
         $command = $this->handlePackageInstall($this->packages[0]);
 
         // run first command and execute all then after..
-        Artisan::call($command, []);
+        exec($command);
 
         foreach ($this->packages as $dependency) {
             # code...
             $command = $this->handlePackageInstall($dependency);
             
-            Artisan::call($command, []);
+            exec($command);
 
         }
 
@@ -77,10 +77,10 @@ class InstallPackages extends Command
             $handlePublish = '--tag="'.$firstPackagePublish->sibling.'';
         }
 
-        $currentPublishInstall = 'vendor:publish '. $handlePublish .'';
+        $currentPublishInstall = 'php artisan vendor:publish '. $handlePublish .'';
 
         if($log) {
-            $this->info('Handle console command:  php artisan '. $currentPublishInstall);
+            $this->info('Handle console command:  '. $currentPublishInstall);
         }
 
         return $currentPublishInstall;
