@@ -20,11 +20,19 @@ class AdminifyServiceProvider extends ServiceProvider {
      */
     public function boot() {
 
+        $packages = require_once(__DIR__.'/../../config/packagelist.php');
+
+        dd($packages);
+
         // Publishing is only necessary when using the CLI.
         // if ($this->app->runningInConsole()) {
 
         //     $this->bootForConsole();
         // }
+
+        // $this->app->register(
+        //     MyProvider::class
+        // );
 
         $this->mergeConfigFrom(
             __DIR__.'/../config/site-settings.php', 'adminify'
