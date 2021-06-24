@@ -77,10 +77,10 @@ class InstallPackages extends Command
             $handlePublish = '--tag="'.$firstPackagePublish->sibling.'';
         }
 
-        $currentPublishInstall = 'php artisan vendor:publish '. $handlePublish .'';
+        $currentPublishInstall = 'vendor:publish '. $handlePublish .'';
 
         if($log) {
-            $this->info('Handle console command:  '. $currentPublishInstall);
+            $this->info('Handle console command:  php artisan '. $currentPublishInstall);
         }
 
         return $currentPublishInstall;

@@ -42,9 +42,6 @@ class AdminifyServiceProvider extends ServiceProvider {
      */
     public function register() {
 
-        // @todo
-        // $this->mergeConfigFrom(__DIR__ . '/../config/medkit.php', 'mediactive-digital.medkit');
-
         // Register the service the package provides.
 
         $this->app->singleton('adminify', function($app) {
