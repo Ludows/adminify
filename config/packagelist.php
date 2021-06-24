@@ -294,7 +294,16 @@ return array(
             ],
             'autoload' => (object) [
                 'providers' => [],
-                'middlewares' => [],
+                'middlewares' => [
+                    'named' => [
+                        'autoload.forms' => \Ludows\Adminify\Http\Middleware\RequiredForms::class,
+                        'admin.menu' => \Ludows\Adminify\Http\Middleware\GenerateAdminMenu::class,
+                        'check.permissions' => \Ludows\Adminify\Http\Middleware\checkUserPermissions::class,
+                        'multilang.basic' => \Ludows\Adminify\Http\Middleware\MultilangBasic::class,
+                        'admin.breadcrumb' => \Ludows\Adminify\Http\Middleware\AdminBreadcrumb::class,
+                        'front.blogpage' => \Ludows\Adminify\Http\Middleware\checkBlogPage::class
+                    ]
+                ],
                 'aliases' => []
             ],
             'config' => null,

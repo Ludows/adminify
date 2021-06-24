@@ -24,7 +24,7 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         if(!$app->runningInConsole()) {
             $packages = require_once(__DIR__.'/../config/packagelist.php');
-            
+
             $this->bootableDependencies($packages);
         }
         if($app->runningInConsole()) {
@@ -107,9 +107,51 @@ class AdminifyServiceProvider extends ServiceProvider {
 
             // Second one register Middlewares
 
-            //$this->app['router']->aliasMiddleware('shortname', Vendor\Some\Class::class);
+            if(count($dependency->autoload->middlewares) > 0) {
+                $middlewares = $dependency->autoload->middlewares;
+                $router = $this->app['router'];
+
+                if( array_key_exists('named', $middlewares) ) {
+                    $keys = array_keys($middlewares['named']);
+
+                    foreach ($keys as $key) {
+                        # code...
+                        $router->aliasMiddleware($key, $middlewares['named'][$key]);
+                    }
+                }
+
+                if( array_key_exists('web', $middlewares) ) {
+                    // $router->pushMiddlewareToGroup('web', MyMiddleware::class);
+                    foreach ($middlewares['web'] as $middleware) {
+                        # code...
+                        $router->pushMiddlewareToGroup('web', $middleware);
+                    }
+                }
+
+                if( array_key_exists('global', $middlewares) ) {
+                    foreach ($middlewares['global'] as $middleware) {
+                        # code...
+                        $router->middleware($middleware);
+                    }
+                }
+
+            }
 
             // and finaly register Aliases
+
+            if(count($dependency->autoload->aliases) > 0) {
+                /*
+                * Create aliases for the dependency.
+                */
+                $loader = \Illuminate\Foundation\AliasLoader::getInstance();
+                $aliases = $dependency->autoload->aliases;
+                $keys = array_keys($aliases);
+                foreach ($keys as $key) {
+                    # code...
+                    $loader->alias($key, $aliases[$key]);
+                }
+
+            }
 
         }
         
