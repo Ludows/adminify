@@ -35,7 +35,7 @@ class InstallPackages extends Command
         parent::__construct();
         //@todo aliases and autoregister services providers..
         
-        $this->packages = require_once(__DIR__.'/../config/packagelist.php');
+        $this->packages = require_once(__DIR__.'/../../config/packagelist.php');
     }
     /**
      * Execute the console command.
