@@ -36,7 +36,7 @@ class InstallPackages extends Command
         //@todo aliases and autoregister services providers..
         
         $this->packages = require_once(__DIR__.'../config/packagelist.php');
-
+    }
     /**
      * Execute the console command.
      *
@@ -47,13 +47,13 @@ class InstallPackages extends Command
         $command = $this->handlePackageInstall($this->packages[0]);
 
         // run first command and execute all then after..
-        Artisan::call($command, [])
+        Artisan::call($command, []);
 
         foreach ($this->packages as $dependency) {
             # code...
             $command = $this->handlePackageInstall($dependency);
             
-            Artisan::call($command, [])
+            Artisan::call($command, []);
 
         }
         
