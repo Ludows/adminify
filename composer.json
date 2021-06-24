@@ -51,9 +51,11 @@
         }
     },
     "autoload": {
+        "classmap": [
+            "database/seeders"    
+        ],
         "psr-4": {
             "Ludows\\Adminify\\" : "src/",   
-            "Ludows\\Adminify\\Database\\Seeders\\" : "database/"
         }
     },
     "autoload-dev": {
