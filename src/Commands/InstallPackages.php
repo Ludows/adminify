@@ -65,11 +65,7 @@ class InstallPackages extends Command
             $this->handleConfig($dependency);
 
         }
-
-        //publishes check-permissions and site-settings
-        \File::copy( __DIR__.'/../../config/check-permissions.php' , config_path('check-permissions.php'));
         
-        \File::copy( __DIR__.'/../../config/site-settings.php' , config_path('site-settings.php'));
 
     }
     public function handleHook($package, $key, $log = true) {

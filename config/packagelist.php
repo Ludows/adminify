@@ -282,6 +282,21 @@ return array(
         ),
         (object) array(
             'beforePublish' => [],
+            'name' => 'ludoows/adminify',
+            'publish' => (object) [
+                'tag' => true,
+                'sibling' => 'adminify-config'
+            ],
+            'autoload' => (object) [
+                'providers' => [],
+                'middlewares' => [],
+                'aliases' => []
+            ],
+            'config' => null,
+            'afterPublish' => [],
+        ),
+        (object) array(
+            'beforePublish' => [],
             'name' => 'zerospam/laravel-gettext',
             'publish' => null,
             'autoload' => (object) [

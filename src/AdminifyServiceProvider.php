@@ -20,7 +20,22 @@ class AdminifyServiceProvider extends ServiceProvider {
      */
     public function boot() {
 
-        $packages = require_once(__DIR__.'/../config/packagelist.php');
+        $app = app();
+
+        if(!$app->runningInConsole()) {
+            $packages = require_once(__DIR__.'/../config/packagelist.php');
+            
+            $this->bootableDependencies($packages);
+        }
+        if($app->runningInConsole()) {
+            $this->publishes(array(
+                __DIR__.'/../config/check-permissions.php' => config_path('check-permissions.php'),
+                __DIR__.'/../config/site-settings.php' => config_path('site-settings.php'),
+            ), 'adminify-config');
+        }
+       
+
+        // 'MyMenuBuilder' => App\Helpers\MenuBuilderFacade::class,
 
         //dd($packages);
 
@@ -33,6 +48,8 @@ class AdminifyServiceProvider extends ServiceProvider {
         // $this->app->register(
         //     MyProvider::class
         // );
+
+        
 
         $this->mergeConfigFrom(
             __DIR__.'/../config/site-settings.php', 'adminify'
@@ -72,6 +89,31 @@ class AdminifyServiceProvider extends ServiceProvider {
     public function provides() {
 
         return ['adminify'];
+    }
+
+    private function bootableDependencies($packages) {
+
+        foreach ($packages as $dependency) {
+            # code...
+            // first of all register Providers
+            if(count($dependency->autoload->providers) > 0) {
+                $providers = $dependency->autoload->providers;
+
+                foreach ($providers as $provider) {
+                    # code...
+                    $this->app->register($provider);
+                }
+            }
+
+            // Second one register Middlewares
+
+            //$this->app['router']->aliasMiddleware('shortname', Vendor\Some\Class::class);
+
+            // and finaly register Aliases
+
+        }
+        
+
     }
 
     private function registerCommands() {
