@@ -112,7 +112,7 @@ class InstallPackages extends Command
 
         if($firstPackageConfig != null) {
 
-            \File::copy( __DIR__.$firstPackageConfig->file , config_path($firstPackageConfig->name.'.php'));
+            \File::copy( __DIR__.$firstPackageConfig->file.'.php' , config_path($firstPackageConfig->name.'.php'));
 
             if($log) {
                 $this->info('Handle published config:  '. $firstPackageConfig->name);
