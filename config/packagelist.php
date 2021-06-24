@@ -1,9 +1,7 @@
 <?php
 
 
-return [
-    
-    array(
+return array(
         (object) array(
             'beforePublish' => [],
             'name' => 'artesaos/seotools',
@@ -254,6 +252,3 @@ return [
             'afterInstall' => [],
         )
     );
-}
-
-];
