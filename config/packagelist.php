@@ -224,7 +224,7 @@ return array(
                 'file' => '/../../config/lfm',
                 'name' => 'lfm',
             ],
-            'afterInstall' => [
+            'afterPublish' => [
                 'php artisan vendor:publish --tag=lfm_config',
                 'php artisan vendor:publish --tag=lfm_public',
                 'php artisan storage:link'
@@ -246,7 +246,7 @@ return array(
                 'file' => '/../../config/laraberg',
                 'name' => 'laraberg',
             ],
-            'afterInstall' => [],
+            'afterPublish' => [],
         ),
         (object) array(
             'beforePublish' => [],
@@ -261,7 +261,7 @@ return array(
                 'aliases' => []
             ],
             'config' => null,
-            'afterInstall' => [],
+            'afterPublish' => [],
         ),
         (object) array(
             'beforePublish' => [],
@@ -276,6 +276,6 @@ return array(
                 'file' => '/../../config/laravel-gettext',
                 'name' => 'laravel-gettext',
             ],
-            'afterInstall' => [],
+            'afterPublish' => [],
         )
     );
