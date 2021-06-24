@@ -96,10 +96,10 @@ class InstallPackages extends Command
         $currentPublishInstall = null;
 
         if($firstPackagePublish != null) {
-            $handlePublish = '--provider="'.$firstPackagePublish->sibling.'';
+            $handlePublish = '--provider="'.$firstPackagePublish->sibling.'"';
 
             if($firstPackagePublish->tag) {
-                $handlePublish = '--tag="'.$firstPackagePublish->sibling.'';
+                $handlePublish = '--tag="'.$firstPackagePublish->sibling.'"';
             }
 
             $currentPublishInstall = 'php artisan vendor:publish '. $handlePublish .'';
