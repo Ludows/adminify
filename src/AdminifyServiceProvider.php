@@ -20,7 +20,7 @@ class AdminifyServiceProvider extends ServiceProvider {
      */
     public function boot() {
 
-        $packages = require_once(__DIR__.'/../../config/packagelist.php');
+        $packages = require_once(__DIR__.'/../config/packagelist.php');
 
         dd($packages);
 
