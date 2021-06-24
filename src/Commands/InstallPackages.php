@@ -65,6 +65,12 @@ class InstallPackages extends Command
             $this->handleConfig($dependency);
 
         }
+
+        //run migration for tables
+        exec("php artisan migrate");
+        
+        //run seeds
+        exec("php artisan db:seed --class='Ludows\Adminify\Database\Seeders\DatabaseSeeder'");
         
 
     }
