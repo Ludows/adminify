@@ -29,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    // protected $redirectTo = route('home.dashboard');
 
     /**
      * Create a new controller instance.
@@ -58,6 +58,11 @@ class RegisterController extends Controller
 
     public function showRegistrationForm() {
         return view('adminify::auth.register');
+    }
+
+    protected function redirectPath()
+    {
+        return route('home.dashboard');
     }
 
     /**
