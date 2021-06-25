@@ -37,30 +37,14 @@ class AdminifyServiceProvider extends ServiceProvider {
             ), 'adminify-config');
 
             $this->publishes(array(
-
+                __DIR__.'/../resources/views/' => resource_path('views/vendor/adminify/'),
             ), 'adminify-views');
             
             $this->publishes(array(
-
+                __DIR__.'/../database/views/' => database_path('migrations'),
             ), 'adminify-migrations');
         }
-       
 
-        // 'MyMenuBuilder' => App\Helpers\MenuBuilderFacade::class,
-
-        //dd($packages);
-
-        // Publishing is only necessary when using the CLI.
-        // if ($this->app->runningInConsole()) {
-
-        //     $this->bootForConsole();
-        // }
-
-        // $this->app->register(
-        //     MyProvider::class
-        // );
-
-        
 
         $this->mergeConfigFrom(
             __DIR__.'/../config/site-settings.php', 'adminify'
