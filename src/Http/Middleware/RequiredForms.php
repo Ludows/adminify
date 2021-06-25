@@ -5,8 +5,8 @@ namespace Ludows\Adminify\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-use App\Forms\UpdateMediaLibrary;
-use App\Forms\CreateCategory;
+use Ludows\Adminify\Forms\UpdateMediaLibrary;
+use Ludows\Adminify\Forms\CreateCategory;
 use Kris\LaravelFormBuilder\FormBuilder;
 
 
