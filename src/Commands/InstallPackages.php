@@ -81,6 +81,21 @@ class InstallPackages extends Command
         
 
     }
+    /**
+     * Execute a command
+     *
+     * @param [type] $command
+     * @return void
+     */
+    private function doCommand($command)
+    {
+        $process = Process::fromShellCommandline($command);
+        $process->setTimeout(null); // Setting timeout to null to prevent installation from stopping at a certain point in time
+
+        $process->setWorkingDirectory(base_path())->run(function ($type, $buffer) {
+            $this->line($buffer);
+        });
+    }
     public function handleHook($package, $key, $log = true) {
         $commands = $package->{$key};
         if(count($commands) > 0) {
