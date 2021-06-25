@@ -47,6 +47,15 @@ class InstallPackages extends Command
      */
     public function handle()
     {
+
+        // prevent package.json and webpack.mix.js
+        if(\File::exists(base_path('webpack.mix.js'))){
+            File::delete(base_path('webpack.mix.js'));
+        }
+        if(\File::exists(base_path('package.json'))){
+            File::delete(base_path('package.json'));
+        }
+
         foreach ($this->packages as $dependency) {
             # code...
 
