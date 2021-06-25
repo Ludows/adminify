@@ -35,6 +35,14 @@ class AdminifyServiceProvider extends ServiceProvider {
                 __DIR__.'/../publishable/public/webpack.mix.js' => base_path(),
                 __DIR__.'/../publishable/public/package.json' => base_path(),
             ), 'adminify-config');
+
+            $this->publishes(array(
+
+            ), 'adminify-views');
+            
+            $this->publishes(array(
+
+            ), 'adminify-migrations');
         }
        
 

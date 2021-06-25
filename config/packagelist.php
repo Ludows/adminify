@@ -304,7 +304,9 @@ return array(
                         'front.blogpage' => \Ludows\Adminify\Http\Middleware\checkBlogPage::class
                     ]
                 ],
-                'aliases' => []
+                'aliases' => [
+                    'MyMenuBuilder' => \Ludows\Adminify\Libs\MenuBuilder::class,
+                ]
             ],
             'config' => null,
             'afterPublish' => [],
