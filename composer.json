@@ -52,6 +52,9 @@
         }
     },
     "autoload": {
+        "files": [
+            "src/Helpers/helpers.php"
+        ],
         "classmap": [
             "database/seeders"   
         ],

@@ -1,7 +1,8 @@
 <?php
 use Thunder\Shortcode\ShortcodeFacade;
-use App\Models\Traduction;
-use App\Models\Menu;
+use Ludows\Adminify\Models\Translations as Traduction;
+use Ludows\Adminify\Models\Menu;
+use Ludows\Adminify\Models\Settings;
 
 if (! function_exists('do_shortcode')) {
     function do_shortcode($shortcodeName, $parameters = []) {
@@ -68,7 +69,7 @@ if (! function_exists('is_shortcode')) {
 
 if (! function_exists('setting')) {
     function setting($string) {
-        $m = new \App\Models\Settings();
+        $m = new Settings();
         $q = $m->where('type', $string)->first();
         return $q != null ? $q->data : null;
     }

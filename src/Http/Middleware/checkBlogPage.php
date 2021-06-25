@@ -17,9 +17,9 @@ class checkBlogPage
     public function handle(Request $request, Closure $next)
     {
         $blogpage = setting('blogpage');
-        if($request->slug instanceof \App\Models\Page && (int) $blogpage != 0) {
+        if($request->slug instanceof \Ludows\Adminify\Models\Page && (int) $blogpage != 0) {
             if($request->slug->id === (int) $blogpage) {
-               $posts = new \App\Models\Post();
+               $posts = new \Ludows\Adminify\Models\Post();
                $request->posts = $posts->all();
             }
         }
