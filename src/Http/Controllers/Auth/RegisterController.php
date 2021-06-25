@@ -56,6 +56,10 @@ class RegisterController extends Controller
         ]);
     }
 
+    public function showRegistrationForm() {
+        return view('adminify::auth.register');
+    }
+
     /**
      * Create a new user instance after a valid registration.
      *
