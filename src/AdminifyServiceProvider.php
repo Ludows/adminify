@@ -34,6 +34,7 @@ class AdminifyServiceProvider extends ServiceProvider {
                 __DIR__.'/../publishable/public/argon/' => public_path('argon'),
                 __DIR__.'/../publishable/webpack.mix.js' => base_path('webpack.mix.js'),
                 __DIR__.'/../publishable/package.json' => base_path('package.json'),
+                __DIR__.'/../publishable/resources/adminify/' => resource_path('adminify'),
             ), 'adminify-config');
 
             $this->publishes(array(
