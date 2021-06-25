@@ -31,6 +31,9 @@ class AdminifyServiceProvider extends ServiceProvider {
             $this->publishes(array(
                 __DIR__.'/../config/check-permissions.php' => config_path('check-permissions.php'),
                 __DIR__.'/../config/site-settings.php' => config_path('site-settings.php'),
+                __DIR__.'/../publishable/public/argon/' => public_path(),
+                __DIR__.'/../publishable/public/webpack.mix.js' => base_path(),
+                __DIR__.'/../publishable/public/package.json' => base_path(),
             ), 'adminify-config');
         }
        
