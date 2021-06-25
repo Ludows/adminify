@@ -1,4 +1,4 @@
-<x-modal id="{{ $id ?? 'globalSearch' }}" modalClasses="" title="Rechercher une entité">
+<x-adminify-modal id="{{ $id ?? 'globalSearch' }}" modalClasses="" title="Rechercher une entité">
     <form method="POST" action="{{ route('searchable') }}" class="">
         @csrf
         <div class="form-group mb-0">
@@ -11,4 +11,4 @@
         </div>
     </form>
     <div id="appendSearchable"></div>
-</x-modal>
+</x-adminify-modal>

@@ -1,5 +1,5 @@
-<x-modal id="modalMediaLibrary" modalClasses="" modalDialogClasses="modal-xl" title="Titre" btnSave="Attacher" btnClear="Annuler">
+<x-adminify-modal id="modalMediaLibrary" modalClasses="" modalDialogClasses="modal-xl" title="Titre" btnSave="Attacher" btnClear="Annuler">
 
-            @include('layouts.admin.modales.contents.modaleMediaLibrary')
+            @include('adminify::layouts.admin.modales.contents.modaleMediaLibrary')
 
-</x-modal>
+</x-adminify-modal>

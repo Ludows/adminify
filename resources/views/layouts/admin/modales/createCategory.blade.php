@@ -1,4 +1,4 @@
-<x-modal id="{{ $id ?? 'modalCreateCategory' }}" modalClasses="" title="Créer une catégorie">
+<x-adminify-modal id="{{ $id ?? 'modalCreateCategory' }}" modalClasses="" title="Créer une catégorie">
 
     <div class="row">
         @if($createCategory)
@@ -10,4 +10,4 @@
     </div>
 
 
-</x-modal>
+</x-adminify-modal>
