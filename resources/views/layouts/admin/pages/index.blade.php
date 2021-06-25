@@ -1,4 +1,4 @@
-@extends('layouts.admin.app')
+@extends('adminify::layouts.admin.app')
 
 @section('content')
     @php
