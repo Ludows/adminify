@@ -82,6 +82,7 @@ class InstallPackages extends Command
         
         $this->info('Handle npm process');
         $this->doCommand('npm install && npm run dev');
+        $this->info('Installation finished.');
         
 
     }
