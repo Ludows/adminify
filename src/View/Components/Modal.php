@@ -38,6 +38,6 @@ class Modal extends Component
      */
     public function render()
     {
-        return view('components.modal');
+        return view('adminify::components.modal');
     }
 }
