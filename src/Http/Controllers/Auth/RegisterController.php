@@ -60,7 +60,7 @@ class RegisterController extends Controller
         return view('adminify::auth.register');
     }
 
-    protected function redirectPath()
+    protected function redirectTo()
     {
         return route('home.dashboard');
     }
