@@ -67,10 +67,17 @@ class InstallPackages extends Command
         }
 
         //run migration for tables
-        exec("php artisan migrate");
+        // exec("php artisan migrate");
+        Artisan::call('migrate');
         
         //run seeds
-        exec("php artisan db:seed --class='Ludows\Adminify\Database\Seeders\DatabaseSeeder'");
+        //exec("php artisan db:seed --class='Ludows\Adminify\Database\Seeders\DatabaseSeeder'");
+        Artisan::call('db:seed', [
+            '--class' => 'Ludows\Adminify\Database\Seeders\DatabaseSeeder'
+        ]);
+        
+        $this->info('Handle npm process');
+        $this->doCommand('npm install && npm run dev');
         
 
     }
