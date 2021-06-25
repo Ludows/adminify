@@ -70,10 +70,12 @@ class InstallPackages extends Command
 
         //run migration for tables
         // exec("php artisan migrate");
+        $this->info('Handle migrations');
         Artisan::call('migrate');
         
         //run seeds
         //exec("php artisan db:seed --class='Ludows\Adminify\Database\Seeders\DatabaseSeeder'");
+        $this->info('Handle seeding database');
         Artisan::call('db:seed', [
             '--class' => 'Ludows\Adminify\Database\Seeders\DatabaseSeeder'
         ]);
