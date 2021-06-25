@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('adminify::layouts.admin.app')
 
 @section('content')
 <div class="container">
