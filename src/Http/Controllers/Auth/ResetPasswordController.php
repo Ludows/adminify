@@ -27,4 +27,15 @@ class ResetPasswordController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::HOME;
+
+    public function showResetForm(Request $request)
+
+    {
+        $token = $request->route()->parameter('token');
+
+        return view('adminify::auth.passwords.reset')->with(
+            ['token' => $token, 'email' => $request->email]
+        );
+    }
+
 }
