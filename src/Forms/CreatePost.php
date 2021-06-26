@@ -15,7 +15,7 @@ class CreatePost extends Form
 
         $this
             ->add('title', Field::TEXT, [])
-            ->add('content', 'quilleditor', []);
+            ->add('content', 'laraberg', []);
             // if(count($categories) > 0) {
                 $this->add('categories_id', 'select2', [
                     'empty_value' => '',
