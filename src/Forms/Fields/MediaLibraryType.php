@@ -33,7 +33,7 @@ class MediaLibraryType extends FormField {
 
         $this->setOptions([
             'sibling' => Str::slug('media_library_'.$uniqid),
-            'modal' => isset($options['modal']) ? $options['modal'] : 'layouts.admin.modales.modaleMediaLibrary',
+            'modal' => isset($options['modal']) ? $options['modal'] : 'adminify::layouts.admin.modales.modaleMediaLibrary',
             'media_library_options' => array_merge($this->setDefaults(), isset($options['media_library_options']) ? $options['media_library_options'] : [])
         ]);
 

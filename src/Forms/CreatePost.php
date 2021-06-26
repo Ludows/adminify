@@ -20,7 +20,7 @@ class CreatePost extends Form
                 $this->add('categories_id', 'select2', [
                     'empty_value' => '',
                     'withCreate' => true,
-                    'modal' => 'layouts.admin.modales.createCategory',
+                    'modal' => 'adminify::layouts.admin.modales.createCategory',
                     'choices' => $hydrator['categories'],
                     'selected' => $hydrator['selected'],
                     'attr' => ['multiple' => 'multiple'],

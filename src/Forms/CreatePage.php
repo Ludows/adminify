@@ -24,7 +24,7 @@ class CreatePage extends Form
             ->add('categories_id', 'select2', [
                 'empty_value' => '',
                 'withCreate' => true,
-                'modal' => 'layouts.admin.modales.createCategory', // simple include
+                'modal' => 'adminify::layouts.admin.modales.createCategory', // simple include
                 'choices' => $hydratorCat['categories'],
                 'selected' => $hydratorCat['selected'],
                 'attr' => ['multiple' => 'multiple'],
