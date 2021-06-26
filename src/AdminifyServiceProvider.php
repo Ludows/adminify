@@ -44,7 +44,7 @@ class AdminifyServiceProvider extends ServiceProvider {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'adminify');
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'adminify');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        //$this->loadRoutesFrom(__DIR__.'/../routes/web.php');
     }
 
     /**
