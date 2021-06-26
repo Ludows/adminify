@@ -168,7 +168,9 @@ class MediaController extends Controller
             */
         public function destroy(Media $media)
         {
-            //
+            // Call controller of unisharp for destroy the image
+            $this->call('GET', route('unisharp.lfm.getDelete', ['items' => $media->src]) );
+            
             $this->mediaRepository->delete($media);
 
             // redirect
