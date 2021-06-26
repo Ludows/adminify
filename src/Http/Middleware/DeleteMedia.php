@@ -20,7 +20,7 @@ class DeleteMedia
 
         if($routeName == 'medias.destroy') {
             $m = \Route::current()->parameter('media');
-            $request->merge(["items"=>$m->src]);
+            $request->merge(["items"=> [$m->src] ]);
         }
         return $next($request);
     }
