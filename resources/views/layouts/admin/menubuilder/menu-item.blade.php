@@ -20,7 +20,7 @@
                 <div class="row row-selection"></div>
                 <div class="form-group">
                     <button type="button" class="btn btn-primary">Call Media @trad</button>
-                    <input type="hidden" data-path="{{ $item->media->path ?? '' }}" menu-three-key="media_src" value="{{ $item->media->src ?? '' }}" />
+                    <input type="hidden" data-path="{{ $item->media->path ?? '' }}" menu-three-key="media_id" value="{{ $item->media->src ?? '' }}" />
                 </div>
             </div>
 

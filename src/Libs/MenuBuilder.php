@@ -197,7 +197,7 @@ class MenuBuilder
                 ]);
 
                 if($collectionName != 'custom') {
-                    var_dump($collectionName);
+                    //var_dump($collectionName);
                     $pluckable_items = $this->pluckable($key, [
                         'id' => 'title'
                     ]);
