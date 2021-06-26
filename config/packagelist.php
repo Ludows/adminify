@@ -308,7 +308,8 @@ return array(
                         'check.permissions' => \Ludows\Adminify\Http\Middleware\checkUserPermissions::class,
                         'multilang.basic' => \Ludows\Adminify\Http\Middleware\MultilangBasic::class,
                         'admin.breadcrumb' => \Ludows\Adminify\Http\Middleware\AdminBreadcrumb::class,
-                        'front.blogpage' => \Ludows\Adminify\Http\Middleware\checkBlogPage::class
+                        'front.blogpage' => \Ludows\Adminify\Http\Middleware\checkBlogPage::class,
+                        'admin.deletemedia' => \Ludows\Adminify\Http\Middleware\DeleteMedia::class
                     ]
                 ],
                 'aliases' => [

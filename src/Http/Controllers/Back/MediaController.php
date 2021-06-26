@@ -170,9 +170,7 @@ class MediaController extends Controller
         public function destroy(Media $media)
         {
 
-            $path = $media->path;
-
-            File::delete($path);
+            app('UniSharp\LaravelFilemanager\Controllers\DeleteController')->getDelete();
 
             $this->mediaRepository->delete($media);
             // redirect
