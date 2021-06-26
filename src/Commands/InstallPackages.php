@@ -136,10 +136,10 @@ class InstallPackages extends Command
                 $forceStr = ' --force';
             }
 
-            $handlePublish = '--provider="'.$firstPackagePublish->sibling.$forceStr.'"';
+            $handlePublish = '--provider="'.$firstPackagePublish->sibling.'" '.$forceStr.'';
 
             if($firstPackagePublish->tag) {
-                $handlePublish = '--tag="'.$firstPackagePublish->sibling.$forceStr.'"';
+                $handlePublish = '--tag="'.$firstPackagePublish->sibling.$forceStr.'" '.$forceStr.'';
             }
 
             $currentPublishInstall = 'php artisan vendor:publish '. $handlePublish .'';
