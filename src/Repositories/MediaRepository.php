@@ -33,12 +33,19 @@ class MediaRepository
         // dd($context, $request);
         $formValues = $form->getFieldValues();
 
-        $file = json_decode($formValues['src']);
+        if(is_string($formValues['src'])) {
+            $pathinfo = pathinfo($formValues['src'], PATHINFO_EXTENSION);
+            $formValues['mime_type'] = $pathinfo['extension'];
+        }
+        else {
+            $file = json_decode($formValues['src']);
 
-        $formValues['mime_type'] = $file[0]->file->type->type;
+            $formValues['mime_type'] = $file[0]->file->type->type;
 
-        // dirty method ?
-        $formValues['src'] = $file[0]->name;
+            // dirty method ?
+            $formValues['src'] = $file[0]->name;
+        }
+        
 
         // create entity
         $media = Media::create($formValues);
@@ -49,13 +56,18 @@ class MediaRepository
 
         $formValues = $form->getFieldValues();
 
-        $file = json_decode($formValues['src']);
+        if(is_string($formValues['src'])) {
+            $pathinfo = pathinfo($formValues['src'], PATHINFO_EXTENSION);
+            $formValues['mime_type'] = $pathinfo['extension'];
+        }
+        else {
+            $file = json_decode($formValues['src']);
 
-        $formValues['mime_type'] = $file[0]->file->type->type;
+            $formValues['mime_type'] = $file[0]->file->type->type;
 
-        // dirty method ?
-        $formValues['src'] = $file[0]->name;
-
+            // dirty method ?
+            $formValues['src'] = $file[0]->name;
+        }
 
         $model->fill($formValues);
         $model->save();

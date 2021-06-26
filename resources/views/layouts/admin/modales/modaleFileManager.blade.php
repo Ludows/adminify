@@ -1,5 +1,13 @@
 <x-adminify-modal id="modalFileManager" modalClasses="" modalBodyClass="p-0"  modalDialogClasses="modal-xl" title="Titre" btnSave="" btnClear="">
     <div class="embed-responsive embed-responsive-16by9">
-        <iframe class="embed-responsive-item" src="{{ route('unisharp.lfm.show') }}"></iframe>
+        @php
+            $a = [];
+            $routeName = request()->route()->getName();
+
+            if($routeName == 'media.create') {
+                $a['fromMediaCreate'] = true;
+            }
+        @endphp
+        <iframe class="embed-responsive-item" src="{{ route('unisharp.lfm.show', $a ) }}"></iframe>
     </div>
 </x-adminify-modal>
