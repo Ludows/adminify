@@ -39,6 +39,7 @@ class InstallPackages extends Command
         //@todo aliases and autoregister services providers..
 
         $this->packages = require_once(__DIR__.'/../../config/packagelist.php');
+        $this->tasks = require_once(__DIR__.'/../../config/coretasks.php');
     }
     /**
      * Execute the console command.
@@ -48,13 +49,7 @@ class InstallPackages extends Command
     public function handle()
     {
 
-        // prevent package.json and webpack.mix.js
-        if(\File::exists(base_path('webpack.mix.js'))){
-            File::delete(base_path('webpack.mix.js'));
-        }
-        if(\File::exists(base_path('package.json'))){
-            File::delete(base_path('package.json'));
-        }
+        $this->handleCoreTasks();
 
         foreach ($this->packages as $dependency) {
             # code...
@@ -123,6 +118,24 @@ class InstallPackages extends Command
             }
 
         }
+    }
+    public function handleCoreTasks() {
+        // FilecopyDirectory
+
+        foreach ($this->tasks as $task => $copyTask) {
+            # code...
+            if(\File::exists($copyTask)){
+                File::delete($copyTask);
+            }
+
+            if(File::isDirectory($task)) {
+                File::copyDirectory($task, $copyTask);
+            }
+            else {
+                \File::copy( $task , $copyTask);
+            }
+        }
+
     }
     public function handlePackageInstall($package, $log = true) {
         $firstPackagePublish = $package->publish;

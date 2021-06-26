@@ -298,11 +298,7 @@ return array(
         (object) array(
             'beforePublish' => [],
             'name' => 'ludoows/adminify',
-            'publish' => (object) [
-                'tag' => true,
-                'force' => true,
-                'sibling' => 'adminify-config'
-            ],
+            'publish' => null,
             'autoload' => (object) [
                 'providers' => [],
                 'middlewares' => [
