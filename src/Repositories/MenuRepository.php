@@ -166,9 +166,9 @@ class MenuRepository
                     $menuItem->overwrite_title = null;
                 }
 
-                if(isset($menuitem['media_src']) && strlen($menuitem['media_src']) > 0) {
-                    $json = json_decode($menuitem['media_src']);
-                    $menuItem->media_src = $json[0]->name;
+                if(isset($menuitem['media_id']) && strlen($menuitem['media_id']) > 0) {
+                    $json = json_decode($menuitem['media_id']);
+                    $menuItem->media_id = $json[0]->name;
                 }
 
                 if(isset($menuitem['class']) && strlen($menuitem['class']) > 0) {

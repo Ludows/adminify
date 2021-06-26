@@ -48,14 +48,14 @@ class PostRepository
                 }
             }
             foreach ($fields as $field) {
-                if(isset($formValues[$field]) && $field != "categories_id" && $field != "media_src") {
+                if(isset($formValues[$field]) && $field != "categories_id" && $field != "media_id") {
                     $post->{$field} = $formValues[$field];
                 }
             }
 
-            if(isset($formValues['media_src'])) {
-                $json = json_decode($formValues['media_src']);
-                $post->media_src = $json[0]->name;
+            if(isset($formValues['media_id'])) {
+                $json = json_decode($formValues['media_id']);
+                $post->media_id = $json[0]->name;
             }
 
             $post::booted();
@@ -65,14 +65,14 @@ class PostRepository
         }
         else {
 
-            if(isset($formValues['media_src'])) {
-                $json = json_decode($formValues['media_src']);
+            if(isset($formValues['media_id'])) {
+                $json = json_decode($formValues['media_id']);
             }
 
             $post = Post::create([
                 'title' => $formValues['title'],
                 'content' => $formValues['content'],
-                'media_src' => $json[0]->name ?? null
+                'media_id' => $json[0]->name ?? 0
             ]);
         }
 
