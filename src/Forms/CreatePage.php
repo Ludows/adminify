@@ -16,7 +16,7 @@ class CreatePage extends Form
         $hydratorPages = $this->hydrateSelectPage();
         $m = $this->getModel();
         $r = $this->getRequest();
-        $translations = $m->translations;
+        // $translations = $m->translations;
 
         $this
             ->add('title', Field::TEXT, [])
