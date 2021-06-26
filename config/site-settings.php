@@ -43,38 +43,38 @@ return [
             'page' => [
                 'class' => Ludows\Adminify\Models\Page::class,
                 'showIf' => ['administrator', 'client'],
-                'template' => 'layouts.admin.dashboard.card-page',
+                'template' => 'adminify::layouts.admin.dashboard.card-page',
                 'columnShow' => 'title',
             ],
             'post' => [
                 'class' => Ludows\Adminify\Models\Post::class,
                 'showIf' => ['administrator', 'client'],
-                'template' => 'layouts.admin.dashboard.card-post',
+                'template' => 'adminify::layouts.admin.dashboard.card-post',
                 'columnShow' => 'title',
             ],
             'media' => [
                 'class' => Ludows\Adminify\Models\Media::class,
                 'showIf' => ['administrator', 'client'],
-                'template' => 'layouts.admin.dashboard.card-media',
+                'template' => 'adminify::layouts.admin.dashboard.card-media',
                 'columnShow' => 'title',
                 'plural' => 'medias'
             ],
             'category' => [
                 'class' => Ludows\Adminify\Models\Category::class,
                 'showIf' => ['administrator', 'client'],
-                'template' => 'layouts.admin.dashboard.card-category',
+                'template' => 'adminify::layouts.admin.dashboard.card-category',
                 'columnShow' => 'title',
             ],
             'traduction' => [
                 'class' => Ludows\Adminify\Models\Traduction::class,
                 'showIf' => ['administrator', 'client'],
-                'template' => 'layouts.admin.dashboard.card-traduction',
+                'template' => 'adminify::layouts.admin.dashboard.card-traduction',
                 'columnShow' => 'key',
             ],
             'comment' => [
                 'class' => Ludows\Adminify\Models\Comment::class,
                 'showIf' => ['administrator', 'client'],
-                'template' => 'layouts.admin.dashboard.card-comment',
+                'template' => 'adminify::layouts.admin.dashboard.card-comment',
                 'columnShow' => 'comment',
             ],
         ]
