@@ -38,7 +38,7 @@ class MediaRepository
             $formValues = $mixed->getFieldValues();
         }
 
-        if(is_string($formValues['src'])) {
+        if(is_string($formValues['src']) && !str_starts_with($formValues['src'], '[{')) {
             $pathinfo = pathinfo($formValues['src']);
             $formValues['mime_type'] = $pathinfo['extension'];
         }
@@ -66,7 +66,7 @@ class MediaRepository
             $formValues = $mixed->getFieldValues();
         }
 
-        if(is_string($formValues['src'])) {
+        if(is_string($formValues['src']) && !str_starts_with($formValues['src'], '[{')) {
             $pathinfo = pathinfo($formValues['src'], PATHINFO_EXTENSION);
             $formValues['mime_type'] = $pathinfo['extension'];
         }
