@@ -13,14 +13,18 @@ class HasUploadedImageListener
      * @param  ImageWasUploaded  $event
      * @return void
      */
-    public function handle(ImageWasUploaded $event, MediaRepository $MediaRepository, FormBuilder $FormBuilder)
+    public function __construct(MediaRepository $MediaRepository, FormBuilder $FormBuilder) {
+        $this->MediaRepository = $MediaRepository;
+        $this->FormBuilder = $FormBuilder;
+    }
+    public function handle(ImageWasUploaded $event)
     {
 
         $request = request();
 
         if(!$request->fromMediaCreate != null) {
 
-            $form = $FormBuilder->create(CreateMedia::class, [
+            $form = $this->FormBuilder->create(CreateMedia::class, [
                 'method' => 'POST',
                 'url' => route('medias.store')
             ]);
@@ -31,7 +35,7 @@ class HasUploadedImageListener
 
             $form->src->setValue($info['basename']);
 
-            $MediaRepository->create($form, $request);
+            $this->MediaRepository->create($form, $request);
         }
 
         // dd($event);
