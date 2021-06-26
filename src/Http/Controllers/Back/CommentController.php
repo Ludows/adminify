@@ -12,6 +12,9 @@ use Ludows\Adminify\Repositories\CommentRepository;
 use Ludows\Adminify\Actions\Comment as CommentAction;
 use Illuminate\Support\Str;
 
+use Ludows\Adminify\Forms\DeleteCrud;
+use Ludows\Adminify\Forms\UpdateComment;
+
 
 class CommentController extends Controller
 {
@@ -44,7 +47,7 @@ class CommentController extends Controller
             foreach ($comments as $comment) {
                 # code...
                 $actions[] = new CommentAction($comment, [
-                    'form' => $formBuilder->create(\App\Forms\DeleteCrud::class, [
+                    'form' => $formBuilder->create(DeleteCrud::class, [
                         'method' => 'DELETE',
                         'url' => route('comments.destroy', ['comment' => $comment->id])
                     ])
@@ -89,7 +92,7 @@ class CommentController extends Controller
         public function edit(FormBuilder $formBuilder, Comment $comment, Request $request)
         {
             //
-            $form = $formBuilder->create(\App\Forms\UpdateComment::class, [
+            $form = $formBuilder->create(UpdateComment::class, [
                 'method' => 'PUT',
                 'url' => route('comments.update', ['comment' => $comment->id]),
                 'model' => $comment

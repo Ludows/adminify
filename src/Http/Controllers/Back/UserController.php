@@ -14,9 +14,11 @@ use Ludows\Adminify\Http\Requests\UserUpdateRequest;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Actions\Users as UserAction;
+
 use Ludows\Adminify\Forms\CreateUser;
 use Ludows\Adminify\Forms\UpdateUser;
 use Ludows\Adminify\Repositories\UserRepository;
+use Ludows\Adminify\Forms\DeleteCrud;
 class UserController extends Controller
 {
     use FormBuilderTrait;
@@ -45,7 +47,7 @@ class UserController extends Controller
                 # code...
 
                 $actions[] = new UserAction($user, [
-                    'form' => $formBuilder->create(\App\Forms\DeleteCrud::class, [
+                    'form' => $formBuilder->create(DeleteCrud::class, [
                         'method' => 'DELETE',
                         'url' => route('users.destroy', ['user' => $user->id])
                     ])
@@ -62,7 +64,7 @@ class UserController extends Controller
             public function create(FormBuilder $formBuilder)
             {
                 //
-                $form = $formBuilder->create(\App\Forms\CreateUser::class, [
+                $form = $formBuilder->create(CreateUser::class, [
                     'method' => 'POST',
                     'url' => route('users.store')
                 ]);
@@ -101,7 +103,7 @@ class UserController extends Controller
             public function edit(User $user, FormBuilder $formBuilder)
             {
                 //
-                $form = $formBuilder->create(\App\Forms\UpdateUser::class, [
+                $form = $formBuilder->create(UpdateUser::class, [
                     'method' => 'PUT',
                     'url' => route('users.update', ['user' => $user->id]),
                     'model' => $user

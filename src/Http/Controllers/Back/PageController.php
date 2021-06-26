@@ -3,11 +3,17 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Ludows\Adminify\Models\Page;
+
 use Illuminate\Http\Request;
-use Kris\LaravelFormBuilder\FormBuilder;
 use Ludows\Adminify\Http\Controllers\Controller;
-use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Illuminate\Support\Str;
+
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Ludows\Adminify\Forms\DeleteCrud;
+use Ludows\Adminify\Forms\CreatePage;
+use Ludows\Adminify\Forms\SeoForm;
+
 
 use Ludows\Adminify\Http\Requests\PageRequest;
 
@@ -56,7 +62,7 @@ class PageController extends Controller
                 # code...
                 $page->checkForTraduction();
                 $actions[] = new PageAction($page, [
-                    'form' => $formBuilder->create(\App\Forms\DeleteCrud::class, [
+                    'form' => $formBuilder->create(DeleteCrud::class, [
                         'method' => 'DELETE',
                         'url' => route('pages.destroy', ['page' => $page->id])
                     ])
@@ -77,7 +83,7 @@ class PageController extends Controller
             */
         public function create(FormBuilder $formBuilder)
         {
-            $form = $formBuilder->create(\App\Forms\CreatePage::class, [
+            $form = $formBuilder->create(CreatePage::class, [
                 'method' => 'POST',
                 'url' => route('pages.store')
             ]);
@@ -93,7 +99,7 @@ class PageController extends Controller
         public function store(PageRequest $request)
         {
             //
-            $form = $this->form(\App\Forms\CreatePage::class);
+            $form = $this->form(CreatePage::class);
             $page = $this->pageRepository->create($form, $request);
             if($request->ajax()) {
                 return response()->json([
@@ -133,14 +139,14 @@ class PageController extends Controller
             // dd($page);
 
             if($request->exists('seo')) {
-                $form = $formBuilder->create(\App\Forms\SeoForm::class, [
+                $form = $formBuilder->create(SeoForm::class, [
                     'method' => 'PUT',
                     'url' => route('pages.update', ['page' => $page->id]),
                     'model' => $page
                 ]);
             }
             else {
-                $form = $formBuilder->create(\App\Forms\CreatePage::class, [
+                $form = $formBuilder->create(CreatePage::class, [
                     'method' => 'PUT',
                     'url' => route('pages.update', ['page' => $page->id]),
                     'model' => $page
@@ -164,14 +170,14 @@ class PageController extends Controller
             $seo = null;
 
             if($isSeo) {
-                $form = $this->form(\App\Forms\SeoForm::class, [
+                $form = $this->form(SeoForm::class, [
                     'method' => 'PUT',
                     'url' => route('pages.update', ['page' => $page->id]),
                     'model' => $page
                 ]);
             }
             else {
-                $form = $this->form(\App\Forms\CreatePage::class);
+                $form = $this->form(CreatePage::class);
             }
 
             if($isSeo) {

@@ -11,6 +11,7 @@ use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Ludows\Adminify\Forms\CreateCategory;
 use Ludows\Adminify\Forms\UpdateCategory;
+use Ludows\Adminify\Forms\DeleteCategory;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 
@@ -51,7 +52,7 @@ class CategoryController extends Controller
                 # code...
                 $category->checkForTraduction();
 
-                $forms[] = $formBuilder->create(\App\Forms\DeleteCategory::class, [
+                $forms[] = $formBuilder->create(DeleteCategory::class, [
                     'method' => 'DELETE',
                     'url' => route('categories.destroy', ['category' => $category->id])
                 ]);
@@ -71,7 +72,7 @@ class CategoryController extends Controller
         public function create(FormBuilder $formBuilder)
         {
             //
-            $form = $formBuilder->create(\App\Forms\CreateCategory::class, [
+            $form = $formBuilder->create(CreateCategory::class, [
                 'method' => 'POST',
                 'url' => route('categories.store')
             ]);
@@ -134,7 +135,7 @@ class CategoryController extends Controller
             $category->checkForTraduction();
             $category->flashForMissing();
 
-            $form = $formBuilder->create(\App\Forms\UpdateCategory::class, [
+            $form = $formBuilder->create(UpdateCategory::class, [
                 'method' => 'PUT',
                 'url' => route('categories.update', ['category' => $category->id]),
                 'model' => $category

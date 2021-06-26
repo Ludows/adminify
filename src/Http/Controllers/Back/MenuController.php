@@ -11,6 +11,7 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Ludows\Adminify\Forms\MenuSwitcher;
 use Ludows\Adminify\Forms\MenuItemsThree;
 use Ludows\Adminify\Forms\CreateMenu;
+use Ludows\Adminify\Forms\DeleteCrud;
 
 use Ludows\Adminify\Models\Menu;
 use Ludows\Adminify\Libs\MenuBuilder;
@@ -57,7 +58,7 @@ class MenuController extends Controller
                 $menu->checkForTraduction();
 
                 $actions[] = new MenuAction($menu, [
-                    'form' => $formBuilder->create(\App\Forms\DeleteCrud::class, [
+                    'form' => $formBuilder->create(DeleteCrud::class, [
                         'method' => 'DELETE',
                         'url' => route('menus.destroy', ['menu' => $menu->id])
                     ])

@@ -5,6 +5,8 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 use Illuminate\Http\Request;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Ludows\Adminify\Forms\DeleteCrud;
+use Ludows\Adminify\Forms\CreateSettings;
 
 use Ludows\Adminify\Http\Requests\SaveSettings;
 use Ludows\Adminify\Repositories\SettingsRepository;
@@ -22,7 +24,7 @@ class SettingsController extends Controller
     public function index(Settings $settings, FormBuilder $formBuilder, Request $request)
         {
 
-            $form = $formBuilder->create(\App\Forms\CreateSettings::class, [
+            $form = $formBuilder->create(CreateSettings::class, [
                 'method' => 'POST',
                 'url' => route('settings.store'),
             ]);
@@ -38,7 +40,7 @@ class SettingsController extends Controller
         public function store(SaveSettings $request)
         {
             //
-            $form = $this->form(\App\Forms\CreateSettings::class);
+            $form = $this->form(CreateSettings::class);
             $settings = $this->settingsRepository->CreateOrUpdate($form, $request);
             if($request->ajax()) {
                 return response()->json([

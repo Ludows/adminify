@@ -2,12 +2,8 @@
 
 namespace Ludows\Adminify\Http\Controllers\Back;
 
-use Ludows\Adminify\Forms\CreateMedia;
-use Ludows\Adminify\Forms\UpdateMedia;
+
 use Ludows\Adminify\Models\Media;
-use Illuminate\Http\Request;
-use Kris\LaravelFormBuilder\FormBuilder;
-use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 use Ludows\Adminify\Http\Requests\CreateMediaRequest;
 use Ludows\Adminify\Http\Requests\UpdateMediaRequest;
@@ -18,6 +14,12 @@ use Ludows\Adminify\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Ludows\Adminify\Actions\Media as MediaAction;
 
+
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use Ludows\Adminify\Forms\CreateMedia;
+use Ludows\Adminify\Forms\UpdateMedia;
+use Ludows\Adminify\Forms\DeleteCrud;
 
 
 
@@ -48,7 +50,7 @@ class MediaController extends Controller
             foreach ($medias as $media) {
                 # code...
                 $actions[] = new MediaAction($media, [
-                    'form' => $formBuilder->create(\App\Forms\DeleteCrud::class, [
+                    'form' => $formBuilder->create(DeleteCrud::class, [
                         'method' => 'DELETE',
                         'url' => route('medias.destroy', ['media' => $media->id])
                     ])
@@ -66,7 +68,7 @@ class MediaController extends Controller
             */
         public function create(FormBuilder $formBuilder)
         {
-            $form = $formBuilder->create(\App\Forms\CreateMedia::class, [
+            $form = $formBuilder->create(CreateMedia::class, [
                 'method' => 'POST',
                 'url' => route('medias.store')
             ]);
@@ -119,7 +121,7 @@ class MediaController extends Controller
         public function edit(Media $media, FormBuilder $formBuilder)
         {
             //
-            $form = $formBuilder->create(\App\Forms\UpdateMedia::class, [
+            $form = $formBuilder->create(UpdateMedia::class, [
                 'method' => 'PUT',
                 'url' => route('medias.update', ['media' => $media->id]),
                 'model' => $media

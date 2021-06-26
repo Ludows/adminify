@@ -10,8 +10,8 @@ use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Ludows\Adminify\Forms\CreatePost;
 use Ludows\Adminify\Forms\UpdatePost;
-use Ludows\Adminify\Forms\UpdateMediaLibrary;
-use Ludows\Adminify\Forms\CreateCategory;
+use Ludows\Adminify\Forms\DeleteCrud;
+use Ludows\Adminify\Forms\SeoForm;
 
 use Ludows\Adminify\Models\Post;
 use Ludows\Adminify\Http\Controllers\Controller;
@@ -59,7 +59,7 @@ class PostController extends Controller
                 $post->checkForTraduction();
 
                 $actions[] = new PostAction($post, [
-                    'form' => $formBuilder->create(\App\Forms\DeleteCrud::class, [
+                    'form' => $formBuilder->create(DeleteCrud::class, [
                         'method' => 'DELETE',
                         'url' => route('posts.destroy', ['post' => $post->id])
                     ])
@@ -82,7 +82,7 @@ class PostController extends Controller
         public function create(FormBuilder $formBuilder)
         {
             //
-            $form = $formBuilder->create(\App\Forms\CreatePost::class, [
+            $form = $formBuilder->create(CreatePost::class, [
                 'method' => 'POST',
                 'url' => route('posts.store')
             ]);
@@ -138,14 +138,14 @@ class PostController extends Controller
             $post->flashForMissing();
 
             if($request->exists('seo')) {
-                $form = $formBuilder->create(\App\Forms\SeoForm::class, [
+                $form = $formBuilder->create(SeoForm::class, [
                     'method' => 'PUT',
                     'url' => route('posts.update', ['post' => $post->id]),
                     'model' => $post
                 ]);
             }
             else {
-                $form = $formBuilder->create(\App\Forms\UpdatePost::class, [
+                $form = $formBuilder->create(UpdatePost::class, [
                     'method' => 'PUT',
                     'url' => route('posts.update', ['post' => $post->id]),
                     'model' => $post
@@ -168,7 +168,7 @@ class PostController extends Controller
             $seo = null;
 
             if($isSeo) {
-                $form = $this->form(\App\Forms\SeoForm::class, [
+                $form = $this->form(SeoForm::class, [
                     'method' => 'PUT',
                     'url' => route('posts.update', ['post' => $post->id]),
                     'model' => $post

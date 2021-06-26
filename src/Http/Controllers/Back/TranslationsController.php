@@ -2,14 +2,16 @@
 
 namespace Ludows\Adminify\Http\Controllers\Back;
 
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Ludows\Adminify\Forms\CreateTranslation as FormsCreateTranslation;
 use Ludows\Adminify\Forms\UpdateTranslation;
+use Ludows\Adminify\Forms\DeleteCrud;
+
 use Illuminate\Http\Request;
 use Ludows\Adminify\Http\Requests\CreateTranslation;
 use Ludows\Adminify\Models\Translations as Traductions;
 
-use Kris\LaravelFormBuilder\FormBuilder;
-use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Ludows\Adminify\Repositories\TranslationRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 
@@ -52,7 +54,7 @@ class TranslationsController extends Controller
                 $t->checkForTraduction();
 
                 $actions[] = new TranslationAction($t ,[
-                    'form' => $formBuilder->create(\App\Forms\DeleteCrud::class, [
+                    'form' => $formBuilder->create(DeleteCrud::class, [
                         'method' => 'DELETE',
                         'url' => route('traductions.destroy', ['traduction' => $t->id])
                     ])
@@ -63,7 +65,7 @@ class TranslationsController extends Controller
                 $trans[0]->flashForMissing();
             }
 
-            return view("layouts.admin.pages.index", ["datas" => $trans, 'actions' => $actions, 'thead' => $fillables]);
+            return view("adminify::layouts.admin.pages.index", ["datas" => $trans, 'actions' => $actions, 'thead' => $fillables]);
         }
 
         /**
@@ -73,12 +75,12 @@ class TranslationsController extends Controller
             */
         public function create(FormBuilder $formBuilder)
         {
-            $form = $formBuilder->create(\App\Forms\CreateTranslation::class, [
+            $form = $formBuilder->create(FormsCreateTranslation::class, [
                 'method' => 'POST',
                 'url' => route('traductions.store')
             ]);
             //
-            return view("layouts.admin.pages.create", ['form' => $form]);
+            return view("adminify::layouts.admin.pages.create", ['form' => $form]);
         }
 
         /**
@@ -127,13 +129,13 @@ class TranslationsController extends Controller
             $traduction->checkForTraduction();
             $traduction->flashForMissing();
 
-            $form = $formBuilder->create(\App\Forms\UpdateTranslation::class, [
+            $form = $formBuilder->create(UpdateTranslation::class, [
                 'method' => 'PUT',
                 'url' => route('traductions.update', ['traduction' => $traduction->id]),
                 'model' => $traduction
             ]);
 
-            return view("layouts.admin.pages.edit", ['form' => $form]);
+            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
         }
 
         /**

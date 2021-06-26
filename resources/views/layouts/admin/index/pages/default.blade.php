@@ -1,4 +1,4 @@
-@include('layouts.admin.headers.topPageListing')
+@include('adminify::layouts.admin.headers.topPageListing')
 
 <div class="container-fluid mt--7">
     <div class="row">
@@ -39,7 +39,7 @@
                                         @php
                                             $slugBlade = Str::slug($th);
                                         @endphp
-                                        @if(view()->exists('layouts.admin.index.blocks.'.$name.'-'.$slugBlade))
+                                        @if(view()->exists('adminify::layouts.admin.index.blocks.'.$name.'-'.$slugBlade))
                                             @include('adminify::layouts.admin.index.blocks.'.$name.'-'.$slugBlade, ['data' => $data[$th] ,'model' => $data ])
                                         @elseif(view()->exists('layouts.admin.index.blocks'.$slugBlade))
                                             @include('adminify::layouts.admin.index.blocks.'.$slugBlade, ['data' => $data[$th] ,'model' => $data])
