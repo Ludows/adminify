@@ -57,9 +57,14 @@ class MediaRepository
 
         return $media;
     }
-    public function update($form, $request, $model) {
+    public function update($mixed, $request, $model) {
 
-        $formValues = $form->getFieldValues();
+        if(is_array($mixed)) {
+            $formValues = $mixed;
+        }
+        else {
+            $formValues = $mixed->getFieldValues();
+        }
 
         if(is_string($formValues['src'])) {
             $pathinfo = pathinfo($formValues['src'], PATHINFO_EXTENSION);
