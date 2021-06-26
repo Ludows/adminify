@@ -14,6 +14,8 @@ use Ludows\Adminify\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Ludows\Adminify\Actions\Media as MediaAction;
 
+use Illuminate\Support\Facades\Http;
+
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -169,12 +171,16 @@ class MediaController extends Controller
         public function destroy(Media $media)
         {
             // Call controller of unisharp for destroy the image
-            $this->call('GET', route('unisharp.lfm.getDelete', ['items' => $media->src]) );
-            
-            $this->mediaRepository->delete($media);
+            $response = Http::get(route('unisharp.lfm.getDelete', ['items' => $media->src]));
 
-            // redirect
-            flash('Le Media a bien été supprimé !')->success();
-            return redirect()->route('medias.index');
+            if($response->ok()) {
+                $this->mediaRepository->delete($media);
+                // redirect
+                flash('Le Media a bien été supprimé !')->success();
+                return redirect()->route('medias.index');
+            }
+            else {
+                dd($response->json());
+            }
         }
 }
