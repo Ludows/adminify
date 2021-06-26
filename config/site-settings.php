@@ -8,10 +8,10 @@ return [
     // menu builder is automatic sync with multilang param.
     'menu-builder' => [
         'models' => [
-            'category' => App\Models\Category::class,
-            'page' => App\Models\Page::class,
-            'post' => App\Models\Post::class,
-            'custom' => App\Models\CustomLink::class
+            'category' => Ludows\Adminify\Models\Category::class,
+            'page' => Ludows\Adminify\Models\Page::class,
+            'post' => Ludows\Adminify\Models\Post::class,
+            'custom' => Ludows\Adminify\Models\CustomLink::class
         ],
         'showAlways' => [
             'custom' => [ // you can pass some field to build your form
@@ -24,8 +24,8 @@ return [
 
     'searchable-front' => [
         'models' => [
-            'page' => App\Models\Page::class,
-            'post' => App\Models\Post::class,
+            'page' => Ludows\Adminify\Models\Page::class,
+            'post' => Ludows\Adminify\Models\Post::class,
         ],
         'fields' => [
             'page' => ['slug'],
@@ -41,38 +41,38 @@ return [
         'limit' => 3,
         'blocks' => [
             'page' => [
-                'class' => App\Models\Page::class,
+                'class' => Ludows\Adminify\Models\Page::class,
                 'showIf' => ['administrator', 'client'],
                 'template' => 'layouts.admin.dashboard.card-page',
                 'columnShow' => 'title',
             ],
             'post' => [
-                'class' => App\Models\Post::class,
+                'class' => Ludows\Adminify\Models\Post::class,
                 'showIf' => ['administrator', 'client'],
                 'template' => 'layouts.admin.dashboard.card-post',
                 'columnShow' => 'title',
             ],
             'media' => [
-                'class' => App\Models\Media::class,
+                'class' => Ludows\Adminify\Models\Media::class,
                 'showIf' => ['administrator', 'client'],
                 'template' => 'layouts.admin.dashboard.card-media',
                 'columnShow' => 'title',
                 'plural' => 'medias'
             ],
             'category' => [
-                'class' => App\Models\Category::class,
+                'class' => Ludows\Adminify\Models\Category::class,
                 'showIf' => ['administrator', 'client'],
                 'template' => 'layouts.admin.dashboard.card-category',
                 'columnShow' => 'title',
             ],
             'traduction' => [
-                'class' => App\Models\Traduction::class,
+                'class' => Ludows\Adminify\Models\Traduction::class,
                 'showIf' => ['administrator', 'client'],
                 'template' => 'layouts.admin.dashboard.card-traduction',
                 'columnShow' => 'key',
             ],
             'comment' => [
-                'class' => App\Models\Comment::class,
+                'class' => Ludows\Adminify\Models\Comment::class,
                 'showIf' => ['administrator', 'client'],
                 'template' => 'layouts.admin.dashboard.card-comment',
                 'columnShow' => 'comment',
