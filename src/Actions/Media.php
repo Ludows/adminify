@@ -13,14 +13,14 @@ class Media extends Actionable
         $m = $this->getModel();
 
         $this->add('edit', [
-            'template' => 'actions.edit',
+            'template' => 'adminify::actions.edit',
             'vars' => [
                 'url' => route('medias.edit', ['media' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
                 'name' => 'medias'
             ]
         ]);
         $this->add('delete', [
-            'template' => 'actions.delete',
+            'template' => 'adminify::actions.delete',
             'vars' => [
                 'form' => $datas['form'],
             ]

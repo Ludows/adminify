@@ -12,14 +12,14 @@ class Users extends Actionable
         $m = $this->getModel();
 
         $this->add('edit', [
-            'template' => 'actions.edit',
+            'template' => 'adminify::actions.edit',
             'vars' => [
                 'url' => route('users.edit', ['user' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
                 'name' => 'users'
             ]
         ]);
         $this->add('delete', [
-            'template' => 'actions.delete',
+            'template' => 'adminify::actions.delete',
             'vars' => [
                 'form' => $datas['form'],
             ]

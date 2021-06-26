@@ -8,7 +8,7 @@ class Translations extends Actionable
     public function getView() {
         //you can overwrite parent view
         $r = $this->getRequest();
-        return $r->exists('missing_translations') ? 'layouts.admin.actionable.missing-translations' : parent::getView();
+        return $r->exists('missing_translations') ? 'adminify::layouts.admin.actionable.missing-translations' : parent::getView();
     }
     public function handle() {
 
@@ -22,7 +22,7 @@ class Translations extends Actionable
                 foreach ($missing as $miss) {
                     # code...
                     $this->add('edit_'.$miss, [
-                        'template' =>  'actions.edit',
+                        'template' =>  'adminify::actions.edit',
                         'vars' => [
                             'url' => route('traductions.edit', ['traduction' => $m->id, 'lang' => $r->useMultilang ? $miss : '']),
                             'name' => 'traductions'
@@ -33,7 +33,7 @@ class Translations extends Actionable
         }
         if(!$r->exists('missing_translations')) {
             $this->add('edit', [
-                'template' => 'actions.edit',
+                'template' => 'adminify::actions.edit',
                 'vars' => [
                     'editParam' => $datas['singular'],
                     'id' => $datas['pageId'],
@@ -41,7 +41,7 @@ class Translations extends Actionable
                 ]
             ]);
             $this->add('delete', [
-                'template' => 'actions.delete',
+                'template' => 'adminify::actions.delete',
                 'vars' => [
                     'form' => $datas['form'],
                 ]

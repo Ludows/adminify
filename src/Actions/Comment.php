@@ -13,14 +13,14 @@ class Comment extends Actionable
         $m = $this->getModel();
 
         $this->add('edit', [
-            'template' => 'actions.edit',
+            'template' => 'adminify::actions.edit',
             'vars' => [
                 'url' => route('comments.edit', ['comment' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
                 'name' => 'comments'
             ]
         ]);
         $this->add('delete', [
-            'template' => 'actions.delete',
+            'template' => 'adminify::actions.delete',
             'vars' => [
                 'form' => $datas['form'],
             ]

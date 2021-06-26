@@ -54,7 +54,7 @@ class Actionable
         return $this;
     }
     public function getView() {
-        return 'layouts.admin.actionable.dropdown';
+        return 'adminify::layouts.admin.actionable.dropdown';
     }
     public function remove($name = '') {
         $this->removeAction($name);
