@@ -28,10 +28,15 @@ class MediaRepository
         // Don't forget to update the model's name
         $this->model = app(Media::class);
     }
-    public function create($form, $request) {
+    public function create($mixed, $request) {
         // $context is $this of the controller for more flexibility
         // dd($context, $request);
-        $formValues = $form->getFieldValues();
+        if(is_array($mixed)) {
+            $formValues = $mixed;
+        }
+        else {
+            $formValues = $mixed->getFieldValues();
+        }
 
         if(is_string($formValues['src'])) {
             $pathinfo = pathinfo($formValues['src']);

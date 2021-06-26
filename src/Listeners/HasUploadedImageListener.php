@@ -3,8 +3,6 @@ namespace Ludows\Adminify\Listeners;
 
 use Unisharp\Laravelfilemanager\Events\ImageWasUploaded;
 use Ludows\Adminify\Repositories\MediaRepository;
-use Ludows\Adminify\Forms\CreateMedia;
-use Kris\LaravelFormBuilder\FormBuilder;
 class HasUploadedImageListener
 {
     /**
@@ -13,9 +11,8 @@ class HasUploadedImageListener
      * @param  ImageWasUploaded  $event
      * @return void
      */
-    public function __construct(MediaRepository $MediaRepository, FormBuilder $FormBuilder) {
+    public function __construct(MediaRepository $MediaRepository) {
         $this->MediaRepository = $MediaRepository;
-        $this->FormBuilder = $FormBuilder;
     }
     public function handle(ImageWasUploaded $event)
     {
@@ -24,18 +21,15 @@ class HasUploadedImageListener
 
         if(!$request->fromMediaCreate != null) {
 
-            $form = $this->FormBuilder->create(CreateMedia::class, [
-                'method' => 'POST',
-                'url' => route('medias.store')
-            ]);
-
+            
             $info = pathinfo($event->path());
             
-            $form->title->setValue($info['basename']);
+            $a = [
+                'title' => $info['basename'],
+                'src' => $info['basename'],
+            ];
 
-            $form->src->setValue($info['basename']);
-
-            $this->MediaRepository->create($form, $request);
+            $this->MediaRepository->create($a, $request);
         }
 
         // dd($event);
