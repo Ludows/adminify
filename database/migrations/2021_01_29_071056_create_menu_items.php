@@ -21,7 +21,7 @@ class CreateMenuItems extends Migration
                 $table->string('type')->default(null)->nullable();
                 $table->json('overwrite_title');
                 $table->unsignedBigInteger('parent_id')->default(0);
-                $table->string('media_src')->nullable()->default(null);
+                $table->bigInteger('media_id')->default(0)->unsigned();
                 $table->string('class')->nullable();
                 $table->boolean('open_new_tab')->default(false);
                 // $table->integer('depth')->default(0);
@@ -36,7 +36,7 @@ class CreateMenuItems extends Migration
                 $table->string('type')->default(null)->nullable();
                 $table->string('overwrite_title')->default(null)->nullable();
                 $table->unsignedBigInteger('parent_id')->default(0);
-                $table->string('media_src')->nullable()->default(null);
+                $table->bigInteger('media_id')->default(0)->unsigned();
                 $table->string('class')->nullable();
                 $table->boolean('open_new_tab')->default(false);
                 $table->timestamps();

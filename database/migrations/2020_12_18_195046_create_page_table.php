@@ -20,7 +20,7 @@ class CreatePageTable extends Migration
                 $table->json('title');
                 $table->json('slug');
                 $table->json('content')->nullable();
-                $table->string('media_src', 255)->nullable();
+                $table->bigInteger('media_id')->default(0)->unsigned();
                 $table->bigInteger('parent_id')->unsigned()->default(0);
                 //$table->json('categories_id'); //@Todo table pivot
             });
@@ -32,7 +32,7 @@ class CreatePageTable extends Migration
                 $table->string('title', 255);
                 $table->string('slug', 255);
                 $table->json('content')->nullable();
-                $table->string('media_src', 255)->nullable();
+                $table->bigInteger('media_id')->default(0)->unsigned();
                 $table->bigInteger('parent_id')->unsigned()->default(0);
                 //$table->json('categories_id'); //@Todo table pivot
             });

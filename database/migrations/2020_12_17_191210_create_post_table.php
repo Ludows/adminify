@@ -21,7 +21,7 @@ class CreatePostTable extends Migration
                 $table->json('title');
                 $table->json('slug');
                 $table->json('content')->nullable();
-                $table->string('media_src', 255)->nullable();
+                $table->bigInteger('media_id')->default(0)->unsigned();
             });
         }
         else {
@@ -31,7 +31,7 @@ class CreatePostTable extends Migration
                 $table->string('title', 255);
                 $table->string('slug', 255);
                 $table->json('content')->nullable();
-                $table->string('media_src', 255)->nullable();
+                $table->bigInteger('media_id')->default(0)->unsigned();
             });
         }
 
