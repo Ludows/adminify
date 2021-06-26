@@ -19,7 +19,7 @@ class HasRenamedImageListener
 
         $request = request();
 
-        if(!$request->fromMediaCreate) {
+        if(!$request->fromMediaCreate != null) {
 
             $form = $FormBuilder->create(UpdateMedia::class, [
                 'method' => 'POST',

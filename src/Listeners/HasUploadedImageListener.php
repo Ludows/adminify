@@ -18,7 +18,7 @@ class HasUploadedImageListener
 
         $request = request();
 
-        if(!$request->fromMediaCreate) {
+        if(!$request->fromMediaCreate != null) {
 
             $form = $FormBuilder->create(CreateMedia::class, [
                 'method' => 'POST',
