@@ -4,7 +4,7 @@
             $a = [];
             $routeName = request()->route()->getName();
 
-            if($routeName == 'media.create') {
+            if($routeName == 'medias.create' || $routeName == 'medias.update') {
                 $a['fromMediaCreate'] = true;
             }
         @endphp
