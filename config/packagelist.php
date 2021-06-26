@@ -7,6 +7,7 @@ return array(
             'name' => 'artesaos/seotools',
             'publish' => (object) [
                 'tag' => false,
+                'force' => false,
                 'sibling' => 'Artesaos\SEOTools\Providers\SEOToolsServiceProvider'
             ],
             'autoload' => (object) [
@@ -69,6 +70,7 @@ return array(
             'name' => 'laracasts/flash',
             'publish' => (object) [
                 'tag' => false,
+                'force' => false,
                 'sibling' => 'Laracasts\Flash\FlashServiceProvider'
             ],
             'autoload' => (object) [
@@ -108,6 +110,7 @@ return array(
             'name' => 'silviolleite/laravelpwa',
             'publish' => (object) [
                 'tag' => false,
+                'force' => false,
                 'sibling' => 'LaravelPWA\Providers\LaravelPWAServiceProvider'
             ],
             'autoload' => (object) [
@@ -123,6 +126,7 @@ return array(
             'name' => 'spatie/laravel-backup',
             'publish' => (object) [
                 'tag' => false,
+                'force' => false,
                 'sibling' => 'Spatie\Backup\BackupServiceProvider'
             ],
             'autoload' => (object) [
@@ -141,6 +145,7 @@ return array(
             'name' => 'spatie/laravel-menu',
             'publish' => (object) [
                 'tag' => false,
+                'force' => false,
                 'sibling' => 'Spatie\Menu\Laravel\MenuServiceProvider'
             ],
             'autoload' => (object) [
@@ -160,6 +165,7 @@ return array(
             'name' => 'spatie/laravel-permission',
             'publish' => (object) [
                 'tag' => false,
+                'force' => false,
                 'sibling' => 'Spatie\Permission\PermissionServiceProvider'
             ],
             'autoload' => (object) [
@@ -193,6 +199,7 @@ return array(
             'name' => 'spatie/laravel-translatable',
             'publish' => (object) [
                 'tag' => false,
+                'force' => false,
                 'sibling' => 'Spatie\Translatable\TranslatableServiceProvider'
             ],
             'autoload' => (object) [
@@ -211,6 +218,7 @@ return array(
             'name' => 'spatie/menu',
             'publish' => (object) [
                 'tag' => false,
+                'force' => false,
                 'sibling' => 'Spatie\Menu\Laravel\MenuServiceProvider'
             ],
             'autoload' => (object) [
@@ -257,6 +265,7 @@ return array(
             'name' => 'van-ons/laraberg',
             'publish' => (object) [
                 'tag' => false,
+                'force' => false,
                 'sibling' => 'VanOns\Laraberg\LarabergServiceProvider'
             ],
             'autoload' => (object) [
@@ -275,6 +284,7 @@ return array(
             'name' => 'ycs77/laravel-form-builder-bs4',
             'publish' => (object) [
                 'tag' => true,
+                'force' => false,
                 'sibling' => 'laravel-form-builder-bs4'
             ],
             'autoload' => (object) [
@@ -290,6 +300,7 @@ return array(
             'name' => 'ludoows/adminify',
             'publish' => (object) [
                 'tag' => true,
+                'force' => true,
                 'sibling' => 'adminify-config'
             ],
             'autoload' => (object) [
