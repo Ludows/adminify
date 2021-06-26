@@ -5,8 +5,8 @@
     $name = request()->route()->getName();
     $name = str_replace('.edit', '', $name);
 @endphp
-@if(view()->exists('layouts.admin.edit.pages.'.$name))
-    @include('layouts.admin.edit.pages.'.$name)
+@if(view()->exists('adminify::layouts.admin.edit.pages.'.$name))
+    @include('adminify::layouts.admin.edit.pages.'.$name)
 @else
     @include('adminify::layouts.admin.edit.pages.default')
 @endif
