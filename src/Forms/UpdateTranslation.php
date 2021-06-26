@@ -9,6 +9,6 @@ class UpdateTranslation extends Form
     public function buildForm()
     {
         // Add fields here...
-        $this->compose('App\Forms\CreateTranslation');
+        $this->compose('Ludows\Adminify\Forms\CreateTranslation');
     }
 }

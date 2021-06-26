@@ -9,7 +9,7 @@ class UpdateMediaLibrary extends Form
     public function buildForm()
     {
         // Add fields here...
-        $this->compose('App\Forms\CreateMedia');
+        $this->compose('Ludows\Adminify\Forms\CreateMedia');
         $this->remove('src');
         $this->remove('submit');
     }
