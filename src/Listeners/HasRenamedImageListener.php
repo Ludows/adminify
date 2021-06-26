@@ -14,14 +14,18 @@ class HasRenamedImageListener
      * @param  ImageWasRenamed  $event
      * @return void
      */
-    public function handle(ImageWasRenamed $event, MediaRepository $MediaRepository, FormBuilder $FormBuilder)
+    public function __construct(MediaRepository $MediaRepository, FormBuilder $FormBuilder) {
+        $this->MediaRepository = $MediaRepository;
+        $this->FormBuilder = $FormBuilder;
+    }
+    public function handle(ImageWasRenamed $event)
     {
 
         $request = request();
 
         if(!$request->fromMediaCreate != null) {
 
-            $form = $FormBuilder->create(UpdateMedia::class, [
+            $form = $this->FormBuilder->create(UpdateMedia::class, [
                 'method' => 'POST',
                 'url' => route('medias.update')
             ]);
@@ -35,7 +39,7 @@ class HasRenamedImageListener
 
             $form->src->setValue($newInfo['basename']);
 
-            $MediaRepository->update($form, $request, $m);
+            $this->MediaRepository->update($form, $request, $m);
         }
 
         // dd($event);

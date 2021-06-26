@@ -34,7 +34,7 @@ class MediaRepository
         $formValues = $form->getFieldValues();
 
         if(is_string($formValues['src'])) {
-            $pathinfo = pathinfo($formValues['src'], PATHINFO_EXTENSION);
+            $pathinfo = pathinfo($formValues['src']);
             $formValues['mime_type'] = $pathinfo['extension'];
         }
         else {
