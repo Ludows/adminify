@@ -62,5 +62,5 @@
 
     </div>
 
-    @include('layouts.admin.footers.auth')
+    @include('adminify::layouts.admin.footers.auth')
 </div>
