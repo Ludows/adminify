@@ -66,7 +66,7 @@ return [
                 'columnShow' => 'title',
             ],
             'traduction' => [
-                'class' => Ludows\Adminify\Models\Traduction::class,
+                'class' => Ludows\Adminify\Models\Translations::class,
                 'showIf' => ['administrator', 'client'],
                 'template' => 'adminify::layouts.admin.dashboard.card-traduction',
                 'columnShow' => 'key',
