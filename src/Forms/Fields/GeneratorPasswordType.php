@@ -11,7 +11,7 @@ class GeneratorPasswordType extends FormField {
         // At first it tries to load config variable,
         // and if fails falls back to loading view
         // resources/views/fields/datetime.blade.php
-        return 'fields.generator-password';
+        return 'adminify::fields.generator-password';
     }
 
     public function setDefaults() {

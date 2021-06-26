@@ -12,7 +12,7 @@ class MediaLibraryType extends FormField {
         // At first it tries to load config variable,
         // and if fails falls back to loading view
         // resources/views/fields/datetime.blade.php
-        return 'fields.media-library';
+        return 'adminify::fields.media-library';
     }
 
     public function setDefaults() {
