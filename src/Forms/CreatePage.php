@@ -46,7 +46,7 @@ class CreatePage extends Form
                     'width' => '100%'
                 ]
             ])
-            ->add('media_src', 'lfm', [
+            ->add('media_id', 'lfm', [
                 'label_show' => false
             ])
             ->add('submit', 'submit', ['label' => 'Créer', 'attr' => ['class' => 'btn btn-default']]);

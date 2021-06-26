@@ -45,13 +45,13 @@ class Page extends Model implements Searchable
         'title',
         'slug',
         'content',
-        'media_src',
+        'media_id',
         'parent_id',
         'categories_id'
     ];
     public function media()
     {
-        return $this->belongsTo(Media::class,'media_src', 'src');
+        return $this->belongsTo(Media::class,'media_id', 'id');
     }
     public function categories()
     {

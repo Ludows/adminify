@@ -34,7 +34,7 @@ class Post extends Model implements Searchable
         'title',
         'slug',
         'content',
-        'media_src',
+        'media_id',
         'categories_id'
     ];
 
@@ -51,7 +51,7 @@ class Post extends Model implements Searchable
 
     public function media()
     {
-        return $this->belongsTo(Media::class,'media_src', 'src');
+        return $this->belongsTo(Media::class,'media_id', 'id');
     }
     public function categories()
     {
