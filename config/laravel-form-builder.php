@@ -73,13 +73,13 @@ return [
 
     'custom_fields' => [
         //
-        'editupload' => 'App\Forms\Fields\EditUploadType',
-        'quilleditor' => 'App\Forms\Fields\QuillEditorType',
-        'select2' => 'App\Forms\Fields\Select2Type',
-        'medialibrary' => 'App\Forms\Fields\MediaLibraryType',
-        'laraberg' => 'App\Forms\Fields\LarabergType',
-        'generatorPassword' => 'App\Forms\Fields\GeneratorPasswordType',
-        'lfm' => 'App\Forms\Fields\FileManagerType'
+        'editupload' => 'Ludows\Adminify\Forms\Fields\EditUploadType',
+        'quilleditor' => 'Ludows\Adminify\Forms\Fields\QuillEditorType',
+        'select2' => 'Ludows\Adminify\Forms\Fields\Select2Type',
+        'medialibrary' => 'Ludows\Adminify\Forms\Fields\MediaLibraryType',
+        'laraberg' => 'Ludows\Adminify\Forms\Fields\LarabergType',
+        'generatorPassword' => 'Ludows\Adminify\Forms\Fields\GeneratorPasswordType',
+        'lfm' => 'Ludows\Adminify\Forms\Fields\FileManagerType'
     ],
 
 ];
