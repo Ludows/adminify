@@ -22,6 +22,10 @@ class PageController extends Controller
 
             $page = Page::find( setting('homepage') );
 
+            if( $page == null ) {
+                abort("404");
+            }
+
 
             $reflection = new ReflectionClass($page);
             $type = $reflection->getShortName();
