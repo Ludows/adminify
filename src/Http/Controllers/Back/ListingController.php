@@ -27,7 +27,7 @@ class ListingController extends Controller
             $searchColumns = $m->getFillable();
         }
         else {
-            $searchColumns = $config['search'][$datas['type']]['columns'];
+            $searchColumns = $config['search'][$datas['singular']]['columns'];
         }
 
         $i = 0;
@@ -50,7 +50,7 @@ class ListingController extends Controller
         $actions = array();
         foreach ($results as $result) {
             # code...
-            $actionable = $config['search'][$datas['type']]['actionable'];
+            $actionable = $config['search'][$datas['singular']]['actionable'];
 
             $actions[] = new $actionable($result, [
                     'form' => $formBuilder->create(DeleteCrud::class, [
