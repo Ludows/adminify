@@ -1,9 +1,9 @@
 <?php
 
 return [
-    'multilang' => true, // this use Laravel get text + Translatable. Please to verify your migration for correct working..
-    'email_admin' => 'theartist768@gmail.com', // For logging errors etc..
-    'sender_mail' => 'theartist768@gmail.com', // email used to send mail
+    'multilang' => env('ENABLE_MULTILANG', true), // this use Laravel get text + Translatable. Please to verify your migration for correct working..
+    'email_admin' => env('EMAIL_ADMIN', 'theartist768@gmail.com'), // For logging errors etc..
+    'sender_mail' => env('SENDER_MAIL', 'theartist768@gmail.com'), // email used to send mail
 
     // menu builder is automatic sync with multilang param.
     'menu-builder' => [
@@ -22,14 +22,25 @@ return [
         ]
     ],
 
-    'searchable-front' => [
-        'models' => [
-            'page' => Ludows\Adminify\Models\Page::class,
-            'post' => Ludows\Adminify\Models\Post::class,
-        ],
-        'fields' => [
-            'page' => ['slug'],
-            'post' => ['slug'],
+    // please to pay attention that your models implements Searchable.
+    'searchable' => [
+        'admin' => [
+            'models' => [
+                'post' => \Ludows\Adminify\Models\Post::class,
+                'user' => \Ludows\Adminify\Models\User::class,
+                'menu' => \Ludows\Adminify\Models\Menu::class,
+                'page' => \Ludows\Adminify\Models\Page::class,
+                'traduction' => \Ludows\Adminify\Models\Translations::class
+            ],
+            'labels' => [
+                'post' => 'title',
+                'user' => 'name',
+                'menu' => 'title',
+                'page' => 'title',
+                'traduction' => 'key'
+            ],
+            'limit' => 5,
+            'name' => 'query'
         ]
     ],
 

@@ -10,27 +10,30 @@ use Spatie\Searchable\Search;
 class SearchController extends Controller
 {
     public function index(Request $request) {
-        $searchResults = (new Search())
-            ->registerModel(\Ludows\Adminify\Models\User::class, 'name')
-            ->registerModel(\Ludows\Adminify\Models\Category::class, 'title')
-            ->registerModel(\Ludows\Adminify\Models\Menu::class, 'title')
-            ->registerModel(\Ludows\Adminify\Models\Page::class, 'title')
-            ->registerModel(\Ludows\Adminify\Models\Post::class, 'title')
-            ->registerModel(\Ludows\Adminify\Models\Translations::class, 'text')
-            ->limitAspectResults(5)
-            ->search($request->input('query'));
 
-        return response()->json([
+
+        $config = config('site-settings.searchable.admin');
+
+        if($config) {
+            $searchResults = (new Search());
+
+            foreach ($config['models'] as $nameModel => $classModel) {
+                # code...
+                $searchResults->registerModel($classModel, $config['labels'][$nameModel] );
+            }
+
+            $searchResults->limitAspectResults($config['limit']);
+
+            $searchResults->search($request->input( $config['name'] ));
+        }
+
+        $a = [
             'response' => $searchResults->groupByType(),
             'count' => $searchResults->count(),
-            'labels' => [
-                'posts' => 'title',
-                'users' => 'name',
-                'menus' => 'title',
-                'pages' => 'title',
-                'traductions' => 'key'
-            ],
-            'status' => 'OK'
-        ]);
+            'status' => 'OK',
+            'labels' => $config['labels']
+        ];
+
+        return response()->json($a);
     }
 }
