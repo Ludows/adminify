@@ -13,6 +13,7 @@ use Ludows\Adminify\Forms\CreateCategory;
 use Ludows\Adminify\Forms\UpdateCategory;
 use Ludows\Adminify\Forms\DeleteCategory;
 use Ludows\Adminify\Http\Controllers\Controller;
+use Ludows\Adminify\Actions\Category as CategoryAction;
 
 
 use Ludows\Adminify\Repositories\CategoryRepository;
@@ -46,22 +47,23 @@ class CategoryController extends Controller
 
             $model = new Category();
             $fillables = $model->getFillable();
-            $forms = array();
 
-            foreach ($categories as $category) {
+            $actions = array();
+            foreach ($categories as $categorie) {
                 # code...
-                $category->checkForTraduction();
-
-                $forms[] = $formBuilder->create(DeleteCategory::class, [
-                    'method' => 'DELETE',
-                    'url' => route('categories.destroy', ['category' => $category->id])
+                $actions[] = new CategoryAction($categorie, [
+                    'form' => $formBuilder->create(DeleteCategory::class, [
+                        'method' => 'DELETE',
+                        'url' => route('categories.destroy', ['category' => $categorie->id])
+                    ])
                 ]);
             }
+
             if(isset($categories) && count($categories) > 0) {
                 $categories[0]->flashForMissing();
             }
 
-            return view("adminify::layouts.admin.pages.index", ["datas" => $categories, 'thead' => $fillables, 'editParam' => 'category', 'forms' => $forms ]);
+            return view("adminify::layouts.admin.pages.index", ["datas" => $categories, 'thead' => $fillables, 'actions' => $actions ]);
         }
 
         /**
