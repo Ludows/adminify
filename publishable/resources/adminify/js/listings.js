@@ -62,9 +62,9 @@ jQuery(document).ready(function ($) {
             o['search'] = valInput.toLowerCase().trim();
         }
 
-        if(fromBtns) {
-            o['offset'] = parseInt( listingBlock.attr('data-page') ) * window.listingBlock.limit;
-        }
+        // if(fromBtns) {
+        o['offset'] = parseInt( listingBlock.attr('data-page') ) * window.listingBlock.limit;
+        // }
 
         if(btnElement != null) {
             let direction = btnElement.attr('data-direction');
@@ -81,7 +81,7 @@ jQuery(document).ready(function ($) {
                 listingBlock.find('.js-datatable tbody').html('');
                 listingBlock.find('.js-datatable tbody').append(data.html);
 
-                window.listingBlock.isEnd = data.isEnd;
+                window.listingConfig.isEnd = data.isEnd;
 
                 if(!fromBtns) {
                     listingBlock.attr('data-page', '1')
