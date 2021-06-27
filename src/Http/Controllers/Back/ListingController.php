@@ -34,16 +34,16 @@ class ListingController extends Controller
         foreach ($searchColumns as $column) {
             # code...
             if($i == 0) {
-                $m->where($column, 'like',  "%" . strtolower($datas['search']) . "%");
+                $m = $m->where($column, 'like',  "%" . strtolower($datas['search']) . "%");
             }
             else {
-                $m->orWhere($column, 'like',  "%" . strtolower($datas['search']) . "%");
+                $m = $m->orWhere($column, 'like',  "%" . strtolower($datas['search']) . "%");
             }
             
             $i++;
         }
 
-        $m->take( $config['limit'] );
+        $m = $m->take( $config['limit'] );
 
         $results = $m->get();
 
@@ -60,7 +60,7 @@ class ListingController extends Controller
             ]);
         }
 
-        
+
         $a = [
             'html' => view('adminify::layouts.admin.index.blocks.datalist', ['actions' => $actions, 'datas' => $results, 'thead' => $columns, 'name' => $datas['singular']]),
             'response' => $results,
