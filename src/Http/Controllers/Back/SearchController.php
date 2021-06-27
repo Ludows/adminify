@@ -14,9 +14,10 @@ class SearchController extends Controller
 
         $config = config('site-settings.searchable.admin');
 
+        $searchResults = (new Search());
+        
         if($config) {
-            $searchResults = (new Search());
-
+            
             foreach ($config['models'] as $nameModel => $classModel) {
                 # code...
                 $searchResults->registerModel($classModel, $config['labels'][$nameModel] );
