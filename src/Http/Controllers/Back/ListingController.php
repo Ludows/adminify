@@ -60,9 +60,11 @@ class ListingController extends Controller
             ]);
         }
 
+        $v = view('adminify::layouts.admin.index.blocks.datalist', ['actions' => $actions, 'datas' => $results, 'thead' => $columns, 'name' => $datas['singular']]);
+
 
         $a = [
-            'html' => view('adminify::layouts.admin.index.blocks.datalist', ['actions' => $actions, 'datas' => $results, 'thead' => $columns, 'name' => $datas['singular']]),
+            'html' => $v,
             'response' => $results,
             'count' => $results->count(),
             'status' => 'OK',
