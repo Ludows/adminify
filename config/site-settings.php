@@ -45,12 +45,20 @@ return [
     ],
 
     'shortcodes' => [
-
     ],
 
     'listings' => [
         'type' => 'ajax', // or normal
-        'limit' => 5
+        'limit' => env('LISTINGS_LIMIT', 5),
+        'search' => [
+            'post' => \Ludows\Adminify\Models\Post::class,
+            'user' => \Ludows\Adminify\Models\User::class,
+            'menu' => \Ludows\Adminify\Models\Menu::class,
+            'page' => \Ludows\Adminify\Models\Page::class,
+            'category' => \Ludows\Adminify\Models\Category::class,
+            'comment' => \Ludows\Adminify\Models\Comment::class,
+            'traduction' => \Ludows\Adminify\Models\Translations::class
+        ]
     ],
 
     'dashboard' => [

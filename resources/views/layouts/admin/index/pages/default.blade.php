@@ -8,6 +8,13 @@
                     $name = request()->route()->getName();
                     $name = str_replace('.index', '', $name);
                 @endphp
+
+                <script>
+                    window.listingConfig = {
+                        limit : {{ config('site-settings.listings.limit') }},
+                        singular : '{{ singular($name) }}',
+                    }
+                </script>
     
                 <div class="card shadow">
                     <div class="card-header border-0">
@@ -15,12 +22,14 @@
                             <div class="col-8">
                                 <h3 class="mb-0">{{ _i($name.'.title') }}</h3>
                             </div>
-                            @if(\Route::has($name.'.create'))
+                            
                                 <div class="col-4 text-right">
                                     <input id="" class="form-control js-search-entity" placeholder="Search" type="text">
-                                    <a href="{{ route($name.'.create', ['lang' => $useMultilang ? $currentLang : '']) }}" class="btn btn-sm btn-primary"> {{ _i($name.'.add') }}</a>
+                                    @if(\Route::has($name.'.create'))
+                                        <a href="{{ route($name.'.create', ['lang' => $useMultilang ? $currentLang : '']) }}" class="btn btn-sm btn-primary"> {{ _i($name.'.add') }}</a>
+                                    @endif
                                 </div>
-                            @endif
+                            
                         </div>
                     </div>
     
