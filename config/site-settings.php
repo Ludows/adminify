@@ -48,6 +48,11 @@ return [
 
     ],
 
+    'listings' => [
+        'type' => 'ajax', // or normal
+        'limit' => 5
+    ],
+
     'dashboard' => [
         'limit' => 3,
         'blocks' => [
