@@ -7,6 +7,7 @@ jQuery(document).ready(function ($) {
     let tBodyStart = listingBlock.find('.js-datatable tbody').html();
 
     console.log(_.debounce)
+    let searchEntity = listingBlock.find('.js-search-entity');
 
     listingBlock.on('keyup', '.js-search-entity', _.debounce(function (e) {
             e.preventDefault();
@@ -26,6 +27,10 @@ jQuery(document).ready(function ($) {
 
 
     )
+
+    if(searchEntity.val().length > 0) {
+        searchEntity.trigger('keyup');
+    }
 
     function triggerSearch(valInput) {
         // window.listingConfig
