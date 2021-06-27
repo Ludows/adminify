@@ -4,6 +4,7 @@ namespace Ludows\Adminify\Repositories;
 
 use MrAtiebatie\Repository;
 use Ludows\Adminify\Models\Menu;
+use Ludows\Adminify\Models\Media;
 use Ludows\Adminify\Models\MenuItem; // Don't forget to update the model's namespace
 
 class MenuRepository
@@ -168,7 +169,13 @@ class MenuRepository
 
                 if(isset($menuitem['media_id']) && strlen($menuitem['media_id']) > 0) {
                     $json = json_decode($menuitem['media_id']);
-                    $menuItem->media_id = $json[0]->name;
+
+                    $m = Media::where('src', $json[0]->name);
+
+                    if($m != null) {
+                        $menuItem->media_id = $m->id;
+                    }
+                    
                 }
 
                 if(isset($menuitem['class']) && strlen($menuitem['class']) > 0) {

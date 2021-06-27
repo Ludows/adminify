@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Repositories;
 
 use MrAtiebatie\Repository;
 use Ludows\Adminify\Models\Page; // Don't forget to update the model's namespace
-use Ludows\Adminify\Models\Url;
+use Ludows\Adminify\Models\Media;
 
 
 class PageRepository
@@ -59,7 +59,11 @@ class PageRepository
 
             if(isset($formValues['media_id'])) {
                 $json = json_decode($formValues['media_id']);
-                $page->media_id = $json[0]->name;
+
+                $m = Media::where('src', $json[0]->name);
+                if($m != null) {
+                    $page->media_id = $m->id;
+                }
             }
 
             $page::booted();
@@ -119,7 +123,11 @@ class PageRepository
 
             if(isset($formValues['media_id'])) {
                 $json = json_decode($formValues['media_id']);
-                $page->media_id = $json[0]->name;
+
+                $m = Media::where('src', $json[0]->name);
+                if($m != null) {
+                    $page->media_id = $m->id;
+                }
             }
 
             $page::booted();

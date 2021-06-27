@@ -5,7 +5,7 @@ namespace Ludows\Adminify\Repositories;
 use Ludows\Adminify\Models\Category;
 use MrAtiebatie\Repository;
 use Ludows\Adminify\Models\Post; // Don't forget to update the model's namespace
-use Ludows\Adminify\Models\Url;
+use Ludows\Adminify\Models\Media;
 class PostRepository
 {
     use Repository;
@@ -55,7 +55,11 @@ class PostRepository
 
             if(isset($formValues['media_id'])) {
                 $json = json_decode($formValues['media_id']);
-                $post->media_id = $json[0]->name;
+
+                $m = Media::where('src', $json[0]->name);
+                if($m != null) {
+                    $post->media_id = $m->id;
+                }
             }
 
             $post::booted();
@@ -111,8 +115,17 @@ class PostRepository
 
             }
             foreach ($fields as $field) {
-                if(isset($formValues[$field]) && $field != "categories_id") {
+                if(isset($formValues[$field]) && $field != "categories_id" && $field != "media_id") {
                     $model->{$field} = $formValues[$field];
+                }
+            }
+
+            if(isset($formValues['media_id'])) {
+                $json = json_decode($formValues['media_id']);
+
+                $m = Media::where('src', $json[0]->name);
+                if($m != null) {
+                    $model->media_id = $m->id;
                 }
             }
         }
