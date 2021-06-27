@@ -13,6 +13,7 @@
                     window.listingConfig = {
                         limit : {{ config('site-settings.listings.limit') }},
                         singular : '{{ Str::singular($name) }}',
+                        maxItems : {{ count($datas) }}
                     }
                 </script>
     
