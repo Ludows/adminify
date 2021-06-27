@@ -30,18 +30,26 @@ class ListingController extends Controller
             $searchColumns = $config['search'][$datas['singular']]['columns'];
         }
 
-        $i = 0;
-        foreach ($searchColumns as $column) {
-            # code...
-            if($i == 0) {
-                $m = $m->where($column, 'like',  "%" . strtolower($datas['search']) . "%");
-            }
-            else {
-                $m = $m->orWhere($column, 'like',  "%" . strtolower($datas['search']) . "%");
-            }
-            
-            $i++;
+        $search = null;
+        if(isset($datas['search'])) {
+            $search = $datas['search'];
         }
+
+        if($search != null) {
+            $i = 0;
+            foreach ($searchColumns as $column) {
+                # code...
+                if($i == 0) {
+                    $m = $m->where($column, 'like',  "%" . strtolower($search) . "%");
+                }
+                else {
+                    $m = $m->orWhere($column, 'like',  "%" . strtolower($search) . "%");
+                }
+                
+                $i++;
+            }
+        } 
+        
 
         $m = $m->take( $config['limit'] );
 
@@ -65,6 +73,7 @@ class ListingController extends Controller
 
         $a = [
             'html' => $v,
+            'isEnd' => isset($datas['offset']) && ($datas['offset'] + $results->count()) >= $datas['maxItems'] ? true : false,
             'response' => $results,
             'count' => $results->count(),
             'status' => 'OK',
