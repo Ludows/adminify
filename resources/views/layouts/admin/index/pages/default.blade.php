@@ -12,7 +12,7 @@
                 <script>
                     window.listingConfig = {
                         limit : {{ config('site-settings.listings.limit') }},
-                        singular : '{{ singular($name) }}',
+                        singular : '{{ Str::singular($name) }}',
                     }
                 </script>
     
