@@ -1,31 +1,36 @@
 let _ = require('lodash');
 
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
 
     let listingBlock = $('.js-listings');
 
     let tBodyStart = listingBlock.find('.js-datatable tbody').html();
 
-    listingBlock.on('keyup', '.js-search-entity', function(e) {
-        e.preventDefault();
+    console.log(_.debounce)
 
-        let val = $(this).val()
+    listingBlock.on('keyup', '.js-search-entity', _.debounce(function (e) {
+            e.preventDefault();
 
-        if(val.length > 2) {
-            _.debounce(function() {
+            let val = $(this).val()
+
+            if (val.length > 2) {
+                console.log('val>>>', val)
                 triggerSearch(val);
-            }, 300)
-        }
-        else {
-            listingBlock.find('.js-datatable tbody').html('');
-            listingBlock.find('.js-datatable tbody').append(tBodyStart);
-        }
-        
-    })
+            } else {
+                listingBlock.find('.js-datatable tbody').html('');
+                listingBlock.find('.js-datatable tbody').append(tBodyStart);
+            }
+
+        }, 300)
+
+
+
+    )
 
     function triggerSearch(valInput) {
         // window.listingConfig
 
+        console.log('debounced')
         let o = window.listingConfig;
 
         o['search'] = valInput.toLowerCase().trim();
@@ -35,7 +40,7 @@ jQuery(document).ready(function($) {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             method: 'POST',
-            url: Route('listing'),
+            url: Route('listings'),
             data: o,
             success: function (data) {
                 listingBlock.find('.js-datatable tbody').html('');

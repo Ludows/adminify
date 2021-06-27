@@ -19,7 +19,7 @@ class ListingController extends Controller
 
         $datas = $request->all();
 
-        $m = new $config['search'][$datas['type']]['class']();
+        $m = new $config['search'][$datas['singular']]['class']();
 
         $columns = $m->getFillable();
 
