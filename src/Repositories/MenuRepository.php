@@ -170,7 +170,7 @@ class MenuRepository
                 if(isset($menuitem['media_id']) && strlen($menuitem['media_id']) > 0) {
                     $json = json_decode($menuitem['media_id']);
 
-                    $m = Media::where('src', $json[0]->name);
+                    $m = Media::where('src', $json[0]->name)->first();
 
                     if($m != null) {
                         $menuItem->media_id = $m->id;

@@ -60,7 +60,7 @@ class PageRepository
             if(isset($formValues['media_id'])) {
                 $json = json_decode($formValues['media_id']);
 
-                $m = Media::where('src', $json[0]->name);
+                $m = Media::where('src', $json[0]->name)->first();
                 if($m != null) {
                     $page->media_id = $m->id;
                 }
@@ -124,7 +124,7 @@ class PageRepository
             if(isset($formValues['media_id'])) {
                 $json = json_decode($formValues['media_id']);
 
-                $m = Media::where('src', $json[0]->name);
+                $m = Media::where('src', $json[0]->name)->first();
                 if($m != null) {
                     $page->media_id = $m->id;
                 }
