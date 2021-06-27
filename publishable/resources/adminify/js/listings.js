@@ -63,7 +63,7 @@ jQuery(document).ready(function ($) {
         }
 
         // if(fromBtns) {
-        o['offset'] = parseInt( listingBlock.attr('data-page') ) * window.listingBlock.limit;
+        o['offset'] = parseInt( listingBlock.attr('data-page') ) * window.listingConfig.limit;
         // }
 
         if(btnElement != null) {
