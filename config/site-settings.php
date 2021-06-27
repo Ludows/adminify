@@ -53,30 +53,37 @@ return [
         'searchType' => 'fillable', // or manual. In manual mode, columns is necessary.
         'search' => [
             'post' => [
+                'actionable' => \Ludows\Adminify\Actions\Post::class,
                 'class' => \Ludows\Adminify\Models\Post::class,
                 'columns' => []
             ],
             'user' => [
+                'actionable' => \Ludows\Adminify\Actions\Users::class,
                 'class' => \Ludows\Adminify\Models\User::class,
                 'columns' => []
             ],
             'menu' => [
+                'actionable' => \Ludows\Adminify\Actions\Menu::class,
                 'class' => \Ludows\Adminify\Models\Menu::class,
                 'columns' => []
             ],
             'page' => [
+                'actionable' => \Ludows\Adminify\Actions\Page::class,
                 'class' => \Ludows\Adminify\Models\Page::class,
                 'columns' => []
             ],
             'category' => [
+                'actionable' => \Ludows\Adminify\Actions\Category::class,
                 'class' => \Ludows\Adminify\Models\Category::class,
                 'columns' => []
             ],
             'comment' => [
+                'actionable' => \Ludows\Adminify\Actions\Comment::class,
                 'class' => \Ludows\Adminify\Models\Comment::class,
                 'columns' => []
             ],
             'traduction' => [
+                'actionable' => \Ludows\Adminify\Actions\Translations::class,
                 'class' => \Ludows\Adminify\Models\Translations::class,
                 'columns' => []
             ],
