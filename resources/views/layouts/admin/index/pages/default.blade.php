@@ -61,3 +61,7 @@
     </div>
 </div>
 
+@push('js')
+    <script src="{{ asset('argon') }}/js/listings.js"></script>
+@endpush
+
