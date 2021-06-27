@@ -16,9 +16,9 @@ jQuery(document).ready(function($) {
         })
 
         input.on('keyup', function(e) {
-            console.log('change')
+            //console.log('change')
             if(input.val().length > 2) {
-                console.log(Route('searchable'), input.val())
+                //console.log(Route('searchable'), input.val())
                 $.ajax({
                     'method' : 'POST',
                     'url' : Route('searchable'),
@@ -60,7 +60,7 @@ jQuery(document).ready(function($) {
                     st += `${data[localKey].length} entité trouvée${data[localKey].length > 1 ? 's' : ''} pour ${localKey}<br>`;
                     $.each(data[localKey], function(i, item) {
                         st += `<a href="${item.url}" class="list-group-item list-group-item-action">
-                                ${item[labels[localKey]]}
+                                ${item.title}
                               </a>`;
                     })
                 })

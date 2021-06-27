@@ -36,7 +36,7 @@ class User extends Authenticatable implements Searchable
 
         return new \Spatie\Searchable\SearchResult(
            $this,
-           $this->key,
+           $this->name,
            $url
         );
     }
