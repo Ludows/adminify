@@ -57,15 +57,13 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <div class="mt-3">
+                            @include('adminify::layouts.admin.index.blocks.paginate')
+                        </div>
                     </div>
                 </div>
             </div>
     
-        </div>
-        <div class="row">
-            <div class="col-12">
-                @include('adminify::layouts.admin.index.blocks.paginate')
-            </div>
         </div>
     
         @include('adminify::layouts.admin.footers.auth')
