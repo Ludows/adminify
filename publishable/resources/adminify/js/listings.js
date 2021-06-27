@@ -6,7 +6,7 @@ jQuery(document).ready(function($) {
 
     let tBodyStart = listingBlock.find('.js-datatable tbody').html();
 
-    listingBlock.on('keydown', 'js-search-entity', function(e) {
+    listingBlock.on('keydown', '.js-search-entity', function(e) {
         e.preventDefault();
 
         let val = $(this).val()
