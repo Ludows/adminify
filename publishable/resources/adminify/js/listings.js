@@ -66,7 +66,9 @@ jQuery(document).ready(function ($) {
             o['offset'] = parseInt( listingBlock.attr('data-page') ) * window.listingBlock.limit;
         }
 
-        let direction = btnElement.attr('data-direction');
+        if(btnElement != null) {
+            let direction = btnElement.attr('data-direction');
+        }
 
         $.ajax({
             headers: {
@@ -88,11 +90,13 @@ jQuery(document).ready(function ($) {
 
                     let dataPage = parseInt(listingBlock.attr('data-page'));
 
-                    if(direction == 'next') {
-                        listingBlock.attr('data-page', dataPage + 1);
-                    }
-                    else {
-                        listingBlock.attr('data-page', dataPage - 1);
+                    if(btnElement != null) {
+                        if(direction == 'next') {
+                            listingBlock.attr('data-page', dataPage + 1);
+                        }
+                        else {
+                            listingBlock.attr('data-page', dataPage - 1);
+                        }
                     }
 
                 }
