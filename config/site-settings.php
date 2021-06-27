@@ -47,17 +47,39 @@ return [
     'shortcodes' => [
     ],
 
+    // all routes search are binded to singular route name.
     'listings' => [
-        'type' => 'ajax', // or normal
         'limit' => env('LISTINGS_LIMIT', 5),
+        'searchType' => 'fillable', // or manual. In manual mode, columns is necessary.
         'search' => [
-            'post' => \Ludows\Adminify\Models\Post::class,
-            'user' => \Ludows\Adminify\Models\User::class,
-            'menu' => \Ludows\Adminify\Models\Menu::class,
-            'page' => \Ludows\Adminify\Models\Page::class,
-            'category' => \Ludows\Adminify\Models\Category::class,
-            'comment' => \Ludows\Adminify\Models\Comment::class,
-            'traduction' => \Ludows\Adminify\Models\Translations::class
+            'post' => [
+                'class' => \Ludows\Adminify\Models\Post::class,
+                'columns' => []
+            ],
+            'user' => [
+                'class' => \Ludows\Adminify\Models\User::class,
+                'columns' => []
+            ],
+            'menu' => [
+                'class' => \Ludows\Adminify\Models\Menu::class,
+                'columns' => []
+            ],
+            'page' => [
+                'class' => \Ludows\Adminify\Models\Page::class,
+                'columns' => []
+            ],
+            'category' => [
+                'class' => \Ludows\Adminify\Models\Category::class,
+                'columns' => []
+            ],
+            'comment' => [
+                'class' => \Ludows\Adminify\Models\Comment::class,
+                'columns' => []
+            ],
+            'traduction' => [
+                'class' => \Ludows\Adminify\Models\Translations::class,
+                'columns' => []
+            ],
         ]
     ],
 
