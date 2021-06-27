@@ -17,6 +17,7 @@
                             </div>
                             @if(\Route::has($name.'.create'))
                                 <div class="col-4 text-right">
+                                    <input id="" class="form-control js-search-entity" placeholder="Search" type="text">
                                     <a href="{{ route($name.'.create', ['lang' => $useMultilang ? $currentLang : '']) }}" class="btn btn-sm btn-primary"> {{ _i($name.'.add') }}</a>
                                 </div>
                             @endif
