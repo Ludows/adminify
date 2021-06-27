@@ -26,18 +26,18 @@ return [
     'searchable' => [
         'admin' => [
             'models' => [
-                'post' => \Ludows\Adminify\Models\Post::class,
-                'user' => \Ludows\Adminify\Models\User::class,
-                'menu' => \Ludows\Adminify\Models\Menu::class,
-                'page' => \Ludows\Adminify\Models\Page::class,
-                'traduction' => \Ludows\Adminify\Models\Translations::class
+                'posts' => \Ludows\Adminify\Models\Post::class,
+                'users' => \Ludows\Adminify\Models\User::class,
+                'menus' => \Ludows\Adminify\Models\Menu::class,
+                'pages' => \Ludows\Adminify\Models\Page::class,
+                'traductions' => \Ludows\Adminify\Models\Translations::class
             ],
             'labels' => [
-                'post' => 'title',
-                'user' => 'name',
-                'menu' => 'title',
-                'page' => 'title',
-                'traduction' => 'key'
+                'posts' => 'title',
+                'users' => 'name',
+                'menus' => 'title',
+                'pages' => 'title',
+                'traductions' => 'key'
             ],
             'limit' => 5,
             'name' => 'query'
