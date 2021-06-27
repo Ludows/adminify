@@ -25,8 +25,9 @@ class SearchController extends Controller
 
             $searchResults->limitAspectResults($config['limit']);
 
-            $searchResults->search($request->input( $config['name'] ));
         }
+
+        $searchResults->search($request->input( $config['name'] ));
 
         $a = [
             'response' => $searchResults->groupByType(),
