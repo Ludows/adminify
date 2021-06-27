@@ -61,11 +61,10 @@ class ListingController extends Controller
         }
 
         
-
         $a = [
             'html' => view('adminify::layouts.admin.index.blocks.datalist', ['actions' => $actions, 'datas' => $results, 'thead' => $columns, 'name' => $datas['singular']]),
-            'response' => $result,
-            'count' => $result->count(),
+            'response' => $results,
+            'count' => $results->count(),
             'status' => 'OK',
         ];
 
