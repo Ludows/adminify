@@ -49,7 +49,7 @@
                                 @include('adminify::layouts.admin.index.blocks.datalist', ['datas' => $datas])
                             </tbody>
                         </table>
-                        <div class="mt-3">
+                        <div class="mt-3 px-3">
                             @include('adminify::layouts.admin.index.blocks.paginate')
                         </div>
                     </div>
