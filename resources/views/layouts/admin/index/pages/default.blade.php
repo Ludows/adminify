@@ -25,10 +25,10 @@
                                 <h3 class="mb-0">{{ _i($name.'.title') }}</h3>
                             </div>
                             
-                                <div class="col-4 text-right">
+                                <div class="col-4 d-flex justify-content-between align-items-center text-right">
                                     <input id="" class="form-control js-search-entity" placeholder="Search" type="text">
                                     @if(\Route::has($name.'.create'))
-                                        <a href="{{ route($name.'.create', ['lang' => $useMultilang ? $currentLang : '']) }}" class="btn btn-sm btn-primary"> {{ _i($name.'.add') }}</a>
+                                        <a href="{{ route($name.'.create', ['lang' => $useMultilang ? $currentLang : '']) }}" class="ml-3 btn btn-sm btn-primary"> {{ _i($name.'.add') }}</a>
                                     @endif
                                 </div>
                             
