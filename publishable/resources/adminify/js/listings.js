@@ -8,6 +8,7 @@ jQuery(document).ready(function ($) {
 
     let searchEntity = listingBlock.find('.js-search-entity');
     let btnsListing = listingBlock.find('.js-listing-btn');
+    let searchhasbeenTriggered = false;
 
     listingBlock.on('keyup', '.js-search-entity', _.debounce(function (e) {
         e.preventDefault();
@@ -56,6 +57,7 @@ jQuery(document).ready(function ($) {
         // window.listingConfig
 
         console.log('debounced')
+        
         let o = window.listingConfig;
 
         if(valInput.length > 0) {
@@ -69,45 +71,52 @@ jQuery(document).ready(function ($) {
         if(btnElement != null) {
             let direction = btnElement.attr('data-direction');
         }
+        if(searchhasbeenTriggered == false) {
+            
+            searchhasbeenTriggered = true;
 
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            method: 'POST',
-            url: Route('listings'),
-            data: o,
-            success: function (data) {
-                listingBlock.find('.js-datatable tbody').html('');
-                listingBlock.find('.js-datatable tbody').append(data.html);
-
-                window.listingConfig.isEnd = data.isEnd;
-
-                if(!fromBtns) {
-                    listingBlock.attr('data-page', '1')
-                }
-                else {
-
-                    let dataPage = parseInt(listingBlock.attr('data-page'));
-
-                    if(btnElement != null) {
-                        if(direction == 'next') {
-                            listingBlock.attr('data-page', dataPage + 1);
-                        }
-                        else {
-                            listingBlock.attr('data-page', dataPage - 1);
-                        }
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                method: 'POST',
+                url: Route('listings'),
+                data: o,
+                success: function (data) {
+                    listingBlock.find('.js-datatable tbody').html('');
+                    listingBlock.find('.js-datatable tbody').append(data.html);
+    
+                    window.listingConfig.isEnd = data.isEnd;
+    
+                    if(!fromBtns) {
+                        listingBlock.attr('data-page', '1')
                     }
-
+                    else {
+    
+                        let dataPage = parseInt(listingBlock.attr('data-page'));
+    
+                        if(btnElement != null) {
+                            if(direction == 'next') {
+                                listingBlock.attr('data-page', dataPage + 1);
+                            }
+                            else {
+                                listingBlock.attr('data-page', dataPage - 1);
+                            }
+                        }
+    
+                    }
+    
+                    syncBtns()
+    
+                    searchhasbeenTriggered = false;
+                    
+                },
+                error: function (err) {
+                    console.log('err', err)
                 }
-
-                syncBtns()
-                
-            },
-            error: function (err) {
-                console.log('err', err)
-            }
-        })
+            })
+        }
+        
     }
 
     if (searchEntity.val().length > 0) {
