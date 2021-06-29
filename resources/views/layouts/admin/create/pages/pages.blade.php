@@ -1,6 +1,8 @@
+@include('adminify::layouts.admin.headers.topPageListing')
+
 <div class="container-fluid editor mt--7">
     <div class="row no-gutters">
-        <div class="col-12 mt-3">
+        <div class="col-12">
             @php
                 $name = request()->route()->getName();
                 $name = str_replace('.create', '', $name);
