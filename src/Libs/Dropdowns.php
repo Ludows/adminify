@@ -11,7 +11,9 @@ class Dropdowns
         $this->datas = isset($datas) ? $datas : null;
         $this->request = request();
         $this->models = isset($models) ? $models : [];
-        $this->handle();
+        
+        $ref = new ReflectionMethod($this, 'handle');
+        $this->handle(...$ref);
     }
 
     public function setDefaults() {
