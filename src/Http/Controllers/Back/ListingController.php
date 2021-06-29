@@ -20,6 +20,8 @@ class ListingController extends Controller
         $datas = $request->all();
 
         $m = new $config['search'][$datas['singular']]['class']();
+        $is_multilang_model = is_translatable_model($m);
+        $lang = lang();
 
         $columns = $m->getFillable();
 
@@ -39,11 +41,19 @@ class ListingController extends Controller
             $i = 0;
             foreach ($searchColumns as $column) {
                 # code...
-                if($i == 0) {
-                    $m = $m->where($column, 'like',  "%" . strtolower($search) . "%");
+                $binding = null;
+                if($is_multilang_model) {
+                    $binding = $column.'->'.$lang;
                 }
                 else {
-                    $m = $m->orWhere($column, 'like',  "%" . strtolower($search) . "%");
+                    $binding = $column;
+                }
+
+                if($i == 0) {
+                    $m = $m->where($binding, 'like',  "%" . strtolower($search) . "%");
+                }
+                else {
+                    $m = $m->orWhere($binding, 'like',  "%" . strtolower($search) . "%");
                 }
                 
                 $i++;
