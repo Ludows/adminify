@@ -21,14 +21,16 @@
                 <div class="card shadow">
                     <div class="card-header border-0">
                         <div class="row align-items-center">
-                            <div class="col-8">
+                            <div class="col-12 col-lg-8">
                                 <h3 class="mb-0">{{ _i($name.'.title') }}</h3>
                             </div>
                             
-                                <div class="col-4 d-flex justify-content-between align-items-center text-right">
+                                <div class="col-12 col-lg-4 d-flex justify-content-between align-items-center text-right">
                                     <input id="" class="form-control js-search-entity" placeholder="Search" type="text">
                                     @if(\Route::has($name.'.create'))
-                                        <a href="{{ route($name.'.create', ['lang' => $useMultilang ? $currentLang : '']) }}" class="ml-3 btn btn-sm btn-primary"> {{ _i($name.'.add') }}</a>
+                                        <div class="ml-lg-3 mt-3 mt-lg-0">
+                                            <a href="{{ route($name.'.create', ['lang' => $useMultilang ? $currentLang : '']) }}" class="btn btn-sm btn-primary"> {{ _i($name.'.add') }}</a>
+                                        </div>
                                     @endif
                                 </div>
                             

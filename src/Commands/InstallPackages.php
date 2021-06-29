@@ -49,12 +49,13 @@ class InstallPackages extends Command
     public function handle()
     {
 
+        $this->info('Handle Core install');
         $this->handleCoreTasks();
 
         foreach ($this->packages as $dependency) {
             # code...
 
-
+            
             $command = $this->handlePackageInstall($dependency);
 
             // handle beforePublish
@@ -119,7 +120,7 @@ class InstallPackages extends Command
 
         }
     }
-    public function handleCoreTasks() {
+    public function handleCoreTasks($log = true) {
         // FilecopyDirectory
 
         foreach ($this->tasks as $task => $copyTask) {
@@ -133,6 +134,10 @@ class InstallPackages extends Command
             }
             else {
                 \File::copy( $task , $copyTask);
+            }
+
+            if($log) {
+                $this->info('Handle File copy:  '. $copyTask);
             }
         }
 
