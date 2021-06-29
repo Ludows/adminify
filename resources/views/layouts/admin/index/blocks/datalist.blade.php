@@ -14,8 +14,8 @@
                                                 @endif
                                             @endforeach
                                             <td>
-                                                @isset($actions)
-                                                    @include('adminify::layouts.admin.index.blocks.dropdown-actions', ['action' => $actions[$loop->index]])
+                                                @isset($dropdowns)
+                                                    @include('adminify::layouts.admin.index.blocks.dropdown-actions', ['action' => $dropdowns->actions ])
                                                 @endisset
                                             </td>
                                         </tr>
