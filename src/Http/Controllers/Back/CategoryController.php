@@ -13,7 +13,7 @@ use Ludows\Adminify\Forms\CreateCategory;
 use Ludows\Adminify\Forms\UpdateCategory;
 use Ludows\Adminify\Forms\DeleteCrud;
 use Ludows\Adminify\Http\Controllers\Controller;
-use Ludows\Adminify\Actions\Category as CategoryAction;
+use Ludows\Adminify\Dropdowns\Category as CategoryAction;
 
 
 use Ludows\Adminify\Repositories\CategoryRepository;

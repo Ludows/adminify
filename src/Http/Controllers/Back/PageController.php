@@ -20,7 +20,7 @@ use Ludows\Adminify\Http\Requests\PageRequest;
 use Ludows\Adminify\Repositories\PageRepository;
 use Ludows\Adminify\Repositories\SeoRepository;
 
-use Ludows\Adminify\Actions\Page as PageAction;
+use Ludows\Adminify\Dropdowns\Page as PageAction;
 
 class PageController extends Controller
 {

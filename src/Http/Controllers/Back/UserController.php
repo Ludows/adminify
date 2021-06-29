@@ -13,7 +13,7 @@ use Ludows\Adminify\Http\Requests\CreateUserRequest;
 use Ludows\Adminify\Http\Requests\UserUpdateRequest;
 use Ludows\Adminify\Http\Controllers\Controller;
 
-use Ludows\Adminify\Actions\Users as UserAction;
+use Ludows\Adminify\Dropdowns\Users as UserAction;
 
 use Ludows\Adminify\Forms\CreateUser;
 use Ludows\Adminify\Forms\UpdateUser;

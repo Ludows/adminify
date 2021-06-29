@@ -19,7 +19,7 @@ use Ludows\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Repositories\PostRepository;
 use Ludows\Adminify\Repositories\SeoRepository;
-use Ludows\Adminify\Actions\Post as PostAction;
+use Ludows\Adminify\Dropdowns\Post as PostAction;
 
 class PostController extends Controller
 {

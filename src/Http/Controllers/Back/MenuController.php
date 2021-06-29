@@ -20,7 +20,7 @@ use Illuminate\Support\Str;
 use Ludows\Adminify\Repositories\MenuRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 
-use Ludows\Adminify\Actions\Menu as MenuAction;
+use Ludows\Adminify\Dropdowns\Menu as MenuAction;
 
 
 class MenuController extends Controller

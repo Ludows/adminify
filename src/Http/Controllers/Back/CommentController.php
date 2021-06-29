@@ -9,7 +9,7 @@ use Kris\LaravelFormBuilder\FormBuilder;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Repositories\CommentRepository;
-use Ludows\Adminify\Actions\Comment as CommentAction;
+use Ludows\Adminify\Dropdowns\Comment as CommentAction;
 use Illuminate\Support\Str;
 
 use Ludows\Adminify\Forms\DeleteCrud;

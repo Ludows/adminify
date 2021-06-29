@@ -14,7 +14,7 @@ use Ludows\Adminify\Http\Controllers\Controller;
 use File;
 
 use Illuminate\Support\Str;
-use Ludows\Adminify\Actions\Media as MediaAction;
+use Ludows\Adminify\Dropdowns\Media as MediaAction;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;

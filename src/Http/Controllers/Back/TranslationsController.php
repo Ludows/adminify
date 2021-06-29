@@ -15,7 +15,7 @@ use Ludows\Adminify\Models\Translations as Traductions;
 use Ludows\Adminify\Repositories\TranslationRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 
-use Ludows\Adminify\Actions\Translations as TranslationAction;
+use Ludows\Adminify\Dropdowns\Translations as TranslationAction;
 
 
 class TranslationsController extends Controller
