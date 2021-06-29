@@ -104,6 +104,23 @@ if (! function_exists('menu_builder')) {
     }
 }
 
+if(! function_exists('add_to_request')) {
+    function add_to_request($key, $value) {
+        $request = request();
+        $request->{$key} = $value;
+    }
+}
+
+if(! function_exists('merge_to_request')) {
+    function merge_to_request($key, $value) {
+        $request = request();
+        if($request->{$key}) {
+            $request->{$key} = $value;
+        }
+        $request->{$key} = $value;
+    }
+}
+
 if(! function_exists('is_translatable_model')) {
     function is_translatable_model($class) {
         return method_exists($class,'getMultilangTranslatableSwitch');
