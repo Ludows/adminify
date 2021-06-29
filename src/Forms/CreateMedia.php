@@ -17,6 +17,6 @@ class CreateMedia extends Form
         ->add('src', 'lfm', [
             'label_show' => false
         ])
-        ->add('submit', 'submit', ['label' => 'Créer', 'attr' => ['class' => 'btn btn-default']]);
+        ->add('submit', 'submit', ['label' => _i('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
 }

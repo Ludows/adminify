@@ -13,6 +13,6 @@ class CreateTranslation extends Form
         $this
             ->add('key', Field::TEXT, [])
             ->add('text', Field::TEXT, []);
-            $this->add('submit', 'submit', ['label' => 'Créer', 'attr' => ['class' => 'btn btn-default']]);
+            $this->add('submit', 'submit', ['label' => _i('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
 }

@@ -31,7 +31,7 @@ class CreatePage extends Form
                 'selected' => $hydratorCat['selected'],
                 'attr' => ['multiple' => 'multiple'],
                 'select2options' => [
-                    'placeholder' => 'Sélectionner vos Catégories',
+                    'placeholder' => _i('admin.select_category'),
                     'multiple' => true,
                     'width' => '100%'
                 ]
@@ -43,7 +43,7 @@ class CreatePage extends Form
                 'attr' => [],
                 'label_attr' => ['class' => 'control-label', 'for' => 'post_parent_id'],
                 'select2options' => [
-                    'placeholder' => 'Sélectionner une Catégorie Parente',
+                    'placeholder' => _i('admin.select_parentpage_id'),
                     'multiple' => false,
                     'width' => '100%'
                 ]

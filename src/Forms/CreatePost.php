@@ -13,28 +13,28 @@ class CreatePost extends Form
     {
         $hydrator = $this->hydrateSelect();
 
-        $this
-            ->add('title', Field::TEXT, [])
-            ->add('content', 'laraberg', []);
-            // if(count($categories) > 0) {
-                $this->add('categories_id', 'select2', [
-                    'empty_value' => '',
-                    'withCreate' => true,
-                    'modal' => 'adminify::layouts.admin.modales.createCategory',
-                    'choices' => $hydrator['categories'],
-                    'selected' => $hydrator['selected'],
-                    'attr' => ['multiple' => 'multiple'],
-                    'select2options' => [
-                        'placeholder' => 'Sélectionner vos Catégories',
-                        'multiple' => true,
-                        'width' => '100%'
-                    ]
-                ]);
-            // }
+            $this->add('title', Field::TEXT, []);
+            $this->add('categories_id', 'select2', [
+                'empty_value' => '',
+                'withCreate' => true,
+                'modal' => 'adminify::layouts.admin.modales.createCategory',
+                'choices' => $hydrator['categories'],
+                'selected' => $hydrator['selected'],
+                'attr' => ['multiple' => 'multiple'],
+                'select2options' => [
+                    'placeholder' => _i('admin.select_category'),
+                    'multiple' => true,
+                    'width' => '100%'
+                ]
+            ]);
+            
             $this->add('media_id', 'lfm',[
                 'label_show' => false,
             ]);
-            $this->add('submit', 'submit', ['label' => 'Créer', 'attr' => ['class' => 'btn btn-default']]);
+
+            $this->add('content', 'laraberg', []);
+            
+            $this->add('submit', 'submit', ['label' => _i('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
 
     public function hydrateSelect() {

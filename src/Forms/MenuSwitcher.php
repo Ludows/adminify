@@ -18,6 +18,6 @@ class MenuSwitcher extends Form
             'selected' => '',
             'attr' => [],
         ]);
-        $this->add('submit', 'submit', ['label' => 'Select', 'attr' => ['class' => 'btn btn-default']]);
+        $this->add('submit', 'submit', ['label' => __('admin.select'), 'attr' => ['class' => 'btn btn-default']]);
     }
 }

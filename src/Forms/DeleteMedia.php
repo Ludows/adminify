@@ -9,6 +9,6 @@ class DeleteMedia extends Form
     public function buildForm()
     {
         // Add fields here...
-        $this->add('submit', 'submit', ['label' => __('suppress.medias') , 'attr' => ['class' => 'btn btn-danger']]);
+        $this->add('submit', 'submit', ['label' => _i('admin.destroy') , 'attr' => ['class' => 'btn btn-danger']]);
     }
 }

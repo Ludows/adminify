@@ -24,7 +24,7 @@ class UpdateComment extends Form
         ])
         ->add('comment', Field::TEXTAREA, [])
         ->add('is_moderated', Field::CHECKBOX, [])
-        ->add('submit', 'submit', ['label' => 'Mettre à jour', 'attr' => ['class' => 'btn btn-default']]);
+        ->add('submit', 'submit', ['label' => _i('admin.update'), 'attr' => ['class' => 'btn btn-default']]);
 
     }
 }

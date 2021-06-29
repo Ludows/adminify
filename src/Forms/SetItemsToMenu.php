@@ -15,7 +15,7 @@ class SetItemsToMenu extends Form
                 'multiple' => 'multiple'
             ]
         ]);
-        $this->add('submit', 'submit', ['label' => _i('send.items') , 'attr' => ['class' => 'btn btn-default']]);
+        $this->add('submit', 'submit', ['label' => _i('admin.send') , 'attr' => ['class' => 'btn btn-default']]);
 
     }
 }

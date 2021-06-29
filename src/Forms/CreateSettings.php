@@ -27,7 +27,7 @@ class CreateSettings extends Form
             'value' => $this->getSetting('logo_src')
         ])
         ->add('homepage', 'select2', [
-            'empty_value' => 'Sélectionnez votre Page d\'accueil',
+            'empty_value' => _('admin.select_homepage'),
             'choices' => $home['datas'],
             'selected' => $home['selected'],
             'select2options' => [
@@ -36,7 +36,7 @@ class CreateSettings extends Form
             ]
         ])
         ->add('blogpage', 'select2', [
-            'empty_value' => 'Sélectionnez votre Page de Blog',
+            'empty_value' => _('admin.select_blogpage'),
             'choices' => $blog['datas'],
             'selected' => $blog['selected'],
             'select2options' => [
@@ -45,7 +45,7 @@ class CreateSettings extends Form
             ]
         ]);
 
-        $this->add('submit', 'submit', ['label' => 'Sauver', 'attr' => ['class' => 'btn btn-default']]);
+        $this->add('submit', 'submit', ['label' => _('admin.save'), 'attr' => ['class' => 'btn btn-default']]);
     }
     public function getStatePage($settingName = '') {
 
