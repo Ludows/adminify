@@ -21,8 +21,10 @@ class MultilangBasic
 
         $config = config('site-settings');
         $getTextConfig = config('laravel-gettext.supported-locales');
+        $routeName = $request->route()->getName();
+        
         if($config['multilang']) {
-            $routeName = $request->route()->getName();
+            
             $currentLocale = \LaravelGettext::getLocale();
             $routeNameSpl = explode('.', $routeName);
             // these routes needs singular parameter
@@ -39,8 +41,10 @@ class MultilangBasic
             foreach ($checkedKeys as $checkedKey) {
                 # code...
                 if(in_array($checkedKey , $routeNameSpl )) {
-                    $request->isCrudPattern = true;
-                    $request->singleParam = Str::singular($routeNameSpl[0]);
+                    $request->merge(["isCrudPattern"=> true ]);
+                    $request->merge(["singleParam"=> Str::singular($routeNameSpl[0]) ]);
+                    // $request->isCrudPattern = true;
+                    // $request->singleParam = Str::singular($routeNameSpl[0]);
                     break;
                 }
             }
@@ -51,7 +55,13 @@ class MultilangBasic
                 $currentLocale = $request->lang;
             }
 
-            $request->lang = $currentLocale;
+            // $request->lang = $currentLocale;
+            $request->merge([
+                "lang"=> $currentLocale,
+                "langs" => $getTextConfig,
+                "currentRouteName" => $routeName,
+                "useMultilang" => $config['multilang']
+            ]);
 
             view()->share('langs', $getTextConfig);
             view()->share('currentLang', $currentLocale);
@@ -68,6 +78,18 @@ class MultilangBasic
 
         }
         else {
+
+            $request->isCrudPattern = false;
+            $request->singleParam = null;
+            $request->useMultilang = $config['multilang'];
+
+            $request->merge([
+                "lang"=> 'fr',
+                "langs" => $getTextConfig,
+                "currentRouteName" => $routeName,
+                "useMultilang" => $config['multilang']
+            ]);
+
             return $next($request);
         }
     }
