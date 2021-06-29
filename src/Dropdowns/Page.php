@@ -1,9 +1,10 @@
 <?php
-namespace Ludows\Adminify\Actions;
 
-use Ludows\Adminify\Libs\Actionable;
+namespace Ludows\Adminify\Dropdowns;
 
-class Post extends Actionable
+use Ludows\Adminify\Libs\Dropdowns;
+
+class Page extends Dropdowns
 {
     public function getView() {
         //you can overwrite parent view
@@ -13,6 +14,7 @@ class Post extends Actionable
     public function handle() {
 
         $datas = $this->getDatas();
+
         $r = $this->getRequest();
         $m = $this->getModel();
 
@@ -24,27 +26,27 @@ class Post extends Actionable
                     $this->add('edit_'.$miss, [
                         'template' =>  'adminify::actions.edit',
                         'vars' => [
-                            'url' => route('posts.edit', ['post' => $m->id, 'lang' => $r->useMultilang ? $miss : '']),
-                            'name' => 'posts'
+                            'url' => route('pages.edit', ['page' => $m->id, 'lang' => $r->useMultilang ? $miss : '']),
+                            'name' => 'pages'
                         ]
                     ]);
                 }
             }
         }
+
         if(!$r->exists('missing_translations')) {
             $this->add('edit', [
                 'template' => 'adminify::actions.edit',
                 'vars' => [
-                    'url' => route('posts.edit', ['post' => $m->id, 'lang' => $r->useMultilang ? $miss : '']),
-                    'name' => 'posts'
+                    'url' => route('pages.edit', ['page' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
+                    'name' => 'pages'
                 ]
             ]);
             $this->add('seo', [
                 'template' => 'adminify::actions.seo',
                 'vars' => [
-                    'editParam' => $datas['singular'],
-                    'id' => $datas['pageId'],
-                    'name' => 'posts'
+                    'url' => route('pages.edit', ['page' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '', 'seo']),
+                    'name' => 'pages'
                 ]
             ]);
             $this->add('delete', [
@@ -54,5 +56,7 @@ class Post extends Actionable
                 ]
             ]);
         }
+
+
     }
 }

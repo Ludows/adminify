@@ -1,10 +1,9 @@
 <?php
+namespace Ludows\Adminify\Dropdowns;
 
-namespace Ludows\Adminify\Actions;
+use Ludows\Adminify\Libs\Dropdowns;
 
-use Ludows\Adminify\Libs\Actionable;
-
-class Menu extends Actionable
+class Post extends Dropdowns
 {
     public function getView() {
         //you can overwrite parent view
@@ -14,7 +13,6 @@ class Menu extends Actionable
     public function handle() {
 
         $datas = $this->getDatas();
-
         $r = $this->getRequest();
         $m = $this->getModel();
 
@@ -26,20 +24,27 @@ class Menu extends Actionable
                     $this->add('edit_'.$miss, [
                         'template' =>  'adminify::actions.edit',
                         'vars' => [
-                            'url' => route('menus.edit', ['menu' => $m->id, 'lang' => $r->useMultilang ? $miss : '']),
-                            'name' => 'menus'
+                            'url' => route('posts.edit', ['post' => $m->id, 'lang' => $r->useMultilang ? $miss : '']),
+                            'name' => 'posts'
                         ]
                     ]);
                 }
             }
         }
-
         if(!$r->exists('missing_translations')) {
             $this->add('edit', [
                 'template' => 'adminify::actions.edit',
                 'vars' => [
-                    'url' => route('menus.edit', ['menu' => $m->id, 'lang' => $r->useMultilang ? $miss : '']),
-                    'name' => 'menus'
+                    'url' => route('posts.edit', ['post' => $m->id, 'lang' => $r->useMultilang ? $miss : '']),
+                    'name' => 'posts'
+                ]
+            ]);
+            $this->add('seo', [
+                'template' => 'adminify::actions.seo',
+                'vars' => [
+                    'editParam' => $datas['singular'],
+                    'id' => $datas['pageId'],
+                    'name' => 'posts'
                 ]
             ]);
             $this->add('delete', [

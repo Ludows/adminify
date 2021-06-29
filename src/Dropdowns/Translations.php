@@ -1,10 +1,9 @@
 <?php
+namespace Ludows\Adminify\Dropdowns;
 
-namespace Ludows\Adminify\Actions;
+use Ludows\Adminify\Libs\Dropdowns;
 
-use Ludows\Adminify\Libs\Actionable;
-
-class Page extends Actionable
+class Translations extends Dropdowns
 {
     public function getView() {
         //you can overwrite parent view
@@ -14,7 +13,6 @@ class Page extends Actionable
     public function handle() {
 
         $datas = $this->getDatas();
-
         $r = $this->getRequest();
         $m = $this->getModel();
 
@@ -26,27 +24,20 @@ class Page extends Actionable
                     $this->add('edit_'.$miss, [
                         'template' =>  'adminify::actions.edit',
                         'vars' => [
-                            'url' => route('pages.edit', ['page' => $m->id, 'lang' => $r->useMultilang ? $miss : '']),
-                            'name' => 'pages'
+                            'url' => route('traductions.edit', ['traduction' => $m->id, 'lang' => $r->useMultilang ? $miss : '']),
+                            'name' => 'traductions'
                         ]
                     ]);
                 }
             }
         }
-
         if(!$r->exists('missing_translations')) {
             $this->add('edit', [
                 'template' => 'adminify::actions.edit',
                 'vars' => [
-                    'url' => route('pages.edit', ['page' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
-                    'name' => 'pages'
-                ]
-            ]);
-            $this->add('seo', [
-                'template' => 'adminify::actions.seo',
-                'vars' => [
-                    'url' => route('pages.edit', ['page' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '', 'seo']),
-                    'name' => 'pages'
+                    'editParam' => $datas['singular'],
+                    'id' => $datas['pageId'],
+                    'name' => 'traductions'
                 ]
             ]);
             $this->add('delete', [
@@ -56,7 +47,5 @@ class Page extends Actionable
                 ]
             ]);
         }
-
-
     }
 }

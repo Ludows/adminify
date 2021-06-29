@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Libs;
 
-class Actionable
+class Dropdowns
 {
     public function __construct($model, $datas = [])
     {

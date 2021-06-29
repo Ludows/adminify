@@ -1,10 +1,10 @@
 <?php
 
-namespace Ludows\Adminify\Actions;
+namespace Ludows\Adminify\Dropdowns;
 
-use Ludows\Adminify\Libs\Actionable;
+use Ludows\Adminify\Libs\Dropdowns;
 
-class Media extends Actionable
+class Media extends Dropdowns
 {
     public function handle() {
 

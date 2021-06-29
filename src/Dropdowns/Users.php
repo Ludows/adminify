@@ -1,10 +1,9 @@
 <?php
-
 namespace Ludows\Adminify\Actions;
 
-use Ludows\Adminify\Libs\Actionable;
+use Ludows\Adminify\Libs\Dropdowns;
 
-class Comment extends Actionable
+class Users extends Dropdowns
 {
     public function handle() {
 
@@ -15,8 +14,8 @@ class Comment extends Actionable
         $this->add('edit', [
             'template' => 'adminify::actions.edit',
             'vars' => [
-                'url' => route('comments.edit', ['comment' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
-                'name' => 'comments'
+                'url' => route('users.edit', ['user' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
+                'name' => 'users'
             ]
         ]);
         $this->add('delete', [
