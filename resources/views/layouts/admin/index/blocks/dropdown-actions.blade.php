@@ -1,1 +1,1 @@
-{!! render_action($action) !!}
+{!! render_actions($action) !!}
