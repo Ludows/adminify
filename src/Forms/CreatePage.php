@@ -54,7 +54,7 @@ class CreatePage extends Form
             ->add('content', 'laraberg', [
                 'label_show' => false
             ])            
-            ->add('submit', 'submit', ['label' => 'Créer', 'attr' => ['class' => 'btn btn-default']]);
+            ->add('submit', 'submit', ['label' => _i('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
     public function hydrateSelect() {
         $categories = '';
