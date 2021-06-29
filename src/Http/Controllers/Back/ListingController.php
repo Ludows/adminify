@@ -21,6 +21,7 @@ class ListingController extends Controller
 
         $m = new $config['search'][$datas['singular']]['class']();
         $is_multilang_model = is_translatable_model($m);
+        $useMultilang = $request->useMultilang;
         $lang = lang();
 
         $columns = $m->getFillable();
@@ -42,7 +43,7 @@ class ListingController extends Controller
             foreach ($searchColumns as $column) {
                 # code...
                 $binding = null;
-                if($is_multilang_model) {
+                if($is_multilang_model && $useMultilang) {
                     $binding = $column.'->'.$lang;
                 }
                 else {
