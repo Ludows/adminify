@@ -15,14 +15,14 @@ class Users extends Dropdowns
         $models = $this->getModels();
 
         foreach ($models as $m) {
-            # code...
+            # code...            
             $this->add('edit_'.$m->id, [
                 'template' => 'adminify::actions.edit',
                 'vars' => [
                     'url' => route('users.edit', ['user' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
                     'name' => 'users'
                 ]
-            ]);
+            ], 'group_'.$m->id);
             $this->add('delete_'.$m->id, [
                 'template' => 'adminify::actions.delete',
                 'vars' => [
@@ -31,7 +31,7 @@ class Users extends Dropdowns
                         'url' => route('users.destroy', ['user' => $m->id])
                     ])
                 ]
-            ]);
+            ], 'group_'.$m->id);
         }
     }
 }

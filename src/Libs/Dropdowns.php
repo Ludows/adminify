@@ -42,16 +42,32 @@ class Dropdowns
     public function getAction($name = '') {
         return $this->actions[$name];
     }
-    public function setAction($name = '', $params = []) {
-        $this->actions[$name] = $params;
+    public function setAction($name = '', $params = [], $group = null) {
+        if($group != null) {
+            $this->actions[$group][$name] = $params;
+        }
+        else {
+            $this->actions[$name] = $params;
+        }
         return $this;
     }
     public function removeAction($name = '') {
         unset($this->actions[$name]);
         return $this;
     }
-    public function add($name = '', $params = []) {
-        $this->setAction($name, array_merge($this->setDefaults(), $params));
+    public function add($name = '', $params = [], $group = null) {
+        if($group != null) {
+            $this->setAction($group , []);
+        }
+        $this->setAction($name, array_merge($this->setDefaults(), $params), $group);
+        return $this;
+    }
+    public function addGroup($name = null) {
+        $this->setAction($name, []);
+        return $this;
+    }
+    public function removeGroup($name = null) {
+        $this->removeAction($name);
         return $this;
     }
     public function getView() {
