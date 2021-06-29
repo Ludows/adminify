@@ -12,8 +12,7 @@ class Dropdowns
         $this->request = request();
         $this->models = isset($models) ? $models : [];
         
-        $ref = new ReflectionMethod($this, 'handle');
-        $this->handle(...$ref);
+        $this->handle();
     }
 
     public function setDefaults() {
@@ -62,7 +61,7 @@ class Dropdowns
         $this->removeAction($name);
         return $this;
     }
-    public function handle(...$parameters) {}
+    public function handle() {}
     public function render() {
         $actions = $this->getActions();
         $tpl = $this->getView();

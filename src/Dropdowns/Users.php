@@ -7,7 +7,12 @@ use Kris\LaravelFormBuilder\FormBuilder;
 
 class Users extends Dropdowns
 {
-    public function handle(FormBuilder $formbuilder) {
+    public function __construct($models, $datas = []) {
+        
+        $this->form = app('Kris\LaravelFormBuilder\FormBuilder');
+
+    }
+    public function handle() {
 
         $datas = $this->getDatas();
         $r = $this->getRequest();
@@ -25,7 +30,7 @@ class Users extends Dropdowns
             $this->add('delete_'.$m->id, [
                 'template' => 'adminify::actions.delete',
                 'vars' => [
-                    'form' => $formbuilder->create(DeleteCrud::class, [
+                    'form' => $this->form->create(DeleteCrud::class, [
                         'method' => 'DELETE',
                         'url' => route('users.destroy', ['user' => $m->id])
                     ])
