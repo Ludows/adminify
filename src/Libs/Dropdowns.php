@@ -4,13 +4,13 @@ namespace Ludows\Adminify\Libs;
 
 class Dropdowns
 {
-    public function __construct($model, $datas = [])
+    public function __construct($models, $datas = [])
     {
         $this->actions = [];
         $this->view = view();
         $this->datas = isset($datas) ? $datas : null;
         $this->request = request();
-        $this->model = isset($model) ? $model : null;
+        $this->models = isset($models) ? $models : [];
         $this->handle();
     }
 
@@ -32,11 +32,11 @@ class Dropdowns
     public function getActions() {
         return $this->actions;
     }
-    public function getModel() {
-        return $this->model;
+    public function getModels() {
+        return $this->models;
     }
-    public function hasModel() {
-        return $this->model != null;
+    public function hasModels() {
+        return $this->model != [];
     }
     public function getAction($name = '') {
         return $this->actions[$name];

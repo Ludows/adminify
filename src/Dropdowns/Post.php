@@ -14,7 +14,7 @@ class Post extends Dropdowns
 
         $datas = $this->getDatas();
         $r = $this->getRequest();
-        $m = $this->getModel();
+        $m = $this->getModels();
 
         if($m->isMultiLangModel()) {
             $missing = $m->getNeededTranslations();

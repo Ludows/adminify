@@ -10,7 +10,7 @@ class Comment extends Dropdowns
 
         $datas = $this->getDatas();
         $r = $this->getRequest();
-        $m = $this->getModel();
+        $m = $this->getModels();
 
         $this->add('edit', [
             'template' => 'adminify::actions.edit',
