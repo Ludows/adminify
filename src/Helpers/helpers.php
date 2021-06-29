@@ -104,6 +104,19 @@ if (! function_exists('menu_builder')) {
     }
 }
 
+if(! function_exists('is_translatable_model')) {
+    function is_translatable_model($class) {
+        return method_exists($class,'getMultilangTranslatableSwitch');
+    }
+}
+
+if(! function_exists('lang')) {
+    function lang() {
+        $request = request();
+        return $request->lang;
+    }
+}
+
 if (! function_exists('menu')) {
     function menu($mixed) {
         $m = new Menu();
