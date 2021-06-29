@@ -16,12 +16,7 @@ require_once('auth.php');
 // Register Admin Routes..
 require_once('admin.php');
 
-// Define it'smultilang according to config site
-if(config('site-settings.multilang')) {
-    require_once('multilang.php');
-}
-else {
-    require_once('no-multilang.php');
-}
+require_once('front.php');
+// require_once('no-multilang.php');
 
 
