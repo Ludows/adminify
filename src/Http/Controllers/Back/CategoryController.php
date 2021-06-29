@@ -11,7 +11,7 @@ use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Ludows\Adminify\Forms\CreateCategory;
 use Ludows\Adminify\Forms\UpdateCategory;
-use Ludows\Adminify\Forms\DeleteCategory;
+use Ludows\Adminify\Forms\DeleteCrud;
 use Ludows\Adminify\Http\Controllers\Controller;
 use Ludows\Adminify\Actions\Category as CategoryAction;
 
@@ -52,7 +52,7 @@ class CategoryController extends Controller
             foreach ($categories as $categorie) {
                 # code...
                 $actions[] = new CategoryAction($categorie, [
-                    'form' => $formBuilder->create(DeleteCategory::class, [
+                    'form' => $formBuilder->create(DeleteCrud::class, [
                         'method' => 'DELETE',
                         'url' => route('categories.destroy', ['category' => $categorie->id])
                     ])
