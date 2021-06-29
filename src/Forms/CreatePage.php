@@ -23,9 +23,6 @@ class CreatePage extends Form
                 'label_show' => false,
                 'attr' => ['placeholder' =>  _i('admin.title') ],
             ])
-            ->add('content', 'laraberg', [
-                'label_show' => false
-            ])
             ->add('categories_id', 'select2', [
                 'empty_value' => '',
                 'withCreate' => true,
@@ -54,6 +51,9 @@ class CreatePage extends Form
             ->add('media_id', 'lfm', [
                 'label_show' => false
             ])
+            ->add('content', 'laraberg', [
+                'label_show' => false
+            ])            
             ->add('submit', 'submit', ['label' => 'Créer', 'attr' => ['class' => 'btn btn-default']]);
     }
     public function hydrateSelect() {
