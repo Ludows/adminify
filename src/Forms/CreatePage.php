@@ -19,8 +19,13 @@ class CreatePage extends Form
         // $translations = $m->translations;
 
         $this
-            ->add('title', Field::TEXT, [])
-            ->add('content', 'laraberg', [])
+            ->add('title', Field::TEXT, [
+                'label_show' => false,
+                'attr' => ['placeholder' =>  _i('admin.title') ],
+            ])
+            ->add('content', 'laraberg', [
+                'label_show' => false
+            ])
             ->add('categories_id', 'select2', [
                 'empty_value' => '',
                 'withCreate' => true,
