@@ -8,11 +8,11 @@
                 $name = str_replace('.create', '', $name);
             @endphp
 
-            <div class="card shadow-none bg-transparent">
+            <div class="card shadow">
                 {{-- <div class="card-header border-0">
                     {{ __('add.'.$name) }}
                 </div> --}}
-                <div class="card-body p-0">
+                <div class="card-body">
                     @if(isset($form))
                         {!! form($form) !!}
                     @endif
