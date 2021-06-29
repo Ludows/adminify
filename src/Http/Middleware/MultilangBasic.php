@@ -27,7 +27,6 @@ class MultilangBasic
         $checkedKeys = [
             'update',
             'edit',
-            'index',
             'destroy'
         ];
 
@@ -36,7 +35,7 @@ class MultilangBasic
 
         $base_parameters = [
             "isCrudPattern"=> false,
-            "singleParam"=> null,
+            "singleParam"=> Str::singular($routeNameSpl[0]),
             "useMultilang" => $config['multilang'],
             "lang"=> $currentLocale,
             "langs" => $getTextConfig,
@@ -57,7 +56,6 @@ class MultilangBasic
             # code...
             if(in_array($checkedKey , $routeNameSpl )) {
                 merge_to_request('isCrudPattern', true);
-                merge_to_request('singleParam', Str::singular($routeNameSpl[0]));
                 break;
             }
         }
