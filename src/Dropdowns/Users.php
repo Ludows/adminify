@@ -1,5 +1,5 @@
 <?php
-namespace Ludows\Adminify\Actions;
+namespace Ludows\Adminify\Dropdowns;
 
 use Ludows\Adminify\Libs\Dropdowns;
 use Ludows\Adminify\Forms\DeleteCrud;
