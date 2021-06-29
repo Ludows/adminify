@@ -29,9 +29,11 @@ class DisplayFullmode
 
         $routeName = $request->route()->getName();
 
-        if( array_search($routeName, $listFullModePages) != false ) {
+        if( in_array($routeName, $listFullModePages) ) {
             $fullmode = true;
         }
+
+        //dd($fullmode, $listFullModePages, $routeName);
 
         $v->share('fullmode', $fullmode);
 
