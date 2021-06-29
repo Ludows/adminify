@@ -9,7 +9,7 @@ class Users extends Dropdowns
 {
     public function __construct($models, $datas = []) {
         
-        parent::__construct();
+        parent::__construct($models, $datas);
         $this->form = app('Kris\LaravelFormBuilder\FormBuilder');
 
     }
