@@ -309,7 +309,8 @@ return array(
                         'multilang.basic' => \Ludows\Adminify\Http\Middleware\MultilangBasic::class,
                         'admin.breadcrumb' => \Ludows\Adminify\Http\Middleware\AdminBreadcrumb::class,
                         'front.blogpage' => \Ludows\Adminify\Http\Middleware\checkBlogPage::class,
-                        'admin.deletemedia' => \Ludows\Adminify\Http\Middleware\DeleteMedia::class
+                        'admin.deletemedia' => \Ludows\Adminify\Http\Middleware\DeleteMedia::class,
+                        'admin.fullmode' => \Ludows\Adminify\Http\Middleware\DisplayFullmode::class
                     ]
                 ],
                 'aliases' => [
