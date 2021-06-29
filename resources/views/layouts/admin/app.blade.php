@@ -27,11 +27,16 @@
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
-            @include('adminify::layouts.admin.navbars.sidebar')
+            @if(!$fullmode)
+                @include('adminify::layouts.admin.navbars.sidebar')
+            @endif
         @endauth
 
         <div class="main-content">
-            @include('adminify::layouts.admin.navbars.navbar')
+            @if(!$fullmode)
+                @include('adminify::layouts.admin.navbars.navbar')
+            @endif
+           
             @yield('content')
         </div>
 
