@@ -60,7 +60,7 @@ class Dropdowns
         $this->removeAction($name);
         return $this;
     }
-    public function handle() {}
+    public function handle(...$parameters) {}
     public function render() {
         $actions = $this->getActions();
         $tpl = $this->getView();
