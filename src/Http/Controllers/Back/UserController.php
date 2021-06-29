@@ -41,20 +41,9 @@ class UserController extends Controller
 
             // no necessary to print password..
 
-            $actions = array();
+            $a = new UserAction($users, []);
 
-            foreach ($users as $user) {
-                # code...
-
-                $actions[] = new UserAction($user, [
-                    'form' => $formBuilder->create(DeleteCrud::class, [
-                        'method' => 'DELETE',
-                        'url' => route('users.destroy', ['user' => $user->id])
-                    ])
-                ]);
-            }
-
-            return view("adminify::layouts.admin.pages.index", ["datas" => $users,  'thead' => $fillables, 'actions' => $actions]);
+            return view("adminify::layouts.admin.pages.index", ["datas" => $users,  'thead' => $fillables, 'dropdowns' => $a]);
     }
     /**
             * Show the form for creating a new resource.
