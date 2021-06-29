@@ -21,6 +21,9 @@
         <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
         <link type="text/css" href="{{ asset('argon') }}/css/extensions.css" rel="stylesheet">
         @stack('css')
+        @php
+            $fullmode = isset($fullmode) ? $fullmode : false;
+        @endphp
     </head>
     <body class="{{ $class ?? '' }}">
         @auth()
