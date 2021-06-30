@@ -156,7 +156,7 @@ class MenuController extends Controller
             $model = $config['menu-builder']['models'][$type];
 
             $three = [];
-            $html = '';
+            $html = [];
 
             if($type == 'custom') {
                 $three[] = (object) [
@@ -183,7 +183,7 @@ class MenuController extends Controller
 
             foreach ($three as $b) {
                 # code...
-                $html .= $v->make('adminify::layouts.admin.menubuilder.menu-item', ['item' => $b, 'type' => $type, 'new' => true])->render();
+                $html[] = $v->make('adminify::layouts.admin.menubuilder.menu-item', ['item' => $b, 'type' => $type, 'new' => true])->render();
             }
             
 
