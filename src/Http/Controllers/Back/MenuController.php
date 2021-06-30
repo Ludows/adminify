@@ -183,7 +183,7 @@ class MenuController extends Controller
 
             foreach ($three as $b) {
                 # code...
-                $html[] = $v->make('adminify::layouts.admin.menubuilder.menu-item', ['item' => $b, 'type' => $type, 'new' => true])->render();
+                $html[] = $v->make('adminify::layouts.admin.menubuilder.menu-item', ['item' => $b, 'type' => $type, 'new' => true, 'isCustom' => $type == 'custom'])->render();
             }
             
 

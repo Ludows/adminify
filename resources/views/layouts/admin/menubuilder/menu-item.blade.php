@@ -13,6 +13,9 @@
             @if(isset($new) && $new == false)
                 <input type="hidden" menu-three-key="menu-item-id" value="{{ $item->id }}"/>
             @endif
+            @if(isset($new) && $new == true && $type != 'custom')
+            
+            @endif
             <input type="hidden" menu-three-key="id" value="{{ $id }}"/>
             <input type="hidden" menu-three-key="type" value="{{ $type }}"/>
             <input type="hidden" menu-three-key="delete" value="0"/>
@@ -51,7 +54,7 @@
     <ul style="width:80%; border: 1px solid transparent;" id="nested-sortable-{{ $identifier }}" class="nested_sortable list-group">
         @if(isset($item->childs))
             @foreach($item->childs as $child)
-                @include('adminify::layouts.admin.menubuilder.menu-item', ['item' => $child, 'new' => false])
+                @include('adminify::layouts.admin.menubuilder.menu-item', ['item' => $child, 'new' => false, 'isCustom' => $type == 'custom'])
             @endforeach
         @endif
     </ul>
