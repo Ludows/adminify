@@ -43,7 +43,7 @@ class UserController extends Controller
 
             $a = new UserDropdownsManager($users, []);
 
-            return view("adminify::layouts.admin.pages.index", ["datas" => $users,  'thead' => $fillables, 'dropdowns' => $a]);
+            return view("adminify::layouts.admin.pages.index", ["datas" => $users,  'thead' => $fillables, 'dropdownManager' => $a]);
     }
     /**
             * Show the form for creating a new resource.
