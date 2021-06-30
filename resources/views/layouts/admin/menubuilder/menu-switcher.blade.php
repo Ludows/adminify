@@ -1,2 +1,5 @@
-
-{!! form($forms['formMenuSwitcher']) !!}
+<div class="card">
+    <div class="card-body">
+        {!! form($forms['formMenuSwitcher']) !!}
+    </div>
+</div>
