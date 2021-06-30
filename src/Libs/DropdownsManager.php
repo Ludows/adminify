@@ -12,6 +12,8 @@ class DropdownsManager
         $this->datas = isset($datas) ? $datas : null;
         $this->request = request();
         $this->models = isset($models) ? $models : [];
+
+        $this->handle();
     }
 
     public function setDefaults() {
@@ -41,8 +43,8 @@ class DropdownsManager
     public function hasModels() {
         return $this->model != [];
     }
-    public function getDropdown($index = 0) {
-        return $this->dropdowns[$index];
+    public function getDropdown($name = '') {
+        return $this->dropdowns[$name];
     }
     public function setDropdown($name = '', $params = []) {
 
@@ -75,8 +77,6 @@ class DropdownsManager
     }
     public function handle() {}
     public function render() {
-
-        $this->handle();
 
         $dropdowns = $this->getDropdowns();
         $tpl = $this->getView();
