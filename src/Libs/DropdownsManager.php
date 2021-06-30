@@ -1,8 +1,9 @@
 <?php
 
 namespace Ludows\Adminify\Libs;
+use Ludows\Adminify\Libs\Dropdown;
 
-class Dropdowns
+class DropdownsManager
 {
     public function __construct($models, $datas = [])
     {
@@ -60,7 +61,7 @@ class Dropdowns
     }
     public function add($name = '', $params = [], $group = null) {
         if($group != null && $this->exists($group) == false) {
-            $this->setAction($group , []);
+            $this->addGroup($group , []);
         }
         $this->setAction($name, array_merge($this->setDefaults(), $params), $group);
         return $this;

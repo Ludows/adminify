@@ -1,10 +1,11 @@
 <?php
 namespace Ludows\Adminify\Dropdowns;
 
-use Ludows\Adminify\Libs\Dropdowns;
+use Ludows\Adminify\Libs\DropdownsManager;
+use Ludows\Adminify\Libs\Dropdown;
 use Ludows\Adminify\Forms\DeleteCrud;
 
-class Users extends Dropdowns
+class Users extends DropdownsManager
 {
     public function handle() {
 
