@@ -5,6 +5,8 @@ namespace Ludows\Adminify\Repositories;
 use MrAtiebatie\Repository;
 use Ludows\Adminify\Models\Category; // Don't forget to update the model's namespace
 
+use Ludows\Adminify\Models\Media;
+
 class CategoryRepository
 {
     use Repository;
@@ -48,6 +50,15 @@ class CategoryRepository
                     $category->{$field} = $formValues[$field];
                 }
             }
+
+            if(isset($formValues['media_id'])) {
+                $json = json_decode($formValues['media_id']);
+
+                $m = Media::where('src', $json[0]->name)->first();
+                if($m != null) {
+                    $page->media_id = $m->id;
+                }
+            }
             // call boot method to save slug
             $category::booted();
 
@@ -86,6 +97,15 @@ class CategoryRepository
             foreach ($fields as $field) {
                 if(isset($formValues[$field])) {
                     $model->{$field} = $formValues[$field];
+                }
+            }
+
+            if(isset($formValues['media_id'])) {
+                $json = json_decode($formValues['media_id']);
+
+                $m = Media::where('src', $json[0]->name)->first();
+                if($m != null) {
+                    $model->media_id = $m->id;
                 }
             }
             // call boot method to save slug
