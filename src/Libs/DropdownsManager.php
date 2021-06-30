@@ -18,7 +18,7 @@ class DropdownsManager
 
     public function setDefaults() {
         return [
-            'template' => '',
+            'template' => 'adminify::layouts.admin.actionable.dropdown-item',
             'vars' => []
         ];
     }

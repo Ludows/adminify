@@ -18,14 +18,14 @@ class Users extends DropdownsManager
         foreach ($models as $m) {
             # code...            
             $this->add('dropdown_'.$m->id, [
-                'template' => 'adminify::actions.edit',
+                'template' => 'adminify::layouts.admin.dropdowns.extends.edit',
                 'vars' => [
                     'url' => route('users.edit', ['user' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
                     'name' => 'users'
                 ]
             ]);
             $this->add('dropdown_'.$m->id, [
-                'template' => 'adminify::actions.delete',
+                'template' => 'adminify::layouts.admin.dropdowns.extends.delete',
                 'vars' => [
                     'form' => $form->create(DeleteCrud::class, [
                         'method' => 'DELETE',
