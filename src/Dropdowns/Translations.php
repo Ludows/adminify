@@ -20,6 +20,9 @@ class Translations extends DropdownsManager
 
         foreach ($models as $m) {
             if($m->isMultiLangModel()) {
+                
+                $m->checkForTraduction();
+
                 $missing = $m->getNeededTranslations();
                 if(count($missing) > 0 && $r->exists('missing_translations')) {
                     foreach ($missing as $miss) {

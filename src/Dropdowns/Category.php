@@ -22,6 +22,9 @@ class Category extends DropdownsManager
         foreach ($models as $m) {
             # code...
             if($m->isMultiLangModel()) {
+
+                $m->checkForTraduction();
+
                 $missing = $m->getNeededTranslations();
                 if(count($missing) > 0 && $r->exists('missing_translations')) {
                     foreach ($missing as $miss) {
