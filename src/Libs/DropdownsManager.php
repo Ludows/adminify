@@ -38,7 +38,7 @@ class DropdownsManager
         return $this->models;
     }
     public function exists($name = '') {
-        return array_search( $name, $this->getDropdowns() );
+        return in_array( $name, $this->getDropdowns() );
     }
     public function hasModels() {
         return $this->model != [];
@@ -48,7 +48,7 @@ class DropdownsManager
     }
     public function setDropdown($name = '', $params = []) {
 
-        if($this->exists($name) != null) {
+        if(!$this->exists($name)) {
             $d = new Dropdown();
         }
         else {
