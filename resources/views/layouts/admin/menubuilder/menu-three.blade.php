@@ -21,7 +21,7 @@
             @if(count($three) > 0)
                 <ul id="sortable" class="list-group zone_menu_items">
                     @foreach($three as $menu_item)
-                        @include('adminify::layouts.admin.menubuilder.menu-item', ['item' => $menu_item])
+                        @include('adminify::layouts.admin.menubuilder.menu-item', ['item' => $menu_item, 'new' => false])
                     @endforeach
                 </ul>
             @else
