@@ -1,1 +1,1 @@
-{!! render_dropdown($action) !!}
+{!! render_dropdown($dropdownManager) !!}
