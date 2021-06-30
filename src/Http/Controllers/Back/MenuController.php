@@ -151,13 +151,15 @@ class MenuController extends Controller
 
             $config = config('site-settings');
             $type = $request->type;
+            $v = view();
 
             $model = $config['menu-builder']['models'][$type];
 
-            $a = [];
+            $three = [];
+            $html = '';
 
             if($type == 'custom') {
-                $a[] = (object) [
+                $three[] = (object) [
                     'title' => $request->input('title'),
                     'url' => $request->input('url'),
                     'slug' => Str::slug( $request->input('title'), '-' ),
@@ -168,19 +170,26 @@ class MenuController extends Controller
                 $items = $request->input('items');
 
                 if(is_string($items)) {
-                    $a[] = $model::find($items);
+                    $three[] = $model::find($items);
                 }
 
                 if(is_array($items)) {
                     foreach ($items as $item) {
                         # code...
-                        $a[] = $model::find($item);
+                        $three[] = $model::find($item);
                     }
                 }
             }
 
+            foreach ($three as $b) {
+                # code...
+                $html .= $v->make('adminify::layouts.admin.menubuilder.menu-item', ['item' => $b])->render();
+            }
+            
+
             return response()->json([
-                'items' => $a,
+                'html' => $html,
+                'items' => $three,
                 'multilang' => $request->useMultilang,
                 'type' => $type
             ]);
