@@ -21,26 +21,29 @@
                 </div>
             </div>
         </form>  --}}
-        <!-- User -->
+        {{-- <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
-            <li class="nav-item dropdown">
-                <a class="nav-link pr-0 text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    @include('adminify::layouts.admin.navbars.navs.avatar', ['withName' => true])
-                </a>
-                @include('adminify::layouts.admin.navbars.navs.dropdown-user')
-            </li>
-        </ul>
-        @if($useMultilang)
+            
+        </ul> --}}
+        
             <!-- Langs -->
             <ul class="navbar-nav align-items-center d-none d-md-flex">
                 <li class="nav-item dropdown">
                     <a class="nav-link pr-0 text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {{ $currentLang }}
+                        @include('adminify::layouts.admin.navbars.navs.avatar', ['withName' => true])
                     </a>
-                    @include('adminify::layouts.admin.navbars.navs.dropdown-lang')
+                    @include('adminify::layouts.admin.navbars.navs.dropdown-user')
                 </li>
+                @if($useMultilang)
+                    <li class="nav-item dropdown">
+                        <a class="nav-link pr-0 text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ $currentLang }}
+                        </a>
+                        @include('adminify::layouts.admin.navbars.navs.dropdown-lang')
+                    </li>
+                @endif
             </ul>
-        @endif
+        
 
     </div>
 </nav>
