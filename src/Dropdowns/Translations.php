@@ -18,11 +18,13 @@ class Translations extends DropdownsManager
 
         $form = app('Kris\LaravelFormBuilder\FormBuilder');
 
-        foreach ($models as $m) {
-            if($m->isMultiLangModel()) {
-                
-                $m->checkForTraduction();
+        if(count($models) > 0 && is_translatable_model($models[0])) {
+            check_traductions($models);
+        }
 
+        foreach ($models as $m) {
+            if(is_translatable_model($m)) {
+                
                 $missing = $m->getNeededTranslations();
                 if(count($missing) > 0 && $r->exists('missing_translations')) {
                     foreach ($missing as $miss) {
@@ -41,7 +43,7 @@ class Translations extends DropdownsManager
                 $this->add('dropdown_'.$m->id, [
                     'template' => 'adminify::layouts.admin.dropdowns.extends.edit',
                     'vars' => [
-                        'url' => route('traductions.edit', ['traduction' => $m->id, 'lang' => $r->useMultilang ? $miss : '']),
+                        'url' => route('traductions.edit', ['traduction' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
                         'name' => 'traductions'
                     ]
                 ]);

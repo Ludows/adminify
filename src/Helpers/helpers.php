@@ -92,6 +92,18 @@ if (! function_exists('render_dropdown')) {
     }
 }
 
+if (! function_exists('check_traductions')) {
+    function check_traductions($array) {
+        
+        foreach ($array as $model) {
+            # code...
+            if(is_translatable_model($model)) {
+
+            }
+        }
+    }
+}
+
 if (! function_exists('get_translation')) {
     function get_translation($string) {
         $t = new Traduction();
