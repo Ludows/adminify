@@ -322,21 +322,18 @@ return array(
         ),
         (object) array(
             'beforePublish' => [],
-            'name' => 'zerospam/laravel-gettext',
-            'publish' => null,
+            'name' => 'dingo/api',
+            'publish' => (object) [
+                'tag' => false,
+                'force' => false,
+                'sibling' => 'Dingo\Api\Provider\LaravelServiceProvider'
+            ],
             'autoload' => (object) [
                 'providers' => [],
-                'middlewares' => [
-                    'web' => [
-                        \Xinax\LaravelGettext\Middleware\GettextMiddleware::class,
-                    ],
-                ],
+                'middlewares' => [],
                 'aliases' => []
             ],
-            'config' => (object) [
-                'file' => '/../../config/laravel-gettext',
-                'name' => 'laravel-gettext',
-            ],
+            'config' => null,
             'afterPublish' => [],
         )
     );
