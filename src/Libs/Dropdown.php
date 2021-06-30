@@ -24,17 +24,20 @@ class Dropdown
     public function getItem($name = '') {
         return $this->items[$name];
     }
-    public function getItemView() {
-        return 'adminify::layouts.admin.actionable.dropdown';
-    }
     public function handle() {}
     public function render() {
         
         $this->handle();
 
-        $actions = $this->getItems();
-        $tpl = $this->getItemView();
-        $compiled = $this->view->make($tpl, ['actions' => $actions]);
+        $items = $this->getItems();
+        $compiled = '';
+
+        foreach ($items as $item) {
+            # code...
+            $compiled .= $this->view->make($item['tpl'], $item['vars']);
+        }
+
+       
         return $compiled;
     }
 }
