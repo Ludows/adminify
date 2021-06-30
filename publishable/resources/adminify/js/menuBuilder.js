@@ -129,7 +129,7 @@ jQuery(document).ready(function ($) {
             data: $(the_form).serializeFormJSON(),
             success: function (data) {
                 console.log(data)
-                let htmlLis = generateLiSortableElements(data);
+                let htmlLis = data.html;
 
                 $.each(htmlLis, function (i, htmlLi) {
                     $(sortableElement).append(htmlLi);
@@ -217,66 +217,5 @@ jQuery(document).ready(function ($) {
 
     function PasswordGenerator() {
         return Math.random().toString(36).slice(2);
-    }
-
-    function generateLiSortableElements(datas = []) {
-        let htmls = [];
-        let lang = $('html').attr('lang');
-        $.each(datas.items, function (i, item) {
-            let identifier = 'list-group-item-' + PasswordGenerator();
-            let html = `<li class="list-group-item" id="${identifier}" data-target="#collapse-${datas.multilang && datas.type != 'custom' ? item.slug[lang] : item.slug}" aria-expanded="false" aria-controls="collapse-${datas.multilang && datas.type != 'custom' ? item.slug[lang] : item.slug}">
-                        <span data-replace="${datas.multilang && datas.type != 'custom' ? item.title[lang] : item.title}" class="handle handle-click-collapse d-block">${datas.multilang && datas.type != 'custom' ? item.title[lang] : item.title}</span>
-                        <div class="collapse js-collapse" id="collapse-${datas.multilang && datas.type != 'custom' ? item.slug[lang] : item.slug}">
-                            <div class="card card-body">
-                                ${ item.id ? '<input type="hidden" menu-three-key="id" value="'+ item.id +'"/>': ''}
-                                <input type="hidden" menu-three-key="type" value="${datas.type}"/>
-                                <input type="hidden" menu-three-key="title" value="${datas.multilang && datas.type != 'custom' ? item.title[lang] : item.title}"/>
-                                <input type="hidden" menu-three-key="slug" value="${datas.multilang && datas.type != 'custom' ? item.slug[lang] : item.slug}"/>
-                                <div class="form-group">
-                                    <label for="title_nav_${identifier}">Titre de navigation @todo trad</label>
-                                    <input type="text" menu-three-key="overwrite_title" data-sel="#${identifier} .handle-click-collapse" value="${datas.type == 'custom' ? item.title : ''}" class="form-control js-change-title" id="title_nav_${identifier}">
-                                </div>
-                                <div class="call_media" id="media-${identifier}">
-                                    <div class="row row-selection"></div>
-                                    <div class="form-group">
-                                        <button type="button" class="btn btn-primary">Call Media @trad</button>
-                                        <input type="hidden" menu-three-key="media_src" value="" />
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <div class="form-check">
-                                        <input ${datas.type == 'custom' && item.open_new_tab ? 'checked="checked"' : ''} menu-three-key="open_new_tab" class="form-check-input" type="checkbox" value="" id="openOnglet_${identifier}">
-                                        <label class="form-check-label" for="openOnglet_${identifier}">
-                                            Ouvrir dans un autre onglet ? @trad
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="classes_${identifier}">Classes @todo trad</label>
-                                    <input menu-three-key="class" type="text" class="form-control" id="classes_${identifier}">
-                                </div>
-                            </div>
-                            <div class="card-footer">
-                                <a href="#" data-el="${identifier}" class="text-underline js-suppress text-danger">Supprimer @trad</a>
-                                <a href="#" data-el="collapse-${datas.multilang && datas.type != 'custom' ? item.slug[lang] : item.slug}" class="text-underline js-close text-default">Fermer @trad</a>
-                            </div>
-                        </div>
-                        <div style="width:80%; border: 1px solid transparent;" id="nested-sortable-${identifier}" class="nested_sortable list-group"></div>
-                    </li>
-                    <script>
-                        lfmInitFunction([{
-                            selector: "media-${identifier}",
-                            options: [],
-                            multilang: ${datas.multilang},
-                            currentLang: '${lang}'
-                        }]);
-                    </script>
-
-                    `;
-            htmls.push(html);
-        })
-
-        return htmls;
     }
 })
