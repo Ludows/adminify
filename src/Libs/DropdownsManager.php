@@ -38,7 +38,7 @@ class DropdownsManager
         return $this->models;
     }
     public function exists($name = '') {
-        return in_array( $name, $this->getDropdowns() );
+        return array_key_exists( $name, $this->getDropdowns() );
     }
     public function hasModels() {
         return $this->model != [];
@@ -54,7 +54,7 @@ class DropdownsManager
         else {
             $d = $this->getDropdown($name);
         }
-        
+
         $d = $d->setItem($params);
 
         $this->dropdowns[$name] = $d;
