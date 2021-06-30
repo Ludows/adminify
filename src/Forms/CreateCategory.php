@@ -11,6 +11,7 @@ class CreateCategory extends Form
     public function buildForm()
     {
         $categories = $this->hydrateSelect();
+        $m = $this->getModel();
         // Add fields here...
         $this->add('title', Field::TEXT, [
             'label_attr' => ['class' => 'control-label', 'for' => 'cat_title'],
@@ -19,7 +20,10 @@ class CreateCategory extends Form
             ],
         ]);
         $this->add('media_id', 'lfm', [
-            'label_show' => false
+            'label_show' => false,
+            'attr' => [
+                'value' => $m->media_id != 0 ? $m->media->path : null
+            ]
         ]);
         // if(count($categories) > 0) {
             $this->add('parent_id', 'select2', [

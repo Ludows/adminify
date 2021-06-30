@@ -49,7 +49,10 @@ class CreatePage extends Form
                 ]
             ])
             ->add('media_id', 'lfm', [
-                'label_show' => false
+                'label_show' => false,
+                'attr' => [
+                    'value' => isset($m) && $m->media_id != 0 ? $m->media->path : null
+                ]
             ])
             ->add('content', 'laraberg', [
                 'label_show' => false

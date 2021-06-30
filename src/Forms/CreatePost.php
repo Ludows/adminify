@@ -12,6 +12,7 @@ class CreatePost extends Form
     public function buildForm()
     {
         $hydrator = $this->hydrateSelect();
+        $m = $this->getModel();
 
             $this->add('title', Field::TEXT, []);
             $this->add('categories_id', 'select2', [
@@ -30,6 +31,9 @@ class CreatePost extends Form
             
             $this->add('media_id', 'lfm',[
                 'label_show' => false,
+                'attr' => [
+                    'value' => isset($m) && $m->media_id != 0 ? $m->media->path : null
+                ]
             ]);
 
             $this->add('content', 'laraberg', []);
