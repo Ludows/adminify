@@ -9,7 +9,7 @@ use Kris\LaravelFormBuilder\FormBuilder;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Repositories\CommentRepository;
-use Ludows\Adminify\Dropdowns\Comment as CommentAction;
+use Ludows\Adminify\Dropdowns\Comment as CommentDropdownManager;
 use Illuminate\Support\Str;
 
 use Ludows\Adminify\Forms\DeleteCrud;
@@ -39,22 +39,12 @@ class CommentController extends Controller
             else {
                 $comments = Comment::all();
             }
-            $comments = Comment::all();
             $model = new Comment();
             $fillables = $model->getFillable();
 
-            $actions = array();
-            foreach ($comments as $comment) {
-                # code...
-                $actions[] = new CommentAction($comment, [
-                    'form' => $formBuilder->create(DeleteCrud::class, [
-                        'method' => 'DELETE',
-                        'url' => route('comments.destroy', ['comment' => $comment->id])
-                    ])
-                ]);
-            }
+            $a = new CommentDropdownManager($comments, []);
 
-            return view("adminify::layouts.admin.pages.index", ["datas" => $comments, 'actions' => $actions,  'thead' => $fillables]);
+            return view("adminify::layouts.admin.pages.index", ["datas" => $comments, 'dropdownManager' => $a,  'thead' => $fillables]);
         }
 
         /**

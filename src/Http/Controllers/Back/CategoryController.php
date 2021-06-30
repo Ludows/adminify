@@ -13,7 +13,7 @@ use Ludows\Adminify\Forms\CreateCategory;
 use Ludows\Adminify\Forms\UpdateCategory;
 use Ludows\Adminify\Forms\DeleteCrud;
 use Ludows\Adminify\Http\Controllers\Controller;
-use Ludows\Adminify\Dropdowns\Category as CategoryAction;
+use Ludows\Adminify\Dropdowns\Category as CategoryDropdownManager;
 
 
 use Ludows\Adminify\Repositories\CategoryRepository;
@@ -48,22 +48,13 @@ class CategoryController extends Controller
             $model = new Category();
             $fillables = $model->getFillable();
 
-            $actions = array();
-            foreach ($categories as $categorie) {
-                # code...
-                $actions[] = new CategoryAction($categorie, [
-                    'form' => $formBuilder->create(DeleteCrud::class, [
-                        'method' => 'DELETE',
-                        'url' => route('categories.destroy', ['category' => $categorie->id])
-                    ])
-                ]);
-            }
+            $a = new CategoryDropdownManager($categories, []);
 
             if(isset($categories) && count($categories) > 0) {
                 $categories[0]->flashForMissing();
             }
 
-            return view("adminify::layouts.admin.pages.index", ["datas" => $categories, 'thead' => $fillables, 'actions' => $actions ]);
+            return view("adminify::layouts.admin.pages.index", ["datas" => $categories, 'thead' => $fillables, 'dropdownManager' => $a ]);
         }
 
         /**

@@ -19,7 +19,7 @@ use Ludows\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Repositories\PostRepository;
 use Ludows\Adminify\Repositories\SeoRepository;
-use Ludows\Adminify\Dropdowns\Post as PostAction;
+use Ludows\Adminify\Dropdowns\Post as PostDropdownManager;
 
 class PostController extends Controller
 {
@@ -52,26 +52,14 @@ class PostController extends Controller
             $model = new Post();
             $fillables = $model->getFillable();
 
-            $actions = array();
-
-            foreach ($posts as $post) {
-                # code...
-                $post->checkForTraduction();
-
-                $actions[] = new PostAction($post, [
-                    'form' => $formBuilder->create(DeleteCrud::class, [
-                        'method' => 'DELETE',
-                        'url' => route('posts.destroy', ['post' => $post->id])
-                    ])
-                ]);
-            }
+            $a = new PostDropdownManager($posts, []);
 
             if(isset($posts) && count($posts) > 0) {
                 $posts[0]->flashForMissing();
             }
 
 
-            return view("adminify::layouts.admin.pages.index", ["datas" => $posts, 'actions' => $actions,  'thead' => $fillables]);
+            return view("adminify::layouts.admin.pages.index", ["datas" => $posts, 'dropdownManager' => $a,  'thead' => $fillables]);
         }
 
         /**

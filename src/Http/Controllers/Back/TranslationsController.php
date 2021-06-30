@@ -15,7 +15,7 @@ use Ludows\Adminify\Models\Translations as Traductions;
 use Ludows\Adminify\Repositories\TranslationRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 
-use Ludows\Adminify\Dropdowns\Translations as TranslationAction;
+use Ludows\Adminify\Dropdowns\Translations as TranslationDropdownManager;
 
 
 class TranslationsController extends Controller
@@ -47,25 +47,14 @@ class TranslationsController extends Controller
             else {
                 $trans = Traductions::all();
             }
-            $actions = array();
-
-            foreach ($trans as $t) {
-                # code...
-                $t->checkForTraduction();
-
-                $actions[] = new TranslationAction($t ,[
-                    'form' => $formBuilder->create(DeleteCrud::class, [
-                        'method' => 'DELETE',
-                        'url' => route('traductions.destroy', ['traduction' => $t->id])
-                    ])
-                ]);
-            }
+            
+            $a = new TranslationDropdownManager($trans ,[]);
 
             if(isset($trans) && count($trans) > 0) {
                 $trans[0]->flashForMissing();
             }
 
-            return view("adminify::layouts.admin.pages.index", ["datas" => $trans, 'actions' => $actions, 'thead' => $fillables]);
+            return view("adminify::layouts.admin.pages.index", ["datas" => $trans, 'dropdownManager' => $a, 'thead' => $fillables]);
         }
 
         /**

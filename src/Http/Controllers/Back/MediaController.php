@@ -14,7 +14,7 @@ use Ludows\Adminify\Http\Controllers\Controller;
 use File;
 
 use Illuminate\Support\Str;
-use Ludows\Adminify\Dropdowns\Media as MediaAction;
+use Ludows\Adminify\Dropdowns\Media as MediaDropdownManager;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -47,19 +47,10 @@ class MediaController extends Controller
             $fillables = $model->getFillable();
             $medias = Media::all();
 
-            $actions = array();
-            foreach ($medias as $media) {
-                # code...
-                $actions[] = new MediaAction($media, [
-                    'form' => $formBuilder->create(DeleteCrud::class, [
-                        'method' => 'DELETE',
-                        'url' => route('medias.destroy', ['media' => $media->id])
-                    ])
-                ]);
-            }
+            $a = new MediaDropdownManager($medias, []);
 
             // dd($forms);
-            return view("adminify::layouts.admin.pages.index", ["datas" => $medias, 'thead' => $fillables, 'actions' => $actions,  'forms' => collect($forms) ]);
+            return view("adminify::layouts.admin.pages.index", ["datas" => $medias, 'thead' => $fillables, 'dropdownManager' => $a ]);
         }
 
         /**

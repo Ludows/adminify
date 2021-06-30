@@ -20,7 +20,7 @@ use Illuminate\Support\Str;
 use Ludows\Adminify\Repositories\MenuRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 
-use Ludows\Adminify\Dropdowns\Menu as MenuAction;
+use Ludows\Adminify\Dropdowns\Menu as MenuDropdownManager;
 
 
 class MenuController extends Controller
@@ -51,25 +51,13 @@ class MenuController extends Controller
                 $menus = Menu::all();
             }
 
-            $actions = array();
-
-            foreach ($menus as $menu) {
-                # code...
-                $menu->checkForTraduction();
-
-                $actions[] = new MenuAction($menu, [
-                    'form' => $formBuilder->create(DeleteCrud::class, [
-                        'method' => 'DELETE',
-                        'url' => route('menus.destroy', ['menu' => $menu->id])
-                    ])
-                ]);
-            }
+            $a = new MenuDropdownManager($menus, []);
 
             if(isset($menus) && count($menus) > 0) {
                 $menus[0]->flashForMissing();
             }
 
-            return view("adminify::layouts.admin.pages.index", ["datas" => $menus, 'actions' => $actions, 'thead' => $fillables]);
+            return view("adminify::layouts.admin.pages.index", ["datas" => $menus, 'dropdownManager' => $a, 'thead' => $fillables]);
         }
 
         /**

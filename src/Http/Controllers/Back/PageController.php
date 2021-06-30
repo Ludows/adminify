@@ -20,7 +20,7 @@ use Ludows\Adminify\Http\Requests\PageRequest;
 use Ludows\Adminify\Repositories\PageRepository;
 use Ludows\Adminify\Repositories\SeoRepository;
 
-use Ludows\Adminify\Dropdowns\Page as PageAction;
+use Ludows\Adminify\Dropdowns\Page as PageDropdownManager;
 
 class PageController extends Controller
 {
@@ -45,8 +45,6 @@ class PageController extends Controller
             $model = new Page();
             $fillables = $model->getFillable();
 
-
-
             if($request->useMultilang) {
                 $pages = Page::lang($request->lang);
                 // dd($categories);
@@ -56,24 +54,12 @@ class PageController extends Controller
                 $pages = Page::all();
             }
 
-            $actions = array();
-
-            foreach ($pages as $page) {
-                # code...
-                $page->checkForTraduction();
-                $actions[] = new PageAction($page, [
-                    'form' => $formBuilder->create(DeleteCrud::class, [
-                        'method' => 'DELETE',
-                        'url' => route('pages.destroy', ['page' => $page->id])
-                    ])
-                ]);
-
-            }
+            $a = new PageDropdownManager($pages, []);
 
             if(isset($pages) && count($pages) > 0) {
                 $pages[0]->flashForMissing();
             }
-            return view("adminify::layouts.admin.pages.index", ["datas" => $pages, 'actions' => $actions, 'thead' => $fillables]);
+            return view("adminify::layouts.admin.pages.index", ["datas" => $pages, 'dropdownManager' => $a, 'thead' => $fillables]);
         }
 
         /**
