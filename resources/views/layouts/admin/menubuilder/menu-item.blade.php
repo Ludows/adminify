@@ -39,7 +39,7 @@
             <div class="call_media" id="media-{{ $identifier }}">
                 <div class="row row-selection"></div>
                 <div class="form-group">
-                    <button type="button" class="btn btn-primary">Call Media @trad</button>
+                    <button type="button" class="btn btn-primary">{{ _i('admin.lfm') }}</button>
                     <input type="hidden" data-path="{{ $item->media->path ?? '' }}" menu-three-key="media_id" value="{{ $item->media->id ?? '' }}" />
                 </div>
             </div>
