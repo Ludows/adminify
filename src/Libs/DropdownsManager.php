@@ -84,7 +84,7 @@ class DropdownsManager
         else {
             $dropdowns = $this->getDropdowns();
         }
-        $dropdowns = $this->getDropdowns();
+
         $tpl = $this->getView();
         $compiled = $this->view->make($tpl, ['dropdowns' => $dropdowns]);
         return $compiled;
