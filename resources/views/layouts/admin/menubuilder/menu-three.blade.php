@@ -43,7 +43,5 @@
 </div>
 
 @push('modales')
-    @if(isset($menu_three) && count($three) > 0)
-        @include('adminify::layouts.admin.modales.modaleFileManager')
-    @endif
+    @include('adminify::layouts.admin.modales.modaleFileManager')
 @endpush
