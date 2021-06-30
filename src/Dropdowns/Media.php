@@ -23,7 +23,7 @@ class Media extends DropdownsManager
                     'name' => 'medias'
                 ]
             ]);
-            $this->add('delete', [
+            $this->add('dropdown_'.$m->id, [
                 'template' => 'adminify::layouts.admin.dropdowns.extends.delete',
                 'vars' => [
                     'form' => $form->create(DeleteCrud::class, [
