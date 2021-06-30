@@ -56,7 +56,7 @@ class CategoryRepository
 
                 $m = Media::where('src', $json[0]->name)->first();
                 if($m != null) {
-                    $page->media_id = $m->id;
+                    $category->media_id = $m->id;
                 }
             }
             // call boot method to save slug
