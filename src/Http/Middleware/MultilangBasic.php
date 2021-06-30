@@ -63,15 +63,19 @@ class MultilangBasic
 
         if($config['multilang']) {
 
-            if(isset($request->lang) && $request->lang != $currentLocale) {
+            $langParameter = $request->get('lang');
+            // dd($request->get('lang'), $currentLocale);
+            if($langParameter && $langParameter != $currentLocale) {
                 //we update the value
-                \LaravelGettext::setLocale($request->lang);
-                $currentLocale = $request->lang;
+                $v->share('currentLang', $langParameter);
+                \LaravelGettext::setLocale($langParameter);
+                $currentLocale = $langParameter;
                 merge_to_request('lang', $currentLocale);
             }
 
             if(!isset($request->lang) && !in_array('store' , $routeNameSpl )) {
                 merge_to_request('lang', $currentLocale);
+                $v->share('currentLang', $currentLocale);
                 return redirect(route($routeName, ['lang' => $request->lang]));
             }
             else {
