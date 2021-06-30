@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Libs;
 
-class Dropdowns
+class Dropdown
 {
     public function __construct()
     {
