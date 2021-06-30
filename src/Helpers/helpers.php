@@ -75,8 +75,8 @@ if (! function_exists('setting')) {
     }
 }
 
-if (! function_exists('render_actions')) {
-    function render_actions($array) {
+if (! function_exists('render_dropdowns')) {
+    function render_dropdowns($array) {
         foreach ($array as $a) {
             # code...
             return $a->render();
@@ -84,8 +84,8 @@ if (! function_exists('render_actions')) {
     }
 }
 
-if (! function_exists('render_action')) {
-    function render_action($class) {
+if (! function_exists('render_dropdown')) {
+    function render_dropdown($class) {
         return $class->render();
     }
 }
