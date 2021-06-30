@@ -4,7 +4,7 @@
         <!-- Brand -->
         <div class="">
             <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{{ route('home.dashboard') }}">{{ __('Dashboard') }}</a>
-            <a href="#" class="btn btn-default js-search-btn">
+            <a href="#" class="btn btn-default js-search-btn btn-sm rounded">
                 <i class="fas fa-search"></i>
             </a>
         </div>
@@ -24,7 +24,7 @@
         <!-- User -->
         <ul class="navbar-nav align-items-center d-none d-md-flex">
             <li class="nav-item dropdown">
-                <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link pr-0 text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     @include('adminify::layouts.admin.navbars.navs.avatar', ['withName' => true])
                 </a>
                 @include('adminify::layouts.admin.navbars.navs.dropdown-user')
@@ -34,7 +34,7 @@
             <!-- Langs -->
             <ul class="navbar-nav align-items-center d-none d-md-flex">
                 <li class="nav-item dropdown">
-                    <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="nav-link pr-0 text-white" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ $currentLang }}
                     </a>
                     @include('adminify::layouts.admin.navbars.navs.dropdown-lang')
