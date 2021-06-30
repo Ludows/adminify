@@ -13,7 +13,7 @@ use Ludows\Adminify\Http\Requests\CreateUserRequest;
 use Ludows\Adminify\Http\Requests\UserUpdateRequest;
 use Ludows\Adminify\Http\Controllers\Controller;
 
-use Ludows\Adminify\Dropdowns\Users as UserAction;
+use Ludows\Adminify\Dropdowns\Users as UserDropdownsManager;
 
 use Ludows\Adminify\Forms\CreateUser;
 use Ludows\Adminify\Forms\UpdateUser;
@@ -41,7 +41,7 @@ class UserController extends Controller
 
             // no necessary to print password..
 
-            $a = new UserAction($users, []);
+            $a = new UserDropdownsManager($users, []);
 
             return view("adminify::layouts.admin.pages.index", ["datas" => $users,  'thead' => $fillables, 'dropdowns' => $a]);
     }

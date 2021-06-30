@@ -9,7 +9,7 @@ class Dropdowns
         $this->items = [];
         $this->view = view();
         $this->request = request();
-        $this->handle();
+       
     }
 
     public function getRequest() {
@@ -29,6 +29,9 @@ class Dropdowns
     }
     public function handle() {}
     public function render() {
+        
+        $this->handle();
+
         $actions = $this->getItems();
         $tpl = $this->getItemView();
         $compiled = $this->view->make($tpl, ['actions' => $actions]);

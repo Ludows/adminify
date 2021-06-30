@@ -7,13 +7,11 @@ class DropdownsManager
 {
     public function __construct($models, $datas = [])
     {
-        $this->actions = [];
+        $this->dropdowns = [];
         $this->view = view();
         $this->datas = isset($datas) ? $datas : null;
         $this->request = request();
         $this->models = isset($models) ? $models : [];
-        
-        $this->handle();
     }
 
     public function setDefaults() {
@@ -31,22 +29,22 @@ class DropdownsManager
     public function hasDatas() {
         return $this->datas != null;
     }
-    public function getActions() {
-        return $this->actions;
+    public function getDropdowns() {
+        return $this->dropdowns;
     }
     public function getModels() {
         return $this->models;
     }
     public function exists($name = '') {
-        return array_search( $name, $this->getActions() );
+        return array_search( $name, $this->getDropdowns() );
     }
     public function hasModels() {
         return $this->model != [];
     }
-    public function getAction($name = '') {
-        return $this->actions[$name];
+    public function getDropdown($index = 0) {
+        return $this->dropdowns[$index];
     }
-    public function setAction($name = '', $params = [], $group = null) {
+    public function setDropdown($name = '', $params = [], $group = null) {
         if($group != null) {
             $this->actions[$group][$name] = $params;
         }
@@ -55,37 +53,29 @@ class DropdownsManager
         }
         return $this;
     }
-    public function removeAction($name = '') {
-        unset($this->actions[$name]);
+    public function removeDropdown($index = 0) {
+        unset($this->dropdowns[$index]);
         return $this;
     }
     public function add($name = '', $params = [], $group = null) {
-        if($group != null && $this->exists($group) == false) {
-            $this->addGroup($group , []);
-        }
-        $this->setAction($name, array_merge($this->setDefaults(), $params), $group);
-        return $this;
-    }
-    public function addGroup($name = null) {
-        $this->setAction($name, []);
-        return $this;
-    }
-    public function removeGroup($name = null) {
-        $this->removeAction($name);
+        $this->setDropdown($name, array_merge($this->setDefaults(), $params));
         return $this;
     }
     public function getView() {
         return 'adminify::layouts.admin.actionable.dropdown';
     }
-    public function remove($name = '') {
-        $this->removeAction($name);
+    public function remove($index = 0) {
+        $this->removeDropdown($index);
         return $this;
     }
     public function handle() {}
     public function render() {
-        $actions = $this->getActions();
+
+        $this->handle();
+
+        $dropdowns = $this->getDropdowns();
         $tpl = $this->getView();
-        $compiled = $this->view->make($tpl, ['actions' => $actions]);
+        $compiled = $this->view->make($tpl, ['dropdowns' => $dropdowns]);
         return $compiled;
     }
 }
