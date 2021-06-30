@@ -131,11 +131,12 @@ class MenuBuilder
     public function getMenuSwitcherVars() {
         $menus = [];
         $defaultsVars = $this->getDefaultsVars();
+        $r = $this->getRequest();
         if($defaultsVars['multilang']) {
-            $menus = Menu::lang($defaultsVars['lang'])->all();
+            $menus = Menu::lang($defaultsVars['lang'])->where('id', '!=' , $r->menu)->get();
         }
         else {
-            $menus = Menu::all();
+            $menus = Menu::where('id', '!=' , $r->menu)->get();
         }
         return $menus;
     }
