@@ -4,7 +4,7 @@
         <i class="fas fa-ellipsis-v"></i>
     </a>
     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-        @foreach($dropdown as $action)
+        @foreach($dropdowns as $action)
             {!! $action->render() !!}
         @endforeach
     </div>
