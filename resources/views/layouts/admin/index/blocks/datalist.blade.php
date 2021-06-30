@@ -15,7 +15,7 @@
                                             @endforeach
                                             <td>
                                                 @isset($dropdownManager)
-                                                    @include('adminify::layouts.admin.index.blocks.dropdown-actions', ['action' => $dropdownManager->getDropdown('dropdown_'.$data->id ) ])
+                                                    @include('adminify::layouts.admin.index.blocks.dropdown-actions', ['dropdownManager' => $dropdownManager ])
                                                 @endisset
                                             </td>
                                         </tr>
