@@ -47,7 +47,7 @@ class MenuBuilder
         return $this->config;
     }
     public function getTemplate() {
-        return 'layouts.admin.menubuilder.default';
+        return 'adminify::layouts.admin.menubuilder.default';
     }
     public function getDefaultsVars() {
         $array = [];
