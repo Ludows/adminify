@@ -164,6 +164,7 @@ class MenuController extends Controller
                     'url' => $request->input('url'),
                     'slug' => Str::slug( $request->input('title'), '-' ),
                     'open_new_tab' => $request->input('open_new_tab') ? true : false,
+                    'overwrite_title' => ''
                 ];
             }
             else {
