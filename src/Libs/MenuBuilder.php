@@ -132,7 +132,7 @@ class MenuBuilder
         $menus = [];
         $defaultsVars = $this->getDefaultsVars();
         $r = $this->getRequest();
-        if($defaultsVars['multilang']) { 
+        if($defaultsVars['multilang']) {
             $menus = $r->menu != null ? Menu::where('id', '!=' , $r->menu->id)->lang($defaultsVars['lang']) : Menu::lang($defaultsVars['lang']);
         }
         else {
