@@ -34,7 +34,7 @@ class Dropdown
 
         foreach ($items as $item) {
             # code...
-            $compiled .= $this->view->make($item['tpl'], $item['vars']);
+            $compiled .= $this->view->make($item['template'], $item['vars']);
         }
 
        
