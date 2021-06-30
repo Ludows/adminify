@@ -53,37 +53,37 @@ return [
         'searchType' => 'fillable', // or manual. In manual mode, columns is necessary.
         'search' => [
             'post' => [
-                'actionable' => \Ludows\Adminify\Actions\Post::class,
+                'dropdownManager' => \Ludows\Adminify\Dropdowns\Post::class,
                 'class' => \Ludows\Adminify\Models\Post::class,
                 'columns' => []
             ],
             'user' => [
-                'actionable' => \Ludows\Adminify\Actions\Users::class,
+                'dropdownManager' => \Ludows\Adminify\Dropdowns\Users::class,
                 'class' => \Ludows\Adminify\Models\User::class,
                 'columns' => []
             ],
             'menu' => [
-                'actionable' => \Ludows\Adminify\Actions\Menu::class,
+                'dropdownManager' => \Ludows\Adminify\Dropdowns\Menu::class,
                 'class' => \Ludows\Adminify\Models\Menu::class,
                 'columns' => []
             ],
             'page' => [
-                'actionable' => \Ludows\Adminify\Actions\Page::class,
+                'dropdownManager' => \Ludows\Adminify\Dropdowns\Page::class,
                 'class' => \Ludows\Adminify\Models\Page::class,
                 'columns' => []
             ],
             'category' => [
-                'actionable' => \Ludows\Adminify\Actions\Category::class,
+                'dropdownManager' => \Ludows\Adminify\Dropdowns\Category::class,
                 'class' => \Ludows\Adminify\Models\Category::class,
                 'columns' => []
             ],
             'comment' => [
-                'actionable' => \Ludows\Adminify\Actions\Comment::class,
+                'dropdownManager' => \Ludows\Adminify\Dropdowns\Comment::class,
                 'class' => \Ludows\Adminify\Models\Comment::class,
                 'columns' => []
             ],
             'traduction' => [
-                'actionable' => \Ludows\Adminify\Actions\Translations::class,
+                'dropdownManager' => \Ludows\Adminify\Dropdowns\Translations::class,
                 'class' => \Ludows\Adminify\Models\Translations::class,
                 'columns' => []
             ],

@@ -66,20 +66,12 @@ class ListingController extends Controller
 
         $results = $m->get();
 
-        $actions = array();
-        foreach ($results as $result) {
-            # code...
-            $actionable = $config['search'][$datas['singular']]['actionable'];
 
-            $actions[] = new $actionable($result, [
-                    'form' => $formBuilder->create(DeleteCrud::class, [
-                    'method' => 'DELETE',
-                    'url' => route( Str::plural($datas['singular']). '.destroy', [ $datas['singular'] => $result->id])
-                ])
-            ]);
-        }
+        $dropdownManager = $config['search'][$datas['singular']]['dropdownManager'];
 
-        $v = view('adminify::layouts.admin.index.blocks.datalist', ['actions' => $actions, 'datas' => $results, 'thead' => $columns, 'name' => Str::plural($datas['singular']) ])->render();
+        $a = new $dropdownManager($results, []);
+
+        $v = view('adminify::layouts.admin.index.blocks.datalist', ['dropdownManager' => $a, 'datas' => $results, 'thead' => $columns, 'name' => Str::plural($datas['singular']) ])->render();
 
 
         $a = [
