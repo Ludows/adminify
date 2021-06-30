@@ -4,6 +4,7 @@
     $id = isset($new) && $new == true ? $item->id : $item->related->id;
     $type = isset($type) ? $type : $item->type;
     $slug = isset($new) && $new == true ? $item->slug : $item->related->slug;
+    $isNew = isset($new) ? $new : false;
 @endphp
 {{-- {{ dd($item->related) }} --}}
 <li class="list-group-item" id="list-group-item-{{ $identifier }}" data-target="#collapse-{{ $identifier }}" aria-expanded="false" aria-controls="collapse-{{ $identifier }}">
@@ -13,10 +14,11 @@
             @if(isset($new) && $new == false)
                 <input type="hidden" menu-three-key="menu-item-id" value="{{ $item->id }}"/>
             @endif
-            @if(isset($new) && $new == true && $type != 'custom')
-            
+            @if(!$isCustom && $isNew)
+                <input type="hidden" menu-three-key="id" value="{{ $id }}"/>
+            @elseif(!$isNew)
+                <input type="hidden" menu-three-key="id" value="{{ $id }}"/>
             @endif
-            <input type="hidden" menu-three-key="id" value="{{ $id }}"/>
             <input type="hidden" menu-three-key="type" value="{{ $type }}"/>
             <input type="hidden" menu-three-key="delete" value="0"/>
             <input type="hidden" menu-three-key="title" value="{{ $title }}"/>
