@@ -1,10 +1,19 @@
 @php
     $identifier = Str::random(10);
+    $isNew = isset($new) ? $new : false;
     $title = isset($new) && $new == true ? $item->title : $item->related->title;
-    $id = isset($new) && $new == true ? $item->id : $item->related->id;
+
+    $id = null;
+    if(!$isCustom && $isNew) {
+        $id = $item->id;
+    }
+    elseif(!$isNew) {
+        $id = $item->related->id;
+    }
+    
     $type = isset($type) ? $type : $item->type;
     $slug = isset($new) && $new == true ? $item->slug : $item->related->slug;
-    $isNew = isset($new) ? $new : false;
+    
 @endphp
 {{-- {{ dd($item->related) }} --}}
 <li class="list-group-item" id="list-group-item-{{ $identifier }}" data-target="#collapse-{{ $identifier }}" aria-expanded="false" aria-controls="collapse-{{ $identifier }}">
