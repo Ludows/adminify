@@ -76,8 +76,14 @@ class DropdownsManager
         return $this;
     }
     public function handle() {}
-    public function render() {
+    public function render($index) {
 
+        if($index != null) {
+            $dropdowns = [$this->getDropdown('dropdown_'.$index)];
+        }
+        else {
+            $dropdowns = $this->getDropdowns();
+        }
         $dropdowns = $this->getDropdowns();
         $tpl = $this->getView();
         $compiled = $this->view->make($tpl, ['dropdowns' => $dropdowns]);

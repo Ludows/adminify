@@ -77,16 +77,18 @@ if (! function_exists('setting')) {
 
 if (! function_exists('render_dropdowns')) {
     function render_dropdowns($array) {
+        $i = 0;
         foreach ($array as $a) {
             # code...
-            return $a->render();
+            return $a->render($i ? $i : null);
+            $i++;
         }
     }
 }
 
 if (! function_exists('render_dropdown')) {
-    function render_dropdown($class) {
-        return $class->render();
+    function render_dropdown($class, $index) {
+        return $class->render($index ? $index : null);
     }
 }
 
