@@ -17,14 +17,14 @@ class Users extends DropdownsManager
 
         foreach ($models as $m) {
             # code...            
-            $this->add('edit_'.$m->id, [
+            $this->add('group_'.$m->id, [
                 'template' => 'adminify::actions.edit',
                 'vars' => [
                     'url' => route('users.edit', ['user' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
                     'name' => 'users'
                 ]
-            ], 'group_'.$m->id);
-            $this->add('delete_'.$m->id, [
+            ]);
+            $this->add('group_'.$m->id, [
                 'template' => 'adminify::actions.delete',
                 'vars' => [
                     'form' => $form->create(DeleteCrud::class, [
@@ -32,7 +32,7 @@ class Users extends DropdownsManager
                         'url' => route('users.destroy', ['user' => $m->id])
                     ])
                 ]
-            ], 'group_'.$m->id);
+            ]);
         }
     }
 }

@@ -9,7 +9,6 @@ class Dropdowns
         $this->items = [];
         $this->view = view();
         $this->request = request();
-       
     }
 
     public function getRequest() {
@@ -18,8 +17,9 @@ class Dropdowns
     public function getItems() {
         return $this->items;
     }
-    public function setItems($array) {
-
+    public function setItem($items) {
+        $this->items[] = $items;
+        return $this;
     }
     public function getItem($name = '') {
         return $this->items[$name];

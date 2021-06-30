@@ -44,20 +44,25 @@ class DropdownsManager
     public function getDropdown($index = 0) {
         return $this->dropdowns[$index];
     }
-    public function setDropdown($name = '', $params = [], $group = null) {
-        if($group != null) {
-            $this->actions[$group][$name] = $params;
+    public function setDropdown($name = '', $params = []) {
+
+        if($this->exists($name) != null) {
+            $d = new Dropdown();
         }
         else {
-            $this->actions[$name] = $params;
+            $d = $this->getDropdown($name);
         }
+        
+        $d = $d->setItem($params);
+
+        $this->dropdowns[$name] = $d;
         return $this;
     }
     public function removeDropdown($index = 0) {
         unset($this->dropdowns[$index]);
         return $this;
     }
-    public function add($name = '', $params = [], $group = null) {
+    public function add($name = '', $params = []) {
         $this->setDropdown($name, array_merge($this->setDefaults(), $params));
         return $this;
     }
