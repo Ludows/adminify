@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'multilang' => env('ENABLE_MULTILANG', true), // this use Laravel get text + Translatable. Please to verify your migration for correct working..
+    'multilang' => env('ENABLE_MULTILANG', true), // this use Translatable. Please to verify your migration for correct working..
     'email_admin' => env('EMAIL_ADMIN', 'theartist768@gmail.com'), // For logging errors etc..
     'sender_mail' => env('SENDER_MAIL', 'theartist768@gmail.com'), // email used to send mail
 
@@ -20,6 +20,11 @@ return [
                 'open_new_tab' => ['type' => 'checkbox', 'options' => []]
             ]
         ]
+    ],
+
+    'supported_locales' => [
+        'en',
+        'fr'
     ],
 
     // please to pay attention that your models implements Searchable.

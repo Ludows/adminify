@@ -32,7 +32,6 @@
         "unisharp/laravel-filemanager": "^2.2",
         "van-ons/laraberg": "^1.1",
         "ycs77/laravel-form-builder-bs4": "^1.0",
-        "zerospam/laravel-gettext": "^8.0",
         "barryvdh/laravel-debugbar": "^3.5"
     },
     "require-dev": {

@@ -6,10 +6,10 @@
         <h6 class="text-overflow m-0">{{ __('Welcome!') }}</h6>
     </div>
     @if($user->hasPermissionTo('edit_users'))
-    <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="dropdown-item">
-        <i class="ni ni-single-02"></i>
-        <span>{{ __('My profile') }}</span>
-    </a>
+        <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="dropdown-item">
+            <i class="ni ni-single-02"></i>
+            <span>{{ __('My profile') }}</span>
+        </a>
     @endif
     @if($user->hasPermissionTo('manage_settings'))
         <a href="{{ route('settings.index') }}" class="dropdown-item">

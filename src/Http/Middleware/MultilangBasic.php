@@ -2,6 +2,7 @@
 
 namespace Ludows\Adminify\Http\Middleware;
 
+use Illuminate\Support\Facades\App;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -20,7 +21,7 @@ class MultilangBasic
     {
 
         $config = config('site-settings');
-        $getTextConfig = config('laravel-gettext.supported-locales');
+        $supported_locales = $config['supported_locales'];
         $routeName = $request->route()->getName();
         $v = view();
 
@@ -30,7 +31,7 @@ class MultilangBasic
             'destroy'
         ];
 
-        $currentLocale = \LaravelGettext::getLocale();
+        $currentLocale = App::currentLocale();
         $routeNameSpl = explode('.', $routeName);
 
         $base_parameters = [
@@ -38,11 +39,11 @@ class MultilangBasic
             "singleParam"=> Str::singular($routeNameSpl[0]),
             "useMultilang" => $config['multilang'],
             "lang"=> $currentLocale,
-            "langs" => $getTextConfig,
+            "langs" => $supported_locales,
             "currentRouteName" => $routeName,
         ];
 
-        $v->share('langs', $getTextConfig);
+        $v->share('langs', $supported_locales);
         $v->share('currentLang', $currentLocale);
         $v->share('currentRouteName', $routeName);
         $v->share('useMultilang', $config['multilang']);
@@ -68,7 +69,7 @@ class MultilangBasic
             if($langParameter && $langParameter != $currentLocale) {
                 //we update the value
                 $v->share('currentLang', $langParameter);
-                \LaravelGettext::setLocale($langParameter);
+                App::setLocale($langParameter);
                 $currentLocale = $langParameter;
                 merge_to_request('lang', $currentLocale);
             }
