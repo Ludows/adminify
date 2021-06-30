@@ -36,6 +36,9 @@ class Dropdowns
     public function getModels() {
         return $this->models;
     }
+    public function exists($name = '') {
+        return array_search( $name, $this->getActions() );
+    }
     public function hasModels() {
         return $this->model != [];
     }
@@ -56,7 +59,7 @@ class Dropdowns
         return $this;
     }
     public function add($name = '', $params = [], $group = null) {
-        if($group != null) {
+        if($group != null && $this->exists($group) == false) {
             $this->setAction($group , []);
         }
         $this->setAction($name, array_merge($this->setDefaults(), $params), $group);
