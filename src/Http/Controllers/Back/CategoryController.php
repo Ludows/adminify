@@ -36,13 +36,15 @@ class CategoryController extends Controller
         public function index(FormBuilder $formBuilder, Request $request)
         {
             //
+            $config = config('site-settings.listings');
+
             if($request->useMultilang) {
-                $categories = Category::lang($request->lang);
+                $categories = Category::all()->limit( $config['limit'] )->lang($request->lang);
                 // dd($categories);
-                $categories = $categories->all();
+                // $categories = $categories->all()->limit( $config['limit'] )->get();
             }
             else {
-                $categories = Category::all();
+                $categories = Category::all()->limit( $config['limit'] )->get();
             }
 
             $model = new Category();

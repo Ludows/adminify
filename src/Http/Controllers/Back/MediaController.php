@@ -41,11 +41,11 @@ class MediaController extends Controller
         */
         public function index(FormBuilder $formBuilder)
         {
-            $forms = array();
+            $config = config('site-settings.listings');
 
             $model = new Media();
             $fillables = $model->getFillable();
-            $medias = Media::all();
+            $medias = Media::all()->limit( $config['limit'] )->get();
 
             $a = new MediaDropdownManager($medias, []);
 

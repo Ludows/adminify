@@ -36,7 +36,9 @@ class UserController extends Controller
      */
     public function index(User $model, FormBuilder $formBuilder)
     {
-            $users = User::all();
+            $config = config('site-settings.listings');
+
+            $users = User::all()->limit( $config['limit'] )->get();
             $fillables = $model->getFillable();
 
             // no necessary to print password..

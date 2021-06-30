@@ -34,18 +34,18 @@ class TranslationsController extends Controller
         */
         public function index(Request $request, FormBuilder $formBuilder)
         {
+            $config = config('site-settings.listings');
 
             $model = new Traductions();
             $fillables = $model->getFillable();
 
 
             if($request->useMultilang) {
-                $trans = Traductions::lang($request->lang);
+                $trans = Traductions::all()->limit( $config['limit'] )->lang($request->lang);
                 // dd($categories);
-                $trans = $trans->all();
             }
             else {
-                $trans = Traductions::all();
+                $trans = Traductions::all()->limit( $config['limit'] )->get();
             }
             
             $a = new TranslationDropdownManager($trans ,[]);

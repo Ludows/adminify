@@ -31,13 +31,14 @@ class CommentController extends Controller
         public function index(Request $request, FormBuilder $formBuilder)
         {
             //
+            $config = config('site-settings.listings');
+
             if($request->useMultilang) {
-                $comments = Comment::lang($request->lang, 'comment');
+                $comments = Comment::all()->limit( $config['limit'] )->lang($request->lang);
                 // dd($categories);
-                $comments = $comments->all();
             }
             else {
-                $comments = Comment::all();
+                $comments = Comment::all()->limit( $config['limit'] )->get();
             }
             $model = new Comment();
             $fillables = $model->getFillable();

@@ -42,16 +42,18 @@ class PageController extends Controller
 
         public function index(FormBuilder $formBuilder, Request $request)
         {
+
+            $config = config('site-settings.listings');
             $model = new Page();
             $fillables = $model->getFillable();
 
             if($request->useMultilang) {
-                $pages = Page::lang($request->lang);
+                $pages = Page::all()->limit( $config['limit'] )->lang($request->lang);
                 // dd($categories);
                 $pages = $pages->all();
             }
             else {
-                $pages = Page::all();
+                $pages = Page::all()->limit( $config['limit'] )->get();
             }
 
             $a = new PageDropdownManager($pages, []);

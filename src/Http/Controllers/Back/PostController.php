@@ -40,13 +40,15 @@ class PostController extends Controller
         public function index(FormBuilder $formBuilder, Request $request)
         {
             //
+            $config = config('site-settings.listings');
+
             if($request->useMultilang) {
-                $posts = Post::lang($request->lang);
+                $posts = Post::all()->limit( $config['limit'] )->lang($request->lang);
                 // dd($categories);
                 $posts = $posts->all();
             }
             else {
-                $posts = Post::all();
+                $posts = Post::all()->limit( $config['limit'] )->get();
             }
 
             $model = new Post();

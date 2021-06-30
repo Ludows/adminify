@@ -38,17 +38,18 @@ class MenuController extends Controller
         */
         public function index(Request $request, FormBuilder $formBuilder)
         {
+            $config = config('site-settings.listings');
+
             $model = new Menu();
             $fillables = $model->getFillable();
 
 
             if($request->useMultilang) {
-                $menus = Menu::lang($request->lang);
+                $menus = Menu::all()->limit( $config['limit'] )->lang($request->lang);
                 // dd($categories);
-                $menus = $menus->all();
             }
             else {
-                $menus = Menu::all();
+                $menus = Menu::all()->limit( $config['limit'] )->get();
             }
 
             $a = new MenuDropdownManager($menus, []);
