@@ -18,6 +18,9 @@ class CreateCategory extends Form
                 'id' => 'cat_title'
             ],
         ]);
+        $this->add('media_id', 'lfm', [
+            'label_show' => false
+        ]);
         // if(count($categories) > 0) {
             $this->add('parent_id', 'select2', [
                 'empty_value' => '',

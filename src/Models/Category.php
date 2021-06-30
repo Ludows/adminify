@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 use Ludows\Adminify\Models\Post;
+use Ludows\Adminify\Models\Media;
 
 use Ludows\Adminify\Traits\SlugUpdate;
 use Ludows\Adminify\Traits\Urlable;
@@ -31,8 +32,9 @@ class Category extends Model implements Searchable
 
     protected $fillable = [
         'title',
+        'media_id',
         'slug',
-        'parent_id'
+        'parent_id',
     ];
 
     public function getSearchResult(): SearchResult
@@ -45,7 +47,9 @@ class Category extends Model implements Searchable
             $url
          );
      }
-
+   public function media() {
+      return $this->belongsTo(Media::class,'media_id', 'id');
+   }
     public function categories()
     {
        return $this->hasMany(Category::class);
