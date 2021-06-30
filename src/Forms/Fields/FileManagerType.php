@@ -31,7 +31,14 @@ class FileManagerType extends FormField {
 
         if(isset($options['value']) && $options['value'] != "") {
             $m = $this->parent->getModel();
-            $options['attr']['data-path'] = $m->path;
+
+            if($m instanceof Ludows\Adminify\Models\Media == false) {
+                $options['attr']['data-path'] = $m->media->path;
+            }
+            else {
+                $options['attr']['data-path'] = $m->path;
+            }
+
         }
 
         $this->setOptions([
