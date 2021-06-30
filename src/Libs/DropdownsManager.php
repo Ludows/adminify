@@ -67,7 +67,7 @@ class DropdownsManager
         return $this;
     }
     public function getView() {
-        return 'adminify::layouts.admin.actionable.dropdown';
+        return 'adminify::layouts.admin.dropdowns.dropdown';
     }
     public function remove($index = 0) {
         $this->removeDropdown($index);
