@@ -22,7 +22,7 @@ class CreateCategory extends Form
         $this->add('media_id', 'lfm', [
             'label_show' => false,
             'attr' => [
-                'value' => $m->media_id != 0 ? $m->media->path : null
+                'value' => isset($m) && $m->media_id != 0 ? $m->media->path : null
             ]
         ]);
         // if(count($categories) > 0) {
