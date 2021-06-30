@@ -38,7 +38,7 @@ class UserController extends Controller
     {
             $config = config('site-settings.listings');
 
-            $users = User::all()->limit( $config['limit'] )->get();
+            $users = User::limit( $config['limit'] )->get();
             $fillables = $model->getFillable();
 
             // no necessary to print password..

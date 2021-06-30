@@ -48,12 +48,12 @@ class PageController extends Controller
             $fillables = $model->getFillable();
 
             if($request->useMultilang) {
-                $pages = Page::all()->limit( $config['limit'] )->lang($request->lang);
+                $pages = Page::limit( $config['limit'] )->lang($request->lang);
                 // dd($categories);
                 $pages = $pages->all();
             }
             else {
-                $pages = Page::all()->limit( $config['limit'] )->get();
+                $pages = Page::limit( $config['limit'] )->get();
             }
 
             $a = new PageDropdownManager($pages, []);

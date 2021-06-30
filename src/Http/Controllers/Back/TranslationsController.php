@@ -41,11 +41,11 @@ class TranslationsController extends Controller
 
 
             if($request->useMultilang) {
-                $trans = Traductions::all()->limit( $config['limit'] )->lang($request->lang);
+                $trans = Traductions::limit( $config['limit'] )->lang($request->lang);
                 // dd($categories);
             }
             else {
-                $trans = Traductions::all()->limit( $config['limit'] )->get();
+                $trans = Traductions::limit( $config['limit'] )->get();
             }
             
             $a = new TranslationDropdownManager($trans ,[]);

@@ -45,11 +45,11 @@ class MenuController extends Controller
 
 
             if($request->useMultilang) {
-                $menus = Menu::all()->limit( $config['limit'] )->lang($request->lang);
+                $menus = Menu::limit( $config['limit'] )->lang($request->lang);
                 // dd($categories);
             }
             else {
-                $menus = Menu::all()->limit( $config['limit'] )->get();
+                $menus = Menu::limit( $config['limit'] )->get();
             }
 
             $a = new MenuDropdownManager($menus, []);

@@ -45,7 +45,7 @@ class MediaController extends Controller
 
             $model = new Media();
             $fillables = $model->getFillable();
-            $medias = Media::all()->limit( $config['limit'] )->get();
+            $medias = Media::limit( $config['limit'] )->get();
 
             $a = new MediaDropdownManager($medias, []);
 

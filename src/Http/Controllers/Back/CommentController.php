@@ -34,11 +34,11 @@ class CommentController extends Controller
             $config = config('site-settings.listings');
 
             if($request->useMultilang) {
-                $comments = Comment::all()->limit( $config['limit'] )->lang($request->lang);
+                $comments = Comment::limit( $config['limit'] )->lang($request->lang);
                 // dd($categories);
             }
             else {
-                $comments = Comment::all()->limit( $config['limit'] )->get();
+                $comments = Comment::limit( $config['limit'] )->get();
             }
             $model = new Comment();
             $fillables = $model->getFillable();
