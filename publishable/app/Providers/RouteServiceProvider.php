@@ -50,8 +50,7 @@ class RouteServiceProvider extends ServiceProvider
             
             if($config['enable']) {
 
-                $routerBasicApi = \Illuminate\Support\Facades\Route;
-                $routerBasicApi::middleware('api');
+                $routerBasicApi = Route::middleware('api');
                 if($config['prefix'] != null) {
                     $routerBasicApi->prefix($config['prefix']);
                 }
