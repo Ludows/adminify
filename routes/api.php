@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 $config = config('site-settings.restApi');
 
-Route::get('/', '\Ludows\Adminify\Http\Controllers\Api\PageController@index');
+Route::get('/', '\Ludows\Adminify\Http\Controllers\Api\PageController@index')->name('api.routelist');
 
 if($config['enable']) {
     //$config crud

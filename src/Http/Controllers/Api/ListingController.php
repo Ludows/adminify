@@ -23,6 +23,6 @@ class ListingController extends Controller
         ));
         $output .= Artisan::output();
 
-        return $output;
+        return response()->json($output);
     }
 }
