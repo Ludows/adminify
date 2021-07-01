@@ -2,6 +2,8 @@
 
 namespace Ludows\Adminify\Http\Controllers\Api;
 
+use Symfony\Component\Console\Output\BufferedOutput;
+
 use Ludows\Adminify\Http\Controllers\Controller;
 
 
@@ -16,13 +18,13 @@ class ListingController extends Controller
      */
     public function index()
     {
-        $output = '';
+        $output = new BufferedOutput;
+
         Artisan::call('route:list', array(
             '--path' => 'api',
             '--json' => true
-        ));
-        $output .= Artisan::output();
+        ), $output);
 
-        return response()->json($output);
+        return $output->fetch();
     }
 }
