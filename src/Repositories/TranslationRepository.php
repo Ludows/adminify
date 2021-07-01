@@ -24,9 +24,14 @@ class TranslationRepository
         // Don't forget to update the model's name
         $this->model = app(Traduction::class);
     }
-    public function create($form, $request) {
+    public function create($mixed, $request) {
         $request = request();
-        $formValues = $form->getFieldValues();
+        if(is_array($mixed)) {
+            $formValues = $mixed;
+        }
+        else {
+            $formValues = $mixed->getFieldValues();
+        }
         $multilang = $request->useMultilang;
 
 
@@ -65,10 +70,15 @@ class TranslationRepository
 
         return $trans;
     }
-    public function update($form, $request, $model) {
+    public function update($mixed, $request, $model) {
 
         $request = request();
-        $formValues = $form->getFieldValues();
+        if(is_array($mixed)) {
+            $formValues = $mixed;
+        }
+        else {
+            $formValues = $mixed->getFieldValues();
+        }
         $multilang = $request->useMultilang;
 
 
