@@ -50,19 +50,15 @@ class RouteServiceProvider extends ServiceProvider
             
             if($config['enable']) {
 
-                $a = [];
+                $routerBasicApi = Route::middleware('api');
                 if($config['prefix'] != null) {
-                    $a['prefix'] = $config['prefix'];
+                    $routerBasicApi->prefix($config['prefix']);
                 }
                 if($config['domain'] != null) {
-                    $a['domain'] = $config['domain'];
+                    $routerBasicApi->domain($config['domain']);
                 }
-
-                Route::middleware('api')
-                    ->namespace($this->namespace)
-                    ->group($a, function() {
-                        base_path('vendor/ludows/adminify/routes/api.php');
-                    });
+                $routerBasicApi->namespace($this->namespace)
+                ->group(base_path('vendor/ludows/adminify/routes/api.php'));
             }
             
         });
