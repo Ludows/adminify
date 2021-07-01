@@ -26,6 +26,9 @@ class PageRequest extends FormRequest
             $a['lang'] = [
                 'required'
             ];
+            $a['token'] = [
+                'required'
+            ];
         }
 
         return $a;
