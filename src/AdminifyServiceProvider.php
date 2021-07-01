@@ -45,6 +45,9 @@ class AdminifyServiceProvider extends ServiceProvider {
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'adminify');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         //$this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+
+        $this->mergeConfigFrom(__DIR__.'/../config/api.php', 'api');
+
     }
 
     /**
