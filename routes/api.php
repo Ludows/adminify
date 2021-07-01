@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 $config = config('site-settings.restApi');
 
+Route::get('/', '\Ludows\Adminify\Http\Controllers\Api\PageController@index');
+
 if($config['enable']) {
     //$config crud
     if(count($config['crud']) > 0) {
