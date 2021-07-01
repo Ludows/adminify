@@ -26,12 +26,16 @@ class PageRepository
         // Don't forget to update the model's name
         $this->model = app(Page::class);
     }
-    public function create($form, $request) {
+    public function create($mixed, $request) {
 
-        $formValues = $form->getFieldValues(true);
+        if(is_array($mixed)) {
+            $formValues = $mixed;
+        }
+        else {
+            $formValues = $mixed->getFieldValues();
+        }
 
         $request = request();
-        $formValues = $form->getFieldValues();
         $multilang = $request->useMultilang;
 
         // dd($formValues);
@@ -92,11 +96,16 @@ class PageRepository
 
         return $page;
     }
-    public function update($form, $request, $page) {
-        $formValues = $form->getFieldValues(true);
+    public function update($mixed, $request, $page) {
+
+        if(is_array($mixed)) {
+            $formValues = $mixed;
+        }
+        else {
+            $formValues = $mixed->getFieldValues();
+        }
 
         $request = request();
-        $formValues = $form->getFieldValues();
         $multilang = $request->useMultilang;
 
         // dd($formValues);
