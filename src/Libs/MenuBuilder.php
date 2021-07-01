@@ -205,7 +205,7 @@ class MenuBuilder
                     // dd($this->forms['formMenuSwitcher']);
                     $tplDynamicForm->modify('items', 'select2', [
                         'choices' => $pluckable_items,
-                        'empty_value' => _i('select.'.$collectionName)
+                        'empty_value' => __('admin.select.'.$collectionName)
                     ]);
                 }
                 else {
