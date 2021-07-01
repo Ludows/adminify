@@ -57,9 +57,9 @@ namespace Ludows\Adminify\Traits;
         $request = request();
         $lang = $request->lang;
         $multilang = $request->useMultilang;
-        $getTextConfig = config('laravel-gettext.supported-locales');
+        $supported_locales = config('site-settings.supported_locales');
 
-        $langs = Arr::where($getTextConfig, function ($value, $key) use ($lang) {
+        $langs = Arr::where($supported_locales, function ($value, $key) use ($lang) {
                 return $value != $lang;
         });
 
