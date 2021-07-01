@@ -95,6 +95,16 @@ return [
         ]
     ],
 
+    // this works with dingo package for rest api
+    // this is possible for all website ( front and back )
+    'restApi' => [
+        'prefix' => 'api', // use prefix 
+        'domain' => '', // or a domain path,
+        'version' => 'v1',
+        'name_api' => 'Adminify REST API',
+        'debug' => true
+    ],
+
     'dashboard' => [
         'limit' => 3,
         'blocks' => [
