@@ -33,7 +33,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request)
+    public function store(CreateCategoryRequest $request)
     {
         //
         $model = $this->CategoryRepository->create($request->all(), $request);
@@ -61,7 +61,7 @@ class CategoryController extends Controller
      * @param  \App\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, Category $Category)
+    public function update(CreateCategoryRequest $request, Category $Category)
     {
         //
         $model = $this->CategoryRepository->update($request->all(), $request, $Category);
