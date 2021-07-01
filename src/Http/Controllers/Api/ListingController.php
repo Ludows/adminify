@@ -6,6 +6,7 @@ use Symfony\Component\Console\Output\BufferedOutput;
 
 use Ludows\Adminify\Http\Controllers\Controller;
 
+use Illuminate\Support\Facades\Artisan;
 
 use Illuminate\Http\Request;
 
