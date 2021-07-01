@@ -37,12 +37,9 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->configureRateLimiting();
 
-        $this->routes(function () {
-            Route::prefix('api')
-                ->middleware('api')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/api.php'));
+        $config = config('site-settings.restApi');
 
+        $this->routes(function () use ($config) {
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
@@ -50,6 +47,22 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('vendor/ludows/adminify/routes/web.php'));
+            
+            if($config['enable']) {
+
+                $a = [];
+                if($config['prefix'] != null) {
+                    $a['prefix'] = $config['prefix'];
+                }
+                if($config['domain'] != null) {
+                    $a['domain'] = $config['domain'];
+                }
+
+                Route::middleware('api')
+                    ->namespace($this->namespace)
+                    ->group($a, base_path('vendor/ludows/adminify/routes/api.php'));
+            }
+            
         });
     }
 

@@ -98,15 +98,17 @@ return [
     // this works with dingo package for rest api
     // this is possible for all website ( front and back )
     'restApi' => [
-        'standardsTree' => 'x',
-        'subtype' => '',
-        'conditionalRequest' => true,
-        'strict' => '',
-        'prefix' => 'api', // use prefix 
-        'domain' => '', // or a domain path,
-        'version' => 'v1',
-        'name_api' => 'Adminify REST API',
-        'debug' => true
+        'enable' => true, // resets to false to disable entierely rest api
+        'prefix' => 'api', // use prefix
+        'domain' => null, // to set a domain, just replace by your domain,
+        'controllers' => [
+            // controllers here we binded like the CRUD pattern
+           'pages' => Ludows\Adminify\Models\Page::class,
+           'posts' => Ludows\Adminify\Models\Post::class,
+           'medias' => Ludows\Adminify\Models\Media::class,
+           'categories' => Ludows\Adminify\Models\Category::class,
+           'translations' => Ludows\Adminify\Models\Translations::class,
+        ]
     ],
 
     'dashboard' => [
