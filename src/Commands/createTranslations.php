@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\Traduction as Traductions;
+use Ludows\Adminify\Models\Translations as Traductions;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 
