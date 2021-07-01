@@ -40,14 +40,7 @@ class RouteServiceProvider extends ServiceProvider
         $config = config('site-settings.restApi');
 
         $this->routes(function () use ($config) {
-            Route::middleware('web')
-                ->namespace($this->namespace)
-                ->group(base_path('routes/web.php'));
 
-            Route::middleware('web')
-                ->namespace($this->namespace)
-                ->group(base_path('vendor/ludows/adminify/routes/web.php'));
-            
             if($config['enable']) {
 
                 $routerBasicApi = Route::middleware('api');
@@ -60,7 +53,17 @@ class RouteServiceProvider extends ServiceProvider
                 $routerBasicApi->namespace($this->namespace)
                 ->group(base_path('vendor/ludows/adminify/routes/api.php'));
             }
-            
+
+            Route::middleware('web')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/web.php'));
+
+            Route::middleware('web')
+                ->namespace($this->namespace)
+                ->group(base_path('vendor/ludows/adminify/routes/web.php'));
+
+
+
         });
     }
 

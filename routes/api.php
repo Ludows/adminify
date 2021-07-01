@@ -9,8 +9,10 @@ if($config['enable']) {
     if(count($config['crud']) > 0) {
         foreach ($config['crud'] as $key => $classValue) {
             # code...
-            Route::resource($key, $classValue);
-    
+            Route::resource($key, $classValue, [
+                'as' => $config['prefix'],
+            ]);
+
         }
     }
     if(count($config['customRoutes']) > 0) {
