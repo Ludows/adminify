@@ -35,7 +35,7 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         //
-        $model = $this->CommentRepository->create($request->all(), $request);
+        $model = $this->CommentRepository->create($request->all());
         
         return response()->json([
             'entry' => $model,
@@ -63,7 +63,7 @@ class CommentController extends Controller
     public function update(Request $request, Comment $Comment)
     {
         //
-        $model = $this->CommentRepository->update($request->all(), $request, $Comment);
+        $model = $this->CommentRepository->update($request->all(), $Comment);
         
         return response()->json([
             'entry' => $model,
