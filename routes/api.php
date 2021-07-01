@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-$config = config('site-settings.restApi');
+// $config = config('site-settings.restApi');
 
 // if($config['enable']) {
 //     //$config crud
