@@ -25,10 +25,15 @@ class PostRepository
         // Don't forget to update the model's name
         $this->model = app(Post::class);
     }
-    public function create($form, $request) {
+    public function create($mixed, $request) {
         // $context is $this of the controller for more flexibility
         $request = request();
-        $formValues = $form->getFieldValues();
+        if(is_array($mixed)) {
+            $formValues = $mixed;
+        }
+        else {
+            $formValues = $mixed->getFieldValues();
+        }
         $multilang = $request->useMultilang;
 
         // dd($formValues);
@@ -92,10 +97,15 @@ class PostRepository
 
         return $post;
     }
-    public function update($form, $request, $model) {
+    public function update($mixed, $request, $model) {
 
         $request = request();
-        $formValues = $form->getFieldValues();
+        if(is_array($mixed)) {
+            $formValues = $mixed;
+        }
+        else {
+            $formValues = $mixed->getFieldValues();
+        }
         $multilang = $request->useMultilang;
 
         // dd($formValues);
