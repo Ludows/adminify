@@ -17,7 +17,7 @@ class FileManagerType extends FormField {
     public function setDefaults() {
         return array(
             'btn' => [
-                'label' => _i('admin.select_media'),
+                'label' => __('admin.select_media'),
                 'attr' => ['class' => 'btn btn-default'],
             ]
         );

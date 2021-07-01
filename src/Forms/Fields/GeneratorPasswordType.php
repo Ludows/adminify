@@ -17,7 +17,7 @@ class GeneratorPasswordType extends FormField {
     public function setDefaults() {
         return array(
             'btn' => [
-                'label' => _i('admin.generate_password'),
+                'label' => __('admin.generate_password'),
                 'attr' => ['class' => 'btn btn-default'],
             ],
         );
