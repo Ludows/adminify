@@ -23,7 +23,8 @@ class CreateTranslation extends FormRequest
      */
     public function rules()
     {
-        return [
+        $r = request();
+        $a = [
             'key' => [
                 'unique:traductions,key',
                 'required',
@@ -34,5 +35,19 @@ class CreateTranslation extends FormRequest
                 'string'
             ]
         ];
+
+        if($r->is('api.*')) {
+            $a['token'] = [
+                'required'
+            ];
+        }
+
+        if($r->useMultilang && $r->is('api.*')) {
+            $a['lang'] = [
+                'required'
+            ];
+        }
+
+        return $a;
     }
 }

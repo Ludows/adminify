@@ -24,10 +24,25 @@ class SaveSettings extends FormRequest
      */
     public function rules()
     {
-        return [
+        $r = request();
+        $a = [
             'site_name' => ['required', 'string'],
             'site_slogan' => ['required', 'string'],
             'logo_id' => ['integer']
         ];
+
+        if($r->is('api.*')) {
+            $a['token'] = [
+                'required'
+            ];
+        }
+
+        if($r->useMultilang && $r->is('api.*')) {
+            $a['lang'] = [
+                'required'
+            ];
+        }
+
+        return $a;
     }
 }

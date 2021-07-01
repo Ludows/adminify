@@ -22,11 +22,14 @@ class PageRequest extends FormRequest
             ]
         ];
 
-        if($r->useMultilang && $r->is('api.*')) {
-            $a['lang'] = [
+        if($r->is('api.*')) {
+            $a['token'] = [
                 'required'
             ];
-            $a['token'] = [
+        }
+
+        if($r->useMultilang && $r->is('api.*')) {
+            $a['lang'] = [
                 'required'
             ];
         }

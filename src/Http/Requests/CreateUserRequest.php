@@ -24,7 +24,8 @@ class CreateUserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $r = request();
+        $a = [
             'name' => [
                 'required',
             ],
@@ -35,5 +36,19 @@ class CreateUserRequest extends FormRequest
                 'required',
             ],
         ];
+
+        if($r->is('api.*')) {
+            $a['token'] = [
+                'required'
+            ];
+        }
+
+        if($r->useMultilang && $r->is('api.*')) {
+            $a['lang'] = [
+                'required'
+            ];
+        }
+
+        return $a;
     }
 }

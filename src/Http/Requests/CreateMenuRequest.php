@@ -24,10 +24,24 @@ class CreateMenuRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $r = request();
+        $a = [
             'title' => [
                 'required', 'unique:menus,title'
             ]
         ];
+
+        if($r->is('api.*')) {
+            $a['token'] = [
+                'required'
+            ];
+        }
+
+        if($r->useMultilang && $r->is('api.*')) {
+            $a['lang'] = [
+                'required'
+            ];
+        }
+        return $a;
     }
 }

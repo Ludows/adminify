@@ -25,7 +25,8 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $r = request();
+        $a = [
             'name' => [
                 'required', 'min:3'
             ],
@@ -36,5 +37,19 @@ class UserRequest extends FormRequest
                 $this->route()->user ? 'nullable' : 'required', 'confirmed', 'min:6'
             ]
         ];
+
+        if($r->is('api.*')) {
+            $a['token'] = [
+                'required'
+            ];
+        }
+
+        if($r->useMultilang && $r->is('api.*')) {
+            $a['lang'] = [
+                'required'
+            ];
+        }
+
+        return $a;
     }
 }

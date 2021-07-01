@@ -14,7 +14,8 @@ class UpdateMediaRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $r = request();
+        $a = [
             //
             'title' => [
                 'required',
@@ -24,5 +25,19 @@ class UpdateMediaRequest extends FormRequest
                 'max:10000',
             ]
         ];
+
+        if($r->is('api.*')) {
+            $a['token'] = [
+                'required'
+            ];
+        }
+
+        if($r->useMultilang && $r->is('api.*')) {
+            $a['lang'] = [
+                'required'
+            ];
+        }
+
+        return $a;
     }
 }
