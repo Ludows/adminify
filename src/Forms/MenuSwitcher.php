@@ -13,7 +13,7 @@ class MenuSwitcher extends Form
     {
         // Add fields here...
         $this->add('menus', Field::SELECT, [
-            'empty_value' => _i('select.menu'),
+            'empty_value' => __('select.menu'),
             'choices' =>[],
             'selected' => '',
             'attr' => [],

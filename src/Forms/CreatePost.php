@@ -23,7 +23,7 @@ class CreatePost extends Form
                 'selected' => $hydrator['selected'],
                 'attr' => ['multiple' => 'multiple'],
                 'select2options' => [
-                    'placeholder' => _i('admin.select_category'),
+                    'placeholder' => __('admin.select_category'),
                     'multiple' => true,
                     'width' => '100%'
                 ]
@@ -38,7 +38,7 @@ class CreatePost extends Form
 
             $this->add('content', 'laraberg', []);
             
-            $this->add('submit', 'submit', ['label' => _i('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
+            $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
 
     public function hydrateSelect() {

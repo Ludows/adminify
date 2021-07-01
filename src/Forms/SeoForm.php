@@ -35,7 +35,7 @@ class SeoForm extends Form
         ->add('image', 'lfm', [
             'value' => $m->seoWith('image', false) ?? ''
         ]);
-        $this->add('submit', 'submit', ['label' => _i('admin.create') , 'attr' => ['class' => 'btn btn-default']]);
+        $this->add('submit', 'submit', ['label' => __('admin.create') , 'attr' => ['class' => 'btn btn-default']]);
 
     }
 }

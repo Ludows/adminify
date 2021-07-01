@@ -16,7 +16,7 @@ class CreateUser extends Form
             ->add('email', Field::EMAIL, [])
             ->add('password', 'generatorPassword', []);
 
-        $this->add('submit', 'submit', ['label' => _i('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
+        $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
 
     }
 }

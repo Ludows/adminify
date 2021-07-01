@@ -21,7 +21,7 @@ class CreatePage extends Form
         $this
             ->add('title', Field::TEXT, [
                 'label_show' => false,
-                'attr' => ['placeholder' =>  _i('admin.title') ],
+                'attr' => ['placeholder' =>  __('admin.title') ],
             ])
             ->add('categories_id', 'select2', [
                 'empty_value' => '',
@@ -31,7 +31,7 @@ class CreatePage extends Form
                 'selected' => $hydratorCat['selected'],
                 'attr' => ['multiple' => 'multiple'],
                 'select2options' => [
-                    'placeholder' => _i('admin.select_category'),
+                    'placeholder' => __('admin.select_category'),
                     'multiple' => true,
                     'width' => '100%'
                 ]
@@ -43,7 +43,7 @@ class CreatePage extends Form
                 'attr' => [],
                 'label_attr' => ['class' => 'control-label', 'for' => 'post_parent_id'],
                 'select2options' => [
-                    'placeholder' => _i('admin.select_parentpage_id'),
+                    'placeholder' => __('admin.select_parentpage_id'),
                     'multiple' => false,
                     'width' => '100%'
                 ]
@@ -57,7 +57,7 @@ class CreatePage extends Form
             ->add('content', 'laraberg', [
                 'label_show' => false
             ])            
-            ->add('submit', 'submit', ['label' => _i('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
+            ->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
     public function hydrateSelect() {
         $categories = '';
