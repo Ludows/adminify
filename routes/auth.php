@@ -1,6 +1,7 @@
 <?php
 
 // Auth::routes();
+use Illuminate\Support\Facades\Route;
 
 Route::middleware(['web', 'multilang.basic'])->group( function () {
     // Authentication Routes...
