@@ -4,9 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 $config = config('site-settings.restApi');
 
-Route::get('/', '\Ludows\Adminify\Http\Controllers\Api\ListingController@index')->name('routelist');
-
 if($config['enable']) {
+    Route::get('/', '\Ludows\Adminify\Http\Controllers\Api\ListingController@index')->name('routelist');
     //$config crud
     if(count($config['crud']) > 0) {
         foreach ($config['crud'] as $key => $classValue) {
