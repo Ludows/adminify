@@ -14,12 +14,20 @@ class PageRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
+        $r = request();
+        $a = [
             'title' => [
                 'required',
                 'min:5'
             ]
         ];
+
+        if($r->useMultilang && $r->is('api.*')) {
+            $a['lang'] = [
+                'required'
+            ];
+        }
+
+        return $a;
     }
 }
