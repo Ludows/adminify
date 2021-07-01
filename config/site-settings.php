@@ -98,6 +98,10 @@ return [
     // this works with dingo package for rest api
     // this is possible for all website ( front and back )
     'restApi' => [
+        'standardsTree' => 'x',
+        'subtype' => '',
+        'conditionalRequest' => true,
+        'strict' => '',
         'prefix' => 'api', // use prefix 
         'domain' => '', // or a domain path,
         'version' => 'v1',

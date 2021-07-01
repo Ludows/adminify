@@ -18,7 +18,7 @@ return [
     |
     */
 
-    'standardsTree' => env('API_STANDARDS_TREE', 'x'),
+    'standardsTree' => config('site-settings.restApi.standardsTree'),
 
     /*
     |--------------------------------------------------------------------------
@@ -32,7 +32,7 @@ return [
     |
     */
 
-    'subtype' => env('API_SUBTYPE', ''),
+    'subtype' => config('site-settings.restApi.subtype'),
 
     /*
     |--------------------------------------------------------------------------
@@ -96,7 +96,7 @@ return [
     |
     */
 
-    'conditionalRequest' => env('API_CONDITIONAL_REQUEST', true),
+    'conditionalRequest' => config('site-settings.restApi.conditionalRequest'),
 
     /*
     |--------------------------------------------------------------------------
@@ -109,7 +109,7 @@ return [
     |
     */
 
-    'strict' => env('API_STRICT', false),
+    'strict' => config('site-settings.restApi.strict'),
 
     /*
     |--------------------------------------------------------------------------
