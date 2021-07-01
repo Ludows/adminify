@@ -4,6 +4,6 @@
         {{ $model->title }}
 
     @else
-        {{ _i('admin.hasNoParentPage') }}
+        {{ __('admin.hasNoParentPage') }}
     @endif
 </td>

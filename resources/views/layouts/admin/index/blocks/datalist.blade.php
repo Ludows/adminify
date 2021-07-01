@@ -23,7 +23,7 @@
                                 @else
                                     <tr>
                                         <td>
-                                            {{ _i('admin.noDatas') }}
+                                            {{ __('admin.noDatas') }}
                                         </td>
                                     </tr>     
                                 @endif

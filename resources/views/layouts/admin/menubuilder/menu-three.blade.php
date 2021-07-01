@@ -13,7 +13,7 @@
     </h5>
     @if(isset($menu_three))
         <div class="card-body">
-            <h5 class="card-title">{!! _i('menu.three') !!}</h5>
+            <h5 class="card-title">{!! __('admin.menu.three') !!}</h5>
             <input name="menuthree" value="" type="hidden" />
             @php
                 $three = $menu_three->makeThree;

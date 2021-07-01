@@ -1,7 +1,7 @@
 <td>
     @if(isset($data))
-        {{ _i('admin.hasPassword') }}
+        {{ __('admin.hasPassword') }}
     @else
-        {{ _i('admin.hasNoPassword') }}
+        {{ __('admin.hasNoPassword') }}
     @endif
 </td>

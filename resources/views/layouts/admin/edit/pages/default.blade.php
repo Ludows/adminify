@@ -10,7 +10,7 @@
 
             <div class="card shadow">
                 <div class="card-header border-0">
-                    {{ __('edit.'.$name) }}
+                    {{ __('admin.edit.'.$name) }}
                 </div>
                 <div class="card-body">
                     @if(isset($form))

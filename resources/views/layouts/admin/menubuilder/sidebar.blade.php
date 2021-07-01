@@ -5,7 +5,7 @@
             <div class="card-header" id="heading{{ Str::slug($collectionName, '-') }}-item">
                 <h2 class="mb-0">
                     <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#{{ Str::slug($collectionName, '-') }}-item-collapse" aria-expanded="true" aria-controls="{{ Str::slug($collectionName, '-') }}-item-collapse">
-                        {!! _i('block.'.$collectionName) !!}
+                        {!! __('admin.block.'.$collectionName) !!}
                     </button>
                 </h2>
             </div>

@@ -1,7 +1,7 @@
 <td>
     @if(isset($data))
-        {{ _i('admin.hasContent') }}
+        {{ __('admin.hasContent') }}
     @else
-        {{ _i('admin.hasNoContent') }}
+        {{ __('admin.hasNoContent') }}
     @endif
 </td>

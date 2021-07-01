@@ -22,14 +22,14 @@
                     <div class="card-header border-0">
                         <div class="row align-items-center">
                             <div class="col-12 col-lg-8">
-                                <h3 class="mb-0">{{ _i($name.'.title') }}</h3>
+                                <h3 class="mb-0">{{ __('admin.'.$name.'.title') }}</h3>
                             </div>
                             
                                 <div class="col-12 col-lg-4 d-flex justify-content-between align-items-center text-right">
                                     <input id="" class="form-control js-search-entity" placeholder="Search" type="text">
                                     @if(\Route::has($name.'.create'))
                                         <div class="ml-lg-3 mt-3 mt-lg-0">
-                                            <a href="{{ route($name.'.create', ['lang' => $useMultilang ? $currentLang : '']) }}" class="btn btn-sm btn-primary"> {{ _i($name.'.add') }}</a>
+                                            <a href="{{ route($name.'.create', ['lang' => $useMultilang ? $currentLang : '']) }}" class="btn btn-sm btn-primary"> {{ __('admin'.$name.'.store') }}</a>
                                         </div>
                                     @endif
                                 </div>
@@ -42,9 +42,9 @@
                             <thead class="thead-light">
                                 <tr>
                                     @foreach($thead as $th)
-                                        <th scope="col">{{ _i($name.'.'.$th) }}</th>
+                                        <th scope="col">{{ __('admin.'.$name.'.'.$th) }}</th>
                                     @endforeach
-                                    <th scope="col">{{ _i('admin.actions') }}</th>
+                                    <th scope="col">{{ __('admin.actions') }}</th>
                                 </tr>
                             </thead>
                             <tbody>

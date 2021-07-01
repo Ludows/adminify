@@ -3,9 +3,9 @@
 @endphp
 <div class="card">
     <div class="card-header d-flex {{ $hasCreateLink ? 'justify-content-between' : '' }} align-items-center">
-        <div>{{ _i('last.'.$type) }}</div>
+        <div>{{ __('admin.last.'.$type) }}</div>
         @if($hasCreateLink)
-            <div><a href="{{ $createLink }}" class="btn btn-sm btn-primary">{{ _i('create.'.$type) }}</a></div>
+            <div><a href="{{ $createLink }}" class="btn btn-sm btn-primary">{{ __('admin.create.'.$type) }}</a></div>
         @endif
     </div>
         @if($data->count() > 0)
@@ -16,14 +16,14 @@
                             {{ $item->{$column} }}
                         </div>
                         <div>
-                            <a href="{{ route( $plural.'.edit', [ $type =>  $item->id] ) }}">{{ _i('edit.'.$type) }}</a>
+                            <a href="{{ route( $plural.'.edit', [ $type =>  $item->id] ) }}">{{ __('admin.edit.'.$type) }}</a>
                         </div>
                     </li>
                 @endforeach
             </ul>
         @else
             <div class="card-body">
-                {{ _i('nocontent.'.$type) }}
+                {{ __('admin.nocontent.'.$type) }}
             </div>
         @endif
 
