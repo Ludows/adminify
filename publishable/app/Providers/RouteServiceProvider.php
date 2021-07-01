@@ -60,7 +60,9 @@ class RouteServiceProvider extends ServiceProvider
 
                 Route::middleware('api')
                     ->namespace($this->namespace)
-                    ->group($a, base_path('vendor/ludows/adminify/routes/api.php'));
+                    ->group($a, function() {
+                        require_once(base_path('vendor/ludows/adminify/routes/api.php'));
+                    });
             }
             
         });
