@@ -26,10 +26,15 @@ class CategoryRepository
         // Don't forget to update the model's name
         $this->model = app(Category::class);
     }
-    public function create($form, $request) {
+    public function create($mixed, $request) {
 
         $request = request();
-        $formValues = $form->getFieldValues();
+        if(is_array($mixed)) {
+            $formValues = $mixed;
+        }
+        else {
+            $formValues = $mixed->getFieldValues();
+        }
         $multilang = $request->useMultilang;
 
         if($multilang) {
@@ -78,7 +83,12 @@ class CategoryRepository
     public function update($form, $request, $model) {
 
         $request = request();
-        $formValues = $form->getFieldValues();
+        if(is_array($mixed)) {
+            $formValues = $mixed;
+        }
+        else {
+            $formValues = $mixed->getFieldValues();
+        }
         $multilang = $request->useMultilang;
 
         if($multilang) {
