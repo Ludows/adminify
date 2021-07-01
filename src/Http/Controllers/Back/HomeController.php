@@ -2,6 +2,7 @@
 
 namespace Ludows\Adminify\Http\Controllers\Back;
 use Ludows\Adminify\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 
 
 class HomeController extends Controller
@@ -39,11 +40,11 @@ class HomeController extends Controller
                         'data' => $m,
                         'type' => $blockName,
                         'column' => $arr['columnShow'],
-                        'plural' => isset($arr['plural']) ? $arr['plural'] : str_plural($blockName)
+                        'plural' => isset($arr['plural']) ? $arr['plural'] : Str::plural($blockName)
                     ];
 
-                    if(\Route::has(isset($arr['plural']) ? $arr['plural'].'.create' : str_plural($blockName).'.create')) {
-                        $a['createLink'] = route( isset($arr['plural']) ? $arr['plural'].'.create' : str_plural($blockName).'.create');
+                    if(\Route::has(isset($arr['plural']) ? $arr['plural'].'.create' : Str::plural($blockName).'.create')) {
+                        $a['createLink'] = route( isset($arr['plural']) ? $arr['plural'].'.create' : Str::plural($blockName).'.create');
                     }
 
                     $v = view()->make($arr['template'], $a);
