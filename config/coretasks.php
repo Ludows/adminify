@@ -6,7 +6,6 @@ return array(
     __DIR__.'/../publishable/resources/lang/' => resource_path('lang'),
     __DIR__.'/../config/check-permissions.php' => config_path('check-permissions.php'),
     __DIR__.'/../config/auth.php' => config_path('auth.php'),
-    __DIR__.'/../config/api.php' => config_path('api.php'),
     __DIR__.'/../config/filesystems.php' => config_path('filesystems.php'),
     __DIR__.'/../config/site-settings.php' => config_path('site-settings.php'),
     __DIR__.'/../publishable/public/argon/' => public_path('argon'),
