@@ -340,20 +340,4 @@ return array(
             'config' => null,
             'afterPublish' => [],
         ),
-        (object) array(
-            'beforePublish' => [],
-            'name' => 'dingo/api',
-            'publish' => (object) [
-                'tag' => false,
-                'force' => false,
-                'sibling' => 'Dingo\Api\Provider\LaravelServiceProvider'
-            ],
-            'autoload' => (object) [
-                'providers' => [],
-                'middlewares' => [],
-                'aliases' => []
-            ],
-            'config' => null,
-            'afterPublish' => [],
-        )
     );
