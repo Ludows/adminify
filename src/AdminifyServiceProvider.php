@@ -9,6 +9,8 @@ use Ludows\Adminify\Commands\RouteList;
 use Ludows\Adminify\Commands\createTranslations;
 use Ludows\Adminify\Commands\InstallPackages;
 
+use Illuminate\Contracts\Http\Kernel; // add kernel
+
 use Ludows\Adminify\View\Components\Modal;
 
 class AdminifyServiceProvider extends ServiceProvider {
@@ -18,14 +20,14 @@ class AdminifyServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function boot() {
+    public function boot(Kernel $kernel) {
 
         $app = app();
 
         if(!$app->runningInConsole()) {
             $packages = require_once(__DIR__.'/../config/packagelist.php');
 
-            $this->bootableDependencies($packages);
+            $this->bootableDependencies($packages, $kernel);
         }
         if($app->runningInConsole()) {
             $this->publishes(array(
@@ -81,7 +83,7 @@ class AdminifyServiceProvider extends ServiceProvider {
         return ['adminify'];
     }
 
-    private function bootableDependencies($packages) {
+    private function bootableDependencies($packages, $kernel) {
 
         foreach ($packages as $dependency) {
             # code...
@@ -129,7 +131,8 @@ class AdminifyServiceProvider extends ServiceProvider {
                 if( array_key_exists('global', $middlewares) ) {
                     foreach ($middlewares['global'] as $middleware) {
                         # code...
-                        $router->middleware($middleware);
+                        // $router->middleware($middleware);
+                        $kernel->pushMiddleware($middleware);
                     }
                 }
 
