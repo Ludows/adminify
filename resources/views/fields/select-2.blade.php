@@ -9,8 +9,12 @@
     @endif
 
     @if($showField)
-        @php
+        @php    
             $emptyVal = $options['empty_value'] ? ['0' => $options['empty_value']] : null;
+            if(isset($options['select2options']['multiple']) && $options['select2options']['multiple'] == false) {
+                $emptyVal = [];
+            }
+            
         @endphp
         @if($options['withCreate'])
             <button class="js-handle-form-create btn btn-default">+</button>
