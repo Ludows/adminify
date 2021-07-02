@@ -12,10 +12,11 @@ use Ludows\Adminify\Models\Media;
 
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements Searchable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
     use HasRoles;
 
     /**
