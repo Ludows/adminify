@@ -12,7 +12,7 @@
         @php    
             $emptyVal = $options['empty_value'] ? ['0' => $options['empty_value']] : null;
             if(isset($options['select2options']['multiple']) && $options['select2options']['multiple'] == false) {
-                $emptyVal = ['0' => ''];
+                $emptyVal = ['' => $options['empty_value']];
             }
             
         @endphp
