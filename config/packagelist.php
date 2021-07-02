@@ -311,6 +311,9 @@ return array(
                         'front.blogpage' => \Ludows\Adminify\Http\Middleware\checkBlogPage::class,
                         'admin.deletemedia' => \Ludows\Adminify\Http\Middleware\DeleteMedia::class,
                         'admin.fullmode' => \Ludows\Adminify\Http\Middleware\DisplayFullmode::class
+                    ],
+                    'global' => [
+                        \Ludows\Adminify\Http\Middleware\ShareCurrentUser::class
                     ]
                 ],
                 'aliases' => [
