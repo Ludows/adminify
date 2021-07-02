@@ -31,7 +31,9 @@ class CreateCategory extends Form
                 'withCreate' => false,
                 'choices' => $categories,
                 'selected' => '',
-                'attr' => [],
+                'attr' => [
+                    'data-placeholder' => __('admin.select_parentcategory')
+                ],
                 'select2options' => [
                     'multiple' => false,
                     'width' => '100%'
