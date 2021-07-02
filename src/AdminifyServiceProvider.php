@@ -118,6 +118,14 @@ class AdminifyServiceProvider extends ServiceProvider {
                     }
                 }
 
+                if( array_key_exists('api', $middlewares) ) {
+                    // $router->pushMiddlewareToGroup('web', MyMiddleware::class);
+                    foreach ($middlewares['api'] as $middleware) {
+                        # code...
+                        $router->pushMiddlewareToGroup('api', $middleware);
+                    }
+                }
+
                 if( array_key_exists('global', $middlewares) ) {
                     foreach ($middlewares['global'] as $middleware) {
                         # code...
