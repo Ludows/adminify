@@ -1,6 +1,3 @@
-@php
-    $user = auth()->user();
-@endphp
 <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
     <div class=" dropdown-header noti-title">
         <h6 class="text-overflow m-0">{{ __('admin.welcome') }}</h6>
