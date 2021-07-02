@@ -100,6 +100,15 @@ return [
         'enable' => true, // resets to false to disable entierely rest api
         'prefix' => 'api', // use prefix
         'domain' => null, // to set a domain, just replace by your domain,
+        'token_name' => 'api-token',
+        'token_capacities' => [
+            'guest' => [
+                'api:readonly',
+            ],
+            'authentificated' => [
+                'api:full' // update, read, create, delete
+            ]
+        ],
         'crud' => [
             // controllers here we binded like the CRUD pattern
            'pages' => \Ludows\Adminify\Http\Controllers\Api\PageController::class,

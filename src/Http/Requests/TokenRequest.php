@@ -16,23 +16,12 @@ class TokenRequest extends FormRequest
     public function rules()
     {
         $r = request();
+
         $a = [
-            'name' => [
-                'required', 'min:3'
-            ],
-            'email' => [
-                'required', 'email', Rule::unique((new User)->getTable())->ignore($this->route()->user->id ?? null)
-            ],
-            'password' => [
-                $this->route()->user ? 'nullable' : 'required', 'confirmed', 'min:6'
+            'token' => [
+                'required'
             ]
         ];
-
-        if($r->is('api.*')) {
-            $a['token'] = [
-                'required'
-            ];
-        }
 
         if($r->useMultilang && $r->is('api.*')) {
             $a['lang'] = [

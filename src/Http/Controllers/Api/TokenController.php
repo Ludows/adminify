@@ -4,9 +4,10 @@ namespace Ludows\Adminify\Http\Controllers\Api;
 
 use Ludows\Adminify\Http\Controllers\Controller;
 
-use Illuminate\Support\Facades\Artisan;
+use Ludows\Adminify\Http\Requests\TokenRequest;
 
 use Illuminate\Http\Request;
+use Ludows\Adminify\Models\User;
 
 class TokenController extends Controller
 {
@@ -15,10 +16,29 @@ class TokenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function getToken(TokenRequest $request)
     {
         $datas = $request->all();
-        
-        // return ;
+        $lang = $datas['lang'] ?? null;
+        $u = new User();
+        $token = null;
+        $config = config('site-settings.restApi');
+
+        if($datas['user'] == null) {
+
+            $token = $u->createToken( $config['token_name'], $config['token_capacities']['guest'] )->plainTextToken;
+        }
+        else {
+            //RETRIEVE USER
+            $u = $u->find($datas['user']->id);
+            $token = $u->createToken( $config['token_name'], $config['token_capacities']['authentificated'] )->plainTextToken;
+        }
+
+        //token is setted in session
+        session([$config['token_name'] => $token]);
+
+        return response()->json([
+            'token' => $token
+        ]);
     }
 }
