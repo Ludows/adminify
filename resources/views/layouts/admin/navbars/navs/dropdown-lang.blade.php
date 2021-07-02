@@ -7,8 +7,8 @@
             }
         @endphp
         <a href="{{ route( $currentRouteName , $arrayParameters) }}" class="dropdown-item">
-            <i class="ni ni-single-02"></i>
-            <span>{{ __($lang) }}</span>
+            <img alt="{{ $lang }}" src="{{ asset('argon/img/flags/') }}{{ $lang }}.svg">
+            <span>{{ __('admin.'.$lang) }}</span>
         </a>
     @endforeach
 
