@@ -15,6 +15,7 @@ class CommentController extends Controller
 
     public function __construct(CommentRepository $CommentRepository)
     {
+        $this->middleware('auth:sanctum', ['except' => ['index','show']]);
         $this->CommentRepository = $CommentRepository;
     }
     /**

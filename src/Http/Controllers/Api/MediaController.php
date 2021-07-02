@@ -17,6 +17,7 @@ class MediaController extends Controller
 
     public function __construct(MediaRepository $MediaRepository)
     {
+        $this->middleware('auth:sanctum', ['except' => ['index','show']]);
         $this->MediaRepository = $MediaRepository;
     }
     /**

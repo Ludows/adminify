@@ -16,6 +16,7 @@ class PageController extends Controller
 
     public function __construct(PageRepository $pageRepository)
     {
+        $this->middleware('auth:sanctum', ['except' => ['index','show']]);
         $this->pageRepository = $pageRepository;
     }
     /**

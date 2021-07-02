@@ -16,6 +16,7 @@ class CategoryController extends Controller
 
     public function __construct(CategoryRepository $CategoryRepository)
     {
+        $this->middleware('auth:sanctum', ['except' => ['index','show']]);
         $this->CategoryRepository = $CategoryRepository;
     }
     /**
