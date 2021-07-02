@@ -312,7 +312,7 @@ return array(
                         'admin.deletemedia' => \Ludows\Adminify\Http\Middleware\DeleteMedia::class,
                         'admin.fullmode' => \Ludows\Adminify\Http\Middleware\DisplayFullmode::class
                     ],
-                    'global' => [
+                    'web' => [
                         \Ludows\Adminify\Http\Middleware\ShareCurrentUser::class
                     ]
                 ],
