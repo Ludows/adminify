@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 $config = config('site-settings.restApi');
 
 if($config['enable']) {
+    
     Route::get('/', '\Ludows\Adminify\Http\Controllers\Api\ListingController@index')->name('routelist');
     //$config crud
     if(count($config['crud']) > 0) {
