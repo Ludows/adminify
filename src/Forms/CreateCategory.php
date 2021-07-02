@@ -32,11 +32,11 @@ class CreateCategory extends Form
                 'choices' => $categories,
                 'selected' => '',
                 'attr' => [
-                    'data-placeholder' => __('admin.select_parentcategory')
                 ],
                 'select2options' => [
                     'multiple' => false,
-                    'width' => '100%'
+                    'width' => '100%',
+                    'placeholder' => __('admin.select_parentcategory')
                 ]
             ]);
         // }
