@@ -8,6 +8,7 @@ use Ludows\Adminify\Http\Controllers\Controller;
 use Ludows\Adminify\Http\Requests\CreateCategoryRequest;
 
 
+
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
