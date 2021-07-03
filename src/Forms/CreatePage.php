@@ -4,8 +4,8 @@ namespace Ludows\Adminify\Forms;
 
 use Kris\LaravelFormBuilder\Form;
 use Kris\LaravelFormBuilder\Field;
-use Ludows\Adminify\Models\Category;
-use Ludows\Adminify\Models\Page;
+use App\Models\Category;
+use App\Models\Page;
 
 class CreatePage extends Form
 {

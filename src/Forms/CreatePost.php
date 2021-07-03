@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Forms;
 
 use Kris\LaravelFormBuilder\Form;
 use Kris\LaravelFormBuilder\Field;
-use Ludows\Adminify\Models\Category;
+use App\Models\Category;
 
 
 class CreatePost extends Form

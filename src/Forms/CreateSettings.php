@@ -5,8 +5,8 @@ namespace Ludows\Adminify\Forms;
 use Kris\LaravelFormBuilder\Form;
 use Kris\LaravelFormBuilder\Field;
 
-use Ludows\Adminify\Models\Page;
-use Ludows\Adminify\Models\Settings;
+use App\Models\Page;
+use App\Models\Settings;
 
 class CreateSettings extends Form
 {
