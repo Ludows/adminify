@@ -1,0 +1,12 @@
+<?php
+
+namespace App\Repositories;
+
+use MrAtiebatie\Repository;
+
+use Ludows\Adminify\Repositories\PageRepository as PageBaseRepository;
+
+class PageRepository extends PageBaseRepository
+{
+    use Repository;
+}

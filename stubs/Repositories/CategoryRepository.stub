@@ -1,0 +1,12 @@
+<?php
+
+namespace App\Repositories;
+
+use MrAtiebatie\Repository;
+
+use Ludows\Adminify\Repositories\CategoryRepository as CategoryBaseRepository;
+
+class CategoryRepository extends CategoryBaseRepository
+{
+    use Repository;
+}
