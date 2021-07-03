@@ -8,7 +8,7 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 use App\Forms\CreateSettings;
 
 use Ludows\Adminify\Http\Requests\SaveSettings;
-use Ludows\Adminify\Repositories\SettingsRepository;
+use App\Repositories\SettingsRepository;
 use App\Models\Settings;
 use Ludows\Adminify\Http\Controllers\Controller;
 

@@ -17,7 +17,7 @@ use Ludows\Adminify\Dropdowns\Users as UserDropdownsManager;
 
 use App\Forms\CreateUser;
 use App\Forms\UpdateUser;
-use Ludows\Adminify\Repositories\UserRepository;
+use App\Repositories\UserRepository;
 use App\Forms\DeleteCrud;
 class UserController extends Controller
 {

@@ -7,7 +7,7 @@ use App\Models\Media;
 
 use Ludows\Adminify\Http\Requests\CreateMediaRequest;
 use Ludows\Adminify\Http\Requests\UpdateMediaRequest;
-use Ludows\Adminify\Repositories\MediaRepository;
+use App\Repositories\MediaRepository;
 use Illuminate\Support\Facades\Storage;
 use Ludows\Adminify\Http\Controllers\Controller;
 

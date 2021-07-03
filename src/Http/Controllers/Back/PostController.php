@@ -17,8 +17,8 @@ use App\Models\Post;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 
-use Ludows\Adminify\Repositories\PostRepository;
-use Ludows\Adminify\Repositories\SeoRepository;
+use App\Repositories\PostRepository;
+use App\Repositories\SeoRepository;
 use Ludows\Adminify\Dropdowns\Post as PostDropdownManager;
 
 class PostController extends Controller

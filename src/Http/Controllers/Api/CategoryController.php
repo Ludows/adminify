@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Http\Controllers\Api;
 
 use App\Models\Category;
-use Ludows\Adminify\Repositories\CategoryRepository;
+use App\Repositories\CategoryRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 use Ludows\Adminify\Http\Requests\CreateCategoryRequest;
 

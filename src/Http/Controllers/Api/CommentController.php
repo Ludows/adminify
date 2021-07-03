@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Http\Controllers\Api;
 
 use App\Models\Comment;
-use Ludows\Adminify\Repositories\CommentRepository;
+use App\Repositories\CommentRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 

@@ -17,7 +17,7 @@ use App\Models\Menu;
 use Ludows\Adminify\Libs\MenuBuilder;
 use Illuminate\Support\Str;
 
-use Ludows\Adminify\Repositories\MenuRepository;
+use App\Repositories\MenuRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Dropdowns\Menu as MenuDropdownManager;

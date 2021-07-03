@@ -17,8 +17,8 @@ use App\Forms\SeoForm;
 
 use Ludows\Adminify\Http\Requests\PageRequest;
 
-use Ludows\Adminify\Repositories\PageRepository;
-use Ludows\Adminify\Repositories\SeoRepository;
+use App\Repositories\PageRepository;
+use App\Repositories\SeoRepository;
 
 use Ludows\Adminify\Dropdowns\Page as PageDropdownManager;
 

@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Http\Controllers\Api;
 
 use App\Models\Media;
-use Ludows\Adminify\Repositories\MediaRepository;
+use App\Repositories\MediaRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 use Ludows\Adminify\Http\Requests\CreateMediaRequest;
 use Ludows\Adminify\Http\Requests\UpdateMediaRequest;

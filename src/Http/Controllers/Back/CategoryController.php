@@ -16,7 +16,7 @@ use Ludows\Adminify\Http\Controllers\Controller;
 use Ludows\Adminify\Dropdowns\Category as CategoryDropdownManager;
 
 
-use Ludows\Adminify\Repositories\CategoryRepository;
+use App\Repositories\CategoryRepository;
 
 
 class CategoryController extends Controller

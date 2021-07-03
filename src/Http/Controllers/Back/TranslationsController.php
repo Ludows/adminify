@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use Ludows\Adminify\Http\Requests\CreateTranslation;
 use App\Models\Translations as Traductions;
 
-use Ludows\Adminify\Repositories\TranslationRepository;
+use App\Repositories\TranslationRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Dropdowns\Translations as TranslationDropdownManager;

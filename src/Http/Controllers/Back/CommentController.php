@@ -8,7 +8,7 @@ use App\Models\Post;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Ludows\Adminify\Http\Controllers\Controller;
 
-use Ludows\Adminify\Repositories\CommentRepository;
+use App\Repositories\CommentRepository;
 use Ludows\Adminify\Dropdowns\Comment as CommentDropdownManager;
 use Illuminate\Support\Str;
 
