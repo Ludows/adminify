@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-use Ludows\Adminify\Models\Media;
+use App\Models\Media;
 
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;

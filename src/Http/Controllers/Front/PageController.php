@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Http\Controllers\Front;
 
 use Illuminate\Http\Request;
-use Ludows\Adminify\Models\Page;
+use App\Models\Page;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Traits\SeoGenerator;
@@ -37,7 +37,7 @@ class PageController extends Controller
                 unset($user->roles);
             }
 
-            return view("layouts.front.pages.index", ['seo' => $seo, 'type' => $type, 'model' => $page, 'user' => $user, 'lang' => $request->lang]);
+            return view("adminify::layouts.front.pages.index", ['seo' => $seo, 'type' => $type, 'model' => $page, 'user' => $user, 'lang' => $request->lang]);
         }
 
         public function getPages($slug = null, Request $request) {
@@ -57,7 +57,7 @@ class PageController extends Controller
             }
 
 
-            return view("layouts.front.pages.index", ['seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => $request->lang]);
+            return view("adminify::layouts.front.pages.index", ['seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => $request->lang]);
 
         }
 
@@ -66,7 +66,7 @@ class PageController extends Controller
             $config = config('site-settings');
             $request = request();
             $multilang = $config['multilang'];
-            $lang = \LaravelGettext::getLocale();
+            $lang = $request->lang;
 
             $slug = explode('/', $slug);
             $slugCount = count($slug);
