@@ -1,0 +1,11 @@
+<?php
+
+namespace App\Forms;
+
+use Kris\LaravelFormBuilder\Field;
+
+use Ludows\Adminify\Forms\MenuSwitcher as MenuSwitcherBaseForm;
+
+
+class MenuSwitcher extends MenuSwitcherBaseForm
+{}

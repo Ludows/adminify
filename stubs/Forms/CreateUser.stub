@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Forms;
+
+use Kris\LaravelFormBuilder\Field;
+
+use Ludows\Adminify\Forms\CreateUser as CreateUserBaseForm;
+
+class CreateUser extends CreateUserBaseForm
+{}

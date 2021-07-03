@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Forms;
+
+use Kris\LaravelFormBuilder\Field;
+
+use Ludows\Adminify\Forms\CreateMenu as CreateMenuBaseForm;
+
+class CreateMenu extends CreateMenuBaseForm
+{}
