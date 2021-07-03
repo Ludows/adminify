@@ -13,7 +13,7 @@ use Ludows\Adminify\Forms\UpdatePost;
 use Ludows\Adminify\Forms\DeleteCrud;
 use Ludows\Adminify\Forms\SeoForm;
 
-use Ludows\Adminify\Models\Post;
+use App\Models\Post;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 

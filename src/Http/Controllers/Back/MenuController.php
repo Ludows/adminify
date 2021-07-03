@@ -13,7 +13,7 @@ use Ludows\Adminify\Forms\MenuItemsThree;
 use Ludows\Adminify\Forms\CreateMenu;
 use Ludows\Adminify\Forms\DeleteCrud;
 
-use Ludows\Adminify\Models\Menu;
+use App\Models\Menu;
 use Ludows\Adminify\Libs\MenuBuilder;
 use Illuminate\Support\Str;
 

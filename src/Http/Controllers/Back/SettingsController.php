@@ -9,7 +9,7 @@ use Ludows\Adminify\Forms\CreateSettings;
 
 use Ludows\Adminify\Http\Requests\SaveSettings;
 use Ludows\Adminify\Repositories\SettingsRepository;
-use Ludows\Adminify\Models\Settings;
+use App\Models\Settings;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 

@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Http\Controllers\Back;
 
-use Ludows\Adminify\Models\User;
+use App\Models\User;
 use Ludows\Adminify\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
 

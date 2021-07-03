@@ -10,7 +10,7 @@ use Ludows\Adminify\Forms\DeleteCrud;
 
 use Illuminate\Http\Request;
 use Ludows\Adminify\Http\Requests\CreateTranslation;
-use Ludows\Adminify\Models\Translations as Traductions;
+use App\Models\Translations as Traductions;
 
 use Ludows\Adminify\Repositories\TranslationRepository;
 use Ludows\Adminify\Http\Controllers\Controller;

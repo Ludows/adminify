@@ -7,7 +7,7 @@ use Ludows\Adminify\Http\Controllers\Controller;
 use Ludows\Adminify\Http\Requests\TokenRequest;
 
 use Illuminate\Http\Request;
-use Ludows\Adminify\Models\User;
+use App\Models\User;
 
 class TokenController extends Controller
 {

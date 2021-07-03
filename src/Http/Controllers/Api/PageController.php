@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Http\Controllers\Api;
 
-use Ludows\Adminify\Models\Page;
+use App\Models\Page;
 use Ludows\Adminify\Repositories\PageRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 use Ludows\Adminify\Http\Requests\PageRequest;

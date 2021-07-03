@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Http\Controllers\Api;
 
-use Ludows\Adminify\Models\Translations;
+use App\Models\Translations;
 use Ludows\Adminify\Repositories\TranslationRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 use Ludows\Adminify\Http\Requests\CreateTranslation;

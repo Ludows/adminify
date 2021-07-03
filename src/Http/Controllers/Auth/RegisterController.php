@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Http\Controllers\Auth;
 
 use Ludows\Adminify\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use Ludows\Adminify\Models\User;
+use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;

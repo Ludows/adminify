@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Http\Controllers\Api;
 
-use Ludows\Adminify\Models\Post;
+use App\Models\Post;
 use Ludows\Adminify\Repositories\PostRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 use Ludows\Adminify\Http\Requests\CreatePostRequest;

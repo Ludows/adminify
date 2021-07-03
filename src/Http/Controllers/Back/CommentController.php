@@ -3,8 +3,8 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
-use Ludows\Adminify\Models\Comment;
-use Ludows\Adminify\Models\Post;
+use App\Models\Comment;
+use App\Models\Post;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Ludows\Adminify\Http\Controllers\Controller;
 
