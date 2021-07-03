@@ -2,7 +2,7 @@
 namespace Ludows\Adminify\Listeners;
 
 use Unisharp\Laravelfilemanager\Events\ImageWasUploaded;
-use Ludows\Adminify\Repositories\MediaRepository;
+use App\Repositories\MediaRepository;
 class HasUploadedImageListener
 {
     /**
