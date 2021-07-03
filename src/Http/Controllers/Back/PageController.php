@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Http\Controllers\Back;
 
-use Ludows\Adminify\Models\Page;
+use App\Models\Page;
 
 use Illuminate\Http\Request;
 use Ludows\Adminify\Http\Controllers\Controller;
@@ -10,9 +10,9 @@ use Illuminate\Support\Str;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Ludows\Adminify\Forms\DeleteCrud;
-use Ludows\Adminify\Forms\CreatePage;
-use Ludows\Adminify\Forms\SeoForm;
+use App\Forms\DeleteCrud;
+use App\Forms\CreatePage;
+use App\Forms\SeoForm;
 
 
 use Ludows\Adminify\Http\Requests\PageRequest;

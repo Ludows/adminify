@@ -5,7 +5,7 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 use Illuminate\Http\Request;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Ludows\Adminify\Forms\CreateSettings;
+use App\Forms\CreateSettings;
 
 use Ludows\Adminify\Http\Requests\SaveSettings;
 use Ludows\Adminify\Repositories\SettingsRepository;

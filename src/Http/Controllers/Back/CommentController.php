@@ -12,8 +12,8 @@ use Ludows\Adminify\Repositories\CommentRepository;
 use Ludows\Adminify\Dropdowns\Comment as CommentDropdownManager;
 use Illuminate\Support\Str;
 
-use Ludows\Adminify\Forms\DeleteCrud;
-use Ludows\Adminify\Forms\UpdateComment;
+use App\Forms\DeleteCrud;
+use App\Forms\UpdateComment;
 
 
 class CommentController extends Controller

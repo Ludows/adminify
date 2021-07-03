@@ -18,9 +18,9 @@ use Ludows\Adminify\Dropdowns\Media as MediaDropdownManager;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Ludows\Adminify\Forms\CreateMedia;
-use Ludows\Adminify\Forms\UpdateMedia;
-use Ludows\Adminify\Forms\DeleteCrud;
+use App\Forms\CreateMedia;
+use App\Forms\UpdateMedia;
+use App\Forms\DeleteCrud;
 
 
 

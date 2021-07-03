@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
 use Ludows\Adminify\Http\Controllers\Controller;
-use Ludows\Adminify\Forms\DeleteCrud;
+use App\Forms\DeleteCrud;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;

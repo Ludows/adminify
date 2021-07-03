@@ -8,10 +8,10 @@ use Ludows\Adminify\Http\Requests\CreatePostRequest;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Ludows\Adminify\Forms\CreatePost;
-use Ludows\Adminify\Forms\UpdatePost;
-use Ludows\Adminify\Forms\DeleteCrud;
-use Ludows\Adminify\Forms\SeoForm;
+use App\Forms\CreatePost;
+use App\Forms\UpdatePost;
+use App\Forms\DeleteCrud;
+use App\Forms\SeoForm;
 
 use App\Models\Post;
 use Ludows\Adminify\Http\Controllers\Controller;

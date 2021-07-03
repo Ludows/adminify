@@ -15,10 +15,10 @@ use Ludows\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Dropdowns\Users as UserDropdownsManager;
 
-use Ludows\Adminify\Forms\CreateUser;
-use Ludows\Adminify\Forms\UpdateUser;
+use App\Forms\CreateUser;
+use App\Forms\UpdateUser;
 use Ludows\Adminify\Repositories\UserRepository;
-use Ludows\Adminify\Forms\DeleteCrud;
+use App\Forms\DeleteCrud;
 class UserController extends Controller
 {
     use FormBuilderTrait;

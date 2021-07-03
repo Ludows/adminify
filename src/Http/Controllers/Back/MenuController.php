@@ -8,8 +8,8 @@ use Ludows\Adminify\Http\Requests\CreateMenuRequest;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
-use Ludows\Adminify\Forms\MenuSwitcher;
-use Ludows\Adminify\Forms\MenuItemsThree;
+use App\Forms\MenuSwitcher;
+use App\Forms\MenuItemsThree;
 use Ludows\Adminify\Forms\CreateMenu;
 use Ludows\Adminify\Forms\DeleteCrud;
 

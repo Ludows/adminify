@@ -4,9 +4,9 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Ludows\Adminify\Forms\CreateTranslation as FormsCreateTranslation;
-use Ludows\Adminify\Forms\UpdateTranslation;
-use Ludows\Adminify\Forms\DeleteCrud;
+use App\Forms\CreateTranslation as FormsCreateTranslation;
+use App\Forms\UpdateTranslation;
+use App\Forms\DeleteCrud;
 
 use Illuminate\Http\Request;
 use Ludows\Adminify\Http\Requests\CreateTranslation;

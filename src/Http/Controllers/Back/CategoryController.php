@@ -9,9 +9,9 @@ use App\Models\Category;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use Ludows\Adminify\Forms\CreateCategory;
-use Ludows\Adminify\Forms\UpdateCategory;
-use Ludows\Adminify\Forms\DeleteCrud;
+use App\Forms\CreateCategory;
+use App\Forms\UpdateCategory;
+use App\Forms\DeleteCrud;
 use Ludows\Adminify\Http\Controllers\Controller;
 use Ludows\Adminify\Dropdowns\Category as CategoryDropdownManager;
 
