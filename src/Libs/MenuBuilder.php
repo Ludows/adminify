@@ -2,17 +2,17 @@
 
 namespace Ludows\Adminify\Libs;
 
-use Ludows\Adminify\Models\Menu;
-use Ludows\Adminify\Models\MenuItem;
+use App\Models\Menu;
+use App\Models\MenuItem;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 use App\Http\Controllers\MenuController;
-use Ludows\Adminify\Forms\MenuSwitcher;
-use Ludows\Adminify\Forms\CreateMenu;
-use Ludows\Adminify\Forms\UpdateMenu;
-use Ludows\Adminify\Forms\SetItemsToMenu;
-use Ludows\Adminify\Forms\DeleteCrud;
+use App\Forms\MenuSwitcher;
+use App\Forms\CreateMenu;
+use App\Forms\UpdateMenu;
+use App\Forms\SetItemsToMenu;
+use App\Forms\Forms\DeleteCrud;
 
 class MenuBuilder
 {
