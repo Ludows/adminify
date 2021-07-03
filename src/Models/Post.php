@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Ludows\Adminify\Models\Category;
 use Ludows\Adminify\Models\Comment;
 
+use VanOns\Laraberg\Models\Gutenbergable;
 use Ludows\Adminify\Traits\SlugUpdate;
 use Ludows\Adminify\Traits\Urlable;
 use Spatie\Translatable\HasTranslations;
@@ -20,6 +21,7 @@ use Spatie\Searchable\SearchResult;
 
 class Post extends Model implements Searchable
 {
+    use Gutenbergable;
     use HasFactory;
     use SlugUpdate;
     use Urlable;

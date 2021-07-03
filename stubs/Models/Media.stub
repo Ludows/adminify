@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+use Ludows\Adminify\Models\Media as MediaBaseModel;
+use Ludows\Adminify\Traits\PathableMedia;
+use Ludows\Adminify\Traits\Helpers;
+
+class Media extends MediaBaseModel
+{
+    protected $table = 'medias';
+
+    use HasFactory;
+    use PathableMedia;
+    use Helpers;
+}

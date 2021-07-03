@@ -1,0 +1,21 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+use Ludows\Adminify\Traits\SlugUpdate;
+use Spatie\Translatable\HasTranslations;
+use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
+
+use Ludows\Adminify\Models\MenuItem as MenuItemBaseModel;
+
+class MenuItem extends MenuItemBaseModel
+{
+    use HasFactory;
+    use SlugUpdate;
+    use HasTranslations;
+    use MultilangTranslatableSwitch;
+    use Helpers;
+}
