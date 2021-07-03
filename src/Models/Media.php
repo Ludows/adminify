@@ -5,7 +5,7 @@ namespace Ludows\Adminify\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use Ludows\Adminify\Models\Post;
+use App\Models\Post;
 use Ludows\Adminify\Traits\PathableMedia;
 use Ludows\Adminify\Traits\Helpers;
 class Media extends Model

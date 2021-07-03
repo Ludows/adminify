@@ -9,8 +9,8 @@ use Ludows\Adminify\Traits\SlugUpdate;
 use Spatie\Translatable\HasTranslations;
 use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
 
-use Ludows\Adminify\Models\Menu;
-use Ludows\Adminify\Models\Media;
+use App\Models\Menu;
+use App\Models\Media;
 use Ludows\Adminify\Traits\Helpers;
 
 class MenuItem extends Model

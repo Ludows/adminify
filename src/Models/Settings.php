@@ -9,7 +9,7 @@ use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
 use Ludows\Adminify\Traits\Helpers;
 
 
-use Ludows\Adminify\Models\Page;
+use App\Models\Page;
 
 class Settings extends Model
 {

@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
-use Ludows\Adminify\Models\Post;
-use Ludows\Adminify\Models\Media;
+use App\Models\Post;
+use App\Models\Media;
 
 use Ludows\Adminify\Traits\SlugUpdate;
 use Ludows\Adminify\Traits\Urlable;

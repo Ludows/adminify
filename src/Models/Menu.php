@@ -9,7 +9,7 @@ use Ludows\Adminify\Traits\SlugUpdate;
 use Spatie\Translatable\HasTranslations;
 use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
 
-use Ludows\Adminify\Models\MenuItem;
+use App\Models\MenuItem;
 
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
