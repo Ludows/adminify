@@ -1,0 +1,7 @@
+<?php
+namespace App\Listeners;
+
+use Ludows\Adminify\Listeners\HasRenamedImageListener as HasRenamedImageBaseListener;
+
+class HasRenamedImageListener extends HasRenamedImageBaseListener
+{}
