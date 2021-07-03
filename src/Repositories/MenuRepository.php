@@ -3,9 +3,9 @@
 namespace Ludows\Adminify\Repositories;
 
 use MrAtiebatie\Repository;
-use Ludows\Adminify\Models\Menu;
-use Ludows\Adminify\Models\Media;
-use Ludows\Adminify\Models\MenuItem; // Don't forget to update the model's namespace
+use App\Models\Menu;
+use App\Models\Media;
+use App\Models\MenuItem; // Don't forget to update the model's namespace
 
 class MenuRepository
 {

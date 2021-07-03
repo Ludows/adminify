@@ -3,8 +3,8 @@
 namespace Ludows\Adminify\Repositories;
 
 use MrAtiebatie\Repository;
-use Ludows\Adminify\Models\Page; // Don't forget to update the model's namespace
-use Ludows\Adminify\Models\Media;
+use App\Models\Page; // Don't forget to update the model's namespace
+use App\Models\Media;
 
 
 class PageRepository

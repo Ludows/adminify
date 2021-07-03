@@ -2,10 +2,10 @@
 
 namespace Ludows\Adminify\Repositories;
 
-use Ludows\Adminify\Models\Category;
+use App\Models\Category;
 use MrAtiebatie\Repository;
-use Ludows\Adminify\Models\Post; // Don't forget to update the model's namespace
-use Ludows\Adminify\Models\Media;
+use App\Models\Post; // Don't forget to update the model's namespace
+use App\Models\Media;
 class PostRepository
 {
     use Repository;

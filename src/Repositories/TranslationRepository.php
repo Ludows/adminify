@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Repositories;
 
 use MrAtiebatie\Repository;
-use Ludows\Adminify\Models\Translations as Traduction; // Don't forget to update the model's namespace
+use App\Models\Translations as Traduction; // Don't forget to update the model's namespace
 
 class TranslationRepository
 {

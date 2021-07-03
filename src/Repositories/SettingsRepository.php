@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Repositories;
 
 use MrAtiebatie\Repository;
-use Ludows\Adminify\Models\Settings; // Don't forget to update the model's namespace
+use App\Models\Settings; // Don't forget to update the model's namespace
 
 class SettingsRepository
 {

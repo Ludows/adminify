@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Repositories;
 
 use MrAtiebatie\Repository;
-use Ludows\Adminify\Models\User;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash; // Don't forget to update the model's namespace
 
 class UserRepository
