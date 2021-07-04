@@ -5,7 +5,7 @@ namespace Ludows\Adminify\Http\Controllers\Api;
 use App\Models\Translations;
 use App\Repositories\TranslationRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
-use Ludows\Adminify\Http\Requests\CreateTranslation;
+use App\Http\Requests\CreateTranslation;
 
 
 use Illuminate\Http\Request;

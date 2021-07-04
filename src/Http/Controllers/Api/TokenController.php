@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Http\Controllers\Api;
 
 use Ludows\Adminify\Http\Controllers\Controller;
 
-use Ludows\Adminify\Http\Requests\TokenRequest;
+use App\Http\Requests\TokenRequest;
 
 use Illuminate\Http\Request;
 use App\Models\User;

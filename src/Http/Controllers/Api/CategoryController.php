@@ -5,7 +5,7 @@ namespace Ludows\Adminify\Http\Controllers\Api;
 use App\Models\Category;
 use App\Repositories\CategoryRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
-use Ludows\Adminify\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\CreateCategoryRequest;
 
 
 

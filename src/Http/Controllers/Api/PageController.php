@@ -5,7 +5,7 @@ namespace Ludows\Adminify\Http\Controllers\Api;
 use App\Models\Page;
 use App\Repositories\PageRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
-use Ludows\Adminify\Http\Requests\PageRequest;
+use App\Http\Requests\PageRequest;
 
 
 use Illuminate\Http\Request;
