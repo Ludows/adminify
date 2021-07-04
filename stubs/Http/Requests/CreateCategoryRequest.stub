@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+use Ludows\Adminify\Http\Requests\CreateCategoryRequest as CreateCategoryRequestBaseRequest;
+
+class CreateCategoryRequest extends CreateCategoryRequestBaseRequest
+{}
