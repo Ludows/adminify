@@ -37,6 +37,44 @@ if (! function_exists('parse_shortcode')) {
     }
 }
 
+if(! function_exists('set_recursive_finder')) {
+    function set_recursive_finder($path, $wantedFile, $params = []) {
+        $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
+    
+        $ret = $params['startValue']; 
+        foreach ($rii as $file)
+            if ($file->isDir()) {
+                set_recursive_finder($file, $wantedFile, $params);
+            }
+
+            if($file->getPathname() == $wantedFile) {
+                $ret = $params['endValue'] ?? $file->getPathname();
+            }
+    
+        return $ret;
+    }
+}
+
+
+if(! function_exists('search_stubs_install')) {
+    function search_stubs_install($path, $wantedFile) {
+        $ret = set_recursive_finder($path, $wantedFile, [
+            'startValue' => null,
+        ]);
+        return $ret;
+    }
+}
+
+if(! function_exists('is_installed_class')) {
+    function is_installed_class($path, $wantedFile) {
+        $ret = set_recursive_finder($path, $wantedFile, [
+            'startValue' => false,
+            'endValue' => true,
+        ]);
+        return $ret;
+    }
+}
+
 if (! function_exists('get_shortcode')) {
     function get_shortcode($string = '') {
         $ret_s = null;
