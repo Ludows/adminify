@@ -303,17 +303,17 @@ return array(
                 'providers' => [],
                 'middlewares' => [
                     'named' => [
-                        'autoload.forms' => \Ludows\Adminify\Http\Middleware\RequiredForms::class,
-                        'admin.menu' => \Ludows\Adminify\Http\Middleware\GenerateAdminMenu::class,
-                        'check.permissions' => \Ludows\Adminify\Http\Middleware\checkUserPermissions::class,
-                        'multilang.basic' => \Ludows\Adminify\Http\Middleware\MultilangBasic::class,
-                        'admin.breadcrumb' => \Ludows\Adminify\Http\Middleware\AdminBreadcrumb::class,
-                        'front.blogpage' => \Ludows\Adminify\Http\Middleware\checkBlogPage::class,
-                        'admin.deletemedia' => \Ludows\Adminify\Http\Middleware\DeleteMedia::class,
-                        'admin.fullmode' => \Ludows\Adminify\Http\Middleware\DisplayFullmode::class
+                        'autoload.forms' => \App\Http\Middleware\RequiredForms::class,
+                        'admin.menu' => \App\Http\Middleware\GenerateAdminMenu::class,
+                        'check.permissions' => \App\Http\Middleware\checkUserPermissions::class,
+                        'multilang.basic' => \App\Http\Middleware\MultilangBasic::class,
+                        'admin.breadcrumb' => \App\Http\Middleware\AdminBreadcrumb::class,
+                        'front.blogpage' => \App\Http\Middleware\checkBlogPage::class,
+                        'admin.deletemedia' => \App\Http\Middleware\DeleteMedia::class,
+                        'admin.fullmode' => \App\Http\Middleware\DisplayFullmode::class
                     ],
                     'web' => [
-                        \Ludows\Adminify\Http\Middleware\ShareCurrentUser::class
+                        \App\Http\Middleware\ShareCurrentUser::class
                     ]
                 ],
                 'aliases' => [

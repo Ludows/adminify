@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Ludows\Adminify\Http\Middleware\ShareCurrentUser as ShareCurrentUserBaseMiddleware;
+
+class ShareCurrentUser extends ShareCurrentUserBaseMiddleware
+{}
