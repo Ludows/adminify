@@ -5,8 +5,8 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 
 use App\Models\Media;
 
-use Ludows\Adminify\Http\Requests\CreateMediaRequest;
-use Ludows\Adminify\Http\Requests\UpdateMediaRequest;
+use App\Http\Requests\CreateMediaRequest;
+use App\Http\Requests\UpdateMediaRequest;
 use App\Repositories\MediaRepository;
 use Illuminate\Support\Facades\Storage;
 use Ludows\Adminify\Http\Controllers\Controller;

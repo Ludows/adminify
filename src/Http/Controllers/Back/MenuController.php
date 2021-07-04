@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
-use Ludows\Adminify\Http\Requests\CreateMenuRequest;
+use App\Http\Requests\CreateMenuRequest;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;

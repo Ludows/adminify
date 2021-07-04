@@ -3,14 +3,13 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 use App\Models\User;
-use Ludows\Adminify\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Hash;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
-use Ludows\Adminify\Http\Requests\CreateUserRequest;
-use Ludows\Adminify\Http\Requests\UserUpdateRequest;
+use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UserUpdateRequest;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Dropdowns\Users as UserDropdownsManager;

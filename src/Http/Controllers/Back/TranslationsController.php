@@ -9,7 +9,7 @@ use App\Forms\UpdateTranslation;
 use App\Forms\DeleteCrud;
 
 use Illuminate\Http\Request;
-use Ludows\Adminify\Http\Requests\CreateTranslation;
+use App\Http\Requests\CreateTranslation;
 use App\Models\Translations as Traductions;
 
 use App\Repositories\TranslationRepository;

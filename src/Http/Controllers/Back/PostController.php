@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
-use Ludows\Adminify\Http\Requests\CreatePostRequest;
+use App\Http\Requests\CreatePostRequest;
 
 
 use Kris\LaravelFormBuilder\FormBuilder;

@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
-use Ludows\Adminify\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\CreateCategoryRequest;
 
 use App\Models\Category;
 

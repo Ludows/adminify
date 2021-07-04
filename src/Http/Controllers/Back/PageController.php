@@ -15,7 +15,7 @@ use App\Forms\CreatePage;
 use App\Forms\SeoForm;
 
 
-use Ludows\Adminify\Http\Requests\PageRequest;
+use App\Http\Requests\PageRequest;
 
 use App\Repositories\PageRepository;
 use App\Repositories\SeoRepository;
