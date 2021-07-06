@@ -219,7 +219,8 @@ class InstallPackages extends Command
 
         $currentPath = $path;
 
-        $dirs = \Storage::allDirectories($path);
+        $dirs = \Storage::allDirectories($currentPath);
+        dump($dirs);
         $namespace = $namespaceStr ?? "App\\";
 
         foreach ($dirs as $dir) {
