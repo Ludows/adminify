@@ -57,7 +57,7 @@ class InstallPackages extends Command
         if(isset($arguments['task'])) {
             foreach ($arguments['task'] as $t) {
                 # code...
-                $cleanedTasks[] = str_replace('task=', $t);
+                $cleanedTasks[] = str_replace('task=', '', $t);
             }
         }
         
