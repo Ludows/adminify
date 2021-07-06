@@ -19,7 +19,7 @@ class InstallPackages extends Command
      */
     protected $signature = 'adminify:install 
         {task?* : Tasks name are npm, coreinstall, migrations, seed, publishes}
-        {--force : Force all tasks}';
+        {--force : Force all tasks}'; //todo
 
     /**
      * The console command description.
@@ -52,7 +52,17 @@ class InstallPackages extends Command
         $options = $this->options();
         $arguments = $this->arguments();
 
-        dd($options, $arguments);
+        $cleanedTasks = [];
+
+        if(isset($arguments['task'])) {
+            foreach ($arguments['task'] as $t) {
+                # code...
+                $cleanedTasks[] = str_replace('task=', $t);
+            }
+        }
+        
+
+        dd($options, $arguments, $cleanedTasks);
 
         
         // if(!isset($options['noCoreInstall']))
