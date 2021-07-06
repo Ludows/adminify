@@ -64,34 +64,44 @@ class InstallPackages extends Command
 
         dd($options, $arguments, $cleanedTasks);
 
-        
-        // if(!isset($options['noCoreInstall']))
-        $this->info('Handle Adminify core instalation');
-        $this->handleCoreTasks();
-        
-        $this->info('Handle stubs install');
-        $this->handleStubs(base_path('vendor/ludows/adminify/stubs'));
 
-        $this->handlePublishesPackages();
+        if(in_array('*', $cleanedTasks)  || in_array('coreinstall', $cleanedTasks)) {
+            $this->info('Handle Adminify core instalation');
+            $this->handleCoreTasks();
+            
+            $this->info('Handle stubs install');
+            $this->handleStubs(base_path('vendor/ludows/adminify/stubs'));
+        }
+        
+        if(in_array('*', $cleanedTasks)  || in_array('publishes', $cleanedTasks)) {
+            $this->handlePublishesPackages();
+        }
 
-        //run migration for tables
-        // exec("php artisan migrate");
-        $this->info('Handle migrations');
-        Artisan::call('migrate');
+        if(in_array('*', $cleanedTasks)  || in_array('migrate', $cleanedTasks)) {
+            $this->info('Handle migrations');
+            Artisan::call('migrate');
+        }
 
         //run seeds
         //exec("php artisan db:seed --class='Ludows\Adminify\Database\Seeders\DatabaseSeeder'");
-        $this->info('Handle seeding database');
-        Artisan::call('db:seed', [
-            '--class' => 'Ludows\Adminify\Database\Seeders\DatabaseSeeder'
-        ]);
+        if(in_array('*', $cleanedTasks)  || in_array('seed', $cleanedTasks)) {
+            $this->info('Handle seeding database');
+            Artisan::call('db:seed', [
+                '--class' => 'Ludows\Adminify\Database\Seeders\DatabaseSeeder'
+            ]);
+        }
         
-        $this->info('Handle npm process');
-        $this->doCommand('npm install && npm run dev');
-        
-        $this->info('Installation finished.');
-        
+        if(in_array('*', $cleanedTasks)  || in_array('npm', $cleanedTasks)) {
+            $this->info('Handle npm process');
+            $this->doCommand('npm install && npm run dev');
+        }
 
+        if(count($cleanedTasks) > 0) {
+            $this->info('Installation finished.');
+        }
+        else {
+            $this->info('No Tasks specified, Installation finished.');
+        }
     }
     /**
      * Execute a command
