@@ -3,6 +3,7 @@ use Thunder\Shortcode\ShortcodeFacade;
 use Ludows\Adminify\Models\Translations as Traduction;
 use Ludows\Adminify\Models\Menu;
 use Ludows\Adminify\Models\Settings;
+use Storage;
 
 if (! function_exists('do_shortcode')) {
     function do_shortcode($shortcodeName, $parameters = []) {
@@ -65,8 +66,8 @@ if(! function_exists('search_stubs_install')) {
     }
 }
 
-if(! function_exists('is_installed_class')) {
-    function is_installed_class($path, $wantedFile) {
+if(! function_exists('is_installed_stub')) {
+    function is_installed_stub($path, $wantedFile) {
         $ret = set_recursive_finder($path, $wantedFile, [
             'startValue' => false,
             'endValue' => true,

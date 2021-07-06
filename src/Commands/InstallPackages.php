@@ -8,10 +8,9 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Str;
 // use Illuminate\Support\Facades\Event;
 use File;
-
-
 class InstallPackages extends Command
 {
     /**
@@ -19,7 +18,7 @@ class InstallPackages extends Command
      *
      * @var string
      */
-    protected $signature = 'install:packages';
+    protected $signature = 'adminify:install {—-noPublish} {—-noCoreInstall} {—-noMigrations} {—-noNpm} {—-noPublishStubs}';
 
     /**
      * The console command description.
@@ -49,35 +48,24 @@ class InstallPackages extends Command
     public function handle()
     {
 
-        $this->info('Handle Core install');
+        $options = $this->options();
+
+        dd($options);
+
+        
+        // if(!isset($options['noCoreInstall']))
+        $this->info('Handle Adminify core instalation');
         $this->handleCoreTasks();
 
-        foreach ($this->packages as $dependency) {
-            # code...
-
-            
-            $command = $this->handlePackageInstall($dependency);
-
-            // handle beforePublish
-            $this->handleHook($dependency, 'beforePublish');
-            //first exec command package
-            if($command != null) {
-                exec($command);
-            }
-
-            // handle afterPublish
-            $this->handleHook($dependency, 'afterPublish');
-
-            //second publish my preconfigured files config
-            $this->handleConfig($dependency);
-
-        }
+        $this->handlePublishesPackages();
 
         //run migration for tables
         // exec("php artisan migrate");
         $this->info('Handle migrations');
         Artisan::call('migrate');
-        
+
+        $this->info('Handle stubs install');
+        $this->handleStubs(base_path('vendor/ludows/adminify/stubs'));
         //run seeds
         //exec("php artisan db:seed --class='Ludows\Adminify\Database\Seeders\DatabaseSeeder'");
         $this->info('Handle seeding database');
@@ -87,6 +75,7 @@ class InstallPackages extends Command
         
         $this->info('Handle npm process');
         $this->doCommand('npm install && npm run dev');
+        
         $this->info('Installation finished.');
         
 
@@ -117,6 +106,28 @@ class InstallPackages extends Command
                 }
                 exec($command);
             }
+
+        }
+    }
+    public function handlePublishesPackages() {
+        foreach ($this->packages as $dependency) {
+            # code...
+
+            
+            $command = $this->handlePackageInstall($dependency);
+
+            // handle beforePublish
+            $this->handleHook($dependency, 'beforePublish');
+            //first exec command package
+            if($command != null) {
+                exec($command);
+            }
+
+            // handle afterPublish
+            $this->handleHook($dependency, 'afterPublish');
+
+            //second publish my preconfigured files config
+            $this->handleConfig($dependency);
 
         }
     }
@@ -180,5 +191,36 @@ class InstallPackages extends Command
                 $this->info('Handle published config:  '. $firstPackageConfig->name);
             }
         }
+    }
+    public function handleStubs($path = '', $namespaceStr = '',  $log = true) {
+
+        $currentPath = $path;
+
+        $dirs = Storage::allDirectories($path);
+        $namespace = $namespaceStr ?? "App\\";
+
+        foreach ($dirs as $dir) {
+            # code...
+            $namespaced = Str::title($dir);
+            $checkDirectories = Storage::allDirectories($currentPath.'/'.$dir);
+            if(count($checkDirectories) > 0) {
+                $this->handleStubs($currentPath.'/'.$dir, $namespace.'\\'.$namespaced);
+            }
+
+            $files = Storage::allFiles($currentPath.'/'.$dir);
+
+            foreach ($files as $file) {
+                # code...
+                $info = pathinfo($file);
+            }
+
+            if($log) {
+                $this->info('Handle directory stub:  '. $currentPath.'/'.$dir);
+                $this->info('Handle namespace stub:  '. $namespace);
+            }
+        }
+
+
+
     }
 }
