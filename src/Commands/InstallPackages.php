@@ -17,10 +17,11 @@ class InstallPackages extends Command
      *
      * @var string
      */
-    protected $signature = 'adminify:install {—-publish : Handle Publishes Packages,
-        —-coreinstall : Handle Core Install,
-        --migrations : Handle migrations,
-        --npm : run Npm }';
+    protected $signature = 'adminify:install 
+        { —-publish : Handle Publishes Packages }
+        { —-coreinstall : Handle Core Install }
+        { --migrations : Handle migrations }
+        { --npm : run Npm }';
 
     /**
      * The console command description.
