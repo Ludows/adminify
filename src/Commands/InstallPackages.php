@@ -17,7 +17,7 @@ class InstallPackages extends Command
      *
      * @var string
      */
-    protected $signature = 'adminify:install {—-noPublish?} {—-noCoreInstall?} {—-noMigrations?} {—-noNpm?} {—-noPublishStubs?}';
+    protected $signature = 'adminify:install {—-nopublish?} {—-nocoreinstall?} {—-nomigrations?} {—-nonpm?} {—-nostubs?}';
 
     /**
      * The console command description.
