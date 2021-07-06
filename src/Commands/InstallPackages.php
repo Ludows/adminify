@@ -17,7 +17,10 @@ class InstallPackages extends Command
      *
      * @var string
      */
-    protected $signature = 'adminify:install {—-publish} {—-coreinstall} {—-migrations} {—-npm} {—-stubs}';
+    protected $signature = 'adminify:install {—-publish : Handle Publishes Packages,
+        —-coreinstall : Handle Core Install,
+        --migrations : Handle migrations,
+        --npm : run Npm }';
 
     /**
      * The console command description.
@@ -55,6 +58,9 @@ class InstallPackages extends Command
         // if(!isset($options['noCoreInstall']))
         $this->info('Handle Adminify core instalation');
         $this->handleCoreTasks();
+        
+        $this->info('Handle stubs install');
+        $this->handleStubs(base_path('vendor/ludows/adminify/stubs'));
 
         $this->handlePublishesPackages();
 
@@ -63,8 +69,6 @@ class InstallPackages extends Command
         $this->info('Handle migrations');
         Artisan::call('migrate');
 
-        $this->info('Handle stubs install');
-        $this->handleStubs(base_path('vendor/ludows/adminify/stubs'));
         //run seeds
         //exec("php artisan db:seed --class='Ludows\Adminify\Database\Seeders\DatabaseSeeder'");
         $this->info('Handle seeding database');
