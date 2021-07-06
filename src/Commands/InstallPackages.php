@@ -61,6 +61,10 @@ class InstallPackages extends Command
             }
         }
 
+        if(!in_array('*', $cleanedTasks) && count($arguments['task']) == 0) {
+            $cleanedTasks[] = '*';
+        }
+
         if(in_array('*', $cleanedTasks)  || in_array('coreinstall', $cleanedTasks)) {
             $this->info('Handle Adminify core instalation');
             $this->handleCoreTasks();
