@@ -50,8 +50,9 @@ class InstallPackages extends Command
     {
 
         $options = $this->options();
+        $arguments = $this->arguments();
 
-        dd($options);
+        dd($options, $arguments);
 
         
         // if(!isset($options['noCoreInstall']))
