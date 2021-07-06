@@ -235,6 +235,7 @@ class InstallPackages extends Command
             foreach ($files as $file) {
                 # code...
                 $info = pathinfo($file);
+                dump($info);
             }
 
             if($log) {
