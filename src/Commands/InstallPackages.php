@@ -18,10 +18,8 @@ class InstallPackages extends Command
      * @var string
      */
     protected $signature = 'adminify:install 
-        { —-publish : Handle Publishes Packages }
-        { —-coreinstall : Handle Core Install }
-        { --migrations : Handle migrations }
-        { --npm : run Npm }';
+        {task?* : Tasks name are npm, coreinstall, migrations, seed, publishes}
+        {--force : Force all tasks}';
 
     /**
      * The console command description.
