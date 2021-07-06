@@ -6,7 +6,6 @@ use Symfony\Component\Process\Process;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 // use Illuminate\Support\Facades\Event;
@@ -196,18 +195,18 @@ class InstallPackages extends Command
 
         $currentPath = $path;
 
-        $dirs = Storage::allDirectories($path);
+        $dirs = \Storage::allDirectories($path);
         $namespace = $namespaceStr ?? "App\\";
 
         foreach ($dirs as $dir) {
             # code...
             $namespaced = Str::title($dir);
-            $checkDirectories = Storage::allDirectories($currentPath.'/'.$dir);
+            $checkDirectories = \Storage::allDirectories($currentPath.'/'.$dir);
             if(count($checkDirectories) > 0) {
                 $this->handleStubs($currentPath.'/'.$dir, $namespace.'\\'.$namespaced);
             }
 
-            $files = Storage::allFiles($currentPath.'/'.$dir);
+            $files = \Storage::allFiles($currentPath.'/'.$dir);
 
             foreach ($files as $file) {
                 # code...
