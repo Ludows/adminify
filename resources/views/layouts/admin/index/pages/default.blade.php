@@ -29,7 +29,7 @@
                     </div>
     
                     @if(isset($table))
-                        {!! $table !!}
+                        {!! $table->render() !!}
                     @endif
                 </div>
             </div>

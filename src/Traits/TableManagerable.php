@@ -7,6 +7,6 @@
   {
    //
    public function table($tableClass) {
-        return $tableClass->render();
+        return $tableClass;
    }
   }
