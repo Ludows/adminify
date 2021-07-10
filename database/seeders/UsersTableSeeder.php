@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-use Ludows\Adminify\Models\User;
+use App\Models\User;
 
 class UsersTableSeeder extends Seeder
 {
