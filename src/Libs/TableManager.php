@@ -12,6 +12,7 @@ class TableManager
         $this->request = request();
         $this->model = null;
         $this->th = [];
+        $this->items = [];
 
         $this->handle();
     }
@@ -40,7 +41,7 @@ class TableManager
     }
 
     public function column($name, $view) {
-        
+
     }
 
     public function setDefaults() {
@@ -76,17 +77,10 @@ class TableManager
         return $this;
     }
     public function handle() {}
-    public function render($index) {
-
-        if($index != null) {
-            $dropdowns = [$this->getDropdown('dropdown_'.$index)];
-        }
-        else {
-            $dropdowns = $this->getDropdowns();
-        }
+    public function render() {
 
         $tpl = $this->getView();
-        $compiled = $this->view->make($tpl, ['dropdowns' => $dropdowns]);
+        $compiled = $this->view->make($tpl, ['items' => $this->items, 'th' => $this->getTh()]);
         return $compiled;
     }
 }
