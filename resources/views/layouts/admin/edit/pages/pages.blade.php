@@ -1,3 +1,5 @@
+@include('adminify::layouts.admin.headers.topPageListing')
+
 <div class="container-fluid mt--7">
     <div class="row">
         <div class="col-12">
