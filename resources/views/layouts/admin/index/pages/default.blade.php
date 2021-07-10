@@ -37,7 +37,9 @@
                         </div>
                     </div>
     
-                    @include('adminify::layouts.admin.table.index')
+                    @if(isset($table))
+                        {!! $table !!}
+                    @endif
                 </div>
             </div>
     
