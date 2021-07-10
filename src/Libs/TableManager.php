@@ -70,7 +70,7 @@ class TableManager
         return $this;
     }
     public function getView() {
-        return 'adminify::layouts.admin.table';
+        return 'adminify::layouts.admin.table.index';
     }
     public function remove($index = 0) {
         // $this->removeDropdown($index);
