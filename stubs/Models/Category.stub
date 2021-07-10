@@ -8,18 +8,5 @@ use Illuminate\Http\Request;
 
 use Ludows\Adminify\Models\Category as CategoryBaseModel;
 
-use Ludows\Adminify\Traits\SlugUpdate;
-use Ludows\Adminify\Traits\Urlable;
-use Spatie\Translatable\HasTranslations;
-use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
-use Ludows\Adminify\Traits\Helpers;
-
 class Category extends CategoryBaseModel
-{
-    use HasFactory;
-    use SlugUpdate;
-    use Urlable;
-    use HasTranslations;
-    use MultilangTranslatableSwitch;
-    use Helpers;
-}
+{}

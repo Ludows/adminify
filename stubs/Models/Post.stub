@@ -7,22 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 use Ludows\Adminify\Models\Post as PostBaseModel;
 
-use VanOns\Laraberg\Models\Gutenbergable;
-use Ludows\Adminify\Traits\SlugUpdate;
-use Ludows\Adminify\Traits\Urlable;
-use Spatie\Translatable\HasTranslations;
-use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
-use Ludows\Adminify\Traits\HasSeo;
-use Ludows\Adminify\Traits\Helpers;
-
 class Post extends PostBaseModel
-{
-    use Gutenbergable;
-    use HasFactory;
-    use SlugUpdate;
-    use Urlable;
-    use HasTranslations;
-    use HasSeo;
-    use MultilangTranslatableSwitch;
-    use Helpers;
-}
+{}

@@ -5,16 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use Spatie\Translatable\HasTranslations;
-use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
-use Ludows\Adminify\Traits\Helpers;
-
 use Ludows\Adminify\Models\Comment as CommentBaseModel;
 
 class Comment extends CommentBaseModel
-{
-    use HasFactory;
-    use HasTranslations;
-    use MultilangTranslatableSwitch;
-    use Helpers;
-}
+{}

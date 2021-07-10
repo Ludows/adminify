@@ -5,19 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-use Ludows\Adminify\Traits\SlugUpdate;
-use Spatie\Translatable\HasTranslations;
-use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
-use Ludows\Adminify\Traits\Helpers;
-
 use Ludows\Adminify\Models\Menu as MenuBaseModel;
 
 
 class Menu extends MenuBaseModel
-{
-    use HasFactory;
-    use SlugUpdate;
-    use HasTranslations;
-    use MultilangTranslatableSwitch;
-    use Helpers;
-}
+{}

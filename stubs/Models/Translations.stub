@@ -4,20 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Spatie\Translatable\HasTranslations;
-use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
-use Illuminate\Support\Facades\Artisan;
-use Ludows\Adminify\Traits\Helpers;
 
 use Ludows\Adminify\Models\Translations as TranslationsBaseModel;
 
-
-use Spatie\Searchable\Searchable;
-use Spatie\Searchable\SearchResult;
 class Translations extends TranslationsBaseModel
-{
-    use HasFactory;
-    use HasTranslations;
-    use Helpers;
-    use MultilangTranslatableSwitch;
-}
+{}
