@@ -8,15 +8,6 @@
                     $name = request()->route()->getName();
                     $name = str_replace('.index', '', $name);
                 @endphp
-
-                <script>
-                    window.listingConfig = {
-                        limit : {{ config('site-settings.listings.limit') }},
-                        singular : '{{ Str::singular($name) }}',
-                        maxItems : {{ count($datas) }},
-                        isEnd : {{ count($datas) <  config('site-settings.listings.limit') ? true : false }}
-                    }
-                </script>
     
                 <div class="card shadow">
                     <div class="card-header border-0">

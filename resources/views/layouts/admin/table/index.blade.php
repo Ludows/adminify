@@ -1,3 +1,12 @@
+<script>
+    window.listingConfig = {
+        limit : {{ config('site-settings.listings.limit') }},
+        singular : '{{ Str::singular($name) }}',
+        maxItems : {{ count($datas) }},
+        isEnd : {{ count($datas) <  config('site-settings.listings.limit') ? true : false }}
+    }
+</script>
+
 <div class="table-responsive">
     <table class="js-datatable table align-items-center table-flush">
         <thead class="thead-light">
