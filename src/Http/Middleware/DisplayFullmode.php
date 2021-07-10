@@ -22,9 +22,11 @@ class DisplayFullmode
 
         $listFullModePages = [
             'pages.create',
+            'pages.edit',
             'pages.update',
             'posts.create',
             'posts.update',
+            'posts.edit',
         ];
 
         $routeName = $request->route()->getName();
