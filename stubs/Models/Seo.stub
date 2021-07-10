@@ -9,12 +9,14 @@ use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
 use Ludows\Adminify\Traits\Helpers;
 
 
-use Ludows\Adminify\Models\Settings as SettingsBaseModel;
+use Ludows\Adminify\Models\Seo as SeoBaseModel;
 
-class Settings extends SettingsBaseModel
+
+class Seo extends SeoBaseModel
 {
     use HasFactory;
     use HasTranslations;
-    use MultilangTranslatableSwitch;
     use Helpers;
+    use MultilangTranslatableSwitch;
 }
+
