@@ -10,13 +10,42 @@ class TableManager
         $this->view = view();
         $this->datas = null;
         $this->request = request();
+        $this->model = null;
+        $this->th = [];
 
         $this->handle();
+    }
+    public function setTh($value = []) {
+        $this->th = $value;
+        return $this;
+    }
+
+    public function getTh() {
+        return $this->th;
+    }
+
+    public function getModel() {
+        return $this->model;
+    }
+    public function hasModel() {
+        return $this->model != null;
+    }
+    public function setModel($model) {
+        $this->model = $model;
+        return $this;
+    }
+
+    public function model($model) {
+        return $this->setModel($model);
+    }
+
+    public function column($name, $view) {
+        
     }
 
     public function setDefaults() {
         return [
-            'template' => 'adminify::layouts.admin.table.dropdown-item',
+            'template' => 'adminify::layouts.admin.table.item',
             'vars' => []
         ];
     }

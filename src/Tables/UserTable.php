@@ -14,10 +14,25 @@ class User extends TableManager {
         $config = config('site-settings.listings');
 
         $users = UserModel::limit( $config['limit'] )->get();
-        $fillables = $model->getFillable();
+        $fillables = $u->getFillable();
 
         // no necessary to print password..
+        $this->setTh($fillables);
+
+        // $
 
         $a = new UserDropdownsManager($users, []);
+
+        foreach ($users as $user) {
+            # code...
+            // pass current model
+            $table = $this->model($user);
+            foreach ($fillables as $fillable) {
+                # code...
+                $table->column($fillable, 'view_name');
+            }
+        }
+
+
     }
 }
