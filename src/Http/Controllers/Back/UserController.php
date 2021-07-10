@@ -12,8 +12,6 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UserUpdateRequest;
 use Ludows\Adminify\Http\Controllers\Controller;
 
-use Ludows\Adminify\Dropdowns\Users as UserDropdownsManager;
-
 use App\Forms\CreateUser;
 use App\Forms\UpdateUser;
 use App\Repositories\UserRepository;
@@ -35,14 +33,7 @@ class UserController extends Controller
      */
     public function index(User $model, FormBuilder $formBuilder)
     {
-            $config = config('site-settings.listings');
-
-            $users = User::limit( $config['limit'] )->get();
-            $fillables = $model->getFillable();
-
-            // no necessary to print password..
-
-            $a = new UserDropdownsManager($users, []);
+            
 
             return view("adminify::layouts.admin.pages.index", ["datas" => $users,  'thead' => $fillables, 'dropdownManager' => $a]);
     }
