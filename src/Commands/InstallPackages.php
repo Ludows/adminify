@@ -17,7 +17,7 @@ class InstallPackages extends Command
      *
      * @var string
      */
-    protected $signature = 'adminify:install 
+    protected $signature = 'adminify:install
         {task?* : Tasks name are npm, coreinstall, migrations, seed, publishes}
         {--force : Force all tasks}'; //todo
 
@@ -68,11 +68,14 @@ class InstallPackages extends Command
         if(in_array('*', $cleanedTasks)  || in_array('coreinstall', $cleanedTasks)) {
             $this->info('Handle Adminify core instalation');
             $this->handleCoreTasks();
-            
+
             $this->info('Handle stubs install');
             $this->handleStubs(base_path('vendor/ludows/adminify/stubs'));
+            if(!in_array('seed', $cleanedTasks)) {
+                $this->doCommand('composer dump-autoload');
+            }
         }
-        
+
         if(in_array('*', $cleanedTasks)  || in_array('publishes', $cleanedTasks)) {
             $this->handlePublishesPackages();
         }
@@ -90,7 +93,7 @@ class InstallPackages extends Command
                 '--class' => 'Ludows\Adminify\Database\Seeders\DatabaseSeeder'
             ]);
         }
-        
+
         if(in_array('*', $cleanedTasks)  || in_array('npm', $cleanedTasks)) {
             $this->info('Handle npm process');
             $this->doCommand('npm install && npm run dev');
@@ -136,7 +139,7 @@ class InstallPackages extends Command
         foreach ($this->packages as $dependency) {
             # code...
 
-            
+
             $command = $this->handlePackageInstall($dependency);
 
             // handle beforePublish
@@ -215,33 +218,75 @@ class InstallPackages extends Command
             }
         }
     }
-    public function handleStubs($path = '', $namespaceStr = '',  $log = true) {
+    public function dif_scandir($a = []) {
+        $excludes = [
+            '.',
+            '..'
+        ];
+        return array_diff($a, $excludes);
+    }
+    public function constructPathFromNamespace($namespace) {
+
+       $a = explode('\\', $namespace);
+       $a = array_diff($a, ['', ' ']);
+       $i = 0;
+       $path = [];
+       foreach ($a as $b) {
+           # code...
+           if($i == 0) {
+            $path[] = strtolower($b);
+           }
+           else {
+            $path[] = $b;
+           }
+           $i++;
+       }
+
+       return join(DIRECTORY_SEPARATOR, $path);
+
+    }
+    public function handleStubs($path = '', $namespaceStr = "\App",  $log = true) {
 
         $currentPath = $path;
+        // dump($currentPath);
+        $mixed =  $this->dif_scandir(scandir($currentPath));
+        // dump($mixed_types, $namespaceStr);
+        $namespace = $namespaceStr;
 
-        $dirs = \Storage::allDirectories($currentPath);
-        dump($dirs);
-        $namespace = $namespaceStr ?? "App\\";
-
-        foreach ($dirs as $dir) {
+        foreach ($mixed as $mixed_type) {
             # code...
-            $namespaced = Str::title($dir);
-            $checkDirectories = \Storage::allDirectories($currentPath.'/'.$dir);
-            if(count($checkDirectories) > 0) {
-                $this->handleStubs($currentPath.'/'.$dir, $namespace.'\\'.$namespaced);
+            // dump($mixed_type);
+            if(!is_file($currentPath.'/'.$mixed_type) ){
+                $namespaced = Str::title($mixed_type);
+                $checkDirectories = scandir($currentPath.'/'.$mixed_type);
+                if(count($checkDirectories) > 0) {
+                    $this->handleStubs($currentPath.DIRECTORY_SEPARATOR.$mixed_type, $namespace.'\\'.$namespaced);
+                }
+
+                if($log) {
+                    $this->info('Handle directory stub:  '. $currentPath.DIRECTORY_SEPARATOR.$mixed_type);
+                    $this->info('Handle namespace stub:  '. $namespace.'\\'.$namespaced);
+                }
             }
+            if(is_file($currentPath.DIRECTORY_SEPARATOR.$mixed_type) && $namespace != '\App') {
+                if(!class_exists($namespace)) {
+                    $p = $this->constructPathFromNamespace($namespace);
 
-            $files = \Storage::allFiles($currentPath.'/'.$dir);
+                    if(!File::exists(base_path().DIRECTORY_SEPARATOR.$p)) {
+                        \File::makeDirectory(base_path().DIRECTORY_SEPARATOR.$p, 0755, true, true);
+                    }
 
-            foreach ($files as $file) {
-                # code...
-                $info = pathinfo($file);
-                dump($info);
-            }
+                    $this->info('Handle copy of '.$namespace.'\\'.$mixed_type);
+                    $info = pathinfo($currentPath.DIRECTORY_SEPARATOR.$mixed_type);
+                    \File::copy( $currentPath.DIRECTORY_SEPARATOR.$mixed_type ,  base_path().DIRECTORY_SEPARATOR.$p.DIRECTORY_SEPARATOR.$info['filename'].'.php' );
+                }
+                else {
+                    $this->info('Skipping '.$namespace.'\\'.$mixed_type.' already present');
+                }
 
-            if($log) {
-                $this->info('Handle directory stub:  '. $currentPath.'/'.$dir);
-                $this->info('Handle namespace stub:  '. $namespace);
+                // if(!File::exists($backupLoc)) {
+                //     File::makeDirectory($backupLoc, 0755, true, true);
+                // }
             }
         }
 
