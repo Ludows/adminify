@@ -16,9 +16,15 @@ use App\Forms\CreateUser;
 use App\Forms\UpdateUser;
 use App\Repositories\UserRepository;
 use App\Forms\DeleteCrud;
+
+use Ludows\Adminify\Traits\TableManagerable;
+use Ludows\Adminify\Tables\User as UserTable;
+
 class UserController extends Controller
 {
     use FormBuilderTrait;
+    use TableManagerable;
+
     private $userRepository;
 
     public function __construct(UserRepository $userRepository) {
@@ -33,9 +39,11 @@ class UserController extends Controller
      */
     public function index(User $model, FormBuilder $formBuilder)
     {
+
+            $table = $this->table(new UserTable());
             
 
-            return view("adminify::layouts.admin.pages.index", ["datas" => $users,  'thead' => $fillables, 'dropdownManager' => $a]);
+            return view("adminify::layouts.admin.pages.index", ['table' => $table]);
     }
     /**
             * Show the form for creating a new resource.

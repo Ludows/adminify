@@ -80,7 +80,7 @@ class TableManager
     public function render() {
 
         $tpl = $this->getView();
-        $compiled = $this->view->make($tpl, ['items' => $this->items, 'th' => $this->getTh()]);
+        $compiled = $this->view->make($tpl, ['datas' => $this->getDatas(), 'thead' => $this->getTh()]);
         return $compiled;
     }
 }

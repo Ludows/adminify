@@ -17,11 +17,13 @@ use Ludows\Adminify\Dropdowns\Category as CategoryDropdownManager;
 
 
 use App\Repositories\CategoryRepository;
+use Ludows\Adminify\Traits\TableManagerable;
 
 
 class CategoryController extends Controller
 {
     use FormBuilderTrait;
+    use TableManagerable;
     private $categoryRepository;
 
     public function __construct(CategoryRepository $categoryRepository) {
