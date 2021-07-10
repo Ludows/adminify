@@ -43,6 +43,7 @@ class MultilangBasic
             "currentRouteName" => $routeName,
         ];
 
+        $v->share('name', join('.',array_diff($routeNameSpl, ['index', 'edit', 'create'])));
         $v->share('langs', $supported_locales);
         $v->share('currentLang', $currentLocale);
         $v->share('currentRouteName', $routeName);
