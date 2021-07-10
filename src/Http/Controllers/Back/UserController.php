@@ -18,7 +18,7 @@ use App\Repositories\UserRepository;
 use App\Forms\DeleteCrud;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use Ludows\Adminify\Tables\User as UserTable;
+use Ludows\Adminify\Tables\UserTable;
 
 class UserController extends Controller
 {

@@ -6,7 +6,7 @@ use Ludows\Adminify\Libs\TableManager;
 use App\Models\User as UserModel;
 use Ludows\Adminify\Dropdowns\Users as UserDropdownsManager;
 
-class User extends TableManager {
+class UserTable extends TableManager {
     public function handle() {
 
         $u = new UserModel();
