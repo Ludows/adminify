@@ -10,18 +10,9 @@ class MediaTable extends TableManager {
     public function getTemplateByName($name) {
         $ret = null;
         switch ($name) {
-            case 'avatar':
+            case 'src':
                 # code...
-                $ret = 'adminify::layouts.admin.table.custom-cells.users-avatar';
-                break;
-            case 'email':
-            case 'name':
-                # code...
-                $ret = 'adminify::layouts.admin.table.cell';
-                break;
-            case 'password':
-                # code...
-                $ret = 'adminify::layouts.admin.table.custom-cells.users-password';
+                $ret = 'adminify::layouts.admin.table.custom-cells.medias-src';
                 break;
         }
 
