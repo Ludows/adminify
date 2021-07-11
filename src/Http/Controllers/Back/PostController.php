@@ -21,7 +21,7 @@ use App\Repositories\PostRepository;
 use App\Repositories\SeoRepository;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use Ludows\Adminify\Tables\TranslationTable;
+use Ludows\Adminify\Tables\PostTable;
 
 class PostController extends Controller
 {
@@ -43,7 +43,7 @@ class PostController extends Controller
         public function index(FormBuilder $formBuilder, Request $request)
         {
             
-            $table = $this->table(new TranslationTable());
+            $table = $this->table(new PostTable());
 
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
