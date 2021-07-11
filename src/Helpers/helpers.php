@@ -136,7 +136,7 @@ if (! function_exists('check_traductions')) {
         foreach ($array as $model) {
             # code...
             if(is_translatable_model($model)) {
-
+                $model->checkForTraduction();
             }
         }
     }
