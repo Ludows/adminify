@@ -65,6 +65,11 @@ return [
         'limit' => env('LISTINGS_LIMIT', 5),
         'searchType' => 'fillable', // or manual. In manual mode, columns is necessary.
         'search' => [
+            'media' => [
+                'tableManager' => \Ludows\Adminify\Tables\MediaTable::class,
+                'class' => \App\Models\Media::class,
+                'columns' => []
+            ],
             'post' => [
                 'tableManager' => \Ludows\Adminify\Tables\PostTable::class,
                 'class' => \App\Models\Post::class,
