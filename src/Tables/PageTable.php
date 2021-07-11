@@ -62,7 +62,14 @@ class PageTable extends TableManager {
                 $pages[0]->flashForMissing();
             }
         // set columns
-        $this->columns( array_merge($fillables, ['categories_id','actions']) );
+        
+        $default_merge_columns = ['categories_id','actions'];
+
+        if($request->useMultilang) {
+            $default_merge_columns = array_unshift($default_merge_columns, 'translated');
+        }
+
+        $this->columns( array_merge($fillables, $default_merge_columns) );
 
 
         foreach ($pages as $page) {
@@ -73,6 +80,10 @@ class PageTable extends TableManager {
                 # code...
                 $table->column($fillable, $this->getTemplateByName($fillable));
             }
+            
+            $table->column('translated', 'adminify::layouts.admin.table.custom-cells.translated', [
+                'langs' => $page->getNeededTranslations()
+            ]);
             
             $table->column('categories_id', 'adminify::layouts.admin.table.custom-cells.pages-categories-id', []);
 

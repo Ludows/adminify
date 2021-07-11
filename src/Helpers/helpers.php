@@ -1,8 +1,8 @@
 <?php
 use Thunder\Shortcode\ShortcodeFacade;
-use Ludows\Adminify\Models\Translations as Traduction;
-use Ludows\Adminify\Models\Menu;
-use Ludows\Adminify\Models\Settings;
+use App\Models\Translations as Traduction;
+use App\Models\Menu;
+use App\Models\Settings;
 
 if (! function_exists('do_shortcode')) {
     function do_shortcode($shortcodeName, $parameters = []) {
