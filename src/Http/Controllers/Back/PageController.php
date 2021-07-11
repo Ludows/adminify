@@ -20,8 +20,8 @@ use App\Http\Requests\PageRequest;
 use App\Repositories\PageRepository;
 use App\Repositories\SeoRepository;
 
-use Ludows\Adminify\Dropdowns\Page as PageDropdownManager;
-
+use Ludows\Adminify\Traits\TableManagerable;
+use Ludows\Adminify\Tables\PageTable;
 class PageController extends Controller
 {
      /**
@@ -30,6 +30,7 @@ class PageController extends Controller
         * @return Response
         */
         use FormBuilderTrait;
+        use TableManagerable;
         private $pageRepository;
         private $actionable;
         private $seoRepository;
@@ -42,26 +43,9 @@ class PageController extends Controller
 
         public function index(FormBuilder $formBuilder, Request $request)
         {
-
-            $config = config('site-settings.listings');
-            $model = new Page();
-            $fillables = $model->getFillable();
-
-            if($request->useMultilang) {
-                $pages = Page::limit( $config['limit'] )->lang($request->lang);
-                // dd($categories);
-                $pages = $pages->all();
-            }
-            else {
-                $pages = Page::limit( $config['limit'] )->get();
-            }
-
-            $a = new PageDropdownManager($pages, []);
-
-            if(isset($pages) && count($pages) > 0) {
-                $pages[0]->flashForMissing();
-            }
-            return view("adminify::layouts.admin.pages.index", ["datas" => $pages, 'dropdownManager' => $a, 'thead' => $fillables]);
+            $table = $this->table(new PageTable());
+            
+            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
 
         /**
