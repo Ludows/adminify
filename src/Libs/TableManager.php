@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Libs;
 use Ludows\Adminify\Libs\Dropdown;
-
+use Illuminate\Support\Str;
 class TableManager
 {
     public function __construct($autoHandle = true)
@@ -66,7 +66,7 @@ class TableManager
             $v = 'adminify::layouts.admin.table.cell';
         }
 
-        $this->_columns[$name][] = (object) [
+        $this->_columns[ Str::slug($name) ][] = (object) [
             'view' => $v,
             'vars' => array_merge($extraVars, ['model' => $this->getModel(), 'attr' => $name]),
         ];
