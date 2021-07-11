@@ -6,7 +6,7 @@ use Ludows\Adminify\Libs\TableManager;
 use App\Models\Page as PageModel;
 use Ludows\Adminify\Dropdowns\Page as PageDropdownsManager;
 
-class PostTable extends TableManager {
+class PageTable extends TableManager {
     public function getTemplateByName($name) {
         $ret = null;
         switch ($name) {
