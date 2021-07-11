@@ -63,6 +63,9 @@ class CategoryRepository
                 if($m != null) {
                     $category->media_id = $m->id;
                 }
+                else {
+                    $model->media_id = 0;
+                }
             }
             // call boot method to save slug
             $category::booted();
@@ -116,6 +119,9 @@ class CategoryRepository
                 $m = Media::where('src', $json[0]->name)->first();
                 if($m != null) {
                     $model->media_id = $m->id;
+                }
+                else {
+                    $model->media_id = 0;
                 }
             }
             // call boot method to save slug

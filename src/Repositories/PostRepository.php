@@ -65,6 +65,9 @@ class PostRepository
                 if($m != null) {
                     $post->media_id = $m->id;
                 }
+                else {
+                    $post->media_id = 0;
+                }
             }
 
             $post::booted();
@@ -136,6 +139,9 @@ class PostRepository
                 $m = Media::where('src', $json[0]->name)->first();
                 if($m != null) {
                     $model->media_id = $m->id;
+                }
+                else {
+                    $model->media_id = 0;
                 }
             }
         }

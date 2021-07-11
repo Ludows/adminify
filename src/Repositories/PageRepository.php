@@ -68,6 +68,9 @@ class PageRepository
                 if($m != null) {
                     $page->media_id = $m->id;
                 }
+                else {
+                    $page->media_id = 0;
+                }
             }
 
             $page::booted();
@@ -136,6 +139,9 @@ class PageRepository
                 $m = Media::where('src', $json[0]->name)->first();
                 if($m != null) {
                     $page->media_id = $m->id;
+                }
+                else {
+                    $page->media_id = 0;
                 }
             }
 

@@ -5,6 +5,7 @@ namespace Ludows\Adminify\Repositories;
 use MrAtiebatie\Repository;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash; // Don't forget to update the model's namespace
+use App\Models\Media;
 
 class UserRepository
 {
@@ -34,7 +35,13 @@ class UserRepository
 
         if(isset($formValues['avatar'])) {
             $json = json_decode($formValues['avatar']);
-            $formValues['avatar'] = $json[0]->name;
+            $m = Media::where('src', $json[0]->name)->first();
+            if($m != null) {
+                $formValues['avatar'] = $m->id;
+            }
+            else {
+                $formValues['avatar'] = null;
+            }
         }
 
         $user = User::create($formValues);
@@ -54,7 +61,13 @@ class UserRepository
 
         if(isset($formValues['avatar'])) {
             $json = json_decode($formValues['avatar']);
-            $formValues['avatar'] = $json[0]->name;
+            $m = Media::where('src', $json[0]->name)->first();
+            if($m != null) {
+                $formValues['avatar'] = $m->id;
+            }
+            else {
+                $formValues['avatar'] = null;
+            }
         }
 
         $model->fill($formValues);
