@@ -20,7 +20,7 @@
                                     <input id="" class="form-control js-search-entity" placeholder="Search" type="text">
                                     @if(\Route::has($name.'.create'))
                                         <div class="ml-lg-3 mt-3 mt-lg-0">
-                                            <a href="{{ route($name.'.create', ['lang' => $useMultilang ? $currentLang : '']) }}" class="btn btn-sm btn-primary"> {{ __('admin'.$name.'.store') }}</a>
+                                            <a href="{{ route($name.'.create', ['lang' => $useMultilang ? $currentLang : '']) }}" class="btn btn-sm btn-primary"> {{ __('admin.'.$name.'.store') }}</a>
                                         </div>
                                     @endif
                                 </div>
