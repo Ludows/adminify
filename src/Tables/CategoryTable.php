@@ -10,18 +10,13 @@ class CategoryTable extends TableManager {
     public function getTemplateByName($name) {
         $ret = null;
         switch ($name) {
-            case 'avatar':
+            case 'media_id':
                 # code...
-                $ret = 'adminify::layouts.admin.table.custom-cells.users-avatar';
+                $ret = 'adminify::layouts.admin.table.custom-cells.categories-media-id';
                 break;
-            case 'email':
-            case 'name':
+            case 'parent_id':
                 # code...
-                $ret = 'adminify::layouts.admin.table.cell';
-                break;
-            case 'password':
-                # code...
-                $ret = 'adminify::layouts.admin.table.custom-cells.users-password';
+                $ret = 'adminify::layouts.admin.table.custom-cells.categories-parent-id';
                 break;
         }
 

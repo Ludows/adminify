@@ -10,18 +10,21 @@ class PageTable extends TableManager {
     public function getTemplateByName($name) {
         $ret = null;
         switch ($name) {
-            case 'avatar':
+            case 'categories_id':
                 # code...
-                $ret = 'adminify::layouts.admin.table.custom-cells.users-avatar';
+                $ret = 'adminify::layouts.admin.table.custom-cells.pages-categories-id';
                 break;
-            case 'email':
-            case 'name':
+            case 'media_id':
                 # code...
-                $ret = 'adminify::layouts.admin.table.cell';
+                $ret = 'adminify::layouts.admin.table.custom-cells.pages-media-id';
                 break;
-            case 'password':
+            case 'content':
                 # code...
-                $ret = 'adminify::layouts.admin.table.custom-cells.users-password';
+                $ret = 'adminify::layouts.admin.table.custom-cells.pages-content';
+                break;
+            case 'parent_id':
+                # code...
+                $ret = 'adminify::layouts.admin.table.custom-cells.pages-parent-id';
                 break;
         }
 
