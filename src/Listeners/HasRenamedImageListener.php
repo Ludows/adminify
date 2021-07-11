@@ -20,7 +20,7 @@ class HasRenamedImageListener
 
         $request = request();
 
-        if(!$request->fromMediaCreate != null) {
+        if(!$request->fromMediaCreate) {
 
             $info = pathinfo($event->oldPath());
             $newInfo = pathinfo($event->newPath());

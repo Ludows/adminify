@@ -7,6 +7,9 @@
             if($routeName == 'medias.create' || $routeName == 'medias.update') {
                 $a['fromMediaCreate'] = true;
             }
+            else {
+                $a['fromMediaCreate'] = false; 
+            }
         @endphp
         <iframe class="embed-responsive-item" src="{{ route('unisharp.lfm.show', $a ) }}"></iframe>
     </div>
