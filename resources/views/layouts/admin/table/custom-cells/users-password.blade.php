@@ -1,5 +1,5 @@
 <td>
-    @if(isset($data))
+    @if(isset($model->{$attr}))
         {{ __('admin.hasPassword') }}
     @else
         {{ __('admin.hasNoPassword') }}

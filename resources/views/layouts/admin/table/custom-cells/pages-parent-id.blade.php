@@ -1,8 +1,6 @@
 <td>
-    @if($data != 0)
-
+    @if($model->{$attr} != 0)
         {{ $model->title }}
-
     @else
         {{ __('admin.hasNoParentPage') }}
     @endif

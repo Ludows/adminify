@@ -1,1 +1,1 @@
-<td><img class="img-fluid" alt="{{ $data }}" src="{{ $model->media->path ?? '' }}" ></td>
+<td><img class="img-fluid" alt="{{ $model->{$attr} }}" src="{{ $model->media->path ?? '' }}" ></td>

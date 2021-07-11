@@ -1,4 +1,4 @@
-@if($data == 0)
+@if($model->{$attr} == 0)
     <td>{{ __('admin.hasNoCategory') }}</td>
 @else
     {{-- {{ dd($model->children) }} --}}
