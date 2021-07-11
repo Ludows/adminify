@@ -58,7 +58,13 @@ class MenuTable extends TableManager {
             //     $menus[0]->flashForMissing();
             // }
         // set columns
-        $this->columns( array_merge($fillables, ['actions']) );
+        $default_merge_columns = ['actions'];
+
+        if($request->useMultilang && is_translatable_model($model)) {
+            array_unshift($default_merge_columns, 'need_translations');
+        }
+
+        $this->columns( array_merge($fillables, $default_merge_columns) );
 
 
         foreach ($menus as $menu) {
@@ -69,6 +75,14 @@ class MenuTable extends TableManager {
                 # code...
                 $table->column($fillable, $this->getTemplateByName($fillable));
             }
+
+            if($request->useMultilang && is_translatable_model($model)) {
+                $table->column('need_translations', 'adminify::layouts.admin.table.custom-cells.translated', [
+                    'routes' => get_missing_translations_routes('menus.edit', 'menu', $this->getModel()),
+                    'missing' => get_missing_langs($this->getModel())
+                ]);
+            }
+
             $table->column('actions', 'adminify::layouts.admin.table.custom-cells.dropdown', [
                 'dropdown' => $a,
                 'index' => $menu->id
