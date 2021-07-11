@@ -35,7 +35,7 @@ class PostTable extends TableManager {
         $datas = $this->getDatas();
 
         if(isset($datas['results'])) {
-            $posts = $datas;
+            $posts = $datas['results'];
         }
         else {
             if($request->useMultilang) {

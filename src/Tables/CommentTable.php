@@ -34,7 +34,7 @@ class CommentTable extends TableManager {
         $datas = $this->getDatas();
 
         if(isset($datas['results'])) {
-            $comments = $datas;
+            $comments = $datas['results'];
         }
         else {
             if($request->useMultilang) {

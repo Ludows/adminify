@@ -36,7 +36,7 @@ class MediaTable extends TableManager {
         $datas = $this->getDatas();
         
         if(isset($datas['results'])) {
-            $medias = $datas;
+            $medias = $datas['results'];
         }
         else {
             $medias = MediaModel::limit( $config['limit'] )->get();

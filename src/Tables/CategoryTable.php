@@ -35,7 +35,7 @@ class CategoryTable extends TableManager {
         $datas = $this->getDatas();
 
         if(isset($datas['results'])) {
-            $categories = $datas;
+            $categories = $datas['results'];
         }
         else {
             if($request->useMultilang) {

@@ -37,7 +37,7 @@ class UserTable extends TableManager {
         $datas = $this->getDatas();
 
         if(isset($datas['results'])) {
-            $users = $datas;
+            $users = $datas['results'];
         }
         else {
             $users = UserModel::limit( $config['limit'] )->get();

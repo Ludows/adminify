@@ -37,7 +37,7 @@ class MenuTable extends TableManager {
         $datas = $this->getDatas();
 
         if(isset($datas['results'])) {
-            $menus = $datas;
+            $menus = $datas['results'];
         }
         else {
             if($request->useMultilang) {

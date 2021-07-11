@@ -38,7 +38,7 @@ class PageTable extends TableManager {
         $datas = $this->getDatas();
 
         if(isset($datas['results'])) {
-            $pages = $datas;
+            $pages = $datas['results'];
         }
         else {
             if($request->useMultilang) {

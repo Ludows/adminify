@@ -38,7 +38,7 @@ class TranslationTable extends TableManager {
         $datas = $this->getDatas();
 
         if(isset($datas['results'])) {
-            $trans = $datas;
+            $trans = $datas['results'];
         }
         else {
             if($request->useMultilang) {
