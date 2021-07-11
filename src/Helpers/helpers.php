@@ -92,7 +92,8 @@ if(! function_exists('get_missing_translations_routes') ) {
         $request = request();
 
         $default_route_params = [
-            $singular => $model->id
+            $singular => $model->id,
+            'missing' => true
         ];
 
         $routeList = [];
