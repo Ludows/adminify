@@ -247,8 +247,8 @@ return array(
             'publish' => null,
             'autoload' => (object) [
                 'providers' => [
-                    UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
-                    Intervention\Image\ImageServiceProvider::class,
+                    // UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
+                    // Intervention\Image\ImageServiceProvider::class,
                 ],
                 'middlewares' => [],
                 'aliases' => [
