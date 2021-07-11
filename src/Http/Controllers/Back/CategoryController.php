@@ -17,7 +17,9 @@ use Ludows\Adminify\Dropdowns\Category as CategoryDropdownManager;
 
 
 use App\Repositories\CategoryRepository;
+
 use Ludows\Adminify\Traits\TableManagerable;
+use Ludows\Adminify\Tables\CategoryTable;
 
 
 class CategoryController extends Controller
@@ -37,28 +39,9 @@ class CategoryController extends Controller
         */
         public function index(FormBuilder $formBuilder, Request $request)
         {
-            //
-            $config = config('site-settings.listings');
+            $table = $this->table(new CategoryTable());            
 
-            if($request->useMultilang) {
-                $categories = Category::limit( $config['limit'] )->lang($request->lang);
-                // dd($categories);
-                // $categories = $categories->all()->limit( $config['limit'] )->get();
-            }
-            else {
-                $categories = Category::limit( $config['limit'] )->get();
-            }
-
-            $model = new Category();
-            $fillables = $model->getFillable();
-
-            $a = new CategoryDropdownManager($categories, []);
-
-            if(isset($categories) && count($categories) > 0) {
-                $categories[0]->flashForMissing();
-            }
-
-            return view("adminify::layouts.admin.pages.index", ["datas" => $categories, 'thead' => $fillables, 'dropdownManager' => $a ]);
+            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
 
         /**
