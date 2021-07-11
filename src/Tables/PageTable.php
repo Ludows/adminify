@@ -66,7 +66,7 @@ class PageTable extends TableManager {
         $default_merge_columns = ['categories_id','actions'];
 
         if($request->useMultilang) {
-            array_unshift($default_merge_columns, 'translated');
+            array_unshift($default_merge_columns, 'need_translations');
         }
 
         $this->columns( array_merge($fillables, $default_merge_columns) );
@@ -75,14 +75,33 @@ class PageTable extends TableManager {
         foreach ($pages as $page) {
             # code...
             // pass current model
+            $default_route_params = [
+                'page' => $page->id
+            ];
+
+            $routeList = [];
+            if($request->useMultilang) {
+                $miss = $page->getNeededTranslations();
+                if(count($miss) > 0) {
+                    foreach ($miss as $missing) {
+                        # code...
+                        $default_route_params['lang'] = $missing;
+
+                        $routeList[] = route('pages.edit', $default_route_params);
+
+                    }
+                }
+                // $default_route_params['lang'] =  ;
+            }
+
             $table = $this->model($page);
             foreach ($fillables as $fillable) {
                 # code...
                 $table->column($fillable, $this->getTemplateByName($fillable));
             }
             
-            $table->column('translated', 'adminify::layouts.admin.table.custom-cells.translated', [
-                'langs' => $page->getNeededTranslations()
+            $table->column('need_translations', 'adminify::layouts.admin.table.custom-cells.translated', [
+                'routes' => $routeList
             ]);
             
             $table->column('categories_id', 'adminify::layouts.admin.table.custom-cells.pages-categories-id', []);
