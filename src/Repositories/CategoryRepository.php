@@ -64,7 +64,7 @@ class CategoryRepository
                     $category->media_id = $m->id;
                 }
                 else {
-                    $model->media_id = 0;
+                    $category->media_id = 0;
                 }
             }
             // call boot method to save slug
