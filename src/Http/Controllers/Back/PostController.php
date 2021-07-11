@@ -19,11 +19,14 @@ use Ludows\Adminify\Http\Controllers\Controller;
 
 use App\Repositories\PostRepository;
 use App\Repositories\SeoRepository;
-use Ludows\Adminify\Dropdowns\Post as PostDropdownManager;
+
+use Ludows\Adminify\Traits\TableManagerable;
+use Ludows\Adminify\Tables\TranslationTable;
 
 class PostController extends Controller
 {
     use FormBuilderTrait;
+    use TableManagerable;
     private $postRepository;
     private $seoRepository;
 
@@ -39,28 +42,10 @@ class PostController extends Controller
         */
         public function index(FormBuilder $formBuilder, Request $request)
         {
-            //
-            $config = config('site-settings.listings');
+            
+            $table = $this->table(new TranslationTable());
 
-            if($request->useMultilang) {
-                $posts = Post::limit( $config['limit'] )->lang($request->lang);
-                // dd($categories);
-            }
-            else {
-                $posts = Post::limit( $config['limit'] )->get();
-            }
-
-            $model = new Post();
-            $fillables = $model->getFillable();
-
-            $a = new PostDropdownManager($posts, []);
-
-            if(isset($posts) && count($posts) > 0) {
-                $posts[0]->flashForMissing();
-            }
-
-
-            return view("adminify::layouts.admin.pages.index", ["datas" => $posts, 'dropdownManager' => $a,  'thead' => $fillables]);
+            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
 
         /**

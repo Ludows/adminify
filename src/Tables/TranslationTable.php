@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
 use App\Models\Translations as TranslationModel;
-use Ludows\Adminify\Dropdowns\Translations as UserDropdownsManager;
+use Ludows\Adminify\Dropdowns\Translations as TranslationDropdownManager;
 
 class TranslationTable extends TableManager {
     // public function getTemplateByName($name) {
