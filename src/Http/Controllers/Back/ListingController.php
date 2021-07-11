@@ -78,7 +78,7 @@ class ListingController extends Controller
 
 
         $a = [
-            'html' => $v,
+            'html' => $v->render(),
             'isEnd' => isset($datas['offset']) && ($datas['offset'] + $results->count()) >= $datas['maxItems'] ? true : false,
             'response' => $results,
             'count' => $results->count(),
