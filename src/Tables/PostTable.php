@@ -58,8 +58,13 @@ class PostTable extends TableManager {
             //     $posts[0]->flashForMissing();
             // }
 
-        // set columns
-        $this->columns( array_merge($fillables, ['categories_id','actions']) );
+            $default_merge_columns = ['categories_id','actions'];
+
+            if($request->useMultilang && is_translatable_model($model)) {
+                array_unshift($default_merge_columns, 'need_translations');
+            }
+
+            $this->columns( array_merge($fillables, $default_merge_columns) );
 
 
         foreach ($posts as $post) {
@@ -70,7 +75,14 @@ class PostTable extends TableManager {
                 # code...
                 $table->column($fillable, $this->getTemplateByName($fillable));
             }
-            
+
+            if($request->useMultilang && is_translatable_model($model)) {
+                $table->column('need_translations', 'adminify::layouts.admin.table.custom-cells.translated', [
+                    'routes' => get_missing_translations_routes('posts.edit', 'post', $this->getModel()),
+                    'missing' => get_missing_langs($this->getModel())
+                ]);
+            }
+
             $table->column('categories_id', 'adminify::layouts.admin.table.custom-cells.posts-categories-id', []);
 
             $table->column('actions', 'adminify::layouts.admin.table.custom-cells.dropdown', [
