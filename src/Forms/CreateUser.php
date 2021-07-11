@@ -11,10 +11,18 @@ class CreateUser extends Form
     {
         // Add fields here...
         $this
-            ->add('name', Field::TEXT, [])
-            ->add('avatar', 'lfm', [])
-            ->add('email', Field::EMAIL, [])
-            ->add('password', 'generatorPassword', []);
+            ->add('name', Field::TEXT, [
+                'label' => __('admin.form.name'),
+            ])
+            ->add('avatar', 'lfm', [
+                'label' => __('admin.form.avatar'),
+            ])
+            ->add('email', Field::EMAIL, [
+                'label' => __('admin.form.email'),
+            ])
+            ->add('password', 'generatorPassword', [
+                'label' => __('admin.form.password'),
+            ]);
 
         $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
 

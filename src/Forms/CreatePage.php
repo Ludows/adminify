@@ -30,6 +30,7 @@ class CreatePage extends Form
                 'choices' => $hydratorCat['categories'],
                 'selected' => $hydratorCat['selected'],
                 'attr' => ['multiple' => 'multiple'],
+                'label' => __('admin.form.categories_id'),
                 'select2options' => [
                     'placeholder' => __('admin.select_category'),
                     'multiple' => true,
@@ -41,6 +42,7 @@ class CreatePage extends Form
                 'choices' => $hydratorPages['pages'],
                 'selected' => $hydratorPages['selected'],
                 'attr' => [],
+                'label' => __('admin.form.parent_id'),
                 'label_attr' => ['class' => 'control-label', 'for' => 'post_parent_id'],
                 'select2options' => [
                     'placeholder' => __('admin.select_parentpage_id'),

@@ -14,6 +14,7 @@ class CreateCategory extends Form
         $m = $this->getModel();
         // Add fields here...
         $this->add('title', Field::TEXT, [
+            'label' => __('admin.form.title'),
             'label_attr' => ['class' => 'control-label', 'for' => 'cat_title'],
             'attr' => [
                 'id' => 'cat_title'
@@ -31,6 +32,7 @@ class CreateCategory extends Form
                 'withCreate' => false,
                 'choices' => $categories,
                 'selected' => '',
+                'label' => __('admin.form.parent_id'),
                 'attr' => [
                 ],
                 'select2options' => [

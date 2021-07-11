@@ -12,7 +12,7 @@ class CreateMenu extends Form
         // Add fields here...
         // Add fields here...
         $this->add('title', Field::TEXT, [
-            'label' => __('admin.name'),
+            'label' => __('admin.form.name'),
             'attr' => [],
         ]);
         $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);

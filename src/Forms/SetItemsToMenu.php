@@ -10,7 +10,7 @@ class SetItemsToMenu extends Form
     {
         // Add fields here...
         $this->add('items', 'select2', [
-            'label' => false,
+            'label' => __('admin.form.items'),
             'attr' => [
                 'multiple' => 'multiple'
             ]

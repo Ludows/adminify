@@ -11,8 +11,12 @@ class CreateTranslation extends Form
     {
         // Add fields here...
         $this
-            ->add('key', Field::TEXT, [])
-            ->add('text', Field::TEXT, []);
+            ->add('key', Field::TEXT, [
+                'label' => __('admin.form.key'),
+            ])
+            ->add('text', Field::TEXT, [
+                'label' => __('admin.form.text'),
+            ]);
             $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
 }

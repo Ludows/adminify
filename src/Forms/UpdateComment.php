@@ -13,17 +13,23 @@ class UpdateComment extends Form
 
         $this
         ->add('email', Field::TEXT, [
+            'label' => __('admin.form.email'),
             'attr' => [
                 'readonly' => 'readonly'
             ]
         ])
         ->add('name', Field::TEXT, [
+            'label' => __('admin.form.name'),
             'attr' => [
                 'readonly' => 'readonly'
             ]
         ])
-        ->add('comment', Field::TEXTAREA, [])
-        ->add('is_moderated', Field::CHECKBOX, [])
+        ->add('comment', Field::TEXTAREA, [
+            'label' => __('admin.form.comment'),
+        ])
+        ->add('is_moderated', Field::CHECKBOX, [
+            'label' => __('admin.form.is_moderated'),
+        ])
         ->add('submit', 'submit', ['label' => __('admin.update'), 'attr' => ['class' => 'btn btn-default']]);
 
     }

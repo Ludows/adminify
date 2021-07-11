@@ -14,7 +14,9 @@ class CreatePost extends Form
         $hydrator = $this->hydrateSelect();
         $m = $this->getModel();
 
-            $this->add('title', Field::TEXT, []);
+            $this->add('title', Field::TEXT, [
+                'label' => __('admin.form.title'),
+            ]);
             $this->add('categories_id', 'select2', [
                 'empty_value' => '',
                 'withCreate' => true,
@@ -22,6 +24,7 @@ class CreatePost extends Form
                 'choices' => $hydrator['categories'],
                 'selected' => $hydrator['selected'],
                 'attr' => ['multiple' => 'multiple'],
+                'label' => __('admin.form.categories_id'),
                 'select2options' => [
                     'placeholder' => __('admin.select_category'),
                     'multiple' => true,
@@ -36,7 +39,9 @@ class CreatePost extends Form
                 ]
             ]);
 
-            $this->add('content', 'laraberg', []);
+            $this->add('content', 'laraberg', [
+                'label' => __('admin.form.content'),
+            ]);
             
             $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
     }

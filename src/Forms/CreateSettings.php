@@ -17,9 +17,11 @@ class CreateSettings extends Form
         $blog = $this->getStatePage('blogpage');
 
         $this->add('site_name', Field::TEXT, [
+            'label' => __('admin.form.site_name'),
             'value' => $this->getSetting('site_name')
         ])
         ->add('site_slogan', Field::TEXT, [
+            'label' => __('admin.form.site_slogan'),
             'value' => $this->getSetting('site_slogan')
         ])
         ->add('logo_src', 'lfm', [
@@ -30,6 +32,7 @@ class CreateSettings extends Form
             'empty_value' => _('admin.select_homepage'),
             'choices' => $home['datas'],
             'selected' => $home['selected'],
+            'label' => __('admin.form.homepage'),
             'select2options' => [
                 'multiple' => false,
                 'width' => '100%'
@@ -39,6 +42,7 @@ class CreateSettings extends Form
             'empty_value' => _('admin.select_blogpage'),
             'choices' => $blog['datas'],
             'selected' => $blog['selected'],
+            'label' => __('admin.form.blogpage'),
             'select2options' => [
                 'multiple' => false,
                 'width' => '100%'

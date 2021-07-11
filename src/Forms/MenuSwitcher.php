@@ -14,6 +14,7 @@ class MenuSwitcher extends Form
         // Add fields here...
         $this->add('menus', Field::SELECT, [
             'empty_value' => __('select.menu'),
+            'label' => __('admin.form.menus'),
             'choices' =>[],
             'selected' => '',
             'attr' => [],
