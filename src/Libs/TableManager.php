@@ -5,17 +5,19 @@ use Ludows\Adminify\Libs\Dropdown;
 
 class TableManager
 {
-    public function __construct()
+    public function __construct($autoHandle = true)
     {
         $this->view = view();
-        $this->datas = null;
+        $this->datas = [];
         $this->request = request();
         $this->model = null;
         $this->columns = [];
         $this->items = [];
         $this->_columns = [];
 
-        $this->handle();
+        if($autoHandle) {
+            $this->handle();
+        }
     }
     public function setColumns($value = []) {
         $this->columns = $value;
@@ -52,6 +54,11 @@ class TableManager
         return $this;
     }
 
+    public function datas($name = null, $value) {
+        $this->datas[$name] = $value;
+        return $this;
+    }
+
     public function column($name, $viewName, $extraVars = []) {
 
         $v = $viewName;
@@ -72,23 +79,27 @@ class TableManager
         return $this->datas;
     }
     public function hasDatas() {
-        return $this->datas != null;
-    }
-    public function setDatas($value) {
-        $this->datas = $value;
-    }
-    public function removeDatas() {
-        $this->datas = null;
+        return count($this->datas) != 0;
     }
     public function getView() {
         return 'adminify::layouts.admin.table.index';
     }
+
+    public function getViewList() {
+        return 'adminify::layouts.admin.table.datalist';
+    }
+
     public function handle() {}
     public function render() {
 
         $tpl = $this->getView();
         $cols = $this->getColumns();
         $compiled = $this->view->make($tpl, ['datas' => $this->_columns, 'thead' => $cols, 'count' => count($this->_columns[$cols[0]]) ]);
+        return $compiled;
+    }
+    public function list() {
+        $cols = $this->getColumns();
+        $compiled = $this->view->make( $this->getViewList() , ['datas' => $this->_columns, 'count' => count($this->_columns[$cols[0]]) ]);
         return $compiled;
     }
 }

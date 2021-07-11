@@ -66,37 +66,37 @@ return [
         'searchType' => 'fillable', // or manual. In manual mode, columns is necessary.
         'search' => [
             'post' => [
-                'dropdownManager' => \Ludows\Adminify\Dropdowns\Post::class,
+                'tableManager' => \Ludows\Adminify\Tables\PostTable::class,
                 'class' => \App\Models\Post::class,
                 'columns' => []
             ],
             'user' => [
-                'dropdownManager' => \Ludows\Adminify\Dropdowns\Users::class,
+                'tableManager' => \Ludows\Adminify\Tables\UserTable::class,
                 'class' => \App\Models\User::class,
                 'columns' => []
             ],
             'menu' => [
-                'dropdownManager' => \Ludows\Adminify\Dropdowns\Menu::class,
+                'tableManager' => \Ludows\Adminify\Tables\MenuTable::class,
                 'class' => \App\Models\Menu::class,
                 'columns' => []
             ],
             'page' => [
-                'dropdownManager' => \Ludows\Adminify\Dropdowns\Page::class,
+                'tableManager' => \Ludows\Adminify\Tables\PageTable::class,
                 'class' => \App\Models\Page::class,
                 'columns' => []
             ],
             'category' => [
-                'dropdownManager' => \Ludows\Adminify\Dropdowns\Category::class,
+                'tableManager' => \Ludows\Adminify\Tables\CategoryTable::class,
                 'class' => \App\Models\Category::class,
                 'columns' => []
             ],
             'comment' => [
-                'dropdownManager' => \Ludows\Adminify\Dropdowns\Comment::class,
+                'tableManager' => \Ludows\Adminify\Tables\CommentTable::class,
                 'class' => \App\Models\Comment::class,
                 'columns' => []
             ],
             'traduction' => [
-                'dropdownManager' => \Ludows\Adminify\Dropdowns\Translations::class,
+                'tableManager' => \Ludows\Adminify\Tables\TranslationTable::class,
                 'class' => \App\Models\Translations::class,
                 'columns' => []
             ],

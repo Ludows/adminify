@@ -35,8 +35,6 @@ class CategoryTable extends TableManager {
 
         if($request->useMultilang) {
             $categories = CategoryModel::limit( $config['limit'] )->lang($request->lang);
-            // dd($categories);
-            // $categories = $categories->all()->limit( $config['limit'] )->get();
         }
         else {
             $categories = CategoryModel::limit( $config['limit'] )->get();

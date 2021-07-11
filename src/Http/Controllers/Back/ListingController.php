@@ -67,11 +67,14 @@ class ListingController extends Controller
         $results = $m->get();
 
 
-        $dropdownManager = $config['search'][$datas['singular']]['dropdownManager'];
+        $TableManager = $config['search'][$datas['singular']]['tableManager'];
 
-        $a = new $dropdownManager($results, []);
+        $table = new $TableManager(false); // for disable autohandling
+        $table->datas('results', $results); 
+        $table->handle();
 
-        $v = view('adminify::layouts.admin.index.blocks.datalist', ['dropdownManager' => $a, 'datas' => $results, 'thead' => $columns, 'name' => Str::plural($datas['singular']) ])->render();
+        //render only listing not entierely table
+        $v = $table->list();
 
 
         $a = [
