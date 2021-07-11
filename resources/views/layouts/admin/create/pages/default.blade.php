@@ -10,7 +10,7 @@
 
             <div class="card shadow">
                 <div class="card-header border-0">
-                    {{ __('add.'.$name) }}
+                    {{ __($name.'.create') }}
                 </div>
                 <div class="card-body">
                     @if(isset($form))
