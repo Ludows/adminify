@@ -66,7 +66,7 @@ class PageTable extends TableManager {
         $default_merge_columns = ['categories_id','actions'];
 
         if($request->useMultilang) {
-            $default_merge_columns = array_unshift($default_merge_columns, 'translated');
+            array_unshift($default_merge_columns, 'translated');
         }
 
         $this->columns( array_merge($fillables, $default_merge_columns) );
