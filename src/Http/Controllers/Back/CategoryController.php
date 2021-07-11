@@ -113,7 +113,7 @@ class CategoryController extends Controller
         {
             //
             $category->checkForTraduction();
-            $category->flashForMissing();
+            // $category->flashForMissing();
 
             $form = $formBuilder->create(UpdateCategory::class, [
                 'method' => 'PUT',

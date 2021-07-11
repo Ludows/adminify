@@ -54,9 +54,9 @@ class PostTable extends TableManager {
 
             $a = new PostDropdownsManager($posts, []);
 
-            if(isset($posts) && count($posts) > 0) {
-                $posts[0]->flashForMissing();
-            }
+            // if(isset($posts) && count($posts) > 0) {
+            //     $posts[0]->flashForMissing();
+            // }
 
         // set columns
         $this->columns( array_merge($fillables, ['categories_id','actions']) );

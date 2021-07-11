@@ -106,7 +106,7 @@ class PageController extends Controller
         {
             //
             $page->checkForTraduction();
-            $page->flashForMissing();
+            // $page->flashForMissing();
 
             // dd($page);
 

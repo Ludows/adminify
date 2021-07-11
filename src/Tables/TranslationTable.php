@@ -53,9 +53,9 @@ class TranslationTable extends TableManager {
         //call the dropdown manager
         $a = new TranslationDropdownManager($trans ,[]);
 
-        if(isset($trans) && count($trans) > 0) {
-            $trans[0]->flashForMissing();
-        }
+        // if(isset($trans) && count($trans) > 0) {
+        //     $trans[0]->flashForMissing();
+        // }
         // set columns
         $this->columns( array_merge($fillables, ['actions']) );
 

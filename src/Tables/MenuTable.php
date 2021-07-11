@@ -54,9 +54,9 @@ class MenuTable extends TableManager {
 
             $a = new MenuDropdownsManager($menus, []);
 
-            if(isset($menus) && count($menus) > 0) {
-                $menus[0]->flashForMissing();
-            }
+            // if(isset($menus) && count($menus) > 0) {
+            //     $menus[0]->flashForMissing();
+            // }
         // set columns
         $this->columns( array_merge($fillables, ['actions']) );
 

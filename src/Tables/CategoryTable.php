@@ -47,9 +47,9 @@ class CategoryTable extends TableManager {
 
         $a = new CategoryDropdownsManager($categories, []);
 
-        if(isset($categories) && count($categories) > 0) {
-            $categories[0]->flashForMissing();
-        }
+        // if(isset($categories) && count($categories) > 0) {
+        //     $categories[0]->flashForMissing();
+        // }
 
         // set columns
         $this->columns( array_merge($fillables, ['actions']) );

@@ -101,7 +101,7 @@ class TranslationsController extends Controller
             // Etonnant laravel ne comprends pas l'object Traduction.
 
             $traduction->checkForTraduction();
-            $traduction->flashForMissing();
+            // $traduction->flashForMissing();
 
             $form = $formBuilder->create(UpdateTranslation::class, [
                 'method' => 'PUT',

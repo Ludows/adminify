@@ -109,7 +109,7 @@ class PostController extends Controller
             // dd($request->exists('seo'));
 
             $post->checkForTraduction();
-            $post->flashForMissing();
+            // $post->flashForMissing();
 
             if($request->exists('seo')) {
                 $form = $formBuilder->create(SeoForm::class, [

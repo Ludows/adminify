@@ -99,7 +99,7 @@ class MenuController extends Controller
         {
 
             $menu->checkForTraduction();
-            $menu->flashForMissing();
+            // $menu->flashForMissing();
 
             $menuBuilder->setModel($menu);
             // dd($menuBuilder);

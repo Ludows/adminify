@@ -58,9 +58,9 @@ class PageTable extends TableManager {
 
             $a = new PageDropdownsManager($pages, []);
 
-            if(isset($pages) && count($pages) > 0) {
-                $pages[0]->flashForMissing();
-            }
+            // if(isset($pages) && count($pages) > 0) {
+            //     $pages[0]->flashForMissing();
+            // }
         // set columns
         
         $default_merge_columns = ['categories_id','actions'];
