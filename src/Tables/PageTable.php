@@ -59,7 +59,7 @@ class PageTable extends TableManager {
                 $pages[0]->flashForMissing();
             }
         // set columns
-        $this->columns( array_merge($fillables, ['actions']) );
+        $this->columns( array_merge($fillables, ['categories_id','actions']) );
 
 
         foreach ($pages as $page) {
@@ -70,6 +70,9 @@ class PageTable extends TableManager {
                 # code...
                 $table->column($fillable, $this->getTemplateByName($fillable));
             }
+            
+            $table->column('categories_id', 'adminify::layouts.admin.table.custom-cells.pages-categories-id', []);
+
             $table->column('actions', 'adminify::layouts.admin.table.custom-cells.dropdown', [
                 'dropdown' => $a,
                 'index' => $page->id

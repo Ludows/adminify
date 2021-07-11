@@ -56,7 +56,7 @@ class PostTable extends TableManager {
             }
 
         // set columns
-        $this->columns( array_merge($fillables, ['actions']) );
+        $this->columns( array_merge($fillables, ['categories_id','actions']) );
 
 
         foreach ($posts as $post) {
@@ -67,6 +67,9 @@ class PostTable extends TableManager {
                 # code...
                 $table->column($fillable, $this->getTemplateByName($fillable));
             }
+            
+            $table->column('categories_id', 'adminify::layouts.admin.table.custom-cells.posts-categories-id', []);
+
             $table->column('actions', 'adminify::layouts.admin.table.custom-cells.dropdown', [
                 'dropdown' => $a,
                 'index' => $post->id

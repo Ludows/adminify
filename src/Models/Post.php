@@ -37,7 +37,6 @@ class Post extends Model implements Searchable
         'slug',
         'content',
         'media_id',
-        'categories_id'
     ];
 
     public function getSearchResult(): SearchResult

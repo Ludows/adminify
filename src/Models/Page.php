@@ -47,7 +47,6 @@ class Page extends Model implements Searchable
         'content',
         'media_id',
         'parent_id',
-        'categories_id'
     ];
     public function media()
     {
