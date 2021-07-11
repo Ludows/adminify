@@ -255,10 +255,7 @@ return array(
                     'Image' => Intervention\Image\Facades\Image::class,
                 ]
             ],
-            'config' => (object) [
-                'file' => '/../../config/lfm',
-                'name' => 'lfm',
-            ],
+            'config' => null,
             'afterPublish' => [
                 'php artisan vendor:publish --tag=lfm_config',
                 'php artisan vendor:publish --tag=lfm_public',
