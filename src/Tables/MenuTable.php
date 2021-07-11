@@ -31,10 +31,15 @@ class MenuTable extends TableManager {
 
         $config = config('site-settings.listings');
         $request = $this->getRequest();
-            $model = new MenuModel();
-            $fillables = $model->getFillable();
+        $model = new MenuModel();
+        $fillables = $model->getFillable();
 
+        $datas = $this->getDatas();
 
+        if(isset($datas['results'])) {
+            $menus = $datas;
+        }
+        else {
             if($request->useMultilang) {
                 $menus = MenuModel::limit( $config['limit'] )->lang($request->lang);
                 // dd($categories);
@@ -42,6 +47,10 @@ class MenuTable extends TableManager {
             else {
                 $menus = MenuModel::limit( $config['limit'] )->get();
             }
+        }
+
+
+            
 
             $a = new MenuDropdownsManager($menus, []);
 

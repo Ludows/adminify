@@ -33,7 +33,15 @@ class MediaTable extends TableManager {
 
         $model = new MediaModel();
         $fillables = $model->getFillable();
-        $medias = MediaModel::limit( $config['limit'] )->get();
+        $datas = $this->getDatas();
+        
+        if(isset($datas['results'])) {
+            $medias = $datas;
+        }
+        else {
+            $medias = MediaModel::limit( $config['limit'] )->get();
+        }
+        
 
         $a = new MediaDropdownsManager($medias, []);
         // set columns

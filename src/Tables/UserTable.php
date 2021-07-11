@@ -32,9 +32,16 @@ class UserTable extends TableManager {
         $u = new UserModel();
 
         $config = config('site-settings.listings');
-
-        $users = UserModel::limit( $config['limit'] )->get();
         $fillables = $u->getFillable();
+
+        $datas = $this->getDatas();
+
+        if(isset($datas['results'])) {
+            $users = $datas;
+        }
+        else {
+            $users = UserModel::limit( $config['limit'] )->get();
+        }
 
         // set columns
         $this->columns( array_merge($fillables, ['actions']) );

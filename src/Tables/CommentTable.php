@@ -31,7 +31,12 @@ class CommentTable extends TableManager {
 
         $config = config('site-settings.listings');
         $request = $this->getRequest();
+        $datas = $this->getDatas();
 
+        if(isset($datas['results'])) {
+            $comments = $datas;
+        }
+        else {
             if($request->useMultilang) {
                 $comments = CommentModel::limit( $config['limit'] )->lang($request->lang);
                 // dd($categories);
@@ -39,6 +44,9 @@ class CommentTable extends TableManager {
             else {
                 $comments = CommentModel::limit( $config['limit'] )->get();
             }
+        }
+
+            
             $model = new CommentModel();
             $fillables = $model->getFillable();
 

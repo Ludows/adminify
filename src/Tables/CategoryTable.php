@@ -32,13 +32,20 @@ class CategoryTable extends TableManager {
         //
         $config = config('site-settings.listings');
         $request = $this->getRequest();
+        $datas = $this->getDatas();
 
-        if($request->useMultilang) {
-            $categories = CategoryModel::limit( $config['limit'] )->lang($request->lang);
+        if(isset($datas['results'])) {
+            $categories = $datas;
         }
         else {
-            $categories = CategoryModel::limit( $config['limit'] )->get();
+            if($request->useMultilang) {
+                $categories = CategoryModel::limit( $config['limit'] )->lang($request->lang);
+            }
+            else {
+                $categories = CategoryModel::limit( $config['limit'] )->get();
+            }
         }
+        
 
         $model = new CategoryModel();
         $fillables = $model->getFillable();

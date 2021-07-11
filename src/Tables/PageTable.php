@@ -32,9 +32,15 @@ class PageTable extends TableManager {
         $config = config('site-settings.listings');
         $request = $this->getRequest();
 
-            $model = new PageModel();
-            $fillables = $model->getFillable();
+        $model = new PageModel();
+        $fillables = $model->getFillable();
 
+        $datas = $this->getDatas();
+
+        if(isset($datas['results'])) {
+            $pages = $datas;
+        }
+        else {
             if($request->useMultilang) {
                 $pages = PageModel::limit( $config['limit'] )->lang($request->lang);
                 // dd($categories);
@@ -43,6 +49,9 @@ class PageTable extends TableManager {
             else {
                 $pages = PageModel::limit( $config['limit'] )->get();
             }
+        }
+
+            
 
             $a = new PageDropdownsManager($pages, []);
 

@@ -32,6 +32,12 @@ class PostTable extends TableManager {
         $config = config('site-settings.listings');
         $request = $this->getRequest();
 
+        $datas = $this->getDatas();
+
+        if(isset($datas['results'])) {
+            $posts = $datas;
+        }
+        else {
             if($request->useMultilang) {
                 $posts = PostModel::limit( $config['limit'] )->lang($request->lang);
                 // dd($categories);
@@ -39,7 +45,7 @@ class PostTable extends TableManager {
             else {
                 $posts = PostModel::limit( $config['limit'] )->get();
             }
-
+        }
             $model = new PostModel();
             $fillables = $model->getFillable();
 

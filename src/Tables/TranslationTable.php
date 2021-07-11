@@ -35,13 +35,19 @@ class TranslationTable extends TableManager {
         $model = new TranslationModel();
         $fillables = $model->getFillable();
 
+        $datas = $this->getDatas();
 
-        if($request->useMultilang) {
-            $trans = TranslationModel::limit( $config['limit'] )->lang($request->lang);
-                // dd($categories);
+        if(isset($datas['results'])) {
+            $trans = $datas;
         }
         else {
-            $trans = TranslationModel::limit( $config['limit'] )->get();
+            if($request->useMultilang) {
+                $trans = TranslationModel::limit( $config['limit'] )->lang($request->lang);
+                    // dd($categories);
+            }
+            else {
+                $trans = TranslationModel::limit( $config['limit'] )->get();
+            }
         }
            
         //call the dropdown manager
