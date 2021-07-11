@@ -7,6 +7,26 @@ use App\Models\User as UserModel;
 use Ludows\Adminify\Dropdowns\Users as UserDropdownsManager;
 
 class UserTable extends TableManager {
+    public function getTemplateByName($name) {
+        $ret = null;
+        switch ($name) {
+            case 'avatar':
+                # code...
+                $ret = 'adminify::layouts.admin.table.custom-cells.users-avatar';
+                break;
+            case 'email':
+            case 'name':
+                # code...
+                $ret = 'adminify::layouts.admin.table.cell';
+                break;
+            case 'password':
+                # code...
+                $ret = 'adminify::layouts.admin.table.custom-cells.users-password';
+                break;
+        }
+
+        return $ret;
+    }
     public function handle() {
 
         $u = new UserModel();
@@ -16,11 +36,10 @@ class UserTable extends TableManager {
         $users = UserModel::limit( $config['limit'] )->get();
         $fillables = $u->getFillable();
 
-        // no necessary to print password..
-        $this->setTh($fillables);
+        // set columns
+        $this->columns( array_merge($fillables, ['actions']) );
 
-        // $
-
+        //call the dropdown manager
         $a = new UserDropdownsManager($users, []);
 
         foreach ($users as $user) {
@@ -29,8 +48,12 @@ class UserTable extends TableManager {
             $table = $this->model($user);
             foreach ($fillables as $fillable) {
                 # code...
-                $table->column($fillable, 'view_name');
+                $table->column($fillable, $this->getTemplateByName($fillable));
             }
+            $table->column('actions', 'adminify::layouts.admin.table.custom-cells.dropdown', [
+                'dropdown' => $a,
+                'index' => $user->id
+            ]);
         }
 
 

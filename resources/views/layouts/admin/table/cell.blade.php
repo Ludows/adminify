@@ -1,0 +1,1 @@
+<td>{{ $model->{$attr} }}</td>

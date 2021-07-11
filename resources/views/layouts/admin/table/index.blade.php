@@ -2,8 +2,8 @@
     window.listingConfig = {
         limit : {{ config('site-settings.listings.limit') }},
         singular : '{{ Str::singular($name) }}',
-        maxItems : {{ count($datas) }},
-        isEnd : {{ count($datas) <  config('site-settings.listings.limit') ? true : false }}
+        maxItems : {{ $count }},
+        isEnd : {{ $count <  config('site-settings.listings.limit') ? true : false }}
     }
 </script>
 
@@ -14,7 +14,6 @@
                 @foreach($thead as $th)
                     <th scope="col">{{ __('admin.'.$name.'.'.$th) }}</th>
                 @endforeach
-                <th scope="col">{{ __('admin.actions') }}</th>
             </tr>
         </thead>
         <tbody>

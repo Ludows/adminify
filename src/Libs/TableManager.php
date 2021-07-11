@@ -11,18 +11,19 @@ class TableManager
         $this->datas = null;
         $this->request = request();
         $this->model = null;
-        $this->th = [];
+        $this->columns = [];
         $this->items = [];
+        $this->_columns = [];
 
         $this->handle();
     }
-    public function setTh($value = []) {
-        $this->th = $value;
+    public function setColumns($value = []) {
+        $this->columns = $value;
         return $this;
     }
 
-    public function getTh() {
-        return $this->th;
+    public function getColumns() {
+        return $this->columns;
     }
 
     public function getModel() {
@@ -40,15 +41,29 @@ class TableManager
         return $this->setModel($model);
     }
 
-    public function column($name, $view) {
+    public function columns($a = []) {
+        $this->columns = $a;
 
+        foreach ($a as $col) {
+            # code...
+            $this->_columns[$col] = [];
+        }
+
+        return $this;
     }
 
-    public function setDefaults() {
-        return [
-            'template' => 'adminify::layouts.admin.table.item',
-            'vars' => []
+    public function column($name, $viewName, $extraVars = []) {
+
+        $v = $viewName;
+        if(is_null($viewName)) {
+            $v = 'adminify::layouts.admin.table.cell';
+        }
+
+        $this->_columns[$name][] = (object) [
+            'view' => $v,
+            'vars' => array_merge($extraVars, ['model' => $this->getModel(), 'attr' => $name]),
         ];
+        return $this;
     }
     public function getRequest() {
         return $this->request;
@@ -65,22 +80,15 @@ class TableManager
     public function removeDatas() {
         $this->datas = null;
     }
-    public function add($name = '', $params = []) {
-        // $this->setDropdown($name, array_merge($this->setDefaults(), $params));
-        return $this;
-    }
     public function getView() {
         return 'adminify::layouts.admin.table.index';
-    }
-    public function remove($index = 0) {
-        // $this->removeDropdown($index);
-        return $this;
     }
     public function handle() {}
     public function render() {
 
         $tpl = $this->getView();
-        $compiled = $this->view->make($tpl, ['datas' => $this->getDatas(), 'thead' => $this->getTh()]);
+        $cols = $this->getColumns();
+        $compiled = $this->view->make($tpl, ['datas' => $this->_columns, 'thead' => $cols, 'count' => count($this->_columns[$cols[0]]) ]);
         return $compiled;
     }
 }
