@@ -8,10 +8,7 @@ use App\Http\Requests\CreateMenuRequest;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
-use App\Forms\MenuSwitcher;
-use App\Forms\MenuItemsThree;
 use Ludows\Adminify\Forms\CreateMenu;
-use Ludows\Adminify\Forms\DeleteCrud;
 
 use App\Models\Menu;
 use Ludows\Adminify\Libs\MenuBuilder;
@@ -20,12 +17,13 @@ use Illuminate\Support\Str;
 use App\Repositories\MenuRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 
-use Ludows\Adminify\Dropdowns\Menu as MenuDropdownManager;
-
+use Ludows\Adminify\Traits\TableManagerable;
+use Ludows\Adminify\Tables\MenuTable;
 
 class MenuController extends Controller
 {
     use FormBuilderTrait;
+    use TableManagerable;
     private $menuRepository;
 
     public function __construct(MenuRepository $menuRepository) {
@@ -38,27 +36,9 @@ class MenuController extends Controller
         */
         public function index(Request $request, FormBuilder $formBuilder)
         {
-            $config = config('site-settings.listings');
+            $table = $this->table(new MenuTable());
 
-            $model = new Menu();
-            $fillables = $model->getFillable();
-
-
-            if($request->useMultilang) {
-                $menus = Menu::limit( $config['limit'] )->lang($request->lang);
-                // dd($categories);
-            }
-            else {
-                $menus = Menu::limit( $config['limit'] )->get();
-            }
-
-            $a = new MenuDropdownManager($menus, []);
-
-            if(isset($menus) && count($menus) > 0) {
-                $menus[0]->flashForMissing();
-            }
-
-            return view("adminify::layouts.admin.pages.index", ["datas" => $menus, 'dropdownManager' => $a, 'thead' => $fillables]);
+            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
 
         /**

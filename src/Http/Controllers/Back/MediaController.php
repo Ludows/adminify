@@ -22,11 +22,13 @@ use App\Forms\CreateMedia;
 use App\Forms\UpdateMedia;
 use App\Forms\DeleteCrud;
 
-
+use Ludows\Adminify\Traits\TableManagerable;
+use Ludows\Adminify\Tables\MediaTable;
 
 class MediaController extends Controller
 {
     use FormBuilderTrait;
+    use TableManagerable;
     private $mediaRepository;
 
         public function __construct(MediaRepository $mediaRepository) {
@@ -41,16 +43,10 @@ class MediaController extends Controller
         */
         public function index(FormBuilder $formBuilder)
         {
-            $config = config('site-settings.listings');
-
-            $model = new Media();
-            $fillables = $model->getFillable();
-            $medias = Media::limit( $config['limit'] )->get();
-
-            $a = new MediaDropdownManager($medias, []);
-
+            
+            $table = $this->table(new MediaTable());
             // dd($forms);
-            return view("adminify::layouts.admin.pages.index", ["datas" => $medias, 'thead' => $fillables, 'dropdownManager' => $a ]);
+            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
 
         /**
