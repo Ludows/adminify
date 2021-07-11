@@ -99,7 +99,7 @@ class TableManager
     }
     public function list() {
         $cols = $this->getColumns();
-        $compiled = $this->view->make( $this->getViewList() , ['datas' => $this->_columns, 'count' => count($this->_columns[$cols[0]]) ]);
+        $compiled = $this->view->make( $this->getViewList() , ['datas' => $this->_columns,'thead' => $cols, 'count' => count($this->_columns[$cols[0]]) ]);
         return $compiled;
     }
 }
