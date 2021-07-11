@@ -15,12 +15,14 @@ use App\Models\Translations as Traductions;
 use App\Repositories\TranslationRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 
-use Ludows\Adminify\Dropdowns\Translations as TranslationDropdownManager;
+use Ludows\Adminify\Traits\TableManagerable;
+use Ludows\Adminify\Tables\TranslationTable;
 
 
 class TranslationsController extends Controller
 {
     use FormBuilderTrait;
+    use TableManagerable;
     private $translationRepository;
 
     public function __construct(TranslationRepository $translationRepository) {
@@ -34,27 +36,10 @@ class TranslationsController extends Controller
         */
         public function index(Request $request, FormBuilder $formBuilder)
         {
-            $config = config('site-settings.listings');
 
-            $model = new Traductions();
-            $fillables = $model->getFillable();
+            $table = $this->table(new TranslationTable());
 
-
-            if($request->useMultilang) {
-                $trans = Traductions::limit( $config['limit'] )->lang($request->lang);
-                // dd($categories);
-            }
-            else {
-                $trans = Traductions::limit( $config['limit'] )->get();
-            }
-            
-            $a = new TranslationDropdownManager($trans ,[]);
-
-            if(isset($trans) && count($trans) > 0) {
-                $trans[0]->flashForMissing();
-            }
-
-            return view("adminify::layouts.admin.pages.index", ["datas" => $trans, 'dropdownManager' => $a, 'thead' => $fillables]);
+            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
 
         /**
