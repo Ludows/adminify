@@ -75,6 +75,44 @@ if(! function_exists('is_installed_stub')) {
     }
 }
 
+if(! function_exists('get_missing_langs')) {
+    function get_missing_langs($model) {
+        $request = request();
+        $langs = [];
+        if($request->useMultilang && is_translatable_model($model)) {
+            $langs = $model->getNeededTranslations();
+        }
+        return $langs;
+    }
+}
+
+if(! function_exists('get_missing_translations_routes') ) {
+    function get_missing_translations_routes($routeName, $singular, $model) {
+        
+        $request = request();
+
+        $default_route_params = [
+            $singular => $model->id
+        ];
+
+        $routeList = [];
+        if($request->useMultilang && is_translatable_model($model)) {
+            $miss = $model->getNeededTranslations();
+            if(count($miss) > 0) {
+                foreach ($miss as $missing) {
+                    # code...
+                    $default_route_params['lang'] = $missing;
+
+                    $routeList[] = route($routeName, $default_route_params);
+
+                }
+            }
+            // $default_route_params['lang'] =  ;
+        }
+        return $routeList;
+    }
+}
+
 if (! function_exists('get_shortcode')) {
     function get_shortcode($string = '') {
         $ret_s = null;

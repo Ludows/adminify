@@ -54,18 +54,11 @@ class PageTable extends TableManager {
             }
         }
 
-            
-
-            $a = new PageDropdownsManager($pages, []);
-
-            // if(isset($pages) && count($pages) > 0) {
-            //     $pages[0]->flashForMissing();
-            // }
-        // set columns
+        $a = new PageDropdownsManager($pages, []);
         
         $default_merge_columns = ['categories_id','actions'];
 
-        if($request->useMultilang) {
+        if($request->useMultilang && is_translatable_model($model)) {
             array_unshift($default_merge_columns, 'need_translations');
         }
 
@@ -75,35 +68,20 @@ class PageTable extends TableManager {
         foreach ($pages as $page) {
             # code...
             // pass current model
-            $default_route_params = [
-                'page' => $page->id
-            ];
-
-            $routeList = [];
-            if($request->useMultilang) {
-                $miss = $page->getNeededTranslations();
-                if(count($miss) > 0) {
-                    foreach ($miss as $missing) {
-                        # code...
-                        $default_route_params['lang'] = $missing;
-
-                        $routeList[] = route('pages.edit', $default_route_params);
-
-                    }
-                }
-                // $default_route_params['lang'] =  ;
-            }
-
             $table = $this->model($page);
             foreach ($fillables as $fillable) {
                 # code...
                 $table->column($fillable, $this->getTemplateByName($fillable));
             }
+
+            if($request->useMultilang && is_translatable_model($model)) {
+                $table->column('need_translations', 'adminify::layouts.admin.table.custom-cells.translated', [
+                    'routes' => get_missing_translations_routes('pages.edit', 'page', $this->getModel()),
+                    'missing' => get_missing_langs($this->getModel())
+                ]);
+            }
             
-            $table->column('need_translations', 'adminify::layouts.admin.table.custom-cells.translated', [
-                'routes' => $routeList,
-                'missing' => $miss
-            ]);
+            
             
             $table->column('categories_id', 'adminify::layouts.admin.table.custom-cells.pages-categories-id', []);
 
