@@ -71,7 +71,7 @@ class InstallPackages extends Command
 
             $this->info('Handle stubs install');
             $this->handleStubs(base_path('vendor/ludows/adminify/stubs'));
-            if(!in_array('seed', $cleanedTasks)) {
+            if(!in_array('*', $cleanedTasks) || !in_array('seed', $cleanedTasks)) {
                 $this->doCommand('composer dump-autoload');
             }
         }
