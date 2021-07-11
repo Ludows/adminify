@@ -246,9 +246,14 @@ return array(
             'name' => 'unisharp/laravel-filemanager',
             'publish' => null,
             'autoload' => (object) [
-                'providers' => [],
+                'providers' => [
+                    UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
+                    Intervention\Image\ImageServiceProvider::class,
+                ],
                 'middlewares' => [],
-                'aliases' => []
+                'aliases' => [
+                    'Image' => Intervention\Image\Facades\Image::class,
+                ]
             ],
             'config' => (object) [
                 'file' => '/../../config/lfm',
