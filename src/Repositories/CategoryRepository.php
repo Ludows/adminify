@@ -80,7 +80,7 @@ class CategoryRepository
 
         return $category;
     }
-    public function update($form, $request, $model) {
+    public function update($mixed, $request, $model) {
 
         $request = request();
         if(is_array($mixed)) {
