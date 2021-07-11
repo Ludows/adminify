@@ -101,7 +101,8 @@ class PageTable extends TableManager {
             }
             
             $table->column('need_translations', 'adminify::layouts.admin.table.custom-cells.translated', [
-                'routes' => $routeList
+                'routes' => $routeList,
+                'missing' => $miss
             ]);
             
             $table->column('categories_id', 'adminify::layouts.admin.table.custom-cells.pages-categories-id', []);
