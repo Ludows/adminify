@@ -9,11 +9,12 @@ use Kris\LaravelFormBuilder\FormBuilder;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 use App\Repositories\CommentRepository;
-use Ludows\Adminify\Dropdowns\Comment as CommentDropdownManager;
-use Illuminate\Support\Str;
 
 use App\Forms\DeleteCrud;
 use App\Forms\UpdateComment;
+
+use Ludows\Adminify\Traits\TableManagerable;
+use Ludows\Adminify\Tables\CommentTable;
 
 
 class CommentController extends Controller
@@ -24,6 +25,7 @@ class CommentController extends Controller
         * @return Response
         */
         private $commentRepository;
+        use TableManagerable;
         public function __construct(CommentRepository $commentRepository)
         {
             $this->commentRepository = $commentRepository;
@@ -31,21 +33,9 @@ class CommentController extends Controller
         public function index(Request $request, FormBuilder $formBuilder)
         {
             //
-            $config = config('site-settings.listings');
+            $table = $this->table(new CommentTable());
 
-            if($request->useMultilang) {
-                $comments = Comment::limit( $config['limit'] )->lang($request->lang);
-                // dd($categories);
-            }
-            else {
-                $comments = Comment::limit( $config['limit'] )->get();
-            }
-            $model = new Comment();
-            $fillables = $model->getFillable();
-
-            $a = new CommentDropdownManager($comments, []);
-
-            return view("adminify::layouts.admin.pages.index", ["datas" => $comments, 'dropdownManager' => $a,  'thead' => $fillables]);
+            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
 
         /**

@@ -14,7 +14,6 @@ use Ludows\Adminify\Http\Controllers\Controller;
 use File;
 
 use Illuminate\Support\Str;
-use Ludows\Adminify\Dropdowns\Media as MediaDropdownManager;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
