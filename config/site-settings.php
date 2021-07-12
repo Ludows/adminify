@@ -49,6 +49,15 @@ return [
         ]
     ],
 
+    
+    'savetraductions' => [
+        'post' => \App\Models\Post::class,
+        'page' => \App\Models\Page::class,
+        'traduction' => \App\Models\Translations::class,
+        'category' => \App\Models\Category::class,
+        'menu' => \App\Models\Menu::class,
+    ],
+
     'sitemap' => [
         \App\Models\Post::class,
         \App\Models\Page::class,
