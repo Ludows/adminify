@@ -13,38 +13,84 @@ namespace Ludows\Adminify\Traits;
       'page' => 'page',
       'category' => 'categorie',
    ];
-   public function handleSeo($model) {
-        $reflection = new ReflectionClass($model);
-        $type = $reflection->getShortName();
+   public function handleSeo($mixed) {
+
+        $isModel = true;
         $multilang = request()->useMultilang;
-        $getTextConfig = config('laravel-gettext.supported-locales');
+
+        if(is_array($mixed)) {
+            $isModel = false;
+            $isSeo = false;
+        }
+        else {
+            $isSeo = is_seo_model($mixed);
+        }
+        if($isModel) {
+            $reflection = new ReflectionClass($mixed);
+            $type = $reflection->getShortName();
+        }
+        else {
+            $type = $mixed['type'];
+        }
+
+        $description = $isSeo ? $mixed->seoWith('description', false) : null;
+        $keywords = $isSeo ? $mixed->seoWith('keywords', false) : null;
+        $robots = $isSeo ? $mixed->seoWith('robots', false) : null;
+        $langs = config('site-settings.supported_locales');
+
 
         if($multilang) {
             // SEOMeta::addAlternateLanguages($getTextConfig);
         }
         SEOMeta::setTitleSeparator(' - ');
 
-        $title = $model->seoWith('title', false);
-        if($title != null) {
+        $title = $isSeo ? $mixed->seoWith('title', false) : null;
+        if($title != null && $isModel) {
             SEOMeta::setTitle($title);
+            OpenGraph::setTitle($title);
+            TwitterCard::setTitle($title); // title of twitter card tag
+            JsonLd::setTitle($title); // title of twitter card tag
+        }
+        else if($isModel) {
+            SEOMeta::setTitle($mixed->title);
+            OpenGraph::setTitle($mixed->title);
+            TwitterCard::setTitle($mixed->title); // title of twitter card tag
+            JsonLd::setTitle($mixed->title); // title of twitter card tag
         }
         else {
-            SEOMeta::setTitle($model->title);
+            SEOMeta::setTitle($mixed['title']);
+            OpenGraph::setTitle($mixed['title']);
+            TwitterCard::setTitle($mixed['title']);
+            JsonLd::setTitle($mixed['title']); // title of twitter card tag
         }
 
-
-        $description = $model->seoWith('description', false);
-        $keywords = $model->seoWith('keywords', false);
-        $robots = $model->seoWith('robots', false);
-        if($description) {
+        if($description != null && $isModel) {
             SEOMeta::setDescription($description);
+            OpenGraph::setDescription($description);
+            TwitterCard::setDescription($description);  // define description
+            JsonLd::setDescription($description);  // define description
         }
-        if($keywords) {
-            SEOMeta::setKeywords($keywords);
+        if($description == null && !$isModel) {
+            SEOMeta::setDescription($mixed['description']);
+            OpenGraph::setDescription($mixed['description']);
+            TwitterCard::setDescription($mixed['description']);  // define description
+            JsonLd::setDescription($mixed['description']);  // define description
         }
-        if($robots) {
-            SEOMeta::setRobots($robots);
+
+        if($keywords != null && $isModel) {
+            SEOMeta::setDescription($keywords);
         }
+        if($keywords == null && !$isModel) {
+            SEOMeta::setDescription($mixed['keywords']);
+        }
+
+        if($robots != null && $isModel) {
+            SEOMeta::setDescription($robots);
+        }
+        if($robots == null && !$isModel) {
+            SEOMeta::setDescription($mixed['robots']);
+        }
+
         // SEOMeta::setDescription($description);
         // SEOMeta::setKeywords($keywords);
         // SEOMeta::setRobots($robots);
@@ -52,37 +98,27 @@ namespace Ludows\Adminify\Traits;
         //SEOMeta::setNext($url);
 
 
-
-        if(isset($model->media_src)) {
-            $media = $model->media->path;
+        if(isset($mixed->media_id) && $isModel) {
+            $media = $mixed->media->path;
             OpenGraph::addImage($media);
             TwitterCard::setImage($media);
             JsonLd::setImage($media); // add image url
         }
-        OpenGraph::setTitle($model->title);
-        if($description) {
-            OpenGraph::setDescription($description);  // define description
-        }
+
         OpenGraph::setSiteName(env('APP_NAME')); //define site_name
         OpenGraph::addProperty('type', $this->types[strtolower($type)]);
 
         // TwitterCard::setType($type); // type of twitter card tag
-        TwitterCard::setTitle($model->title); // title of twitter card tag
+
         TwitterCard::setSite(env('APP_NAME')); // site of twitter card tag
         // TwitterCard::setDescription($type); // description of twitter card tag
-        if($description) {
-            TwitterCard::setDescription($description);  // define description
-        }
 
 
         // JsonLd::setType($type); // type of twitter card tag
-        JsonLd::setTitle($model->title); // title of twitter card tag
+
         JsonLd::setSite(env('APP_URL')); // site of twitter card tag
         //JsonLd::addValue($key, $value);
         // JsonLd::setDescription($type); // description of twitter card tag
-        if($description) {
-            JsonLd::setDescription($description);  // define description
-        }
         // ; // add image url
    }
   }
