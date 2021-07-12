@@ -42,7 +42,9 @@ class AdminBreadcrumb
 
             if(Str::contains($requestedNameRoute, 'edit') && $this->hasRoute($routeSpl['0'].'.edit')) {
 
-                $trail->push( __($routeSpl['0'].'.index') , route($routeSpl['0'].'.index'));
+                if($this->hasRoute($routeSpl['0'].'.index')) {
+                    $trail->push( __($routeSpl['0'].'.index') , route($routeSpl['0'].'.index'));
+                }
 
                 $singular = Str::singular($routeSpl['0']);
                 // we find the model mapped by the crud mode
