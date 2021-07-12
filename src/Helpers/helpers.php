@@ -93,14 +93,14 @@ if(! function_exists('is_seo_model')) {
 }
 
 if(! function_exists('get_missing_translations_routes') ) {
-    function get_missing_translations_routes($routeName, $singular, $model) {
+    function get_missing_translations_routes($routeName, $singular, $model, $extraVarsRoute = []) {
         
         $request = request();
 
-        $default_route_params = [
+        $default_route_params = array_merge([
             $singular => $model->id,
             'from' => $request->lang
-        ];
+        ], $extraVarsRoute);
 
         $routeList = [];
         if($request->useMultilang && is_translatable_model($model)) {
