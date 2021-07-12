@@ -7,7 +7,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^8.0",
         "artesaos/seotools": "^0.20.0",
         "diglactic/laravel-breadcrumbs": "^6.1",
         "fideloper/proxy": "^4.4",
@@ -34,7 +34,7 @@
         "ycs77/laravel-form-builder-bs4": "^1.0",
         "barryvdh/laravel-debugbar": "^3.5",
         "laravel/sanctum": "^2.1.2",
-        "spatie/laravel-sitemap": "^5.9.2"
+        "spatie/laravel-sitemap": "^6.0.4"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
