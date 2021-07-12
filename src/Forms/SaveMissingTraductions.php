@@ -15,6 +15,8 @@ class SaveMissingTraductions extends Form
         
         if(isset($datas['clsForm'])) {
             
+            $formChild = $datas['clsForm'];
+            $fields = $formChild->getFields();
         }
     }
 }

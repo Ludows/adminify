@@ -120,11 +120,14 @@ class PostController extends Controller
                 ]);
             }
             else if($request->exists('missingTraductions') && $request->useMultilang) {
+
+                $clsForm = $this->form(UpdatePost::class);
+
                 $form = $formBuilder->create(SaveMissingTraductions::class, [
                     'method' => 'PUT',
                     'url' => route('savetraductions.update'),
                 ], [
-                    'clsForm' => UpdatePost::class,
+                    'clsForm' => $clsForm,
                     'model' => $post
                 ]);
             }
