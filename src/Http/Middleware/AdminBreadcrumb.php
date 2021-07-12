@@ -49,7 +49,9 @@ class AdminBreadcrumb
                 $singular = Str::singular($routeSpl['0']);
                 // we find the model mapped by the crud mode
                 $model = \Route::current()->parameter($singular);
-                $trail->push( __($requestedNameRoute) , route($requestedNameRoute, [$singular => $model->id]));
+                if($model != null) {
+                    $trail->push( __($requestedNameRoute) , route($requestedNameRoute, [$singular => $model->id]));
+                }
             }
 
 
