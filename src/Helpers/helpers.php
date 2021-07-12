@@ -99,7 +99,8 @@ if(! function_exists('get_missing_translations_routes') ) {
 
         $default_route_params = array_merge([
             $singular => $model->id,
-            'from' => $request->lang
+            'from' => $request->lang,
+            'namepace' => $model->getNameSpace()
         ], $extraVarsRoute);
 
         $routeList = [];
