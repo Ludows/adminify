@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Forms;
+
+use Ludows\Adminify\Forms\SaveMissingTraductions as SaveMissingBaseForm;
+
+class SaveMissingTraductions extends SaveMissingBaseForm
+{}

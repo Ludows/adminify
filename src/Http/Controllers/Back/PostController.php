@@ -12,6 +12,7 @@ use App\Forms\CreatePost;
 use App\Forms\UpdatePost;
 use App\Forms\DeleteCrud;
 use App\Forms\SeoForm;
+use App\Forms\SaveMissingTraductions;
 
 use App\Models\Post;
 use Ludows\Adminify\Http\Controllers\Controller;
@@ -115,6 +116,15 @@ class PostController extends Controller
                 $form = $formBuilder->create(SeoForm::class, [
                     'method' => 'PUT',
                     'url' => route('posts.update', ['post' => $post->id]),
+                    'model' => $post
+                ]);
+            }
+            else if($request->exists('missingTraductions') && $request->useMultilang) {
+                $form = $formBuilder->create(SaveMissingTraductions::class, [
+                    'method' => 'PUT',
+                    'url' => route('savetraductions.update'),
+                ], [
+                    'clsForm' => UpdatePost::class,
                     'model' => $post
                 ]);
             }
