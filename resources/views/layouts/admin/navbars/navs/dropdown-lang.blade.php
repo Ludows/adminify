@@ -3,7 +3,7 @@
         @php
             $arrayParameters = ['lang' => $lang];
             if(request()->isCrudPattern) {
-                $arrayParameters[request()->singleParam] = request()->{request()->singleParam}->id;
+                $arrayParameters[request()->singleParam] = request()->{request()->singleParam}->id ?? \Route::current()->parameter(request()->singleParam);;
             }
         @endphp
         <a href="{{ route( $currentRouteName , $arrayParameters) }}" class="dropdown-item">
