@@ -78,9 +78,9 @@ class PostTable extends TableManager {
 
             if($request->useMultilang && is_translatable_model($model)) {
                 $table->column('need_translations', 'adminify::layouts.admin.table.custom-cells.translated', [
-                    'routes' => get_missing_translations_routes('posts.edit', 'post', $this->getModel()),
+                    'routes' => get_missing_translations_routes('posts.edit', 'post', $this->getModel(), ['missingTraductions' => true]),
                     'missing' => get_missing_langs($this->getModel()),
-                ], ['missingTraductions' => true]);
+                ]);
             }
 
             $table->column('categories_id', 'adminify::layouts.admin.table.custom-cells.posts-categories-id', []);

@@ -76,9 +76,9 @@ class PageTable extends TableManager {
 
             if($request->useMultilang && is_translatable_model($model)) {
                 $table->column('need_translations', 'adminify::layouts.admin.table.custom-cells.translated', [
-                    'routes' => get_missing_translations_routes('pages.edit', 'page', $this->getModel()),
+                    'routes' => get_missing_translations_routes('pages.edit', 'page', $this->getModel(), ['missingTraductions' => true]),
                     'missing' => get_missing_langs($this->getModel()),
-                ], ['missingTraductions' => true]);
+                ]);
             }
             
             
