@@ -47,6 +47,7 @@ class SaveTranslationsController extends Controller
                     'method' => 'PUT',
                     'url' => route('savetraductions.update', ['savetraduction' => $id]),
                 ], [
+                    'id' => $id,
                     'type' => $type,
                     'clsForm' => $clsForm,
                     'fromLang' => $originLang,
@@ -61,11 +62,8 @@ class SaveTranslationsController extends Controller
         public function update(FormBuilder $formBuilder, Request $request)
         {
             //
-            // $form = $this->form(SaveMissingTraductions::class, [
-            //     'method' => 'PUT',
-            //     'url' => route('traductions.update', ['traduction' => $traduction->id]),
-            //     'model' => $traduction
-            // ]);
+            $all = $request->all();
+            dd($all)
 
             // $this->translationRepository->update($form, $request, $traduction);
 

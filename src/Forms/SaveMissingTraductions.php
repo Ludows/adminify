@@ -31,6 +31,10 @@ class SaveMissingTraductions extends Form
                 'value' => $datas['type']
             ]);
 
+            $this->add('id', 'hidden', [
+                'value' => $datas['id']
+            ]);
+
             $this->add('current_trad', 'static', [
                 'label' => __('admin.current_trad'),
                 'tag' => 'div', // Tag to be used for holding static data,
