@@ -41,7 +41,7 @@ class createSitemap extends Command
      */
     public function handle()
     {
-
+        
 
         return 'ok';
     }
