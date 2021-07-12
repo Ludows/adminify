@@ -5,6 +5,7 @@ namespace Ludows\Adminify\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Route;
 
 class AdminBreadcrumb
 {
@@ -15,6 +16,9 @@ class AdminBreadcrumb
      * @param  \Closure  $next
      * @return mixed
      */
+    public function hasRoute($name) {
+        return Route::has($name);
+    }
     public function handle(Request $request, Closure $next)
     {
         // dd(app());
@@ -29,14 +33,14 @@ class AdminBreadcrumb
             $routeSpl = explode('.', $requestedNameRoute);
 
             $trail->push( __('home.dashboard') , route('home.dashboard'));
-            if(Str::contains($requestedNameRoute, 'index')) {
+            if(Str::contains($requestedNameRoute, 'index') && $this->hasRoute($routeSpl['0'].'.index')) {
                 $trail->push( __($routeSpl['0'].'.index') , route($routeSpl['0'].'.index'));
             }
-            if(Str::contains($requestedNameRoute, 'create') ) {
+            if(Str::contains($requestedNameRoute, 'create') && $this->hasRoute($routeSpl['0'].'.create')) {
                 $trail->push( __($requestedNameRoute) , route($requestedNameRoute));
             }
 
-            if(Str::contains($requestedNameRoute, 'edit')) {
+            if(Str::contains($requestedNameRoute, 'edit') && $this->hasRoute($routeSpl['0'].'.edit')) {
 
                 $trail->push( __($routeSpl['0'].'.index') , route($routeSpl['0'].'.index'));
 

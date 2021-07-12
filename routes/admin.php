@@ -30,7 +30,7 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'admin.breadcrumb
 	
     Route::resource('traductions', 'Ludows\Adminify\Http\Controllers\Back\TranslationsController', ['except' => ['show']]);
 
-    Route::resource('savetraductions', 'Ludows\Adminify\Http\Controllers\Back\SaveTranslationsController', ['except' => ['show', 'create', 'index', 'destroy']]);
+    Route::resource('savetraductions', 'Ludows\Adminify\Http\Controllers\Back\SaveTranslationsController', ['except' => ['show', 'create', 'store', 'index', 'destroy']]);
 
     Route::get('modales/content/{name}', function ($name) {
         $returnView = view("layouts.admin.modales.contents.".$name, [])->render();
