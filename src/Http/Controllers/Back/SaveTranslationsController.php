@@ -26,15 +26,26 @@ class SaveTranslationsController extends Controller
             * @param  int  $id
             * @return Response
             */
-            public function edit(FormBuilder $formBuilder)
+            public function edit(FormBuilder $formBuilder , Request $request)
             {
+
+                $type = $request->get('type');
+                $originLang = $request->get('from');
+                $actualLang = $request->get('lang');
+
+                $config = config('site-settings');
+                $id = \Route::current()->parameter($request->singleParam);
+
+                $model = new $config['savetraductions'][$type]['model']();
                 
     
-                // $form = $formBuilder->create(SaveMissingTraductions::class, [
-                //     'method' => 'PUT',
-                //     'url' => route('savetraductions.update', ['savetraduction' => $traduction->id]),
-                //     'model' => $traduction
-                // ]);
+                $form = $formBuilder->create(SaveMissingTraductions::class, [
+                    'method' => 'PUT',
+                    'url' => route('savetraductions.update', ['savetraduction' => $id]),
+                ], [
+                    'clsForm' => $config['savetraductions'][$type]['clsForm'],
+                    'model' => $model->find($id)
+                ]);
     
                 return view("adminify::layouts.admin.pages.edit", []);
             }

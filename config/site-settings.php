@@ -51,11 +51,28 @@ return [
 
     
     'savetraductions' => [
-        'post' => \App\Models\Post::class,
-        'page' => \App\Models\Page::class,
-        'traduction' => \App\Models\Translations::class,
-        'category' => \App\Models\Category::class,
-        'menu' => \App\Models\Menu::class,
+        'post' => [
+            'model' => \App\Models\Post::class,
+            'clsForm' => \App\Forms\UpdatePost::class
+
+        ],
+        'page' => [
+            'model' => \App\Models\Page::class,
+            'clsForm' => \App\Forms\CreatePage::class
+        ],
+        'traduction' => [
+            'model' => \App\Models\Translations::class,
+            'clsForm' => \App\Forms\UpdateTranslation::class
+        ],
+        'category' => [
+            'model' => \App\Models\Category::class,
+            'clsForm' => \App\Forms\UpdateCategory::class
+        ],
+        'menu' => [
+            'model' => \App\Models\Menu::class,
+            'clsForm' => null
+        ],
+        'fallback' => 'request' // if no class form provided . request->all() is intended
     ],
 
     'sitemap' => [
