@@ -86,6 +86,12 @@ if(! function_exists('get_missing_langs')) {
     }
 }
 
+if(! function_exists('is_seo_model')) {
+    function is_seo_model($class) {
+        return method_exists($class,'seoWith');
+    }
+}
+
 if(! function_exists('get_missing_translations_routes') ) {
     function get_missing_translations_routes($routeName, $singular, $model) {
         
