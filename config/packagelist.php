@@ -312,7 +312,8 @@ return array(
                         'admin.breadcrumb' => \App\Http\Middleware\AdminBreadcrumb::class,
                         'front.blogpage' => \App\Http\Middleware\checkBlogPage::class,
                         'admin.deletemedia' => \App\Http\Middleware\DeleteMedia::class,
-                        'admin.fullmode' => \App\Http\Middleware\DisplayFullmode::class
+                        'admin.fullmode' => \App\Http\Middleware\DisplayFullmode::class,
+                        'admin.seo' => \App\Http\Middleware\BackendSeo::class
                     ],
                     'web' => [
                         \App\Http\Middleware\ShareCurrentUser::class

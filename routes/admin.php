@@ -1,7 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'admin.breadcrumb', 'admin.menu', 'autoload.forms', 'check.permissions', 'admin.deletemedia', 'admin.fullmode'])->group( function () {
+Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'admin.breadcrumb', 'admin.menu', 'autoload.forms', 'check.permissions', 'admin.deletemedia', 'admin.fullmode', 'admin.seo'])->group( function () {
 
     Route::get('/dashboard', 'Ludows\Adminify\Http\Controllers\Back\HomeController@index')->name('home.dashboard');
     

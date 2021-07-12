@@ -1,0 +1,10 @@
+
+<?php
+
+namespace App\Http\Middleware;
+
+use Ludows\Adminify\Http\Middleware\BackendSeo as BackendSeoBaseMiddleware;
+
+class AdminBreadcrumb extends BackendSeoBaseMiddleware
+{}
+
