@@ -77,8 +77,8 @@ class TranslationTable extends TableManager {
             if($request->useMultilang && is_translatable_model($model)) {
                 $table->column('need_translations', 'adminify::layouts.admin.table.custom-cells.translated', [
                     'routes' => get_missing_translations_routes('translations.edit', 'translation', $this->getModel()),
-                    'missing' => get_missing_langs($this->getModel())
-                ]);
+                    'missing' => get_missing_langs($this->getModel()),
+                ], ['missingTraductions' => true]);
             }
 
             $table->column('actions', 'adminify::layouts.admin.table.custom-cells.dropdown', [

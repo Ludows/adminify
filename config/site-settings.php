@@ -57,13 +57,13 @@ return [
     'shortcodes' => [
     ],
 
-    // this key is called when page is fetched for front
-    'handleFront' => [
-        'models' => [
+    // // this key is called when page is fetched for front
+    // 'handleFront' => [
+    //     'models' => [
 
-        ],
-        'searchType' => 'fillable', // or manual. In manual mode, columns is necessary.
-    ],
+    //     ],
+    //     'searchType' => 'fillable', // or manual. In manual mode, columns is necessary.
+    // ],
 
     // all routes search are binded to singular route name.
     'listings' => [
