@@ -17,6 +17,13 @@ class SaveMissingTraductions extends Form
             
             $formChild = $datas['clsForm'];
             $fields = $formChild->getFields();
+
+            foreach ($fields as $fieldKey => $value) {
+                # code...
+                if(!in_array($fieldKey, $datas['config']['excludes'])) {
+                    $this->add($fieldKey, 'text', []);
+                }
+            }
         }
     }
 }
