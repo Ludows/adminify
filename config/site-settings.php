@@ -55,7 +55,8 @@ return [
             'model' => \App\Models\Post::class,
             'clsForm' => \App\Forms\UpdatePost::class,
             'excludes' => [
-                'media_id'
+                'media_id',
+                'parent_id'
             ]
 
         ],
@@ -63,7 +64,8 @@ return [
             'model' => \App\Models\Page::class,
             'clsForm' => \App\Forms\CreatePage::class,
             'excludes' => [
-                'media_id'
+                'media_id',
+                'parent_id'
             ]
         ],
         'traduction' => [
@@ -75,7 +77,8 @@ return [
             'model' => \App\Models\Category::class,
             'clsForm' => \App\Forms\UpdateCategory::class,
             'excludes' => [
-                'media_id'
+                'media_id',
+                'parent_id'
             ]
         ],
         'menu' => [
