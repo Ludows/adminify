@@ -10,7 +10,7 @@ use App\Forms\SaveMissingTraductions;
 use App\Repositories\SaveTranslationRepository;
 
 
-
+use Ludows\Adminify\Http\Controllers\Controller;
 class SaveTranslationsController extends Controller
 {
     use FormBuilderTrait;
