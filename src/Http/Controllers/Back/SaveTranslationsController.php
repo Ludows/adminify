@@ -59,23 +59,46 @@ class SaveTranslationsController extends Controller
                 return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
             }
 
-        public function update(FormBuilder $formBuilder, Request $request)
+        public function update(Request $request)
         {
             //
             $all = $request->all();
-            dd($all);
+            //dd($all);
+            
+            $config = config('site-settings');
+            $model = new $config['savetraductions'][$all['type']]['model']();
+            $model = $model->find($all['id']);
+
+            $excludes = [
+                '_method',
+                '_token',
+                'from',
+                'current_lang',
+                'type',
+                'id'
+            ];
+            
+            $sanitized = array_diff($all, $excludes);
+
+            foreach ($sanitized as $sanitizedKey => $value) {
+                # code...
+                $model->setTranslation($sanitizedKey, $all['current_lang'], $value);
+            }
+
+            $model::booted();
+            $model->save();
 
             // $this->translationRepository->update($form, $request, $traduction);
 
-            // if($request->ajax()) {
-            //     return response()->json([
-            //         'traduction' => $traduction,
-            //         'status' => 'La Traduction a bien été mise à jour !'
-            //     ]);
-            // }
-            // else {
-            //     flash('La Traduction a bien été mise à jour !')->success();
-            //     return redirect()->route('traductions.index');
-            // }
+            if($request->ajax()) {
+                return response()->json([
+                    'translation' => $traduction,
+                    'status' => 'La Translation a bien été faite !'
+                ]);
+            }
+            else {
+                flash('La Translation a bien été faite !')->success();
+                return redirect(url()->previous());
+            }
         }
 }
