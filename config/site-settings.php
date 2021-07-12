@@ -53,26 +53,38 @@ return [
     'savetraductions' => [
         'post' => [
             'model' => \App\Models\Post::class,
-            'clsForm' => \App\Forms\UpdatePost::class
+            'clsForm' => \App\Forms\UpdatePost::class,
+            'excludes' => [
+                'media_id'
+            ]
 
         ],
         'page' => [
             'model' => \App\Models\Page::class,
-            'clsForm' => \App\Forms\CreatePage::class
+            'clsForm' => \App\Forms\CreatePage::class,
+            'excludes' => [
+                'media_id'
+            ]
         ],
         'traduction' => [
             'model' => \App\Models\Translations::class,
-            'clsForm' => \App\Forms\UpdateTranslation::class
+            'clsForm' => \App\Forms\UpdateTranslation::class,
+            'excludes' => []
         ],
         'category' => [
             'model' => \App\Models\Category::class,
-            'clsForm' => \App\Forms\UpdateCategory::class
+            'clsForm' => \App\Forms\UpdateCategory::class,
+            'excludes' => [
+                'media_id'
+            ]
         ],
         'menu' => [
             'model' => \App\Models\Menu::class,
-            'clsForm' => null
+            'clsForm' => null,
+            'excludes' => []
         ],
-        'fallback' => 'request' // if no class form provided . request->all() is intended
+        'fallback' => 'request' // if no class form provided . request->all() is intended,
+
     ],
 
     'sitemap' => [

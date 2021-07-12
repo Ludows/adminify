@@ -48,10 +48,13 @@ class SaveTranslationsController extends Controller
                     'url' => route('savetraductions.update', ['savetraduction' => $id]),
                 ], [
                     'clsForm' => $clsForm,
+                    'fromLang' => $originLang,
+                    'actualLang' => $actualLang,
+                    'config' => $config['savetraductions'][$type],
                     'model' => $model->find($id)
                 ]);
     
-                return view("adminify::layouts.admin.pages.edit", []);
+                return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
             }
 
         public function update(Traductions $traduction, FormBuilder $formBuilder, Request $request)
