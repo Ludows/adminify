@@ -49,6 +49,11 @@ return [
         ]
     ],
 
+    'sitemap' => [
+        \App\Models\Post::class,
+        \App\Models\Page::class,
+    ],
+
     'shortcodes' => [
     ],
 
