@@ -97,10 +97,13 @@ if(! function_exists('get_missing_translations_routes') ) {
         
         $request = request();
 
+        $namepace = explode('\\', strtolower( $model->getNameSpace() ) );
+
+
         $default_route_params = array_merge([
             $singular => $model->id,
             'from' => $request->lang,
-            'type' => $singular
+            'type' => Str::singular($namepace[count($namepace)])
         ], $extraVarsRoute);
 
         $routeList = [];
