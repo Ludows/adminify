@@ -39,13 +39,15 @@ class SaveTranslationsController extends Controller
                 $id = \Route::current()->parameter($request->singleParam);
 
                 $model = new $config['savetraductions'][$type]['model']();
-                
+
+
+                $clsForm = $this->form($config['savetraductions'][$type]['clsForm']);
     
                 $form = $formBuilder->create(SaveMissingTraductions::class, [
                     'method' => 'PUT',
                     'url' => route('savetraductions.update', ['savetraduction' => $id]),
                 ], [
-                    'clsForm' => $config['savetraductions'][$type]['clsForm'],
+                    'clsForm' => $clsForm,
                     'model' => $model->find($id)
                 ]);
     
