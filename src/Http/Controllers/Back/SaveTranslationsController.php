@@ -63,7 +63,7 @@ class SaveTranslationsController extends Controller
         {
             //
             $all = $request->all();
-            dd($all)
+            dd($all);
 
             // $this->translationRepository->update($form, $request, $traduction);
 
