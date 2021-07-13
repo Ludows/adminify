@@ -35,11 +35,12 @@ class HomeController extends Controller
             foreach ($config['blocks'] as $blockName => $arr) {
                 # code...
                 if($user->hasRole($arr['showIf'])) {
+                    $m = new $arr['class']();
                     if($request->useMultilang) {
-                        $m = $arr['class']::orderBy('id', 'desc')->lang($request->lang)->take($config['limit'])->get();
+                        $m = $m->orderBy('id', 'desc')->lang($request->lang)->take($config['limit'])->get();
                     }
                     else {
-                        $m = $arr['class']::orderBy('id', 'desc')->take($config['limit'])->get();
+                        $m = $m->orderBy('id', 'desc')->take($config['limit'])->get();
                     }
                     
 
