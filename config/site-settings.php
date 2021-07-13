@@ -59,7 +59,8 @@ return [
                 'parent_id'
             ],
             'unmodifiedFields' => [
-                'content'
+                'content',
+                'submit'
             ]
 
         ],
@@ -71,7 +72,8 @@ return [
                 'parent_id'
             ],
             'unmodifiedFields' => [
-                'content'
+                'content',
+                'submit'
             ]
         ],
         'traduction' => [
@@ -87,13 +89,17 @@ return [
                 'media_id',
                 'parent_id'
             ],
-            'unmodifiedFields' => []
+            'unmodifiedFields' => [
+                'submit'
+            ]
         ],
         'menu' => [
             'model' => \App\Models\Menu::class,
             'clsForm' => null,
             'excludes' => [],
-            'unmodifiedFields' => []
+            'unmodifiedFields' => [
+                'submit'
+            ]
         ],
         'fallback' => 'request' // if no class form provided . request->all() is intended,
 
