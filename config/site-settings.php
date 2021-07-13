@@ -60,6 +60,7 @@ return [
             ],
             'unmodifiedFields' => [
                 'content',
+                'categories_id',
                 'submit'
             ]
 
@@ -73,6 +74,7 @@ return [
             ],
             'unmodifiedFields' => [
                 'content',
+                'categories_id',
                 'submit'
             ]
         ],

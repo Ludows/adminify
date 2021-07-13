@@ -46,7 +46,14 @@ class SaveMissingTraductions extends Form
                 # code...
                 //dd($datas);
                 if(!in_array($fieldKey, $datas['config']['excludes'])) {
-                    $this->add($fieldKey, $value->getName() == 'submit' ? 'submit' : 'text', $value->getOptions());
+                    $type = null;
+                    if(!in_array($fieldKey, $datas['config']['unmodifiedFields'])) {
+                        $type = 'text';
+                    }
+                    else {
+                        $type = $value->getType();
+                    }
+                    $this->add($fieldKey, $type, $value->getOptions());
                 }
             }
         }
