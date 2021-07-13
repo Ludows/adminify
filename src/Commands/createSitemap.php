@@ -41,7 +41,31 @@ class createSitemap extends Command
      */
     public function handle()
     {
-        
+
+        // create new sitemap object
+        $sitemap = app()->make("sitemap");
+        $config = config('site-settings');
+
+        foreach ($config['sitemap'] as $model) {
+            # code...
+
+            $m = new $model();
+            $all = $m->all();
+
+            foreach ($all as $modelData) {
+                # code...
+                //@to be continued
+                if($config['multilang']) {
+
+                }
+                else {
+
+                }
+            }
+
+        }
+
+
 
         return 'ok';
     }

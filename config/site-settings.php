@@ -110,6 +110,8 @@ return [
     'sitemap' => [
         \App\Models\Post::class,
         \App\Models\Page::class,
+        \App\Models\Category::class,
+        \App\Models\Media::class,
     ],
 
     'shortcodes' => [
