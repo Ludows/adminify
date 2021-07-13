@@ -36,13 +36,21 @@ class HomeController extends Controller
                 # code...
                 if($user->hasRole($arr['showIf'])) {
                     $m = new $arr['class']();
+
                     if($request->useMultilang) {
-                        $m = $m->orderBy('id', 'desc')->lang($request->lang)->take($config['limit'])->get();
+                        $m->orderBy('id', 'desc');
+                        if(is_translatable_model($m)) {
+                            $m->lang($request->lang);
+                        }
+                        $m->take($config['limit']);
+                        $m = $m->get();
                     }
                     else {
-                        $m = $m->orderBy('id', 'desc')->take($config['limit'])->get();
+                        $m->orderBy('id', 'desc');
+                        $m->take($config['limit']);
+                        $m = $m->get();
                     }
-                    
+
 
                     $a = [
                         'data' => $m,
