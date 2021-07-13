@@ -18,7 +18,7 @@ class InstallPackages extends Command
      * @var string
      */
     protected $signature = 'adminify:install
-        {task?* : Tasks name are npm, coreinstall, migrations, seed, publishes}
+        {task?* : Tasks name are npm, coreinstall, migrations, seed, publishes, rollback}
         {--force : Force all tasks}'; //todo
 
     /**
@@ -59,6 +59,10 @@ class InstallPackages extends Command
                 # code...
                 $cleanedTasks[] = str_replace('task=', '', $t);
             }
+        }
+
+        if(in_array('*', $cleanedTasks) || in_array('rollback', $cleanedTasks)) {
+            Artisan::call('migrate:rollback');
         }
 
         if(!in_array('*', $cleanedTasks) && count($arguments['task']) == 0) {
