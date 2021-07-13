@@ -42,7 +42,7 @@ class SaveTranslationsController extends Controller
 
 
                 $clsForm = $this->form($config['savetraductions'][$type]['clsForm']);
-    
+
                 $form = $formBuilder->create(SaveMissingTraductions::class, [
                     'method' => 'PUT',
                     'url' => route('savetraductions.update', ['savetraduction' => $id]),
@@ -55,7 +55,7 @@ class SaveTranslationsController extends Controller
                     'config' => $config['savetraductions'][$type],
                     'model' => $model->find($id)
                 ]);
-    
+
                 return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
             }
 
@@ -64,7 +64,7 @@ class SaveTranslationsController extends Controller
             //
             $all = $request->all();
             //dd($all);
-            
+
             $config = config('site-settings');
             $model = new $config['savetraductions'][$all['type']]['model']();
             $model = $model->find($all['id']);
@@ -77,8 +77,19 @@ class SaveTranslationsController extends Controller
                 'type',
                 'id'
             ];
-            
-            $sanitized = array_diff($all, $excludes);
+
+            $sanitized =  $all;
+            foreach ($sanitized as $key => $value) {
+                # code...
+                if(in_array($key, $excludes)) {
+                    unset($sanitized[$key]);
+                }
+            }
+            //dd($sanitized);
+
+            if(array_key_exists('title', $sanitized)) {
+                $model->setTranslation('slug', $all['current_lang'], Str::slug($sanitized['title']));
+            }
 
             foreach ($sanitized as $sanitizedKey => $value) {
                 # code...
@@ -92,7 +103,7 @@ class SaveTranslationsController extends Controller
 
             if($request->ajax()) {
                 return response()->json([
-                    'translation' => $traduction,
+                    'translation' => $model,
                     'status' => 'La Translation a bien été faite !'
                 ]);
             }
