@@ -70,11 +70,11 @@ class TranslationsController extends Controller
             if($request->ajax()) {
                 return response()->json([
                     'traduction' => $traduction,
-                    'status' => 'La Traduction a bien été crée !'
+                    'status' => __('admin.typed_data.success')
                 ]);
             }
             else {
-                flash('La Traduction a bien été crée !')->success();
+                flash(__('admin.typed_data.success'))->success();
                 return redirect()->route('traductions.index');
             }
         }
@@ -132,11 +132,11 @@ class TranslationsController extends Controller
             if($request->ajax()) {
                 return response()->json([
                     'traduction' => $traduction,
-                    'status' => 'La Traduction a bien été mise à jour !'
+                    'status' => __('admin.typed_data.updated')
                 ]);
             }
             else {
-                flash('La Traduction a bien été mise à jour !')->success();
+                flash(__('admin.typed_data.updated'))->success();
                 return redirect()->route('traductions.index');
             }
         }
@@ -153,7 +153,7 @@ class TranslationsController extends Controller
             $this->translationRepository->delete($traduction);
 
             // redirect
-            flash('La Traduction a bien été supprimée !')->success();
+            flash(__('admin.typed_data.deleted'))->success();
             return redirect()->route('traductions.index');
         }
 }

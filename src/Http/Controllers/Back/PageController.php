@@ -76,11 +76,11 @@ class PageController extends Controller
             if($request->ajax()) {
                 return response()->json([
                     'page' => $page,
-                    'status' => 'La Page a bien été créee !'
+                    'status' => __('admin.typed_data.success')
                 ]);
             }
             else {
-                flash('La Page a bien été créee !')->success();
+                flash(__('admin.typed_data.success'))->success();
                 return redirect()->route('pages.index');
             }
         }
@@ -162,11 +162,11 @@ class PageController extends Controller
             if($request->ajax()) {
                 return response()->json([
                     'page' => $page,
-                    'status' => 'La Page a bien été mise à jour !'
+                    'status' => __('admin.typed_data.updated')
                 ]);
             }
             else {
-                flash('La Page a bien été mise à jour !')->success();
+                flash(__('admin.typed_data.updated'))->success();
                 return redirect()->route('pages.index');
             }
         }
@@ -183,7 +183,7 @@ class PageController extends Controller
             $this->pageRepository->delete($page);
 
             // redirect
-            flash('La Page a bien été supprimée !')->success();
+            flash(__('admin.typed_data.deleted'))->success();
             return redirect()->route('pages.index');
         }
 }

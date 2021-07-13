@@ -108,11 +108,11 @@ class SaveTranslationsController extends Controller
             if($request->ajax()) {
                 return response()->json([
                     'translation' => $model,
-                    'status' => 'La Translation a bien été faite !'
+                    'status' => __('admin.typed_data.updated')
                 ]);
             }
             else {
-                flash('La Translation a bien été faite !')->success();
+                flash(__('admin.typed_data.updated'))->success();
                 return redirect(url()->previous());
             }
         }

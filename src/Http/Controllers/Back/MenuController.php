@@ -66,11 +66,11 @@ class MenuController extends Controller
             if($request->ajax()) {
                 return response()->json([
                     'menu' => $menu,
-                    'status' => 'Le Menu a bien été crée !'
+                    'status' => __('admin.typed_data.success')
                 ]);
             }
             else {
-                flash('Le Menu a bien été crée !')->success();
+                flash(__('admin.typed_data.success'))->success();
                 return redirect()->route('menus.index');
             }
             // $name = $request->input('name');
@@ -193,12 +193,12 @@ class MenuController extends Controller
             if($request->ajax()) {
                 return response()->json([
                     'menu' => $menu,
-                    'status' => 'Le Menu a bien été mis a jour !'
+                    'status' => __('admin.typed_data.updated')
                 ]);
             }
             else {
-                flash('Le Menu a bien été mis a jour !')->success();
-                return redirect()->route('menus.index')->with('status', 'Le Menu a bien été mis a jour !');
+                flash(__('admin.typed_data.updated'))->success();
+                return redirect()->route('menus.index');
             }
         }
 
@@ -214,8 +214,8 @@ class MenuController extends Controller
 
             $this->menuRepository->delete($menu);
 
-            flash('Le Menu a bien été supprimé !')->success();
-            return redirect()->route('menus.index')->with('status', 'Le Menu a bien été supprimé !');
+            flash(__('admin.typed_data.deleted'))->success();
+            return redirect()->route('menus.index');
 
         }
 }

@@ -74,11 +74,11 @@ class UserController extends Controller
             if($request->ajax()) {
                 return response()->json([
                     'user' => $user,
-                    'status' => 'L\'utilisateur a bien été crée !'
+                    'status' => __('admin.typed_data.success')
                 ]);
             }
             else {
-                flash('L\'utilisateur a bien été crée !')->success();
+                flash(__('admin.typed_data.success'))->success();
                 return redirect()->route('users.index');
             }
         }
@@ -120,11 +120,11 @@ class UserController extends Controller
                 if($request->ajax()) {
                     return response()->json([
                         'user' => $user,
-                        'status' => 'L\'utilisateur a bien été mis à jour !'
+                        'status' => __('admin.typed_data.updated')
                     ]);
                 }
                 else {
-                    flash('L\'utilisateur a bien été mis à jour !')->success();
+                    flash(__('admin.typed_data.updated'))->success();
                     return redirect()->route('users.index');
                 }
             }
@@ -141,7 +141,7 @@ class UserController extends Controller
                 $this->userRepository->delete($user);
 
                 // redirect
-                flash('L\'utilisateur a bien été supprimé !')->success();
+                flash(__('admin.typed_data.deleted'))->success();
                 return redirect()->route('users.index');
             }
 }

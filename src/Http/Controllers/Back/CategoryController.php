@@ -83,11 +83,11 @@ class CategoryController extends Controller
             if($request->ajax()) {
                 return response()->json([
                     'category' => $category,
-                    'message' => 'La Catégorie a bien été créee !'
+                    'message' => __('admin.typed_data.success')
                 ]);
             }
             else {
-                flash('La Catégorie a bien été créee !')->success();
+                flash(__('admin.typed_data.success'))->success();
                 return redirect()->route('categories.index');
             }
         }
@@ -142,7 +142,7 @@ class CategoryController extends Controller
             ]);
 
             $this->categoryRepository->update($form, $request, $category);
-            flash('La Catégorie a bien été mise à jour !')->success();
+            flash(__('admin.typed_data.updated'))->success();
             return redirect()->route('categories.index');
         }
 
@@ -158,7 +158,7 @@ class CategoryController extends Controller
             $this->categoryRepository->delete($category);
 
             // redirect
-            flash('La Catégorie a bien été supprimée !')->success();
-            return redirect()->route('categories.index')->with('status', 'La Catégorie a bien été supprimée !');
+            flash(__('admin.typed_data.deleted'))->success();
+            return redirect()->route('categories.index');
         }
 }

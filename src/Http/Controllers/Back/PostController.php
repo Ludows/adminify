@@ -77,11 +77,11 @@ class PostController extends Controller
             if($request->ajax()) {
                 return response()->json([
                     'media' => $post,
-                    'status' => 'Le Post a bien été crée !'
+                    'status' => __('admin.typed_data.success')
                 ]);
             }
             else {
-                flash('Le Post a bien été crée !')->success();
+                flash(__('admin.typed_data.success'))->success();
                 return redirect()->route('posts.index');
             }
         }
@@ -167,11 +167,11 @@ class PostController extends Controller
             if($request->ajax()) {
                 return response()->json([
                     'media' => $post,
-                    'status' => 'Le Post a bien été mis à jour !'
+                    'status' => __('admin.typed_data.updated')
                 ]);
             }
             else {
-                flash('Le Post a bien été mis à jour !')->success();
+                flash(__('admin.typed_data.updated'))->success();
                 return redirect()->route('posts.index');
             }
         }
@@ -189,7 +189,7 @@ class PostController extends Controller
             $this->postRepository->delete($post);
 
             // redirect
-            flash('Le Post a bien été supprimé !')->success();
+            flash(__('admin.typed_data.deleted'))->success();
             return redirect()->route('posts.index');
         }
 }

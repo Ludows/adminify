@@ -99,7 +99,7 @@ class CommentController extends Controller
                 ]);
             }
             else {
-                flash('Le Commentaire a bien été mis à jour !')->success();
+                flash(__('admin.typed_data.updated'))->success();
                 return redirect()->route('comments.index');
             }
         }
@@ -121,11 +121,11 @@ class CommentController extends Controller
             if($request->ajax()) {
                 return response()->json([
                     'commentList' => $m->commentsThree,
-                    'status' => 'Le Commentaire a bien supprimé'
+                    'status' => __('admin.typed_data.deleted')
                 ]);
             }
             else {
-                flash('Le Commentaire a bien supprimé')->success();
+                flash(__('admin.typed_data.deleted'))->success();
                 return redirect()->route('comments.index');
             }
         }

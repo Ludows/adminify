@@ -44,11 +44,11 @@ class SettingsController extends Controller
             if($request->ajax()) {
                 return response()->json([
                     'media' => $settings,
-                    'status' => 'Les Paramètres ont bien mis à jour !'
+                    'status' => __('admin.typed_data.success')
                 ]);
             }
             else {
-                flash('Les Paramètres ont bien mis à jour !')->success();
+                flash(__('admin.typed_data.success'))->success();
                 return redirect()->route('settings.index');
             }
         }

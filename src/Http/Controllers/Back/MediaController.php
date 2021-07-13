@@ -78,11 +78,11 @@ class MediaController extends Controller
                 if($request->ajax()) {
                     return response()->json([
                         'media' => $media,
-                        'status' => 'Le Media a bien été crée !'
+                        'status' => __('admin.typed_data.success')
                     ]);
                 }
                 else {
-                    flash('Le Media a bien été crée !')->success();
+                    flash(__('admin.typed_data.success'))->success();
                     return redirect()->route('medias.index');
                 }
 
@@ -138,11 +138,11 @@ class MediaController extends Controller
             if($request->ajax()) {
                 return response()->json([
                     'media' => $media,
-                    'status' => 'Le Media a bien été mis à jour !'
+                    'status' => __('admin.typed_data.updated')
                 ]);
             }
             else {
-                flash('Le Media a bien été mis à jour !')->success();
+                flash(__('admin.typed_data.updated'))->success();
                 return redirect()->route('medias.index');
             }
         }
@@ -160,7 +160,7 @@ class MediaController extends Controller
 
             $this->mediaRepository->delete($media);
             // redirect
-            flash('Le Media a bien été supprimé !')->success();
+            flash(__('admin.typed_data.deleted'))->success();
             return redirect()->route('medias.index');
         }
 }
