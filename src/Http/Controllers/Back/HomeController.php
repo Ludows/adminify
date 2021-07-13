@@ -36,7 +36,7 @@ class HomeController extends Controller
                 # code...
                 if($user->hasRole($arr['showIf'])) {
                     if($request->useMultilang) {
-                        $m = $arr['class']::orderBy('id', 'desc')->take($config['limit'])->lang($request->lang);
+                        $m = $arr['class']::orderBy('id', 'desc')->lang($request->lang)->take($config['limit'])->get();
                     }
                     else {
                         $m = $arr['class']::orderBy('id', 'desc')->take($config['limit'])->get();

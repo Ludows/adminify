@@ -18,7 +18,7 @@ namespace Ludows\Adminify\Traits;
             $localField = $this->MultilangTranslatableSwitch[0];
         }
 
-        return $query->whereNotNull($localField.'->'.$lang)->get();
+        return $query->whereNotNull($localField.'->'.$lang);
     }
     public function getMultilangTranslatableSwitch() {
         return $this->MultilangTranslatableSwitch;
