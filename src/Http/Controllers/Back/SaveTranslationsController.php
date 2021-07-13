@@ -35,7 +35,7 @@ class SaveTranslationsController extends Controller
                 $originLang = $request->get('from');
                 $actualLang = $request->get('lang');
 
-                if($type == null && $originLang == null && $actualLang == null) {
+                if($type == null && $originLang == null) {
                     abort(403);
                 }
 
