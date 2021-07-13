@@ -38,7 +38,7 @@ class CommentTable extends TableManager {
         }
         else {
             if($request->useMultilang) {
-                $comments = CommentModel::limit( $config['limit'] )->lang($request->lang);
+                $comments = CommentModel::limit( $config['limit'] )->lang($request->lang)->get();
                 // dd($categories);
             }
             else {

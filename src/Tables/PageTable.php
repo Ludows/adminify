@@ -45,7 +45,7 @@ class PageTable extends TableManager {
         }
         else {
             if($request->useMultilang) {
-                $pages = PageModel::limit( $config['limit'] )->lang($request->lang);
+                $pages = PageModel::limit( $config['limit'] )->lang($request->lang)->get();
                 // dd($categories);
                 $pages = $pages->all();
             }

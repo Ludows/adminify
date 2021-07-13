@@ -41,7 +41,7 @@ class MenuTable extends TableManager {
         }
         else {
             if($request->useMultilang) {
-                $menus = MenuModel::limit( $config['limit'] )->lang($request->lang);
+                $menus = MenuModel::limit( $config['limit'] )->lang($request->lang)->get();
                 // dd($categories);
             }
             else {

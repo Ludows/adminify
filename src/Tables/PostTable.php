@@ -42,7 +42,7 @@ class PostTable extends TableManager {
         }
         else {
             if($request->useMultilang) {
-                $posts = PostModel::limit( $config['limit'] )->lang($request->lang);
+                $posts = PostModel::limit( $config['limit'] )->lang($request->lang)->get();
                 // dd($categories);
             }
             else {

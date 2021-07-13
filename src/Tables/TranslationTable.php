@@ -42,7 +42,7 @@ class TranslationTable extends TableManager {
         }
         else {
             if($request->useMultilang) {
-                $trans = TranslationModel::limit( $config['limit'] )->lang($request->lang);
+                $trans = TranslationModel::limit( $config['limit'] )->lang($request->lang)->get();
                     // dd($categories);
             }
             else {
