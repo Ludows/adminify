@@ -27,6 +27,7 @@ class HomeController extends Controller
 
         $user = auth()->user();
         $config = config('site-settings.dashboard');
+        $request = request();
 
 
         $blocks = [];
@@ -34,7 +35,13 @@ class HomeController extends Controller
             foreach ($config['blocks'] as $blockName => $arr) {
                 # code...
                 if($user->hasRole($arr['showIf'])) {
-                    $m = $arr['class']::orderBy('id', 'desc')->take($config['limit'])->get();
+                    if($request->useMultilang) {
+                        $m = $arr['class']::orderBy('id', 'desc')->take($config['limit'])->lang($request->lang);
+                    }
+                    else {
+                        $m = $arr['class']::orderBy('id', 'desc')->take($config['limit'])->get();
+                    }
+                    
 
                     $a = [
                         'data' => $m,
