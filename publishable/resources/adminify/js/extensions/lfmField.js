@@ -87,7 +87,7 @@ export default function LFMField(fields) {
         let $hidden = $el_wrapper.find('[type="hidden"]');
         let confirm = ifr.contents().find('#actions a[data-action="use"]');
 
-        if($hidden.val().length > 0) {
+        if($hidden.val().length > 0 && $hidden.val() != '0') {
             let fieldList = [
                 {
                     name : $hidden.val(),
