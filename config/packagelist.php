@@ -328,6 +328,22 @@ return array(
         ),
         (object) array(
             'beforePublish' => [],
+            'name' => 'laravelium/sitemap',
+            'publish' => (object) [
+                'tag' => false,
+                'force' => false,
+                'sibling' => 'Laravelium\Sitemap\SitemapServiceProvider'
+            ],
+            'autoload' => (object) [
+                'providers' => [],
+                'middlewares' => [],
+                'aliases' => []
+            ],
+            'config' => null,
+            'afterPublish' => [],
+        ),
+        (object) array(
+            'beforePublish' => [],
             'name' => 'laravel/sanctum',
             'publish' => (object) [
                 'tag' => false,
