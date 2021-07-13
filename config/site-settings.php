@@ -57,6 +57,9 @@ return [
             'excludes' => [
                 'media_id',
                 'parent_id'
+            ],
+            'unmodifiedFields' => [
+                'content'
             ]
 
         ],
@@ -66,12 +69,16 @@ return [
             'excludes' => [
                 'media_id',
                 'parent_id'
+            ],
+            'unmodifiedFields' => [
+                'content'
             ]
         ],
         'traduction' => [
             'model' => \App\Models\Translations::class,
             'clsForm' => \App\Forms\UpdateTranslation::class,
-            'excludes' => []
+            'excludes' => [],
+            'unmodifiedFields' => []
         ],
         'category' => [
             'model' => \App\Models\Category::class,
@@ -79,12 +86,14 @@ return [
             'excludes' => [
                 'media_id',
                 'parent_id'
-            ]
+            ],
+            'unmodifiedFields' => []
         ],
         'menu' => [
             'model' => \App\Models\Menu::class,
             'clsForm' => null,
-            'excludes' => []
+            'excludes' => [],
+            'unmodifiedFields' => []
         ],
         'fallback' => 'request' // if no class form provided . request->all() is intended,
 
