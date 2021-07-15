@@ -5,7 +5,7 @@ return [
     'email_admin' => env('EMAIL_ADMIN', 'theartist768@gmail.com'), // For logging errors etc..
     'sender_mail' => env('SENDER_MAIL', 'theartist768@gmail.com'), // email used to send mail
 
-    'models' => [
+    'register' => [
         'categories' => \App\Models\Category::class,
         'comments' => \App\Models\Comment::class,
         'custom_links' => \App\Models\CustomLink::class,
@@ -24,10 +24,10 @@ return [
     // menu builder is automatic sync with multilang param.
     'menu-builder' => [
         'models' => [
-            'category' => App\Models\Category::class,
-            'page' => App\Models\Page::class,
-            'post' => App\Models\Post::class,
-            'custom' => App\Models\CustomLink::class
+            'category' => 'register.categories',
+            'page' => 'register.pages',
+            'post' => 'register.posts',
+            'custom' => 'register.custom_links'
         ],
         'showAlways' => [
             'custom' => [ // you can pass some field to build your form
@@ -47,11 +47,11 @@ return [
     'searchable' => [
         'admin' => [
             'models' => [
-                'posts' => \App\Models\Post::class,
-                'users' => \App\Models\User::class,
-                'menus' => \App\Models\Menu::class,
-                'pages' => \App\Models\Page::class,
-                'traductions' => \App\Models\Translations::class
+                'posts' => 'register.posts',
+                'users' => 'register.users',
+                'menus' => 'register.menus',
+                'pages' => 'register.pages',
+                'traductions' => 'register.traductions'
             ],
             'labels' => [
                 'posts' => 'title',
@@ -68,7 +68,7 @@ return [
     
     'savetraductions' => [
         'post' => [
-            'model' => \App\Models\Post::class,
+            'model' => 'register.posts',
             'clsForm' => \App\Forms\UpdatePost::class,
             'excludes' => [
                 'media_id',
@@ -82,7 +82,7 @@ return [
 
         ],
         'page' => [
-            'model' => \App\Models\Page::class,
+            'model' => 'register.pages',
             'clsForm' => \App\Forms\CreatePage::class,
             'excludes' => [
                 'media_id',
@@ -95,13 +95,13 @@ return [
             ]
         ],
         'traduction' => [
-            'model' => \App\Models\Translations::class,
+            'model' => 'register.traductions',
             'clsForm' => \App\Forms\UpdateTranslation::class,
             'excludes' => [],
             'unmodifiedFields' => []
         ],
         'category' => [
-            'model' => \App\Models\Category::class,
+            'model' => 'register.categories',
             'clsForm' => \App\Forms\UpdateCategory::class,
             'excludes' => [
                 'media_id',
@@ -112,7 +112,7 @@ return [
             ]
         ],
         'menu' => [
-            'model' => \App\Models\Menu::class,
+            'model' => 'register.menus',
             'clsForm' => null,
             'excludes' => [],
             'unmodifiedFields' => [
@@ -124,10 +124,10 @@ return [
     ],
 
     'sitemap' => [
-        \App\Models\Post::class,
-        \App\Models\Page::class,
-        \App\Models\Category::class,
-        \App\Models\Media::class,
+        'register.pages',
+        'register.posts',
+        'register.categories',
+        'register.medias'
     ],
 
     'shortcodes' => [
@@ -148,42 +148,42 @@ return [
         'search' => [
             'media' => [
                 'tableManager' => \Ludows\Adminify\Tables\MediaTable::class,
-                'class' => \App\Models\Media::class,
+                'class' => 'register.medias',
                 'columns' => []
             ],
             'post' => [
                 'tableManager' => \Ludows\Adminify\Tables\PostTable::class,
-                'class' => \App\Models\Post::class,
+                'class' => 'register.posts',
                 'columns' => []
             ],
             'user' => [
                 'tableManager' => \Ludows\Adminify\Tables\UserTable::class,
-                'class' => \App\Models\User::class,
+                'class' => 'register.users',
                 'columns' => []
             ],
             'menu' => [
                 'tableManager' => \Ludows\Adminify\Tables\MenuTable::class,
-                'class' => \App\Models\Menu::class,
+                'class' => 'register.users',
                 'columns' => []
             ],
             'page' => [
                 'tableManager' => \Ludows\Adminify\Tables\PageTable::class,
-                'class' => \App\Models\Page::class,
+                'class' => 'register.pages',
                 'columns' => []
             ],
             'category' => [
                 'tableManager' => \Ludows\Adminify\Tables\CategoryTable::class,
-                'class' => \App\Models\Category::class,
+                'class' => 'register.categories',
                 'columns' => []
             ],
             'comment' => [
                 'tableManager' => \Ludows\Adminify\Tables\CommentTable::class,
-                'class' => \App\Models\Comment::class,
+                'class' => 'register.comments',
                 'columns' => []
             ],
             'traduction' => [
                 'tableManager' => \Ludows\Adminify\Tables\TranslationTable::class,
-                'class' => \App\Models\Translations::class,
+                'class' => 'register.traductions',
                 'columns' => []
             ],
         ]
@@ -225,38 +225,38 @@ return [
         'limit' => 3,
         'blocks' => [
             'page' => [
-                'class' => \App\Models\Page::class,
+                'class' => 'register.pages',
                 'showIf' => ['administrator', 'client'],
                 'template' => 'adminify::layouts.admin.dashboard.card-page',
                 'columnShow' => 'title',
             ],
             'post' => [
-                'class' => \App\Models\Post::class,
+                'class' => 'register.posts',
                 'showIf' => ['administrator', 'client'],
                 'template' => 'adminify::layouts.admin.dashboard.card-post',
                 'columnShow' => 'title',
             ],
             'media' => [
-                'class' => \App\Models\Media::class,
+                'class' => 'register.medias',
                 'showIf' => ['administrator', 'client'],
                 'template' => 'adminify::layouts.admin.dashboard.card-media',
                 'columnShow' => 'title',
                 'plural' => 'medias'
             ],
             'category' => [
-                'class' => \App\Models\Category::class,
+                'class' => 'register.categories',
                 'showIf' => ['administrator', 'client'],
                 'template' => 'adminify::layouts.admin.dashboard.card-category',
                 'columnShow' => 'title',
             ],
             'traduction' => [
-                'class' => \App\Models\Translations::class,
+                'class' => 'register.traductions',
                 'showIf' => ['administrator', 'client'],
                 'template' => 'adminify::layouts.admin.dashboard.card-traduction',
                 'columnShow' => 'key',
             ],
             'comment' => [
-                'class' => \App\Models\Comment::class,
+                'class' => 'register.comments',
                 'showIf' => ['administrator', 'client'],
                 'template' => 'adminify::layouts.admin.dashboard.card-comment',
                 'columnShow' => 'comment',

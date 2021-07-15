@@ -106,6 +106,12 @@ if(! function_exists('get_url')) {
     }
 }
 
+if(! function_exists('get_site_key')) {
+    function get_site_key($key = '') {
+        return config('site-settings.'.$key);
+    }
+}
+
 if(! function_exists('get_missing_translations_routes') ) {
     function get_missing_translations_routes($routeName, $singular, $model, $extraVarsRoute = []) {
         
