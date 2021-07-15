@@ -35,7 +35,7 @@
           }
           
           $u = new Url();
-          $m = $u->where('from_model_id', $defaults['from_model_id']);
+          $m = $u->where('from_model_id', $defaults['from_model_id'])->get()->all();
           
           foreach ($m as $entity) {
                # code...
@@ -54,7 +54,7 @@
           }
 
           $u = new Url();
-          $m = $u->where('from_model_id', $defaults['from_model_id']);
+          $m = $u->where('from_model_id', $defaults['from_model_id'])->get()->all();
           
           foreach ($m as $entity) {
                # code...
@@ -78,7 +78,7 @@
           $defaults = $this->getConfigUrl($a);
 
           $u = new Url();
-          $check = $u->where('from_model_id', $defaults['from_model_id'])->all();
+          $check = $u->where('from_model_id', $defaults['from_model_id'])->get()->all();
           if($check == null) {
                $this->makeUrl($defaults ?? [], false);
           }
@@ -93,7 +93,7 @@
           $u->where('from_model_id', $this->id);
           $u->orderBy('order', 'desc');
 
-          return $u->all();
+          return $u->get()->all();
      }
      public function urlAttribute() {
           $a = [];
@@ -104,6 +104,9 @@
                     # code...
                     $str_model = $col->model_name;
                     $m = new $str_model();
+                    $m = $m->where([
+                         ['id', '=', $col->model_id],
+                    ]);
                     $a[] = $m->{$this->urlableColumn};
                }
           }
