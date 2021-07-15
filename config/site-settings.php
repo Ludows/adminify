@@ -5,6 +5,22 @@ return [
     'email_admin' => env('EMAIL_ADMIN', 'theartist768@gmail.com'), // For logging errors etc..
     'sender_mail' => env('SENDER_MAIL', 'theartist768@gmail.com'), // email used to send mail
 
+    'models' => [
+        'categories' => \App\Models\Category::class,
+        'comments' => \App\Models\Comment::class,
+        'custom_links' => \App\Models\CustomLink::class,
+        'medias' => \App\Models\Media::class,
+        'menus' => \App\Models\Menu::class,
+        'menu_items' => \App\Models\MenuItem::class,
+        'pages' => \App\Models\Page::class,
+        'posts' => \App\Models\Post::class,
+        'seo' => \App\Models\Seo::class,
+        'settings' => \App\Models\Settings::class,
+        'traductions' => \App\Models\Translations::class,
+        'url' => \App\Models\Url::class,
+        'users' => \App\Models\User::class,
+    ],
+
     // menu builder is automatic sync with multilang param.
     'menu-builder' => [
         'models' => [
