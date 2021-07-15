@@ -4,6 +4,7 @@ namespace Ludows\Adminify\Http\Controllers\Front;
 
 use Illuminate\Http\Request;
 use App\Models\Page;
+use App\Models\Url;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Traits\SeoGenerator;
@@ -62,65 +63,32 @@ class PageController extends Controller
         }
 
         public function handleSlug($slug) {
-            $searchable = config('site-settings')['searchable-front'];
+
             $config = config('site-settings');
             $request = request();
+            $segments = $request->segments();
             $multilang = $config['multilang'];
             $lang = $request->lang;
 
-            $slug = explode('/', $slug);
-            $slugCount = count($slug);
+            // dd(Url::all()->all());
 
+            // get all urls from website
+            $urls = Url::all()->all();
             $defaultResponse = null;
 
-            foreach ($searchable['models'] as $modelName => $arr) {
-                # code...
-                $m = new $searchable['models'][$modelName];
-                $fields = $searchable['fields'][$modelName];
+            if(count($urls) > 0) {
+                foreach ($urls as $url) {
+                    # code...
+                    $m_str = $url->model_name;
+                    $m = new $m_str();
+                    $m =  $m->where('id', $url->model_id)->get();
 
-                if(isset($fields)) {
-                    if(count($fields) == 1) {
-                        if($multilang) {
-                            $m = $m->where( $fields[0].'->'.$lang, '=',  $slug[$slugCount - 1]);
-                        }
-                        else {
-                            $m = $m->where( $fields[0], '=',  $slug[$slugCount - 1]);
-                        }
+                    $url_model = $m->url;
+                    if(array_equal($url_model, $segments)) {
+                        $defaultResponse = $m;
                     }
-                    else {
-                        $count_column = 0;
-                        foreach ($fields as $field) {
-                            # code...
-                            if($count_column > 0) {
-                                if($multilang) {
-                                    $m = $m->orWhere( $field.'->'.$lang, '=',  $slug[$slugCount - 1]);
-                                }
-                                else {
-                                    $m = $m->orWhere( $field, '=',  $slug[$slugCount - 1]);
-                                }
-                            }
-                            else {
-                                if($multilang) {
-                                    $m = $m->where( $field.'->'.$lang, '=',  $slug[$slugCount - 1]);
-                                }
-                                else {
-                                    $m = $m->where( $field, '=',  $slug[$slugCount - 1]);
-                                }
-                            }
 
-                            $count_column++;
-                        }
-                    }
                 }
-
-
-                $result = $m->limit(1)->first();
-                if($result != null) {
-                    $defaultResponse = $result;
-                    break;
-                }
-
-
             }
 
             return $defaultResponse;

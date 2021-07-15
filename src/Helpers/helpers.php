@@ -97,6 +97,16 @@ if(! function_exists('is_urlable_model')) {
         return method_exists($class,'url');
     }
 }
+if(! function_exists('array_equal')) {
+    function array_equal($a, $b) {
+        return (
+            is_array($a) 
+            && is_array($b) 
+            && count($a) == count($b) 
+            && array_diff($a, $b) === array_diff($b, $a)
+        );
+    }
+}
 
 if(! function_exists('get_url')) {
     function get_url($class) {
