@@ -19,7 +19,8 @@ class ListingController extends Controller
 
         $datas = $request->all();
 
-        $m = new $config['search'][$datas['singular']]['class']();
+        $m_str = get_site_key($config['search'][$datas['singular']]['class']);
+        $m = new $m_str();
         $is_multilang_model = is_translatable_model($m);
         $useMultilang = $request->useMultilang;
         $lang = lang();

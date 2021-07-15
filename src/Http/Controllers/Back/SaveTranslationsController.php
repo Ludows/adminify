@@ -42,7 +42,8 @@ class SaveTranslationsController extends Controller
                 $config = config('site-settings');
                 $id = \Route::current()->parameter($request->singleParam);
 
-                $model = new $config['savetraductions'][$type]['model']();
+                $m = get_site_key($config['savetraductions'][$type]['model']);
+                $model = new $m();
 
 
                 $clsForm = $this->form($config['savetraductions'][$type]['clsForm']);
@@ -70,7 +71,8 @@ class SaveTranslationsController extends Controller
             //dd($all);
 
             $config = config('site-settings');
-            $model = new $config['savetraductions'][$all['type']]['model']();
+            $m = get_site_key($config['savetraductions'][$type]['model']);
+            $model = new $m();
             $model = $model->find($all['id']);
 
             $excludes = [

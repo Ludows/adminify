@@ -35,7 +35,8 @@ class HomeController extends Controller
             foreach ($config['blocks'] as $blockName => $arr) {
                 # code...
                 if($user->hasRole($arr['showIf'])) {
-                    $m = new $arr['class']();
+                    $m_str = get_site_key($arr['class']);
+                    $m = new $m_str();
 
                     if($request->useMultilang) {
                         $m->orderBy('id', 'desc');

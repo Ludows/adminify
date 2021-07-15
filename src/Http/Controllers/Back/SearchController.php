@@ -20,7 +20,7 @@ class SearchController extends Controller
             
             foreach ($config['models'] as $nameModel => $classModel) {
                 # code...
-                $searchResults->registerModel($classModel, $config['labels'][$nameModel] );
+                $searchResults->registerModel(get_site_key($classModel), $config['labels'][$nameModel] );
             }
 
             $searchResults->limitAspectResults($config['limit']);
