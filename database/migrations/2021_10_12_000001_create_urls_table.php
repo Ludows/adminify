@@ -16,7 +16,6 @@ class CreateUrlsTable extends Migration
         Schema::dropIfExists('urls');
         
         Schema::create('urls', function (Blueprint $table) {
-            $table->bigIncrements('id');
             $table->string('model_name', 255);
             $table->bigInteger('model_id');
             $table->timestamps();

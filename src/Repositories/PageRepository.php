@@ -96,6 +96,12 @@ class PageRepository
                 $page->categories()->attach((int) $catId);
             }
         }
+        // store if parent is present
+        if(isset($formValues['parent_id']) && count($formValues['parent_id']) > 0) {
+            $page->makeUrl($formValues['parent_id']);
+        }
+        // store the current page
+        $page->makeUrl();
 
         return $page;
     }

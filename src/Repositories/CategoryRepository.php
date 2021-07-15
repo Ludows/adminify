@@ -134,6 +134,9 @@ class CategoryRepository
             $model->fill($formValues);
         }
 
+        // sync url
+        $model->syncUrl();
+
         $model->save();
     }
     public function delete($model) {
