@@ -197,6 +197,7 @@ class PageRepository
     }
     public function delete($model) {
         $model->categories()->detach();
+        $model->deleteUrl($model->id);
         $model->delete();
     }
 }
