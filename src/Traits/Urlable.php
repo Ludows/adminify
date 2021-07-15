@@ -18,8 +18,10 @@
           }
 
           $u = new Url();
-          $u->model_name = $defaults['namespace'];
-          $u->model_id = $defaults['model_id'];
+          foreach ($defaults as $key => $value) {
+               # code...
+               $u->{$key} = $value;
+          }
           $u->save();
 
           return $u;
@@ -87,7 +89,11 @@
      }
      public function url() {
           $u = new Url();
-          return $u->where('from_model_id', $this->id)->all();
+
+          $u->where('from_model_id', $this->id);
+          $u->orderBy('order', 'desc');
+
+          return $u->all();
      }
      public function urlAttribute() {
           $a = [];
