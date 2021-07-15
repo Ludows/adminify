@@ -92,6 +92,12 @@ if(! function_exists('is_seo_model')) {
     }
 }
 
+if(! function_exists('is_urlable_model')) {
+    function is_urlable_model($class) {
+        return method_exists($class,'url');
+    }
+}
+
 if(! function_exists('get_missing_translations_routes') ) {
     function get_missing_translations_routes($routeName, $singular, $model, $extraVarsRoute = []) {
         
