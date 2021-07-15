@@ -1,6 +1,6 @@
 <?php
 
-namespace Ludows\Adminify\Models;
+namespace App\Models;
 
 
 use Ludows\Adminify\Models\Url as UrlBaseModel;
