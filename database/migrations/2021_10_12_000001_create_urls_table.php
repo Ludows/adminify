@@ -15,22 +15,12 @@ class CreateUrlsTable extends Migration
     {
         Schema::dropIfExists('urls');
         
-        if(config('site-settings.multilang') == true) {
-            Schema::create('urls', function (Blueprint $table) {
-                $table->bigIncrements('id');
-                $table->string('model_name', 255);
-                $table->bigInteger('model_id');
-                $table->timestamps();
-            });
-        }
-        else {
-            Schema::create('urls', function (Blueprint $table) {
-                $table->bigIncrements('id');
-                $table->string('model_name', 255);
-                $table->bigInteger('model_id');
-                $table->timestamps();
-            });
-        }
+        Schema::create('urls', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('model_name', 255);
+            $table->bigInteger('model_id');
+            $table->timestamps();
+        });
     }
 
     /**
