@@ -98,7 +98,8 @@ namespace Ludows\Adminify\Traits;
         //SEOMeta::setNext($url);
 
 
-        if(isset($mixed->media_id) && $isModel) {
+        if(isset($mixed->media_id) && $isModel && $mixed->media_id != 0) {
+            //dd($mixed);
             $media = $mixed->media->path;
             OpenGraph::addImage($media);
             TwitterCard::setImage($media);
