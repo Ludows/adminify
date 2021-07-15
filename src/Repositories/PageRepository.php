@@ -98,10 +98,16 @@ class PageRepository
         }
         // store if parent is present
         if(isset($formValues['parent_id']) && count($formValues['parent_id']) > 0) {
-            $page->makeUrl($formValues['parent_id']);
+            $page->syncUrl([
+                'id' => $formValues['parent_id'],
+                'namespace' => '\App\Models\Page',
+                'order' => 0
+            ]);
         }
         // store the current page
-        $page->makeUrl();
+        $page->syncUrl([
+            'order' => 1
+        ]);
 
         return $page;
     }

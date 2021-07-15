@@ -78,12 +78,6 @@ class CategoryRepository
             $category = Category::create($formValues);
         }
 
-        // create url
-        $category->syncUrl();
-
-
-
-
         return $category;
     }
     public function update($mixed, $request, $model) {
@@ -133,9 +127,6 @@ class CategoryRepository
         else {
             $model->fill($formValues);
         }
-
-        // sync url
-        $model->syncUrl();
 
         $model->save();
     }

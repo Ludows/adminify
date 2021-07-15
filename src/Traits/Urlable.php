@@ -62,6 +62,8 @@
      }
      public function getConfigUrl($a = []) {
           $defaults = [
+               'from_model' => $this->getNameSpace(),
+               'from_model_id' => $this->id,
                'id' => $this->id,
                'namespace' => $this->getNameSpace(),
                'order' => 0
