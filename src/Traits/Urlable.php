@@ -33,7 +33,7 @@
           }
           
           $u = new Url();
-          $m = $u->where('model_id', $defaults['id']);
+          $m = $u->where('from_model_id', $defaults['from_model_id']);
           
           foreach ($m as $entity) {
                # code...
@@ -52,7 +52,7 @@
           }
 
           $u = new Url();
-          $m = $u->where('model_id', $defaults['id']);
+          $m = $u->where('from_model_id', $defaults['from_model_id']);
           
           foreach ($m as $entity) {
                # code...
@@ -76,7 +76,7 @@
           $defaults = $this->getConfigUrl($a);
 
           $u = new Url();
-          $check = $u->where('model_id', $defaults['model_id'])->all();
+          $check = $u->where('from_model_id', $defaults['from_model_id'])->all();
           if($check == null) {
                $this->makeUrl($defaults ?? [], false);
           }
@@ -87,7 +87,7 @@
      }
      public function url() {
           $u = new Url();
-          return $u->where('model_id', $this->id)->all();
+          return $u->where('from_model_id', $this->id)->all();
      }
      public function urlAttribute() {
           $a = [];

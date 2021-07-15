@@ -13,7 +13,9 @@ class Url extends Model
     use Helpers;
     
     protected $fillable = [
+        'from_model',
+        'from_model_id',
         'model_name',
-        'model_id', //the path you uploaded the image
+        'model_id', 
     ];
 }
