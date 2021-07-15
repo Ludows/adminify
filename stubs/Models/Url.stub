@@ -1,0 +1,8 @@
+<?php
+
+namespace Ludows\Adminify\Models;
+
+
+use Ludows\Adminify\Models\Url as UrlBaseModel;
+class Url extends UrlBaseModel
+{}
