@@ -99,8 +99,8 @@ class PageRepository
         // store if parent is present
         if(isset($formValues['parent_id']) && count($formValues['parent_id']) > 0) {
             $page->syncUrl([
-                'id' => $formValues['parent_id'],
-                'namespace' => '\App\Models\Page',
+                'model_id' => $formValues['parent_id'],
+                'model_name' => '\App\Models\Page',
                 'order' => 0
             ]);
         }

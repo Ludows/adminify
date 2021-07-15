@@ -19,7 +19,7 @@
 
           $u = new Url();
           $u->model_name = $defaults['namespace'];
-          $u->model_id = $defaults['id'];
+          $u->model_id = $defaults['model_id'];
           $u->save();
 
           return $u;
@@ -64,8 +64,8 @@
           $defaults = [
                'from_model' => $this->getNameSpace(),
                'from_model_id' => $this->id,
-               'id' => $this->id,
-               'namespace' => $this->getNameSpace(),
+               'model_id' => $this->id,
+               'model_name' => $this->getNameSpace(),
                'order' => 0
           ];
 
@@ -76,7 +76,7 @@
           $defaults = $this->getConfigUrl($a);
 
           $u = new Url();
-          $check = $u->where('model_id', $defaults['id'])->all();
+          $check = $u->where('model_id', $defaults['model_id'])->all();
           if($check == null) {
                $this->makeUrl($defaults ?? [], false);
           }
@@ -87,7 +87,7 @@
      }
      public function url() {
           $u = new Url();
-          return $u->where('model_id', $this->id);
+          return $u->where('model_id', $this->id)->all();
      }
      public function urlAttribute() {
           $a = [];
