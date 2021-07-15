@@ -8,21 +8,53 @@
      // tell which column to show for your url part
      public $urlableColumn = 'title';
 
-     public function makeUrl($id = null, $overrideNamespace = null) {
-          // define as getter and setter
+     public function makeUrl($a = [], $loadConfig = false) {
+          
+          if($loadConfig) {
+               $defaults = $this->getConfigUrl($a);
+          }
+          else {
+               $defaults = $a;
+          }
+
           $u = new Url();
-          $u->model_name = $overrideNamespace ?? $this->getNameSpace();
-          $u->model_id = $id ?? $this->id;
+          $u->model_name = $defaults['namespace'];
+          $u->model_id = $defaults['id'];
           $u->save();
 
           return $u;
      }
-     public function deleteUrl($id) {
+     public function deleteUrl($a = [], $loadConfig = false) {
+
+          if($loadConfig) {
+               $defaults = $this->getConfigUrl($a);
+          }
+          else {
+               $defaults = $a;
+          }
+
           $u = new Url();
-          $m = $u->find($id);
+          $m = $u->find($defaults['id']);
           $m->delete();
      }
-     public function syncUrl() {
+     public function getConfigUrl($a = []) {
+          $defaults = [
+               'id' => $this->id,
+               'namespace' => $this->getNameSpace(),
+               'order' => 0
+          ];
+
+          return array_merge($defaults, $a);
+     }
+     public function syncUrl($a = []) {
+
+          $defaults = $this->getConfigUrl($a);
+
+          $u = new Url();
+          $check = $u->where('model_id', $defaults['id'])->all();
+          if($check == null) {
+               $this->makeUrl($defaults['id'] ?? null, $defaults['namespace'] ?? null);
+          }
 
      }
      public function url() {

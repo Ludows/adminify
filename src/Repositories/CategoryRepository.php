@@ -79,7 +79,7 @@ class CategoryRepository
         }
 
         // create url
-        $category->makeUrl();
+        $category->syncUrl();
 
 
 
