@@ -81,9 +81,9 @@ class PageController extends Controller
                     # code...
                     $m_str = $url->model_name;
                     $m = new $m_str();
-                    $m =  $m->where('id', $url->model_id)->get();
-
+                    $m =  $m->where('id', $url->model_id)->get()->first();
                     $url_model = $m->url;
+                    //dd($url_model);
                     if(array_equal($url_model, $segments)) {
                         $defaultResponse = $m;
                     }

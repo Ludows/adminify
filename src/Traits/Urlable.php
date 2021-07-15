@@ -6,10 +6,10 @@
   trait Urlable
   {
      // tell which column to show for your url part
-     public $urlableColumn = 'title';
+     public $urlableColumn = 'slug';
 
      public function makeUrl($a = [], $loadConfig = false) {
-          
+
           if($loadConfig) {
                $defaults = $this->getConfigUrl($a);
           }
@@ -33,10 +33,10 @@
           else {
                $defaults = $a;
           }
-          
+
           $u = new Url();
           $m = $u->where('from_model_id', $defaults['from_model_id'])->get()->all();
-          
+
           foreach ($m as $entity) {
                # code...
                $entity->fill($defaults);
@@ -55,12 +55,12 @@
 
           $u = new Url();
           $m = $u->where('from_model_id', $defaults['from_model_id'])->get()->all();
-          
+
           foreach ($m as $entity) {
                # code...
                $entity->delete();
           }
-          
+
      }
      public function getConfigUrl($a = []) {
           $defaults = [
@@ -95,7 +95,7 @@
 
           return $u->get()->all();
      }
-     public function urlAttribute() {
+     public function getUrlAttribute() {
           $a = [];
 
           $collection =  $this->url();
@@ -106,7 +106,7 @@
                     $m = new $str_model();
                     $m = $m->where([
                          ['id', '=', $col->model_id],
-                    ]);
+                    ])->get()->first();
                     $a[] = $m->{$this->urlableColumn};
                }
           }
