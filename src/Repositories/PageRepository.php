@@ -180,6 +180,18 @@ class PageRepository
                 $page->categories()->attach((int) $catId);
             }
         }
+        // store if parent is present
+        if(isset($formValues['parent_id']) && count($formValues['parent_id']) > 0) {
+            $page->syncUrl([
+                'model_id' => $formValues['parent_id'],
+                'model_name' => '\App\Models\Page',
+                'order' => 0
+            ]);
+        }
+        // store the current page
+        $page->syncUrl([
+            'order' => 1
+        ]);
 
         return $page;
     }
