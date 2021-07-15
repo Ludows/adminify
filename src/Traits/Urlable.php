@@ -24,6 +24,24 @@
 
           return $u;
      }
+     public function updateUrl($a = [], $loadConfig = false) {
+          if($loadConfig) {
+               $defaults = $this->getConfigUrl($a);
+          }
+          else {
+               $defaults = $a;
+          }
+          
+          $u = new Url();
+          $m = $u->where('model_id', $defaults['id']);
+          
+          foreach ($m as $entity) {
+               # code...
+               $entity->fill($defaults);
+          }
+
+          return $m;
+     }
      public function deleteUrl($a = [], $loadConfig = false) {
 
           if($loadConfig) {
@@ -34,8 +52,13 @@
           }
 
           $u = new Url();
-          $m = $u->find($defaults['id']);
-          $m->delete();
+          $m = $u->where('model_id', $defaults['id']);
+          
+          foreach ($m as $entity) {
+               # code...
+               $entity->delete();
+          }
+          
      }
      public function getConfigUrl($a = []) {
           $defaults = [
@@ -53,7 +76,10 @@
           $u = new Url();
           $check = $u->where('model_id', $defaults['id'])->all();
           if($check == null) {
-               $this->makeUrl($defaults['id'] ?? null, $defaults['namespace'] ?? null);
+               $this->makeUrl($defaults ?? [], false);
+          }
+          else {
+               $this->updateUrl($defaults ?? [], false);
           }
 
      }
