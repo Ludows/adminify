@@ -20,7 +20,6 @@ class CreateUrlsTable extends Migration
                 $table->bigIncrements('id');
                 $table->string('model_name', 255);
                 $table->bigInteger('model_id');
-                $table->json('data');
                 $table->timestamps();
             });
         }
@@ -29,7 +28,6 @@ class CreateUrlsTable extends Migration
                 $table->bigIncrements('id');
                 $table->string('model_name', 255);
                 $table->bigInteger('model_id');
-                $table->string('data', 255);
                 $table->timestamps();
             });
         }
