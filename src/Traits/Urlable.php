@@ -5,29 +5,33 @@
   use App\Models\Url;
   trait Urlable
   {
-     //
-     public function url($model = null) {
+     // tell which column to show for your url part
+     public $urlableColumn = 'title';
+
+     public function makeUrl() {
           // define as getter and setter
           $u = new Url();
-          if(is_null($model)) {
-               $u->model_name = $model->getNameSpace();
-               $u->model_id = $model->id;
-               $u->data = $model->title;
-               $u->save();
-          }
-          else {
-               $u->where('model_id', $this->id);
-          }
+          $u->model_name = $this->getNameSpace();
+          $u->model_id = $this->id;
+          $u->save();
 
           return $u;
+     }
+     public function url() {
+          $u = new Url();
+          return $u->where('model_id', $this->id);
      }
      public function urlAttribute() {
           $a = [];
 
           $collection =  $this->url();
-          foreach ($collection as $col) {
-               # code...
-               $a[] = $col->data;
+          if($collection != null) {
+               foreach ($collection as $col) {
+                    # code...
+                    $str_model = $col->model_name;
+                    $m = new $str_model();
+                    $a[] = $m->{$this->urlableColumn};
+               }
           }
 
           return $a;

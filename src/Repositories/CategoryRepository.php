@@ -78,6 +78,9 @@ class CategoryRepository
             $category = Category::create($formValues);
         }
 
+        // create url
+        $category->makeUrl();
+
 
 
 
