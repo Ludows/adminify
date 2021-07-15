@@ -98,6 +98,14 @@ if(! function_exists('is_urlable_model')) {
     }
 }
 
+if(! function_exists('get_url')) {
+    function get_url($class) {
+        if(is_urlable_model($class)) {
+            return $class->url;   
+        }
+    }
+}
+
 if(! function_exists('get_missing_translations_routes') ) {
     function get_missing_translations_routes($routeName, $singular, $model, $extraVarsRoute = []) {
         

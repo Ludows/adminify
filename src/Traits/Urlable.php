@@ -22,6 +22,14 @@
           return $u;
      }
      public function urlAttribute() {
-          return $this->url();
+          $a = [];
+
+          $collection =  $this->url();
+          foreach ($collection as $col) {
+               # code...
+               $a[] = $col->data;
+          }
+
+          return $a;
      }
   }
