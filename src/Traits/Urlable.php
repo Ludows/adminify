@@ -96,8 +96,11 @@
      public function url() {
           $u = new Url();
 
-          $u->where('from_model_id', $this->id);
-          $u->orderBy('order', 'desc');
+          $u = $u->where([
+              ['from_model_id', '=', $this->id],
+              ['from_model', '=', $this->getNamespace()],
+          ]);
+          $u = $u->orderBy('order', 'desc');
 
           return $u->get()->all();
      }
@@ -105,6 +108,7 @@
           $a = [];
 
           $collection =  $this->url();
+          dump($collection);
           if($collection != null) {
                foreach ($collection as $col) {
                     # code...

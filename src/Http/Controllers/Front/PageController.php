@@ -70,7 +70,7 @@ class PageController extends Controller
             $multilang = $config['multilang'];
             $lang = $request->lang;
 
-            // dd(Url::all()->all());
+            //dd(Url::all()->all());
 
             // get all urls from website
             $urls = Url::all()->all();
@@ -81,11 +81,12 @@ class PageController extends Controller
                     # code...
                     $m_str = $url->model_name;
                     $m = new $m_str();
-                    $m =  $m->where('id', $url->model_id)->get()->first();
+                    $m =  $m->where('id', $url->from_model_id)->get()->first();
                     $url_model = $m->url;
-                    //dd($url_model);
+                    //dump($url_model);
                     if(array_equal($url_model, $segments)) {
                         $defaultResponse = $m;
+                        break;
                     }
 
                 }
