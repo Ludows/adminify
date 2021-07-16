@@ -108,6 +108,14 @@ if(! function_exists('array_equal')) {
     }
 }
 
+if(! function_exists('get_model_by')) {
+    function get_model_by($modelNamespace, $column, $value = '', $operator = '=') {
+        $m = new $modelNamespace();
+        $m = $m->where($column, $operator, $value)->get()->all();
+        return $m;
+    }
+}
+
 if(! function_exists('get_url')) {
     function get_url($class) {
         if(is_urlable_model($class)) {

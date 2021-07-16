@@ -108,7 +108,7 @@
           $a = [];
 
           $collection =  $this->url();
-          dump($collection);
+          //dump($collection);
           if($collection != null) {
                foreach ($collection as $col) {
                     # code...
