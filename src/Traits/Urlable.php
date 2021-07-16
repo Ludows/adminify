@@ -78,7 +78,13 @@
           $defaults = $this->getConfigUrl($a);
 
           $u = new Url();
-          $check = $u->where('from_model_id', $defaults['from_model_id'])->get()->all();
+          $check = $u->where([
+               ['from_model_id', '=', $defaults['from_model_id']],
+               ['from_model', '=', $defaults['from_model']],
+               ['model_id', '=', $defaults['model_id']],
+               ['model_name', '=', $defaults['model_name']],
+               ['order', '=', $defaults['order']],
+          ])->get()->all();
           if($check == null) {
                $this->makeUrl($defaults ?? [], false);
           }
