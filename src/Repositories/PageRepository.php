@@ -97,7 +97,7 @@ class PageRepository
             }
         }
         // store if parent is present
-        if(isset($formValues['parent_id']) && count($formValues['parent_id']) > 0) {
+        if(isset($formValues['parent_id']) && $formValues['parent_id'] != 0) {
             $page->syncUrl([
                 'model_id' => $formValues['parent_id'],
                 'model_name' => '\App\Models\Page',
