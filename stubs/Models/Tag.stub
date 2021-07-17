@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Models;
+
+use Ludows\Adminify\Models\Tag as TagBaseModel;
+
+class Tag extends TagBaseModel
+{}
