@@ -11,8 +11,8 @@ use App\Http\Controllers\MenuController;
 use App\Forms\MenuSwitcher;
 use App\Forms\CreateMenu;
 use App\Forms\UpdateMenu;
-use App\Forms\SetItemsToMenu;
-use App\Forms\Forms\DeleteCrud;
+use App\Forms\SetItemsToMenu as SetItemsToMenuBaseMenuBuilder;
+use App\Forms\DeleteCrud;
 
 class MenuBuilder
 {
@@ -76,7 +76,7 @@ class MenuBuilder
         ]);
         $this->forms['formMenuSwitcher'] = $menuSwitcher;
 
-        $formSetItemsToMenu = $this->form(SetItemsToMenu::class, [
+        $formSetItemsToMenu = $this->form(SetItemsToMenuBaseMenuBuilder::class, [
             'method' => 'POST',
             'url' => null
         ]);
@@ -192,7 +192,7 @@ class MenuBuilder
                 # code...
 
                 $tplDynamicForm = null;
-                $tplDynamicForm = $this->form(SetItemsToMenu::class, [
+                $tplDynamicForm = $this->form(SetItemsToMenuBaseMenuBuilder::class, [
                     'method' => 'POST',
                     'url' => route('menus.setItemsToMenu', ['id' => $model->id, 'type' => $collectionName])
                 ]);
