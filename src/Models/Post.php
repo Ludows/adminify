@@ -11,6 +11,7 @@ use App\Models\Comment;
 use VanOns\Laraberg\Models\Gutenbergable;
 use Ludows\Adminify\Traits\SlugUpdate;
 use Ludows\Adminify\Traits\Urlable;
+use Ludows\Adminify\Traits\Taggable;
 use Spatie\Translatable\HasTranslations;
 use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
 use Ludows\Adminify\Traits\HasSeo;
@@ -28,6 +29,7 @@ class Post extends Model implements Searchable
     use HasTranslations;
     use HasSeo;
     use MultilangTranslatableSwitch;
+    use Taggable;
     use Helpers;
 
     public $MultilangTranslatableSwitch = ['title', 'slug', 'content'];
