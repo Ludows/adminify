@@ -60,6 +60,11 @@ class CreatePost extends Form
             $this->add('content', 'laraberg', [
                 'label' => __('admin.form.content'),
             ]);
+
+            $this->add('no_comments', 'checkbox', [
+                'label_show' => true,
+                'label' => __('admin.form.no_comments'),
+            ]);
             
             $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
