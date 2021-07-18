@@ -21,9 +21,7 @@ export default function select2Inititalization(fields) {
                 e.preventDefault();
 
                 var datas = ModaleForm.serializeFormJSON();
-                if(!datas.parent_id && datas.category != undefined) {
-                    datas.parent_id = 0;
-                }
+                
                 console.log(datas)
                 $.ajax({
                     method: ModaleForm.attr('method'),
@@ -32,14 +30,17 @@ export default function select2Inititalization(fields) {
                     headers: { 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content') },
                     success: function(data) {
                         console.log(data)
+
+                        let keys = Object.keys(data);
+
                         $(ModaleForm).find('[name]').not('[name="_token"]').setResponseFromAjax()
                         $(ModaleForm).clearValues();
-
+                        // console.log(data[0])
                         if(el.multilang == 1) {
-                            var newOption = new Option(data[0].title[el.currentLang], data[0].id, false, true);
+                            var newOption = new Option(data[keys[0]].title[el.currentLang], data[keys[0]].id, false, true);
                         }
                         else {
-                            var newOption = new Option(data[0].title, data[0].id, false, true);
+                            var newOption = new Option(data[keys[0]].title, data[keys[0]].id, false, true);
                         }
 
 
