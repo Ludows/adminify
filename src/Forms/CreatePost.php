@@ -13,6 +13,8 @@ class CreatePost extends Form
     public function buildForm()
     {
         $hydrator = $this->hydrateSelect();
+        $hydratorTags = $this->getTags();
+
         $m = $this->getModel();
 
             $this->add('title', Field::TEXT, [
@@ -37,8 +39,8 @@ class CreatePost extends Form
                 'empty_value' => '',
                 'withCreate' => true,
                 'modal' => 'adminify::layouts.admin.modales.createTag',
-                'choices' => $hydrator['categories'],
-                'selected' => $hydrator['selected'],
+                'choices' => $hydratorTags['tags'],
+                'selected' => $hydratorTags['selected'],
                 'attr' => ['multiple' => 'multiple'],
                 'label' => __('admin.form.tags_id'),
                 'select2options' => [
@@ -60,6 +62,19 @@ class CreatePost extends Form
             ]);
             
             $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
+    }
+
+    public function getTags() {
+        $hasModel = $this->getModel();
+        $tags = Tag::get()->pluck('title' ,'id');
+        $selecteds = '';
+
+        if(isset($hasModel->tags) && count($hasModel->tags->all()) > 0) {
+            // on a une selection
+            $selecteds = $hasModel->tags()->get()->pluck('id')->all();
+        }
+
+        return [ 'tags' => $tags->all(), 'selected' => $selecteds];
     }
 
     public function hydrateSelect() {
