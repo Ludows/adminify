@@ -18,6 +18,7 @@ class GenerateAdminMenu
      * @return mixed
      */
     public function manageMenu() {
+        $request = request();
         $user = $request->user();
         $multilang = config('site-settings.multilang');
         $lang = $request->lang;
