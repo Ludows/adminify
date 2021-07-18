@@ -28,7 +28,6 @@ class HasRenamedImageListener
             $m = Media::where('src', $info['basename']);
 
             $a = [
-                'title' => $m->title,
                 'src' => $newInfo['basename'],
             ];
 

@@ -11,10 +11,7 @@ class CreateMedia extends Form
     public function buildForm()
     {
         // Add fields here...
-        $this->add('title', Field::TEXT, [
-            'label' => __('admin.form.title'),
-        ])
-        ->add('description', Field::TEXTAREA, [
+        $this->add('description', Field::TEXTAREA, [
             'label' => __('admin.form.description'),
         ])
         ->add('alt', Field::TEXT, [

@@ -17,7 +17,6 @@ class Media extends Model
     use Helpers;
 
     protected $fillable = [
-        'title',
         'src', //the path you uploaded the image
         'mime_type',
         'description',

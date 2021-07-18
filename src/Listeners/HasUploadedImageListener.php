@@ -25,7 +25,6 @@ class HasUploadedImageListener
             $info = pathinfo($event->path());
             
             $a = [
-                'title' => $info['basename'],
                 'src' => $info['basename'],
             ];
 
