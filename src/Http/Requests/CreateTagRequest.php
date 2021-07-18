@@ -28,7 +28,7 @@ class CreateTagRequest extends FormRequest
         $routeName = request()->route()->getName();
         if($routeName == 'tags.update') {
             $a = [
-                'key' => [
+                'title' => [
                     'required',
                     'string'
                 ],
@@ -36,7 +36,7 @@ class CreateTagRequest extends FormRequest
         }
         else {
             $a = [
-                'key' => [
+                'title' => [
                     'unique:tags,title',
                     'required',
                     'string',
