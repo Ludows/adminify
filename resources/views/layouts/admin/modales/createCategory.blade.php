@@ -1,4 +1,4 @@
-<x-adminify-modal id="{{ $id ?? 'modalCreateCategory' }}" modalClasses="" title="Créer une catégorie">
+<x-adminify-modal id="{{ $id ?? 'modalCreateCategory' }}" modalClasses="" title="{{ __('admin.model.title') }}">
 
     <div class="row">
         @if($createCategory)
