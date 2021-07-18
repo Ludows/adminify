@@ -21,7 +21,7 @@ export default function select2Inititalization(fields) {
                 e.preventDefault();
 
                 var datas = ModaleForm.serializeFormJSON();
-                if(!datas.parent_id) {
+                if(!datas.parent_id && datas.category != undefined) {
                     datas.parent_id = 0;
                 }
                 console.log(datas)
@@ -36,10 +36,10 @@ export default function select2Inititalization(fields) {
                         $(ModaleForm).clearValues();
 
                         if(el.multilang == 1) {
-                            var newOption = new Option(data.category.title[el.currentLang], data.category.id, false, true);
+                            var newOption = new Option(data[1].title[el.currentLang], data[1].id, false, true);
                         }
                         else {
-                            var newOption = new Option(data.category.title, data.category.id, false, true);
+                            var newOption = new Option(data[1].title, data[1].id, false, true);
                         }
 
 
