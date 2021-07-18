@@ -5,8 +5,9 @@ namespace Ludows\Adminify\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-use Ludows\Adminify\Forms\UpdateMediaLibrary;
-use Ludows\Adminify\Forms\CreateCategory;
+use App\Forms\UpdateMediaLibrary;
+use App\Forms\CreateCategory;
+use App\Forms\CreateTag;
 use Kris\LaravelFormBuilder\FormBuilder;
 
 
@@ -16,16 +17,9 @@ class RequiredForms
     function __construct(FormBuilder $FormBuilder) {
         $this->formBuilder = $FormBuilder;
     }
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
-    public function handle(Request $request, Closure $next)
-    {
-        $forms = array(
+
+    public function forms() {
+        return array(
             'updateMediaLibrary' => array(
                 'class' => UpdateMediaLibrary::class,
                 'options' => [
@@ -39,8 +33,26 @@ class RequiredForms
                     'method' => 'POST',
                     'url' => route('categories.store')
                 ]
+                ),
+            'createTag' => array(
+                'class' => CreateTag::class,
+                'options' => [
+                    'method' => 'POST',
+                    'url' => route('tags.store')
+                ]
             )
         );
+    }
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle(Request $request, Closure $next)
+    {
+        $forms = $this->forms();
 
         // $formBuilder->create(\App\Forms\DeleteMedia::class, [
         //     'method' => 'DELETE',
