@@ -9,7 +9,7 @@ use App\Forms\UpdateTranslation;
 use App\Forms\DeleteCrud;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateTranslation;
+use App\Http\Requests\CreateTagRequest as CreateTagRequest;
 use App\Models\Tag as TagModel;
 
 use App\Repositories\TagRepository;
@@ -62,7 +62,7 @@ class TagsController extends Controller
             *
             * @return Response
             */
-        public function store(CreateTranslation $request)
+        public function store(CreateTagRequest $request)
         {
             //
             $form = $this->form(CreateTagForm::class);
@@ -107,7 +107,7 @@ class TagsController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(TagModel $tag, FormBuilder $formBuilder, Request $request)
+        public function update(TagModel $tag, FormBuilder $formBuilder, CreateTagRequest $request)
         {
             //
             $form = $this->form(CreateTagForm::class, [
