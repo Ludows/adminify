@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreateTranslation;
 use App\Models\Tag as TagModel;
 
-use App\Repositories\TranslationRepository;
+use App\Repositories\TagRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Traits\TableManagerable;
@@ -23,11 +23,11 @@ class TagsController extends Controller
 {
     use FormBuilderTrait;
     use TableManagerable;
-    private $translationRepository;
+    private $tagRepository;
 
-    public function __construct(TranslationRepository $translationRepository) {
+    public function __construct(TagRepository $tagRepository) {
 
-        $this->translationRepository = $translationRepository;
+        $this->tagRepository = $tagRepository;
     }
     /**
         * Display a listing of the resource.
@@ -66,10 +66,10 @@ class TagsController extends Controller
         {
             //
             $form = $this->form(CreateTagForm::class);
-            $traduction = $this->translationRepository->create($form, $request);
+            $tag = $this->tagRepository->create($form, $request);
             if($request->ajax()) {
                 return response()->json([
-                    'traduction' => $traduction,
+                    'traduction' => $tag,
                     'status' => __('admin.typed_data.success')
                 ]);
             }
@@ -116,7 +116,7 @@ class TagsController extends Controller
                 'model' => $tag
             ]);
 
-            $this->translationRepository->update($form, $request, $tag);
+            $this->tagRepository->update($form, $request, $tag);
 
             if($request->ajax()) {
                 return response()->json([
@@ -136,10 +136,10 @@ class TagsController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function destroy(Traductions $traduction)
+        public function destroy(TagModel $tag)
         {
             //
-            $this->translationRepository->delete($traduction);
+            $this->tagRepository->delete($tag);
 
             // redirect
             flash(__('admin.typed_data.deleted'))->success();
