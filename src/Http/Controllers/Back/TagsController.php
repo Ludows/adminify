@@ -69,7 +69,7 @@ class TagsController extends Controller
             $tag = $this->tagRepository->create($form, $request);
             if($request->ajax()) {
                 return response()->json([
-                    'traduction' => $tag,
+                    'tag' => $tag,
                     'status' => __('admin.typed_data.success')
                 ]);
             }
@@ -120,7 +120,7 @@ class TagsController extends Controller
 
             if($request->ajax()) {
                 return response()->json([
-                    'traduction' => $tag,
+                    'tag' => $tag,
                     'status' => __('admin.typed_data.updated')
                 ]);
             }
