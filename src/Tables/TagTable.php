@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
 use App\Models\Tag as TagModel;
-use Ludows\Adminify\Dropdowns\Translations as TranslationDropdownManager;
+use Ludows\Adminify\Dropdowns\Tags as TagDropdownManager;
 
 class TagTable extends TableManager {
     // public function getTemplateByName($name) {
@@ -50,7 +50,7 @@ class TagTable extends TableManager {
         }
            
         //call the dropdown manager
-        $a = new TranslationDropdownManager($tags ,[]);
+        $a = new TagDropdownManager($tags ,[]);
 
         // if(isset($trans) && count($trans) > 0) {
         //     $trans[0]->flashForMissing();

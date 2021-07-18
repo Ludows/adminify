@@ -5,8 +5,6 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use App\Forms\CreateTag as CreateTagForm;
-use App\Forms\UpdateTranslation;
-use App\Forms\DeleteCrud;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateTagRequest as CreateTagRequest;
