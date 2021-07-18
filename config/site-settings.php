@@ -19,6 +19,7 @@ return [
         'traductions' => \App\Models\Translations::class,
         'url' => \App\Models\Url::class,
         'users' => \App\Models\User::class,
+        'tags' => \App\Models\Tag::class
     ],
 
     // menu builder is automatic sync with multilang param.
@@ -51,6 +52,7 @@ return [
                 'users' => 'register.users',
                 'menus' => 'register.menus',
                 'pages' => 'register.pages',
+                'tags' => 'register.tags',
                 'traductions' => 'register.traductions'
             ],
             'labels' => [
@@ -113,6 +115,14 @@ return [
         ],
         'menu' => [
             'model' => 'register.menus',
+            'clsForm' => null,
+            'excludes' => [],
+            'unmodifiedFields' => [
+                'submit'
+            ]
+        ],
+        'tag' => [
+            'model' => 'register.tags',
             'clsForm' => null,
             'excludes' => [],
             'unmodifiedFields' => [
@@ -186,6 +196,11 @@ return [
                 'class' => 'register.traductions',
                 'columns' => []
             ],
+            'tag' => [
+                'tableManager' => \Ludows\Adminify\Tables\TagTable::class,
+                'class' => 'register.tags',
+                'columns' => []
+            ]
         ]
     ],
 
