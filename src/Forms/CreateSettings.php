@@ -28,16 +28,6 @@ class CreateSettings extends Form
             'label_show' => false,
             'value' => $this->getSetting('logo_src')
         ])
-        ->add('remove_comments', 'checkbox', [
-            'label_show' => true,
-            'label' => __('admin.form.remove_comments'),
-            'value' => $this->getSetting('remove_comments')
-        ])
-        ->add('no_seo', 'checkbox', [
-            'label_show' => true,
-            'label' => __('admin.form.no_seo'),
-            'value' => $this->getSetting('no_seo')
-        ])
         ->add('homepage', 'select2', [
             'empty_value' => _('admin.select_homepage'),
             'choices' => $home['datas'],
@@ -57,6 +47,16 @@ class CreateSettings extends Form
                 'multiple' => false,
                 'width' => '100%'
             ]
+        ])
+        ->add('no_comments', 'checkbox', [
+            'label_show' => true,
+            'label' => __('admin.form.no_comments'),
+            'value' => $this->getSetting('no_comments')
+        ])
+        ->add('no_seo', 'checkbox', [
+            'label_show' => true,
+            'label' => __('admin.form.no_seo'),
+            'value' => $this->getSetting('no_seo')
         ]);
 
         $this->add('submit', 'submit', ['label' => _('admin.save'), 'attr' => ['class' => 'btn btn-default']]);

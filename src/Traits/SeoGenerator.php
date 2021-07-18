@@ -33,6 +33,8 @@ namespace Ludows\Adminify\Traits;
             $type = $mixed['type'];
         }
 
+        $noSeo = setting('no_seo');
+
         $description = $isSeo ? $mixed->seoWith('description', false) : null;
         $keywords = $isSeo ? $mixed->seoWith('keywords', false) : null;
         $robots = $isSeo ? $mixed->seoWith('robots', false) : null;
@@ -84,12 +86,18 @@ namespace Ludows\Adminify\Traits;
             SEOMeta::setDescription($mixed['keywords']);
         }
 
-        if($robots != null && $isModel) {
-            SEOMeta::setDescription($robots);
+        if($noSeo == 1) {
+            SEOMeta::setRobots('none');
         }
-        if($robots == null && !$isModel) {
-            SEOMeta::setDescription($mixed['robots']);
+        else {
+            if($robots != null && $isModel) {
+                SEOMeta::setRobots($robots);
+            }
+            if($robots == null && !$isModel) {
+                SEOMeta::setRobots($mixed['robots']);
+            }
         }
+        
 
         // SEOMeta::setDescription($description);
         // SEOMeta::setKeywords($keywords);
