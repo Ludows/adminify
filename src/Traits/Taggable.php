@@ -21,7 +21,12 @@
       return $this;
     }
     public function deleteTags($array) {
-      $this->tags()->detach($array);
+      if(is_null($array)) {
+        $this->tags()->detach();
+      }
+      else {
+        $this->tags()->detach($array);
+      }
       return $this;
     }
     public function deleteTag($id) {

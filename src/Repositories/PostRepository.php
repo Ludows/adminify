@@ -53,7 +53,7 @@ class PostRepository
                 }
             }
             foreach ($fields as $field) {
-                if(isset($formValues[$field]) && $field != "categories_id" && $field != "media_id") {
+                if(isset($formValues[$field]) && $field != "categories_id" && $field != "media_id" && $field != "tags_id") {
                     $post->{$field} = $formValues[$field];
                 }
             }
@@ -98,6 +98,11 @@ class PostRepository
             }
         }
 
+        // dd($post->categories());
+        if(isset($formValues['tags_id'])) {
+            $post->createTags($formValues['tags_id']);
+        }
+
         return $post;
     }
     public function update($mixed, $request, $model) {
@@ -128,7 +133,7 @@ class PostRepository
 
             }
             foreach ($fields as $field) {
-                if(isset($formValues[$field]) && $field != "categories_id" && $field != "media_id") {
+                if(isset($formValues[$field]) && $field != "categories_id" && $field != "media_id" && $field != "tags_id") {
                     $model->{$field} = $formValues[$field];
                 }
             }
@@ -161,6 +166,10 @@ class PostRepository
 
         }
 
+        if(isset($formValues['tags_id'])) {
+            $model->updateTags($formValues['tags_id']);
+        }
+
         if($multilang) {
             $model::booted();
         }
@@ -176,10 +185,15 @@ class PostRepository
     public function delete($model) {
 
         $insertedCategories = $model->categories;
+        $insertedTags = $model->tags;
 
         if(count($insertedCategories) > 0) {
             // On detache puis on réattache pour éviter les doublons
             $model->categories()->detach();
+        }
+        if(count($insertedTags) > 0) {
+            // On detache puis on réattache pour éviter les doublons
+            $model->deleteTags();
         }
         $model->delete();
     }
