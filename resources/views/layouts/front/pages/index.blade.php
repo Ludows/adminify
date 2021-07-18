@@ -12,8 +12,16 @@
         @include('adminify::layouts.front.pages.default')
     @endif
     @if($type == "Post")
-        <a href="/test-insert-post-second">test-insert-post-second</a>
-        <comments ref="comments" lang='{{ $lang }}' :post_id="{{ $model->id }}" :allow_form="{{ $user != null ? 'true' : 'false' }}" :user="{{ $user ?? '{}' }}" :comments='@json($model->commentsThree)'></comments>
+        @php
+            $allowForm = true;
+            if($user == null) {
+                $allowForm = false;
+            } 
+            if(setting('no_comments') == 1) {
+                $allowForm = false;
+            } 
+        @endphp
+        <comments ref="comments" lang='{{ $lang }}' :post_id="{{ $model->id }}" :allow_form="{{ $allowForm ? 'true' : 'false' }}" :user="{{ $user ?? '{}' }}" :comments='@json($model->commentsThree)'></comments>
     @endif
 @endsection
 
