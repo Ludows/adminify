@@ -5,6 +5,7 @@ namespace Ludows\Adminify\Forms;
 use Kris\LaravelFormBuilder\Form;
 use Kris\LaravelFormBuilder\Field;
 use App\Models\Category;
+use App\Models\Tag;
 
 
 class CreatePost extends Form
@@ -27,6 +28,21 @@ class CreatePost extends Form
                 'label' => __('admin.form.categories_id'),
                 'select2options' => [
                     'placeholder' => __('admin.select_category'),
+                    'multiple' => true,
+                    'width' => '100%'
+                ]
+            ]);
+
+            $this->add('tags_id', 'select2', [
+                'empty_value' => '',
+                'withCreate' => true,
+                'modal' => 'adminify::layouts.admin.modales.createTag',
+                'choices' => $hydrator['categories'],
+                'selected' => $hydrator['selected'],
+                'attr' => ['multiple' => 'multiple'],
+                'label' => __('admin.form.tags_id'),
+                'select2options' => [
+                    'placeholder' => __('admin.select_tag'),
                     'multiple' => true,
                     'width' => '100%'
                 ]
