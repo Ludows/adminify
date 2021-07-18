@@ -192,7 +192,6 @@ class PostRepository
             $model->categories()->detach();
         }
         if(count($insertedTags) > 0) {
-            // On detache puis on réattache pour éviter les doublons
             $model->deleteTags();
         }
         $model->delete();

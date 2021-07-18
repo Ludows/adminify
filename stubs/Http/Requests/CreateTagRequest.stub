@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use Ludows\Adminify\Http\Requests\CreateTag as TagBaseRequest;
+use Ludows\Adminify\Http\Requests\CreateTagRequest as TagBaseRequest;
 
-class CreateTag extends TagBaseRequest
+class CreateTagRequest extends TagBaseRequest
 {}
