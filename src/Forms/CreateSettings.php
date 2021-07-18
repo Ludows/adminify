@@ -28,6 +28,16 @@ class CreateSettings extends Form
             'label_show' => false,
             'value' => $this->getSetting('logo_src')
         ])
+        ->add('remove_comments', 'checkbox', [
+            'label_show' => true,
+            'label' => __('admin.form.remove_comments'),
+            'value' => $this->getSetting('remove_comments')
+        ])
+        ->add('no_seo', 'checkbox', [
+            'label_show' => true,
+            'label' => __('admin.form.no_seo'),
+            'value' => $this->getSetting('no_seo')
+        ])
         ->add('homepage', 'select2', [
             'empty_value' => _('admin.select_homepage'),
             'choices' => $home['datas'],
