@@ -8,4 +8,24 @@
     public function tags() {
       return $this->belongsToMany(Tag::class);
     }
+    public function createTags($array) {
+        $this->tags()->attach($array);
+        return $this;
+    }
+    public function createTag($id) {
+      $this->tags()->attach($id);
+      return $this;
+    }
+    public function updateTags($array) {
+      $this->tags()->syncWithoutDetaching($array);
+      return $this;
+    }
+    public function deleteTags($array) {
+      $this->tags()->detach($array);
+      return $this;
+    }
+    public function deleteTag($id) {
+      $this->tags()->detach($id);
+      return $this;
+    }
   }
