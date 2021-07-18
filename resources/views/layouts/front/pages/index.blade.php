@@ -17,9 +17,12 @@
             if($user == null) {
                 $allowForm = false;
             } 
-            if(setting('no_comments') == 1) {
+            if(setting('no_comments') == 1 && $allowForm) {
                 $allowForm = false;
             } 
+            if($allowForm && $model->no_comments) {
+                $allowForm = false;
+            }
         @endphp
         <comments ref="comments" lang='{{ $lang }}' :post_id="{{ $model->id }}" :allow_form="{{ $allowForm ? 'true' : 'false' }}" :user="{{ $user ?? '{}' }}" :comments='@json($model->commentsThree)'></comments>
     @endif
