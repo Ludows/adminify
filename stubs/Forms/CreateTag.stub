@@ -1,6 +1,6 @@
 <?php
 
-namespace Ludows\Adminify\Forms;
+namespace App\Forms;
 
 use Ludows\Adminify\Forms\CreateTag as CreateTagBaseForm;
 
