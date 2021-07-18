@@ -47,7 +47,7 @@
                 </div>
             </form>
             <!-- Navigation -->
-            {!! $menuAdmin ?? '' !!}
+            {!! isset($menuAdmin) ? $menuAdmin->toHtml() : '' !!}
             <!-- Divider -->
             
             @if($user->hasPermissionTo('create_users'))

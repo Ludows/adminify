@@ -17,11 +17,7 @@ class GenerateAdminMenu
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
-    {
-
-        // dd($request->user()->hasPermissionTo('create_posts'));
-
+    public function manageMenu() {
         $user = $request->user();
         $multilang = config('site-settings.multilang');
         $lang = $request->lang;
@@ -36,6 +32,7 @@ class GenerateAdminMenu
                 $menuAdmin->add( Link::to( $multilang ? '/admin/dashboard?lang='.$lang : '/admin/dashboard', '<i class="ni ni-tv-2 text-primary"></i> '.__('admin.home.dashboard'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
                 if($user->hasPermissionTo('create_posts')) {
                     $menuAdmin->add( Link::to( $multilang ? '/admin/posts?lang='.$lang : '/admin/posts', '<i class="ni ni-single-copy-04"></i> '.__('admin.posts.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+                    $menuAdmin->add( Link::to( $multilang ? '/admin/tags?lang='.$lang : '/admin/tags', '<i class="ni ni-single-copy-04"></i> '.__('admin.tags.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
                 }
                 if($user->hasPermissionTo('upload_media')) {
                     $menuAdmin->add( Link::to( $multilang ? '/admin/medias?lang='.$lang : '/admin/medias', '<i class="ni ni-image"></i> '.__('admin.medias.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
@@ -64,8 +61,18 @@ class GenerateAdminMenu
                 if($user->hasRole('subscriber')) {
                     $menuAdmin->add( Link::to($multilang ? '/admin/users'.'/'.$user->id. '/edit?lang='.$lang : '/admin/users'.'/'.$user->id. '/edit', '<i class="ni ni-circle-08"></i> '.__('admin.users.edit'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
                 }
+        
+        return $menuAdmin;
 
-        view()->share('menuAdmin', $menuAdmin->toHtml());
+    }
+    public function handle(Request $request, Closure $next)
+    {
+
+        // dd($request->user()->hasPermissionTo('create_posts'));
+
+        $menuAdmin = $this->manageMenu();
+        
+        view()->share('menuAdmin', $menuAdmin);
 
         return $next($request);
     }
