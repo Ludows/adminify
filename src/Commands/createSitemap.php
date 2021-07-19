@@ -15,7 +15,9 @@ class createSitemap extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:sitemap';
+    protected $signature = 'generate:sitemap
+    {writeFile?* : Tell if you write the sitemap generated on the disk}
+    {models?* : Array of models for your sitemap generation}';
 
     /**
      * The console command description.
