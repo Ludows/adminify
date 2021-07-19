@@ -23,6 +23,16 @@ return [
         'tags' => \App\Models\Tag::class
     ],
 
+    'sitemap' => [
+        'pages' => 'register.pages',
+        'posts' => 'register.posts',
+        'categories' => 'register.categories',
+        'medias' => 'register.medias'
+    ],
+
+    'shortcodes' => [
+    ],
+
     // menu builder is automatic sync with multilang param.
     'menu-builder' => [
         'models' => [
@@ -133,24 +143,6 @@ return [
         'fallback' => 'request' // if no class form provided . request->all() is intended,
 
     ],
-
-    'sitemap' => [
-        'register.pages',
-        'register.posts',
-        'register.categories',
-        'register.medias'
-    ],
-
-    'shortcodes' => [
-    ],
-
-    // // this key is called when page is fetched for front
-    // 'handleFront' => [
-    //     'models' => [
-
-    //     ],
-    //     'searchType' => 'fillable', // or manual. In manual mode, columns is necessary.
-    // ],
 
     // all routes search are binded to singular route name.
     'listings' => [
