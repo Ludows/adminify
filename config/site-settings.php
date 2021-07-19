@@ -4,7 +4,7 @@ return [
     'multilang' => env('ENABLE_MULTILANG', true), // this use Translatable. Please to verify your migration for correct working..
     'email_admin' => env('EMAIL_ADMIN', 'theartist768@gmail.com'), // For logging errors etc..
     'sender_mail' => env('SENDER_MAIL', 'theartist768@gmail.com'), // email used to send mail
-    'headless' => false, // turn off front routing
+    'headless' => false, // turn off front routing if you want to separate your front or your back
 
     'register' => [
         'categories' => \App\Models\Category::class,
