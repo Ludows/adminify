@@ -16,6 +16,12 @@ require_once('auth.php');
 // Register Admin Routes..
 require_once('admin.php');
 
+// Register Sitemaps..
+require_once('sitemaps.php');
+
+// Register Feeds..
+require_once('feeds.php');
+
 require_once('front.php');
 // require_once('no-multilang.php');
 
