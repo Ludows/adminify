@@ -15,23 +15,25 @@ class SitemapController extends Controller
 
         $slug = $request->slug;
         $configSitemap = get_site_key('sitemap');
-        $classCheck = $configSitemap[$slug];
+        if($slug != null) {
+            $classCheck = $configSitemap[$slug];
+        }
+        else {
+            $classCheck = $configSitemap;
+        }
+
+        if($classCheck == null) {
+            abort('404');
+        }
 
         $params = [
-            'show' => true,
+            'writeFile' => false,
+            'models' => is_array($classCheck) ? $classCheck : [$slug => $classCheck]
         ];
-
-        if($slug == null) {
-
-        }
-
-        if($classCheck != null && $slug != null) {
-            $params['models'] = [$classCheck];
-        }
 
         $output = new BufferedOutput;
 
-        Artisan::call('sitemap', $params, $output);
+        Artisan::call('generate:sitemap', $params, $output);
 
         return $output->fetch();
 

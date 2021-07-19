@@ -44,12 +44,14 @@ class createSitemap extends Command
 
         // create new sitemap object
         $sitemap = app()->make("sitemap");
-        $config = config('site-settings');
+        $sitemap = get_site_key('sitemap');
 
-        foreach ($config['sitemap'] as $model) {
+        $options = $this->options();
+
+        foreach ($options['sitemap'] as $modelName => $modelClass) {
             # code...
 
-            $m = new $model();
+            $m = new $modelClass();
             $all = $m->all();
 
             foreach ($all as $modelData) {
