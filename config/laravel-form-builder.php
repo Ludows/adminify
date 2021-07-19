@@ -73,10 +73,8 @@ return [
 
     'custom_fields' => [
         //
-        'editupload' => 'Ludows\Adminify\Forms\Fields\EditUploadType',
-        'quilleditor' => 'Ludows\Adminify\Forms\Fields\QuillEditorType',
+        'summernote' => 'Ludows\Adminify\Forms\Fields\SummernoteType',
         'select2' => 'Ludows\Adminify\Forms\Fields\Select2Type',
-        'medialibrary' => 'Ludows\Adminify\Forms\Fields\MediaLibraryType',
         'laraberg' => 'Ludows\Adminify\Forms\Fields\LarabergType',
         'generatorPassword' => 'Ludows\Adminify\Forms\Fields\GeneratorPasswordType',
         'lfm' => 'Ludows\Adminify\Forms\Fields\FileManagerType'
