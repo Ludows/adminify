@@ -10,8 +10,10 @@
 
     @if($showField)
         {{-- {{ dd($options['choices']) }} --}}
-        {{-- {!! Form::textarea($name, $options['value'], $options['attr']) !!} --}}
+        {!! Form::hidden($name, $options['value'], $options['attr']) !!}
         <div class="summernote_editor">{!! $options['value'] !!}</div>
+
+
 
         @include('vendor/laravel-form-builder/errors')
         @include('vendor/laravel-form-builder/help_block')
