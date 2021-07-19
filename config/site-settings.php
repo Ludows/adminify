@@ -96,7 +96,7 @@ return [
                 'submit'
             ]
         ],
-        'traduction' => [
+        'translation' => [
             'model' => 'register.traductions',
             'clsForm' => \App\Forms\UpdateTranslation::class,
             'excludes' => [],
