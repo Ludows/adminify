@@ -47,7 +47,7 @@ class createTranslations extends Command
         if($isFront && !$isBack) {
             $traductions = new Traductions();
             $configSite = config('site-settings');
-            $locales = config('laravel-gettext.supported-locales');
+            $locales = $configSite['supported_locales'];
             if($configSite['multilang'] == false) {
                 $locales = ['fr'];
             }
