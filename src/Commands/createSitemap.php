@@ -56,7 +56,7 @@ class createSitemap extends Command
 
         $options = array_merge($this->setDefaults(), $this->options() ?? []);
 
-        foreach ($options['sitemap'] as $modelName => $modelClass) {
+        foreach ($options['models'] as $modelName => $modelClass) {
             # code...
 
             $m = new $modelClass();
