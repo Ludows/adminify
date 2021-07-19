@@ -26,7 +26,7 @@ class SitemapController extends Controller
         }
 
         if($classCheck != null && $slug != null) {
-            $params['model'] = $classCheck;
+            $params['models'] = [$classCheck];
         }
 
         $output = new BufferedOutput;
