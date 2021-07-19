@@ -4,6 +4,8 @@ window.jQuery = window.$ = require('jquery');
 require('select2');
 
 require('bootstrap');
+
+require('summernote');
 // require('bootstra');
 require('./serializeAsObject')
 require('./clearValues')
