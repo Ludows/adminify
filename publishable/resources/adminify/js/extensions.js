@@ -12,12 +12,7 @@ require('./menuThree')
 
 window.Swal = require('sweetalert2');
 
-window.Dropzone = require('dropzone');
-window.Quill = require('quill');
-
 window.Route = require('./Route').default;
-
-Dropzone.autoDiscover = false;
 
 window.admin = {
     select2Fields : [],
