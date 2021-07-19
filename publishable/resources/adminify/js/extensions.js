@@ -21,11 +21,9 @@ Dropzone.autoDiscover = false;
 
 window.admin = {
     select2Fields : [],
-    quillEditorFields: [],
-    mediaLibraryFields: [],
-    editUploadFields : [],
     larabergFields : [],
     generatorPasswordFields: [],
-    lfmFields : []
+    lfmFields : [],
+    summernoteFields : []
 }
 

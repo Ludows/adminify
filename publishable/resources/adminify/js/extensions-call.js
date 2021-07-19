@@ -3,28 +3,16 @@
 //call extensions
 
 window.Select2InitFunction = require('./extensions/select2Field').default;
-window.QuillEditorInitFunction = require('./extensions/quillEditorField').default;
-window.UploadEditInitFunction = require('./extensions/editUploadField').default;
-window.MediaLibraryInitFunction = require('./extensions/mediaLibraryField').default;
 window.LarabergInitFunction = require('./extensions/larabergField').default;
 window.PasswordGeneratorInitFunction = require('./extensions/generatorPasswordField').default;
-window.media_library = require('./MediaLibraryAbstract').default;
 window.lfmInitFunction = require('./extensions/lfmField').default;
+window.summernoteInitFunction = require('./extensions/summernoteField').default;
 
 
 jQuery(document).ready(function($) {
 
     if(window.admin.select2Fields.length > 0) {
         Select2InitFunction(window.admin.select2Fields);
-    }
-    if(window.admin.quillEditorFields.length > 0) {
-        QuillEditorInitFunction(window.admin.quillEditorFields);
-    }
-    if(window.admin.editUploadFields.length > 0) {
-        UploadEditInitFunction(window.admin.editUploadFields);
-    }
-    if(window.admin.mediaLibraryFields.length > 0) {
-        MediaLibraryInitFunction(window.admin.mediaLibraryFields);
     }
     if(window.admin.larabergFields.length > 0) {
         LarabergInitFunction(window.admin.larabergFields);
@@ -34,5 +22,8 @@ jQuery(document).ready(function($) {
     }
     if(window.admin.lfmFields.length > 0) {
         lfmInitFunction(window.admin.lfmFields);
+    }
+    if(window.admin.summernoteFields.length > 0) {
+        summernoteInitFunction(window.admin.summernoteFields);
     }
 })

@@ -10,7 +10,8 @@
 
     @if($showField)
         {{-- {{ dd($options['choices']) }} --}}
-        {!! Form::textarea($name, $options['value'], $options['attr']) !!}
+        {{-- {!! Form::textarea($name, $options['value'], $options['attr']) !!} --}}
+        <div class="summernote_editor">{!! $options['value'] !!}</div>
 
         @include('vendor/laravel-form-builder/errors')
         @include('vendor/laravel-form-builder/help_block')
@@ -25,7 +26,7 @@
 @push('js')
    <script type="text/javascript">
             window.admin.summernoteFields.push({
-                selector: '#{{ $options['sibling'] }}',
+                selector: '{{ $options['sibling'] }}',
                 options: @json($options['summernote_options']),
                 multilang: {!! $useMultilang !!},
                 currentLang: '{!! $currentLang !!}'
