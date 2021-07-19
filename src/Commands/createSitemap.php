@@ -35,7 +35,14 @@ class createSitemap extends Command
     {
         parent::__construct();
     }
+    public function setDefaults() {
+        $sitemap = get_site_key('sitemap');
 
+        return [
+            'models' => array_merge([], $sitemap),
+            'writeFile' => false,
+        ];
+    }
     /**
      * Execute the console command.
      *
@@ -43,18 +50,18 @@ class createSitemap extends Command
      */
     public function handle()
     {
-
-        // create new sitemap object
+         // create new sitemap object
         $sitemap = app()->make("sitemap");
-        $sitemap = get_site_key('sitemap');
+        
 
-        $options = $this->options();
+        $options = array_merge($this->setDefaults(), $this->options() ?? []);
 
         foreach ($options['sitemap'] as $modelName => $modelClass) {
             # code...
 
             $m = new $modelClass();
             $all = $m->all();
+            dump($all);
 
             foreach ($all as $modelData) {
                 # code...
