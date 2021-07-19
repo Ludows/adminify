@@ -58,8 +58,8 @@ class createSitemap extends Command
 
         foreach ($options['models'] as $modelName => $modelClass) {
             # code...
-
-            $m = new $modelClass();
+            $model = get_site_key( $modelClass );
+            $m = new $model();
             $all = $m->all();
             dump($all);
 
