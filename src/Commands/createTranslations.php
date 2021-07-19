@@ -54,7 +54,7 @@ class createTranslations extends Command
             foreach ($locales as $locale) {
                 # code...
                 if($configSite['multilang']) {
-                    $trads_by_lang = $traductions::lang($locale)->all();
+                    $trads_by_lang = $traductions::lang($locale)->get()->all();
                 }
                 else {
                     $trads_by_lang = $traductions->all();
