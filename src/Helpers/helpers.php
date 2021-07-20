@@ -37,11 +37,18 @@ if (! function_exists('parse_shortcode')) {
     }
 }
 
+if(! function_exists('is_linkable_media_model') ) {
+    function is_linkable_media_model($class) {
+        // the relationship model
+        return method_exists($class, 'media');
+    }
+}
+
 if(! function_exists('set_recursive_finder')) {
     function set_recursive_finder($path, $wantedFile, $params = []) {
         $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
-    
-        $ret = $params['startValue']; 
+
+        $ret = $params['startValue'];
         foreach ($rii as $file)
             if ($file->isDir()) {
                 set_recursive_finder($file, $wantedFile, $params);
@@ -50,7 +57,7 @@ if(! function_exists('set_recursive_finder')) {
             if($file->getPathname() == $wantedFile) {
                 $ret = $params['endValue'] ?? $file->getPathname();
             }
-    
+
         return $ret;
     }
 }
@@ -100,9 +107,9 @@ if(! function_exists('is_urlable_model')) {
 if(! function_exists('array_equal')) {
     function array_equal($a, $b) {
         return (
-            is_array($a) 
-            && is_array($b) 
-            && count($a) == count($b) 
+            is_array($a)
+            && is_array($b)
+            && count($a) == count($b)
             && array_diff($a, $b) === array_diff($b, $a)
         );
     }
@@ -119,7 +126,7 @@ if(! function_exists('get_model_by')) {
 if(! function_exists('get_url')) {
     function get_url($class) {
         if(is_urlable_model($class)) {
-            return $class->url;   
+            return $class->url;
         }
     }
 }
@@ -127,7 +134,7 @@ if(! function_exists('get_url')) {
 if(! function_exists('get_urlpath')) {
     function get_urlpath($class) {
         if(is_urlable_model($class)) {
-            return $class->urlpath;   
+            return $class->urlpath;
         }
     }
 }
@@ -140,7 +147,7 @@ if(! function_exists('get_site_key')) {
 
 if(! function_exists('get_missing_translations_routes') ) {
     function get_missing_translations_routes($routeName, $singular, $model, $extraVarsRoute = []) {
-        
+
         $request = request();
 
         $namepace = explode('\\', strtolower( $model->getNameSpace() ) );
@@ -227,7 +234,7 @@ if (! function_exists('render_dropdown')) {
 
 if (! function_exists('check_traductions')) {
     function check_traductions($array) {
-        
+
         foreach ($array as $model) {
             # code...
             if(is_translatable_model($model)) {

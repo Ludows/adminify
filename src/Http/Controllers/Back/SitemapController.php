@@ -5,20 +5,19 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 use Illuminate\Http\Request;
 use Ludows\Adminify\Http\Controllers\Controller;
 
-use Illuminate\Support\Facades\Artisan;
-
-use Symfony\Component\Console\Output\BufferedOutput;
+use Ludows\Adminify\Libs\SitemapRender;
 
 class SitemapController extends Controller
 {
-    public function index(Request $request) {
+    public function index($sitemapPart = null) {
 
-        $slug = $request->slug;
         $configSitemap = get_site_key('sitemap');
-        if($slug != null) {
-            $classCheck = $configSitemap[$slug];
+
+        $classCheck = null;
+        if($sitemapPart != null && array_key_exists($sitemapPart, $configSitemap)) {
+            $classCheck = $configSitemap[$sitemapPart];
         }
-        else {
+        else if($sitemapPart == null) {
             $classCheck = $configSitemap;
         }
 
@@ -28,16 +27,16 @@ class SitemapController extends Controller
 
         $params = [
             'writeFile' => false,
-            'models' => is_array($classCheck) ? $classCheck : [$slug => $classCheck],
+            'modelName' => $sitemapPart ?? null,
+            'models' => is_array($classCheck) ? $classCheck : [$sitemapPart => $classCheck],
             'currentLang' => config('app.locale'),
             'locales' => config('site-settings.supported_locales')
         ];
 
-        $output = new BufferedOutput;
+        $sitemap = new SitemapRender();
+        $sitemap->setOptions($params);
 
-        Artisan::call('generate:sitemap', $params, $output);
-
-        return $output->fetch();
+        return $sitemap->render();
 
     }
 }
