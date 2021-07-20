@@ -57,7 +57,7 @@ class generateFeeds extends Command
                 * The format of the feed.  Acceptable values are 'rss', 'atom', or 'json'.
                 */
                 'format' => 'rss',
-                
+
                 /*
                 * Custom view for the items.
                 *
@@ -79,39 +79,39 @@ class generateFeeds extends Command
                  * [App\Model::class, 'getAllFeedItems', 'parameterName' => 'argument']
                  */
                 'items' => ['App\Feeds\Site', $feedableKey],
-    
+
                 /*
                  * The feed will be available on this url.
                  */
                 'url' => '/feed/'. $feedableKey .'',
-    
+
                 'title' => str_replace('##DATA##', $feedableKey, $feeds['trad']['title']),
                 'description' => str_replace('##DATA##', $feedableKey, $feeds['trad']['description']),
                 'language' => lang(),
-    
+
                 /*
                  * The image to display for the feed.  For Atom feeds, this is displayed as
                  * a banner/logo; for RSS and JSON feeds, it's displayed as an icon.
                  * An empty value omits the image attribute from the feed.
                  */
                 'image' => '',
-    
+
                 /*
                  * The format of the feed.  Acceptable values are 'rss', 'atom', or 'json'.
                  */
                 'format' => 'rss',
-    
+
                 /*
                  * The view that will render the feed.
                  */
                 // 'view' => 'feed::feed',
-    
+
                 /*
                  * The mime type to be used in the <link> tag.  Set to an empty string to automatically
                  * determine the correct value.
                  */
                 'type' => '',
-    
+
                 /*
                  * The content type for the feed response.  Set to an empty string to automatically
                  * determine the correct value.
@@ -120,9 +120,15 @@ class generateFeeds extends Command
             ];
         }
 
+        $str = '<?php
+
+            return '. var_export($array, true) .';
+        ';
+
+        //dd($str);
         // config(['feed' => $feeds]);
-        File::put(config_path('feed.php'), json_encode($feeds, true));
-        
+        File::put(config_path('feed.php'), $str);
+
         return 'ok';
     }
 }
