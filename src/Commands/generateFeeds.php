@@ -7,6 +7,8 @@ use Ludows\Adminify\Models\Translations as Traductions;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 
+use File;
+
 
 class generateFeeds extends Command
 {
@@ -118,7 +120,8 @@ class generateFeeds extends Command
             ];
         }
 
-        config(['feed' => $feeds]);
+        // config(['feed' => $feeds]);
+        File::put(config_path('feed.php'), $feeds);
         
         return 'ok';
     }
