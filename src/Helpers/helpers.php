@@ -388,7 +388,7 @@ if(! function_exists('get_config_feeds')) {
         //          */
         //         'contentType' => '',
         //     ];
-        }
+        // }
 
         return $array;
     }
