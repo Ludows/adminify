@@ -9,7 +9,7 @@ use App\Models\Category;
 use App\Models\Comment;
 
 use VanOns\Laraberg\Models\Gutenbergable;
-use Ludows\Adminify\Traits\SlugUpdate;
+use Ludows\Adminify\Traits\OnBootedModel;
 use Ludows\Adminify\Traits\Urlable;
 use Ludows\Adminify\Traits\Taggable;
 use Spatie\Translatable\HasTranslations;
@@ -25,7 +25,7 @@ class Post extends Model implements Searchable
 {
     use Gutenbergable;
     use HasFactory;
-    use SlugUpdate;
+    use OnBootedModel;
     use Urlable;
     use HasTranslations;
     use HasSeo;

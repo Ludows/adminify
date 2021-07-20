@@ -19,6 +19,8 @@ class Media extends Model
     use Sitemapable;
     use Helpers;
 
+    public $sitemapCallable = 'path';
+
     protected $fillable = [
         'src', //the path you uploaded the image
         'mime_type',

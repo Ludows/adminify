@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use VanOns\Laraberg\Models\Gutenbergable;
-use Ludows\Adminify\Traits\SlugUpdate;
+use Ludows\Adminify\Traits\OnBootedModel;
 use Ludows\Adminify\Traits\Urlable;
 use Spatie\Translatable\HasTranslations;
 use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
@@ -21,7 +21,7 @@ use Spatie\Searchable\SearchResult;
 class Page extends Model implements Searchable
 {
     use Gutenbergable;
-    use SlugUpdate;
+    use OnBootedModel;
     use Urlable;
     use HasSeo;
     use HasFactory;
