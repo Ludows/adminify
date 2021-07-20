@@ -123,4 +123,8 @@
 
           return $a;
      }
+     public function getUrlPathAttribute() {
+        $parts = $this->url;
+        return url( join($parts, ',') );
+     }
   }

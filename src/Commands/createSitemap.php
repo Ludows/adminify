@@ -15,9 +15,11 @@ class createSitemap extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:sitemap 
-        {writeFile : Tell if you write the sitemap generated on the disk} 
-        {models : Array of models for your sitemap generation}';
+    protected $signature = 'generate:sitemap
+        {writeFile : Tell if you write the sitemap generated on the disk}
+        {models : Array of models for your sitemap generation}
+        {currentLang : You can tell currentLang. it is used for multilang}
+        {locales : You can tell your locale list. it is used for multilang}';
 
     /**
      * The console command description.
@@ -41,7 +43,12 @@ class createSitemap extends Command
         return [
             'models' => array_merge([], $sitemap),
             'writeFile' => false,
+            'currentLang' => config('app.locale'),
+            'locales' => config('site-settings.supported_locales') // based on locale
         ];
+    }
+    public function langsExcludingCurrentLang($langs, $current) {
+        return array_diff($langs, [$current]);
     }
     /**
      * Execute the console command.
@@ -52,27 +59,46 @@ class createSitemap extends Command
     {
          // create new sitemap object
         $sitemap = app()->make("sitemap");
-        
+
 
         $options = array_merge($this->setDefaults(), $this->options() ?? []);
+        $othersLangs = $this->langsExcludingCurrentLang($options['locales'], $options['currentLang']);
+        //dd($options, $othersLangs);
 
         foreach ($options['models'] as $modelName => $modelClass) {
             # code...
             $model = get_site_key( $modelClass );
             $m = new $model();
-            $all = $m->all();
-            dump($all);
+            $isTranslatableModel = is_translatable_model($m);
+            $isUrlableModel = is_urlable_model($m);
+            $isMultilang = get_site_key('multilang');
 
-            foreach ($all as $modelData) {
-                # code...
-                //@to be continued
-                if($config['multilang']) {
 
+                if($isTranslatableModel) {
+                    $all = $m->lang($options['currentLang'])->get()->all();
                 }
                 else {
+                    $all = $m->all()->all();
+                }
+
+
+                dump($all);
+
+
+                foreach ($all as $modelObject) {
+                    # code...
+                    //@to be continued
+                    $translations = [];
+                    if($isMultilang) {
+                        foreach ($othersLangs as $l) {
+                            # code...
+                            // $t = $m->getTranslation();
+                        }
+                    }
 
                 }
-            }
+
+
 
         }
 
