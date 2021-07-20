@@ -18,7 +18,7 @@ class InstallPackages extends Command
      * @var string
      */
     protected $signature = 'adminify:install
-        {task?* : Tasks name are npm, coreinstall, migrations, seed, publishes, rollback}
+        {task?* : Tasks name are npm, coreinstall, migrations, seed, publishes, rollback, feeds, routes}
         {--force : Force all tasks}'; //todo
 
     /**
@@ -84,9 +84,24 @@ class InstallPackages extends Command
             $this->handlePublishesPackages();
         }
 
-        if(in_array('*', $cleanedTasks)  || in_array('migrate', $cleanedTasks)) {
-            $this->info('Handle migrations');
-            Artisan::call('migrate');
+        if(in_array('*', $cleanedTasks)  || in_array('feeds', $cleanedTasks)) {
+            $this->info('Handle feeds config generation');
+            Artisan::call('generate:feeds');
+        }
+
+        if(in_array('*', $cleanedTasks)  || in_array('feeds', $cleanedTasks)) {
+            $this->info('Handle feeds config generation');
+            Artisan::call('generate:feeds');
+        }
+
+        if(in_array('*', $cleanedTasks)  || in_array('routes', $cleanedTasks)) {
+            $this->info('Handle route list js');
+            Artisan::call('generate:routes');
+        }
+
+        if(in_array('*', $cleanedTasks)  || in_array('translations', $cleanedTasks)) {
+            $this->info('Handle Translations js');
+            Artisan::call('generate:translations');
         }
 
         //run seeds

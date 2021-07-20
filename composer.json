@@ -68,10 +68,5 @@
         "psr-4": {
             "Ludows\\Adminify\\Tests\\": "tests/"
         }
-    },
-    "scripts": {
-        "post-autoload-dump": [
-            "@php artisan generate:feeds"
-        ]
     }
 }

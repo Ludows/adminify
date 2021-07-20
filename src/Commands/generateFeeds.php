@@ -102,7 +102,7 @@ class generateFeeds extends Command
                 /*
                  * The view that will render the feed.
                  */
-                'view' => 'feed::feed',
+                // 'view' => 'feed::feed',
     
                 /*
                  * The mime type to be used in the <link> tag.  Set to an empty string to automatically
@@ -117,6 +117,8 @@ class generateFeeds extends Command
                 'contentType' => '',
             ];
         }
+
+        config(['feed' => $feeds]);
         
         return 'ok';
     }
