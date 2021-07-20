@@ -8,6 +8,7 @@ use Ludows\Adminify\Commands\TraitGenerator;
 use Ludows\Adminify\Commands\RouteList;
 use Ludows\Adminify\Commands\createTranslations;
 use Ludows\Adminify\Commands\InstallPackages;
+use Ludows\Adminify\Commands\generateFeeds;
 
 use Illuminate\Contracts\Http\Kernel; // add kernel
 
@@ -162,6 +163,7 @@ class AdminifyServiceProvider extends ServiceProvider {
     private function registerCommands() {
         
         $this->commands([
+            generateFeeds::class,
             InstallPackages::class,
             TraitGenerator::class,
             RouteList::class,
