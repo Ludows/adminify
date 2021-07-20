@@ -89,11 +89,6 @@ class InstallPackages extends Command
             Artisan::call('generate:feeds');
         }
 
-        if(in_array('*', $cleanedTasks)  || in_array('feeds', $cleanedTasks)) {
-            $this->info('Handle feeds config generation');
-            Artisan::call('generate:feeds');
-        }
-
         if(in_array('*', $cleanedTasks)  || in_array('routes', $cleanedTasks)) {
             $this->info('Handle route list js');
             Artisan::call('generate:routes');
