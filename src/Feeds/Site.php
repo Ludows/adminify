@@ -7,9 +7,9 @@ use App\Models\Post;
 
 class Site {
     public function all() {
-        $a = Page::all()->all();
-        $b = Post::all()->all();
-        return array_merge($a, $b);
+        $a = Page::all();
+        $b = Post::all();
+        return $a->merge($b);
     }
     public function pages() {
         return Page::all();
