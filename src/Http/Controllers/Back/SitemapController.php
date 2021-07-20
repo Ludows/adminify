@@ -28,7 +28,9 @@ class SitemapController extends Controller
 
         $params = [
             'writeFile' => false,
-            'models' => is_array($classCheck) ? $classCheck : [$slug => $classCheck]
+            'models' => is_array($classCheck) ? $classCheck : [$slug => $classCheck],
+            'currentLang' => config('app.locale'),
+            'locales' => config('site-settings.supported_locales')
         ];
 
         $output = new BufferedOutput;
