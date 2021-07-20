@@ -344,6 +344,20 @@ return array(
         ),
         (object) array(
             'beforePublish' => [],
+            'name' => 'spatie/laravel-feed',
+            'publish' => null,
+            'autoload' => (object) [
+                'providers' => [],
+                'middlewares' => [],
+                'aliases' => []
+            ],
+            'config' => null,
+            'afterPublish' => [
+                'php artisan vendor:publish --provider="Spatie\Feed\FeedServiceProvider" --tag="feed-config"'
+            ],
+        ),
+        (object) array(
+            'beforePublish' => [],
             'name' => 'laravel/sanctum',
             'publish' => (object) [
                 'tag' => false,

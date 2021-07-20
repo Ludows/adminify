@@ -29,6 +29,11 @@ return [
         'medias' => 'register.medias'
     ],
 
+    'feeds' => [
+        'pages' => 'register.pages',
+        'posts' => 'register.posts',
+    ],
+
     'shortcodes' => [
     ],
 
