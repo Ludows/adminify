@@ -124,6 +124,14 @@ if(! function_exists('get_url')) {
     }
 }
 
+if(! function_exists('get_urlpath')) {
+    function get_urlpath($class) {
+        if(is_urlable_model($class)) {
+            return $class->urlpath;   
+        }
+    }
+}
+
 if(! function_exists('get_site_key')) {
     function get_site_key($key = '') {
         return config('site-settings.'.$key);
@@ -226,6 +234,12 @@ if (! function_exists('check_traductions')) {
                 $model->checkForTraduction();
             }
         }
+    }
+}
+
+if (! function_exists('is_sitemapable_model')) {
+    function is_sitemapable_model($class) {
+        return property_exists($class, 'sitemapTitle');
     }
 }
 

@@ -16,6 +16,7 @@ use Spatie\Translatable\HasTranslations;
 use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
 use Ludows\Adminify\Traits\HasSeo;
 use Ludows\Adminify\Traits\Helpers;
+use Ludows\Adminify\Traits\Sitemapable;
 
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
@@ -30,6 +31,7 @@ class Post extends Model implements Searchable
     use HasSeo;
     use MultilangTranslatableSwitch;
     use Taggable;
+    use Sitemapable;
     use Helpers;
 
     public $MultilangTranslatableSwitch = ['title', 'slug', 'content'];

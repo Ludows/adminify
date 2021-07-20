@@ -12,6 +12,7 @@ use Spatie\Translatable\HasTranslations;
 use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
 use Ludows\Adminify\Traits\HasSeo;
 use Ludows\Adminify\Traits\Helpers;
+use Ludows\Adminify\Traits\Sitemapable;
 
 
 use Spatie\Searchable\Searchable;
@@ -26,6 +27,7 @@ class Page extends Model implements Searchable
     use HasFactory;
     use HasTranslations;
     use MultilangTranslatableSwitch;
+    use Sitemapable;
     use Helpers;
 
     public $MultilangTranslatableSwitch = ['title', 'slug', 'content'];

@@ -26,7 +26,6 @@ return [
     'sitemap' => [
         'pages' => 'register.pages',
         'posts' => 'register.posts',
-        'categories' => 'register.categories',
         'medias' => 'register.medias'
     ],
 

@@ -8,12 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Post;
 use Ludows\Adminify\Traits\PathableMedia;
 use Ludows\Adminify\Traits\Helpers;
+use Ludows\Adminify\Traits\Sitemapable;
+
 class Media extends Model
 {
     protected $table = 'medias';
 
     use HasFactory;
     use PathableMedia;
+    use Sitemapable;
     use Helpers;
 
     protected $fillable = [

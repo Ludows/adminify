@@ -63,6 +63,7 @@ class createSitemap extends Command
 
         $options = array_merge($this->setDefaults(), $this->options() ?? []);
         $othersLangs = $this->langsExcludingCurrentLang($options['locales'], $options['currentLang']);
+        $isMultilang = get_site_key('multilang');
         //dd($options, $othersLangs);
 
         foreach ($options['models'] as $modelName => $modelClass) {
@@ -71,7 +72,7 @@ class createSitemap extends Command
             $m = new $model();
             $isTranslatableModel = is_translatable_model($m);
             $isUrlableModel = is_urlable_model($m);
-            $isMultilang = get_site_key('multilang');
+            
 
 
                 if($isTranslatableModel) {
@@ -89,13 +90,16 @@ class createSitemap extends Command
                     # code...
                     //@to be continued
                     $translations = [];
+                    $images = [];
+                    // check translated pages..
                     if($isMultilang) {
                         foreach ($othersLangs as $l) {
                             # code...
                             // $t = $m->getTranslation();
                         }
                     }
-
+                    
+                    $sitemap->add($isUrlableModel ? $modelObject->urlpath : $modelObject->{$modelObject->sitemapCallable} , $modelObject->updated_at, '0.9', 'monthly', $images, $modelObject->sitemapTitle, $translations);
                 }
 
 
