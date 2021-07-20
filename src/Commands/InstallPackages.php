@@ -99,6 +99,12 @@ class InstallPackages extends Command
             Artisan::call('generate:translations');
         }
 
+        
+        if(in_array('*', $cleanedTasks)  || in_array('migrations', $cleanedTasks)) {
+            $this->info('Handle migrations database');
+            Artisan::call('migrate');
+        }
+
         //run seeds
         //exec("php artisan db:seed --class='Ludows\Adminify\Database\Seeders\DatabaseSeeder'");
         if(in_array('*', $cleanedTasks)  || in_array('seed', $cleanedTasks)) {
