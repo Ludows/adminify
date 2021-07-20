@@ -333,7 +333,7 @@ if(! function_exists('get_config_feeds')) {
                 *
                 * Defaults to feed::feed if not present.
                 */
-                'view' => 'feed::feed',
+                // 'view' => 'feed::feed',
             ]
         ];
 
