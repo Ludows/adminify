@@ -121,7 +121,7 @@ class generateFeeds extends Command
         }
 
         // config(['feed' => $feeds]);
-        File::put(config_path('feed.php'), json_encode($feeds));
+        File::put(config_path('feed.php'), json_encode($feeds, true));
         
         return 'ok';
     }
