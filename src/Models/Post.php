@@ -21,7 +21,10 @@ use Ludows\Adminify\Traits\Sitemapable;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
-class Post extends Model implements Searchable
+use Spatie\Feed\Feedable;
+use Spatie\Feed\FeedItem;
+
+class Post extends Model implements Searchable, Feedable
 {
     use Gutenbergable;
     use HasFactory;
@@ -53,6 +56,18 @@ class Post extends Model implements Searchable
            $this->title,
            $url
         );
+    }
+
+    public function toFeedItem(): FeedItem
+    {
+        return FeedItem::create([
+            'id' => $this->id,
+            'title' => $this->title,
+            'summary' => $this->seoWith('description') ?? '',
+            'updated' => $this->updated_at,
+            'link' => $this->urlpath,
+            'authorName' => $this->author,
+        ]);
     }
 
     public function media()
