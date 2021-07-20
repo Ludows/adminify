@@ -321,7 +321,7 @@ if(! function_exists('get_config_feeds')) {
 
                 'url' => '/feeds',
 
-                'title' => __('admin.feed.title'),
+                'title' => str_replace('##DATA##', 'Datas from website !', $feeds['trad']['all']),
 
                 /*
                 * The format of the feed.  Acceptable values are 'rss', 'atom', or 'json'.
@@ -337,7 +337,7 @@ if(! function_exists('get_config_feeds')) {
             ]
         ];
 
-        foreach ($feeds as $feedableKey => $feedableClass) {
+        foreach ($feeds['hydrate'] as $feedableKey) {
             # code...
             $array[$feedableKey] = [
                 /*
@@ -355,8 +355,8 @@ if(! function_exists('get_config_feeds')) {
                  */
                 'url' => '/feed/'. $feedableKey .'',
     
-                'title' => __('admin.feed.title'),
-                'description' => __('admin.feed.description'),
+                'title' => str_replace('##DATA##', $feedableKey, $feeds['trad']['title']),
+                'description' => str_replace('##DATA##', $feedableKey, $feeds['trad']['description']),
                 'language' => lang(),
     
                 /*

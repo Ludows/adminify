@@ -30,8 +30,15 @@ return [
     ],
 
     'feeds' => [
-        'pages' => 'register.pages',
-        'posts' => 'register.posts',
+        'trad' => [
+            'all' => 'All ##DATA##',
+            'title' => "##DATA## Index",
+            'description' => "##DATA## description"
+        ],
+        'hydrate' => [
+            'pages',
+            'posts'
+        ]
     ],
 
     'shortcodes' => [
