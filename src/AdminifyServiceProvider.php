@@ -8,7 +8,6 @@ use Ludows\Adminify\Commands\TraitGenerator;
 use Ludows\Adminify\Commands\RouteList;
 use Ludows\Adminify\Commands\createTranslations;
 use Ludows\Adminify\Commands\InstallPackages;
-use Ludows\Adminify\Commands\createSitemap;
 
 use Illuminate\Contracts\Http\Kernel; // add kernel
 
@@ -167,7 +166,6 @@ class AdminifyServiceProvider extends ServiceProvider {
             TraitGenerator::class,
             RouteList::class,
             createTranslations::class,
-            createSitemap::class
         ]);
     }
 }
