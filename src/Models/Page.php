@@ -53,7 +53,7 @@ class Page extends Model implements Searchable, Feedable
             'summary' => $this->seoWith('description') ?? '',
             'updated' => $this->updated_at,
             'link' => $this->urlpath,
-            'authorName' => $this->author,
+            'authorName' => $this->author->name,
         ]);
     }
 

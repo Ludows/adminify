@@ -317,7 +317,7 @@ if(! function_exists('get_config_feeds')) {
         $feeds = get_site_key('feeds');
         $array = [
             'main' => [
-                'items' => ['App\Feeds', 'all'],
+                'items' => ['App\Feeds\Site', 'all'],
 
                 'url' => '/feeds',
 
@@ -348,7 +348,7 @@ if(! function_exists('get_config_feeds')) {
                  * You can also pass an argument to that method.  Note that their key must be the name of the parameter:             *
                  * [App\Model::class, 'getAllFeedItems', 'parameterName' => 'argument']
                  */
-                'items' => ['App\Feeds', $feedableKey],
+                'items' => ['App\Feeds\Site', $feedableKey],
     
                 /*
                  * The feed will be available on this url.
