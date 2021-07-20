@@ -353,7 +353,8 @@ return array(
             ],
             'config' => null,
             'afterPublish' => [
-                'php artisan vendor:publish --provider="Spatie\Feed\FeedServiceProvider" --tag="feed-config"'
+                'php artisan vendor:publish --provider="Spatie\Feed\FeedServiceProvider" --tag="feed-config"',
+                'php artisan vendor:publish --provider="Spatie\Feed\FeedServiceProvider" --tag="feed-views"'
             ],
         ),
         (object) array(
