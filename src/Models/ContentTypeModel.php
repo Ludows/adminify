@@ -10,7 +10,7 @@ use VanOns\Laraberg\Models\Gutenbergable;
 
 use Ludows\Adminify\Models\ClassicModel; 
 
-class ContentTypeModel extends ClassicModel
+abstract class ContentTypeModel extends ClassicModel
 {
     use Urlable;
     use HasSeo;
