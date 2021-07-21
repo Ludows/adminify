@@ -10,6 +10,7 @@ use Ludows\Adminify\Traits\OnBootedModel;
 use Spatie\Translatable\HasTranslations;
 use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
 use Ludows\Adminify\Traits\Helpers;
+use Ludows\Adminify\Traits\Formidable;
 
 use Spatie\Feed\Feedable;
 
@@ -26,4 +27,5 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     use MultilangTranslatableSwitch;
     // use Sitemapable;
     use Helpers;
+    use Formidable;
 }
