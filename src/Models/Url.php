@@ -2,15 +2,12 @@
 
 namespace Ludows\Adminify\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-use Ludows\Adminify\Traits\Helpers;
-class Url extends Model
+use ClassicModel;
+class Url extends ClassicModel
 {
     protected $table = 'urls';
-    use HasFactory;
-    use Helpers;
+    // use HasFactory;
+    // use Helpers;
     
     protected $fillable = [
         'from_model',

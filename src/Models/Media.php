@@ -2,22 +2,16 @@
 
 namespace Ludows\Adminify\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
 use App\Models\Post;
 use Ludows\Adminify\Traits\PathableMedia;
-use Ludows\Adminify\Traits\Helpers;
-use Ludows\Adminify\Traits\Sitemapable;
 
-class Media extends Model
+use ClassicModel;
+
+class Media extends ClassicModel
 {
     protected $table = 'medias';
-
-    use HasFactory;
+    
     use PathableMedia;
-    use Sitemapable;
-    use Helpers;
 
     public $sitemapCallable = 'path';
 

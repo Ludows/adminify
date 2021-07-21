@@ -1,25 +1,11 @@
 <?php
 
 namespace Ludows\Adminify\Models;
+use ClassicModel;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-use Spatie\Translatable\HasTranslations;
-use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
-use Ludows\Adminify\Traits\OnBootedModel;
-
-
-use Ludows\Adminify\Traits\Helpers;
-
-class Tag extends Model
+class Tag extends ClassicModel
 {
     protected $table = 'tags';
-    use HasFactory;
-    use HasTranslations;
-    use Helpers;
-    use MultilangTranslatableSwitch;
-    use OnBootedModel;
 
     public $MultilangTranslatableSwitch = ['title','slug'];
     

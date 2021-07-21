@@ -15,14 +15,10 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 use Ludows\Adminify\Traits\Helpers;
 
-class Menu extends Model implements Searchable
-{
-    use HasFactory;
-    use OnBootedModel;
-    use HasTranslations;
-    use MultilangTranslatableSwitch;
-    use Helpers;
+use ClassicModel;
 
+class Menu extends ClassicModel
+{
     public $MultilangTranslatableSwitch = ['title', 'slug'];
 
     protected $fillable = [

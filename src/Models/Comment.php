@@ -2,19 +2,10 @@
 
 namespace Ludows\Adminify\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use ClassicModel;
 
-use Spatie\Translatable\HasTranslations;
-use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
-use Ludows\Adminify\Traits\Helpers;
-
-class Comment extends Model
+class Comment extends ClassicModel
 {
-    use HasFactory;
-    use HasTranslations;
-    use MultilangTranslatableSwitch;
-    use Helpers;
     protected $table = 'comments';
 
     public $MultilangTranslatableSwitch = ['comment'];

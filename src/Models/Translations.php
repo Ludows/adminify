@@ -11,12 +11,10 @@ use Ludows\Adminify\Traits\Helpers;
 
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
-class Translations extends Model implements Searchable
+
+use ClassicModel;
+class Translations extends ClassicModel
 {
-    use HasFactory;
-    use HasTranslations;
-    use Helpers;
-    use MultilangTranslatableSwitch;
     public $MultilangTranslatableSwitch = ['text'];
 
     protected $table = 'traductions';

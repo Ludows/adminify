@@ -11,14 +11,9 @@ use Ludows\Adminify\Traits\Urlable;
 use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
 use Ludows\Adminify\Traits\Helpers;
 
-class CustomLink extends Model
+use ClassicModel;
+class CustomLink extends ClassicModel
 {
-    use HasFactory;
-    use OnBootedModel;
-    use HasTranslations;
-    use Helpers;
-    use MultilangTranslatableSwitch;
-
     protected $table = 'custom_links';
 
     public $MultilangTranslatableSwitch = ['title', 'slug'];

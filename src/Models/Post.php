@@ -24,18 +24,11 @@ use Spatie\Searchable\SearchResult;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
 
-class Post extends Model implements Searchable, Feedable
+use ContentTypeModel;
+
+class Post extends ContentTypeModel
 {
-    use Gutenbergable;
-    use HasFactory;
-    use OnBootedModel;
-    use Urlable;
-    use HasTranslations;
-    use HasSeo;
-    use MultilangTranslatableSwitch;
     use Taggable;
-    use Sitemapable;
-    use Helpers;
 
     public $MultilangTranslatableSwitch = ['title', 'slug', 'content'];
 

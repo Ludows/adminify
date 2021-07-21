@@ -10,7 +10,14 @@ use Ludows\Adminify\Traits\OnBootedModel;
 use Spatie\Translatable\HasTranslations;
 use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
 use Ludows\Adminify\Traits\Helpers;
-class BaseModel extends Model
+
+use Spatie\Feed\Feedable;
+use Spatie\Feed\FeedItem;
+
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
+
+class BaseModel extends Model implements Searchable, Feedable
 {
     use HasFactory;
     use OnBootedModel;
@@ -19,4 +26,7 @@ class BaseModel extends Model
     use MultilangTranslatableSwitch;
     // use Sitemapable;
     use Helpers;
+
+    public function getSearchResult(): SearchResult
+    {}
 }

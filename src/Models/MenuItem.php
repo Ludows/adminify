@@ -13,14 +13,9 @@ use App\Models\Menu;
 use App\Models\Media;
 use Ludows\Adminify\Traits\Helpers;
 
-class MenuItem extends Model
+use ClassicModel;
+class MenuItem extends ClassicModel
 {
-    use HasFactory;
-    use OnBootedModel;
-    use HasTranslations;
-    use MultilangTranslatableSwitch;
-    use Helpers;
-
     public $MultilangTranslatableSwitch = ['overwrite_title'];
 
     protected $fillable = [

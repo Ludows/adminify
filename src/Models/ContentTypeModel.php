@@ -2,33 +2,20 @@
 
 namespace Ludows\Adminify\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
-
 use Ludows\Adminify\Traits\Urlable;
-use Ludows\Adminify\Traits\Helpers;
 use Ludows\Adminify\Traits\Sitemapable;
-
-use Spatie\Searchable\Searchable;
-use Spatie\Searchable\SearchResult;
-
-use Spatie\Feed\Feedable;
-use Spatie\Feed\FeedItem;
 use Ludows\Adminify\Traits\HasSeo;
+use VanOns\Laraberg\Models\Gutenbergable;
 
-use App\Models\ClassicModel; 
 
-class ContentTypeModel extends ClassicModel implements Searchable, Feedable
+use ClassicModel; 
+
+class ContentTypeModel extends ClassicModel
 {
-    use HasFactory;
     use Urlable;
     use HasSeo;
     use Sitemapable;
-    use Helpers;
-
-    public function getSearchResult(): SearchResult
-    {}
+    use Gutenbergable;
 
     public function toFeedItem(): FeedItem
     {
