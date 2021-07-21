@@ -26,7 +26,8 @@ class ListingController extends Controller
         $lang = lang();
 
         $columns = $m->getFillable();
-
+        $TableManager = $m->getTableListing();
+        
         if($config['searchType'] == 'fillable') {
             $searchColumns = $m->getFillable();
         }
@@ -61,8 +62,6 @@ class ListingController extends Controller
                 $i++;
             }
         } 
-        
-        $TableManager = $m->getTableListing();
 
         $m = $m->take( $config['limit'] );
 
