@@ -12,10 +12,10 @@ use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
 use Ludows\Adminify\Traits\Helpers;
 
 use Spatie\Feed\Feedable;
-use Spatie\Feed\FeedItem;
 
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use Spatie\Feed\FeedItem;
 
 abstract class ClassicModel extends Model implements Searchable, Feedable
 {

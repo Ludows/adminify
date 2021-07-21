@@ -7,6 +7,7 @@ use Ludows\Adminify\Traits\Sitemapable;
 use Ludows\Adminify\Traits\HasSeo;
 use VanOns\Laraberg\Models\Gutenbergable;
 
+use App\Models\User;
 
 use Ludows\Adminify\Models\ClassicModel; 
 use Spatie\Feed\FeedItem;
@@ -17,6 +18,10 @@ abstract class ContentTypeModel extends ClassicModel
     use HasSeo;
     use Sitemapable;
     use Gutenbergable;
+
+    public function author() {
+        return $this->belongsTo(User::class,'user_id', 'id');
+    }
 
     public function toFeedItem(): FeedItem
     {
