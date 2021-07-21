@@ -22,7 +22,7 @@ class CreatePageTable extends Migration
                 $table->json('content')->nullable();
                 $table->bigInteger('media_id')->default(0)->unsigned();
                 $table->bigInteger('parent_id')->unsigned()->default(0);
-                //$table->json('categories_id'); //@Todo table pivot
+                $table->bigInteger('user_id')->default(0)->unsigned();
             });
         }
         else {
@@ -34,7 +34,7 @@ class CreatePageTable extends Migration
                 $table->json('content')->nullable();
                 $table->bigInteger('media_id')->default(0)->unsigned();
                 $table->bigInteger('parent_id')->unsigned()->default(0);
-                //$table->json('categories_id'); //@Todo table pivot
+                $table->bigInteger('user_id')->default(0)->unsigned();
             });
         }
 

@@ -23,6 +23,7 @@ class CreatePostTable extends Migration
                 $table->json('content')->nullable();
                 $table->boolean('no_comments')->default(false);
                 $table->bigInteger('media_id')->default(0)->unsigned();
+                $table->bigInteger('user_id')->default(0)->unsigned();
             });
         }
         else {
@@ -34,6 +35,7 @@ class CreatePostTable extends Migration
                 $table->json('content')->nullable();
                 $table->boolean('no_comments')->default(false);
                 $table->bigInteger('media_id')->default(0)->unsigned();
+                $table->bigInteger('user_id')->default(0)->unsigned();
             });
         }
 
