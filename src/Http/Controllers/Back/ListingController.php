@@ -27,7 +27,11 @@ class ListingController extends Controller
 
         $columns = $m->getFillable();
         $TableManager = $m->getTableListing();
-        
+        $translatableFields = [];
+        if($is_multilang_model) {
+            $translatableFields = $m->translatable;
+        }
+
         if($config['searchType'] == 'fillable') {
             $searchColumns = $m->getFillable();
         }
@@ -45,7 +49,7 @@ class ListingController extends Controller
             foreach ($searchColumns as $column) {
                 # code...
                 $binding = null;
-                if($is_multilang_model && $useMultilang) {
+                if($is_multilang_model && $useMultilang && in_array($column , $translatableFields)) {
                     $binding = $column.'->'.$lang;
                 }
                 else {
