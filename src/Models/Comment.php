@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Models;
 
-use ClassicModel;
+use Ludows\Adminify\Models\ClassicModel;
 
 class Comment extends ClassicModel
 {

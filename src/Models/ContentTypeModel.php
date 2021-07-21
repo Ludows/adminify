@@ -8,7 +8,7 @@ use Ludows\Adminify\Traits\HasSeo;
 use VanOns\Laraberg\Models\Gutenbergable;
 
 
-use ClassicModel; 
+use Ludows\Adminify\Models\ClassicModel; 
 
 class ContentTypeModel extends ClassicModel
 {

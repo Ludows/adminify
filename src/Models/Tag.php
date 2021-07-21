@@ -1,7 +1,7 @@
 <?php
 
 namespace Ludows\Adminify\Models;
-use ClassicModel;
+use Ludows\Adminify\Models\ClassicModel;
 
 class Tag extends ClassicModel
 {

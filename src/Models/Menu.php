@@ -15,7 +15,7 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 use Ludows\Adminify\Traits\Helpers;
 
-use ClassicModel;
+use Ludows\Adminify\Models\ClassicModel;
 
 class Menu extends ClassicModel
 {

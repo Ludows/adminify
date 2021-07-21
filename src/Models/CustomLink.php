@@ -11,7 +11,7 @@ use Ludows\Adminify\Traits\Urlable;
 use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
 use Ludows\Adminify\Traits\Helpers;
 
-use ClassicModel;
+use Ludows\Adminify\Models\ClassicModel;
 class CustomLink extends ClassicModel
 {
     protected $table = 'custom_links';

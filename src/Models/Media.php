@@ -5,7 +5,7 @@ namespace Ludows\Adminify\Models;
 use App\Models\Post;
 use Ludows\Adminify\Traits\PathableMedia;
 
-use ClassicModel;
+use Ludows\Adminify\Models\ClassicModel;
 
 class Media extends ClassicModel
 {

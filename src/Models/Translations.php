@@ -12,7 +12,7 @@ use Ludows\Adminify\Traits\Helpers;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
-use ClassicModel;
+use Ludows\Adminify\Models\ClassicModel;
 class Translations extends ClassicModel
 {
     public $MultilangTranslatableSwitch = ['text'];

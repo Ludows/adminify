@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Models;
 
 use App\Models\Page;
 
-use ClassicModel;
+use Ludows\Adminify\Models\ClassicModel;
 
 class Settings extends ClassicModel
 {

@@ -24,7 +24,7 @@ use Spatie\Searchable\SearchResult;
 use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
 
-use ContentTypeModel;
+use Ludows\Adminify\Models\ContentTypeModel;
 
 class Post extends ContentTypeModel
 {

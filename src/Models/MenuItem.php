@@ -13,7 +13,7 @@ use App\Models\Menu;
 use App\Models\Media;
 use Ludows\Adminify\Traits\Helpers;
 
-use ClassicModel;
+use Ludows\Adminify\Models\ClassicModel;
 class MenuItem extends ClassicModel
 {
     public $MultilangTranslatableSwitch = ['overwrite_title'];

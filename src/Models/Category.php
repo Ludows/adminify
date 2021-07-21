@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Models;
 
 use App\Models\Post;
 use App\Models\Media;
-use ContentTypeModel;
+use Ludows\Adminify\Models\ContentTypeModel;
 class Category extends ContentTypeModel
 {
     public $MultilangTranslatableSwitch = ['title', 'slug'];
