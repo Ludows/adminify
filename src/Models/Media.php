@@ -11,9 +11,11 @@ use Spatie\Searchable\SearchResult;
 
 class Media extends ClassicModel
 {
-    protected $table = 'medias';
-    
     use PathableMedia;
+
+    protected $table = 'medias';
+
+    public $MultilangTranslatableSwitch = ['alt', 'description'];
 
     public $sitemapCallable = 'path';
 

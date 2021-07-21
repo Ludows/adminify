@@ -13,14 +13,27 @@ class CreateMediaTable extends Migration
      */
     public function up()
     {
-        Schema::create('medias', function (Blueprint $table) {
-            $table->bigIncrements('id')->unsigned();
-            $table->string('src');
-            $table->string('mime_type');
-            $table->string('alt')->nullable();
-            $table->text('description')->nullable();
-            $table->timestamps();
-        });
+        if(config('site-settings.multilang') == true) {
+            Schema::create('medias', function (Blueprint $table) {
+                $table->bigIncrements('id')->unsigned();
+                $table->string('src');
+                $table->string('mime_type');
+                $table->json('alt');
+                $table->json('description');
+                $table->timestamps();
+            });
+        }
+        else {
+            Schema::create('medias', function (Blueprint $table) {
+                $table->bigIncrements('id')->unsigned();
+                $table->string('src');
+                $table->string('mime_type');
+                $table->string('alt')->nullable();
+                $table->text('description')->nullable();
+                $table->timestamps();
+            });
+        }
+        
     }
 
     /**
