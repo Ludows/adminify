@@ -24,18 +24,6 @@ class Page extends ContentTypeModel
         );
     }
 
-    public function toFeedItem()
-    {
-        return FeedItem::create([
-            'id' => $this->id,
-            'title' => $this->title,
-            'summary' => $this->seoWith('description') ?? '',
-            'updated' => $this->updated_at,
-            'link' => $this->urlpath,
-            'authorName' => $this->author->name,
-        ]);
-    }
-
     protected $fillable = [
         'title',
         'slug',
