@@ -17,7 +17,7 @@ use Spatie\Feed\FeedItem;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
-class BaseModel extends Model implements Searchable, Feedable
+class ClassicModel extends Model implements Searchable, Feedable
 {
     use HasFactory;
     use OnBootedModel;
