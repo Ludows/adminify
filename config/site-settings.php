@@ -160,51 +160,15 @@ return [
         'limit' => env('LISTINGS_LIMIT', 5),
         'searchType' => 'fillable', // or manual. In manual mode, columns is necessary.
         'search' => [
-            'media' => [
-                'tableManager' => \Ludows\Adminify\Tables\MediaTable::class,
-                'class' => 'register.medias',
-                'columns' => []
-            ],
-            'post' => [
-                'tableManager' => \Ludows\Adminify\Tables\PostTable::class,
-                'class' => 'register.posts',
-                'columns' => []
-            ],
-            'user' => [
-                'tableManager' => \Ludows\Adminify\Tables\UserTable::class,
-                'class' => 'register.users',
-                'columns' => []
-            ],
-            'menu' => [
-                'tableManager' => \Ludows\Adminify\Tables\MenuTable::class,
-                'class' => 'register.users',
-                'columns' => []
-            ],
-            'page' => [
-                'tableManager' => \Ludows\Adminify\Tables\PageTable::class,
-                'class' => 'register.pages',
-                'columns' => []
-            ],
-            'category' => [
-                'tableManager' => \Ludows\Adminify\Tables\CategoryTable::class,
-                'class' => 'register.categories',
-                'columns' => []
-            ],
-            'comment' => [
-                'tableManager' => \Ludows\Adminify\Tables\CommentTable::class,
-                'class' => 'register.comments',
-                'columns' => []
-            ],
-            'traduction' => [
-                'tableManager' => \Ludows\Adminify\Tables\TranslationTable::class,
-                'class' => 'register.traductions',
-                'columns' => []
-            ],
-            'tag' => [
-                'tableManager' => \Ludows\Adminify\Tables\TagTable::class,
-                'class' => 'register.tags',
-                'columns' => []
-            ]
+            'media' => 'register.medias',
+            'post' => 'register.posts',
+            'user' => 'register.users',
+            'menu' => 'register.users',
+            'page' => 'register.pages',
+            'category' => 'register.categories',
+            'comment' => 'register.comments',
+            'traduction' => 'register.traductions',
+            'tag' => 'register.tags'
         ]
     ],
 

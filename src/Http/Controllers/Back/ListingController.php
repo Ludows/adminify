@@ -19,7 +19,7 @@ class ListingController extends Controller
 
         $datas = $request->all();
 
-        $m_str = get_site_key($config['search'][$datas['singular']]['class']);
+        $m_str = get_site_key($config['search'][$datas['singular']]);
         $m = new $m_str();
         $is_multilang_model = is_translatable_model($m);
         $useMultilang = $request->useMultilang;
@@ -31,7 +31,7 @@ class ListingController extends Controller
             $searchColumns = $m->getFillable();
         }
         else {
-            $searchColumns = $config['search'][$datas['singular']]['columns'];
+            $searchColumns = $m->getColumnsListing();
         }
 
         $search = null;
@@ -68,7 +68,7 @@ class ListingController extends Controller
         $results = $m->get();
 
 
-        $TableManager = $config['search'][$datas['singular']]['tableManager'];
+        $TableManager = $m->getTableListing();
 
         $table = new $TableManager(false); // for disable autohandling
         $table->datas('results', $results); 
