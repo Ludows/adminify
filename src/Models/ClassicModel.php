@@ -26,10 +26,4 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     use MultilangTranslatableSwitch;
     // use Sitemapable;
     use Helpers;
-
-    public function toFeedItem()
-    {}
-
-    public function getSearchResult()
-    {}
 }
