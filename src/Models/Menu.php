@@ -26,7 +26,7 @@ class Menu extends ClassicModel
         'slug',
     ];
 
-    public function getSearchResult()
+    public function getSearchResult() : SearchResult
     {
        $url = route('menus.edit', ['menu' => $this->id]);
 

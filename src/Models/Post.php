@@ -40,7 +40,7 @@ class Post extends ContentTypeModel
         'no_comments'
     ];
 
-    public function getSearchResult()
+    public function getSearchResult() : SearchResult
     {
        $url = route('posts.edit', ['post' => $this->id]);
 

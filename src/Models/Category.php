@@ -16,7 +16,7 @@ class Category extends ContentTypeModel
         'parent_id',
     ];
 
-    public function getSearchResult()
+    public function getSearchResult() : SearchResult
      {
         $url = route('categories.edit', ['category' => $this->id]);
 

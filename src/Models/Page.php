@@ -13,7 +13,7 @@ class Page extends ContentTypeModel
 {
     public $MultilangTranslatableSwitch = ['title', 'slug', 'content'];
 
-    public function getSearchResult()
+    public function getSearchResult() : SearchResult
     {
        $url = route('pages.edit', ['page' => $this->id]);
 
