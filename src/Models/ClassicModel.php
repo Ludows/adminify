@@ -27,6 +27,9 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     // use Sitemapable;
     use Helpers;
 
+    public function toFeedItem(): FeedItem 
+    {}
+
     public function getSearchResult(): SearchResult
     {}
 }
