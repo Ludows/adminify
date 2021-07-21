@@ -20,6 +20,10 @@ class Category extends ContentTypeModel
         'user_id'
     ];
 
+    public function getTableListing() {
+      return \Ludows\Adminify\Tables\CategoryTable::class;
+   }
+
     public function getSearchResult() : SearchResult
      {
         $url = route('categories.edit', ['category' => $this->id]);

@@ -29,6 +29,10 @@ class Media extends ClassicModel
         'user_id'
     ];
 
+    public function getTableListing() {
+        return \Ludows\Adminify\Tables\MediaTable::class;
+    }
+
     public function toFeedItem(): FeedItem {}
     public function getSearchResult() : SearchResult {}
 

@@ -20,6 +20,10 @@ class Page extends ContentTypeModel
         );
     }
 
+    public function getTableListing() {
+        return \Ludows\Adminify\Tables\PageTable::class;
+    }
+
     protected $fillable = [
         'title',
         'slug',

@@ -37,6 +37,10 @@ class Post extends ContentTypeModel
         );
     }
 
+    public function getTableListing() {
+        return \Ludows\Adminify\Tables\UserTable::class;
+    }
+
     public function toFeedItem(): FeedItem {}
 
     public function media()

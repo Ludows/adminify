@@ -14,6 +14,10 @@ class Tag extends ClassicModel
 
     public function toFeedItem(): FeedItem {}
     public function getSearchResult() : SearchResult {}
+
+    public function getTableListing() {
+        return \Ludows\Adminify\Tables\TagTable::class;
+    }
     
     protected $fillable = [
         'title',

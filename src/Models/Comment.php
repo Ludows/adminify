@@ -16,6 +16,10 @@ class Comment extends ClassicModel
     public function toFeedItem(): FeedItem {}
     public function getSearchResult() : SearchResult {}
 
+    public function getTableListing() {
+        return \Ludows\Adminify\Tables\CommentTable::class;
+    }
+
     protected $fillable = [
         'comment',
         'parent_id',

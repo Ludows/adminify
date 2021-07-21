@@ -22,6 +22,10 @@ class Translations extends ClassicModel
         return $query->where('key', $key);
     }
 
+    public function getTableListing() {
+        return \Ludows\Adminify\Tables\TranslationTable::class;
+    }
+
     protected static function makeTranslations($context) {
 
         Artisan::call('generate:translations', [

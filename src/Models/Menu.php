@@ -17,6 +17,10 @@ class Menu extends ClassicModel
         'slug',
     ];
 
+    public function getTableListing() {
+        return \Ludows\Adminify\Tables\MenuTable::class;
+    }
+
     public function getSearchResult() : SearchResult
     {
        $url = route('menus.edit', ['menu' => $this->id]);

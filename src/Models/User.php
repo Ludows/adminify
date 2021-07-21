@@ -15,10 +15,13 @@ use Laravel\Sanctum\HasApiTokens;
 
 use Spatie\Searchable\SearchResult;
 use Spatie\Feed\FeedItem;
+
+use Ludows\Adminify\Traits\Listable;
 class User extends Authenticatable implements Searchable
 {
     use HasFactory, Notifiable, HasApiTokens;
     use HasRoles;
+    use Listable;
 
     /**
      * The attributes that are mass assignable.
@@ -31,6 +34,10 @@ class User extends Authenticatable implements Searchable
         'email',
         'password',
     ];
+
+    public function getTableListing() {
+        return \Ludows\Adminify\Tables\PostTable::class;
+    }
 
     public function getSearchResult() : SearchResult
     {
