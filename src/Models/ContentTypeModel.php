@@ -9,6 +9,7 @@ use VanOns\Laraberg\Models\Gutenbergable;
 
 
 use Ludows\Adminify\Models\ClassicModel; 
+use Spatie\Feed\FeedItem;
 
 abstract class ContentTypeModel extends ClassicModel
 {
@@ -17,7 +18,7 @@ abstract class ContentTypeModel extends ClassicModel
     use Sitemapable;
     use Gutenbergable;
 
-    public function toFeedItem()
+    public function toFeedItem(): FeedItem
     {
         return FeedItem::create([
             'id' => $this->id,
