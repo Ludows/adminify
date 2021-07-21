@@ -4,6 +4,7 @@ namespace Ludows\Adminify\Models;
 
 use App\Models\Post;
 use Ludows\Adminify\Traits\PathableMedia;
+use Ludows\Adminify\Traits\Authorable;
 
 use Ludows\Adminify\Models\ClassicModel;
 use Spatie\Feed\FeedItem;
@@ -12,6 +13,7 @@ use Spatie\Searchable\SearchResult;
 class Media extends ClassicModel
 {
     use PathableMedia;
+    use Authorable;
 
     protected $table = 'medias';
 
