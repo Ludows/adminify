@@ -6,6 +6,7 @@ use Ludows\Adminify\Traits\Urlable;
 use Ludows\Adminify\Traits\Sitemapable;
 use Ludows\Adminify\Traits\HasSeo;
 use VanOns\Laraberg\Models\Gutenbergable;
+use Ludows\Adminify\Traits\Authorable;
 
 use App\Models\User;
 
@@ -18,11 +19,8 @@ abstract class ContentTypeModel extends ClassicModel
     use HasSeo;
     use Sitemapable;
     use Gutenbergable;
-
-    public function author() {
-        return $this->belongsTo(User::class,'user_id', 'id');
-    }
-
+    use Authorable;
+    
     public function toFeedItem(): FeedItem
     {
         return FeedItem::create([
@@ -31,7 +29,7 @@ abstract class ContentTypeModel extends ClassicModel
             'summary' => $this->seoWith('description') ?? '',
             'updated' => $this->updated_at,
             'link' => $this->urlpath,
-            'authorName' => $this->author->name,
+            'authorName' => $this->author->{$this->authorable_column},
         ]);
     }
 }
