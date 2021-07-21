@@ -62,13 +62,14 @@ class ListingController extends Controller
             }
         } 
         
+        $TableManager = $m->getTableListing();
 
         $m = $m->take( $config['limit'] );
 
         $results = $m->get();
 
 
-        $TableManager = $m->getTableListing();
+        // $TableManager = $m->getTableListing();
 
         $table = new $TableManager(false); // for disable autohandling
         $table->datas('results', $results); 
