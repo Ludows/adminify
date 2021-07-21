@@ -26,6 +26,7 @@ class Page extends ContentTypeModel
         'content',
         'media_id',
         'parent_id',
+        'user_id'
     ];
     public function media()
     {

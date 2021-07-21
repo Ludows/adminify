@@ -26,6 +26,7 @@ class Media extends ClassicModel
         'mime_type',
         'description',
         'alt',
+        'user_id'
     ];
 
     public function toFeedItem(): FeedItem {}

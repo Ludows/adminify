@@ -17,6 +17,7 @@ class Category extends ContentTypeModel
         'media_id',
         'slug',
         'parent_id',
+        'user_id'
     ];
 
     public function getSearchResult() : SearchResult

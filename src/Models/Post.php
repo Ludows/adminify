@@ -22,7 +22,8 @@ class Post extends ContentTypeModel
         'slug',
         'content',
         'media_id',
-        'no_comments'
+        'no_comments',
+        'user_id'
     ];
 
     public function getSearchResult() : SearchResult
