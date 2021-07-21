@@ -6,6 +6,8 @@ use App\Models\Post;
 use Ludows\Adminify\Traits\PathableMedia;
 
 use Ludows\Adminify\Models\ClassicModel;
+use Spatie\Feed\FeedItem;
+use Spatie\Searchable\SearchResult;
 
 class Media extends ClassicModel
 {
@@ -21,6 +23,9 @@ class Media extends ClassicModel
         'description',
         'alt',
     ];
+
+    public function toFeedItem(): FeedItem {}
+    public function getSearchResult() : SearchResult {}
 
     public function getPathAttribute() {
         return $this->getFullPath($this->src) . '/' . $this->src;
