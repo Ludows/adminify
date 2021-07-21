@@ -17,11 +17,13 @@ use Spatie\Searchable\SearchResult;
 use Spatie\Feed\FeedItem;
 
 use Ludows\Adminify\Traits\Listable;
+use Ludows\Adminify\Traits\Helpers;
 class User extends Authenticatable implements Searchable
 {
     use HasFactory, Notifiable, HasApiTokens;
     use HasRoles;
     use Listable;
+    use Helpers;
 
     /**
      * The attributes that are mass assignable.
