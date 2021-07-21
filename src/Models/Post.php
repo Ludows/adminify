@@ -40,7 +40,7 @@ class Post extends ContentTypeModel
         'no_comments'
     ];
 
-    public function getSearchResult(): SearchResult
+    public function getSearchResult()
     {
        $url = route('posts.edit', ['post' => $this->id]);
 
@@ -51,7 +51,7 @@ class Post extends ContentTypeModel
         );
     }
 
-    public function toFeedItem(): FeedItem
+    public function toFeedItem()
     {
         return FeedItem::create([
             'id' => $this->id,

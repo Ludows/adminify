@@ -31,7 +31,7 @@ class User extends Authenticatable implements Searchable
         'password',
     ];
 
-    public function getSearchResult(): SearchResult
+    public function getSearchResult()
     {
        $url = route('users.edit', ['user' => $this->id]);
 

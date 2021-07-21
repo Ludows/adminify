@@ -13,7 +13,7 @@ class Page extends ContentTypeModel
 {
     public $MultilangTranslatableSwitch = ['title', 'slug', 'content'];
 
-    public function getSearchResult(): SearchResult
+    public function getSearchResult()
     {
        $url = route('pages.edit', ['page' => $this->id]);
 
@@ -24,7 +24,7 @@ class Page extends ContentTypeModel
         );
     }
 
-    public function toFeedItem(): FeedItem
+    public function toFeedItem()
     {
         return FeedItem::create([
             'id' => $this->id,

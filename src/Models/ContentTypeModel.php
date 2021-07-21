@@ -17,7 +17,7 @@ abstract class ContentTypeModel extends ClassicModel
     use Sitemapable;
     use Gutenbergable;
 
-    public function toFeedItem(): FeedItem
+    public function toFeedItem()
     {
         return FeedItem::create([
             'id' => $this->id,

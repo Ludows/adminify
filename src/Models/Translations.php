@@ -36,7 +36,7 @@ class Translations extends ClassicModel
 
     }
 
-    public function getSearchResult(): SearchResult
+    public function getSearchResult()
     {
        $url = route('traductions.edit', ['traduction' => $this->id]);
 
