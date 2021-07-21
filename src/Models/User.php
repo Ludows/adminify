@@ -11,9 +11,10 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Models\Media;
 
 use Spatie\Searchable\Searchable;
-use Spatie\Searchable\SearchResult;
 use Laravel\Sanctum\HasApiTokens;
 
+use Spatie\Searchable\SearchResult;
+use Spatie\Feed\FeedItem;
 class User extends Authenticatable implements Searchable
 {
     use HasFactory, Notifiable, HasApiTokens;
@@ -41,6 +42,8 @@ class User extends Authenticatable implements Searchable
            $url
         );
     }
+
+    public function toFeedItem(): FeedItem {}
 
     protected $guarded = [];
 

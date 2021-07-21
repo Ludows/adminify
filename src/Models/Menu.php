@@ -2,18 +2,9 @@
 
 namespace Ludows\Adminify\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-use Ludows\Adminify\Traits\OnBootedModel;
-use Spatie\Translatable\HasTranslations;
-use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
-
 use App\Models\MenuItem;
-
-use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
-use Ludows\Adminify\Traits\Helpers;
+use Spatie\Feed\FeedItem;
 
 use Ludows\Adminify\Models\ClassicModel;
 
@@ -36,6 +27,8 @@ class Menu extends ClassicModel
            $url
         );
     }
+
+    public function toFeedItem(): FeedItem {}
 
     public function scopeId($query, $id) {
         return $query->where('id', $id);

@@ -4,11 +4,17 @@ namespace Ludows\Adminify\Models;
 
 use Ludows\Adminify\Models\ClassicModel;
 
+use Spatie\Searchable\SearchResult;
+use Spatie\Feed\FeedItem;
+
 class Comment extends ClassicModel
 {
     protected $table = 'comments';
 
     public $MultilangTranslatableSwitch = ['comment'];
+
+    public function toFeedItem(): FeedItem {}
+    public function getSearchResult() : SearchResult {}
 
     protected $fillable = [
         'comment',

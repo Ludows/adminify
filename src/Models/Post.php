@@ -2,27 +2,12 @@
 
 namespace Ludows\Adminify\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 use App\Models\Category;
 use App\Models\Comment;
 
-use VanOns\Laraberg\Models\Gutenbergable;
-use Ludows\Adminify\Traits\OnBootedModel;
-use Ludows\Adminify\Traits\Urlable;
-use Ludows\Adminify\Traits\Taggable;
-use Spatie\Translatable\HasTranslations;
-use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
-use Ludows\Adminify\Traits\HasSeo;
-use Ludows\Adminify\Traits\Helpers;
-use Ludows\Adminify\Traits\Sitemapable;
-
-use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
-
-use Spatie\Feed\Feedable;
 use Spatie\Feed\FeedItem;
+use Ludows\Adminify\Traits\Taggable;
 
 use Ludows\Adminify\Models\ContentTypeModel;
 
@@ -50,6 +35,8 @@ class Post extends ContentTypeModel
            $url
         );
     }
+
+    public function toFeedItem(): FeedItem {}
 
     public function media()
     {

@@ -2,16 +2,10 @@
 
 namespace Ludows\Adminify\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-use Ludows\Adminify\Traits\OnBootedModel;
-use Spatie\Translatable\HasTranslations;
-use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
-
 use App\Models\Menu;
 use App\Models\Media;
-use Ludows\Adminify\Traits\Helpers;
+use Spatie\Searchable\SearchResult;
+use Spatie\Feed\FeedItem;
 
 use Ludows\Adminify\Models\ClassicModel;
 class MenuItem extends ClassicModel
@@ -27,6 +21,9 @@ class MenuItem extends ClassicModel
         'class',
         'open_new_tab'
     ];
+
+    public function toFeedItem(): FeedItem {}
+    public function getSearchResult() : SearchResult {}
 
     public function media()
     {

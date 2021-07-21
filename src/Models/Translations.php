@@ -2,15 +2,9 @@
 
 namespace Ludows\Adminify\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\Translatable\HasTranslations;
-use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
 use Illuminate\Support\Facades\Artisan;
-use Ludows\Adminify\Traits\Helpers;
-
-use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use Spatie\Feed\FeedItem;
 
 use Ludows\Adminify\Models\ClassicModel;
 class Translations extends ClassicModel
@@ -36,7 +30,7 @@ class Translations extends ClassicModel
 
     }
 
-    public function getSearchResult()
+    public function getSearchResult() : SearchResult
     {
        $url = route('traductions.edit', ['traduction' => $this->id]);
 
@@ -46,6 +40,8 @@ class Translations extends ClassicModel
            $url
         );
     }
+
+    public function toFeedItem(): FeedItem {}
 
     protected static function booted()
     {

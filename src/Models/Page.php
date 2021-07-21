@@ -2,11 +2,7 @@
 
 namespace Ludows\Adminify\Models;
 
-use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
-
-use Spatie\Feed\Feedable;
-use Spatie\Feed\FeedItem;
 
 use Ludows\Adminify\Models\ContentTypeModel;
 class Page extends ContentTypeModel

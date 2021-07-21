@@ -2,14 +2,8 @@
 
 namespace Ludows\Adminify\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-use Ludows\Adminify\Traits\OnBootedModel;
-use Spatie\Translatable\HasTranslations;
-use Ludows\Adminify\Traits\Urlable;
-use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
-use Ludows\Adminify\Traits\Helpers;
+use Spatie\Searchable\SearchResult;
+use Spatie\Feed\FeedItem;
 
 use Ludows\Adminify\Models\ClassicModel;
 class CustomLink extends ClassicModel
@@ -17,6 +11,9 @@ class CustomLink extends ClassicModel
     protected $table = 'custom_links';
 
     public $MultilangTranslatableSwitch = ['title', 'slug'];
+
+    public function toFeedItem(): FeedItem {}
+    public function getSearchResult() : SearchResult {}
 
     protected $fillable = [
         'title',

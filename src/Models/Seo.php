@@ -2,6 +2,9 @@
 
 namespace Ludows\Adminify\Models;
 
+use Spatie\Searchable\SearchResult;
+use Spatie\Feed\FeedItem;
+
 use Ludows\Adminify\Models\ClassicModel;
 
 class Seo extends ClassicModel
@@ -17,6 +20,8 @@ class Seo extends ClassicModel
         'data',
     ];
 
+    public function toFeedItem(): FeedItem {}
+    public function getSearchResult() : SearchResult {}
 
     public function scopeType($query, $type) {
         return $query->where('type', $type);

@@ -5,6 +5,9 @@ namespace Ludows\Adminify\Models;
 use App\Models\Post;
 use App\Models\Media;
 use Ludows\Adminify\Models\ContentTypeModel;
+
+use Spatie\Searchable\SearchResult;
+use Spatie\Feed\FeedItem;
 class Category extends ContentTypeModel
 {
     public $MultilangTranslatableSwitch = ['title', 'slug'];
@@ -26,6 +29,7 @@ class Category extends ContentTypeModel
             $url
          );
      }
+   public function toFeedItem(): FeedItem {}
    public function media() {
       return $this->belongsTo(Media::class,'media_id', 'id');
    }
