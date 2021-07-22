@@ -2,16 +2,10 @@
 
 namespace Ludows\Adminify\Models;
 
-use Ludows\Adminify\Models\ClassicModel;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles;
+use Ludows\Adminify\Models\ClassicAuthUser;
 
-use Laravel\Sanctum\HasApiTokens;
+use Spatie\Feed\Feedable;
 
-
-abstract class ClassicUser extends ClassicModel
-{
-    use Notifiable, HasApiTokens;
-    use HasRoles;
-}
+use Spatie\Searchable\Searchable;
+abstract class ClassicUser extends ClassicAuthUser implements Searchable, Feedable
+{}

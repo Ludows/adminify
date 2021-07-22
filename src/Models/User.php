@@ -2,16 +2,15 @@
 
 namespace Ludows\Adminify\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-
 use App\Models\Media;
 
 use Spatie\Searchable\SearchResult;
 use Spatie\Feed\FeedItem;
 
 use Ludows\Adminify\Models\ClassicUser;
+
 class User extends ClassicUser
-{
+{    
     public $searchable_label = 'name';
 
     /**
