@@ -18,6 +18,8 @@ use Ludows\Adminify\Traits\Formidable;
 use Ludows\Adminify\Traits\Listable;
 use Ludows\Adminify\Traits\Searchables;
 
+use Illuminate\Support\Facades\DB;
+
 
 abstract class ClassicAuthUser extends Authenticatable implements MustVerifyEmail
 {
@@ -34,4 +36,19 @@ abstract class ClassicAuthUser extends Authenticatable implements MustVerifyEmai
     use Formidable;
     use Listable;
     use Searchables;
+
+    public function getRolesAttribute() {
+        $config = config('permissions.table_names.model_has_roles');
+        $roleModel = app('Spatie\Permission\Models\Role');
+        $pivotResults = DB::select('select * from '. $config .' where model_id = '. $this->id .'  and where model_name = App\Models\User');
+
+        $a = collect();
+
+        foreach ($pivotResults as $result) {
+            # code...
+            $a->push( $roleModel->find($result->role_id) );
+        }
+
+        return $a;
+    }
 }

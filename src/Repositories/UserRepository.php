@@ -28,6 +28,8 @@ class UserRepository
     }
     public function create($form, $request) {
         $formValues = $form->getFieldValues();
+        $roles = $formValues['roles'];
+        unset($formValues['roles']);
 
         if(isset($formValues['password'])) {
             $formValues['password'] = Hash::make($formValues['password']);
@@ -44,13 +46,21 @@ class UserRepository
             }
         }
 
+
         $user = User::create($formValues);
+
+        if(isset($roles)) {
+            $user->assignRole($roles);
+        }
+
         $user->save();
 
         return $user;
     }
     public function update($form, $request, $model) {
         $formValues = $form->getFieldValues();
+        $roles = $formValues['roles'];
+        unset($formValues['roles']);
 
         if(!Hash::check($formValues['password'], $model->password)) {
             $formValues['password'] = Hash::make($formValues['password']);
@@ -71,6 +81,11 @@ class UserRepository
         }
 
         $model->fill($formValues);
+
+        if(isset($roles)) {
+            $model->syncRoles($roles);
+        }
+
         $model->save();
 
         return $model;
