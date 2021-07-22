@@ -82,12 +82,19 @@ class CreatePage extends Form
         $statuses = app('App\Models\Statuses')->all()->pluck('name' ,'id');
         $selecteds = [];
 
+        $statuses = $statuses->all();
+
+        foreach ($statuses as $statusId => $status) {
+            # code...
+            $statuses[$statusId] = __('admin.statuses.'.$status);
+        }
+
         if(isset($hasModel->status)) {
             // on a une selection
             $selecteds = $hasModel->status()->get()->pluck('id')->all();
         }
 
-        return [ 'statuses' => $statuses->all(), 'selected' => $selecteds];
+        return [ 'statuses' => $statuses, 'selected' => $selecteds];
     }
     public function hydrateSelect() {
         $categories = '';
