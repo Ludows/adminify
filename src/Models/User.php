@@ -38,7 +38,7 @@ class User extends Authenticatable implements Searchable
     ];
 
     public function getTableListing() {
-        return \Ludows\Adminify\Tables\PostTable::class;
+        return \Ludows\Adminify\Tables\UserTable::class;
     }
 
     public function getSearchResult() : SearchResult
