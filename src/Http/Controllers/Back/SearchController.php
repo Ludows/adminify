@@ -27,7 +27,7 @@ class SearchController extends Controller
 
                 $labels[$nameModel] = $m->searchable_label;
 
-                $searchResults->registerModel($m, $m->searchable_label );
+                $searchResults->registerModel($m_str, $m->searchable_label );
             }
 
             $searchResults->limitAspectResults($config['limit']);
