@@ -15,12 +15,19 @@ class SearchController extends Controller
         $config = config('site-settings.searchable.admin');
 
         $searchResults = (new Search());
+
+        $labels = [];
         
         if($config) {
             
             foreach ($config['models'] as $nameModel => $classModel) {
                 # code...
-                $searchResults->registerModel(get_site_key($classModel), $config['labels'][$nameModel] );
+                $m_str = get_site_key($classModel);
+                $m = new $m_str();
+
+                $labels[$nameModel] = $m->searchable_label;
+
+                $searchResults->registerModel($m, $config['labels'][$nameModel] );
             }
 
             $searchResults->limitAspectResults($config['limit']);
@@ -33,7 +40,7 @@ class SearchController extends Controller
             'response' => $searchResults->groupByType(),
             'count' => $searchResults->count(),
             'status' => 'OK',
-            'labels' => $config['labels']
+            'labels' => $labels
         ];
 
         return response()->json($a);

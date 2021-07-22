@@ -13,6 +13,8 @@ class Translations extends ClassicModel
 
     protected $table = 'traductions';
 
+    public $searchable_label = 'key';
+
     protected $fillable = [
         'key',
         'text'

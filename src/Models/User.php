@@ -18,12 +18,17 @@ use Spatie\Feed\FeedItem;
 
 use Ludows\Adminify\Traits\Listable;
 use Ludows\Adminify\Traits\Helpers;
+use Ludows\Adminify\Traits\Helpers;
+use Ludows\Adminify\Traits\Searchables;
 class User extends Authenticatable implements Searchable
 {
     use HasFactory, Notifiable, HasApiTokens;
     use HasRoles;
     use Listable;
     use Helpers;
+    use Searchables;
+
+    public $searchable_label = 'name';
 
     /**
      * The attributes that are mass assignable.
