@@ -12,9 +12,6 @@ use Spatie\Feed\FeedItem;
 use Ludows\Adminify\Models\ClassicUser;
 class User extends ClassicUser
 {
-    use HasFactory, Notifiable, HasApiTokens;
-    use HasRoles;
-
     public $searchable_label = 'name';
 
     /**
