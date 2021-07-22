@@ -23,7 +23,8 @@ class Post extends ContentTypeModel
         'content',
         'media_id',
         'no_comments',
-        'user_id'
+        'user_id',
+        'status_id'
     ];
 
     public function getSearchResult() : SearchResult

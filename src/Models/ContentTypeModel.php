@@ -20,7 +20,25 @@ abstract class ContentTypeModel extends ClassicModel
     use Sitemapable;
     use Gutenbergable;
     use Authorable;
+
+    public $statuses = [
+        'published',
+        'draft',
+        'trash'
+    ];
     
+    public function statusScope($query, $key, $operator = '=') {
+        return $query->where('status_id', $operator, $key);
+    }
+    public function isPublished() {
+        return $this->status_id = 1;
+    }
+    public function isDrafted() {
+        return $this->status_id = 2;
+    }
+    public function isTrashed() {
+        return $this->status_id = 3;
+    }
     public function toFeedItem(): FeedItem
     {
         return FeedItem::create([

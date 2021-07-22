@@ -23,6 +23,8 @@ class CreatePageTable extends Migration
                 $table->bigInteger('media_id')->default(0)->unsigned();
                 $table->bigInteger('parent_id')->unsigned()->default(0);
                 $table->bigInteger('user_id')->default(0)->unsigned();
+                $table->bigInteger('status_id')->unsigned();
+
             });
         }
         else {
@@ -35,6 +37,7 @@ class CreatePageTable extends Migration
                 $table->bigInteger('media_id')->default(0)->unsigned();
                 $table->bigInteger('parent_id')->unsigned()->default(0);
                 $table->bigInteger('user_id')->default(0)->unsigned();
+                $table->bigInteger('status_id')->unsigned();
             });
         }
 
