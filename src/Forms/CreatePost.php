@@ -66,6 +66,12 @@ class CreatePost extends Form
                 'label' => __('admin.form.no_comments'),
             ]);
             
+            $this->add('user_id', 'hidden', [
+                'attr' => [
+                    'value' => user()
+                ]
+            ]);
+
             $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
 

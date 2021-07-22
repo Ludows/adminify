@@ -20,6 +20,11 @@ class CreateMedia extends Form
         ->add('src', 'lfm', [
             'label_show' => false
         ])
+        ->add('user_id', 'hidden', [
+            'attr' => [
+                'value' => user()
+            ]
+        ])
         ->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
 }

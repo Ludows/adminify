@@ -41,6 +41,11 @@ class CreateCategory extends Form
                     'placeholder' => __('admin.select_parentcategory')
                 ]
             ]);
+            $this->add('user_id', 'hidden', [
+                'attr' => [
+                    'value' => user()
+                ]
+            ]);
         // }
         $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
