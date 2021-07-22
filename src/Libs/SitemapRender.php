@@ -102,7 +102,10 @@ class SitemapRender
                     }
 
                     //$loc, $lastmod = null, $priority = null, $freq = null, $images = [], $title = null, $translations = [], $videos = [], $googlenews = [], $alternates = []
-                    $sitemap->add($isUrlableModel ? $modelObject->urlpath : $modelObject->{$modelObject->sitemapCallable} , $modelObject->updated_at, '0.9', 'monthly', $images, $modelObject->sitemapTitle, $translations);
+                    $fullpath = $modelObject->urlpath;
+                    if($fullpath != null) {
+                        $sitemap->add($isUrlableModel ? $modelObject->urlpath : $modelObject->{$modelObject->sitemapCallable} , $modelObject->updated_at, '0.9', 'monthly', $images, $modelObject->sitemapTitle, $translations);
+                    }
                 }
 
                 if($options['writeFile'] && $options['modelName'] != null) {
