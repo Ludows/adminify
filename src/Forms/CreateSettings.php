@@ -51,12 +51,12 @@ class CreateSettings extends Form
         ->add('no_comments', 'checkbox', [
             'label_show' => true,
             'label' => __('admin.form.no_comments'),
-            'value' => $this->getSetting('no_comments') != null ? 1 : 0
+            'value' => $this->getSetting('no_comments') != null ? 0 : 1
         ])
         ->add('no_seo', 'checkbox', [
             'label_show' => true,
             'label' => __('admin.form.no_seo'),
-            'value' => $this->getSetting('no_seo') != null ? 1 : 0
+            'value' => $this->getSetting('no_seo') != null ? 0 : 1
         ]);
 
         $this->add('submit', 'submit', ['label' => _('admin.save'), 'attr' => ['class' => 'btn btn-default']]);
