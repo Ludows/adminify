@@ -15,7 +15,7 @@
     protected static function loadGenerateSitemap($context) {
         $s = app()->make('Ludows\Adminify\Libs\SitemapRender');
         $s->setOptions([
-            'models' => [$context->getTableName() => 'register.'.$context->getTableName()],
+            'models' => [$context->getTable() => 'register.'.$context->getTable()],
             'modelName' => $context->getTableName(),
             'writeFile' => true,
         ]);
