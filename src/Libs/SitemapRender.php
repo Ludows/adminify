@@ -42,14 +42,14 @@ class SitemapRender
         $othersLangs = $this->langsExcludingCurrentLang($options['locales'], $options['currentLang']);
         $isMultilang = get_site_key('multilang');
 
-        if($options['modelName'] == null) {
+        if($options['modelName'] == null && $options['writeFile'] == false) {
                 $sitemap->setCache('laravel.sitemap', 5);
         }
 
         foreach ($options['models'] as $modelName => $modelClass) {
             # code...
 
-            if($options['modelName'] != null) {
+            if($options['modelName'] != null && $options['writeFile'] == false) {
                 $sitemap->setCache('laravel.sitemap.'.$options['modelName'], 5);
             }
             if (!$sitemap->isCached()) {
