@@ -16,7 +16,7 @@
         $s = app()->make('Ludows\Adminify\Libs\SitemapRender');
         $s->setOptions([
             'models' => [$context->getTable() => 'register.'.$context->getTable()],
-            'modelName' => $context->getTableName(),
+            'modelName' => $context->getTable(),
             'writeFile' => true,
         ]);
         $s->render();
