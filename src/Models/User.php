@@ -18,7 +18,6 @@ use Spatie\Feed\FeedItem;
 
 use Ludows\Adminify\Traits\Listable;
 use Ludows\Adminify\Traits\Helpers;
-use Ludows\Adminify\Traits\Helpers;
 use Ludows\Adminify\Traits\Searchables;
 class User extends Authenticatable implements Searchable
 {
