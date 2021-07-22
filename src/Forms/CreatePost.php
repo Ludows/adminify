@@ -99,7 +99,7 @@ class CreatePost extends Form
     }
     public function getStatuses() {
         $hasModel = $this->getModel();
-        $statuses = $this->app('App\Models\Statuses')->all()->pluck('name' ,'id');
+        $statuses = app('App\Models\Statuses')->all()->pluck('name' ,'id');
         $selecteds = [];
 
         if(isset($hasModel->status)) {
