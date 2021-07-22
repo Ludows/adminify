@@ -26,9 +26,9 @@ class CreateSettings extends Form
             'label' => __('admin.form.site_slogan'),
             'value' => $this->getSetting('site_slogan')
         ])
-        ->add('logo_src', 'lfm', [
+        ->add('logo_id', 'lfm', [
             'label_show' => false,
-            'value' => $this->getSetting('logo_src')
+            'value' => $this->getMedia( $this->getSetting('logo_id') ?? 0 ) 
         ])
         ->add('homepage', 'select2', [
             'empty_value' => _('admin.select_homepage'),
@@ -87,5 +87,10 @@ class CreateSettings extends Form
         $query = $query->first();
 
         return $typed == 'val' && $query != null ? $query->data : $query;
+    }
+    public function getMedia($id) {
+        $mediaModel = app()->make('App\Model\Media');
+
+        return $mediaModel->find($id);
     }
 }
