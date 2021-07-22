@@ -68,7 +68,7 @@ class CreatePost extends Form
             
             $this->add('user_id', 'hidden', [
                 'attr' => [
-                    'value' => user()
+                    'value' => user()->id
                 ]
             ]);
 

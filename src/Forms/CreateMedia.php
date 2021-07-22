@@ -22,7 +22,7 @@ class CreateMedia extends Form
         ])
         ->add('user_id', 'hidden', [
             'attr' => [
-                'value' => user()
+                'value' => user()->id
             ]
         ])
         ->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
