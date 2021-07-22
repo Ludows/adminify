@@ -38,9 +38,11 @@ abstract class ClassicAuthUser extends Authenticatable implements MustVerifyEmai
     use Searchables;
 
     public function getRolesAttribute() {
-        $config = config('permissions.table_names.model_has_roles');
+        $table = config('permissions.table_names.model_has_roles');
         $roleModel = app('Spatie\Permission\Models\Role');
-        $pivotResults = DB::select('select * from '. $config .' where model_id = '. $this->id .'  and where model_name = App\Models\User');
+        $pivotResults = DB::Table($table)
+        ->where('model_id', $this->id)
+        ->where('model_name', 'App\Models\User');
 
         $a = collect();
 
