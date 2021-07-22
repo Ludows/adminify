@@ -16,6 +16,7 @@ class CreatePage extends Form
         $hydratorPages = $this->hydrateSelectPage();
         $m = $this->getModel();
         $r = $this->getRequest();
+        $statuses = $this->getStatuses();
         // $translations = $m->translations;
 
         $this
@@ -34,6 +35,18 @@ class CreatePage extends Form
                 'select2options' => [
                     'placeholder' => __('admin.select_category'),
                     'multiple' => true,
+                    'width' => '100%'
+                ]
+            ])
+            ->add('status_id', 'select2', [
+                'empty_value' => '',
+                'choices' => $statuses['statuses'],
+                'selected' => $statuses['selected'],
+                'attr' => [],
+                'label' => __('admin.form.statuses'),
+                'select2options' => [
+                    'placeholder' => __('admin.statuses'),
+                    'multiple' => false,
                     'width' => '100%'
                 ]
             ])
@@ -63,6 +76,18 @@ class CreatePage extends Form
                 'value' => user()->id
             ])       
             ->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
+    }
+    public function getTags() {
+        $hasModel = $this->getModel();
+        $tags = Tag::get()->pluck('title' ,'id');
+        $selecteds = '';
+
+        if(isset($hasModel->tags) && count($hasModel->tags->all()) > 0) {
+            // on a une selection
+            $selecteds = $hasModel->tags()->get()->pluck('id')->all();
+        }
+
+        return [ 'tags' => $tags->all(), 'selected' => $selecteds];
     }
     public function hydrateSelect() {
         $categories = '';
