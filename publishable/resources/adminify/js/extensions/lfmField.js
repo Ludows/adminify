@@ -122,7 +122,7 @@ export default function LFMField(fields) {
         })
 
         modale.on('show.bs.modal', function(e) {
-            if($hidden.val().length > 0) {
+            if($hidden.val().length > 0 && $hidden.val() != '0') {
                 selectedItems[0].id = findIndexFromName(ifr, JSON.parse($hidden.val()))
                 updateStyle(ifr)
             }
