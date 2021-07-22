@@ -89,7 +89,7 @@ class CreateSettings extends Form
         return $typed == 'val' && $query != null ? $query->data : $query;
     }
     public function getMedia($id) {
-        $mediaModel = app()->make('App\Model\Media');
+        $mediaModel = app('App\Models\Media');
 
         return $mediaModel->find($id);
     }
