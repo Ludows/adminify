@@ -77,13 +77,6 @@ return [
                 'tags' => 'register.tags',
                 'traductions' => 'register.traductions'
             ],
-            'labels' => [
-                'posts' => 'title',
-                'users' => 'name',
-                'menus' => 'title',
-                'pages' => 'title',
-                'traductions' => 'key'
-            ],
             'limit' => 5,
             'name' => 'query'
         ]
