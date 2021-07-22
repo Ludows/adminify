@@ -20,12 +20,6 @@ abstract class ContentTypeModel extends ClassicModel
     use Sitemapable;
     use Gutenbergable;
     use Authorable;
-
-    public $statuses = [
-        'published',
-        'draft',
-        'trash'
-    ];
     
     public function statusScope($query, $key, $operator = '=') {
         return $query->where('status_id', $operator, $key);
