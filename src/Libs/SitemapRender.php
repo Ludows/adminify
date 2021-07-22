@@ -107,7 +107,7 @@ class SitemapRender
 
                 if($options['writeFile'] && $options['modelName'] != null) {
                     $sitemap->store('xml', $modelName.'-sitemap');
-                    $this->info('the sitemap '. $modelName .'-sitemap.xml was generated');
+                    // $this->info('the sitemap '. $modelName .'-sitemap.xml was generated');
                 }
             }
 
