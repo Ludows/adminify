@@ -14,6 +14,7 @@ class CreatePost extends Form
     {
         $hydrator = $this->hydrateSelect();
         $hydratorTags = $this->getTags();
+        $statuses = $this->getStatuses();
 
         $m = $this->getModel();
 
@@ -34,7 +35,18 @@ class CreatePost extends Form
                     'width' => '100%'
                 ]
             ]);
-
+            $this->add('status_id', 'select2', [
+                'empty_value' => '',
+                'choices' => $statuses['statuses'],
+                'selected' => $statuses['selected'],
+                'attr' => [],
+                'label' => __('admin.form.statuses'),
+                'select2options' => [
+                    'placeholder' => __('admin.statuses'),
+                    'multiple' => false,
+                    'width' => '100%'
+                ]
+            ]);
             $this->add('tags_id', 'select2', [
                 'empty_value' => '',
                 'withCreate' => true,
@@ -85,7 +97,18 @@ class CreatePost extends Form
 
         return [ 'tags' => $tags->all(), 'selected' => $selecteds];
     }
+    public function getStatuses() {
+        $hasModel = $this->getModel();
+        $statuses = $this->app('App\Models\Statuses')->all()->pluck('name' ,'id');
+        $selecteds = [];
 
+        if(isset($hasModel->status)) {
+            // on a une selection
+            $selecteds = $hasModel->status()->get()->pluck('id')->all();
+        }
+
+        return [ 'statuses' => $statuses->all(), 'selected' => $selecteds];
+    }
     public function hydrateSelect() {
         $categories = '';
         $hasModel = $this->getModel();

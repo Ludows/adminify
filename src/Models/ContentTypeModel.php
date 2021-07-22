@@ -9,6 +9,7 @@ use VanOns\Laraberg\Models\Gutenbergable;
 use Ludows\Adminify\Traits\Authorable;
 
 use App\Models\User;
+use App\Models\Statuses;
 
 use Ludows\Adminify\Models\ClassicModel; 
 use Spatie\Feed\FeedItem;
@@ -21,6 +22,9 @@ abstract class ContentTypeModel extends ClassicModel
     use Gutenbergable;
     use Authorable;
     
+    public function status() {
+        return $this->HasOne(Statuses::class, 'id', 'status_id');
+    }
     public function statusScope($query, $key, $operator = '=') {
         return $query->where('status_id', $operator, $key);
     }
