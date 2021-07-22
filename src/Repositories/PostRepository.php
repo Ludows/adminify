@@ -58,7 +58,7 @@ class PostRepository
                 }
             }
 
-            if(isset($formValues['media_id'])) {
+            if(isset($formValues['media_id']) && $formValues['media_id'] != 0) {
                 $json = json_decode($formValues['media_id']);
 
                 $m = Media::where('src', $json[0]->name)->first();
@@ -138,7 +138,7 @@ class PostRepository
                 }
             }
 
-            if(isset($formValues['media_id'])) {
+            if(isset($formValues['media_id']) && $formValues['media_id'] != 0) {
                 $json = json_decode($formValues['media_id']);
 
                 $m = Media::where('src', $json[0]->name)->first();

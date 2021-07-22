@@ -67,13 +67,13 @@ class TagRepository
         }
         else {
             //@todo
-            if(isset($formValues['media_id'])) {
+            if(isset($formValues['media_id']) && $formValues['media_id'] != 0) {
                 $json = json_decode($formValues['media_id']);
             }
             $tag = Tag::create([
                 'title' => $formValues['title'],
                 'content' => $formValues['content'],
-                'media_id' => isset($formValues['media_id']) ? $json[0]->name : 0,
+                'media_id' => isset($formValues['media_id']) && $formValues['media_id'] != 0 ? $json[0]->name : 0,
                 'parent_id' => isset($formValues['parent_id']) ? $formValues['parent_id'] : 0
             ]);
         }
