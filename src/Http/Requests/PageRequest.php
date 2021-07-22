@@ -19,8 +19,12 @@ class PageRequest extends FormRequest
             'title' => [
                 'required',
                 'min:5'
+            ],
+            'status_id' => [
+                'required'
             ]
         ];
+        
 
         if($r->is('api.*')) {
             $a['token'] = [

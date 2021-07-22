@@ -18,6 +18,9 @@ class CreatePostRequest extends FormRequest
             'title' => [
                 'required',
                 'min:5',
+            ],
+            'status_id' => [
+                'required'
             ]
         ];
 
