@@ -77,17 +77,17 @@ class CreatePage extends Form
             ])       
             ->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
-    public function getTags() {
+    public function getStatuses() {
         $hasModel = $this->getModel();
-        $tags = Tag::get()->pluck('title' ,'id');
-        $selecteds = '';
+        $statuses = app('App\Models\Statuses')->all()->pluck('name' ,'id');
+        $selecteds = [];
 
-        if(isset($hasModel->tags) && count($hasModel->tags->all()) > 0) {
+        if(isset($hasModel->status)) {
             // on a une selection
-            $selecteds = $hasModel->tags()->get()->pluck('id')->all();
+            $selecteds = $hasModel->status()->get()->pluck('id')->all();
         }
 
-        return [ 'tags' => $tags->all(), 'selected' => $selecteds];
+        return [ 'statuses' => $statuses->all(), 'selected' => $selecteds];
     }
     public function hydrateSelect() {
         $categories = '';
