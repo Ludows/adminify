@@ -67,9 +67,7 @@ class CreatePost extends Form
             ]);
             
             $this->add('user_id', 'hidden', [
-                'attr' => [
-                    'value' => user()->id
-                ]
+                'value' => user()->id
             ]);
 
             $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
