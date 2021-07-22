@@ -16,7 +16,7 @@ class CreateAdminifyUsersTable extends Migration
         Schema::dropIfExists('users');
         
         Schema::create('users', function (Blueprint $table) {
-            $table->bigInteger('id')->unsigned();
+            $table->bigIncrements('id');
             $table->string('name');
             $table->bigInteger('avatar')->unsigned()->nullable();
             $table->string('email')->unique();
