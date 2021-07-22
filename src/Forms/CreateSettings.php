@@ -15,6 +15,8 @@ class CreateSettings extends Form
         // Add fields here...
         $home = $this->getStatePage('homepage');
         $blog = $this->getStatePage('blogpage');
+        $comments = $this->getSetting('no_comments');
+        $seo = $this->getSetting('no_seo');
 
         $this->add('site_name', Field::TEXT, [
             'label' => __('admin.form.site_name'),
@@ -51,12 +53,14 @@ class CreateSettings extends Form
         ->add('no_comments', 'checkbox', [
             'label_show' => true,
             'label' => __('admin.form.no_comments'),
-            'value' => $this->getSetting('no_comments') != null ? 0 : 1
+            'value' => $comments != null ? 0 : 1,
+            'checked' => $comments != null ? true : false
         ])
         ->add('no_seo', 'checkbox', [
             'label_show' => true,
             'label' => __('admin.form.no_seo'),
-            'value' => $this->getSetting('no_seo') != null ? 0 : 1
+            'value' => $seo != null ? 0 : 1,
+            'checked' => $seo != null ? true : false
         ]);
 
         $this->add('submit', 'submit', ['label' => _('admin.save'), 'attr' => ['class' => 'btn btn-default']]);
