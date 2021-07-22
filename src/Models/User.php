@@ -3,25 +3,14 @@
 namespace Ludows\Adminify\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles;
 
 use App\Models\Media;
-
-use Spatie\Searchable\Searchable;
-use Laravel\Sanctum\HasApiTokens;
 
 use Spatie\Searchable\SearchResult;
 use Spatie\Feed\FeedItem;
 
-use Ludows\Adminify\Models\ClassicModel;
-
-use Ludows\Adminify\Traits\Listable;
-use Ludows\Adminify\Traits\Helpers;
-use Ludows\Adminify\Traits\Searchables;
-class User extends Authenticatable implements ClassicModel
+use Ludows\Adminify\Models\ClassicUser;
+class User extends ClassicUser
 {
     use HasFactory, Notifiable, HasApiTokens;
     use HasRoles;
