@@ -139,6 +139,12 @@ if(! function_exists('get_urlpath')) {
     }
 }
 
+if(! function_exists('user')) {
+    function user() {
+        return auth()->user();
+    }
+}
+
 if(! function_exists('get_site_key')) {
     function get_site_key($key = '') {
         return config('site-settings.'.$key);
