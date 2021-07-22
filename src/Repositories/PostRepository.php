@@ -116,7 +116,7 @@ class PostRepository
         }
         $multilang = $request->useMultilang;
 
-        if(!isset('no_comments')) {
+        if(!isset($formValues['no_comments'])) {
             $formValues['no_comments'] = 0;
         }
 
