@@ -49,20 +49,19 @@ class CreateUser extends Form
         $roleModel = app('Spatie\Permission\Models\Role');
         $userModel = app('App\Models\User');
 
-        $userId = $request->user ?? null;
-        $user = $userModel->find($userId);
+        $user = $request->user ?? null;
 
         $roleUser = null;
         if($user != null) {
             $roleUser = $user->roles->first();
         }
-        
+
         $roles = $roleModel::get()->pluck('name' ,'id');
         $selected = [];
 
         if(isset($roleUser) && $roleUser != null) {
             // on a une selection
-            $selected = $roleUser->id;
+            $selected[] = $roleUser->id;
 
             // $selecteds = $selecteds->all();
         }
