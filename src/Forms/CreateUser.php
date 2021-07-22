@@ -67,6 +67,6 @@ class CreateUser extends Form
             // $selecteds = $selecteds->all();
         }
 
-        return [ 'roles' => $roles, 'selected' => $selected];
+        return [ 'roles' => $roles->all(), 'selected' => $selected];
     }
 }
