@@ -125,6 +125,6 @@
      }
      public function getUrlPathAttribute() {
         $parts = $this->url;
-        return url( join($parts, ',') );
+        return count($parts) > 0 ? url( join($parts, ',') ) : null;
      }
   }
