@@ -16,16 +16,15 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\Searchable\SearchResult;
 use Spatie\Feed\FeedItem;
 
+use Ludows\Adminify\Models\ClassicModel;
+
 use Ludows\Adminify\Traits\Listable;
 use Ludows\Adminify\Traits\Helpers;
 use Ludows\Adminify\Traits\Searchables;
-class User extends Authenticatable implements Searchable
+class User extends Authenticatable implements ClassicModel
 {
     use HasFactory, Notifiable, HasApiTokens;
     use HasRoles;
-    use Listable;
-    use Helpers;
-    use Searchables;
 
     public $searchable_label = 'name';
 
