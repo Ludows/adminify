@@ -26,7 +26,8 @@ class Page extends ContentTypeModel
 
     public $excludes_savables_fields = [
         'media_id',
-        'parent_id'
+        'parent_id',
+        'status_id'
     ];
     
     public $unmodified_savables_fields = [
