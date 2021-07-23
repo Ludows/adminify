@@ -74,36 +74,7 @@ class SaveTranslationsController extends Controller
             $model = new $m();
             $model = $model->find($all['id']);
 
-            $excludes = [
-                '_method',
-                '_token',
-                'from',
-                'current_lang',
-                'type',
-                'id'
-            ];
-
-            $sanitized =  $all;
-            foreach ($sanitized as $key => $value) {
-                # code...
-                if(in_array($key, $excludes)) {
-                    unset($sanitized[$key]);
-                }
-            }
-            //dd($sanitized);
-
-            if(array_key_exists('title', $sanitized)) {
-                $model->setTranslation('slug', $all['current_lang'], Str::slug($sanitized['title']));
-            }
-
-            foreach ($sanitized as $sanitizedKey => $value) {
-                # code...
-                $model->setTranslation($sanitizedKey, $all['current_lang'], $value);
-            }
-
-            $model::booted();
-            $model->save();
-
+            $model = $this->translationRepository->update();
             // $this->translationRepository->update($form, $request, $traduction);
 
             if($request->ajax()) {

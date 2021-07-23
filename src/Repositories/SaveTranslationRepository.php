@@ -20,7 +20,7 @@ class SaveTranslationRepository
      */
     public function __construct()
     {}
-    public function update($mixed, $request, $model) {
+    public function update($mixed, $model) {
 
         $request = request();
         if(is_array($mixed)) {
@@ -31,8 +31,21 @@ class SaveTranslationRepository
         }
         $multilang = $request->useMultilang;
 
+        $excludes = [
+            '_method',
+            '_token',
+            'from',
+            'current_lang',
+            'type',
+            'id'
+        ];
 
-        // dd($formValues);
+        foreach ($formValues as $key => $value) {
+            # code...
+            if(in_array($key, $excludes)) {
+                unset($sanitized[$key]);
+            }
+        }
 
         if($multilang) {
             $lang = $request->lang;
@@ -54,15 +67,10 @@ class SaveTranslationRepository
                 }
             }
 
-            // dd($trans);
-
-            $model::booted();
-            $model->save();
-
         }
-        else {
-            $model = Traduction::create($formValues);
-        }
+
+        $model::booted();
+        $model->save();
 
         return $model;
 
