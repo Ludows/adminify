@@ -55,62 +55,62 @@ class SitemapRender
             if (!$sitemap->isCached()) {
                 $model = get_site_key( $modelClass );
                 $m = new $model();
+                $allowSitemap = $m->allowSitemap;
                 $isTranslatableModel = is_translatable_model($m);
                 $isUrlableModel = is_urlable_model($m);
                 $isLinkableMediaModel = is_linkable_media_model($m);
 
 
-
-
-                if($isTranslatableModel) {
-                    $all = $m->lang($options['currentLang'])->get()->all();
-                }
-                else {
-                    $all = $m->all()->all();
-                }
-
-
-                foreach ($all as $modelObject) {
-                    # code...
-                    //@to be continued
-                    $translations = [];
-                    $images = [];
-                    // check translated pages..
-                    if($isMultilang && $isTranslatableModel) {
-                        foreach ($othersLangs as $l) {
-                            # code...
-                            // $t = $m->getTranslation();
-                            $translations[$l] = $modelObject->urlpath;
-                        }
+                if($allowSitemap) {
+                    if($isTranslatableModel) {
+                        $all = $m->lang($options['currentLang'])->get()->all();
+                    }
+                    else {
+                        $all = $m->all()->all();
                     }
 
-                    if($isLinkableMediaModel) {
-                        $media = $modelObject->media;
-                        if($media != null) {
-                            $pathInfo = pathinfo($media->path);
-                            $imageInformations = [
-                                'url' => $media->path,
-                                'title' => $pathInfo['filename']
-                            ];
-
-                            if($media->alt && strlen($media->alt) > 0) {
-                                $imageInformations['caption'] = $media->alt;
+                    foreach ($all as $modelObject) {
+                        # code...
+                        //@to be continued
+                        $translations = [];
+                        $images = [];
+                        // check translated pages..
+                        if($isMultilang && $isTranslatableModel) {
+                            foreach ($othersLangs as $l) {
+                                # code...
+                                // $t = $m->getTranslation();
+                                $translations[$l] = $modelObject->urlpath;
                             }
+                        }
 
-                            $images[] = $imageInformations;
+                        if($isLinkableMediaModel) {
+                            $media = $modelObject->media;
+                            if($media != null) {
+                                $pathInfo = pathinfo($media->path);
+                                $imageInformations = [
+                                    'url' => $media->path,
+                                    'title' => $pathInfo['filename']
+                                ];
+
+                                if($media->alt && strlen($media->alt) > 0) {
+                                    $imageInformations['caption'] = $media->alt;
+                                }
+
+                                $images[] = $imageInformations;
+                            }
+                        }
+
+                        //$loc, $lastmod = null, $priority = null, $freq = null, $images = [], $title = null, $translations = [], $videos = [], $googlenews = [], $alternates = []
+                        $fullpath = $modelObject->urlpath;
+                        if($fullpath != null) {
+                            $sitemap->add($isUrlableModel ? $modelObject->urlpath : $modelObject->{$modelObject->sitemapCallable} , $modelObject->updated_at, '0.9', 'monthly', $images, $modelObject->sitemapTitle, $translations);
                         }
                     }
 
-                    //$loc, $lastmod = null, $priority = null, $freq = null, $images = [], $title = null, $translations = [], $videos = [], $googlenews = [], $alternates = []
-                    $fullpath = $modelObject->urlpath;
-                    if($fullpath != null) {
-                        $sitemap->add($isUrlableModel ? $modelObject->urlpath : $modelObject->{$modelObject->sitemapCallable} , $modelObject->updated_at, '0.9', 'monthly', $images, $modelObject->sitemapTitle, $translations);
+                    if($options['writeFile'] && $options['modelName'] != null) {
+                        $sitemap->store('xml', $modelName.'-sitemap');
+                        // $this->info('the sitemap '. $modelName .'-sitemap.xml was generated');
                     }
-                }
-
-                if($options['writeFile'] && $options['modelName'] != null) {
-                    $sitemap->store('xml', $modelName.'-sitemap');
-                    // $this->info('the sitemap '. $modelName .'-sitemap.xml was generated');
                 }
             }
 

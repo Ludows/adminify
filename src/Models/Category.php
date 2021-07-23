@@ -10,6 +10,7 @@ use Spatie\Searchable\SearchResult;
 use Spatie\Feed\FeedItem;
 class Category extends ContentTypeModel
 {
+    public $allowSitemap = false;
     public $MultilangTranslatableSwitch = ['title', 'slug'];
 
     protected $fillable = [
