@@ -20,6 +20,17 @@ class Category extends ContentTypeModel
         'user_id'
     ];
 
+    public $excludes_savables_fields = [
+      'media_id',
+      'parent_id'
+    ];
+    public $unmodified_savables_fields = [
+      'submit'
+   ];
+    public function getSavableForm() {
+       return \App\Forms\UpdateCategory::class;
+    }
+
     public function getTableListing() {
       return \Ludows\Adminify\Tables\CategoryTable::class;
    }

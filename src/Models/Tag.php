@@ -15,6 +15,14 @@ class Tag extends ClassicModel
     public function toFeedItem(): FeedItem {}
     public function getSearchResult() : SearchResult {}
 
+    public $excludes_savables_fields = [];
+    public $unmodified_savables_fields = [
+        'submit'
+    ];
+    public function getSavableForm() {
+        return null;
+    }
+
     public function getTableListing() {
         return \Ludows\Adminify\Tables\TagTable::class;
     }

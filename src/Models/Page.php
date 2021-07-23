@@ -24,6 +24,21 @@ class Page extends ContentTypeModel
         return \Ludows\Adminify\Tables\PageTable::class;
     }
 
+    public $excludes_savables_fields = [
+        'media_id',
+        'parent_id'
+    ];
+    
+    public $unmodified_savables_fields = [
+        'content',
+        'categories_id',
+        'submit'
+    ];
+
+    public function getSavableForm() {
+        return \App\Forms\CreatePage::class;
+    }
+
     protected $fillable = [
         'title',
         'slug',

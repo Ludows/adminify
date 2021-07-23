@@ -84,57 +84,13 @@ return [
 
     
     'savetraductions' => [
-        'post' => [
-            'model' => 'register.posts',
-            'clsForm' => \App\Forms\UpdatePost::class,
-            'excludes' => [
-                'media_id',
-                'parent_id'
-            ],
-            'unmodifiedFields' => [
-                'content',
-                'categories_id',
-                'submit'
-            ]
-
-        ],
-        'page' => [
-            'model' => 'register.pages',
-            'clsForm' => \App\Forms\CreatePage::class,
-            'excludes' => [
-                'media_id',
-                'parent_id'
-            ],
-            'unmodifiedFields' => [
-                'content',
-                'categories_id',
-                'submit'
-            ]
-        ],
-        'translation' => [
-            'model' => 'register.traductions',
-            'clsForm' => \App\Forms\UpdateTranslation::class,
-            'excludes' => [],
-            'unmodifiedFields' => []
-        ],
-        'category' => [
-            'model' => 'register.categories',
-            'clsForm' => \App\Forms\UpdateCategory::class,
-            'excludes' => [
-                'media_id',
-                'parent_id'
-            ],
-            'unmodifiedFields' => [
-                'submit'
-            ]
-        ],
-        'menu' => [
-            'model' => 'register.menus',
-            'clsForm' => null,
-            'excludes' => [],
-            'unmodifiedFields' => [
-                'submit'
-            ]
+        'models' => [
+            'post' => 'register.posts',
+            'page' => 'register.pages',
+            'translation' => 'register.traductions',
+            'category' => 'register.categories',
+            'menu' => 'register.menus',
+            'tag' => 'register.tags',
         ],
         'tag' => [
             'model' => 'register.tags',
@@ -144,7 +100,6 @@ return [
                 'submit'
             ]
         ],
-        'fallback' => 'request' // if no class form provided . request->all() is intended,
 
     ],
 

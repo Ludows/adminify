@@ -26,6 +26,21 @@ class Post extends ContentTypeModel
         'user_id',
         'status_id'
     ];
+    
+    public $excludes_savables_fields = [
+        'media_id',
+        'parent_id'
+    ];
+    
+    public $unmodified_savables_fields = [
+        'content',
+        'categories_id',
+        'submit'
+    ];
+
+    public function getSavableForm() {
+        return \App\Forms\UpdatePost::class;
+    }
 
     public function getSearchResult() : SearchResult
     {

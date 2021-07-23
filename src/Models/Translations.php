@@ -28,6 +28,12 @@ class Translations extends ClassicModel
         return \Ludows\Adminify\Tables\TranslationTable::class;
     }
 
+    public $excludes_savables_fields = [];
+    public $unmodified_savables_fields = [];
+    public function getSavableForm() {
+        return \App\Forms\UpdateTranslation::class;
+    }
+
     protected static function makeTranslations($context) {
 
         Artisan::call('generate:translations', [

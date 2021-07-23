@@ -17,6 +17,14 @@ class Menu extends ClassicModel
         'slug',
     ];
 
+    public $excludes_savables_fields = [];
+    public $unmodified_savables_fields = [
+        'submit'
+    ];
+    public function getSavableForm() {
+        return null;
+    }
+
     public function getTableListing() {
         return \Ludows\Adminify\Tables\MenuTable::class;
     }
