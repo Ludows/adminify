@@ -16,6 +16,8 @@ class SaveMissingTraductions extends Form
             $formChild = $datas['clsForm'];
             $fields = $formChild->getFields();
             $m = $datas['model'];
+            $excludes = $m->excludes_savables_fields;
+            $modifiables_fields = $m->unmodified_savables_fields;
 
             $fillables = $m->getFillable();
 
@@ -45,9 +47,9 @@ class SaveMissingTraductions extends Form
             foreach ($fields as $fieldKey => $value) {
                 # code...
                 //dd($datas);
-                if(!in_array($fieldKey, $datas['config']['excludes'])) {
+                if(!in_array($fieldKey, $excludes)) {
                     $type = null;
-                    if(!in_array($fieldKey, $datas['config']['unmodifiedFields'])) {
+                    if(!in_array($fieldKey, $modifiables_fields)) {
                         $type = 'text';
                     }
                     else {
