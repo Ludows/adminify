@@ -43,7 +43,7 @@ class SaveTranslationRepository
         foreach ($formValues as $key => $value) {
             # code...
             if(in_array($key, $excludes)) {
-                unset($sanitized[$key]);
+                unset($formValues[$key]);
             }
         }
 
