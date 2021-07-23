@@ -42,7 +42,7 @@ class SaveTranslationsController extends Controller
                 $config = config('site-settings');
                 $id = \Route::current()->parameter($request->singleParam);
 
-                $m = get_site_key($config['savetraductions'][$type]['model']);
+                $m = get_site_key($config['savetraductions']['model'][$type]);
                 $model = new $m();
 
 
