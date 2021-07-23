@@ -37,6 +37,7 @@ class Post extends ContentTypeModel
         'content',
         'categories_id',
         'user_id',
+        'no_comments',
         'tags_id',
         'submit'
     ];
