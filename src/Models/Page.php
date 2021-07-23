@@ -32,6 +32,7 @@ class Page extends ContentTypeModel
     public $unmodified_savables_fields = [
         'content',
         'categories_id',
+        'user_id',
         'submit'
     ];
 
