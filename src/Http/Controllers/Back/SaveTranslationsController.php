@@ -46,7 +46,7 @@ class SaveTranslationsController extends Controller
                 $model = new $m();
 
 
-                $clsForm = $this->form($model->getSaveForm());
+                $clsForm = $this->form($model->getSavableForm());
 
                 $form = $formBuilder->create(SaveMissingTraductions::class, [
                     'method' => 'PUT',
