@@ -46,7 +46,7 @@ class SaveTranslationsController extends Controller
                 $model = new $m();
 
 
-                $clsForm = $this->form($config['savetraductions'][$type]['clsForm']);
+                $clsForm = $this->form($model->getSaveForm());
 
                 $form = $formBuilder->create(SaveMissingTraductions::class, [
                     'method' => 'PUT',
@@ -57,7 +57,6 @@ class SaveTranslationsController extends Controller
                     'clsForm' => $clsForm,
                     'fromLang' => $originLang,
                     'actualLang' => $actualLang,
-                    'config' => $config['savetraductions'][$type],
                     'model' => $model->find($id)
                 ]);
 
@@ -71,7 +70,7 @@ class SaveTranslationsController extends Controller
             //dd($all);
 
             $config = config('site-settings');
-            $m = get_site_key($config['savetraductions'][$all['type']]['model']);
+            $m = get_site_key($config['savetraductions']['model'][$all['type']]);
             $model = new $m();
             $model = $model->find($all['id']);
 
