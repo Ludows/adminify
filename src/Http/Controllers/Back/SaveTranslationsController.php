@@ -70,7 +70,7 @@ class SaveTranslationsController extends Controller
             //dd($all);
 
             $config = config('site-settings');
-            $m = get_site_key($config['savetraductions']['model'][$all['type']]);
+            $m = get_site_key($config['savetraductions']['models'][$all['type']]);
             $model = new $m();
             $model = $model->find($all['id']);
 
