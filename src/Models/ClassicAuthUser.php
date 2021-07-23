@@ -17,6 +17,7 @@ use Ludows\Adminify\Traits\Helpers;
 use Ludows\Adminify\Traits\Formidable;
 use Ludows\Adminify\Traits\Listable;
 use Ludows\Adminify\Traits\Searchables;
+use Ludows\Adminify\Traits\SavableTranslations;
 
 use Illuminate\Support\Facades\DB;
 
@@ -36,6 +37,7 @@ abstract class ClassicAuthUser extends Authenticatable implements MustVerifyEmai
     use Formidable;
     use Listable;
     use Searchables;
+    use SavableTranslations;
 
     public function getRolesAttribute() {
         $table = config('permission.table_names.model_has_roles');
