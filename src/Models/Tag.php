@@ -20,7 +20,7 @@ class Tag extends ClassicModel
         'submit'
     ];
     public function getSavableForm() {
-        return null;
+        return \App\Forms\CreateTag::class;
     }
 
     public function getTableListing() {
