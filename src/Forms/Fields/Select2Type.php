@@ -35,7 +35,7 @@ class Select2Type extends FormField {
             $options['selected'] = '';
         }
 
-        $options['attr']['id'] = 'select2_id_'+$uniqid;
+        $options['attr']['id'] = 'select2_id_'.$uniqid;
 
         $this->setOptions([
             'sibling' => Str::slug('select2_'.$uniqid),
