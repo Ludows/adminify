@@ -180,6 +180,29 @@ class MenuController extends Controller
 
         }
 
+        public function removeItemsToMenu(MenuBuilder $menuBuilder, Request $request) {
+
+            $config = get_site_key('menu-builder');
+            $id = $request->id;
+            $v = view();
+
+            $m = new \Ludows\Adminify\Models\MenuItem();
+            $three = [];
+            $html = [];
+
+            $m = $m->find($id)->delete();
+            
+
+            return response()->json([
+                'status' => 'ok',
+                'model' => $m,
+                'message' => __('admin.typed_data.deleted'),
+            ]);
+
+        }
+
+        
+
         /**
             * Update the specified resource in storage.
             *

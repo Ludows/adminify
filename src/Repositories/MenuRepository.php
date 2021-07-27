@@ -114,15 +114,18 @@ class MenuRepository
             if($menuitem == null) {
                 // quick fix en attendant de regarder la generation du menu three
                 return false;
-                // dd($menuitem, $scope);
             }
 
             $class_model_str = $config['menu-builder']['models'][$menuitem['type']];
-            if(isset($menuitem['delete']) && $menuitem['delete'] == '1') {
-                //nous savons ici que c'est un item à delete en base
-                $menuItem->find($menuitem['menu-id'])->delete();
-            }
-            else {
+            $class_model_str = get_site_key($class_model_str);
+
+
+
+            // if(isset($menuitem['isnew']) && $menuitem['delete'] == '1') {
+            //     //nous savons ici que c'est un item à delete en base
+            //     $menuItem->find($menuitem['menu-id'])->delete();
+            // }
+            // else {
 
                 $check_model_item = null;
 
@@ -240,7 +243,7 @@ class MenuRepository
                 }
 
 
-            }
+            // }
         }
     }
     public function update($menuthree = [], $model) {

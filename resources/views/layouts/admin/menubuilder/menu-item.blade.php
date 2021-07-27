@@ -58,7 +58,7 @@
             </div>
         </div>
         <div class="card-footer">
-            <a href="#" data-el="list-group-item-{{ $identifier }}" class="text-underline js-suppress text-danger">{{ __('admin.destroy_menu_item') }}</a>
+            <a href="#"{!! !$isNew ? 'data-menuitem-id="'.$id.'"' : '' !!} data-el="list-group-item-{{ $identifier }}" class="text-underline js-suppress text-danger">{{ __('admin.destroy_menu_item') }}</a>
             <a href="#" data-el="collapse-{{ $identifier }}" class="text-underline js-close text-default">{{ __('admin.close_menu_item') }}</a>
         </div>
     </div>
