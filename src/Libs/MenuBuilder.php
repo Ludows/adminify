@@ -158,10 +158,10 @@ class MenuBuilder
                 if(!array_key_exists($model, $defaultsVars['config']['menu-builder']['showAlways'])) {
 
                     if($defaultsVars['multilang']) {
-                        $check_all_from_called_class = $class_call::lang($defaultsVars['lang'])->all();
+                        $check_all_from_called_class = $class_call::lang($defaultsVars['lang'])->get()->all();
                     }
                     else {
-                        $check_all_from_called_class = $class_call->all();
+                        $check_all_from_called_class = $class_call->get()->all();
                     }
 
                     if(count($check_all_from_called_class) > 0) {
