@@ -29,7 +29,7 @@
                 <input type="hidden" menu-three-key="id" value="{{ $id }}"/>
             @endif
             <input type="hidden" menu-three-key="type" value="{{ $type }}"/>
-            <input type="hidden" menu-three-key="delete" value="0"/>
+            <input type="hidden" menu-three-key="delete" value="{{ $isNew ? 1 : 0 }}"/>
             <input type="hidden" menu-three-key="title" value="{{ $title }}"/>
             <input type="hidden" menu-three-key="slug" value="{{ $slug }}"/>
             <div class="form-group">

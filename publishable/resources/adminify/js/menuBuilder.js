@@ -165,7 +165,7 @@ jQuery(document).ready(function ($) {
         e.preventDefault();
         let $data_el = $(this).attr('data-el');
         let check = $('#' + $data_el).find('[menu-three-key="delete"]');
-        if (check.length === 0) {
+        if (check.val() === 1) {
             $('#' + $data_el).remove();
         } else {
             // swal(
