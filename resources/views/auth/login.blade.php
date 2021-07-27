@@ -40,7 +40,7 @@
                                         </div>
                                         {!! form_widget($form->email) !!}
                                     </div>
-                                    {!! form_error($form->email) !!}
+                                    {!! form_errors($form->email) !!}
                                 </div>
                                 <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
                                     <div class="input-group input-group-alternative">
@@ -49,7 +49,7 @@
                                         </div>
                                         {!! form_widget($form->password) !!}
                                     </div>
-                                    {!! form_error($form->password) !!}
+                                    {!! form_errors($form->password) !!}
                                 </div>
                             {!! form_end($form, true) !!}
                         @endisset
