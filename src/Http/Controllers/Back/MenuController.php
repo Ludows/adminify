@@ -130,11 +130,12 @@ class MenuController extends Controller
 
         public function setItemsToMenu(MenuBuilder $menuBuilder, Request $request) {
 
-            $config = config('site-settings');
+            $config = get_site_key('menu-builder');
             $type = $request->type;
             $v = view();
 
-            $model = $config['menu-builder']['models'][$type];
+            $model = $config['models'][$type];
+            $m = new $model;
 
             $three = [];
             $html = [];
@@ -152,13 +153,13 @@ class MenuController extends Controller
                 $items = $request->input('items');
 
                 if(is_string($items)) {
-                    $three[] = $model::find($items);
+                    $three[] = $m->find($items);
                 }
 
                 if(is_array($items)) {
                     foreach ($items as $item) {
                         # code...
-                        $three[] = $model::find($item);
+                        $three[] = $m->find($item);
                     }
                 }
             }
