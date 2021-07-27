@@ -1,9 +1,10 @@
 export default function select2Inititalization(fields) {
 
     $.each(fields, function(i, el) {
-        var select2boxe = $(el.selector + '> .form-group > select');
+        var select2boxe = $(el.selector + ' select.form-control');
 
         console.log('select2boxe', select2boxe);
+        console.log('el select2', el);
 
         if(el.withCreate) {
             var btnCallModal = $(el.selector+ ' .js-handle-form-create');
