@@ -1,7 +1,7 @@
-@extends('adminify::layouts.admin.app', ['class' => 'bg-default'])
+@extends('adminify::layouts.admin.app', ['class' => 'bg-default', 'fullmode' => true])
 
 @section('content')
-    {{-- @include('adminify::layouts.admin.headers.guest') --}}
+    @include('adminify::layouts.admin.headers.guest')
 
     <div class="container mt--8 pb-5">
         <div class="row justify-content-center">
