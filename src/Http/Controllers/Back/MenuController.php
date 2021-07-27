@@ -135,7 +135,8 @@ class MenuController extends Controller
             $v = view();
 
             $model = $config['models'][$type];
-            $m = new $model;
+            $m_str = get_site_key($model);
+            $m = new $m_str;
 
             $three = [];
             $html = [];
