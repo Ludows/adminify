@@ -214,8 +214,4 @@ jQuery(document).ready(function ($) {
 
         menuSwitcher.attr('action', editRoute);
     })
-
-    function PasswordGenerator() {
-        return Math.random().toString(36).slice(2);
-    }
 })
