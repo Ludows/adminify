@@ -140,9 +140,9 @@ jQuery(document).ready(function ($) {
                     createSortable(el_id_sortable);
                     
                     let call_media = $(htmlLi).find('.call_media');
-                    lfmInitFunction({
+                    lfmInitFunction([{
                         selector: call_media.attr('id'),
-                    });
+                    }]);
 
 
                     $(the_form).find('.select2-hidden-accessible').val(null).trigger('change');
