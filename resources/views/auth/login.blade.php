@@ -1,7 +1,7 @@
 @extends('adminify::layouts.admin.app', ['class' => 'bg-default'])
 
 @section('content')
-    @include('adminify::layouts.admin.headers.guest')
+    {{-- @include('adminify::layouts.admin.headers.guest') --}}
 
     <div class="container mt--8 pb-5">
         <div class="row justify-content-center">
@@ -9,7 +9,7 @@
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent pb-5">
                         <div class="text-muted text-center mt-2 mb-3"><small>{{ __('Sign in with') }}</small></div>
-                        <div class="btn-wrapper text-center">
+                        {{-- <div class="btn-wrapper text-center">
                             <a href="#" class="btn btn-neutral btn-icon">
                                 <span class="btn-inner--icon"><img src="{{ asset('argon') }}/img/icons/common/github.svg"></span>
                                 <span class="btn-inner--text">{{ __('Github') }}</span>
@@ -18,7 +18,7 @@
                                 <span class="btn-inner--icon"><img src="{{ asset('argon') }}/img/icons/common/google.svg"></span>
                                 <span class="btn-inner--text">{{ __('Google') }}</span>
                             </a>
-                        </div>
+                        </div> --}}
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="text-center text-muted mb-4">
