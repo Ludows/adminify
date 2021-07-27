@@ -6,8 +6,14 @@ use Ludows\Adminify\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+
+use App\Forms\showLoginForm;
+
 class LoginController extends Controller
 {
+    use FormBuilderTrait;
     /*
     |--------------------------------------------------------------------------
     | Login Controller
@@ -41,8 +47,12 @@ class LoginController extends Controller
     public function showLoginForm()
 
     {
+        $form = $this->form(showLoginForm::class, [
+            'method' => 'POST',
+            'url' => route('login')
+        ]);
 
-        return view('adminify::auth.login');
+        return view('adminify::auth.login', ['form' => $form]);
 
     }
 }

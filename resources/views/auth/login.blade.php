@@ -31,7 +31,7 @@
                             </div>
                         @endif
                         
-                        <form role="form" method="POST" action="{{ route('login') }}">
+                        {{-- <form role="form" method="POST" action="{{ route('login') }}">
                             @csrf
 
                             <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} mb-3">
@@ -69,7 +69,30 @@
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary my-4">{{ __('Sign in') }}</button>
                             </div>
-                        </form>
+                        </form> --}}
+
+                        @isset($form)
+                            {!! form_start($form); !!}
+                                <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} mb-3">
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                                        </div>
+                                        {!! form_widget($form->email) !!}
+                                    </div>
+                                    {!! form_error($form->email) !!}
+                                </div>
+                                <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                        </div>
+                                        {!! form_widget($form->password) !!}
+                                    </div>
+                                    {!! form_error($form->password) !!}
+                                </div>
+                            {!! form_end($form, true) !!}
+                        @endisset
                     </div>
                 </div>
                 <div class="row mt-3">
