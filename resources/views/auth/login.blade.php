@@ -8,7 +8,7 @@
             <div class="col-lg-5 col-md-7">
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-header bg-transparent pb-0 border-bottom-0">
-                        <div class="text-muted text-center mt-2 mb-0"><small>{{ __('Sign in with') }}</small></div>
+                        <div class="text-muted text-center mt-2 mb-0"><small>{{ __('admin.sign_in') }}</small></div>
                         {{-- <div class="btn-wrapper text-center">
                             <a href="#" class="btn btn-neutral btn-icon">
                                 <span class="btn-inner--icon"><img src="{{ asset('argon') }}/img/icons/common/github.svg"></span>
@@ -76,13 +76,13 @@
                     <div class="col-6">
                         @if (Route::has('password.request'))
                             <a href="{{ route('password.request') }}" class="text-light">
-                                <small>{{ __('Forgot password?') }}</small>
+                                <small>{{ __('admin.forgot_password') }}</small>
                             </a>
                         @endif
                     </div>
                     <div class="col-6 text-right">
                         <a href="{{ route('register') }}" class="text-light">
-                            <small>{{ __('Create new account') }}</small>
+                            <small>{{ __('admin.create_account') }}</small>
                         </a>
                     </div>
                 </div>
