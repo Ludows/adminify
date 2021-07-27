@@ -153,7 +153,8 @@ class MenuBuilder
         if(count($models) > 0) {
             foreach ($models as $model => $key) {
                 # code...
-                $class_call = new get_site_key($key);
+                $m_str = get_site_key($key);
+                $class_call = new $m_str;
                 if(!array_key_exists($model, $defaultsVars['config']['menu-builder']['showAlways'])) {
 
                     if($defaultsVars['multilang']) {
