@@ -31,8 +31,8 @@
                             </div>
                         @endif
 
-                        @isset($form)
-                            {!! form_start($form); !!}
+                        @if(isset($form))
+                            {!! form_start($form) !!}
                                 <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} mb-3">
                                     <div class="input-group input-group-alternative">
                                         <div class="input-group-prepend">
