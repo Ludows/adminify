@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Forms;
+namespace Ludows\Adminify\Forms;
 
 use Kris\LaravelFormBuilder\Form;
 
