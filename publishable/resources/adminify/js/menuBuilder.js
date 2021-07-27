@@ -141,7 +141,7 @@ jQuery(document).ready(function ($) {
                     
                     let call_media = $(htmlLi).find('.call_media');
                     lfmInitFunction({
-                        selector: '#'.call_media.attr('id'),
+                        selector: '#'+call_media.attr('id'),
                     });
 
 
