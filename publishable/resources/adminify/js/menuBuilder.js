@@ -164,8 +164,10 @@ jQuery(document).ready(function ($) {
     menuBuilder.on('click', '.js-suppress', function (e) {
         e.preventDefault();
         let $data_el = $(this).attr('data-el');
+        let self = $(this);
         let check = $('#' + $data_el).find('[menu-three-key="delete"]');
         if (check.val() === 1) {
+            // is new , no records in db here
             $('#' + $data_el).remove();
         } else {
             // swal(
@@ -178,13 +180,34 @@ jQuery(document).ready(function ($) {
                 confirmButtonText: 'Oui @trad'
             }).then((result) => {
                 if (result.value) {
-                    Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                    )
-                    $('#' + $data_el).css({'display': 'none'});
-                    check.val(1);
+
+                    let removeRoute = Route('menus.removeItemsToMenu', {
+                        id: self.attr('data-menuitem-id')
+                    });
+
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        method: 'POST',
+                        url: removeRoute,
+                        data: {},
+                        success: function (data) {
+                            console.log(data)
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                            $('#' + $data_el).remove();
+                        },
+                        error: function (err) {
+                            console.log('err', err)
+                        }
+                    })
+
+
+                    
                 }
             })
         }
