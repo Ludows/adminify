@@ -39,16 +39,16 @@ class HomeController extends Controller
                     $m = new $m_str();
 
                     if($request->useMultilang) {
-                        $m->orderBy('id', 'desc');
+                        $m = $m->orderBy('id', 'desc');
                         if(is_translatable_model($m)) {
-                            $m->lang($request->lang);
+                            $m = $m->lang($request->lang);
                         }
-                        $m->take($config['limit']);
+                        $m = $m->take($config['limit']);
                         $m = $m->get();
                     }
                     else {
-                        $m->orderBy('id', 'desc');
-                        $m->take($config['limit']);
+                        $m = $m->orderBy('id', 'desc');
+                        $m = $m->take($config['limit']);
                         $m = $m->get();
                     }
 
