@@ -133,10 +133,10 @@ class MenuBuilder
         $defaultsVars = $this->getDefaultsVars();
         $r = $this->getRequest();
         if($defaultsVars['multilang']) {
-            $menus = $r->menu != null ? Menu::where('id', '!=' , $r->menu->id)->lang($defaultsVars['lang']) : Menu::lang($defaultsVars['lang']);
+            $menus = $r->menu != null ? Menu::where('id', '!=' , $r->menu->id)->lang($defaultsVars['lang'])->get()->all() : Menu::lang($defaultsVars['lang'])->get()->all();
         }
         else {
-            $menus = $r->menu != null ? Menu::where('id', '!=' , $r->menu->id)->get() : Menu::all();
+            $menus = $r->menu != null ? Menu::where('id', '!=' , $r->menu->id)->get()->all() : Menu::all()->all();
         }
         return $menus;
     }
