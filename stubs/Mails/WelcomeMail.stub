@@ -1,6 +1,6 @@
 <?php
 
-namespace Ludows\Adminify\Mails;
+namespace App\Mails;
 
 use Ludows\Adminify\Mails\WelcomeMail as WelcomeMailBase;
 

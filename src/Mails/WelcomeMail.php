@@ -2,9 +2,9 @@
 
 namespace Ludows\Adminify\Mails;
 
-use Spatie\MailTemplates\TemplateMailable;
+use Ludows\Adminify\Libs\MailableTemplateBase;
 
-class WelcomeMail extends TemplateMailable
+class WelcomeMail extends MailableTemplateBase
 {
     /** @var string */
     public $name;
@@ -16,6 +16,13 @@ class WelcomeMail extends TemplateMailable
     {
         $this->name = $user->name;
         $this->email = $user->email;
+    }
+
+    public static function getHtmlTemplate() {
+        return '<h1>Hello, {{ name }}!</h1>';
+    }
+    public static function getSubject() {
+        return 'Welcome Mail';
     }
     
     public function getHtmlLayout(): string

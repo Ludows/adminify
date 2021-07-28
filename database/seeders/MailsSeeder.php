@@ -30,5 +30,16 @@ class MailsSeeder extends Seeder
         //     # code...
         //     DB::table($tableName)->insert($status);
         // }
+        $base_i = 1;
+        foreach ($this->mails as $mailableClass) {
+            # code...
+            
+            DB::table('mail_template')->insert([
+                'mailable' => $mailableClass,
+                'subject' => $mailableClass::getSubject(),
+                'html_template' => $mailableClass::getHtmlTemplate(), 
+            ]);
+            $base_i++;
+        }
     }
 }
