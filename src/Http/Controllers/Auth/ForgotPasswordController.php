@@ -5,8 +5,13 @@ namespace Ludows\Adminify\Http\Controllers\Auth;
 use Ludows\Adminify\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+
+use App\Forms\ShowResetForm;
 class ForgotPasswordController extends Controller
 {
+    use FormBuilderTrait;
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
@@ -24,7 +29,12 @@ class ForgotPasswordController extends Controller
 
     {
 
-        return view('adminify::auth.passwords.email');
+        $form = $this->form(ShowResetForm::class, [
+            'method' => 'POST',
+            'url' => route('password.email')
+        ]);
+
+        return view('adminify::auth.passwords.email', ['form' => $form]);
 
     }
 

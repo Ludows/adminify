@@ -9,7 +9,7 @@
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="text-center text-muted mb-4">
-                            <small>{{ __('Reset password') }}</small>
+                            <small>{{ __('admin.reset_passwords') }}</small>
                         </div>
 
                         @if (session('status'))
@@ -24,7 +24,7 @@
                             </div>
                         @endif
 
-                        <form role="form" method="POST" action="{{ route('password.email') }}">
+                        {{-- <form role="form" method="POST" action="{{ route('password.email') }}">
                             @csrf
 
                             <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }} mb-3">
@@ -43,7 +43,21 @@
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary my-4">{{ __('Send Password Reset Link') }}</button>
                             </div>
-                        </form>
+                        </form> --}}
+                        
+                        @if(isset($form))
+                            {!! form_start($form) !!}
+                                <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                                    <div class="input-group input-group-alternative mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                                        </div>
+                                        {!! form_widget($form->email) !!}                                 
+                                    </div>
+                                    {!! form_errors($form->email) !!}
+                                </div>
+                            {!! form_end($form, true) !!}
+                        @endif
                     </div>
                 </div>
             </div>

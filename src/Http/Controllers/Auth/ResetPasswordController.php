@@ -40,12 +40,12 @@ class ResetPasswordController extends Controller
 
     {
         $form = $this->form(ShowResetForm::class, [
-            'method' => 'PUT',
+            'method' => 'POST',
             'url' => route('password.update')
         ]);
 
         return view('adminify::auth.passwords.reset')->with(
-            ['token' => $token, 'email' => $request->email, 'form' => $form]
+            ['form' => $form]
         );
     }
 
