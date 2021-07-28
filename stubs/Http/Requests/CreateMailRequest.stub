@@ -1,6 +1,6 @@
 <?php
 
-namespace Ludows\Adminify\Http\Requests;
+namespace App\Http\Requests;
 
 use Ludows\Adminify\Http\Requests\CreateMailRequest as CreateMailRequestBase;
 
