@@ -47,9 +47,17 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                     </div>
-                                    {!! form_widget($form->password) !!}                                  
+                                    {!! form_widget($form->password->first) !!}                                  
                                 </div>
-                                {!! form_errors($form->email) !!}
+                                {!! form_errors($form->password->first) !!}
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                    </div>
+                                    {!! form_widget($form->password->second) !!}                                   
+                                </div>
                             </div>
                             {!! form_end($form, false) !!}
                         @endif
