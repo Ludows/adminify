@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Forms;
+
+use Ludows\Adminify\Forms\UpdateMail as UpdateMailBase;
+
+class UpdateMail extends UpdateMailBase
+{}
