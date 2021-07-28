@@ -1,0 +1,8 @@
+<?php
+
+namespace Ludows\Adminify\Http\Requests;
+
+use Ludows\Adminify\Http\Requests\CreateMailRequest as CreateMailRequestBase;
+
+class CreateMailRequest extends CreateMailRequestBase
+{}

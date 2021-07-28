@@ -16,6 +16,9 @@ use Ludows\Adminify\Traits\TableManagerable;
 use Ludows\Adminify\Tables\MailsTable;
 
 use App\Forms\CreateMail;
+use App\Forms\UpdateMail;
+
+use App\Models\Mailable;
 
 
 class MailsController extends Controller
