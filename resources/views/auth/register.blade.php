@@ -59,7 +59,7 @@
                                     {!! form_widget($form->password->second) !!}                                   
                                 </div>
                             </div>
-                            {!! form_end($form, false) !!}
+                            {!! form_end($form, true) !!}
                         @endif
                         {{-- <form role="form" method="POST" action="{{ route('register') }}">
                             @csrf
