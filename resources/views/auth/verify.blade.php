@@ -1,4 +1,4 @@
-@extends('adminify::layouts.admin.app', ['class' => 'bg-default'])
+@extends('adminify::layouts.admin.app', ['class' => 'bg-default', 'fullmode' => true])
 
 @section('content')
     @include('adminify::layouts.admin.headers.guest')
