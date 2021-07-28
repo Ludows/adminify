@@ -52,7 +52,7 @@
                                     {!! form_errors($form->password) !!}
                                 </div>
                             {!! form_end($form, true) !!}
-                        @endisset
+                        @endif
                     </div>
                 </div>
                 <div class="row mt-3">

@@ -22,10 +22,38 @@
                         </div> --}}
                     </div>
                     <div class="card-body px-lg-5 py-lg-5">
-                        <div class="text-center text-muted mb-4">
-                            <small>{{ __('Or sign up with credentials') }}</small>
-                        </div>
-                        <form role="form" method="POST" action="{{ route('register') }}">
+                        @if(isset($form))
+                            {!! form_start($form) !!}
+                            <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
+                                <div class="input-group input-group-alternative mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ni ni-hat-3"></i></span>
+                                    </div>
+                                    {!! form_widget($form->name) !!}                                
+                                </div>
+                                {!! form_errors($form->name) !!}
+                            </div>
+                            <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                                <div class="input-group input-group-alternative mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                                    </div>
+                                    {!! form_widget($form->email) !!}                                 
+                                </div>
+                                {!! form_errors($form->email) !!}
+                            </div>
+                            <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                    </div>
+                                    {!! form_widget($form->password) !!}                                  
+                                </div>
+                                {!! form_errors($form->email) !!}
+                            </div>
+                            {!! form_end($form, false) !!}
+                        @endif
+                        {{-- <form role="form" method="POST" action="{{ route('register') }}">
                             @csrf
 
                             <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
@@ -91,7 +119,7 @@
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary mt-4">{{ __('Create account') }}</button>
                             </div>
-                        </form>
+                        </form> --}}
                     </div>
                 </div>
             </div>
