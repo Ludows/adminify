@@ -1,0 +1,8 @@
+<?php
+
+namespace Ludows\Adminify\Mails;
+
+use Ludows\Adminify\Mails\WelcomeMail as WelcomeMailBase;
+
+class WelcomeMail extends WelcomeMailBase
+{}
