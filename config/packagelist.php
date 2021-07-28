@@ -359,6 +359,20 @@ return array(
         ),
         (object) array(
             'beforePublish' => [],
+            'name' => 'laravel-database-mail-templates',
+            'publish' => null,
+            'autoload' => (object) [
+                'providers' => [],
+                'middlewares' => [],
+                'aliases' => []
+            ],
+            'config' => null,
+            'afterPublish' => [
+                'php artisan vendor:publish --provider="Spatie\MailTemplates\MailTemplatesServiceProvider" --tag="migrations"',
+            ],
+        ),
+        (object) array(
+            'beforePublish' => [],
             'name' => 'laravel/sanctum',
             'publish' => (object) [
                 'tag' => false,
