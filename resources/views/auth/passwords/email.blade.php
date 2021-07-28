@@ -47,8 +47,8 @@
                         
                         @if(isset($form))
                             {!! form_start($form) !!}
-                                <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
-                                    <div class="input-group input-group-alternative mb-3">
+                                <div class="form-group mb-0{{ $errors->has('email') ? ' has-danger' : '' }}">
+                                    <div class="input-group input-group-alternative mb-0">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                         </div>
