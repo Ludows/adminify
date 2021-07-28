@@ -33,6 +33,8 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'admin.breadcrumb
     
     Route::resource('tags', 'Ludows\Adminify\Http\Controllers\Back\TagsController', ['except' => ['show']]);
 
+    Route::resource('mails', 'Ludows\Adminify\Http\Controllers\Back\MailsController', ['except' => ['show']]);
+
     Route::resource('savetraductions', 'Ludows\Adminify\Http\Controllers\Back\SaveTranslationsController', ['except' => ['show', 'create', 'store', 'index', 'destroy']]);
 
     Route::get('modales/content/{name}', function ($name) {
