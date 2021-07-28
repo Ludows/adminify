@@ -1,4 +1,4 @@
-@extends('adminify::layouts.admin.app', ['class' => 'bg-default'])
+@extends('adminify::layouts.admin.app', ['class' => 'bg-default', 'fullmode' => true])
 
 @section('content')
     @include('adminify::layouts.admin.headers.guest')
@@ -9,9 +9,9 @@
                 <div class="card bg-secondary shadow border-0">
                     <div class="card-body px-lg-5 py-lg-5">
                         <div class="text-center text-muted mb-4">
-                            <small>{{ __('Reset Password') }}</small>
+                            <small>{{ __('admin.reset_passwords') }}</small>
                         </div>
-                        <form role="form" method="POST" action="{{ route('password.update') }}">
+                        {{-- <form role="form" method="POST" action="{{ route('password.update') }}">
                             @csrf
 
                             <input type="hidden" name="token" value="{{ $token }}">
@@ -53,7 +53,38 @@
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary my-4">{{ __('Reset Password') }}</button>
                             </div>
-                        </form>
+                        </form> --}}
+
+                        @if(isset($form))
+                            {!! form_start($form) !!}
+                                <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                                    <div class="input-group input-group-alternative mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="ni ni-email-83"></i></span>
+                                        </div>
+                                        {!! form_widget($form->email) !!}                                 
+                                    </div>
+                                    {!! form_errors($form->email) !!}
+                                </div>
+                                <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                        </div>
+                                        {!! form_widget($form->password->first) !!}                                  
+                                    </div>
+                                    {!! form_errors($form->password->first) !!}
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                        </div>
+                                        {!! form_widget($form->password->second) !!}                                   
+                                    </div>
+                                </div>
+                            {!! form_end($form, true) !!}
+                        @endif
                     </div>
                 </div>
             </div>

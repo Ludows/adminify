@@ -8,8 +8,14 @@ use Illuminate\Foundation\Auth\ResetsPasswords;
 
 use Illuminate\Http\Request;
 
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+
+use App\Forms\ShowResetForm;
+
 class ResetPasswordController extends Controller
 {
+    use FormBuilderTrait;
     /*
     |--------------------------------------------------------------------------
     | Password Reset Controller
@@ -33,10 +39,13 @@ class ResetPasswordController extends Controller
     public function showResetForm(Request $request)
 
     {
-        $token = $request->route()->parameter('token');
+        $form = $this->form(ShowResetForm::class, [
+            'method' => 'PUT',
+            'url' => route('password.update')
+        ]);
 
         return view('adminify::auth.passwords.reset')->with(
-            ['token' => $token, 'email' => $request->email]
+            ['token' => $token, 'email' => $request->email, 'form' => $form]
         );
     }
 
