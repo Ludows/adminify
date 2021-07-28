@@ -3,6 +3,8 @@
 namespace Ludows\Adminify\Libs;
 
 use Spatie\MailTemplates\TemplateMailable;
+use Spatie\MailTemplates\MailTemplateInterface;
+
 
 class MailableTemplateBase extends TemplateMailable
 {
