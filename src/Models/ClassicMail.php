@@ -28,4 +28,6 @@ abstract class ClassicMail extends SpatieMailTemplate
     use Listable;
     use Searchables;
     use SavableTranslations;
+    
+    public $MultilangTranslatableSwitch = ['subject', 'html_template'];
 }
