@@ -59,6 +59,9 @@ class GenerateAdminMenu
                 if($user->hasPermissionTo('create_translations')) {
                     $menuAdmin->add( Link::to( $multilang ? '/admin/traductions?lang='.$lang : '/admin/traductions', '<i class="ni ni-circle-08"></i> '.__('admin.traductions.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
                 }
+                if($user->hasPermissionTo('manage_mails')) {
+                    $menuAdmin->add( Link::to( $multilang ? '/admin/mails?lang='.$lang : '/admin/mails', '<i class="ni ni-circle-08"></i> '.__('admin.mails.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+                }
                 if($user->hasRole('subscriber')) {
                     $menuAdmin->add( Link::to($multilang ? '/admin/users'.'/'.$user->id. '/edit?lang='.$lang : '/admin/users'.'/'.$user->id. '/edit', '<i class="ni ni-circle-08"></i> '.__('admin.users.edit'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
                 }
