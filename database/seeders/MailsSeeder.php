@@ -3,6 +3,8 @@ namespace Ludows\Adminify\Database\Seeders;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\App;
+
 
 use App\Models\Mailable;
 
@@ -31,13 +33,23 @@ class MailsSeeder extends Seeder
         //     DB::table($tableName)->insert($status);
         // }
         $base_i = 1;
+        $multilang = config('site-settings.multilang');
+        $locale = App::currentLocale();
+
         foreach ($this->mails as $mailableClass) {
             # code...
+            $subject = $multilang ? json_encode([
+                $locale => $mailableClass::getSubject()
+            ]) : $mailableClass::getSubject();
+            
+            $html_template = $multilang ? json_encode([
+                $locale => $mailableClass::getHtmlTemplate()
+            ]) : $mailableClass::getHtmlTemplate();
             
             DB::table('mail_templates')->insert([
                 'mailable' => $mailableClass,
-                'subject' => $mailableClass::getSubject(),
-                'html_template' => $mailableClass::getHtmlTemplate(), 
+                'subject' => $subject,
+                'html_template' => $html_template, 
             ]);
             $base_i++;
         }
