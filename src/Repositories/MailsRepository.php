@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Repositories;
 
 use MrAtiebatie\Repository;
-use App\Models\Mailable; // Don't forget to update the model's namespace
+use App\Models\Mailables; // Don't forget to update the model's namespace
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
 
@@ -26,7 +26,7 @@ class MailsRepository
     public function __construct()
     {
         // Don't forget to update the model's name
-        $this->model = app(Mailable::class);
+        $this->model = app(Mailables::class);
     }
     public function create($mixed, $request) {
         // $context is $this of the controller for more flexibility
