@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
-use App\Models\Mailable as MailableModel;
+use App\Models\Mailables as MailableModel;
 use Ludows\Adminify\Dropdowns\Mail as MailDropdownManager;
 
 class MailsTable extends TableManager {
