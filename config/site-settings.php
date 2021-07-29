@@ -92,6 +92,7 @@ return [
             'category' => 'register.categories',
             'menu' => 'register.menus',
             'tag' => 'register.tags',
+            'mailable' => 'register.mailable'
         ],
     ],
 
