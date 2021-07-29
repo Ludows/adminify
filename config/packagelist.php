@@ -95,18 +95,6 @@ return array(
         ),
         (object) array(
             'beforePublish' => [],
-            'name' => 'nadar/quill-delta-parser',
-            'publish' => null,
-            'config' => null,
-            'autoload' => (object) [
-                'providers' => [],
-                'middlewares' => [],
-                'aliases' => []
-            ],
-            'afterPublish' => [],
-        ),
-        (object) array(
-            'beforePublish' => [],
             'name' => 'silviolleite/laravelpwa',
             'publish' => (object) [
                 'tag' => false,
@@ -367,9 +355,7 @@ return array(
                 'aliases' => []
             ],
             'config' => null,
-            'afterPublish' => [
-                'php artisan vendor:publish --provider="Spatie\MailTemplates\MailTemplatesServiceProvider" --tag="migrations"',
-            ],
+            'afterPublish' => [],
         ),
         (object) array(
             'beforePublish' => [],
