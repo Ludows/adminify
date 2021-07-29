@@ -90,16 +90,16 @@ class MailsController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function edit(FormBuilder $formBuilder, Mailables $mailable, Request $request)
+        public function edit(FormBuilder $formBuilder, Mailables $mail, Request $request)
         {
             //
-            $mailable->checkForTraduction();
+            $mail->checkForTraduction();
             // $category->flashForMissing();
 
             $form = $formBuilder->create(UpdateMail::class, [
                 'method' => 'PUT',
-                'url' => route('mails.update', ['mail' => $mailable->id]),
-                'model' => $mailable
+                'url' => route('mails.update', ['mail' => $mail->id]),
+                'model' => $mail
             ]);
 
             return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
@@ -111,29 +111,29 @@ class MailsController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(Mailables $mailable, CreateMailRequest $request)
+        public function update(Mailables $mail, CreateMailRequest $request)
         {
             //
 
 
             $form = $this->form(UpdateMail::class, [
                 'method' => 'PUT',
-                'url' => route('mails.update', ['mail' => $mailable->id]),
-                'model' => $mailable
+                'url' => route('mails.update', ['mail' => $mail->id]),
+                'model' => $mail
             ]);
 
-            $this->mailRepository->update($form, $request, $mailable);
+            $this->mailRepository->update($form, $request, $mail);
             flash(__('admin.typed_data.updated'))->success();
             return redirect()->route('mails.index');
         }
 
-        public function send(Mailables $mailable) {
+        public function send(Mailables $mail) {
 
             $user = user();
-            $class = $mailable->mailable;
-            $mailable_class = app()->call($class);
+            $class = $mail->mail;
+            $mail_class = app()->call($class);
 
-            Mail::to($user->email)->send($mailable_class);
+            Mail::to($user->email)->send($mail_class);
         }
 
         /**
@@ -142,7 +142,7 @@ class MailsController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function destroy(Mailables $mailable)
+        public function destroy(Mailables $mail)
         {
             //
             $this->mailRepository->delete($category);
