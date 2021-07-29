@@ -35,6 +35,8 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'admin.breadcrumb
 
     Route::resource('mails', 'Ludows\Adminify\Http\Controllers\Back\MailsController', ['except' => ['show']]);
 
+    Route::post('mails/send/{mail}', 'Ludows\Adminify\Http\Controllers\Back\MailsController@send')->name('mails.send');
+
     Route::resource('savetraductions', 'Ludows\Adminify\Http\Controllers\Back\SaveTranslationsController', ['except' => ['show', 'create', 'store', 'index', 'destroy']]);
 
     Route::get('modales/content/{name}', function ($name) {

@@ -19,6 +19,7 @@ use App\Forms\CreateMail;
 use App\Forms\UpdateMail;
 
 use App\Models\Mailable;
+use Mail;
 
 
 class MailsController extends Controller
@@ -124,6 +125,15 @@ class MailsController extends Controller
             $this->mailRepository->update($form, $request, $mailable);
             flash(__('admin.typed_data.updated'))->success();
             return redirect()->route('mails.index');
+        }
+
+        public function send(Mailable $mailable) {
+
+            $user = user();
+            $class = $mailable->mailable;
+            $mailable_class = app()->call($class);
+
+            Mail::to($user->email)->send($mailable_class);
         }
 
         /**
