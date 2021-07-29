@@ -20,7 +20,7 @@ jQuery(document).ready(function($) {
                 'data' : {}
             })
             .done((data) => {
-                
+                console.log('success')
             })
             .fail((err) => {
                 console.log(err)
