@@ -42,17 +42,20 @@ class CreateMail extends Form
         $mailables = $m->all();
         $mails = [];
         $selecteds = [];
+        $r = $this->getRequest();
         $mailables = $mailables->all();
+
+        $mailFetched = $r->mail;
 
         foreach ($mailables as $mail) {
             # code...
             $mails[$mail->mailable] = $mail->mailable::getSubject();
         }
 
-        $r = $this->getRequest();
-
-        if($r->exists('mail')) {
+        if($mailFetched != null) {
             // on a une selection
+
+
             $mailFetched = $r->mail;
             $selecteds = [$mailFetched->mailable];
         }
