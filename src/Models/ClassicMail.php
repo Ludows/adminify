@@ -37,6 +37,14 @@ abstract class ClassicMail extends SpatieMailTemplate
         'html_template',
         'text_template',
     ];
+
+    public function getTableListing() {
+        return \Ludows\Adminify\Tables\MailsTable::class;
+    }
+
+    public function getSavableForm() {
+        return null;
+    }
     
     public $MultilangTranslatableSwitch = ['subject', 'html_template'];
 }
