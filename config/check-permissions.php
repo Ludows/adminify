@@ -4,7 +4,7 @@ return [
     'redirectTo' => 'home.dashboard',
     'forceRedirect' => [
         'administrator' => [], // allows all routes
-        'editor' => ['users.*'], //allow all routes but no users
+        'editor' => ['users.*', 'mails.*'], //allow all routes but no users
         'subscriber' => [
             'users.index',
             'users.create',
@@ -14,7 +14,10 @@ return [
             'pages.*',
             'menus.*',
             'comments.*',
-            'settings.*'
+            'tags.*',
+            'mails.*',
+            'settings.*',
+            'traductions.*'
         ],
     ],
 ];
