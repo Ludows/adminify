@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\App;
 
 
-use App\Models\Mailable;
+use App\Models\Mailables;
 
 class MailsSeeder extends Seeder
 {
