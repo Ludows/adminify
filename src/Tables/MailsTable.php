@@ -86,6 +86,9 @@ class MailsTable extends TableManager {
             ]);
         }
 
+        // add js 
+        $this->js( asset('argon').'/js/sendMail.js' );
+
 
     }
 }
