@@ -90,6 +90,9 @@ class RolesTableSeeder extends Seeder
                     ],
                     23 => [
                         'name' => 'create_translations'
+                    ],
+                    24 => [
+                        'name' => 'manage_mails'
                     ]
                 ]
             ],
