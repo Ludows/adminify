@@ -101,12 +101,20 @@ class TableManager
         return 'adminify::layouts.admin.table.datalist';
     }
 
+    public function getJs() {
+        return $this->js;
+    }
+
+    public function getCss() {
+        return $this->css;
+    }
+
     public function handle() {}
     public function render() {
 
         $tpl = $this->getView();
         $cols = $this->getColumns();
-        $compiled = $this->view->make($tpl, ['datas' => $this->_columns, 'thead' => $cols, 'count' => count($this->_columns[$cols[0]]) ]);
+        $compiled = $this->view->make($tpl, ['datas' => $this->_columns, 'thead' => $cols, 'count' => count($this->_columns[$cols[0]]), 'css' => $this->getCss(), 'js' => $this->getJs() ]);
         return $compiled;
     }
     public function list() {

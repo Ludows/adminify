@@ -7,6 +7,22 @@
     }
 </script>
 
+@if(isset($css) && count($css) > 0)
+    @push('css')
+        @foreach ($css as $cssPath)
+            <link type="text/css" href="{{ $cssPath }}" rel="stylesheet">
+        @endforeach
+    @endpush
+@endif
+
+@if(isset($js) && count($js) > 0)
+    @push('js')
+        @foreach ($js as $jsPath)
+            <script src="{{ $jsPath }}"></script>
+        @endforeach
+    @endpush
+@endif
+
 <div class="table-responsive">
     <table class="js-datatable table align-items-center table-flush">
         <thead class="thead-light">
@@ -24,3 +40,5 @@
         @include('adminify::layouts.admin.table.paginate')
     </div>
 </div>
+
+
