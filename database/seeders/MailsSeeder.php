@@ -9,7 +9,7 @@ use App\Models\Mailable;
 class MailsSeeder extends Seeder
 {
     public $mails = [
-        App\Mails\WelcomeMail::class
+        \App\Mails\WelcomeMail::class
     ];
     /**
      * Run the database seeds.
