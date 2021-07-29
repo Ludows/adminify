@@ -129,9 +129,10 @@ class MailsController extends Controller
 
         public function send(Mailables $mail, Request $request) {
 
+            //dd($mail);
             $user = user();
             $class = $mail->mailable;
-            $mail_class = app()->call($class);
+            $mail_class = app($class);
 
             Mail::to($user->email)->send($mail_class);
 
