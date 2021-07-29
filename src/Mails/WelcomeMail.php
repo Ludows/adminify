@@ -4,6 +4,8 @@ namespace Ludows\Adminify\Mails;
 
 use Ludows\Adminify\Libs\MailableTemplateBase;
 
+use App\Models\User;
+
 class WelcomeMail extends MailableTemplateBase
 {
     /** @var string */
