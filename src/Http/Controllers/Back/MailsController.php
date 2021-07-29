@@ -18,7 +18,7 @@ use Ludows\Adminify\Tables\MailsTable;
 use App\Forms\CreateMail;
 use App\Forms\UpdateMail;
 
-use App\Models\Mailabless;
+use App\Models\Mailables;
 use Mail;
 
 
