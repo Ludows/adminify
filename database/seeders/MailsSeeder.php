@@ -50,6 +50,8 @@ class MailsSeeder extends Seeder
                 'mailable' => $mailableClass,
                 'subject' => $subject,
                 'html_template' => $html_template, 
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
             $base_i++;
         }
