@@ -21,7 +21,7 @@ return [
         'url' => \App\Models\Url::class,
         'users' => \App\Models\User::class,
         'tags' => \App\Models\Tag::class,
-        'mailable' => \App\Models\Mailable::class
+        'mailable' => \App\Models\Mailables::class
     ],
 
     'sitemap' => [
