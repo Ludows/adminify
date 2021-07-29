@@ -38,24 +38,40 @@ class MailsRepository
             $formValues = $mixed->getFieldValues();
         }
 
-        // if(is_string($formValues['src']) && !str_starts_with($formValues['src'], '[{')) {
-        //     $pathinfo = pathinfo($formValues['src']);
-        //     $formValues['mime_type'] = $pathinfo['extension'];
-        // }
-        // else {
-        //     $file = json_decode($formValues['src']);
+        $r = request();
+        $multilang = $r->useMultilang;
+        $m = new Mailables();
 
-        //     $formValues['mime_type'] = $file[0]->file->type->type;
+        if($multilang) {
+            $lang = $request->lang;
+            
+            $multilangsFields = $m->getMultilangTranslatableSwitch();
+            $fields = $m->getFieldsExceptTranslatables();
+            // dd($fields);
 
-        //     // dirty method ?
-        //     $formValues['src'] = $file[0]->name;
-        // }
-        
+            foreach ($multilangsFields as $multilangsField) {
+                # code...
+                if(isset($formValues[$multilangsField])) {
+                    $m->setTranslation($multilangsField, $lang, $formValues[$multilangsField]);
+                    unset($formValues[$multilangsField]);
+                }
+
+            }
+            foreach ($fields as $field) {
+                if(isset($formValues[$field])) {
+                    $m->{$field} = $formValues[$field];
+                }
+            }
+
+            $m::booted();
+        }
+
+        $m->save();
 
         // // create entity
         // $media = Media::create($formValues);
 
-        return $media;
+        return $m;
     }
     public function update($mixed, $request, $model) {
 
@@ -66,21 +82,35 @@ class MailsRepository
             $formValues = $mixed->getFieldValues();
         }
 
-        // if(is_string($formValues['src']) && !str_starts_with($formValues['src'], '[{')) {
-        //     $pathinfo = pathinfo($formValues['src'], PATHINFO_EXTENSION);
-        //     $formValues['mime_type'] = $pathinfo['extension'];
-        // }
-        // else {
-        //     $file = json_decode($formValues['src']);
+        $r = request();
+        $multilang = $r->useMultilang;
+        $m = $model;
 
-        //     $formValues['mime_type'] = $file[0]->file->type->type;
+        if($multilang) {
+            $lang = $request->lang;
+            
+            $multilangsFields = $m->getMultilangTranslatableSwitch();
+            $fields = $m->getFieldsExceptTranslatables();
+            // dd($fields);
 
-        //     // dirty method ?
-        //     $formValues['src'] = $file[0]->name;
-        // }
+            foreach ($multilangsFields as $multilangsField) {
+                # code...
+                if(isset($formValues[$multilangsField])) {
+                    $m->setTranslation($multilangsField, $lang, $formValues[$multilangsField]);
+                    unset($formValues[$multilangsField]);
+                }
 
-        // $model->fill($formValues);
-        // $model->save();
+            }
+            foreach ($fields as $field) {
+                if(isset($formValues[$field])) {
+                    $m->{$field} = $formValues[$field];
+                }
+            }
+
+            $m::booted();
+        }
+
+        $m->save();
     }
     public function delete($model) {
         $model->delete();
