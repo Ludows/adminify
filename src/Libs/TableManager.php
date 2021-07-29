@@ -14,6 +14,8 @@ class TableManager
         $this->columns = [];
         $this->items = [];
         $this->_columns = [];
+        $this->js = [];
+        $this->css = [];
 
         if($autoHandle) {
             $this->handle();
@@ -56,6 +58,16 @@ class TableManager
 
     public function datas($name = null, $value) {
         $this->datas[$name] = $value;
+        return $this;
+    }
+
+    public function js($jsPath) {
+        $this->js[] = $jsPath;
+        return $this;
+    }
+
+    public function css($cssPath) {
+        $this->css[] = $cssPath;
         return $this;
     }
 
