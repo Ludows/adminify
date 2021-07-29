@@ -80,7 +80,7 @@ class MailsController extends Controller
             }
             else {
                 flash(__('admin.typed_data.success'))->success();
-                return redirect()->route('categories.index');
+                return redirect()->route('mails.index');
             }
         }
 
