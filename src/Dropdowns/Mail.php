@@ -31,7 +31,8 @@ class Mail extends DropdownsManager
                     'template' => 'adminify::layouts.admin.dropdowns.extends.sendMail',
                     'vars' => [
                         'url' => route('mails.send', ['mail' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
-                        'name' => 'mails'
+                        'name' => 'mails',
+                        'id' => $m->id
                     ]
                 ]);
                 $this->add('dropdown_'.$m->id, [
