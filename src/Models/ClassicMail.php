@@ -30,6 +30,13 @@ abstract class ClassicMail extends SpatieMailTemplate
     use SavableTranslations;
 
     protected $table = 'mail_templates';
+
+    protected $fillable = [
+        'mailable', //the path you uploaded the image
+        'subject',
+        'html_template',
+        'text_template',
+    ];
     
     public $MultilangTranslatableSwitch = ['subject', 'html_template'];
 }
