@@ -15,6 +15,9 @@ class CreateMailRequest extends FormRequest
     public function rules()
     {
         //@todo
-        return [];
+        return [
+            'subject' => ['required'],
+            'mailable' => ['required'],
+        ];
     }
 }
