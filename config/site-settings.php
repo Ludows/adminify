@@ -48,7 +48,6 @@ return [
     // menu builder is automatic sync with multilang param.
     'menu-builder' => [
         'models' => [
-            'category' => 'register.categories',
             'page' => 'register.pages',
             'post' => 'register.posts',
             'custom' => 'register.custom_links'
