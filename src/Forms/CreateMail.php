@@ -11,30 +11,30 @@ class CreateMail extends Form
         $mailables = $this->getMailables();
 
         //@todo
+        $this->add('subject', 'text', [
+            'label_show' => false,
+            'attr' => ['placeholder' => __('admin.form.subject')],
+        ]);
+
         $this->add('mailable', 'select2', [
             'empty_value' => '',
             'withCreate' => false,
             'modal' => '', // simple include
             'choices' => $mailables['mailables'],
             'selected' => $mailables['selected'],
-            'label' => __('admin.form.mailable'),
+            'label' => __('admin.form.mailable_template'),
             'select2options' => [
-                'placeholder' => __('admin.select_mailable'),
+                'placeholder' => __('admin.select_mailable_template'),
                 'multiple' => false,
                 'width' => '100%'
             ]
-        ]);
-
-        $this->add('subject', 'text', [
-            'label_show' => false,
-            'attr' => ['placeholder' => __('admin.form.subject')],
         ]);
 
         $this->add('html_template', 'summernote', [
             'label_show' => false,
             'attr' => ['placeholder' => __('admin.form.html_template')],
         ]);
-        
+
     }
     public function getMailables() {
         $m = app('App\Models\Mailables');
@@ -42,16 +42,16 @@ class CreateMail extends Form
         $mailables = $m->all();
         $mails = [];
         $selecteds = [];
-        $mailables = $m->all();
-        
+        $mailables = $mailables->all();
+
         foreach ($mailables as $mail) {
             # code...
-            $mails[$mail->mailable] = $mail::getSubject();
+            $mails[$mail->mailable] = $mail->mailable::getSubject();
         }
 
         $r = $this->getRequest();
 
-        if($r->exist('mail')) {
+        if($r->exists('mail')) {
             // on a une selection
             $mailFetched = $r->mail;
             $selecteds = [$mailFetched->mailable];
