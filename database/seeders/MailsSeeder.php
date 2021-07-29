@@ -34,7 +34,7 @@ class MailsSeeder extends Seeder
         foreach ($this->mails as $mailableClass) {
             # code...
             
-            DB::table('mail_template')->insert([
+            DB::table('mail_templates')->insert([
                 'mailable' => $mailableClass,
                 'subject' => $mailableClass::getSubject(),
                 'html_template' => $mailableClass::getHtmlTemplate(), 
