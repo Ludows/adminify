@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
 use App\Models\Mailable as MailableModel;
-use Ludows\Adminify\Dropdowns\Tags as TagDropdownManager;
+use Ludows\Adminify\Dropdowns\Mail as MailDropdownManager;
 
 class MailsTable extends TableManager {
     // public function getTemplateByName($name) {
@@ -50,7 +50,7 @@ class MailsTable extends TableManager {
         }
            
         //call the dropdown manager
-        $a = new TagDropdownManager($mails ,[]);
+        $a = new MailDropdownManager($mails ,[]);
 
         // if(isset($trans) && count($trans) > 0) {
         //     $trans[0]->flashForMissing();

@@ -28,6 +28,13 @@ class Mail extends DropdownsManager
                     ]
                 ]);
                 $this->add('dropdown_'.$m->id, [
+                    'template' => 'adminify::layouts.admin.dropdowns.extends.sendMail',
+                    'vars' => [
+                        'url' => route('mails.send', ['mail' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
+                        'name' => 'mails'
+                    ]
+                ]);
+                $this->add('dropdown_'.$m->id, [
                     'template' => 'adminify::layouts.admin.dropdowns.extends.delete',
                     'vars' => [
                         'form' => $form->create(DeleteCrud::class, [
