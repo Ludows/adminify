@@ -20,7 +20,8 @@ return [
         'traductions' => \App\Models\Translations::class,
         'url' => \App\Models\Url::class,
         'users' => \App\Models\User::class,
-        'tags' => \App\Models\Tag::class
+        'tags' => \App\Models\Tag::class,
+        'mailable' => \App\Models\Mailable::class
     ],
 
     'sitemap' => [
@@ -92,15 +93,6 @@ return [
             'menu' => 'register.menus',
             'tag' => 'register.tags',
         ],
-        'tag' => [
-            'model' => 'register.tags',
-            'clsForm' => null,
-            'excludes' => [],
-            'unmodifiedFields' => [
-                'submit'
-            ]
-        ],
-
     ],
 
     // all routes search are binded to singular route name.
@@ -116,7 +108,8 @@ return [
             'category' => 'register.categories',
             'comment' => 'register.comments',
             'traduction' => 'register.traductions',
-            'tag' => 'register.tags'
+            'tag' => 'register.tags',
+            'mail' => 'register.mailable'
         ]
     ],
 

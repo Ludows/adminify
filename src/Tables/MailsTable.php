@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
-use App\Models\Tag as TagModel;
+use App\Models\Mailable as MailableModel;
 use Ludows\Adminify\Dropdowns\Tags as TagDropdownManager;
 
 class MailsTable extends TableManager {
@@ -32,25 +32,25 @@ class MailsTable extends TableManager {
         $config = config('site-settings.listings');
         $request = $this->getRequest();
 
-        $model = new TagModel();
+        $model = new MailableModel();
         $fillables = $model->getFillable();
 
         $datas = $this->getDatas();
 
         if(isset($datas['results'])) {
-            $tags = $datas['results'];
+            $mails = $datas['results'];
         }
         else {
             if($request->useMultilang) {
-                $tags = TagModel::limit( $config['limit'] )->lang($request->lang)->get();
+                $mails = MailableModel::limit( $config['limit'] )->lang($request->lang)->get();
             }
             else {
-                $tags = TagModel::limit( $config['limit'] )->get();
+                $mails = MailableModel::limit( $config['limit'] )->get();
             }
         }
            
         //call the dropdown manager
-        $a = new TagDropdownManager($tags ,[]);
+        $a = new TagDropdownManager($mails ,[]);
 
         // if(isset($trans) && count($trans) > 0) {
         //     $trans[0]->flashForMissing();
@@ -64,7 +64,7 @@ class MailsTable extends TableManager {
 
         $this->columns( array_merge($fillables, $default_merge_columns) );
 
-        foreach ($tags as $tag) {
+        foreach ($mails as $tag) {
             # code...
             // pass current model
             $table = $this->model($tag);
