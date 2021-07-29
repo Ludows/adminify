@@ -127,13 +127,24 @@ class MailsController extends Controller
             return redirect()->route('mails.index');
         }
 
-        public function send(Mailables $mail) {
+        public function send(Mailables $mail, Request $request) {
 
             $user = user();
-            $class = $mail->mail;
+            $class = $mail->mailable;
             $mail_class = app()->call($class);
 
             Mail::to($user->email)->send($mail_class);
+
+            if($request->ajax()) {
+                return response()->json([
+                    'mail' => $mail,
+                    'message' => __('admin.typed_data.success')
+                ]);
+            }
+            else {
+                flash(__('admin.typed_data.success'))->success();
+                return redirect()->route('mails.index');
+            }
         }
 
         /**
