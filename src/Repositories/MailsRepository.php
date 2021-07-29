@@ -43,7 +43,7 @@ class MailsRepository
         $m = new Mailables();
 
         if($multilang) {
-            $lang = $request->lang;
+            $lang = $r->lang;
             
             $multilangsFields = $m->getMultilangTranslatableSwitch();
             $fields = $m->getFieldsExceptTranslatables();
@@ -87,7 +87,7 @@ class MailsRepository
         $m = $model;
 
         if($multilang) {
-            $lang = $request->lang;
+            $lang = $r->lang;
             
             $multilangsFields = $m->getMultilangTranslatableSwitch();
             $fields = $m->getFieldsExceptTranslatables();
