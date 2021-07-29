@@ -1,8 +1,0 @@
-<?php
-
-namespace App\Models;
-
-use Ludows\Adminify\Models\Mailable as MailableBase;
-
-class Mailable extends MailableBase
-{}

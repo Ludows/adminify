@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Models;
 
 use Ludows\Adminify\Models\ClassicMail;
-class Mailable extends ClassicMail
+class Mailables extends ClassicMail
 {
 
     public function getTableListing() {

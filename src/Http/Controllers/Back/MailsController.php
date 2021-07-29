@@ -18,7 +18,7 @@ use Ludows\Adminify\Tables\MailsTable;
 use App\Forms\CreateMail;
 use App\Forms\UpdateMail;
 
-use App\Models\Mailable;
+use App\Models\Mailabless;
 use Mail;
 
 
@@ -70,11 +70,11 @@ class MailsController extends Controller
             // we pass context and request
             $form = $this->form(CreateMail::class);
 
-            $category = $this->mailRepository->create($form, $request);
+            $mail = $this->mailRepository->create($form, $request);
 
             if($request->ajax()) {
                 return response()->json([
-                    'category' => $category,
+                    'category' => $mail,
                     'message' => __('admin.typed_data.success')
                 ]);
             }
@@ -90,7 +90,7 @@ class MailsController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function edit(FormBuilder $formBuilder, Mailable $mailable, Request $request)
+        public function edit(FormBuilder $formBuilder, Mailables $mailable, Request $request)
         {
             //
             $mailable->checkForTraduction();
@@ -111,7 +111,7 @@ class MailsController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(Mailable $mailable, CreateMailRequest $request)
+        public function update(Mailables $mailable, CreateMailRequest $request)
         {
             //
 
@@ -127,7 +127,7 @@ class MailsController extends Controller
             return redirect()->route('mails.index');
         }
 
-        public function send(Mailable $mailable) {
+        public function send(Mailables $mailable) {
 
             $user = user();
             $class = $mailable->mailable;
@@ -142,7 +142,7 @@ class MailsController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function destroy(Mailable $mailable)
+        public function destroy(Mailables $mailable)
         {
             //
             $this->mailRepository->delete($category);
