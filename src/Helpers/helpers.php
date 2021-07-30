@@ -3,6 +3,7 @@ use Thunder\Shortcode\ShortcodeFacade;
 use App\Models\Translations as Traduction;
 use App\Models\Menu;
 use App\Models\Settings;
+use Illuminate\Support\Facades\Cache;
 
 if (! function_exists('do_shortcode')) {
     function do_shortcode($shortcodeName, $parameters = []) {
@@ -197,6 +198,12 @@ if (! function_exists('get_shortcode')) {
             ];
         }
         return $ret_s;
+    }
+}
+
+if(! function_exists('forget_cache')) {
+    function forget_cache($key) {
+        Cache::forget($key);
     }
 }
 

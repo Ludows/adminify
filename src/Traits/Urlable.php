@@ -45,9 +45,8 @@
           cache([$key => array_merge($defaults, $values)]);
      }
 
-     public function decryptToCache($key = '') {
-
-          // cache($key, )
+     public function forgetToCache($key = '') {
+          forget_cache($key);
      }
 
      public function updateUrl($a = [], $loadConfig = false) {
