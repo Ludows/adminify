@@ -17,11 +17,11 @@ class HomeController extends Controller
     
     public $cards = [
         'register.pages',
-        'register.posts',
-        'register.medias',
-        'register.categories',
-        'register.traductions',
-        'register.comments'
+        // 'register.posts',
+        // 'register.medias',
+        // 'register.categories',
+        // 'register.traductions',
+        // 'register.comments'
     ];
 
     public function __construct(InterfacableManager $interfacable)
@@ -45,7 +45,9 @@ class HomeController extends Controller
         // $this->interfacable->registerBlock('')
 
 
-        $blocks = [];
+        foreach ($this->cards as $card) {
+            # code...
+        }
         // if(count($config['blocks']) > 0) {
         //     foreach ($config['blocks'] as $blockName => $arr) {
         //         # code...
@@ -88,6 +90,6 @@ class HomeController extends Controller
         //dd($user, $config, $blocks);
 
 
-        return view('adminify::layouts.admin.pages.dashboard', ['blocks' => $blocks]);
+        return view('adminify::layouts.admin.pages.dashboard', ['interfacable' => $this->interfacable]);
     }
 }
