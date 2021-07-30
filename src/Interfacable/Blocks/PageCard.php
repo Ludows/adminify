@@ -12,7 +12,7 @@ class PageCard extends InterfacableBlock {
     }
     public function query() {
 
-        $r = this->getRequest();
+        $r = $this->getRequest();
         if($r->useMultilang) {
             $query = Page::lang($r->lang)->get()->all();
         }
