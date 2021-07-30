@@ -7,6 +7,9 @@ use Ludows\Adminify\Libs\InterfacableBlock;
 use App\Models\Page;
 
 class PageCard extends InterfacableBlock {
+    public static function getNamedBlock() {
+        return 'Page Card';
+    }
     public function query() {
 
         $r = this->getRequest();
@@ -18,6 +21,9 @@ class PageCard extends InterfacableBlock {
         }
 
         return $query;
+    }
+    public function addToRender() {
+        return [];
     }
     // public function handle() {
 
