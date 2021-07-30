@@ -119,35 +119,40 @@
           }
 
      }
+     public function walk() {
+        $a = [];
+        $context = $this;
+        if(isset($context->parent_id) && $context->parent_id != 0) {
+            $parts = $this->crawlUrlPart($context->parent, $a);
+            $a = $parts;
+        }
+        return $a;
+    }
+    public function crawlUrlPart($context, $array = []) {
+        if(isset($context->parent_id) && $context->parent_id != 0) {
+            $array[] = $context;
+            $this->crawlUrlPart($context->parent, $array);
+        }
+        return $array;
+    }
      public function url() {
           $u = new Url();
 
-          $reflect = new \ReflectionClass($this);
+          $a = $this->walk();
 
-          //dd($this->id);
+          $a = array_reverse($a);
 
-          $u = $u->where([
-              ['from_model_id', '=', $this->id],
-              ['from_model', '=', $reflect->name],
-          ]);
-          $u = $u->orderBy('order');
-
-          return $u->get()->all();
+          return $a;
      }
      public function getUrlAttribute() {
           $a = [];
 
           $collection =  $this->url();
           //dump($collection);
-          if($collection != null) {
+          if(count($collection) > 0) {
                foreach ($collection as $col) {
                     # code...
-                    $str_model = $col->model_name;
-                    $m = new $str_model();
-                    $m = $m->where([
-                         ['id', '=', $col->model_id],
-                    ])->get()->first();
-                    $a[] = $m->{$this->urlableColumn};
+                    $a[] = $col->{$this->urlableColumn};
                }
           }
 
