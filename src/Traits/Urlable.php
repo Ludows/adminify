@@ -88,11 +88,14 @@
 
      }
      public function getConfigUrl($a = []) {
+
+          $reflect = new \ReflectionClass($this);
+          
           $defaults = [
-               'from_model' => $this->getNameSpace(),
+               'from_model' => $reflect->name,
                'from_model_id' => $this->id,
                'model_id' => $this->id,
-               'model_name' => $this->getNameSpace(),
+               'model_name' => $reflect->name,
                'order' => 0
           ];
 

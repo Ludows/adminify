@@ -31,7 +31,7 @@
 
     protected static function syncronizeUrl($context) {
 
-        if($context->parent_id != 0) {
+        if(isset($context->parent_id) && $context->parent_id != 0) {
             $reflect = new \ReflectionClass($context);
 
             $context->syncUrl([
