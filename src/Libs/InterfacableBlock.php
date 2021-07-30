@@ -92,7 +92,7 @@ class InterfacableBlock
         $return = $show;
         $u = user();
 
-        if($hasRoles && !$u->hasRoles( $this->getRoles() )) {
+        if($hasRoles && !$u->hasAnyRole( $this->getRoles() )) {
             $return = false;
         }
 
