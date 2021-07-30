@@ -121,7 +121,7 @@ class CreatePage extends Form
 
         if(isset($hasModel->childrens) && count($hasModel->childrens->all()) > 0) {
             // on a une selection
-            $selecteds = $hasModel->childrens()->get()->pluck('id')->all();
+            $selecteds = $hasModel->parent()->get()->pluck('id')->all();
         }
 
         return [ 'pages' => $pages->all(), 'selected' => $selecteds];
