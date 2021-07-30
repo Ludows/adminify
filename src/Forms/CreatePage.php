@@ -119,7 +119,7 @@ class CreatePage extends Form
         $pages = Page::get()->pluck('title' ,'id');
         $selecteds = '';
 
-        if(isset($hasModel->childrens) && count($hasModel->childrens->all()) > 0) {
+        if(isset($hasModel->parent) && count($hasModel->parent->all()) > 0) {
             // on a une selection
             $selecteds = $hasModel->parent()->get()->pluck('id')->all();
         }
