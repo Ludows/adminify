@@ -3,6 +3,7 @@
   namespace Ludows\Adminify\Traits;
 
   use App\Models\Url;
+  use Illuminate\Support\Facades\Crypt;
   trait Urlable
   {
      // tell which column to show for your url part
@@ -26,6 +27,30 @@
 
           return $u;
      }
+     public function encryptToCache($key = '', $values = []) {
+
+          if($key == '') {
+               return false;
+          }
+
+          $encryptedKey = Crypt::encryptString($key);
+          $reflect = new \ReflectionClass($this);
+
+          $defaults = [
+               'status_id' => $this->status_id,
+               'model' => $reflect->name,
+               'model_id' => $this->id,
+               'parent_id' => $this->parent_id
+          ];
+
+          cache($encryptedKey, array_merge($defaults, $values));
+     }
+     
+     public function decryptToCache($key = '') {
+
+          // cache($key, )
+     }
+
      public function updateUrl($a = [], $loadConfig = false) {
           if($loadConfig) {
                $defaults = $this->getConfigUrl($a);

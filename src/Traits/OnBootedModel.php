@@ -22,6 +22,10 @@
         $s->render();
     }
 
+    protected static function syncToCache($context) {
+        $context->encryptToCache($context->id);
+    }
+
     protected static function booted()
     {
         
@@ -36,6 +40,10 @@
             if(is_sitemapable_model($model)) {
                 static::loadGenerateSitemap($model);
             }
+
+            if(is_urlable_model($model)) {
+                static::syncToCache($model);
+            }
             
         });
         static::updating(function ($model) {
@@ -47,6 +55,10 @@
             
             if(is_sitemapable_model($model)) {
                 static::loadGenerateSitemap($model);
+            }
+
+            if(is_urlable_model($model)) {
+                static::syncToCache($model);
             }
         });
     }
