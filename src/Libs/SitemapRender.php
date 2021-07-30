@@ -78,11 +78,14 @@ class SitemapRender
                         if($isMultilang && $isTranslatableModel) {
                             foreach ($othersLangs as $l) {
                                 # code...
-                                // $t = $m->getTranslation();
-                                $translations[] = [
-                                    'language' => $l,
-                                    'url' => $modelObject->urlpath
-                                ];
+                                $t = $m->getTranslations();
+                                if(array_key_exists($l, $t)) {
+                                    $translations[] = [
+                                        'language' => $l,
+                                        'url' => $modelObject->urlpath
+                                    ];
+                                }
+
                             }
                         }
 

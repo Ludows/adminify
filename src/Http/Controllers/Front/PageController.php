@@ -75,7 +75,9 @@ class PageController extends Controller
             $cached = cache( join('.', $segments) );
             $defaultResponse = null;
 
-
+            if($cached) {
+                abort('404');
+            }
 
             if($cached != null) {
                 $model = new $cached['model'];

@@ -122,14 +122,13 @@
      public function walk() {
         $a = [];
         $context = $this;
-        if(isset($context->parent_id) && $context->parent_id != 0) {
-            $parts = $this->crawlUrlPart($context->parent, $a);
-            $a = $parts;
-        }
+        $a[] = $context;
+        $parts = $this->crawlUrlPart($context->parent, $a);
+        $a = $parts;
         return $a;
     }
     public function crawlUrlPart($context, $array = []) {
-        if(isset($context->parent_id) && $context->parent_id != 0) {
+        if(isset($context)) {
             $array[] = $context;
             $this->crawlUrlPart($context->parent, $array);
         }
