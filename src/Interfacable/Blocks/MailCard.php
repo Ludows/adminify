@@ -34,4 +34,9 @@ class MailCard extends InterfacableBlock {
         $this->roles(['administrator']);
 
     }
+    public function addToRender() {
+        return [
+            'createLink' => route('mails.create')
+        ];
+    }
 }

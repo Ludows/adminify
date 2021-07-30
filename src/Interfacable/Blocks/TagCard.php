@@ -34,4 +34,9 @@ class TagCard extends InterfacableBlock {
         $this->roles(['administrator', 'client']);
 
     }
+    public function addToRender() {
+        return [
+            'createLink' => route('tags.create')
+        ];
+    }
 }

@@ -34,4 +34,9 @@ class PostCard extends InterfacableBlock {
         $this->roles(['administrator', 'client']);
 
     }
+    public function addToRender() {
+        return [
+            'createLink' => route('posts.create')
+        ];
+    }
 }

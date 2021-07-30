@@ -13,7 +13,7 @@
                 @foreach($data as $item)
                     <li class="list-group-item d-flex align-items-center justify-content-between">
                         <div>
-                            {{ $item->{$column} }}
+                            {{ $item->{$show} }}
                         </div>
                         <div>
                             <a href="{{ route( $plural.'.edit', [ $type =>  $item->id] ) }}">{{ __('admin.edit.'.$type) }}</a>

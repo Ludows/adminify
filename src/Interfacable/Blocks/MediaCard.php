@@ -37,4 +37,9 @@ class MediaCard extends InterfacableBlock {
         $this->roles(['administrator', 'client']);
 
     }
+    public function addToRender() {
+        return [
+            'createLink' => route('medias.create')
+        ];
+    }
 }

@@ -37,4 +37,9 @@ class TranslationsCard extends InterfacableBlock {
         $this->roles(['administrator', 'client']);
 
     }
+    public function addToRender() {
+        return [
+            'createLink' => route('traductions.create')
+        ];
+    }
 }

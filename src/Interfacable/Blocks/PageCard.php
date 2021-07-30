@@ -34,4 +34,9 @@ class PageCard extends InterfacableBlock {
         $this->roles(['administrator', 'client']);
 
     }
+    public function addToRender() {
+        return [
+            'createLink' => route('pages.create')
+        ];
+    }
 }
