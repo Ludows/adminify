@@ -79,9 +79,13 @@ class SitemapRender
                             foreach ($othersLangs as $l) {
                                 # code...
                                 // $t = $m->getTranslation();
-                                $translations[$l] = $modelObject->urlpath;
+                                $translations[] = [
+                                    'language' => $l,
+                                    'url' => $modelObject->urlpath
+                                ];
                             }
                         }
+
 
                         if($isLinkableMediaModel) {
                             $media = $modelObject->media;

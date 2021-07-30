@@ -33,7 +33,6 @@
                return false;
           }
 
-          $encryptedKey = Crypt::encryptString($key);
           $reflect = new \ReflectionClass($this);
 
           $defaults = [
@@ -43,9 +42,9 @@
                'parent_id' => $this->parent_id
           ];
 
-          cache($encryptedKey, array_merge($defaults, $values));
+          cache([$key => array_merge($defaults, $values)]);
      }
-     
+
      public function decryptToCache($key = '') {
 
           // cache($key, )
@@ -90,7 +89,7 @@
      public function getConfigUrl($a = []) {
 
           $reflect = new \ReflectionClass($this);
-          
+
           $defaults = [
                'from_model' => $reflect->name,
                'from_model_id' => $this->id,
@@ -124,9 +123,13 @@
      public function url() {
           $u = new Url();
 
+          $reflect = new \ReflectionClass($this);
+
+          //dd($this->id);
+
           $u = $u->where([
               ['from_model_id', '=', $this->id],
-              ['from_model', '=', $this->getNamespace()],
+              ['from_model', '=', $reflect->name],
           ]);
           $u = $u->orderBy('order', 'desc');
 
@@ -153,6 +156,6 @@
      }
      public function getUrlPathAttribute() {
         $parts = $this->url;
-        return count($parts) > 0 ? url( join($parts, ',') ) : null;
+        return count($parts) > 0 ? url( join(',', $parts) ) : null;
      }
   }

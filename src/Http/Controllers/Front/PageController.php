@@ -9,6 +9,8 @@ use Ludows\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Traits\SeoGenerator;
 use ReflectionClass;
+use Illuminate\Support\Facades\Crypt;
+
 
 class PageController extends Controller
 {
@@ -70,6 +72,10 @@ class PageController extends Controller
             $multilang = $config['multilang'];
             $lang = $request->lang;
 
+            $tata = join('.', $segments);
+
+            dd( cache( $tata ) , join('.', $segments), $segments);
+
             //dd(Url::all()->all());
 
             // get all urls from website
@@ -83,7 +89,7 @@ class PageController extends Controller
                     $m = new $m_str();
                     $m =  $m->where('id', $url->from_model_id)->get()->first();
                     $url_model = $m->url;
-                    //dump($url_model);
+                    // dump($url_model, $m, $lang);
                     if(array_equal($url_model, $segments)) {
                         $defaultResponse = $m;
                         break;
@@ -91,6 +97,8 @@ class PageController extends Controller
 
                 }
             }
+
+            dd($defaultResponse);
 
             return $defaultResponse;
         }
