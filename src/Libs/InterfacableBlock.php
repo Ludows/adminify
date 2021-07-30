@@ -77,7 +77,7 @@ class InterfacableBlock
     }
 
     public function roles($array) {
-        array_merge($this->roles, $array);
+        $this->roles = array_merge($this->roles, $array);
         return $this;
     }
 
