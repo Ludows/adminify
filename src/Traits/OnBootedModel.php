@@ -23,7 +23,27 @@
     }
 
     protected static function syncToCache($context) {
-        $context->encryptToCache($context->id);
+        $url = $context->url;
+        if($url != null) {
+            $context->encryptToCache(join('.', $url));
+        }
+    }
+
+    protected static function syncronizeUrl($context) {
+
+        if($context->parent_id != 0) {
+            $reflect = new \ReflectionClass($context);
+
+            $context->syncUrl([
+                'model_id' => $context->parent_id,
+                'model_name' => $reflect->name,
+                'order' => 0
+            ]);
+        }
+
+        $context->syncUrl([
+            'order' => 1
+        ]);
     }
 
     protected static function booted()
@@ -42,6 +62,7 @@
             }
 
             if(is_urlable_model($model)) {
+                static::syncronizeUrl($model);
                 static::syncToCache($model);
             }
             
@@ -58,6 +79,7 @@
             }
 
             if(is_urlable_model($model)) {
+                static::syncronizeUrl($model);
                 static::syncToCache($model);
             }
         });
