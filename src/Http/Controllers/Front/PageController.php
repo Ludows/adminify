@@ -43,7 +43,7 @@ class PageController extends Controller
             return view("adminify::layouts.front.pages.index", ['seo' => $seo, 'type' => $type, 'model' => $page, 'user' => $user, 'lang' => $request->lang]);
         }
 
-        public function getPages($slug, Request $request) {
+        public function getPages($slug) {
 
             if($slug == null) {
                 abort(404);
@@ -53,14 +53,14 @@ class PageController extends Controller
 
             $seo = $this->handleSeo($slug);
 
-            $user = $request->user();
+            $user = user();
             if($user != null) {
                 $user->role = $user->roles->first();
                 unset($user->roles);
             }
 
 
-            return view("adminify::layouts.front.pages.index", ['seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => $request->lang]);
+            return view("adminify::layouts.front.pages.index", ['seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => lang()]);
 
         }
 
@@ -72,25 +72,34 @@ class PageController extends Controller
             $multilang = $config['multilang'];
             $lang = $request->lang;
 
-            $cached = join('.', $segments);
+            $cached = cache( join('.', $segments) );
             $defaultResponse = null;
+
+
 
             if($cached != null) {
                 $model = new $cached['model'];
 
-                if($cached['parent_id'] != null) {
-                    $model = $model->find($cached['parent_id']);
-                }
-                else {
-                    $model = $model->find($cached['model_id']);
-                }
+                $model = $model->find($cached['model_id']);
+
+                // if($cached['parent_id'] != null) {
+                //     $model = $model->find($cached['parent_id']);
+                //     dd($cached, $model);
+                // }
+                // else {
+                //     $model = $model->find($cached['model_id']);
+                // }
 
                 $url_model = $model->url;
 
+                // dd($segments, $url_model);
+
                 if(array_equal($url_model, $segments)) {
-                    $defaultResponse = $m;
+                    $defaultResponse = $model;
                 }
             }
+
+            //dd($defaultResponse);
 
             return $defaultResponse;
         }
