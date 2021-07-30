@@ -13,6 +13,9 @@ class MailCard extends InterfacableBlock {
     public function getPlural() {
         return 'mails';
     }
+    public function showColumn() {
+        return 'subject';
+    }
     public function limit() {
         return 3;
     }
