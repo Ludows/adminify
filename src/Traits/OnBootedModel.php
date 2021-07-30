@@ -60,13 +60,16 @@
             if(is_sitemapable_model($model)) {
                 static::loadGenerateSitemap($model);
             }
+            
+        });
 
+        static::created(function ($model) {
             if(is_urlable_model($model)) {
                 static::syncronizeUrl($model);
                 static::syncToCache($model);
             }
-            
         });
+
         static::updating(function ($model) {
             //
             $fillables = $model->getFillable();
@@ -77,7 +80,9 @@
             if(is_sitemapable_model($model)) {
                 static::loadGenerateSitemap($model);
             }
+        });
 
+        static::updated(function ($model) {
             if(is_urlable_model($model)) {
                 static::syncronizeUrl($model);
                 static::syncToCache($model);
