@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Interfacable\Blocks;
 
 use Ludows\Adminify\Libs\InterfacableBlock;
 
-use App\Models\Traductions;
+use App\Models\Translations;
 
 class TranslationsCard extends InterfacableBlock {
     public static function getNamedBlock() {
@@ -22,10 +22,10 @@ class TranslationsCard extends InterfacableBlock {
     public function query() {
         $r = $this->getRequest();
         if($r->useMultilang) {
-            $query = Traductions::lang($r->lang)->take($this->limit)->get()->all();
+            $query = Translations::lang($r->lang)->take($this->limit)->get()->all();
         }
         else {
-            $query = Traductions::take($this->limit)->get()->all();
+            $query = Translations::take($this->limit)->get()->all();
         }
 
         // dd($query);
