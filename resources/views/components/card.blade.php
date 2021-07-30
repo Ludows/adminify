@@ -8,7 +8,7 @@
             <div><a href="{{ $createLink }}" class="btn btn-sm btn-primary">{{ __('admin.create.'.$type) }}</a></div>
         @endif
     </div>
-        @if($data->count() > 0)
+        @if(!empty($data))
             <ul class="list-group list-group-flush">
                 @foreach($data as $item)
                     <li class="list-group-item d-flex align-items-center justify-content-between">

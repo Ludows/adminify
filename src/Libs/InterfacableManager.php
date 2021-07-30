@@ -21,11 +21,11 @@ class InterfacableManager
 
         $block = new $phpClass;
         if(is_null($phpClass)) {
-            
+
         }
 
         if($autoHandle) {
-            $block->query();
+            $block->setQuery( $block->query() );
             $block->handle();
         }
 
@@ -74,7 +74,7 @@ class InterfacableManager
     }
 
     public function render() {
-        
+
         $tpl = $this->getView();
         $blocks = $this->getBlocks();
         $compiled = $this->view->make($tpl, ['blocks' => $blocks, 'css' => $this->getCss(), 'js' => $this->getJs() ]);

@@ -35,7 +35,7 @@ class InterfacableBlock
     public function getLimit() {
         return $this->limit;
     }
-    
+
     public function setLimit($value = -1) {
         $this->limit = $value;
         return $this;
@@ -52,6 +52,11 @@ class InterfacableBlock
 
     public function getQuery() {
         return $this->query;
+    }
+
+    public function setQuery($value = null) {
+        $this->query = $value;
+        return $this;
     }
 
     public function query() {
@@ -86,7 +91,7 @@ class InterfacableBlock
         $hasRoles = $this->hasRoles();
         $return = $show;
         $u = user();
-        
+
         if($hasRoles && !$u->hasRoles( $this->getRoles() )) {
             $return = false;
         }
@@ -137,7 +142,7 @@ class InterfacableBlock
 
     public function handle() {}
     public function render() {
-        
+
         $tpl = $this->getView();
         $query = $this->getQuery();
 
@@ -145,7 +150,7 @@ class InterfacableBlock
             'show' => $this->showColumn(),
             'plural' => $this->getPlural(),
             'type' => Str::singular( $this->getPlural() ),
-            'css' => $this->getCss(), 
+            'css' => $this->getCss(),
             'js' => $this->getJs(),
             'query' => $query
         ];
