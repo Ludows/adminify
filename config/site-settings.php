@@ -19,7 +19,8 @@ return [
         'url' => \App\Models\Url::class,
         'users' => \App\Models\User::class,
         'tags' => \App\Models\Tag::class,
-        'mailable' => \App\Models\Mailables::class
+        'mailable' => \App\Models\Mailables::class,
+        'statistics' => \App\Models\Statistics::class,
     ],
 
     'sitemap' => [
@@ -152,48 +153,5 @@ return [
         \Ludows\Adminify\Interfacable\Blocks\TagCard::class,
         \Ludows\Adminify\Interfacable\Blocks\MailCard::class,
         \Ludows\Adminify\Interfacable\Blocks\MenuCard::class,
-        
-
-
-        // 'limit' => 3,
-        // 'blocks' => [
-        //     'page' => [
-        //         'class' => 'register.pages',
-        //         'showIf' => ['administrator', 'client'],
-        //         'template' => 'adminify::layouts.admin.dashboard.card-page',
-        //         'columnShow' => 'title',
-        //     ],
-        //     'post' => [
-        //         'class' => 'register.posts',
-        //         'showIf' => ['administrator', 'client'],
-        //         'template' => 'adminify::layouts.admin.dashboard.card-post',
-        //         'columnShow' => 'title',
-        //     ],
-        //     'media' => [
-        //         'class' => 'register.medias',
-        //         'showIf' => ['administrator', 'client'],
-        //         'template' => 'adminify::layouts.admin.dashboard.card-media',
-        //         'columnShow' => 'title',
-        //         'plural' => 'medias'
-        //     ],
-        //     'category' => [
-        //         'class' => 'register.categories',
-        //         'showIf' => ['administrator', 'client'],
-        //         'template' => 'adminify::layouts.admin.dashboard.card-category',
-        //         'columnShow' => 'title',
-        //     ],
-        //     'traduction' => [
-        //         'class' => 'register.traductions',
-        //         'showIf' => ['administrator', 'client'],
-        //         'template' => 'adminify::layouts.admin.dashboard.card-traduction',
-        //         'columnShow' => 'key',
-        //     ],
-        //     'comment' => [
-        //         'class' => 'register.comments',
-        //         'showIf' => ['administrator', 'client'],
-        //         'template' => 'adminify::layouts.admin.dashboard.card-comment',
-        //         'columnShow' => 'comment',
-        //     ],
-        // ]
     ]
 ];
