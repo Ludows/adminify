@@ -1,6 +1,6 @@
 <td>
     @if($model->{$attr} != 0)
-        {{ $model->title }}
+        {{ $model->parent->title }}
     @else
         {{ __('admin.hasNoParentPage') }}
     @endif

@@ -9,6 +9,7 @@ use VanOns\Laraberg\Models\Gutenbergable;
 use Ludows\Adminify\Traits\Authorable;
 
 use App\Models\User;
+use App\Models\Page;
 use App\Models\Statuses;
 
 use Ludows\Adminify\Models\ClassicModel; 
@@ -27,6 +28,9 @@ abstract class ContentTypeModel extends ClassicModel
     }
     public function statusScope($query, $key, $operator = '=') {
         return $query->where('status_id', $operator, $key);
+    }
+    public function parent() {
+        return $this->HasOne(Page::class, 'id', 'parent_id');
     }
     public function isPublished() {
         return $this->status_id = 1;
