@@ -1,0 +1,76 @@
+<?php
+
+namespace Ludows\Adminify\Libs;
+use Illuminate\Support\Str;
+
+class InterfacableBlock
+{
+    public function __construct()
+    {
+        $this->view = view();
+        $this->request = request();
+        $this->model = null;
+        $this->js = [];
+        $this->css = [];
+    }
+    public function getModel() {
+        return $this->model;
+    }
+    public function hasModel() {
+        return $this->model != null;
+    }
+    public function setModel($model) {
+        $this->model = $model;
+        return $this;
+    }
+
+    public function model($model) {
+        return $this->setModel($model);
+    }
+
+    public function datas($name = null, $value) {
+        $this->datas[$name] = $value;
+        return $this;
+    }
+
+    public function js($jsPath) {
+        $this->js[] = $jsPath;
+        return $this;
+    }
+
+    public function css($cssPath) {
+        $this->css[] = $cssPath;
+        return $this;
+    }
+
+    public function getRequest() {
+        return $this->request;
+    }
+
+    public function getView() {
+        return 'adminify::layouts.admin.interfacable.card';
+    }
+
+    public function getJs() {
+        return $this->js;
+    }
+
+    public function getCss() {
+        return $this->css;
+    }
+
+    public function getBlocks() {
+        return $this->blocks;
+    }
+
+    public function handle() {}
+    public function render() {
+        
+        $this->handle();
+
+        $tpl = $this->getView();
+        $blocks = $this->getBlocks();
+        $compiled = $this->view->make($tpl, ['blocks' => $blocks, 'css' => $this->getCss(), 'js' => $this->getJs() ]);
+        return $compiled;
+    }
+}
