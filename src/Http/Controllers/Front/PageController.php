@@ -72,33 +72,25 @@ class PageController extends Controller
             $multilang = $config['multilang'];
             $lang = $request->lang;
 
-            $tata = join('.', $segments);
-
-            dd( cache( $tata ) , join('.', $segments), $segments);
-
-            //dd(Url::all()->all());
-
-            // get all urls from website
-            $urls = Url::all()->all();
+            $cached = join('.', $segments);
             $defaultResponse = null;
 
-            if(count($urls) > 0) {
-                foreach ($urls as $url) {
-                    # code...
-                    $m_str = $url->model_name;
-                    $m = new $m_str();
-                    $m =  $m->where('id', $url->from_model_id)->get()->first();
-                    $url_model = $m->url;
-                    // dump($url_model, $m, $lang);
-                    if(array_equal($url_model, $segments)) {
-                        $defaultResponse = $m;
-                        break;
-                    }
+            if($cached != null) {
+                $model = new $cached['model'];
 
+                if($cached['parent_id'] != null) {
+                    $model = $model->find($cached['parent_id']);
+                }
+                else {
+                    $model = $model->find($cached['model_id']);
+                }
+
+                $url_model = $model->url;
+
+                if(array_equal($url_model, $segments)) {
+                    $defaultResponse = $m;
                 }
             }
-
-            dd($defaultResponse);
 
             return $defaultResponse;
         }
