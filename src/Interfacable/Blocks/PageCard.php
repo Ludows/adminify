@@ -10,7 +10,7 @@ class PageCard extends InterfacableBlock {
     public static function getNamedBlock() {
         return 'Page Card';
     }
-    public function getPlurial() {
+    public function getPlural() {
         return 'pages';
     }
     public function limit() {

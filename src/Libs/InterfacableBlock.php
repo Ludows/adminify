@@ -103,7 +103,7 @@ class InterfacableBlock
         return 'title';
     }
 
-    public function getPlurial() {
+    public function getPlural() {
         return '';
     }
 
@@ -143,8 +143,8 @@ class InterfacableBlock
 
         $defaults = [
             'show' => $this->showColumn(),
-            'plurial' => $this->getPlurial(),
-            'type' => Str::singular( $this->getPlurial() ),
+            'plural' => $this->getPlural(),
+            'type' => Str::singular( $this->getPlural() ),
             'css' => $this->getCss(), 
             'js' => $this->getJs(),
             'query' => $query
