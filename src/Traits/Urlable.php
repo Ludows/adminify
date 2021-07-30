@@ -131,7 +131,7 @@
               ['from_model_id', '=', $this->id],
               ['from_model', '=', $reflect->name],
           ]);
-          $u = $u->orderBy('order', 'desc');
+          $u = $u->orderBy('order');
 
           return $u->get()->all();
      }
