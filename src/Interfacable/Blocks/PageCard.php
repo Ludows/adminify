@@ -13,14 +13,16 @@ class PageCard extends InterfacableBlock {
     public function getPlurial() {
         return 'pages';
     }
+    public function limit() {
+        return 3;
+    }
     public function query() {
-        $config = get_site_key('dashboard');
         $r = $this->getRequest();
         if($r->useMultilang) {
-            $query = Page::lang($r->lang)->take($config['limit'])->get()->all();
+            $query = Page::lang($r->lang)->take($this->limit)->get()->all();
         }
         else {
-            $query = Page::take($config['limit'])->get()->all();
+            $query = Page::take($this->limit)->get()->all();
         }
 
         return $query;

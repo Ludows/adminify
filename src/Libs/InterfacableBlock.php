@@ -15,6 +15,7 @@ class InterfacableBlock
         $this->roles = [];
         $this->query = null;
         $this->show = true;
+        $this->limit = $this->limit();
     }
     public function getModel() {
         return $this->model;
@@ -24,6 +25,19 @@ class InterfacableBlock
     }
     public function setModel($model) {
         $this->model = $model;
+        return $this;
+    }
+
+    public function limit() {
+        return -1;
+    }
+
+    public function getLimit() {
+        return $this->limit;
+    }
+    
+    public function setLimit($value = -1) {
+        $this->limit = $value;
         return $this;
     }
 

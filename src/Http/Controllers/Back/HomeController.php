@@ -15,15 +15,6 @@ class HomeController extends Controller
      */
     private $interfacable;
     
-    public $cards = [
-        \Ludows\Adminify\Interfacable\Blocks\PageCard::class
-        // 'register.posts',
-        // 'register.medias',
-        // 'register.categories',
-        // 'register.traductions',
-        // 'register.comments'
-    ];
-
     public function __construct(DashboardManager $interfacable)
     {
         $this->interfacable = $interfacable;
@@ -39,58 +30,17 @@ class HomeController extends Controller
     {
 
         $user = user();
-        $config = get_site_key('dashboard');
+        $blocks = get_site_key('dashboard');
         $request = request();
 
         
         // $this->interfacable->registerBlock('')
 
 
-        foreach ($this->cards as $card) {
+        foreach ($blocks as $block) {
             # code...
-            $this->interfacable->registerBlock( $card::getNamedBlock(), $card );
+            $this->interfacable->registerBlock( $block::getNamedBlock(), $block );
         }
-        // if(count($config['blocks']) > 0) {
-        //     foreach ($config['blocks'] as $blockName => $arr) {
-        //         # code...
-        //         if($user->hasRole($arr['showIf'])) {
-        //             $m_str = get_site_key($arr['class']);
-        //             $m = new $m_str();
-
-        //             if($request->useMultilang) {
-        //                 $m = $m->orderBy('id', 'desc');
-        //                 if(is_translatable_model($m)) {
-        //                     $m = $m->lang($request->lang);
-        //                 }
-        //                 $m = $m->take($config['limit']);
-        //                 $m = $m->get();
-        //             }
-        //             else {
-        //                 $m = $m->orderBy('id', 'desc');
-        //                 $m = $m->take($config['limit']);
-        //                 $m = $m->get();
-        //             }
-
-
-        //             $a = [
-        //                 'data' => $m,
-        //                 'type' => $blockName,
-        //                 'column' => $arr['columnShow'],
-        //                 'plural' => isset($arr['plural']) ? $arr['plural'] : Str::plural($blockName)
-        //             ];
-
-        //             if(\Route::has(isset($arr['plural']) ? $arr['plural'].'.create' : Str::plural($blockName).'.create')) {
-        //                 $a['createLink'] = route( isset($arr['plural']) ? $arr['plural'].'.create' : Str::plural($blockName).'.create');
-        //             }
-
-        //             $v = view()->make($arr['template'], $a);
-        //             $blocks[$blockName] = $v->render();
-        //         }
-        //     }
-        // }
-
-        //dd($user, $config, $blocks);
-
 
         return view('adminify::layouts.admin.pages.dashboard', ['interfacable' => $this->interfacable]);
     }
