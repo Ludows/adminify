@@ -15,17 +15,21 @@ class InterfacableManager
         $this->css = [];
     }
 
-    public function registerBlock($name, $viewName, $extraVars = []) {
+    // ex $this->registerBlocks('tata', 'MaSuperClasse');
 
-        $v = $viewName;
-        if(is_null($viewName)) {
-            $v = 'adminify::layouts.admin.interfacable.card';
+    public function registerBlock($name, $phpClass = null, $autoHandle = true) {
+
+        $v = $phpClass;
+        if(is_null($phpClass)) {
+            
         }
 
-        $this->_columns[ Str::slug($name) ][] = (object) [
-            'view' => $v,
-            'vars' => array_merge($extraVars, ['model' => $this->getModel(), 'attr' => $name]),
-        ];
+        if($autoHandle) {
+            $v->query();
+            $v->handle();
+        }
+
+        $this->blocks[ Str::slug($name) ] = $v;
         return $this;
     }
 
@@ -69,11 +73,8 @@ class InterfacableManager
         return $this->blocks;
     }
 
-    public function handle() {}
     public function render() {
         
-        $this->handle();
-
         $tpl = $this->getView();
         $blocks = $this->getBlocks();
         $compiled = $this->view->make($tpl, ['blocks' => $blocks, 'css' => $this->getCss(), 'js' => $this->getJs() ]);

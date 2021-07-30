@@ -12,6 +12,10 @@ class InterfacableBlock
         $this->model = null;
         $this->js = [];
         $this->css = [];
+        $this->roles = [];
+        $this->query = null;
+        $this->enableRoles = false;
+        $this->show = true;
     }
     public function getModel() {
         return $this->model;
@@ -24,18 +28,37 @@ class InterfacableBlock
         return $this;
     }
 
-    public function model($model) {
-        return $this->setModel($model);
+    public function query() {
+
     }
 
-    public function datas($name = null, $value) {
-        $this->datas[$name] = $value;
-        return $this;
+    public function model($model) {
+        return $this->setModel($model);
     }
 
     public function js($jsPath) {
         $this->js[] = $jsPath;
         return $this;
+    }
+
+    public function getRoles() {
+        return $this->roles;
+    }
+
+    public function roles($array) {
+        array_merge($this->roles, $array);
+        return $this;
+    }
+
+    public function show() {
+
+        $return = $this->show;
+
+        if($this->enableRoles && $this->show) {
+            $return = $this->enableRoles;
+        }
+
+        return $return;
     }
 
     public function css($cssPath) {
@@ -66,8 +89,6 @@ class InterfacableBlock
     public function handle() {}
     public function render() {
         
-        $this->handle();
-
         $tpl = $this->getView();
         $blocks = $this->getBlocks();
         $compiled = $this->view->make($tpl, ['blocks' => $blocks, 'css' => $this->getCss(), 'js' => $this->getJs() ]);
