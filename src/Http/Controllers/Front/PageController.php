@@ -41,7 +41,7 @@ class PageController extends Controller
             return view("adminify::layouts.front.pages.index", ['seo' => $seo, 'type' => $type, 'model' => $page, 'user' => $user, 'lang' => $request->lang]);
         }
 
-        public function getPages($slug = null, Request $request) {
+        public function getPages($slug, Request $request) {
 
             if($slug == null) {
                 abort(404);
