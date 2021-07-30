@@ -6,7 +6,7 @@ use Ludows\Adminify\Libs\InterfacableBlock;
 
 use App\Models\Traductions;
 
-class MediaCard extends InterfacableBlock {
+class TranslationsCard extends InterfacableBlock {
     public static function getNamedBlock() {
         return 'Traductions Card';
     }

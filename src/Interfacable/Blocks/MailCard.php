@@ -6,7 +6,7 @@ use Ludows\Adminify\Libs\InterfacableBlock;
 
 use App\Models\Mailables;
 
-class MediaCard extends InterfacableBlock {
+class MailCard extends InterfacableBlock {
     public static function getNamedBlock() {
         return 'Mails Card';
     }
