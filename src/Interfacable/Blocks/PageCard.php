@@ -10,6 +10,9 @@ class PageCard extends InterfacableBlock {
     public static function getNamedBlock() {
         return 'Page Card';
     }
+    public function getPlurial() {
+        return 'pages';
+    }
     public function query() {
 
         $r = $this->getRequest();
@@ -22,12 +25,9 @@ class PageCard extends InterfacableBlock {
 
         return $query;
     }
-    public function addToRender() {
-        return [];
+    public function handle() {
+
+        $this->roles(['administrator', 'client']);
+
     }
-    // public function handle() {
-
-    //     $query = $this->getQuery();
-
-    // }
 }

@@ -48,7 +48,7 @@ class HomeController extends Controller
 
         foreach ($this->cards as $card) {
             # code...
-            $this->interfacable->registerBlock($card::getNamedBlock(), $card);
+            $this->interfacable->registerBlock( $card::getNamedBlock(), $card );
         }
         // if(count($config['blocks']) > 0) {
         //     foreach ($config['blocks'] as $blockName => $arr) {

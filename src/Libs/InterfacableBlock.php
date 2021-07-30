@@ -14,7 +14,6 @@ class InterfacableBlock
         $this->css = [];
         $this->roles = [];
         $this->query = null;
-        $this->enableRoles = false;
         $this->show = true;
     }
     public function getModel() {
@@ -26,6 +25,15 @@ class InterfacableBlock
     public function setModel($model) {
         $this->model = $model;
         return $this;
+    }
+
+    public function setShow($value = true) {
+        $this->show = $value;
+        return $this;
+    }
+
+    public function getShow() {
+        return $this->show;
     }
 
     public function getQuery() {
@@ -54,12 +62,19 @@ class InterfacableBlock
         return $this;
     }
 
+    public function hasRoles() {
+        return is_array($this->roles) && count($this->roles) > 0 ? true : false;
+    }
+
     public function show() {
 
-        $return = $this->show;
-
-        if($this->enableRoles && $this->show) {
-            $return = $this->enableRoles;
+        $show = $this->getShow();
+        $hasRoles = $this->hasRoles();
+        $return = $show;
+        $u = user();
+        
+        if($hasRoles && !$u->hasRoles( $this->getRoles() )) {
+            $return = false;
         }
 
         return $return;
@@ -68,6 +83,14 @@ class InterfacableBlock
     public function css($cssPath) {
         $this->css[] = $cssPath;
         return $this;
+    }
+
+    public function showColumn() {
+        return 'title';
+    }
+
+    public function getPlurial() {
+        return '';
     }
 
     public static function getNamedBlock() {
@@ -105,12 +128,20 @@ class InterfacableBlock
         $query = $this->getQuery();
 
         $defaults = [
+            'show' => $this->showColumn(),
+            'plurial' => $this->getPlurial(),
+            'type' => Str::singular( $this->getPlurial() ),
             'css' => $this->getCss(), 
             'js' => $this->getJs(),
             'query' => $query
         ];
 
-        $compiled = $this->view->make($tpl, array_merge( $defaults, $this->addToRender()));
+        $compiled = '';
+
+        if($this->show()) {
+            $compiled = $this->view->make($tpl, array_merge( $defaults, $this->addToRender()));
+        }
+
         return $compiled;
     }
 }
