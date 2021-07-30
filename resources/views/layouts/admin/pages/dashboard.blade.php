@@ -5,13 +5,7 @@
 
     <div class="container-fluid mt--7">
 
-        <div class="row mt-5 row-cols-1 row-cols-md-2 row-cols-lg-3">
-            @foreach($blocks as $block)
-                <div class="col mb-4">
-                    {!! $block !!}
-                </div>
-            @endforeach
-        </div>
+        {!! $interfacable->render() !!}
 
         @include('adminify::layouts.admin.footers.auth')
     </div>

@@ -70,6 +70,10 @@ class InterfacableBlock
         return $this;
     }
 
+    public static function getNamedBlock() {
+        return '';
+    }
+
     public function getRequest() {
         return $this->request;
     }

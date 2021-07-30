@@ -16,7 +16,7 @@ class HomeController extends Controller
     private $interfacable;
     
     public $cards = [
-        'register.pages',
+        \Ludows\Adminify\Interfacable\Blocks\PageCard::class
         // 'register.posts',
         // 'register.medias',
         // 'register.categories',
@@ -48,6 +48,7 @@ class HomeController extends Controller
 
         foreach ($this->cards as $card) {
             # code...
+            $this->interfacable->registerBlock($card::getNamedBlock(), $card);
         }
         // if(count($config['blocks']) > 0) {
         //     foreach ($config['blocks'] as $blockName => $arr) {
