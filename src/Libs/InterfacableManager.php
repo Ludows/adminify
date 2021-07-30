@@ -19,17 +19,17 @@ class InterfacableManager
 
     public function registerBlock($name, $phpClass = null, $autoHandle = true) {
 
-        $v = $phpClass;
+        $block = new $phpClass;
         if(is_null($phpClass)) {
             
         }
 
         if($autoHandle) {
-            $v->query();
-            $v->handle();
+            $block->query();
+            $block->handle();
         }
 
-        $this->blocks[ Str::slug($name) ] = $v;
+        $this->blocks[ Str::slug($name) ] = $block;
         return $this;
     }
 

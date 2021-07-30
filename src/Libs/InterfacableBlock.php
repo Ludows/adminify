@@ -28,6 +28,10 @@ class InterfacableBlock
         return $this;
     }
 
+    public function getQuery() {
+        return $this->query;
+    }
+
     public function query() {
 
     }
@@ -82,6 +86,10 @@ class InterfacableBlock
         return $this->css;
     }
 
+    public function addToRender() {
+        return [];
+    }
+
     public function getBlocks() {
         return $this->blocks;
     }
@@ -90,8 +98,15 @@ class InterfacableBlock
     public function render() {
         
         $tpl = $this->getView();
-        $blocks = $this->getBlocks();
-        $compiled = $this->view->make($tpl, ['blocks' => $blocks, 'css' => $this->getCss(), 'js' => $this->getJs() ]);
+        $query = $this->getQuery();
+
+        $defaults = [
+            'css' => $this->getCss(), 
+            'js' => $this->getJs(),
+            'query' => $query
+        ];
+
+        $compiled = $this->view->make($tpl, array_merge( $defaults, $this->addToRender()));
         return $compiled;
     }
 }

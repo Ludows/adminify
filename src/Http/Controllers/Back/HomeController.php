@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 use Ludows\Adminify\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 
-use Ludows\Adminify\Libs\InterfacableManager;
+use Ludows\Adminify\Interfacable\DashboardManager;
 
 class HomeController extends Controller
 {
@@ -24,7 +24,7 @@ class HomeController extends Controller
         // 'register.comments'
     ];
 
-    public function __construct(InterfacableManager $interfacable)
+    public function __construct(DashboardManager $interfacable)
     {
         $this->interfacable = $interfacable;
         $this->middleware('auth');
@@ -42,6 +42,7 @@ class HomeController extends Controller
         $config = get_site_key('dashboard');
         $request = request();
 
+        
         // $this->interfacable->registerBlock('')
 
 
