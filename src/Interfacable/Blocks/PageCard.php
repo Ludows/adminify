@@ -25,6 +25,8 @@ class PageCard extends InterfacableBlock {
             $query = Page::take($this->limit)->get()->all();
         }
 
+        // dd($query);
+
         return $query;
     }
     public function handle() {
