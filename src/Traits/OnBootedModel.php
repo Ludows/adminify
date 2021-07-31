@@ -77,7 +77,7 @@
         });
 
         static::created(function ($model) {
-            if(is_urlable_model($model)) {
+            if(is_urlable_model($model) && $model->allowSitemap) {
                 static::syncronizeUrl($model);
                 static::syncToCache($model);
             }
@@ -98,7 +98,7 @@
         });
 
         static::updated(function ($model) {
-            if(is_urlable_model($model)) {
+            if(is_urlable_model($model) && $model->allowSitemap) {
                 static::syncronizeUrl($model);
                 static::syncToCache($model);
             }
