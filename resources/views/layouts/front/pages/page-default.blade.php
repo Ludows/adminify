@@ -1,3 +1,3 @@
-POST DEFAULT TEMPLATE
+PAGE DEFAULT TEMPLATE
 
 {!! $model->rendercontent !!}
