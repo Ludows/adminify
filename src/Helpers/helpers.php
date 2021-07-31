@@ -34,7 +34,9 @@ if (! function_exists('do_shortcode')) {
 if (! function_exists('parse_shortcode')) {
     function parse_shortcode($string = '') {
         $parser = new ShortcodeFacade();
-        return $parser->parse($string)[0];
+        $result = $parser->parse($string);
+        //dd($result);
+        return $result;
     }
 }
 
@@ -188,7 +190,7 @@ if(! function_exists('get_missing_translations_routes') ) {
 if (! function_exists('get_shortcode')) {
     function get_shortcode($string = '') {
         $ret_s = null;
-        $name = parse_shortcode($string)->getName();
+        $name = $string;
         $shortcodes = config('site-settings.shortcodes');
 
         if(isset($shortcodes[$name])) {
@@ -211,7 +213,7 @@ if (! function_exists('is_shortcode')) {
     function is_shortcode($string = '') {
 
         $isShortcode = false;
-        $name = parse_shortcode($string)->getName();
+        $name = $string;
         $shortcodes = config('site-settings.shortcodes');
 
         if(isset($shortcodes[$name])) {

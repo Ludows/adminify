@@ -1,1 +1,3 @@
-{{ get_translation('test.key') }}
+Todo Page base
+
+{{ $model->rendercontent }}
