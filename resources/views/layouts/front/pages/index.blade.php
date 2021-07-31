@@ -5,13 +5,17 @@
         //dd(menu('blade'));
         //dd(get_translation('test.key'));
         $name = Str::slug(request()->route()->getName(), '-');
+        $type = strtolower($type);
+        $v = view();
     @endphp
-    @if(view()->exists('layouts.front.pages.'.$name))
-        @include('adminify::layouts.front.pages.'.$name)
+    @if($v->exists('layouts.front.pages.'.$type.'-'.$name))
+        @include('adminify::layouts.front.pages.'.$type.'-'.$name)
+    @elseif($v->exists('layouts.front.pages.'.$type.'-default'))
+        @include('adminify::layouts.front.pages.'.$type.'-default')
     @else
         @include('adminify::layouts.front.pages.default')
     @endif
-    @if($type == "Post")
+    @if($type == "post")
         @php
             $allowForm = true;
             $showTitle = true;
