@@ -55,4 +55,13 @@ abstract class ContentTypeModel extends ClassicModel
             'authorName' => $this->author->{$this->authorable_column},
         ]);
     }
+    public function getRenderContentAttribute() {
+        
+        $content = $this->content;
+
+        $parse = parse_shortcode($content);
+
+        dd($parse);
+
+    }
 }
