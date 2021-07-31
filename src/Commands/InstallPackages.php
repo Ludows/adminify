@@ -18,7 +18,7 @@ class InstallPackages extends Command
      * @var string
      */
     protected $signature = 'adminify:install
-        {task?* : Tasks name are npm, coreinstall, migrations, seed, publishes, rollback, feeds, routes}
+        {task?* : Tasks name are npm, coreinstall, migrations, seed, publishes, rollback, feeds, routes, caches}
         {--force : Force all tasks}'; //todo
 
     /**
@@ -63,6 +63,7 @@ class InstallPackages extends Command
 
         if(!in_array('*', $cleanedTasks) && count($arguments['task']) == 0) {
             $cleanedTasks[] = '*';
+            $cleanedTasks[] = 'cache';
         }
 
         if(in_array('*', $cleanedTasks) || in_array('rollback', $cleanedTasks)) {
@@ -70,10 +71,10 @@ class InstallPackages extends Command
         }
 
         if(in_array('*', $cleanedTasks)  || in_array('coreinstall', $cleanedTasks)) {
-            $this->info('Handle Adminify core instalation');
+            $this->info('Handle Adminify core instalation...');
             $this->handleCoreTasks();
 
-            $this->info('Handle stubs install');
+            $this->info('Handle stubs install...');
             $this->handleStubs(base_path('vendor/ludows/adminify/stubs'));
             if(!in_array('*', $cleanedTasks)) {
                 $this->doCommand('composer dump-autoload');
@@ -85,37 +86,44 @@ class InstallPackages extends Command
         }
 
         if(in_array('*', $cleanedTasks)  || in_array('feeds', $cleanedTasks)) {
-            $this->info('Handle feeds config generation');
+            $this->info('Handle feeds config generation...');
             Artisan::call('generate:feeds');
         }
 
         if(in_array('*', $cleanedTasks)  || in_array('routes', $cleanedTasks)) {
-            $this->info('Handle route list js');
+            $this->info('Handle route list js...');
             Artisan::call('generate:routes');
         }
 
         if(in_array('*', $cleanedTasks)  || in_array('translations', $cleanedTasks)) {
-            $this->info('Handle Translations js');
+            $this->info('Handle Translations js...');
             Artisan::call('generate:translations');
         }
 
         
         if(in_array('*', $cleanedTasks)  || in_array('migrations', $cleanedTasks)) {
-            $this->info('Handle migrations database');
+            $this->info('Handle migrations database...');
             Artisan::call('migrate');
+        }
+
+        if(in_array('*', $cleanedTasks)  || in_array('cache', $cleanedTasks)) {
+            $this->info('Clear all caches...');
+            Artisan::call('cache:clear');
+            Artisan::call('config:clear');
+            Artisan::call('view:clear');
         }
 
         //run seeds
         //exec("php artisan db:seed --class='Ludows\Adminify\Database\Seeders\DatabaseSeeder'");
         if(in_array('*', $cleanedTasks)  || in_array('seed', $cleanedTasks)) {
-            $this->info('Handle seeding database');
+            $this->info('Handle seeding database...');
             Artisan::call('db:seed', [
                 '--class' => 'Ludows\Adminify\Database\Seeders\DatabaseSeeder'
             ]);
         }
 
         if(in_array('*', $cleanedTasks)  || in_array('npm', $cleanedTasks)) {
-            $this->info('Handle npm process');
+            $this->info('Handle npm process...');
             $this->doCommand('npm install && npm run dev');
         }
 
