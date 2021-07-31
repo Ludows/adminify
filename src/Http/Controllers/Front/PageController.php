@@ -45,9 +45,6 @@ class PageController extends Controller
 
         public function getPages($slug) {
 
-            if($slug == null) {
-                abort(404);
-            }
             $reflection = new ReflectionClass($slug);
             $type = $reflection->getShortName();
 
@@ -75,7 +72,7 @@ class PageController extends Controller
             $cached = cache( join('.', $segments) );
             $defaultResponse = null;
 
-            if($cached) {
+            if($cached == null) {
                 abort('404');
             }
 
@@ -94,7 +91,7 @@ class PageController extends Controller
 
                 $url_model = $model->url;
 
-                // dd($segments, $url_model);
+                //dd($segments, $url_model);
 
                 if(array_equal($url_model, $segments)) {
                     $defaultResponse = $model;

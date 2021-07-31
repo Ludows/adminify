@@ -29,22 +29,38 @@
         }
     }
 
-    protected static function syncronizeUrl($context) {
-        if(isset($context->parent_id) && $context->parent_id != 0) {
-            $reflect = new \ReflectionClass($context);
+    protected static function walkThroughtParents($context, $from = null,  $baseOrder = 1) {
+        $parentable = $context->parent_id;
+        //dump($parentable);
+        $reflect = new \ReflectionClass($context);
 
+        if(isset($parentable) && $parentable != 0) {
             $context->syncUrl([
-                'model_id' => $context->parent_id,
+                'from_model_id' => $from,
+                'model_id' => $context->id,
+                'model_name' => $reflect->name,
+                'order' => $baseOrder
+            ]);
+            //access to parent
+            $parent = $context->getParent($parentable);
+
+            static::walkThroughtParents($parent, $from,  $parent->id);
+        }
+        else {
+            // it's the root path of your url
+            $context->syncUrl([
+                'from_model_id' => $from,
                 'model_name' => $reflect->name,
                 'order' => 0
             ]);
         }
+    }
 
+    protected static function syncronizeUrl($context) {
 
+        // they load a walker to create record in db;
+        static::walkThroughtParents($context, $context->id, $context->id);
 
-        $context->syncUrl([
-            'order' => 1
-        ]);
     }
 
     protected static function booted()

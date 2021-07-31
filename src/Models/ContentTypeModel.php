@@ -12,7 +12,7 @@ use App\Models\User;
 use App\Models\Page;
 use App\Models\Statuses;
 
-use Ludows\Adminify\Models\ClassicModel; 
+use Ludows\Adminify\Models\ClassicModel;
 use Spatie\Feed\FeedItem;
 
 abstract class ContentTypeModel extends ClassicModel
@@ -22,7 +22,7 @@ abstract class ContentTypeModel extends ClassicModel
     use Sitemapable;
     use Gutenbergable;
     use Authorable;
-    
+
     public function status() {
         return $this->HasOne(Statuses::class, 'id', 'status_id');
     }
@@ -32,14 +32,17 @@ abstract class ContentTypeModel extends ClassicModel
     public function parent() {
         return $this->HasOne(Page::class, 'id', 'parent_id');
     }
+    public function getParent($id) {
+        return Page::find($id);
+    }
     public function isPublished() {
-        return $this->status_id = 1;
+        return $this->status_id == 1;
     }
     public function isDrafted() {
-        return $this->status_id = 2;
+        return $this->status_id == 2;
     }
     public function isTrashed() {
-        return $this->status_id = 3;
+        return $this->status_id == 3;
     }
     public function toFeedItem(): FeedItem
     {

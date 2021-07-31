@@ -119,29 +119,34 @@
           }
 
      }
-     public function walk() {
-        $a = [];
-        $context = $this;
-        $a[] = $context;
-        $parts = $this->crawlUrlPart($context->parent, $a);
-        $a = $parts;
-        return $a;
-    }
-    public function crawlUrlPart($context, $array = []) {
-        if(isset($context)) {
-            $array[] = $context;
-            $this->crawlUrlPart($context->parent, $array);
-        }
-        return $array;
-    }
+    //  public function walk() {
+    //     $a = [];
+    //     $context = $this;
+    //     $parts = $this->crawlUrlPart($context->parent, $a);
+    //     $a = array_merge($a,$parts);
+    //     return $a;
+    // }
+    // public function crawlUrlPart($context, $array = []) {
+    //     // if(isset($context)) {
+    //         $array[] = $context;
+    //         $parent = $context->parent;
+    //         $data = is_class($parent) && $parent != 0 ? $parent : $context;
+
+    //         $this->crawlUrlPart($data, $array);
+    //     // }
+    //     return $array;
+    // }
      public function url() {
+
           $u = new Url();
 
-          $a = $this->walk();
+          $u = $u->where([
+            ['from_model_id', '=', $this->id]
+          ]);
 
-          $a = array_reverse($a);
+          $u = $u->orderBy('order');
 
-          return $a;
+          return $u->get()->all();
      }
      public function getUrlAttribute() {
           $a = [];
@@ -151,7 +156,12 @@
           if(count($collection) > 0) {
                foreach ($collection as $col) {
                     # code...
-                    $a[] = $col->{$this->urlableColumn};
+                    $m = new $col->model_name;
+                    $m = $m->where([
+                        ['id', '=', $col->model_id]
+                    ])->get()->first();
+
+                    $a[] = $m->{$this->urlableColumn};
                }
           }
 
