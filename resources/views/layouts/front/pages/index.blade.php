@@ -8,9 +8,9 @@
         $type = strtolower($type);
         $v = view();
     @endphp
-    @if($v->exists('layouts.front.pages.'.$type.'-'.$name))
+    @if($v->exists('adminify::layouts.front.pages.'.$type.'-'.$name))
         @include('adminify::layouts.front.pages.'.$type.'-'.$name)
-    @elseif($v->exists('layouts.front.pages.'.$type.'-default'))
+    @elseif($v->exists('adminify::layouts.front.pages.'.$type.'-default'))
         @include('adminify::layouts.front.pages.'.$type.'-default')
     @else
         @include('adminify::layouts.front.pages.default')
