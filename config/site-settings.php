@@ -19,7 +19,7 @@ return [
         'url' => \App\Models\Url::class,
         'users' => \App\Models\User::class,
         'tags' => \App\Models\Tag::class,
-        'mailable' => \App\Models\Mailables::class,
+        'mailables' => \App\Models\Mailables::class,
         'statistics' => \App\Models\Statistics::class,
     ],
 
