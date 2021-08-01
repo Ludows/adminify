@@ -6,17 +6,17 @@ use App\Models\Page;
 
 use Illuminate\Http\Request;
 use Ludows\Adminify\Http\Controllers\Controller;
-use Illuminate\Support\Str;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use App\Forms\DeleteCrud;
+
 use App\Forms\CreatePage;
 use App\Forms\UpdatePage;
+
 use App\Forms\SeoForm;
 
-
-use App\Http\Requests\PageRequest;
+use App\Http\Requests\CreatePageRequest;
+use App\Http\Requests\UpdatePageRequest;
 
 use App\Repositories\PageRepository;
 use App\Repositories\SeoRepository;
@@ -69,7 +69,7 @@ class PageController extends Controller
             *
             * @return Response
             */
-        public function store(PageRequest $request)
+        public function store(CreatePageRequest $request)
         {
             //
             $form = $this->form(CreatePage::class);
@@ -136,7 +136,7 @@ class PageController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(PageRequest $request, Page $page)
+        public function update(UpdatePageRequest $request, Page $page)
         {
             //
             $isSeo = $request->exists('_seo');
