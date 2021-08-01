@@ -8,18 +8,14 @@ use App\Models\Media;
 use App\Http\Requests\CreateMediaRequest;
 use App\Http\Requests\UpdateMediaRequest;
 use App\Repositories\MediaRepository;
-use Illuminate\Support\Facades\Storage;
+
 use Ludows\Adminify\Http\Controllers\Controller;
-
-use File;
-
-use Illuminate\Support\Str;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
+
 use App\Forms\CreateMedia;
 use App\Forms\UpdateMedia;
-use App\Forms\DeleteCrud;
 
 use Ludows\Adminify\Traits\TableManagerable;
 use Ludows\Adminify\Tables\MediaTable;
