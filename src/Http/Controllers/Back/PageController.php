@@ -12,6 +12,7 @@ use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use App\Forms\DeleteCrud;
 use App\Forms\CreatePage;
+use App\Forms\UpdatePage;
 use App\Forms\SeoForm;
 
 
@@ -118,7 +119,7 @@ class PageController extends Controller
                 ]);
             }
             else {
-                $form = $formBuilder->create(CreatePage::class, [
+                $form = $formBuilder->create(UpdatePage::class, [
                     'method' => 'PUT',
                     'url' => route('pages.update', ['page' => $page->id]),
                     'model' => $page
@@ -149,7 +150,7 @@ class PageController extends Controller
                 ]);
             }
             else {
-                $form = $this->form(CreatePage::class);
+                $form = $this->form(UpdatePage::class);
             }
 
             if($isSeo) {
@@ -160,10 +161,19 @@ class PageController extends Controller
             }
 
             if($request->ajax()) {
-                return response()->json([
-                    'page' => $page,
+
+                $ar = [
                     'status' => __('admin.typed_data.updated')
-                ]);
+                ];
+
+                if($isSeo) {
+                    $ar['seo'] = $seo;
+                }
+                else {
+                    $ar['seo'] = $page;
+                }
+
+                return response()->json($ar);
             }
             else {
                 flash(__('admin.typed_data.updated'))->success();
