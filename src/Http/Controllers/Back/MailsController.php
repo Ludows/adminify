@@ -4,6 +4,7 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateMailRequest;
+use App\Http\Requests\UpdateMailRequest;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -37,7 +38,7 @@ class MailsController extends Controller
         *
         * @return Response
         */
-        public function index(FormBuilder $formBuilder, Request $request)
+        public function index(Request $request)
         {
             $table = $this->table(new MailsTable());            
 
@@ -111,11 +112,9 @@ class MailsController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(Mailables $mail, CreateMailRequest $request)
+        public function update(Mailables $mail, UpdateMailRequest $request)
         {
-            //
-
-
+            
             $form = $this->form(UpdateMail::class, [
                 'method' => 'PUT',
                 'url' => route('mails.update', ['mail' => $mail->id]),
@@ -129,7 +128,6 @@ class MailsController extends Controller
 
         public function send(Mailables $mail, Request $request) {
 
-            //dd($mail);
             $user = user();
             $class = $mail->mailable;
             $mail_class = app($class);

@@ -10,7 +10,6 @@ use Ludows\Adminify\Http\Controllers\Controller;
 
 use App\Repositories\CommentRepository;
 
-use App\Forms\DeleteCrud;
 use App\Forms\UpdateComment;
 
 use Ludows\Adminify\Traits\TableManagerable;

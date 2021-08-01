@@ -4,15 +4,9 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
 use Ludows\Adminify\Http\Controllers\Controller;
-use App\Forms\DeleteCrud;
-
-use Kris\LaravelFormBuilder\FormBuilder;
-use Kris\LaravelFormBuilder\FormBuilderTrait;
-
-use Illuminate\Support\Str;
 class ListingController extends Controller
 {
-    public function index(Request $request, FormBuilder $formBuilder) {
+    public function index(Request $request) {
 
 
         $config = config('site-settings.listings');

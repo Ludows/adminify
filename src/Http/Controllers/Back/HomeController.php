@@ -2,7 +2,6 @@
 
 namespace Ludows\Adminify\Http\Controllers\Back;
 use Ludows\Adminify\Http\Controllers\Controller;
-use Illuminate\Support\Str;
 
 use Ludows\Adminify\Interfacable\DashboardManager;
 
@@ -32,10 +31,6 @@ class HomeController extends Controller
         $user = user();
         $blocks = get_site_key('dashboard');
         $request = request();
-
-        
-        // $this->interfacable->registerBlock('')
-
 
         foreach ($blocks as $block) {
             # code...

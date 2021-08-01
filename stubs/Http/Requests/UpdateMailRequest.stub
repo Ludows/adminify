@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Ludows\Adminify\Http\Requests\UpdateMailRequest as UpdateMailRequestBase;
+
+class UpdateMailRequest extends UpdateMailRequestBase
+{}
