@@ -4,6 +4,7 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 
 use App\Models\Category;
 
@@ -11,16 +12,13 @@ use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use App\Forms\CreateCategory;
 use App\Forms\UpdateCategory;
-use App\Forms\DeleteCrud;
-use Ludows\Adminify\Http\Controllers\Controller;
-use Ludows\Adminify\Dropdowns\Category as CategoryDropdownManager;
-
 
 use App\Repositories\CategoryRepository;
 
 use Ludows\Adminify\Traits\TableManagerable;
 use Ludows\Adminify\Tables\CategoryTable;
 
+use Ludows\Adminify\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
@@ -56,14 +54,6 @@ class CategoryController extends Controller
                 'method' => 'POST',
                 'url' => route('categories.store')
             ]);
-
-            // $formCreateCategory = $formBuilder->create(\App\Forms\CreateCategory::class, [
-            //     'method' => 'POST',
-            //     'action' => null
-            // ]);
-
-            // view()->share('formCreateCategory', $formCreateCategory);
-
 
             return view("adminify::layouts.admin.pages.create", ['form' => $form]);
         }
@@ -130,7 +120,7 @@ class CategoryController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(Category $category, CreateCategoryRequest $request)
+        public function update(Category $category, UpdateCategoryRequest $request)
         {
             //
 
