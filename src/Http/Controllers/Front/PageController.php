@@ -67,7 +67,9 @@ class PageController extends Controller
             $request = request();
             $segments = $request->segments();
             $multilang = $config['multilang'];
-            $lang = $request->lang;
+            $lang = lang();
+            $user = user();
+
 
             $cached = cache( join('.', $segments) );
             $defaultResponse = null;
@@ -92,8 +94,12 @@ class PageController extends Controller
                 $url_model = $model->url;
 
                 //dd($segments, $url_model);
+                //activate front viewing for drafted content with logued user
+                if(array_equal($url_model, $segments) && $model->isDrafted() && $user != null) {
+                    $defaultResponse = $model;
+                }
 
-                if(array_equal($url_model, $segments)) {
+                if(array_equal($url_model, $segments) && $model->isPublished()) {
                     $defaultResponse = $model;
                 }
             }
