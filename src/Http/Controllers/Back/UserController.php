@@ -3,7 +3,6 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -14,8 +13,8 @@ use Ludows\Adminify\Http\Controllers\Controller;
 
 use App\Forms\CreateUser;
 use App\Forms\UpdateUser;
+
 use App\Repositories\UserRepository;
-use App\Forms\DeleteCrud;
 
 use Ludows\Adminify\Traits\TableManagerable;
 use Ludows\Adminify\Tables\UserTable;
