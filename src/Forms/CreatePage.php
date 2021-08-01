@@ -79,7 +79,7 @@ class CreatePage extends Form
     }
     public function getStatuses() {
         $hasModel = $this->getModel();
-        $statuses = app('App\Models\Statuses')->all()->pluck('name' ,'id');
+        $statuses = app('App\Models\Statuses')->where('id' , '!=', 3)->pluck('name' ,'id');
         $selecteds = [];
 
         $statuses = $statuses->all();
