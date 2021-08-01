@@ -8,6 +8,7 @@ use App\Forms\CreateTag as CreateTagForm;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateTagRequest as CreateTagRequest;
+use App\Http\Requests\UpdateTagRequest as UpdateTagRequest;
 use App\Models\Tag as TagModel;
 
 use App\Repositories\TagRepository;
@@ -105,7 +106,7 @@ class TagsController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(TagModel $tag, FormBuilder $formBuilder, CreateTagRequest $request)
+        public function update(TagModel $tag, FormBuilder $formBuilder, UpdateTagRequest $request)
         {
             //
             $form = $this->form(CreateTagForm::class, [

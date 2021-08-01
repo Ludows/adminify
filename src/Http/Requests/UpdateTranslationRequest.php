@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateTranslation extends FormRequest
+class UpdateTranslationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,7 +26,6 @@ class CreateTranslation extends FormRequest
         $r = request();
         $a = [
             'key' => [
-                'unique:traductions,key',
                 'required',
                 'string'
             ],

@@ -10,8 +10,6 @@ use App\Forms\SaveMissingTraductions;
 use App\Repositories\SaveTranslationRepository;
 use Illuminate\Http\Request;
 
-use Illuminate\Support\Str;
-
 use Ludows\Adminify\Http\Controllers\Controller;
 class SaveTranslationsController extends Controller
 {

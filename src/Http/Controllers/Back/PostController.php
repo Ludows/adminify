@@ -4,13 +4,14 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreatePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
+
 use App\Forms\CreatePost;
 use App\Forms\UpdatePost;
-use App\Forms\DeleteCrud;
 use App\Forms\SeoForm;
 
 use App\Models\Post;
@@ -135,7 +136,7 @@ class PostController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(Post $post, CreatePostRequest $request)
+        public function update(Post $post, UpdatePostRequest $request)
         {
             //
             $isSeo = $request->exists('_seo');
@@ -166,7 +167,7 @@ class PostController extends Controller
 
             if($request->ajax()) {
                 return response()->json([
-                    'media' => $post,
+                    'post' => $post,
                     'status' => __('admin.typed_data.updated')
                 ]);
             }

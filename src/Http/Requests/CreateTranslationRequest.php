@@ -4,8 +4,18 @@ namespace Ludows\Adminify\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreatePostRequest extends FormRequest
+class CreateTranslationRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return auth()->check();
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -15,12 +25,14 @@ class CreatePostRequest extends FormRequest
     {
         $r = request();
         $a = [
-            'title' => [
+            'key' => [
+                'unique:traductions,key',
                 'required',
-                'string',
+                'string'
             ],
-            'status_id' => [
-                'required'
+            'text' => [
+                'required',
+                'string'
             ]
         ];
 

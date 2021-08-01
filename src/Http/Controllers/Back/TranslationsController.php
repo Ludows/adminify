@@ -4,12 +4,13 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
+
 use App\Forms\CreateTranslation as FormsCreateTranslation;
 use App\Forms\UpdateTranslation;
-use App\Forms\DeleteCrud;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateTranslation;
+use App\Http\Requests\CreateTranslationRequest;
+use App\Http\Requests\UpdateTranslationRequest;
 use App\Models\Translations as Traductions;
 
 use App\Repositories\TranslationRepository;
@@ -62,7 +63,7 @@ class TranslationsController extends Controller
             *
             * @return Response
             */
-        public function store(CreateTranslation $request)
+        public function store(CreateTranslationRequest $request)
         {
             //
             $form = $this->form(FormsCreateTranslation::class);
@@ -118,7 +119,7 @@ class TranslationsController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(Traductions $traduction, FormBuilder $formBuilder, Request $request)
+        public function update(Traductions $traduction, FormBuilder $formBuilder, UpdateTranslationRequest $request)
         {
             //
             $form = $this->form(UpdateTranslation::class, [
