@@ -36,13 +36,13 @@ abstract class ContentTypeModel extends ClassicModel
         return Page::find($id);
     }
     public function isPublished() {
-        return $this->status_id == 1;
+        return $this->status_id == Statuses::PUBLISHED_ID;
     }
     public function isDrafted() {
-        return $this->status_id == 2;
+        return $this->status_id == Statuses::DRAFTED_ID;
     }
     public function isTrashed() {
-        return $this->status_id == 3;
+        return $this->status_id == Statuses::TRASHED_ID;
     }
     public function toFeedItem(): FeedItem
     {

@@ -47,6 +47,14 @@ if(! function_exists('is_linkable_media_model') ) {
     }
 }
 
+if(! function_exists('is_trashable_model')  ) {
+    function is_trashable_model($class) {
+        // the relationship model
+        $f = $class->getFillable();
+        return in_array('status_id', $f);
+    }
+}
+
 if(! function_exists('set_recursive_finder')) {
     function set_recursive_finder($path, $wantedFile, $params = []) {
         $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));

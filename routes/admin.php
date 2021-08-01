@@ -7,13 +7,13 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'admin.breadcrumb
     
     Route::post('/search', 'Ludows\Adminify\Http\Controllers\Back\SearchController@index')->name('searchable');
 
-	Route::resource('posts', 'Ludows\Adminify\Http\Controllers\Back\PostController', [] );
-	
+	Route::resource('posts', 'Ludows\Adminify\Http\Controllers\Back\PostController', ['except' => ['show']] );
+    
     Route::resource('medias', 'Ludows\Adminify\Http\Controllers\Back\MediaController', ['except' => ['show']]);
 	
     Route::resource('categories', 'Ludows\Adminify\Http\Controllers\Back\CategoryController', ['except' => ['show']]);
 	
-    Route::resource('pages', 'Ludows\Adminify\Http\Controllers\Back\PageController', []);
+    Route::resource('pages', 'Ludows\Adminify\Http\Controllers\Back\PageController', ['except' => ['show']]);
     
     Route::resource('menus', 'Ludows\Adminify\Http\Controllers\Back\MenuController', ['except' => ['show']]);
     Route::post('menus/set-items-to-menu/{id}/{type}', 'Ludows\Adminify\Http\Controllers\Back\MenuController@setItemsToMenu')->name('menus.setItemsToMenu');
@@ -38,6 +38,8 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'admin.breadcrumb
     Route::post('mails/send/{mail}', 'Ludows\Adminify\Http\Controllers\Back\MailsController@send')->name('mails.send');
 
     Route::resource('savetraductions', 'Ludows\Adminify\Http\Controllers\Back\SaveTranslationsController', ['except' => ['show', 'create', 'store', 'index', 'destroy']]);
+
+    Route::post('{type}/trash/{id}', 'Ludows\Adminify\Http\Controllers\Back\TrashController@index')->name('trash');
 
     Route::get('modales/content/{name}', function ($name) {
         $returnView = view("layouts.admin.modales.contents.".$name, [])->render();

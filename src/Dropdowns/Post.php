@@ -34,6 +34,13 @@ class Post extends DropdownsManager
                     ]
                 ]);
                 $this->add('dropdown_'.$m->id, [
+                    'template' => 'adminify::layouts.admin.dropdowns.extends.seo',
+                    'vars' => [
+                        'url' => route('posts.edit', ['post' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '', 'seo']),
+                        'name' => 'posts'
+                    ]
+                ]);
+                $this->add('dropdown_'.$m->id, [
                     'template' => 'adminify::layouts.admin.dropdowns.extends.delete',
                     'vars' => [
                         'form' => $form->create(DeleteCrud::class, [

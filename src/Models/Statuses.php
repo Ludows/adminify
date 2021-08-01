@@ -13,6 +13,10 @@ class Statuses extends ClassicModel
     public function toFeedItem(): FeedItem {}
     public function getSearchResult() : SearchResult {}
 
+    const PUBLISHED_ID = 1;
+    const DRAFTED_ID = 2;
+    const TRASHED_ID = 3;
+
     public $statuses = [
         'published',
         'draft',
