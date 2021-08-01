@@ -1,3 +1,10 @@
-PAGE DEFAULT TEMPLATE
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            PAGE DEFAULT TEMPLATE
 
-{!! $model->rendercontent !!}
+            {!! $model->rendercontent !!}
+        </div>
+    </div>
+</div>
+
