@@ -18,10 +18,9 @@ class GenerateAdminMenu
      * @return mixed
      */
     public function manageMenu() {
-        $request = request();
-        $user = $request->user();
+        $user = user();
         $multilang = config('site-settings.multilang');
-        $lang = $request->lang;
+        $lang = lang();
 
         $menuAdmin = Menu::new()
                 ->setActiveClass('active')
@@ -61,6 +60,7 @@ class GenerateAdminMenu
                 }
                 if($user->hasPermissionTo('manage_mails')) {
                     $menuAdmin->add( Link::to( $multilang ? '/admin/mails?lang='.$lang : '/admin/mails', '<i class="ni ni-circle-08"></i> '.__('admin.mails.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+                    $menuAdmin->add( Link::to( $multilang ? '/admin/templates?lang='.$lang : '/admin/templates', '<i class="ni ni-single-copy-04"></i> '.__('admin.templates.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
                 }
                 if($user->hasRole('subscriber')) {
                     $menuAdmin->add( Link::to($multilang ? '/admin/users'.'/'.$user->id. '/edit?lang='.$lang : '/admin/users'.'/'.$user->id. '/edit', '<i class="ni ni-circle-08"></i> '.__('admin.users.edit'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
