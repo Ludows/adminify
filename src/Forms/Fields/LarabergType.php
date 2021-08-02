@@ -14,14 +14,31 @@ class LarabergType extends FormField {
         return 'adminify::fields.laraberg';
     }
 
+    public function setDefaultsLaraberg() {
+        return [
+            'laravelFilemanager' => true
+        ];
+    }
+
     public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
     {
         $uniqid = Str::random(9);
-        $options['sibling'] = Str::slug('laraberg_'.$uniqid);
+        
+        $options = $this->getOptions();
+
         if(!isset($options['attr'])) {
             $options['attr'] = [];
         }
         $options['attr']['id'] = Str::slug('laraberg_textarea_'.$uniqid);
+
+        $this->setOptions([
+            'attr' => [
+                'id' => Str::slug('laraberg_textarea_'.$uniqid)
+            ],
+            'sibling' => Str::slug('laraberg_'.$uniqid),
+            'withBtnForTemplates' => isset($options['withBtnForTemplates']) ? $options['withBtnForTemplates'] : false,
+            'laraberg_defaults' => array_merge($this->setDefaultsLaraberg(), isset($options['laraberg_defaults']) ? $options['laraberg_defaults'] : [])
+        ]);
 
         return parent::render($options, $showLabel, $showField, $showError);
     }

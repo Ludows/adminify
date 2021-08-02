@@ -3,13 +3,16 @@
         <div {!! $options['wrapperAttrs'] !!}>
     @endif
 
-    <a href="#" class="btn btn-primary">
-        {{ __('admin.selectTemplate') }}
-    </a>
+    @if ($options['withBtnForTemplates'])
+        <a href="#" class="btn btn-primary">
+            {{ __('admin.selectTemplate') }}
+        </a>
 
-    <a href="#" class="btn btn-primary js-save-template">
-        {{ __('admin.saveAs') }}
-    </a>
+        <a href="#" class="btn btn-primary js-save-template">
+            {{ __('admin.saveAs') }}
+        </a>
+    @endif
+    
 
     @if($showLabel && $options['label'] !== false && $options['label_show'])
         {!! Form::customLabel($name, $options['label'], $options['label_attr']) !!}
@@ -41,7 +44,7 @@
     <script>
         window.admin.larabergFields.push({
             selector: "{{ $options['sibling'] }}",
-            options: [],
+            options: @json($options['laraberg_defaults']),
             multilang: {!! $useMultilang !!},
             currentLang: '{!! $currentLang !!}'
         })
