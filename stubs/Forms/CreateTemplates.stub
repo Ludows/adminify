@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Forms;
+
+use Ludows\Adminify\Forms\CreateTemplates as CreateBaseForm;
+
+class CreateTemplates extends CreateBaseForm
+{}
