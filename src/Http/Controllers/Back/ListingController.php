@@ -4,6 +4,8 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
 use Ludows\Adminify\Http\Controllers\Controller;
+
+use App\Models\Statuses;
 class ListingController extends Controller
 {
     public function index(Request $request) {
@@ -61,8 +63,11 @@ class ListingController extends Controller
             }
         } 
 
-        if(isset($datas['status']) && is_trashable_model($m)) {
+        if(isset($datas['status']) && is_trashable_model($m) && $datas['status'] != -1) {
             $m = $m->where('status_id', $datas['status']);
+        }
+        else {
+            $m = $m->status(Statuses::TRASHED_ID, '!=');
         }
 
         $m = $m->take( $config['limit'] );

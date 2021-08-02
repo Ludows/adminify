@@ -74,9 +74,9 @@ jQuery(document).ready(function ($) {
             o['search'] = valInput.toLowerCase().trim();
         }
 
-        if(statusId != -1) {
-            o['status'] = statusId;
-        }
+        // if(statusId != -1) {
+        o['status'] = statusId;
+        // }
         // if(fromBtns) {
         o['offset'] = parseInt( listingBlock.attr('data-page') ) * window.listingConfig.limit;
         // }
