@@ -45,7 +45,7 @@ class PostTable extends TableManager {
         }
         else {
             if($request->useMultilang) {
-                $posts = PostModel::limit( $config['limit'] )->lang($request->lang)->get();
+                $posts = PostModel::limit( $config['limit'] )->status(Statuses::TRASHED_ID, '!=')->lang($request->lang)->get();
                 // dd($categories);
             }
             else {
