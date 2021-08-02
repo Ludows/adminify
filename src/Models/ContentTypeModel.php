@@ -26,7 +26,7 @@ abstract class ContentTypeModel extends ClassicModel
     public function status() {
         return $this->HasOne(Statuses::class, 'id', 'status_id');
     }
-    public function statusScope($query, $key, $operator = '=') {
+    public function scopeStatus($query, $key, $operator = '=') {
         return $query->where('status_id', $operator, $key);
     }
     public function parent() {
