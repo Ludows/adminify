@@ -16,6 +16,13 @@ class TableManager
         $this->_columns = [];
         $this->js = [];
         $this->css = [];
+        $this->areas = [
+            'top-left' => [],
+            'top-right' => [],
+            'bottom-left' => [],
+            'bottom-right' => []
+        ];
+        $this->showTitle = true;
 
         if($autoHandle) {
             $this->handle();
@@ -39,6 +46,23 @@ class TableManager
     public function setModel($model) {
         $this->model = $model;
         return $this;
+    }
+
+    public function module($name, $position = 'top-left', $viewName, $extraVars = []) {
+
+        if(isset($this->areas[$position])) {
+            $this->setToArea($name, $position, view($viewName, $extraVars));
+        }
+
+        return $this;
+    }
+
+    public function setToArea($name, $position, $view) {
+
+        $this->areas[$position][$name] = $view;
+
+        return $this;
+
     }
 
     public function model($model) {
@@ -109,6 +133,10 @@ class TableManager
         return $this->css;
     }
 
+    public function addVarsToRender() {
+        return [];
+    }
+    
     public function handle() {}
     public function render() {
 
