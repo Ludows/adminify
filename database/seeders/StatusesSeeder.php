@@ -32,7 +32,7 @@ class StatusesSeeder extends Seeder
 
         $a = [];
         $statuses = $model->statuses;
-        $baseId = 1;
+        $baseId = Statuses::PUBLISHED_ID;
         foreach ($statuses as $status) {
             # code...
             $a[] = [
