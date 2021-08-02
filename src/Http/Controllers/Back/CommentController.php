@@ -33,7 +33,7 @@ class CommentController extends Controller
         {
             //
             $table = $this->table(CommentTable::class, [
-                'showCreateBtn' => false,
+                'showBtnCreate' => false,
             ]);
 
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
