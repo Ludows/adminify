@@ -9,7 +9,7 @@
    public function table($tableClass, $options = []) {
 
         $c = new $tableClass();
-        $c->options($options);
+        $c = $c->options($options);
 
         return $c;
    }
