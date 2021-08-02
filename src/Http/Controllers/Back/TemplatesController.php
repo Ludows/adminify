@@ -130,7 +130,7 @@ class TemplatesController extends Controller
             $template = Templates::find($all['id']);
 
             return response()->json([
-                'templates' => $template,
+                'html' => $template->content,
                 'message' => __('admin.typed_data.success')
             ]);
         }
