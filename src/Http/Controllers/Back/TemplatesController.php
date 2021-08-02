@@ -127,6 +127,9 @@ class TemplatesController extends Controller
 
         public function setContent(Request $request) {
             $all = $request->all();
+            if(!isset($all['id'])) {
+                abort(403);
+            }
             $template = Templates::find($all['id']);
 
             return response()->json([

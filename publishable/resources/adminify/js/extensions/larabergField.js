@@ -2,7 +2,6 @@ export default function LarabergInititalization(fields) {
     $.each(fields, function(i, el) {
         let textarea = $('#'+el.selector+' textarea');
         let laraberg =  Laraberg.init(textarea.attr('id'), el.options);
-        console.log('laraberg', laraberg)
 
         let modal_select = $('#modalSelectTemplate');
         let modal_save = $('#modalSaveTemplate');
@@ -35,9 +34,9 @@ export default function LarabergInititalization(fields) {
                 console.log('success')
                 $(form).clearValues();
 
-                let c = laraberg.getContent() + data.html;
+                let c = Laraberg.getContent() + data.html;
 
-                laraberg.setContent( c );
+                Laraberg.setContent( c );
                 modal_save.modal('close');
             })
             .fail((err) => {
@@ -50,7 +49,7 @@ export default function LarabergInititalization(fields) {
 
             let form = $(this);
 
-            form.find('[name="content"]').val( laraberg.getContent() )
+            form.find('[name="content"]').val( Laraberg.getContent() )
 
             $.ajax({
                 'method' : 'POST',
