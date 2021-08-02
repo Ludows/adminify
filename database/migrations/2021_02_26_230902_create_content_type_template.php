@@ -24,7 +24,6 @@ class CreateContentTypeTemplate extends Migration
 
         Schema::create('content_type_template', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('type', 255);
             $table->text('content')->nullable();
         });
 
