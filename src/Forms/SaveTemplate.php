@@ -9,7 +9,7 @@ class SaveTemplate extends Form
     public function buildForm()
     {
         // Add fields here...
-        $this->compose('Ludows\Adminify\Forms\CreateCategory');
+        $this->compose('Ludows\Adminify\Forms\CreateTemplates');
 
         $fieldContent = $this->getField('content'); 
 
