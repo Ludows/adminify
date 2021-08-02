@@ -10,25 +10,35 @@ jQuery(document).ready(function ($) {
     let btnsListing = listingBlock.find('.js-listing-btn');
     let searchhasbeenTriggered = false;
 
+    listingBlock.on('keyup', '.js-select-status', _.debounce(function (e) {
+        loadSearch($(this).val(), true)
+    }, 300))
+
     listingBlock.on('keyup', '.js-search-entity', _.debounce(function (e) {
         e.preventDefault();
 
-        let val = $(this).val()
-
-        if (val.length > 2) {
-            console.log('val>>>', val)
-            triggerSearch(val, false);
-        } else {
-            listingBlock.find('.js-datatable tbody').html('');
-            listingBlock.find('.js-datatable tbody').append(tBodyStart);
-            listingBlock.attr('data-page', '1')
-        }
+        loadSearch($(this).val(), false)
 
     }, 300))
 
     listingBlock.on('click', '.js-listing-btn', function (e) {
         triggerSearch(searchEntity.val(), true, $(this));
     });
+
+    function loadSearch(value, isStatusable) {
+        let val = value
+
+        if (val.length > 2 && !isStatusable) {
+            console.log('val>>>', val)
+            triggerSearch(val, false);
+        } else if(isStatusable) {
+            triggerSearch( listingBlock.find('.js-search-entity').val() , false, null, val);
+        } else {
+            listingBlock.find('.js-datatable tbody').html('');
+            listingBlock.find('.js-datatable tbody').append(tBodyStart);
+            listingBlock.attr('data-page', '1')
+        }
+    }
 
     function syncBtns() {
         
@@ -53,7 +63,7 @@ jQuery(document).ready(function ($) {
 
     }
 
-    function triggerSearch(valInput, fromBtns, btnElement = null) {
+    function triggerSearch(valInput, fromBtns, btnElement = null, statusId = -1) {
         // window.listingConfig
 
         console.log('debounced')
@@ -64,6 +74,9 @@ jQuery(document).ready(function ($) {
             o['search'] = valInput.toLowerCase().trim();
         }
 
+        if(statusId != -1) {
+            o['status'] = statusId;
+        }
         // if(fromBtns) {
         o['offset'] = parseInt( listingBlock.attr('data-page') ) * window.listingConfig.limit;
         // }
