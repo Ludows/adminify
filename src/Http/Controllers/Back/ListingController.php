@@ -61,6 +61,10 @@ class ListingController extends Controller
             }
         } 
 
+        if(isset($datas['status']) && is_trashable_model($m)) {
+            $m = $m->where('status_id', $datas['status']);
+        }
+
         $m = $m->take( $config['limit'] );
 
         $results = $m->get();
