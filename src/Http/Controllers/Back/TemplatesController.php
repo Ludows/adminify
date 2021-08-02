@@ -20,7 +20,7 @@ use Ludows\Adminify\Tables\TemplatesTable;
 
 use Ludows\Adminify\Http\Controllers\Controller;
 
-class ContentTemplateController extends Controller
+class TemplatesController extends Controller
 {
     use FormBuilderTrait;
     use TableManagerable;
