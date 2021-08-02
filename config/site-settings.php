@@ -21,6 +21,7 @@ return [
         'tags' => \App\Models\Tag::class,
         'mailables' => \App\Models\Mailables::class,
         'statistics' => \App\Models\Statistics::class,
+        'templates' => \App\Models\Templates::class
     ],
 
     'sitemap' => [
@@ -108,7 +109,8 @@ return [
             'comment' => 'register.comments',
             'traduction' => 'register.traductions',
             'tag' => 'register.tags',
-            'mail' => 'register.mailable'
+            'mail' => 'register.mailable',
+            'template' => 'register.templates'
         ]
     ],
 
