@@ -36,7 +36,7 @@ class TagsController extends Controller
         public function index(Request $request, FormBuilder $formBuilder)
         {
 
-            $table = $this->table(new TagTable());
+            $table = $this->table(TagTable::class);
 
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }

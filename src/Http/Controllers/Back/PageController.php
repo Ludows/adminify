@@ -44,7 +44,7 @@ class PageController extends Controller
 
         public function index(FormBuilder $formBuilder, Request $request)
         {
-            $table = $this->table(new PageTable());
+            $table = $this->table(PageTable::class);
             
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }

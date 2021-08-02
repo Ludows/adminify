@@ -44,7 +44,7 @@ class PostController extends Controller
         public function index(FormBuilder $formBuilder, Request $request)
         {
             
-            $table = $this->table(new PostTable());
+            $table = $this->table(PostTable::class);
 
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }

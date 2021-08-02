@@ -36,7 +36,7 @@ class MenuController extends Controller
         */
         public function index(Request $request, FormBuilder $formBuilder)
         {
-            $table = $this->table(new MenuTable());
+            $table = $this->table(MenuTable::class);
 
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }

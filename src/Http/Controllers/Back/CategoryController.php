@@ -37,7 +37,7 @@ class CategoryController extends Controller
         */
         public function index(FormBuilder $formBuilder, Request $request)
         {
-            $table = $this->table(new CategoryTable());            
+            $table = $this->table(CategoryTable::class);            
 
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }

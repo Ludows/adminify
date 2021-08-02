@@ -39,7 +39,7 @@ class MediaController extends Controller
         public function index(FormBuilder $formBuilder)
         {
             
-            $table = $this->table(new MediaTable());
+            $table = $this->table(MediaTable::class);
             // dd($forms);
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }

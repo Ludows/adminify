@@ -39,7 +39,7 @@ class UserController extends Controller
     public function index(User $model, FormBuilder $formBuilder)
     {
 
-            $table = $this->table(new UserTable());
+            $table = $this->table(UserTable::class);
             
 
             return view("adminify::layouts.admin.pages.index", ['table' => $table]);

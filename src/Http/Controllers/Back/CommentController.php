@@ -32,7 +32,9 @@ class CommentController extends Controller
         public function index(Request $request, FormBuilder $formBuilder)
         {
             //
-            $table = $this->table(new CommentTable());
+            $table = $this->table(CommentTable::class, [
+                'showCreateBtn' => false,
+            ]);
 
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }

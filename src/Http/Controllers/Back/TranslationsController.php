@@ -38,7 +38,7 @@ class TranslationsController extends Controller
         public function index(Request $request, FormBuilder $formBuilder)
         {
 
-            $table = $this->table(new TranslationTable());
+            $table = $this->table(TranslationTable::class);
 
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }

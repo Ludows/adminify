@@ -40,7 +40,7 @@ class MailsController extends Controller
         */
         public function index(Request $request)
         {
-            $table = $this->table(new MailsTable());            
+            $table = $this->table(MailsTable::class);            
 
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }

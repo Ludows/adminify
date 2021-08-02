@@ -6,7 +6,11 @@
   trait TableManagerable
   {
    //
-   public function table($tableClass) {
-        return $tableClass;
+   public function table($tableClass, $options = []) {
+
+        $c = new $tableClass();
+        $c->options($options);
+
+        return $c;
    }
   }
