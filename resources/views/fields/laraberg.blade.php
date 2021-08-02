@@ -3,6 +3,14 @@
         <div {!! $options['wrapperAttrs'] !!}>
     @endif
 
+    <a href="#" class="btn btn-primary">
+        {{ __('admin.selectTemplate') }}
+    </a>
+
+    <a href="#" class="btn btn-primary js-save-template">
+        {{ __('admin.saveAs') }}
+    </a>
+
     @if($showLabel && $options['label'] !== false && $options['label_show'])
         {!! Form::customLabel($name, $options['label'], $options['label_attr']) !!}
     @endif
