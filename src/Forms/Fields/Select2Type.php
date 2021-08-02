@@ -37,13 +37,26 @@ class Select2Type extends FormField {
 
         $options['attr']['id'] = 'select2_id_'.$uniqid;
 
-        $this->setOptions([
+        if(!isset($options['empty_value'])) {
+            $options['empty_value'] = '';
+        }
+
+        if(!isset($options['choices'])) {
+            $options['choices'] = [];
+        }
+
+        $b = [
             'sibling' => Str::slug('select2_'.$uniqid),
             'withCreate' => isset($options['withCreate']) ? $options['withCreate'] : false,
             'modal' => isset($options['modal']) ? $options['modal'] : '',
             'modal_id' => Str::slug('select2_modale_'.$uniqid),
             'select2options' => array_merge($this->setDefaultsSelect2(), isset($options['select2options']) ? $options['select2options'] : [])
-        ]);
+        ];
+
+        $options = array_merge($options, $b);
+
+        $this->setOptions($options);
+        // dump($options);
         // dd($options);
         // dd($this);
 
