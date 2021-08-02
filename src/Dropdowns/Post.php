@@ -27,9 +27,9 @@ class Post extends DropdownsManager
                     ]
                 ]);
                 $this->add('dropdown_'.$m->id, [
-                    'template' => 'adminify::layouts.admin.dropdowns.extends.seo',
+                    'template' => 'adminify::layouts.admin.dropdowns.extends.trash',
                     'vars' => [
-                        'url' => route('posts.edit', ['post' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '', 'seo']),
+                        'url' => route('trash', ['type' => 'posts', 'id' => $m->id]),
                         'name' => 'posts'
                     ]
                 ]);
