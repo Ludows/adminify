@@ -22,6 +22,8 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'admin.breadcrumb
 
     Route::resource('templates', 'Ludows\Adminify\Http\Controllers\Back\TemplatesController', ['except' => ['show']]);
 
+    Route::post('templates/content', 'Ludows\Adminify\Http\Controllers\Back\TemplatesController@setContent')->name('templates.setcontent');
+
 
     Route::post('listings', 'Ludows\Adminify\Http\Controllers\Back\ListingController@index')->name('listings');
 

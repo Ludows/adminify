@@ -47,7 +47,7 @@ class RequiredForms
                 'class' => SelectTemplate::class,
                 'options' => [
                     'method' => 'POST',
-                    'url' => '#'
+                    'url' => route('templates.setcontent')
                 ]
                 ),
                 'saveTemplate' => array(

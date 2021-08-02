@@ -125,6 +125,16 @@ class TemplatesController extends Controller
             return redirect()->route('templates.index');
         }
 
+        public function setContent(Request $request) {
+            $all = $request->all();
+            $template = Templates::find($all['id']);
+
+            return response()->json([
+                'templates' => $template,
+                'message' => __('admin.typed_data.success')
+            ]);
+        }
+
         /**
             * Remove the specified resource from storage.
             *
