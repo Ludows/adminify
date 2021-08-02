@@ -33,7 +33,7 @@ class CreatePageTable extends Migration
                 $table->timestamps();
                 $table->string('title', 255);
                 $table->string('slug', 255);
-                $table->json('content')->nullable();
+                $table->text('content')->nullable();
                 $table->bigInteger('media_id')->default(0)->unsigned();
                 $table->bigInteger('parent_id')->unsigned()->default(0);
                 $table->bigInteger('user_id')->default(0)->unsigned();
