@@ -49,7 +49,7 @@ class PostTable extends TableManager {
                 // dd($categories);
             }
             else {
-                $posts = PostModel::limit( $config['limit'] )->get();
+                $posts = PostModel::limit( $config['limit'] )->status(Statuses::TRASHED_ID, '!=')->get();
             }
         }
             $model = new PostModel();

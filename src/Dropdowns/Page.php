@@ -5,6 +5,7 @@ namespace Ludows\Adminify\Dropdowns;
 use Ludows\Adminify\Libs\DropdownsManager;
 use Ludows\Adminify\Forms\DeleteCrud;
 
+use App\Models\Statuses;
 class Page extends DropdownsManager
 {
     public function handle() {
@@ -29,6 +30,15 @@ class Page extends DropdownsManager
                         'name' => 'pages'
                     ]
                 ]);
+                if(is_trashable_model($m) && $m->status_id != Statuses::TRASHED_ID) {
+                    $this->add('dropdown_'.$m->id, [
+                        'template' => 'adminify::layouts.admin.dropdowns.extends.trash',
+                        'vars' => [
+                            'url' => route('trash', ['type' => 'pages', 'id' => $m->id]),
+                            'name' => 'pages'
+                        ]
+                    ]);
+                }
                 $this->add('dropdown_'.$m->id, [
                     'template' => 'adminify::layouts.admin.dropdowns.extends.seo',
                     'vars' => [
