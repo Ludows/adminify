@@ -10,7 +10,7 @@ jQuery(document).ready(function ($) {
     let btnsListing = listingBlock.find('.js-listing-btn');
     let searchhasbeenTriggered = false;
 
-    listingBlock.on('keyup', '.js-select-status', _.debounce(function (e) {
+    listingBlock.on('change', '.js-select-status', _.debounce(function (e) {
         loadSearch($(this).val(), true)
     }, 300))
 
