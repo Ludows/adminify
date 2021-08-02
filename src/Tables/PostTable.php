@@ -6,6 +6,9 @@ use Ludows\Adminify\Libs\TableManager;
 use App\Models\Post as PostModel;
 use Ludows\Adminify\Dropdowns\Post as PostDropdownsManager;
 
+use App\Models\Statuses;
+
+
 class PostTable extends TableManager {
     public function getTemplateByName($name) {
         $ret = null;
@@ -65,6 +68,10 @@ class PostTable extends TableManager {
             }
 
             $this->columns( array_merge($fillables, $default_merge_columns) );
+
+            $this->module('statuses', 'top-left', 'adminify::layouts.admin.table.core.statuses', [
+                'statuses' => Statuses::all()->all()
+            ]);
 
 
         foreach ($posts as $post) {

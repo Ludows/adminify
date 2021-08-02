@@ -6,6 +6,8 @@ use Ludows\Adminify\Libs\TableManager;
 use App\Models\Page as PageModel;
 use Ludows\Adminify\Dropdowns\Page as PageDropdownsManager;
 
+use App\Models\Statuses;
+
 class PageTable extends TableManager {
     public function getTemplateByName($name) {
         $ret = null;
@@ -64,6 +66,9 @@ class PageTable extends TableManager {
 
         $this->columns( array_merge($fillables, $default_merge_columns) );
 
+        $this->module('statuses', 'top-left', 'adminify::layouts.admin.table.core.statuses', [
+            'statuses' => Statuses::all()->all()
+        ]);
 
         foreach ($pages as $page) {
             # code...
