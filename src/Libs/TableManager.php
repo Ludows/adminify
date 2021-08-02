@@ -93,6 +93,19 @@ class TableManager
         return $this;
     }
 
+    public function options($array) {
+        if(is_array($array)) {
+            $array_keys = array_keys($array);
+            if(count($array_keys) > 0) {
+                foreach ($array_keys as $keyable) {
+                    # code...
+                    $this->{$keyable} = $array[$keyable];
+                }
+            }
+        }
+        return $this;
+    }
+
     public function column($name, $viewName, $extraVars = []) {
 
         $v = $viewName;
