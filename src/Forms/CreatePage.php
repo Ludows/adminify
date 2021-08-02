@@ -70,7 +70,8 @@ class CreatePage extends Form
                 ]
             ])
             ->add('content', 'laraberg', [
-                'label_show' => false
+                'label_show' => false,
+                'withBtnForTemplates' => true
             ])   
             ->add('user_id', 'hidden', [
                 'value' => user()->id

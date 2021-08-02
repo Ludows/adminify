@@ -71,6 +71,7 @@ class CreatePost extends Form
 
             $this->add('content', 'laraberg', [
                 'label' => __('admin.form.content'),
+                'withBtnForTemplates' => true
             ]);
 
             $this->add('no_comments', 'checkbox', [
