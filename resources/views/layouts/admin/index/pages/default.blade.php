@@ -6,7 +6,7 @@
             <div class="col-12">
 
                 @if(isset($table))
-                        {!! $table->render() !!}
+                    {!! $table->render() !!}
                 @endif
                 
             </div>

@@ -68,9 +68,8 @@ class ListingController extends Controller
 
         // $TableManager = $m->getTableListing();
 
-        $table = new $TableManager(false); // for disable autohandling
+        $table = new $TableManager(); // for disable autohandling
         $table->datas('results', $results); 
-        $table->handle();
 
         //render only listing not entierely table
         $v = $table->list();

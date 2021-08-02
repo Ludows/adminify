@@ -5,7 +5,7 @@ use Ludows\Adminify\Libs\Dropdown;
 use Illuminate\Support\Str;
 class TableManager
 {
-    public function __construct($autoHandle = true)
+    public function __construct()
     {
         $this->view = view();
         $this->datas = [];
@@ -23,10 +23,8 @@ class TableManager
             'bottom-right' => []
         ];
         $this->showTitle = true;
-
-        if($autoHandle) {
-            $this->handle();
-        }
+        $this->showSearch = true;
+        $this->showBtnCreate = true;
     }
     public function setColumns($value = []) {
         $this->columns = $value;
@@ -136,12 +134,30 @@ class TableManager
     public function addVarsToRender() {
         return [];
     }
+
+    public function getAreas() {
+        return $this->areas;
+    }
     
     public function handle() {}
     public function render() {
 
+
+        if($this->showTitle) {
+            $this->module('title', 'top-left', 'adminify::layouts.admin.table.core.title');
+        }
+
+        if($this->showSearch) {
+            $this->module('search', 'top-right', 'adminify::layouts.admin.table.core.search', [
+                'showCreate' => $this->showBtnCreate
+            ]);
+        }
+
+        $this->handle();
+
         $tpl = $this->getView();
         $cols = $this->getColumns();
+        $areas = $this->getAreas();
 
         $name = $this->getRequest()->route()->getName();
         $name = str_replace('.index', '', $name);
@@ -152,7 +168,8 @@ class TableManager
             'count' => count($this->_columns[$cols[0]]), 
             'css' => $this->getCss(), 
             'js' => $this->getJs(),
-            'name' => $name
+            'name' => $name,
+            'areas' => $areas
         ];
 
         $addtoVars = $this->addVarsToRender();
@@ -161,6 +178,9 @@ class TableManager
         return $compiled;
     }
     public function list() {
+
+        $this->handle();
+
         $cols = $this->getColumns();
         $addtoVars = $this->addVarsToRender();
 
