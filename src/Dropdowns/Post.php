@@ -26,13 +26,15 @@ class Post extends DropdownsManager
                         'name' => 'posts'
                     ]
                 ]);
-                $this->add('dropdown_'.$m->id, [
-                    'template' => 'adminify::layouts.admin.dropdowns.extends.trash',
-                    'vars' => [
-                        'url' => route('trash', ['type' => 'posts', 'id' => $m->id]),
-                        'name' => 'posts'
-                    ]
-                ]);
+                if(is_trashable_model($m) && $m->status_id != $m::TRASHED_ID) {
+                    $this->add('dropdown_'.$m->id, [
+                        'template' => 'adminify::layouts.admin.dropdowns.extends.trash',
+                        'vars' => [
+                            'url' => route('trash', ['type' => 'posts', 'id' => $m->id]),
+                            'name' => 'posts'
+                        ]
+                    ]);
+                }
                 $this->add('dropdown_'.$m->id, [
                     'template' => 'adminify::layouts.admin.dropdowns.extends.seo',
                     'vars' => [
