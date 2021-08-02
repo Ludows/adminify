@@ -58,7 +58,7 @@ class Post extends ContentTypeModel
     }
 
     public function getTableListing() {
-        return \Ludows\Adminify\Tables\UserTable::class;
+        return \Ludows\Adminify\Tables\PostTable::class;
     }
 
     public function toFeedItem(): FeedItem {}
