@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Forms\UpdateMediaLibrary;
 use App\Forms\CreateCategory;
 use App\Forms\CreateTag;
+use App\Forms\SelectTemplate;
+use App\Forms\SaveTemplate;
 use Kris\LaravelFormBuilder\FormBuilder;
 
 
@@ -40,7 +42,21 @@ class RequiredForms
                     'method' => 'POST',
                     'url' => route('tags.store')
                 ]
-            )
+            ),
+            'selectTemplate' => array(
+                'class' => SelectTemplate::class,
+                'options' => [
+                    'method' => 'POST',
+                    'url' => '#'
+                ]
+                ),
+                'saveTemplate' => array(
+                    'class' => SaveTemplate::class,
+                    'options' => [
+                        'method' => 'POST',
+                        'url' => route('templates.store')
+                    ]
+                )
         );
     }
     /**
