@@ -4,7 +4,7 @@
     @endif
 
     @if ($options['withBtnForTemplates'])
-        <div class="d-flex">
+        <div class="d-flex mb-3">
             <a href="#" class="btn btn-primary js-select-template mr-3">
                 {{ __('admin.selectTemplate') }}
             </a>

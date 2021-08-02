@@ -13,7 +13,7 @@ class SelectTemplate extends Form
         // Add fields here...
         $this->add('items', 'select2', [
             'label' => __('admin.form.items'),
-            'choice' => $t['templates']
+            'choices' => $t['templates']
         ]);
         $this->add('submit', 'submit', ['label' => __('admin.add') , 'attr' => ['class' => 'btn btn-default']]);
 
