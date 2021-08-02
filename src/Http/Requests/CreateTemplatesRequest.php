@@ -24,10 +24,6 @@ class CreateTemplatesRequest extends FormRequest
     public function rules()
     {
         $a = [
-            'type' => [
-                'required',
-                'string',
-            ],
             'content' => [
                 'required',
                 'string',
