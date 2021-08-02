@@ -1,0 +1,9 @@
+<?php
+
+namespace App\Forms;
+
+use Ludows\Adminify\Forms\SelectTemplate as SelectTemplateForm;
+
+class SelectTemplate extends SelectTemplateForm
+{}
+
