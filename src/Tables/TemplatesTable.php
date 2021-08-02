@@ -6,7 +6,7 @@ use Ludows\Adminify\Libs\TableManager;
 use App\Models\Templates as TemplatesModel;
 use Ludows\Adminify\Dropdowns\Category as CategoryDropdownsManager;
 
-class CategoryTable extends TableManager {
+class TemplatesTable extends TableManager {
     // public function getTemplateByName($name) {
     //     $ret = null;
     //     switch ($name) {
