@@ -95,7 +95,5 @@ class PageTable extends TableManager {
                 'index' => $page->id
             ]);
         }
-
-
     }
 }
