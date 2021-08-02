@@ -10,6 +10,10 @@ class CreateTemplates extends Form
 {
     public function buildForm()
     {
+        $this->add('title', Field::TEXT, [
+            'label_show' => false,
+            'attr' => ['placeholder' =>  __('admin.title') ],
+        ]);
         $this->add('content', 'laraberg', [
             'label' => __('admin.form.content'),
             'label_show' => false
