@@ -4,13 +4,16 @@
     @endif
 
     @if ($options['withBtnForTemplates'])
-        <a href="#" class="btn btn-primary">
-            {{ __('admin.selectTemplate') }}
-        </a>
-
-        <a href="#" class="btn btn-primary js-save-template">
-            {{ __('admin.saveAs') }}
-        </a>
+        <div class="d-flex">
+            <a href="#" class="btn btn-primary mr-3">
+                {{ __('admin.selectTemplate') }}
+            </a>
+    
+            <a href="#" class="btn btn-primary js-save-template">
+                {{ __('admin.saveAs') }}
+            </a>
+        </div>
+       
     @endif
     
 
@@ -36,6 +39,13 @@
 @push('css')
     <link rel="stylesheet" href="{{asset('vendor/laraberg/css/laraberg.css')}}">
 @endpush
+
+@if($options['withBtnForTemplates'])
+    @push('modales')
+        @include('adminify::layouts.admin.modales.selectTemplate')
+        @include('adminify::layouts.admin.modales.saveTemplate')
+    @endpush
+@endif
 
 @push('js')
     <script src="https://unpkg.com/react@16.8.6/umd/react.production.min.js"></script>
