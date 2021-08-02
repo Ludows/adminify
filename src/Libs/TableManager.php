@@ -142,12 +142,39 @@ class TableManager
 
         $tpl = $this->getView();
         $cols = $this->getColumns();
-        $compiled = $this->view->make($tpl, ['datas' => $this->_columns, 'thead' => $cols, 'count' => count($this->_columns[$cols[0]]), 'css' => $this->getCss(), 'js' => $this->getJs() ]);
+
+        $name = $this->getRequest()->route()->getName();
+        $name = str_replace('.index', '', $name);
+
+        $defaults = [
+            'datas' => $this->_columns, 
+            'thead' => $cols, 
+            'count' => count($this->_columns[$cols[0]]), 
+            'css' => $this->getCss(), 
+            'js' => $this->getJs(),
+            'name' => $name
+        ];
+
+        $addtoVars = $this->addVarsToRender();
+
+        $compiled = $this->view->make($tpl, array_merge($defaults, $addtoVars));
         return $compiled;
     }
     public function list() {
         $cols = $this->getColumns();
-        $compiled = $this->view->make( $this->getViewList() , ['datas' => $this->_columns,'thead' => $cols, 'count' => count($this->_columns[$cols[0]]) ]);
+        $addtoVars = $this->addVarsToRender();
+
+        $name = $this->getRequest()->route()->getName();
+        $name = str_replace('.index', '', $name);
+
+        $defaults = [
+            'datas' => $this->_columns,
+            'thead' => $cols, 
+            'count' => count($this->_columns[$cols[0]]),
+            'name' => $name
+        ];
+
+        $compiled = $this->view->make( $this->getViewList() , array_merge($defaults, $addtoVars) );
         return $compiled;
     }
 }
