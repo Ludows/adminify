@@ -39,9 +39,12 @@
                 let formData = new FormData(form);
                 let parent = this.$refs.comments;
                 let textarea = this.$refs.textarea;
+
+                let route = this.$route('api.comments.store');
+
                 this.$axios({
                     'method' : 'POST',
-                    'url' : Route('comments.store'),
+                    'url' : route,
                     'data' : formData
                 })
                 .then((response) => {

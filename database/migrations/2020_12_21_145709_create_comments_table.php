@@ -19,7 +19,7 @@ class CreateCommentsTable extends Migration
                 $table->json('comment');
                 $table->bigInteger('parent_id')->unsigned()->default(0);
                 $table->bigInteger('post_id')->unsigned();
-                $table->bigInteger('user_id')->unsigned();
+                $table->bigInteger('user_id')->unsigned()->nullable();
                 $table->foreign('post_id')->references('id')->on('posts');
                 $table->boolean('is_moderated')->default(false);
                 $table->timestamps();
@@ -31,7 +31,7 @@ class CreateCommentsTable extends Migration
                 $table->string('comment', 255);
                 $table->bigInteger('parent_id')->unsigned()->default(0);
                 $table->bigInteger('post_id')->unsigned();
-                $table->bigInteger('user_id')->unsigned();
+                $table->bigInteger('user_id')->unsigned()->nullable();
                 $table->foreign('post_id')->references('id')->on('posts');
                 $table->boolean('is_moderated')->default(false);
                 $table->timestamps();

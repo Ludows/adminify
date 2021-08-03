@@ -57,11 +57,14 @@
                     confirmButtonText: `Save`,
                     denyButtonText: `Don't save`,
                 }).then((result) => {
+                    
+                    let route = this.$route('api.comments.destroy', {'comment': commentId});
+
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {
                         this.$axios({
                             'method' : 'POST',
-                            'url' : Route('comments.destroy', {'comment': commentId}),
+                            'url' : route,
                             'data' : {
                                 _method: 'delete',
                                 post_id : this.post_id

@@ -35,9 +35,12 @@
                 let formData = new FormData(form);
                 formData.append('_method', 'PATCH');
                 let textarea = this.$refs.textarea;
+                
+                let route = this.$route('api.comments.update', {'comment' : this.comment_id});
+
                 this.$axios({
                     'method' : 'POST',
-                    'url' : Route('comments.update', {'comment' : this.comment_id}),
+                    'url' : route,
                     'data' : formData
                 })
                 .then((response) => {
