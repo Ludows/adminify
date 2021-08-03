@@ -16,10 +16,10 @@ class TokenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getToken(TokenRequest $request)
+    public function getToken(Request $request)
     {
         $datas = $request->all();
-        $lang = $datas['lang'] ?? null;
+        $lang = $datas['lang'] ?? lang();
         $u = new User();
         $token = null;
         $config = config('site-settings.restApi');
