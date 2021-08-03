@@ -120,7 +120,8 @@ return [
         'prefix' => 'api', // use prefix
         'domain' => null, // to set a domain, just replace by your domain,
         'token_name' => 'api-token',
-        'token_capacities' => [ // for user logged
+        'roles_token_capacities' => ['administrator', 'client'],
+        'token_capacities' => [ // for user roles based
             'api:full'
         ],
         'crud' => [
