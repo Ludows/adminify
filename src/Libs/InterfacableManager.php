@@ -33,7 +33,7 @@ class InterfacableManager
         return $this;
     }
 
-    public function datas($name = null, $value) {
+    public function datas($name, $value) {
         $this->datas[$name] = $value;
         return $this;
     }
