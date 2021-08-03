@@ -19,8 +19,8 @@
         <link href="{{ asset('argon') }}/vendor/nucleo/css/nucleo.css" rel="stylesheet">
         <link href="{{ asset('argon') }}/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
         <!-- Argon CSS -->
-        <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
-        <link type="text/css" href="{{ asset('argon') }}/css/front.css?v=1.0.0" rel="stylesheet">
+        <link type="text/css" href="{{ asset('argon/front') }}/css/argon.css?v=1.0.0" rel="stylesheet">
+        <link type="text/css" href="{{ asset('argon/front') }}/css/front.css?v=1.0.0" rel="stylesheet">
         @laravelPWA
         @stack('css')
     </head>
@@ -35,8 +35,7 @@
         </main>
         {{--  <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>  --}}
         <script src="{{ asset('myuploads') }}/routes.js"></script>
-        <script src="{{ asset('argon') }}/js/extensions.js"></script>
-        <script src="{{ asset('argon') }}/js/app.js"></script>
+        <script src="{{ asset('argon/front') }}/js/app.js"></script>
         {{--  <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>  --}}
 
         @stack('modales')

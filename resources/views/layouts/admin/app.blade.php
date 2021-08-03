@@ -18,8 +18,8 @@
         <link href="{{ asset('argon') }}/vendor/nucleo/css/nucleo.css" rel="stylesheet">
         <link href="{{ asset('argon') }}/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
         <!-- Argon CSS -->
-        <link type="text/css" href="{{ asset('argon') }}/css/argon.css?v=1.0.0" rel="stylesheet">
-        <link type="text/css" href="{{ asset('argon') }}/css/extensions.css" rel="stylesheet">
+        <link type="text/css" href="{{ asset('argon/back') }}/css/argon.css?v=1.0.0" rel="stylesheet">
+        <link type="text/css" href="{{ asset('argon/back') }}/css/extensions.css" rel="stylesheet">
         @stack('css')
         @php
             $fullmode = isset($fullmode) ? $fullmode : false;
@@ -49,7 +49,7 @@
 
         {{--  <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>  --}}
         <script src="{{ asset('myuploads') }}/routes.js"></script>
-        <script src="{{ asset('argon') }}/js/extensions.js"></script>
+        <script src="{{ asset('argon/back') }}/js/extensions.js"></script>
         {{--  <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>  --}}
 
         @include('adminify::layouts.admin.modales.globalSearch')
@@ -57,9 +57,9 @@
         @stack('js')
 
         <!-- Argon JS -->
-        <script src="{{ asset('argon') }}/js/extensions-call.js"></script>
-        <script src="{{ asset('argon') }}/js/argon.js?v=1.0.0"></script>
-        <script src="{{ asset('argon') }}/js/searchable.js"></script>
+        <script src="{{ asset('argon/back') }}/js/extensions-call.js"></script>
+        <script src="{{ asset('argon/back') }}/js/argon.js?v=1.0.0"></script>
+        <script src="{{ asset('argon/back') }}/js/searchable.js"></script>
 
     </body>
 </html>
