@@ -13,14 +13,15 @@ const mix = require('laravel-mix');
 mix.options({
     processCssUrls: false
 });
-mix.js('resources/adminify/js/argon.js', 'public/argon/js')
-    .js('resources/adminify/js/extensions.js', 'public/argon/js')
-    .js('resources/adminify/js/extensions-call.js', 'public/argon/js')
-    .js('resources/adminify/js/searchable.js', 'public/argon/js')
-    .js('resources/adminify/js/listings.js', 'public/argon/js')
-    .js('resources/adminify/js/menuBuilder.js', 'public/argon/js')
-    .js('resources/adminify/js/sendMail.js', 'public/argon/js')
-    .vue('resources/adminify/js/app.js', 'public/argon/js')
-    .sass('resources/adminify/sass/argon.scss', 'public/argon/css')
-    .sass('resources/adminify/sass/front.scss', 'public/argon/css')
-    .sass('resources/adminify/sass/extensions.scss', 'public/argon/css');
+mix.js('resources/adminify/back/js/argon.js', 'public/argon/js')
+    .js('resources/adminify/back/js/extensions.js', 'public/argon/js')
+    .js('resources/adminify/back/js/extensions-call.js', 'public/argon/js')
+    .js('resources/adminify/back/js/searchable.js', 'public/argon/js')
+    .js('resources/adminify/back/js/listings.js', 'public/argon/js')
+    .js('resources/adminify/back/js/menuBuilder.js', 'public/argon/js')
+    .js('resources/adminify/back/js/sendMail.js', 'public/argon/js')
+    .vue('resources/adminify/front/js/app.js', 'public/argon/js')
+    .sass('resources/adminify/front/sass/argon.scss', 'public/argon/css')
+    .sass('resources/adminify/back/sass/argon.scss', 'public/argon/css')
+    .sass('resources/adminify/front/sass/front.scss', 'public/argon/css')
+    .sass('resources/adminify/back/sass/extensions.scss', 'public/argon/css');
