@@ -28,7 +28,7 @@ class TokenController extends Controller
             abort(403);
         }
 
-        if($user != null && $user->tokenCan('api:full') && $user->hasAnyRoles($config['roles_token_capacities'][$role->name])) {
+        if($user != null && $user->tokenCan('api:full') && $user->hasAnyRoles($config['roles_token_capacities'])) {
 
             return response()->json([
                 'token' => $user->currentAccessToken()
