@@ -24,7 +24,7 @@ class TokenController extends Controller
         $token = null;
         $config = config('site-settings.restApi');
 
-        if($datas['user'] == null) {
+        if(!isset($datas['user'])) {
 
             $token = $u->createToken( $config['token_name'], $config['token_capacities']['guest'] )->plainTextToken;
         }
