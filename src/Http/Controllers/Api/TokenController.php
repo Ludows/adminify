@@ -35,7 +35,7 @@ class TokenController extends Controller
             
         }
         else {
-            abort(403);
+            abort(404, 'Token not found');
         }
     }
 }

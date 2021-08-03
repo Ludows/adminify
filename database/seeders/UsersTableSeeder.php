@@ -9,15 +9,14 @@ use App\Models\User;
 
 class UsersTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     *
-     * @return void
-     */
-    public function run()
-    {
+    public $user_roles = [
+        0 => ['administrator'],
+        1 => ['editor'],
+        2 => ['subscriber']
+    ];
 
-        $user_list = [
+    public function get_user_list() {
+        return [
             0 => [
                 'id' => 1,
                 'avatar' => null,
@@ -49,12 +48,24 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => now()
             ],
         ];
+    }
 
-        $user_roles = [
-            'administrator',
-            'editor',
-            'subscriber'
-        ];
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
+    {
+
+        $user_list = $this->get_user_list();
+        $user_roles = $this->user_roles;
+        $configRest = get_site_key('restApi');
+
+        $tokenizable_roles = $configRest['token_capacities'];
+
+
+        $key_tokens = array_keys($tokenizable_roles);
 
         // foreach ($user_list as $key => $value) {
         //     # code...
@@ -66,9 +77,22 @@ class UsersTableSeeder extends Seeder
 
             $user = User::find($user_data['id']);
 
-            // var_dump($user);
+            if(!empty($user_roles[$base_index])) {
+                foreach ($user_roles[$base_index] as $role) {
+                    # code...
+                    $user->assignRole($role);
 
-            $user->assignRole($user_roles[$base_index]);
+                    if($user->hasRole($role) && isset($tokenizable_roles[$role]) && !empty($tokenizable_roles[$role]) && $configRest['enable'] ) {
+                        foreach ($tokenizable_roles[$role] as $tokenType) {
+                            # code...
+                            $user->createToken($configRest['token_name'], $tokenType);
+                        }
+                    }
+                }
+            }
+            // $user->assignRole($user_roles[$base_index]);
+
+            // if(in_array($user_roles[$base_index], ))
 
             $base_index++;
         }
