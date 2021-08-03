@@ -27,7 +27,7 @@ class TokenController extends Controller
             abort(403);
         }
 
-        if($user != null && $user->tokens->tokenCan('api:full')) {
+        if($user != null && $user->tokenCan('api:full')) {
 
             return response()->json([
                 'token' => $user->currentAccessToken()
