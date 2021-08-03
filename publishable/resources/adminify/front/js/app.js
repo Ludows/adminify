@@ -50,6 +50,10 @@ Vue.prototype.$swal = Swal;
 
 Vue.prototype.$route = require('../../commons/js/Route').default;
 
+const { getToken } = require('./methods/tokens');
+
+Vue.prototype.$getToken = getToken;
+
 /** ----------------------------------------------------------------------------
  * Inizialize Swup
  * -------------------------------------------------------------------------- */
@@ -94,6 +98,9 @@ window.Vue = Vue;
 // VUE
 let app = new Vue({
     el: '#app',
+    created() {
+        this.$getToken();
+    },
     mounted() {
 
 
