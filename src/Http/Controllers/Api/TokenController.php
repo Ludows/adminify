@@ -22,12 +22,13 @@ class TokenController extends Controller
         $user = user();
         $lang = $datas['lang'] ?? lang();
         $config = get_site_key('restApi');
+        $role = $user->roles->first();
 
         if($user == null) {
             abort(403);
         }
 
-        if($user != null && $user->tokenCan('api:full') && $user->hasAnyRoles($config['roles_token_capacities'])) {
+        if($user != null && $user->tokenCan('api:full') && $user->hasAnyRoles($config['roles_token_capacities'][$role->name])) {
 
             return response()->json([
                 'token' => $user->currentAccessToken()
