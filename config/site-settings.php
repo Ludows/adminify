@@ -120,13 +120,8 @@ return [
         'prefix' => 'api', // use prefix
         'domain' => null, // to set a domain, just replace by your domain,
         'token_name' => 'api-token',
-        'token_capacities' => [
-            'guest' => [
-                'api:readonly',
-            ],
-            'authentificated' => [
-                'api:full' // update, read, create, delete
-            ]
+        'token_capacities' => [ // for user logged
+            'api:full'
         ],
         'crud' => [
             // controllers here we binded like the CRUD pattern

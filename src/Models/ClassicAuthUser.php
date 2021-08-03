@@ -39,6 +39,10 @@ abstract class ClassicAuthUser extends Authenticatable implements MustVerifyEmai
     use Searchables;
     use SavableTranslations;
 
+    public function scopeHasToken($query, $key) {
+        return $query->tokens()->where('abilities', $key);
+    }
+
     public function getRolesAttribute() {
         $table = config('permission.table_names.model_has_roles');
         $roleModel = app('Spatie\Permission\Models\Role');

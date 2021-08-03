@@ -19,26 +19,20 @@ class TokenController extends Controller
     public function getToken(Request $request)
     {
         $datas = $request->all();
+        $user = user();
         $lang = $datas['lang'] ?? lang();
-        $u = new User();
-        $token = null;
-        $config = config('site-settings.restApi');
+        $config = get_site_key('restApi');
 
-        if(!isset($datas['user'])) {
-
-            $token = $u->createToken( $config['token_name'], $config['token_capacities']['guest'] )->plainTextToken;
-        }
-        else {
-            //RETRIEVE USER
-            $u = $u->find($datas['user']->id);
-            $token = $u->createToken( $config['token_name'], $config['token_capacities']['authentificated'] )->plainTextToken;
+        if($user == null) {
+            abort(403);
         }
 
-        //token is setted in session
-        session([$config['token_name'] => $token]);
+        if($user != null && $user->tokens->tokenCan('api:full')) {
 
-        return response()->json([
-            'token' => $token
-        ]);
+            return response()->json([
+                'token' => $user->currentAccessToken()
+            ]);
+            
+        }
     }
 }
