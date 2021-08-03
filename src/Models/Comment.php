@@ -11,8 +11,6 @@ class Comment extends ClassicModel
 {
     protected $table = 'comments';
 
-    public $MultilangTranslatableSwitch = ['comment'];
-
     public function toFeedItem(): FeedItem {}
     public function getSearchResult() : SearchResult {}
 

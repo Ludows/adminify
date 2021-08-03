@@ -13,30 +13,16 @@ class CreateCommentsTable extends Migration
      */
     public function up()
     {
-        if(config('site-settings.multilang') == true) {
-            Schema::create('comments', function (Blueprint $table) {
-                $table->bigIncrements('id')->unsigned();
-                $table->json('comment');
-                $table->bigInteger('parent_id')->unsigned()->default(0);
-                $table->bigInteger('post_id')->unsigned();
-                $table->bigInteger('user_id')->unsigned()->nullable();
-                $table->foreign('post_id')->references('id')->on('posts');
-                $table->boolean('is_moderated')->default(false);
-                $table->timestamps();
-            });
-        }
-        else {
-            Schema::create('comments', function (Blueprint $table) {
-                $table->bigIncrements('id')->unsigned();
-                $table->string('comment', 255);
-                $table->bigInteger('parent_id')->unsigned()->default(0);
-                $table->bigInteger('post_id')->unsigned();
-                $table->bigInteger('user_id')->unsigned()->nullable();
-                $table->foreign('post_id')->references('id')->on('posts');
-                $table->boolean('is_moderated')->default(false);
-                $table->timestamps();
-            });
-        }
+        Schema::create('comments', function (Blueprint $table) {
+            $table->bigIncrements('id')->unsigned();
+            $table->string('comment', 255);
+            $table->bigInteger('parent_id')->unsigned()->default(0);
+            $table->bigInteger('post_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->foreign('post_id')->references('id')->on('posts');
+            $table->boolean('is_moderated')->default(false);
+            $table->timestamps();
+        });
     }
 
     /**

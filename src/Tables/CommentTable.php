@@ -37,20 +37,14 @@ class CommentTable extends TableManager {
             $comments = $datas['results'];
         }
         else {
-            if($request->useMultilang) {
-                $comments = CommentModel::limit( $config['limit'] )->lang($request->lang)->get();
-                // dd($categories);
-            }
-            else {
-                $comments = CommentModel::limit( $config['limit'] )->get();
-            }
+            $comments = CommentModel::limit( $config['limit'] )->get();
         }
 
             
-            $model = new CommentModel();
-            $fillables = $model->getFillable();
+        $model = new CommentModel();
+        $fillables = $model->getFillable();
 
-            $a = new CommentModel($comments, []);
+        $a = new CommentDropdownsManager($comments, []);
         // set columns
         $this->columns( array_merge($fillables, ['actions']) );
 
