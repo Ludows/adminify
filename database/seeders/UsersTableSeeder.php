@@ -85,12 +85,14 @@ class UsersTableSeeder extends Seeder
                     dump('$user_roles[$base_index]', $user_roles[$base_index]);                    
                     if($user->hasRole($role) && isset($tokenizable_roles[$role]) && !empty($tokenizable_roles[$role]) && $configRest['enable'] ) {
 
-                        dump('$tokenizable_roles[$role]', $tokenizable_roles[$role]);
+                        // dump('$tokenizable_roles[$role]', $tokenizable_roles[$role]);
 
-                        foreach ($tokenizable_roles[$role] as $tokenType) {
-                            # code...
-                            $user->createToken($configRest['token_name'], $tokenType);
-                        }
+                        $user->createToken($configRest['token_name'], $tokenizable_roles[$role]);
+
+                        // foreach ($tokenizable_roles[$role] as $tokenType) {
+                        //     # code...
+                            
+                        // }
                     }
                 }
             }
