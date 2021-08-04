@@ -34,7 +34,7 @@ class TokenController extends Controller
             $token = $anonymous->getCurrentToken();
         }
 
-        if($user != null && $user->tokenCan('api:full') && $user->hasAnyRole($config['roles_token_capacities'])) {
+        if($user != null) {
             $token = $user->getCurrentToken();
         }
 
