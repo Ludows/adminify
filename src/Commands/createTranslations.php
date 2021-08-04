@@ -78,8 +78,7 @@ class createTranslations extends Command
                     $info = pathinfo($file);
                     $trads = require_once($file);
 
-                    $key = str_replace( '.'.$info['extension'], '', $info['basename']);
-                    $messages[ $key ] = $trads;
+                    $messages->{$info['filename']} = $trads;
                 }
 
 
@@ -92,11 +91,11 @@ class createTranslations extends Command
                     window.__ = createLaravelLocalization(messages_'. $locale .');
                 })()';
 
-                if (Cache::has('translations_front')) {
+                if (Cache::has('website_translations')) {
                     //
-                    Cache::forget('translations_front');
+                    Cache::forget('website_translations');
                 }
-                Cache::put('translations_front', json_encode($messages, true));
+                Cache::put('website_translations', json_encode($messages, true));
 
 
 
