@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-use Laravel\Sanctum\HasApiTokens;
+use Ludows\Adminify\Traits\HasApiTokens;
 
 use Ludows\Adminify\Traits\OnBootedModel;
 use Spatie\Translatable\HasTranslations;

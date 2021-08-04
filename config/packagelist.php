@@ -357,24 +357,4 @@ return array(
             'config' => null,
             'afterPublish' => [],
         ),
-        (object) array(
-            'beforePublish' => [],
-            'name' => 'laravel/sanctum',
-            'publish' => (object) [
-                'tag' => false,
-                'force' => false,
-                'sibling' => 'Laravel\Sanctum\SanctumServiceProvider'
-            ],
-            'autoload' => (object) [
-                'providers' => [],
-                'middlewares' => [
-                    'api' => [
-                        \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-                    ] 
-                ],
-                'aliases' => []
-            ],
-            'config' => null,
-            'afterPublish' => [],
-        ),
     );
