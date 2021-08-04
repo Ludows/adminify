@@ -46,7 +46,7 @@ class createTranslations extends Command
         $isFront = $this->option('front');
         $isBack = $this->option('back');
 
-        if($isFront && !$isBack) {
+        // if($isFront && !$isBack) {
             $traductions = new Traductions();
             $configSite = config('site-settings');
             $locales = $configSite['supported_locales'];
@@ -109,11 +109,11 @@ class createTranslations extends Command
                 }
                 $this->info('Traductions '. $locale .' are generated');
             }
-        }
+        // }
 
-        if($isBack && !$isFront) {
+        // if($isBack && !$isFront) {
 
-        }
+        // }
 
 
 
