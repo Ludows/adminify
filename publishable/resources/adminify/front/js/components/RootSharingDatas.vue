@@ -13,10 +13,8 @@
         methods : {
 
         },
-        mounted({ store }) {
-
-            store.commit('addData', this.export);
-            //console.log('Comment Form Mounted.')
+        mounted() {
+            this.$store.commit('addData', this.export);
         }
     }
 </script>
