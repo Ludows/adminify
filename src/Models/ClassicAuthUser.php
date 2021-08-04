@@ -43,20 +43,28 @@ abstract class ClassicAuthUser extends Authenticatable implements MustVerifyEmai
         return $query->tokens()->where('abilities', $key);
     }
 
-    public function getRolesAttribute() {
-        $table = config('permission.table_names.model_has_roles');
-        $roleModel = app('Spatie\Permission\Models\Role');
-        $pivotResults = DB::Table($table)
-        ->where('model_id', $this->id)
-        ->where('model_type', 'App\Models\User')->get();
+    public function tokens() {
 
-        $a = collect();
-
-        foreach ($pivotResults as $result) {
-            # code...
-            $a->push( $roleModel->find($result->role_id) );
-        }
-
-        return $a;
     }
+
+    public function getTokensAttribute() {
+
+    }
+
+    // public function getRolesAttribute() {
+    //     $table = config('permission.table_names.model_has_roles');
+    //     $roleModel = app('Spatie\Permission\Models\Role');
+    //     $pivotResults = DB::Table($table)
+    //     ->where('model_id', $this->id)
+    //     ->where('model_type', 'App\Models\User')->get();
+
+    //     $a = collect();
+
+    //     foreach ($pivotResults as $result) {
+    //         # code...
+    //         $a->push( $roleModel->find($result->role_id) );
+    //     }
+
+    //     return $a;
+    // }
 }
