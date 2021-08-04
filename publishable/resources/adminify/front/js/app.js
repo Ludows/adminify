@@ -18,6 +18,7 @@ import {
     IconsPlugin
 } from 'bootstrap-vue'
 import Vuex from 'vuex'
+import Store from "./store";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 import Swup from 'swup';
@@ -103,7 +104,7 @@ window.Vue = Vue;
 // VUE
 let app = new Vue({
     el: '#app',
-    store: store,
+    store: Store,
     created() {
         this.$getToken();
     },
