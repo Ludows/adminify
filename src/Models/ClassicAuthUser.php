@@ -21,6 +21,8 @@ use Ludows\Adminify\Traits\SavableTranslations;
 
 use Illuminate\Support\Facades\DB;
 
+use App\Models\ApiToken;
+
 
 abstract class ClassicAuthUser extends Authenticatable implements MustVerifyEmail
 {
@@ -39,32 +41,7 @@ abstract class ClassicAuthUser extends Authenticatable implements MustVerifyEmai
     use Searchables;
     use SavableTranslations;
 
-    public function scopeHasToken($query, $key) {
-        return $query->tokens()->where('abilities', $key);
-    }
-
     public function tokens() {
-
+        return $this->hasMany(ApiToken::class, 'user_id', 'id');
     }
-
-    public function getTokensAttribute() {
-
-    }
-
-    // public function getRolesAttribute() {
-    //     $table = config('permission.table_names.model_has_roles');
-    //     $roleModel = app('Spatie\Permission\Models\Role');
-    //     $pivotResults = DB::Table($table)
-    //     ->where('model_id', $this->id)
-    //     ->where('model_type', 'App\Models\User')->get();
-
-    //     $a = collect();
-
-    //     foreach ($pivotResults as $result) {
-    //         # code...
-    //         $a->push( $roleModel->find($result->role_id) );
-    //     }
-
-    //     return $a;
-    // }
 }

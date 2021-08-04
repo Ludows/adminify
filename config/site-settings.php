@@ -120,6 +120,8 @@ return [
         'prefix' => 'api', // use prefix
         'domain' => null, // to set a domain, just replace by your domain,
         'token_name' => 'api-token',
+        'secret' => 'my-random-string',
+        'expiration_time' => null, // if null this will never been expirated
         'roles_token_capacities' => ['administrator', 'editor'],
         'token_capacities' => [ // for user roles based
             'administrator' => ['api:full'],
