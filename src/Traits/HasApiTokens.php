@@ -34,6 +34,10 @@ trait HasApiTokens
 
         return $m;
     }
+
+    public function getCurrentToken() {
+        return $this->tokens()->first();
+    }
     
     public function isExpiratedToken() {
         

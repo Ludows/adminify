@@ -19,24 +19,26 @@ class TokenController extends Controller
     public function getToken(Request $request)
     {
         $datas = $request->all();
-        $user = user();
+        $user = user(); // get logged user
         $lang = $datas['lang'] ?? lang();
         $config = get_site_key('restApi');
-        $role = $user->roles->first();
+        $token = null;
 
         if($user == null) {
-            abort(403);
+            $anonymous = new User();
+            $token = $anonymous->createToken($config['token_name'])->token;
         }
 
-        if($user != null && $user->tokenCan('api:full') && $user->hasAnyRoles($config['roles_token_capacities'])) {
-
-            return response()->json([
-                'token' => $user->currentAccessToken()
-            ]);
-            
+        if($user != null && $user->tokenCan('api:full') && $user->hasAnyRole($config['roles_token_capacities'])) {
+            $token = $user->getCurrentToken();
         }
-        else {
+
+        if($token == null) {
             abort(404, 'Token not found');
         }
+
+        return response()->json([
+            'token' => $token
+        ]);
     }
 }
