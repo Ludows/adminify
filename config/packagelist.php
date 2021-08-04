@@ -301,7 +301,8 @@ return array(
                         'front.blogpage' => \App\Http\Middleware\checkBlogPage::class,
                         'admin.deletemedia' => \App\Http\Middleware\DeleteMedia::class,
                         'admin.fullmode' => \App\Http\Middleware\DisplayFullmode::class,
-                        'admin.seo' => \App\Http\Middleware\BackendSeo::class
+                        'admin.seo' => \App\Http\Middleware\BackendSeo::class,
+                        'api.verify' => \App\Http\Middleware\VerifyApiToken::class
                     ],
                     'web' => [
                         \App\Http\Middleware\ShareCurrentUser::class

@@ -14,7 +14,7 @@ if($config['enable']) {
             # code...
             Route::resource($key, $classValue, [
                 'as' => $config['prefix'],
-            ]);
+            ])->middelware('api.verify');
 
         }
     }
@@ -23,7 +23,7 @@ if($config['enable']) {
             # code...
             foreach ($arrayValues['verbs'] as $verb) {
                 # code...
-                Route::{$verb}($arrayValues['route'], $arrayValues['controller']);
+                Route::{$verb}($arrayValues['route'], $arrayValues['controller'])->middelware('api.verify');
             }
         }
     }
