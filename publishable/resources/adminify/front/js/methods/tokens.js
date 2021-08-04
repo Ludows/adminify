@@ -10,6 +10,7 @@ export function getToken() {
     })
     .then((response) => {
         console.log('response', response)
+        localStorage.setItem('api-token', response.data.token)
     })
     .catch((err) => {
         console.log('whooops', err)

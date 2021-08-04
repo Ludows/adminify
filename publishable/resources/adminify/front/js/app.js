@@ -105,7 +105,9 @@ let app = new Vue({
     el: appSelector,
     store: Store,
     created() {
-        this.$getToken();
+        if(localStorage.getItem('api-token') != null) {
+            this.$getToken();
+        }
     },
     mounted() {
 
