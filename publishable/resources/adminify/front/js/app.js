@@ -41,6 +41,7 @@ import SwupScrollPlugin from '@swup/scroll-plugin';
 Vue.component('comments', require('./components/Comments.vue').default);
 Vue.component('comment-form', require('./components/CommentForm.vue').default);
 Vue.component('update-comment', require('./components/CommentUpdateForm.vue').default);
+Vue.component('root-sharing', require('./components/RootSharingDatas.vue').default);
 
 Vue.prototype.$axios = require('axios');
 

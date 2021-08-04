@@ -25,8 +25,9 @@
         @stack('css')
     </head>
     <body class="{{ $class ?? '' }}">
-        <main id="app" data-user="{{ $user != null ? @json($user) : '{}' }}">
+        <main id="app">
             <div id="swup">
+                <root-sharing :user="{{ $user ?? '{}' }}"/>
                 @include('adminify::layouts.front.navbars.navbar')
                 @yield('content')
 
