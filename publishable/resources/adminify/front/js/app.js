@@ -97,12 +97,13 @@ window.Vue = Vue;
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-
+let appSelector = document.querySelector('#app');
 
 // VUE
 let app = new Vue({
-    el: '#app',
+    el: appSelector,
     store: Store,
+    propsData : { ...appSelector.dataset },
     props: {
         user : {
             type: Object,
