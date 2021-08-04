@@ -41,6 +41,11 @@ abstract class ClassicAuthUser extends Authenticatable implements MustVerifyEmai
     use Searchables;
     use SavableTranslations;
 
+    const ADMINISTRATOR = 1;
+    const EDITOR = 2;
+    const SUBSCRIBER = 3;
+    const GUEST = 4;
+
     public function tokens() {
         return $this->hasMany(ApiToken::class, 'user_id', 'id');
     }

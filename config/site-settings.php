@@ -124,9 +124,10 @@ return [
         'expiration_time' => null, // if null this will never been expirated
         'roles_token_capacities' => ['administrator', 'editor'],
         'token_capacities' => [ // for user roles based
-            'administrator' => ['api:full'],
-            'editor' => ['api:full'],
-            'subscriber' => []
+            'administrator' => ['api:update', 'api:read', 'api:create', 'api:delete'],
+            'editor' => ['api:update', 'api:read', 'api:create', 'api:delete'],
+            'subscriber' => ['api:read'],
+            'guest' => ['api:read']
         ],
         'crud' => [
             // controllers here we binded like the CRUD pattern

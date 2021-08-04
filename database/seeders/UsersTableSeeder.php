@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
     public function get_user_list() {
         return [
             0 => [
-                'id' => 1,
+                'id' => User::ADMINISTRATOR,
                 'avatar' => null,
                 'name' => 'Admin Admin',
                 'email' => 'admin@argon.com',
@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => now()
             ],
             1 => [
-                'id' => 2,
+                'id' => User::EDITOR,
                 'avatar' => null,
                 'name' => 'Ludovic Cointrel (as client)',
                 'email' => 'theartist768@gmail.com',
@@ -39,7 +39,7 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => now()
             ],
             2 => [
-                'id' => 3,
+                'id' => User::SUBSCRIBER,
                 'avatar' => null,
                 'name' => 'Ludovic Cointrel (as simple user)',
                 'email' => 'ludoco60@hotmail.com',
@@ -49,7 +49,7 @@ class UsersTableSeeder extends Seeder
                 'updated_at' => now()
             ],
             3 => [
-                'id' => 4,
+                'id' => User::GUEST,
                 'avatar' => null,
                 'name' => 'Guest User',
                 'email' => '',
