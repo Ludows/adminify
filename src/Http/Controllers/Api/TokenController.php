@@ -30,7 +30,8 @@ class TokenController extends Controller
 
         if($user == null) {
             $anonymous = new User();
-            // $token = $anonymous->createToken($config['token_name'])->token;
+            $anonymous = $anonymous->find(User::GUEST);
+            $token = $anonymous->getCurrentToken();
         }
 
         if($user != null && $user->tokenCan('api:full') && $user->hasAnyRole($config['roles_token_capacities'])) {
