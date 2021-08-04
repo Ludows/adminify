@@ -84,6 +84,11 @@ class InstallPackages extends Command
         if(in_array('*', $cleanedTasks)  || in_array('publishes', $cleanedTasks)) {
             $this->handlePublishesPackages();
         }
+        
+        if(in_array('*', $cleanedTasks)  || in_array('migrations', $cleanedTasks)) {
+            $this->info('Handle migrations database...');
+            Artisan::call('migrate');
+        }
 
         if(in_array('*', $cleanedTasks)  || in_array('feeds', $cleanedTasks)) {
             $this->info('Handle feeds config generation...');
@@ -98,12 +103,6 @@ class InstallPackages extends Command
         if(in_array('*', $cleanedTasks)  || in_array('translations', $cleanedTasks)) {
             $this->info('Handle Translations js...');
             Artisan::call('generate:translations');
-        }
-
-        
-        if(in_array('*', $cleanedTasks)  || in_array('migrations', $cleanedTasks)) {
-            $this->info('Handle migrations database...');
-            Artisan::call('migrate');
         }
 
         if(in_array('*', $cleanedTasks)  || in_array('cache', $cleanedTasks)) {
