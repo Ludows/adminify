@@ -27,11 +27,11 @@ class TokenController extends Controller
         if($user == null) {
             $anonymous = new User();
             $anonymous = $anonymous->find(User::GUEST);
-            $token = $anonymous->getCurrentToken();
+            $token = $anonymous->getCurrentToken()->token;
         }
 
         if($user != null) {
-            $token = $user->getCurrentToken();
+            $token = $user->getCurrentToken()->token;
         }
 
         if($token == null) {
