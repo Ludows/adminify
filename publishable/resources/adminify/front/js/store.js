@@ -2,7 +2,8 @@ import Vuex from 'vuex'
 
 import User from './store/user';
 
-export const store = new Vuex.Store({
+export default new Vuex.Store({
+    namespaced: true,
     modules: {
       user: User,
     }

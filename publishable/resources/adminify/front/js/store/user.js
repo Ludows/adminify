@@ -1,7 +1,7 @@
-export const user = {
+export default {
     state: () => {{ 
         data : {}
      }},
     mutations: {},
     actions: {}
-  }
+}
