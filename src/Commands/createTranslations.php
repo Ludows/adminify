@@ -75,8 +75,8 @@ class createTranslations extends Command
 
                 foreach ($files as $file) {
                     # code...
-                    $info = pathinfo($langPath.$file);
-                    $trads = require_once($langPath.$file);
+                    $info = pathinfo($file);
+                    $trads = require_once($file);
 
                     $key = str_replace( '.'.$info['extension'], '', $info['basename']);
                     $messages[ $key ] = $trads;
