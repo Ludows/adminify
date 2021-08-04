@@ -13,7 +13,7 @@
         methods : {
 
         },
-        mounted() {
+        mounted({ store }) {
 
             store.commit('addData', this.export);
             //console.log('Comment Form Mounted.')
