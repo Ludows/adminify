@@ -3,9 +3,6 @@
 namespace Ludows\Adminify\Commands;
 
 use Illuminate\Console\Command;
-use Ludows\Adminify\Models\Translations as Traductions;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Cache;
 
 use File;
 
@@ -46,30 +43,32 @@ class generateFeeds extends Command
 
         $feeds = get_site_key('feeds');
         $array = [
-            'main' => [
-                'items' => ['App\Feeds\Site', 'all'],
+            'feeds' => [
+                'main' => [
+                    'items' => ['App\Feeds\Site', 'all'],
 
-                'url' => '/feeds',
+                    'url' => '/feeds',
 
-                'title' => 'Datas from website !',
+                    'title' => 'Datas from website !',
 
-                /*
-                * The format of the feed.  Acceptable values are 'rss', 'atom', or 'json'.
-                */
-                'format' => 'rss',
+                    /*
+                    * The format of the feed.  Acceptable values are 'rss', 'atom', or 'json'.
+                    */
+                    'format' => 'rss',
 
-                /*
-                * Custom view for the items.
-                *
-                * Defaults to feed::feed if not present.
-                */
-                // 'view' => 'feed::feed',
+                    /*
+                    * Custom view for the items.
+                    *
+                    * Defaults to feed::feed if not present.
+                    */
+                    // 'view' => 'feed::feed',
+                ]
             ]
         ];
 
         foreach ($feeds['hydrate'] as $feedableKey) {
             # code...
-            $array[$feedableKey] = [
+            $array["feeds"][$feedableKey] = [
                 /*
                  * Here you can specify which class and method will return
                  * the items that should appear in the feed. For example:
@@ -83,7 +82,7 @@ class generateFeeds extends Command
                 /*
                  * The feed will be available on this url.
                  */
-                'url' => '/feed/'. $feedableKey .'',
+                'url' => '/feeds/'. $feedableKey .'',
 
                 'title' => str_replace('##DATA##', $feedableKey, $feeds['trad']['title']),
                 'description' => str_replace('##DATA##', $feedableKey, $feeds['trad']['description']),
@@ -125,7 +124,6 @@ class generateFeeds extends Command
             return '. var_export($array, true) .';
         ';
 
-        //dd($str);
         // config(['feed' => $feeds]);
         File::put(config_path('feed.php'), $str);
 
