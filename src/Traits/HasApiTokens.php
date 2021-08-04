@@ -4,6 +4,8 @@ namespace Ludows\Adminify\Traits;
 use App\Models\ApiToken;
 use Illuminate\Support\Str;
 
+use Carbon\Carbon;
+
 trait HasApiTokens
 {
     public function createToken(string $name, array $abilities = []) {
@@ -39,10 +41,37 @@ trait HasApiTokens
         return $this->tokens()->first();
     }
     
-    public function isExpiratedToken() {
-        
+    public function isExpiratedToken($token) {
+        $isExpirated = false;
+
+        $c = get_site_key('restApi');
+        $isEnabled = $c['expiration_time'] != null;
+
+        if($isEnabled) {
+            // check time
+            $now = Carbon::now();
+            $dateToken = Carbon::parse($token->expiration_date);
+
+            if($now->gt($dateToken)) {
+                $isExpirated = true;
+            }
+        }
+
+
+        return $isExpirated;
     }
-    public function verifyToken() {
-        
+    public function verifyToken(string $token) {
+        $verify = false;
+        $tokenUserModel = $this->getCurrentToken();
+        $tokenFromUser = $tokenUserModel->token;
+        if($tokenFromUser === $token) {
+            //première passe okay
+            // Maintenant on teste la validité du token
+            $isExpirated = $this->isExpiratedToken($tokenUserModel);
+            if(!$isExpirated) {
+                $verify = true;
+            }
+        }
+        return $verify;
     }
 }
