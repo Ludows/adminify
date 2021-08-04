@@ -11,10 +11,6 @@ use App\Models\User;
 
 class TokenController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('web');
-    }
     /**
      * Display a listing of the resource.
      *

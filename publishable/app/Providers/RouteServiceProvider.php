@@ -43,7 +43,7 @@ class RouteServiceProvider extends ServiceProvider
 
             if($config['enable']) {
 
-                $routerBasicApi = Route::middleware('api');
+                $routerBasicApi = Route::middleware('web');
                 if($config['prefix'] != null) {
                     $routerBasicApi->prefix($config['prefix']);
                 }
