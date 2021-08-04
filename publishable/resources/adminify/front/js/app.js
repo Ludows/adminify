@@ -105,7 +105,7 @@ let app = new Vue({
     el: appSelector,
     store: Store,
     created() {
-        if(localStorage.getItem('api-token') != null) {
+        if(localStorage.getItem('api-token') == null) {
             this.$getToken();
         }
     },
