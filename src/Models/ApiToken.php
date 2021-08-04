@@ -19,11 +19,12 @@ class ApiToken extends ClassicModel
     }
 
     protected $fillable = [
-        'comment',
-        'parent_id',
+        'name',
         'user_id',
-        'post_id',
-        'is_moderated',
+        'token',
+        'abilities',
+        'expiration_date',
+        'ip_adress'
     ];
 
     public function user()

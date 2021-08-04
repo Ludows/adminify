@@ -1,0 +1,9 @@
+<?php
+
+namespace App\Models;
+
+use Ludows\Adminify\Models\ApiToken as ApiTokenBaseModel;
+
+class ApiToken extends ApiTokenBaseModel
+{}
+

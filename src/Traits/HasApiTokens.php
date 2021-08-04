@@ -1,7 +1,7 @@
 <?php
 
 namespace Ludows\Adminify\Traits;
-
+use App\Models\ApiToken;
 
 trait HasApiTokens
 {
