@@ -7,6 +7,8 @@ use Ludows\Adminify\Models\Translations as Traductions;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
 
+use File;
+
 
 class createTranslations extends Command
 {
@@ -49,7 +51,7 @@ class createTranslations extends Command
             $configSite = config('site-settings');
             $locales = $configSite['supported_locales'];
             if($configSite['multilang'] == false) {
-                $locales = ['fr'];
+                $locales = [ config('app.locale') ];
             }
             foreach ($locales as $locale) {
                 # code...
@@ -67,6 +69,20 @@ class createTranslations extends Command
                         $messages->{$trad_by_lang->key} = $trad_by_lang->text;
                     }
                 }
+
+                $langPath = resource_path() . '/lang/'. $locale .'/';
+                $files = File::files($langPath);
+
+                foreach ($files as $file) {
+                    # code...
+                    $info = pathinfo($langPath.$file);
+                    $trads = require_once($langPath.$file);
+
+                    $key = str_replace( '.'.$info['extension'], '', $info['basename']);
+                    $messages[ $key ] = $trads;
+                }
+
+
 
                 $exists = Storage::disk('myuploads')->has('traductions-'. $locale .'.js');
 
