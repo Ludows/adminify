@@ -91,11 +91,11 @@ class createTranslations extends Command
                     window.__ = createLaravelLocalization(messages_'. $locale .');
                 })()';
 
-                if (Cache::has('website_translations')) {
+                if (Cache::has('website_translations_'.$locale)) {
                     //
-                    Cache::forget('website_translations');
+                    Cache::forget('website_translations_'.$locale);
                 }
-                Cache::put('website_translations', json_encode($messages, true));
+                Cache::put('website_translations_'.$locale, json_encode($messages, true));
 
 
 
