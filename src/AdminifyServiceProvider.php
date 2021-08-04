@@ -23,7 +23,7 @@ class AdminifyServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    protected $namespace = 'Ludows\Adminify\Http\Controllers';
+    protected $namespace = '';
 
     public function boot(Kernel $kernel) {
 
