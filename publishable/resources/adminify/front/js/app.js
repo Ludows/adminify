@@ -103,6 +103,7 @@ window.Vue = Vue;
 // VUE
 let app = new Vue({
     el: '#app',
+    store: store,
     created() {
         this.$getToken();
     },
