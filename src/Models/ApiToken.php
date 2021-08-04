@@ -7,7 +7,7 @@ use Ludows\Adminify\Models\ClassicModel;
 use Spatie\Searchable\SearchResult;
 use Spatie\Feed\FeedItem;
 
-class Comment extends ClassicModel
+class ApiToken extends ClassicModel
 {
     protected $table = 'api_tokens';
 
