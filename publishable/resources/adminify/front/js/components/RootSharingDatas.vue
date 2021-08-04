@@ -1,4 +1,5 @@
 <template>
+    <span id="ROOT_SHARING"></span>
 </template>
 
 <script>
@@ -10,7 +11,7 @@
             },
         },
         methods : {
-            
+
         },
         mounted() {
             //console.log('Comment Form Mounted.')
