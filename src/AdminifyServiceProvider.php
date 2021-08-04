@@ -10,6 +10,8 @@ use Ludows\Adminify\Commands\createTranslations;
 use Ludows\Adminify\Commands\InstallPackages;
 use Ludows\Adminify\Commands\generateFeeds;
 
+use Illuminate\Support\Facades\Route;
+
 use Illuminate\Contracts\Http\Kernel; // add kernel
 
 use Ludows\Adminify\View\Components\Modal;
