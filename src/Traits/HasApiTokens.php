@@ -16,14 +16,21 @@ trait HasApiTokens
 
         $plainTextToken = $secret.$salt;
 
-        $m = $m->create([
+        $list = [
             'name' => $name,
             'user_id' => $this->id ?? null,
             'token' => hash('sha256', $plainTextToken),
             'abilities' => join(',', $abilities),
             'expiration_date' => $c['expiration_time'],
             'ip_adress' => request()->ip()
-        ]);
+        ];
+
+        foreach ($list as $keyL => $value) {
+            # code...
+            $m->{$keyL} = $value;
+        }
+
+        $m = $m->save();
 
         return $m;
     }
