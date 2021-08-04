@@ -12,7 +12,8 @@ class UsersTableSeeder extends Seeder
     public $user_roles = [
         0 => ['administrator'],
         1 => ['editor'],
-        2 => ['subscriber']
+        2 => ['subscriber'],
+        3 => ['guest']
     ];
 
     public function get_user_list() {
@@ -42,6 +43,16 @@ class UsersTableSeeder extends Seeder
                 'avatar' => null,
                 'name' => 'Ludovic Cointrel (as simple user)',
                 'email' => 'ludoco60@hotmail.com',
+                'email_verified_at' => now(),
+                'password' => Hash::make('secret'),
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            3 => [
+                'id' => 4,
+                'avatar' => null,
+                'name' => 'Guest User',
+                'email' => '',
                 'email_verified_at' => now(),
                 'password' => Hash::make('secret'),
                 'created_at' => now(),

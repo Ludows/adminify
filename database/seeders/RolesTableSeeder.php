@@ -175,6 +175,23 @@ class RolesTableSeeder extends Seeder
                     ],
                 ]
             ],
+            3 => [
+                'name' => 'guest',
+                'permissions' => [
+                    0 => [
+                        'name' => 'read'
+                    ],
+                    1 => [
+                        'name' => 'comment'
+                    ],
+                    // 2 => [
+                    //     'name' => 'update_profile'
+                    // ],
+                    // 3 => [
+                    //     'name' => 'upload_media'
+                    // ],
+                ]
+            ]
 
         ];
 
