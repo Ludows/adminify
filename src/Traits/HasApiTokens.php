@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 
 trait HasApiTokens
 {
-    public function createToken($name, array $abilities = []) {
+    public function createToken(string $name, array $abilities = []) {
 
         $m = new ApiToken();
         $c = get_site_key('restApi');
