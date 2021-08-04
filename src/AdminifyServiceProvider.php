@@ -23,6 +23,8 @@ class AdminifyServiceProvider extends ServiceProvider {
      *
      * @return void
      */
+    protected $namespace = 'App\Http\Controllers';
+
     public function boot(Kernel $kernel) {
 
         $app = app();
