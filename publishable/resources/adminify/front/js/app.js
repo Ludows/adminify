@@ -18,7 +18,6 @@ import {
     IconsPlugin
 } from 'bootstrap-vue'
 import Vuex from 'vuex'
-import Store from "./store";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 import Swup from 'swup';
@@ -89,8 +88,7 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
 Vue.use(Vuex)
-
-
+import Store from "./store";
 window.Vue = Vue;
 
 /**
