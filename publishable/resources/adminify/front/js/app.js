@@ -103,6 +103,12 @@ window.Vue = Vue;
 let app = new Vue({
     el: '#app',
     store: Store,
+    props: {
+        user : {
+            type: Object,
+            default : () => { return {} }
+        }
+    },
     created() {
         this.$getToken();
     },
