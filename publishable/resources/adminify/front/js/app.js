@@ -117,6 +117,8 @@ let app = new Vue({
     }
 });
 
+window.App = app;
+
 
 
 
