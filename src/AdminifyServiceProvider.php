@@ -42,7 +42,7 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         $config = config('site-settings.restApi');
 
-        $this->routes(function () use ($config) {
+        // $this->routes(function () use ($config) {
 
             if($config['enable']) {
 
@@ -61,7 +61,7 @@ class AdminifyServiceProvider extends ServiceProvider {
                 ->namespace($this->namespace)
                 ->group(base_path('vendor/ludows/adminify/routes/web.php'));
 
-        });
+        // });
 
 
         $this->mergeConfigFrom(
