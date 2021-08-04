@@ -41,26 +41,26 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->routes(function () use ($config) {
 
-            if($config['enable']) {
+            // if($config['enable']) {
 
-                $routerBasicApi = Route::middleware('web');
-                if($config['prefix'] != null) {
-                    $routerBasicApi->prefix($config['prefix']);
-                }
-                if($config['domain'] != null) {
-                    $routerBasicApi->domain($config['domain']);
-                }
-                $routerBasicApi->namespace($this->namespace)
-                ->group(base_path('vendor/ludows/adminify/routes/api.php'));
-            }
+            //     $routerBasicApi = Route::middleware('web');
+            //     if($config['prefix'] != null) {
+            //         $routerBasicApi->prefix($config['prefix']);
+            //     }
+            //     if($config['domain'] != null) {
+            //         $routerBasicApi->domain($config['domain']);
+            //     }
+            //     $routerBasicApi->namespace($this->namespace)
+            //     ->group(base_path('vendor/ludows/adminify/routes/api.php'));
+            // }
 
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
 
-            Route::middleware('web')
-                ->namespace($this->namespace)
-                ->group(base_path('vendor/ludows/adminify/routes/web.php'));
+            // Route::middleware('web')
+            //     ->namespace($this->namespace)
+            //     ->group(base_path('vendor/ludows/adminify/routes/web.php'));
 
 
 
