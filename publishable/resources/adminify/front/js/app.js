@@ -104,13 +104,6 @@ let appSelector = document.querySelector('#app');
 let app = new Vue({
     el: appSelector,
     store: Store,
-    propsData : { ...appSelector.dataset },
-    props: {
-        user : {
-            type: Object,
-            default : () => { return {} }
-        }
-    },
     created() {
         this.$getToken();
     },

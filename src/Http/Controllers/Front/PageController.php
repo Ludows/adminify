@@ -34,13 +34,15 @@ class PageController extends Controller
             $type = $reflection->getShortName();
             $seo = $this->handleSeo($page);
 
-            $user = $request->user();
+            $user = user();
             if($user != null) {
                 $user->role = $user->roles->first();
                 unset($user->roles);
             }
+            
+            $export = ['seo' => $seo, 'type' => $type, 'model' => $page, 'user' => $user, 'lang' => lang()];
 
-            return view("adminify::layouts.front.pages.index", ['seo' => $seo, 'type' => $type, 'model' => $page, 'user' => $user, 'lang' => $request->lang]);
+            return view("adminify::layouts.front.pages.index", ['seo' => $seo, 'type' => $type, 'model' => $page, 'user' => $user, 'lang' => lang(), 'export' => json_encode($export)]);
         }
 
         public function getPages($slug) {
@@ -56,8 +58,10 @@ class PageController extends Controller
                 unset($user->roles);
             }
 
+            $export = ['seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => lang()];
 
-            return view("adminify::layouts.front.pages.index", ['seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => lang()]);
+
+            return view("adminify::layouts.front.pages.index", ['seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => lang(), 'export' => json_encode($export)]);
 
         }
 

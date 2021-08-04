@@ -5,7 +5,7 @@
 <script>
     export default {
         props: {
-            user : {
+            export : {
                 type : Object,
                 default: () => { {} }
             },

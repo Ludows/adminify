@@ -27,7 +27,7 @@
     <body class="{{ $class ?? '' }}">
         <main id="app">
             <div id="swup">
-                <root-sharing :user="{{ $user ?? '{}' }}"></root-sharing>
+                <root-sharing :export="{{ $export ?? '{}' }}"></root-sharing>
                 @include('adminify::layouts.front.navbars.navbar')
                 @yield('content')
 
