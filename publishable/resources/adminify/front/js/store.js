@@ -1,13 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import User from './store/user';
+import Global from './store/global';
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     namespaced: true,
     modules: {
-      user: User,
+      global: Global,
     }
 })
