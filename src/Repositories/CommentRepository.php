@@ -35,21 +35,21 @@ class CommentRepository
             foreach ($multilangsFields as $multilangsField) {
                 # code...
                 if(isset($values[$multilangsField])) {
-                    $m->setTranslation($multilangsField, $lang, $values[$multilangsField]);
+                    $m = $m->setTranslation($multilangsField, $lang, $values[$multilangsField]);
                     unset($values[$multilangsField]);
                 }
 
             }
             foreach ($fields as $field) {
                 if(isset($values[$field])) {
-                    $m->{$field} = $values[$field];
+                    $m = $m->{$field} = $values[$field];
                 }
             }
 
-            $m->save();
+            $m = $m->save();
         }
         else {
-            $m->create($values);
+            $m = $m->create($values);
         }
         return $m;
     }

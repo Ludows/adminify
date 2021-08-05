@@ -16,7 +16,7 @@ if($config['enable']) {
             # code...
             Route::resource($key, $classValue, [
                 'as' => $config['prefix'],
-            ])->middleware('api.verify_token');
+            ])->middleware(['api.verify_token', 'multilang.basic']);
 
         }
     }
@@ -25,7 +25,7 @@ if($config['enable']) {
             # code...
             foreach ($arrayValues['verbs'] as $verb) {
                 # code...
-                Route::{$verb}($arrayValues['route'], $arrayValues['controller'])->middleware('api.verify_token');
+                Route::{$verb}($arrayValues['route'], $arrayValues['controller'])->middleware(['api.verify_token', 'multilang.basic']);
             }
         }
     }
