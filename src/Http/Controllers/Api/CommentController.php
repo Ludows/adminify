@@ -56,7 +56,7 @@ class CommentController extends Controller
         $model = $this->CommentRepository->create($request->all());
         
         return response()->json([
-            'entry' => $model,
+            'commentList' => $model->post->commentsThree,
             'message' => __('admin.success_entry_created'),
             'status' => 'OK'
         ]);
@@ -92,7 +92,7 @@ class CommentController extends Controller
         $model = $this->CommentRepository->update($request->all(), $Comment);
         
         return response()->json([
-            'entry' => $model,
+            'commentList' => $model->post->commentsThree,
             'message' => __('admin.success_entry_updated'),
             'status' => 'OK'
         ]);
@@ -116,7 +116,7 @@ class CommentController extends Controller
         $this->CommentRepository->delete($Comment);
         
         return response()->json([
-            'entry' => $m,
+            'commentList' => $m->commentsThree,
             'message' => __('admin.success_entry_deleted'),
             'status' => 'OK'
         ]);
