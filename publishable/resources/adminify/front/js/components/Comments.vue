@@ -124,6 +124,12 @@
         mounted() {
             //console.log('Comments mounted.')
             this.list = this.comments;
+        },
+        watch: { 
+            list: function(newVal, oldVal) { // watch it
+                // console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+                this.list = newVal;
+            }
         }
     }
 </script>
