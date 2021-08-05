@@ -61,9 +61,9 @@ class CommentRepository
         $lang = lang();
         $m = $model;
 
-        $values = array_merge($values, [
-            'lang' => lang()
-        ]);
+        // $values = array_merge($values, [
+        //     'lang' => lang()
+        // ]);
 
         if($multilang) {
             $multilangsFields = $m->getMultilangTranslatableSwitch();
