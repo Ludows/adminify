@@ -34,7 +34,7 @@ class PostController extends Controller
 
         if(!$this->user->tokenCan('api:read')) {
             abort(403);
-        })
+        };
 
         return Post::all();
     }
@@ -47,6 +47,10 @@ class PostController extends Controller
     public function store(CreatePostRequest $request)
     {
         //
+        if(!$this->user->tokenCan('api:create')) {
+            abort(403);
+        };
+
         $model = $this->PostRepository->create($request->all(), $request);
         
         return response()->json([
@@ -63,6 +67,10 @@ class PostController extends Controller
      */
     public function show(Post $Post)
     {
+        if(!$this->user->tokenCan('api:read')) {
+            abort(403);
+        };
+
         return $Post;
     }
     /**
@@ -75,6 +83,10 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, Post $Post)
     {
         //
+        if(!$this->user->tokenCan('api:update')) {
+            abort(403);
+        };
+
         $model = $this->PostRepository->update($request->all(), $request, $Post);
         
         return response()->json([
@@ -93,6 +105,10 @@ class PostController extends Controller
     public function destroy(Post $Post)
     {
         //
+        if(!$this->user->tokenCan('api:delete')) {
+            abort(403);
+        };
+
         $m = $Post;
 
         $this->PostRepository->delete($Post);
