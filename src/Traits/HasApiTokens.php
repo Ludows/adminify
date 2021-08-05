@@ -8,15 +8,21 @@ use Carbon\Carbon;
 
 trait HasApiTokens
 {
+    public function generateToken() {
+        $c = get_site_key('restApi');
+        $salt = Str::random(10);
+        $secret = $c['secret'];
+
+        $plainTextToken = $secret.$salt;
+
+        return $plainTextToken;
+    }
     public function createToken(string $name, array $abilities = []) {
 
         $m = new ApiToken();
         $c = get_site_key('restApi');
 
-        $salt = Str::random(10);
-        $secret = $c['secret'];
-
-        $plainTextToken = $secret.$salt;
+        $plainTextToken = $this->generateToken();
 
         $list = [
             'name' => $name,
@@ -73,6 +79,19 @@ trait HasApiTokens
 
 
         return $isExpirated;
+    }
+    public function refreshToken() {
+
+        $tokenUserModel = $this->getCurrentToken();
+        $plainTextToken = $this->generateToken();
+
+        $tokenUserModel->fill([
+            "token" => $plainTextToken
+        ]);
+
+        $tokenUserModel->save();
+
+        return $tokenUserModel;
     }
     public function verifyToken(string $token) {
         $verify = false;

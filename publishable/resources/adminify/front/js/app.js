@@ -56,9 +56,11 @@ Vue.prototype.$swal = Swal;
 
 Vue.prototype.$route = require('../../commons/js/Route').default;
 
-const { getToken, tokenFromLocalStorage } = require('./methods/tokens');
+const { getToken, tokenFromLocalStorage, verifyToken, refreshToken } = require('./methods/tokens');
 
 Vue.prototype.$getToken = getToken;
+Vue.prototype.$verifyToken = verifyToken;
+Vue.prototype.$refreshToken = refreshToken;
 Vue.prototype.$tokenFromLocalStorage = tokenFromLocalStorage;
 
 /** ----------------------------------------------------------------------------
