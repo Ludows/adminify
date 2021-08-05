@@ -49,4 +49,17 @@ abstract class ClassicAuthUser extends Authenticatable implements MustVerifyEmai
     public function tokens() {
         return $this->hasMany(ApiToken::class, 'user_id', 'id');
     }
+
+    public function isGuest() {
+        return $this->id === User::GUEST;
+    }
+    public function isAdmin() {
+        return $this->id === User::ADMINISTRATOR;
+    }
+    public function isEditor() {
+        return $this->id === User::EDITOR;
+    }
+    public function isSubscriber() {
+        return $this->id === User::SUBSCRIBER;
+    }
 }

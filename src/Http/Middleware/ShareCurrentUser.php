@@ -5,6 +5,8 @@ namespace Ludows\Adminify\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
+use App\Models\User;
+
 class ShareCurrentUser
 {
     /**
@@ -17,7 +19,11 @@ class ShareCurrentUser
     public function handle(Request $request, Closure $next)
     {
 
-        $user = auth()->user();
+        $user = user();
+
+        if($user == null) {
+            $user = User::find(User::GUEST);
+        }
 
         view()->share('user', $user);
 
