@@ -25,13 +25,22 @@ export default class RouteAbstract {
     renderUrl(route, routeName) {
         let params = this.getParameters();
         let KeysParams = Object.keys(params);
+        let _gets = ['?', '&'];
         if(KeysParams.length > 0) {
             for (let index = 0; index < KeysParams.length; index++) {
                 const key = KeysParams[index];
                 let str = `{${key}}`;
                 let url = route.url;
                 if(url.indexOf(str) === -1) {
-                    throw new Error(`${key} cannot be processed for the route nammed ${routeName}`);
+                    //if not present we pass key to url as ? and & 
+                    if(url.indexOf( _gets[0]+key ) === -1) {
+                        str = _gets[0]+key+'='+params[key];
+                        route.renderedUrl = url.str;
+                    }
+                    else {
+                        str = _gets[1]+key+'='+params[key];
+                        route.renderedUrl = url.str;
+                    }
                 }
                 else {
                     route.renderedUrl = url.replace(str, params[key]);

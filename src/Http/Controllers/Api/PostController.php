@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Repositories\PostRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 use App\Http\Requests\CreatePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 
 
 use Illuminate\Http\Request;
@@ -25,6 +26,9 @@ class PostController extends Controller
      */
     public function index()
     {
+
+
+
         return Post::all();
     }
     /**
@@ -61,7 +65,7 @@ class PostController extends Controller
      * @param  \App\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function update(CreatePostRequest $request, Post $Post)
+    public function update(UpdatePostRequest $request, Post $Post)
     {
         //
         $model = $this->PostRepository->update($request->all(), $request, $Post);
