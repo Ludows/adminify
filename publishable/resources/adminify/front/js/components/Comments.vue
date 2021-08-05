@@ -74,7 +74,7 @@
                             }
                         })
                         .then((response) => {
-                            this.$root.$refs.comments.list = response.data.commentList
+                            this.$root.$refs.comments.comments = response.data.commentList
                             this.$swal.fire(response.data.status, '', 'success')
                         })
                         .catch((err) => {

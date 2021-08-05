@@ -47,8 +47,8 @@
                     'data' : formData
                 })
                 .then((response) => {
-                    this.$root.$refs.comments.list = [];
-                    this.$root.$refs.comments.list = response.data.commentList
+                    this.$root.$refs.comments.comments = [];
+                    this.$root.$refs.comments.comments = response.data.commentList
                     this.$parent.toggleForm('update', this.comment_id)
                     textarea.value = '';
                 })
