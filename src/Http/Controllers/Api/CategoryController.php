@@ -20,8 +20,12 @@ class CategoryController extends Controller
 
     public function __construct(CategoryRepository $CategoryRepository)
     {
-        $u = user();
-        $this->user = $u != null ? $u : User::find(Role::GUEST);
+        $this->middleware(function ($request, $next) {
+            $u = user();
+            $this->user = $u != null ? $u : User::find(Role::GUEST);
+    
+            return $next($request);
+        });
         $this->CategoryRepository = $CategoryRepository;
     }
     /**
