@@ -16,7 +16,6 @@ class TranslationsController extends Controller
 
     public function __construct(TranslationRepository $TranslationsRepository)
     {
-        $this->middleware('auth:sanctum', ['except' => ['index','show']]);
         $this->TranslationsRepository = $TranslationsRepository;
     }
     /**

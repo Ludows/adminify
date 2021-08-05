@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Repositories\CategoryRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 use App\Http\Requests\CreateCategoryRequest;
+use App\Http\Requests\UpdateCategoryRequest;
 
 
 
@@ -17,7 +18,6 @@ class CategoryController extends Controller
 
     public function __construct(CategoryRepository $CategoryRepository)
     {
-        $this->middleware('auth:sanctum', ['except' => ['index','show']]);
         $this->CategoryRepository = $CategoryRepository;
     }
     /**
@@ -63,7 +63,7 @@ class CategoryController extends Controller
      * @param  \App\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function update(CreateCategoryRequest $request, Category $Category)
+    public function update(UpdateCategoryRequest $request, Category $Category)
     {
         //
         $model = $this->CategoryRepository->update($request->all(), $request, $Category);

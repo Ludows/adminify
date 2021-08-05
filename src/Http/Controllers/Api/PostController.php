@@ -16,7 +16,6 @@ class PostController extends Controller
 
     public function __construct(PostRepository $PostRepository)
     {
-        $this->middleware('auth:sanctum', ['except' => ['index','show']]);
         $this->PostRepository = $PostRepository;
     }
     /**

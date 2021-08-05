@@ -40,6 +40,20 @@ trait HasApiTokens
     public function getCurrentToken() {
         return $this->tokens()->first();
     }
+
+    public function delete() {
+
+    }
+
+    public function tokenCan($abilities) {
+        $tokenCan = false;
+        $tokenUserModel = $this->getCurrentToken();
+        $abilities_user = explode(',', $tokenUserModel->abilities);
+        if(in_array($abilities, $abilities_user)) {
+            $tokenCan = true;
+        }
+        return $tokenCan;
+    }
     
     public function isExpiratedToken($token) {
         $isExpirated = false;
