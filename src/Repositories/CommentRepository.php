@@ -36,21 +36,21 @@ class CommentRepository
             foreach ($multilangsFields as $multilangsField) {
                 # code...
                 if(isset($values[$multilangsField])) {
-                    $m = $m->setTranslation($multilangsField, $lang, $values[$multilangsField]);
+                    $m->setTranslation($multilangsField, $lang, $values[$multilangsField]);
                     unset($values[$multilangsField]);
                 }
 
             }
             foreach ($fields as $field) {
                 if(isset($values[$field])) {
-                    $m = $m->{$field} = $values[$field];
+                    $m->{$field} = $values[$field];
                 }
             }
 
-            $m = $m->save();
+            $m->save();
         }
         else {
-            $m = $m->create($values);
+            $m->create($values);
         }
         return $m;
     }
@@ -71,13 +71,13 @@ class CommentRepository
             foreach ($multilangsFields as $multilangsField) {
                 # code...
                 if(isset($values[$multilangsField])) {
-                    $m = $m->setTranslation($multilangsField, $lang, $values[$multilangsField]);
+                    $m->setTranslation($multilangsField, $lang, $values[$multilangsField]);
                     unset($values[$multilangsField]);
                 }
             }
             foreach ($fields as $field) {
                 if(isset($values[$field])) {
-                    $m = $m->{$field} = $values[$field];
+                    $m->{$field} = $values[$field];
                 }
             }
         }
