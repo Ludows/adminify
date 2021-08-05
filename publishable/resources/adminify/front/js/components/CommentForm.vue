@@ -52,6 +52,7 @@
                 .then((response) => {
                     console.log(this.$root.$refs.comments)
                     console.log('response.data.commentList', response.data.commentList)
+                    this.$root.$refs.comments.list = [];
                     this.$root.$refs.comments.list = response.data.commentList
                     textarea.value = '';
                 })
