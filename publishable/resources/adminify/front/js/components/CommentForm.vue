@@ -40,7 +40,9 @@
                 let parent = this.$refs.comments;
                 let textarea = this.$refs.textarea;
 
-                let route = this.$route('api.comments.store');
+                let route = this.$route('api.comments.store', {
+                    'token' : this.$tokenFromLocalStorage()
+                });
 
                 this.$axios({
                     'method' : 'POST',

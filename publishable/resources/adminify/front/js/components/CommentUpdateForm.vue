@@ -36,7 +36,10 @@
                 formData.append('_method', 'PATCH');
                 let textarea = this.$refs.textarea;
                 
-                let route = this.$route('api.comments.update', {'comment' : this.comment_id});
+                let route = this.$route('api.comments.update', {
+                    'comment' : this.comment_id,
+                    'token' : this.$tokenFromLocalStorage()
+                });
 
                 this.$axios({
                     'method' : 'POST',

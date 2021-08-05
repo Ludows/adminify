@@ -58,7 +58,10 @@
                     denyButtonText: `Don't save`,
                 }).then((result) => {
                     
-                    let route = this.$route('api.comments.destroy', {'comment': commentId});
+                    let route = this.$route('api.comments.destroy', {
+                        'comment': commentId, 
+                        'token': this.$tokenFromLocalStorage()
+                    });
 
                     /* Read more about isConfirmed, isDenied below */
                     if (result.isConfirmed) {

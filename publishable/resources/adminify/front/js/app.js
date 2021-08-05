@@ -56,9 +56,10 @@ Vue.prototype.$swal = Swal;
 
 Vue.prototype.$route = require('../../commons/js/Route').default;
 
-const { getToken } = require('./methods/tokens');
+const { getToken, tokenFromLocalStorage } = require('./methods/tokens');
 
 Vue.prototype.$getToken = getToken;
+Vue.prototype.$tokenFromLocalStorage = tokenFromLocalStorage;
 
 /** ----------------------------------------------------------------------------
  * Inizialize Swup

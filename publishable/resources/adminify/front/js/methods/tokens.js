@@ -16,3 +16,7 @@ export function getToken() {
         console.log('whooops', err)
     })
 }
+
+export function tokenFromLocalStorage() {
+    return localStorage.getItem('api-token');
+}
