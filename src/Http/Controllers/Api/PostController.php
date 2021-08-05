@@ -11,12 +11,17 @@ use App\Http\Requests\UpdatePostRequest;
 
 use Illuminate\Http\Request;
 
+use App\Models\User;
+use App\Models\Role;
+
 class PostController extends Controller
 {
     private $PostRepository;
 
     public function __construct(PostRepository $PostRepository)
     {
+        $u = user();
+        $this->user = $u != null ? $u : User::find(Role::GUEST);
         $this->PostRepository = $PostRepository;
     }
     /**
@@ -27,7 +32,9 @@ class PostController extends Controller
     public function index()
     {
 
-
+        if(!$this->user->tokenCan('api:read')) {
+            abort(403);
+        })
 
         return Post::all();
     }
