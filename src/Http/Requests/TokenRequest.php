@@ -23,12 +23,6 @@ class TokenRequest extends FormRequest
             ]
         ];
 
-        if($r->useMultilang && $r->is('api.*')) {
-            $a['lang'] = [
-                'required'
-            ];
-        }
-
         return $a;
     }
 }

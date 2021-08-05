@@ -35,18 +35,6 @@ class UpdateTranslationRequest extends FormRequest
             ]
         ];
 
-        if($r->is('api.*')) {
-            $a['token'] = [
-                'required'
-            ];
-        }
-
-        if($r->useMultilang && $r->is('api.*')) {
-            $a['lang'] = [
-                'required'
-            ];
-        }
-
         return $a;
     }
 }

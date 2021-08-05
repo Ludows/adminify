@@ -4,8 +4,9 @@ namespace Ludows\Adminify\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCategoryRequest extends FormRequest
+class CreateCommentRequest extends FormRequest
 {
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -13,14 +14,9 @@ class UpdateCategoryRequest extends FormRequest
      */
     public function rules()
     {
-        $r = request();
-        $a = [
-            'title' => [
-                'required',
-                'string'
-            ]
+        //@todo
+        return [
+            
         ];
-
-        return $a;
     }
 }

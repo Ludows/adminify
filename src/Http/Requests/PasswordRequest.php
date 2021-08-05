@@ -31,11 +31,6 @@ class PasswordRequest extends FormRequest
             'password_confirmation' => ['required', 'min:6'],
         ];
 
-        if($r->is('api.*')) {
-            $a['token'] = [
-                'required'
-            ];
-        }
 
         return $a;
     }

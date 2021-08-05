@@ -31,18 +31,6 @@ class ProfileRequest extends FormRequest
             'email' => ['required', 'email', Rule::unique((new User)->getTable())->ignore(auth()->id())],
         ];
 
-        if($r->is('api.*')) {
-            $a['token'] = [
-                'required'
-            ];
-        }
-
-        if($r->useMultilang && $r->is('api.*')) {
-            $a['lang'] = [
-                'required'
-            ];
-        }
-
         return $a;
     }
 }
