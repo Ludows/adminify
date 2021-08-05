@@ -22,7 +22,7 @@ use Ludows\Adminify\Traits\SavableTranslations;
 use Illuminate\Support\Facades\DB;
 
 use App\Models\ApiToken;
-
+use App\Models\Role;
 
 abstract class ClassicAuthUser extends Authenticatable implements MustVerifyEmail
 {
@@ -41,25 +41,21 @@ abstract class ClassicAuthUser extends Authenticatable implements MustVerifyEmai
     use Searchables;
     use SavableTranslations;
 
-    const ADMINISTRATOR = 1;
-    const EDITOR = 2;
-    const SUBSCRIBER = 3;
-    const GUEST = 4;
-
     public function tokens() {
         return $this->hasMany(ApiToken::class, 'user_id', 'id');
     }
 
+    //@todo
     public function isGuest() {
-        return $this->id === User::GUEST;
+        return $this->id === Role::GUEST;
     }
     public function isAdmin() {
-        return $this->id === User::ADMINISTRATOR;
+        return $this->id === Role::ADMINISTRATOR;
     }
     public function isEditor() {
-        return $this->id === User::EDITOR;
+        return $this->id === Role::EDITOR;
     }
     public function isSubscriber() {
-        return $this->id === User::SUBSCRIBER;
+        return $this->id === Role::SUBSCRIBER;
     }
 }
