@@ -15,7 +15,7 @@ trait HasApiTokens
 
         $plainTextToken = $secret.$salt;
 
-        return $plainTextToken;
+        return hash('sha256', $plainTextToken);
     }
     public function createToken(string $name, array $abilities = []) {
 
@@ -27,7 +27,7 @@ trait HasApiTokens
         $list = [
             'name' => $name,
             'user_id' => $this->id ?? null,
-            'token' => hash('sha256', $plainTextToken),
+            'token' => $plainTextToken,
             'abilities' => join(',', $abilities),
             'expiration_date' => $c['expiration_time'],
             'ip_adress' => request()->ip()
