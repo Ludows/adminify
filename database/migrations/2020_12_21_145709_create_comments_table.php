@@ -15,9 +15,12 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->bigIncrements('id')->unsigned();
-            $table->string('comment', 255);
+            
             if(config('site-settings.multilang') == true) {
-                $table->string('lang', 64);
+                $table->json('comment');
+            }
+            else {
+                $table->string('comment', 255);
             }
             $table->bigInteger('parent_id')->unsigned()->default(0);
             $table->bigInteger('post_id')->unsigned();

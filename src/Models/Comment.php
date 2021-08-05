@@ -18,6 +18,8 @@ class Comment extends ClassicModel
         return \Ludows\Adminify\Tables\CommentTable::class;
     }
 
+    public $MultilangTranslatableSwitch = ['comment'];
+
     protected $fillable = [
         'comment',
         'parent_id',
@@ -45,10 +47,6 @@ class Comment extends ClassicModel
 
     public function scopeSublevel($query, $sublevel) {
         return $query->where('parent_id', $sublevel);
-    }
-
-    public function scopePostedWithLang($query, $locale) {
-        return $query->where('lang', $locale);
     }
 
     public function getHasSublevelAttribute() {

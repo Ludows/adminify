@@ -27,12 +27,8 @@ class CommentRepository
     public function create($values) {
         $request = request();
         $multilang = $request->useMultilang;
-        $lang = $request->lang;
+        $lang = lang();
         $m = new Comment();
-
-        $values = array_merge($values, [
-            'lang' => lang()
-        ]);
 
         if($multilang) {
             $multilangsFields = $m->getMultilangTranslatableSwitch();
@@ -62,13 +58,13 @@ class CommentRepository
 
         $request = request();
         $multilang = $request->useMultilang;
-        $lang = $request->lang;
+        $lang = lang();
         $m = $model;
 
         $values = array_merge($values, [
             'lang' => lang()
         ]);
-        
+
         if($multilang) {
             $multilangsFields = $m->getMultilangTranslatableSwitch();
             $fields = $m->getFieldsExceptTranslatables();
