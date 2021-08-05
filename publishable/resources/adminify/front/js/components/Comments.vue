@@ -18,7 +18,7 @@
                         <div v-if="allow_form">
                             <comment-form :id="'respond_'+_uid+'_'+comment.id" class="d-none"  :user="user" :show_title="false"  :parent_id="comment.id" :post_id="post_id"></comment-form>
                         </div>
-                        <comments :lang="lang" :show_title="false" :root_level="false" :parent_id="comment.id" :post_id="post_id" :allow_form="allow_form" :user="user" :comments='comment.childs != undefined ? comment.childs : []'></comments>
+                        <comments v-if="comment.childs != undefined" :lang="lang" :show_title="false" :root_level="false" :parent_id="comment.id" :post_id="post_id" :allow_form="allow_form" :user="user" :comments='comment.childs != undefined ? comment.childs : []'></comments>
                     </div>
                 </div>
 
