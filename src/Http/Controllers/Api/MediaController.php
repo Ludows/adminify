@@ -10,6 +10,8 @@ use App\Http\Requests\UpdateMediaRequest;
 
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Role;
 
 class MediaController extends Controller
 {
@@ -17,6 +19,8 @@ class MediaController extends Controller
 
     public function __construct(MediaRepository $MediaRepository)
     {
+        $u = user();
+        $this->user = $u != null ? $u : User::find(Role::GUEST);
         $this->MediaRepository = $MediaRepository;
     }
     /**
@@ -26,6 +30,9 @@ class MediaController extends Controller
      */
     public function index()
     {
+        if(!$this->user->tokenCan('api:read')) {
+            abort(403);
+        };
         return Media::all();
     }
     /**
@@ -37,6 +44,10 @@ class MediaController extends Controller
     public function store(CreateMediaRequest $request)
     {
         //
+        if(!$this->user->tokenCan('api:create')) {
+            abort(403);
+        };
+
         $model = $this->MediaRepository->create($request->all(), $request);
         
         return response()->json([
@@ -53,6 +64,10 @@ class MediaController extends Controller
      */
     public function show(Media $Media)
     {
+        if(!$this->user->tokenCan('api:read')) {
+            abort(403);
+        };
+
         return $Media;
     }
     /**
@@ -65,6 +80,10 @@ class MediaController extends Controller
     public function update(UpdateMediaRequest $request, Media $Media)
     {
         //
+        if(!$this->user->tokenCan('api:update')) {
+            abort(403);
+        };
+
         $model = $this->MediaRepository->update($request->all(), $request, $Media);
         
         return response()->json([
@@ -83,6 +102,10 @@ class MediaController extends Controller
     public function destroy(Media $Media)
     {
         //
+        if(!$this->user->tokenCan('api:delete')) {
+            abort(403);
+        };
+
         $m = $Media;
 
         $this->MediaRepository->delete($Media);

@@ -5,10 +5,14 @@ namespace Ludows\Adminify\Http\Controllers\Api;
 use App\Models\Page;
 use App\Repositories\PageRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
-use App\Http\Requests\PageRequest;
+use App\Http\Requests\CreatePageRequest;
+use App\Http\Requests\UpdatePageRequest;
 
 
 use Illuminate\Http\Request;
+
+use App\Models\User;
+use App\Models\Role;
 
 class PageController extends Controller
 {
@@ -16,6 +20,8 @@ class PageController extends Controller
 
     public function __construct(PageRepository $pageRepository)
     {
+        $u = user();
+        $this->user = $u != null ? $u : User::find(Role::GUEST);
         $this->pageRepository = $pageRepository;
     }
     /**
@@ -25,6 +31,10 @@ class PageController extends Controller
      */
     public function index()
     {
+        if(!$this->user->tokenCan('api:read')) {
+            abort(403);
+        };
+
         return Page::all();
     }
     /**
@@ -33,9 +43,13 @@ class PageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PageRequest $request)
+    public function store(CreatePageRequest $request)
     {
         //
+        if(!$this->user->tokenCan('api:create')) {
+            abort(403);
+        };
+
         $model = $this->pageRepository->create($request->all(), $request);
         
         return response()->json([
@@ -52,6 +66,10 @@ class PageController extends Controller
      */
     public function show(Page $page)
     {
+        if(!$this->user->tokenCan('api:read')) {
+            abort(403);
+        };
+
         return $page;
     }
     /**
@@ -61,9 +79,13 @@ class PageController extends Controller
      * @param  \App\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function update(PageRequest $request, Page $page)
+    public function update(UpdatePageRequest $request, Page $page)
     {
         //
+        if(!$this->user->tokenCan('api:update')) {
+            abort(403);
+        };
+
         $model = $this->pageRepository->update($request->all(), $request, $page);
         
         return response()->json([
@@ -82,6 +104,10 @@ class PageController extends Controller
     public function destroy(Page $page)
     {
         //
+        if(!$this->user->tokenCan('api:delete')) {
+            abort(403);
+        };
+        
         $m = $page;
 
         $this->pageRepository->delete($page);

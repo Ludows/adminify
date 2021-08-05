@@ -11,6 +11,8 @@ use App\Http\Requests\UpdateCategoryRequest;
 
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Role;
 
 class CategoryController extends Controller
 {
@@ -18,6 +20,8 @@ class CategoryController extends Controller
 
     public function __construct(CategoryRepository $CategoryRepository)
     {
+        $u = user();
+        $this->user = $u != null ? $u : User::find(Role::GUEST);
         $this->CategoryRepository = $CategoryRepository;
     }
     /**
@@ -27,6 +31,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        if(!$this->user->tokenCan('api:read')) {
+            abort(403);
+        };
         return Category::all();
     }
     /**
@@ -38,6 +45,10 @@ class CategoryController extends Controller
     public function store(CreateCategoryRequest $request)
     {
         //
+        if(!$this->user->tokenCan('api:create')) {
+            abort(403);
+        };
+
         $model = $this->CategoryRepository->create($request->all(), $request);
         
         return response()->json([
@@ -54,6 +65,10 @@ class CategoryController extends Controller
      */
     public function show(Category $Category)
     {
+        if(!$this->user->tokenCan('api:read')) {
+            abort(403);
+        };
+
         return $Category;
     }
     /**
@@ -66,6 +81,10 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $Category)
     {
         //
+        if(!$this->user->tokenCan('api:update')) {
+            abort(403);
+        };
+
         $model = $this->CategoryRepository->update($request->all(), $request, $Category);
         
         return response()->json([
@@ -84,6 +103,10 @@ class CategoryController extends Controller
     public function destroy(Category $Category)
     {
         //
+        if(!$this->user->tokenCan('api:delete')) {
+            abort(403);
+        };
+        
         $m = $Category;
 
         $this->CategoryRepository->delete($Category);

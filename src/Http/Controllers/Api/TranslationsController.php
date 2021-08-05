@@ -5,10 +5,13 @@ namespace Ludows\Adminify\Http\Controllers\Api;
 use App\Models\Translations;
 use App\Repositories\TranslationRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
-use App\Http\Requests\CreateTranslation;
+use App\Http\Requests\CreateTranslationRequest;
+use App\Http\Requests\UpdateTranslationRequest;
 
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Role;
 
 class TranslationsController extends Controller
 {
@@ -16,6 +19,8 @@ class TranslationsController extends Controller
 
     public function __construct(TranslationRepository $TranslationsRepository)
     {
+        $u = user();
+        $this->user = $u != null ? $u : User::find(Role::GUEST);
         $this->TranslationsRepository = $TranslationsRepository;
     }
     /**
@@ -25,6 +30,9 @@ class TranslationsController extends Controller
      */
     public function index()
     {
+        if(!$this->user->tokenCan('api:read')) {
+            abort(403);
+        };
         return Translations::all();
     }
     /**
@@ -33,9 +41,13 @@ class TranslationsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CreateTranslation $request)
+    public function store(CreateTranslationRequest $request)
     {
         //
+        if(!$this->user->tokenCan('api:create')) {
+            abort(403);
+        };
+
         $model = $this->TranslationsRepository->create($request->all(), $request);
         
         return response()->json([
@@ -52,6 +64,10 @@ class TranslationsController extends Controller
      */
     public function show(Translations $Translations)
     {
+        if(!$this->user->tokenCan('api:read')) {
+            abort(403);
+        };
+
         return $Translations;
     }
     /**
@@ -61,9 +77,13 @@ class TranslationsController extends Controller
      * @param  \App\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Translations $Translations)
+    public function update(UpdateTranslationRequest $request, Translations $Translations)
     {
         //
+        if(!$this->user->tokenCan('api:update')) {
+            abort(403);
+        };
+
         $model = $this->TranslationsRepository->update($request->all(), $request, $Translations);
         
         return response()->json([
@@ -82,6 +102,10 @@ class TranslationsController extends Controller
     public function destroy(Translations $Translations)
     {
         //
+        if(!$this->user->tokenCan('api:delete')) {
+            abort(403);
+        };
+        
         $m = $Translations;
 
         $this->TranslationsRepository->delete($Translations);
