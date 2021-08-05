@@ -32,15 +32,15 @@ export default class RouteAbstract {
                 let str = `{${key}}`;
                 let url = route.url;
                 if(url.indexOf(str) === -1) {
-                    //if not present we pass key to url as ? and & 
+                    //if not present we pass key to url as ? and &
                     if(url.indexOf( _gets[0]+key ) === -1) {
                         str = _gets[0]+key+'='+params[key];
-                        route.renderedUrl = url.str;
                     }
                     else {
                         str = _gets[1]+key+'='+params[key];
-                        route.renderedUrl = url.str;
                     }
+                    route.renderedUrl = url+str;
+                    console.log('route.renderedUrl', route.renderedUrl)
                 }
                 else {
                     route.renderedUrl = url.replace(str, params[key]);
