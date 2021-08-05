@@ -302,7 +302,7 @@ return array(
                         'admin.deletemedia' => \App\Http\Middleware\DeleteMedia::class,
                         'admin.fullmode' => \App\Http\Middleware\DisplayFullmode::class,
                         'admin.seo' => \App\Http\Middleware\BackendSeo::class,
-                        'api.verify' => \App\Http\Middleware\VerifyApiToken::class
+                        'api.verify_token' => \App\Http\Middleware\VerifyApiToken::class
                     ],
                     'web' => [
                         \App\Http\Middleware\ShareCurrentUser::class
