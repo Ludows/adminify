@@ -39,12 +39,12 @@ export default class RouteAbstract {
                     else {
                         str = _gets[1]+key+'='+params[key];
                     }
-                    route.renderedUrl = url+str;
+                    route.renderedUrl = route.renderedUrl ? route.renderedUrl+str : url+str;
                     console.log('route.renderedUrl a', route.renderedUrl)
                 }
                 else {
-                    console.log('route.renderedUrl b ', route.renderedUrl)
                     route.renderedUrl = url.replace(str, params[key]);
+                    console.log('route.renderedUrl b ', route.renderedUrl)
                 }
             }
         }
