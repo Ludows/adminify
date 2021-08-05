@@ -10,6 +10,9 @@ use Ludows\Adminify\Http\Controllers\Controller;
 
 use App\Repositories\CommentRepository;
 
+use App\Http\Requests\CreateCommentRequest;
+use App\Http\Requests\UpdateCommentRequest;
+
 use App\Forms\UpdateComment;
 
 use Ludows\Adminify\Traits\TableManagerable;
@@ -44,7 +47,7 @@ class CommentController extends Controller
             *
             * @return Response
             */
-        public function store(Request $request)
+        public function store(CreateCommentRequest $request)
         {
             //
             $comment = $this->commentRepository->create($request->all());
@@ -89,7 +92,7 @@ class CommentController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(Request $request, Comment $comment)
+        public function update(UpdateCommentRequest $request, Comment $comment)
         {
             //
             $comment = $this->commentRepository->update($request->all(), $comment);
