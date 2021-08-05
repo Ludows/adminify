@@ -17,10 +17,6 @@ class UpdateCommentRequest extends FormRequest
         //@todo
         return [
             'comment' => ['required'],
-            'parent_id' => ['required'],
-            'post_id' => ['required'],
-            'user_id' => ['required'],
-            'is_moderated' => ['required']
         ];
     }
 }
