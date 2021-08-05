@@ -27,11 +27,15 @@ export function verifyToken() {
     this.$axios({
         'method' : 'POST',
         'url' : route,
-        'data' : {}
+        'data' : {
+            'token': localStorage.getItem('api-token')
+        }
     })
     .then((response) => {
         console.log('response', response)
-        localStorage.setItem('api-token', response.data.token)
+        if(response.data.isValid == false) {
+            this.$refreshToken();
+        }
     })
     .catch((err) => {
         console.log('whooops', err)

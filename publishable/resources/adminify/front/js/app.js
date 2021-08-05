@@ -111,6 +111,9 @@ let app = new Vue({
         if(localStorage.getItem('api-token') == null) {
             this.$getToken();
         }
+        else {
+            this.$verifyToken();
+        }
     },
     mounted() {
 

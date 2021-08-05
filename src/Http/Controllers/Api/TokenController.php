@@ -43,7 +43,9 @@ class TokenController extends Controller
         // if true , is valid.
         // if false, you must send a request to get token;
         $isValid = $this->user->verifyToken($token);
-        return $isValid;
+        return response()->json([
+            'isValid' => $isValid
+        ]);
     }
     public function refreshToken(Request $request) {
 
