@@ -123,6 +123,7 @@
         },
         mounted() {
             //console.log('Comments mounted.')
+            this.list = this.comments;
         }
     }
 </script>
