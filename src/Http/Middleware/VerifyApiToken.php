@@ -5,7 +5,7 @@ namespace Ludows\Adminify\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-use App\Model\User;
+use App\Models\User;
 
 class VerifyApiToken
 {
