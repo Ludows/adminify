@@ -47,15 +47,19 @@ abstract class ClassicAuthUser extends Authenticatable implements MustVerifyEmai
 
     //@todo
     public function isGuest() {
-        return $this->id === Role::GUEST;
+        $r = $this->roles->pluck('id');
+        return in_array(Role::GUEST, $r);
     }
     public function isAdmin() {
-        return $this->id === Role::ADMINISTRATOR;
+        $r = $this->roles->pluck('id');
+        return in_array(Role::ADMINISTRATOR, $r);
     }
     public function isEditor() {
-        return $this->id === Role::EDITOR;
+        $r = $this->roles->pluck('id');
+        return in_array(Role::EDITOR, $r);
     }
     public function isSubscriber() {
-        return $this->id === Role::SUBSCRIBER;
+        $r = $this->roles->pluck('id');
+        return in_array(Role::SUBSCRIBER, $r);
     }
 }

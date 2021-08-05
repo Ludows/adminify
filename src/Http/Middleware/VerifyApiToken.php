@@ -5,7 +5,7 @@ namespace Ludows\Adminify\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-use App\Models\User;
+use App\Models\Role;
 
 class VerifyApiToken
 {
@@ -24,7 +24,7 @@ class VerifyApiToken
 
         if($user == null) {
             //fallback to guest user
-            $user = User::find(User::GUEST);
+            $user = User::find(Role::GUEST);
         }
 
         if($token == null) {

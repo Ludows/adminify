@@ -5,7 +5,7 @@ namespace Ludows\Adminify\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-use App\Models\User;
+use App\Models\Role;
 
 class ShareCurrentUser
 {
@@ -22,7 +22,7 @@ class ShareCurrentUser
         $user = user();
 
         if($user == null) {
-            $user = User::find(User::GUEST);
+            $user = User::find(Role::GUEST);
         }
 
         view()->share('user', $user);
