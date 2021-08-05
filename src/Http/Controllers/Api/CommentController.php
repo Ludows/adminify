@@ -116,7 +116,7 @@ class CommentController extends Controller
         $this->CommentRepository->delete($Comment);
         
         return response()->json([
-            'commentList' => $m->commentsThree,
+            'commentList' => $m->post->commentsThree,
             'message' => __('admin.success_entry_deleted'),
             'status' => 'OK'
         ]);
