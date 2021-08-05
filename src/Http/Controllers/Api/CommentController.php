@@ -6,8 +6,13 @@ use App\Models\Comment;
 use App\Repositories\CommentRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 
+use App\Http\Requests\CreateCommentRequest;
+use App\Http\Requests\UpdateCommentRequest;
+
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Role;
 
 class CommentController extends Controller
 {
@@ -15,6 +20,8 @@ class CommentController extends Controller
 
     public function __construct(CommentRepository $CommentRepository)
     {
+        $u = user();
+        $this->user = $u != null ? $u : User::find(Role::GUEST);
         $this->CommentRepository = $CommentRepository;
     }
     /**
@@ -24,6 +31,9 @@ class CommentController extends Controller
      */
     public function index()
     {
+        if(!$this->user->tokenCan('api:read')) {
+            abort(403);
+        };
         return Comment::all();
     }
     /**
@@ -32,9 +42,13 @@ class CommentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCommentRequest $request)
     {
         //
+        if(!$this->user->tokenCan('api:create')) {
+            abort(403);
+        };
+
         $model = $this->CommentRepository->create($request->all());
         
         return response()->json([
@@ -51,6 +65,10 @@ class CommentController extends Controller
      */
     public function show(Comment $Comment)
     {
+        if(!$this->user->tokenCan('api:read')) {
+            abort(403);
+        };
+
         return $Comment;
     }
     /**
@@ -60,9 +78,13 @@ class CommentController extends Controller
      * @param  \App\Todo  $todo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Comment $Comment)
+    public function update(UpdateCommentRequest $request, Comment $Comment)
     {
         //
+        if(!$this->user->tokenCan('api:update')) {
+            abort(403);
+        };
+
         $model = $this->CommentRepository->update($request->all(), $Comment);
         
         return response()->json([
@@ -80,6 +102,10 @@ class CommentController extends Controller
      */
     public function destroy(Comment $Comment)
     {
+
+        if(!$this->user->tokenCan('api:delete')) {
+            abort(403);
+        };
         //
         $m = $Comment;
 
