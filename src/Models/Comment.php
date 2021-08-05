@@ -47,7 +47,7 @@ class Comment extends ClassicModel
         return $query->where('parent_id', $sublevel);
     }
 
-    public function scopewithLang($query, $locale) {
+    public function scopePostedWithLang($query, $locale) {
         return $query->where('lang', $locale);
     }
 
