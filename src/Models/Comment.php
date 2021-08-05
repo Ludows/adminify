@@ -47,6 +47,10 @@ class Comment extends ClassicModel
         return $query->where('parent_id', $sublevel);
     }
 
+    public function scopewithLang($query, $locale) {
+        return $query->where('lang', $locale);
+    }
+
     public function getHasSublevelAttribute() {
         $has = false;
         $subs = $this->Sublevel($this->id)->get();
