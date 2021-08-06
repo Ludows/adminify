@@ -96,7 +96,11 @@ class CommentRepository
             $sublevels = $ms->Sublevel($m->id)->get();
             foreach ($sublevels as $sublevel) {
                 # code...
-                $sublevel->delete();
+                if($sublevel->HasSublevel) {
+                    $this->delete($sublevel);
+                    $sublevel->delete();
+                }
+                
             }
         }
         $m->delete();
