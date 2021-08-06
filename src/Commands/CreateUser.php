@@ -51,7 +51,7 @@ class CreateUser extends Command
 
         $allowed_roles = Role::where('id', '!=', Role::GUEST)->get()->pluck('name');
 
-        dd($arguments);
+        //dd($arguments);
 
         $u = new User();
 
