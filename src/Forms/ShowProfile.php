@@ -12,6 +12,10 @@ class ShowProfile extends Form
 
         $topbar = $m->getPreference('topbar');
 
+        $this->add('user_id', 'hidden', [
+            'value' => $m->id
+        ]);
+
         $this->add('topbar', 'checkbox', [
             'label' => __('admin.form.topbar'),
             'checked' =>  $topbar != null ? true : false,
