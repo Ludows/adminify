@@ -48,10 +48,36 @@ class CreateUser extends Command
     {
         $roles = array();
         $arguments = $this->arguments();
+        $trigger_error = false;
 
         $allowed_roles = Role::where('id', '!=', Role::GUEST)->get()->pluck('name')->all();
 
         //dd($arguments);
+
+        $roles_str = $this->formatArgument($arguments['roles'], 'roles=', '');
+        $roles_str = $this->formatArgument($roles_str, '"', '');
+
+        if(str_contains($roles_str, ',')) {
+            //breakable roles
+            $roles = explode(',' ,$roles_str);
+        }
+        else {
+            $roles[] = $roles_str;
+        }
+
+        foreach ($roles as $r) {
+            # code...
+            $asignable_role = trim(strtolower($r));
+            if(!in_array( $asignable_role,  $allowed_roles)) {
+                $this->info('Skipping '.$r.' because no exist in db. You MUST provide valids roles.');
+                $trigger_error = true;
+                break;
+            }
+        }
+
+        if($trigger_error) {
+            return false;
+        }
 
         $u = new User();
 
@@ -61,32 +87,15 @@ class CreateUser extends Command
 
         $u->save();
         // we got a new user let's go to map roles
+    
         
-
-        if(isset($arguments['roles'])) {
-
-            $roles_str = $this->formatArgument($arguments['roles'], 'roles=', '');
-            $roles_str = $this->formatArgument($roles_str, '"', '');
-
-            if(str_contains($roles_str, ',')) {
-                //breakable roles
-                $roles = explode(',' ,$roles_str);
-            }
-            else {
-                $roles[] = $roles_str;
-            }
-
             foreach ($roles as $r) {
                 # code...
                 $asignable_role = trim(strtolower($r));
                 if(in_array( $asignable_role,  $allowed_roles)) {
                     $u->assignRole($asignable_role);
                 }
-                else {
-                    $this->info('Skipping '.$r.' because no exist in db');
-                }
             }
-        }
 
         // $roles_writtent_by_user = $this->formatArgument($arguments['roles'])
 
