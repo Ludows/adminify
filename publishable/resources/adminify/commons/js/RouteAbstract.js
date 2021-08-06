@@ -33,7 +33,8 @@ export default class RouteAbstract {
                 let url = route.url;
                 if(url.indexOf(str) === -1) {
                     //if not present we pass key to url as ? and &
-                    if(url.indexOf( _gets[0]+key ) === -1) {
+                    let correctMatch = route.renderedUrl ? route.renderedUrl : url;
+                    if(correctMatch.indexOf( _gets[0]+key ) === -1) {
                         str = _gets[0]+key+'='+params[key];
                     }
                     else {
