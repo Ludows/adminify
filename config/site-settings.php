@@ -42,6 +42,26 @@ return [
         ]
     ],
 
+    // key_title is available for trads otherwise it's title
+    // todo showIf as function closure
+    'toolbar' => [
+        'class' => 'class_here', // if you want to extend toolbar for add features not present in core class toolbar
+        'menu' => array(
+            ['icon' => '', 'key_title' => 'admin.toolbar.dashboard', 'url' => route('admin.dashboard') ],
+            ['icon' => '', 'key_title' => 'admin.toolbar.create', 'paths' => [
+                ['icon' => '', 'key_title' => 'admin.posts.index', 'url' => route('posts.create') ],
+                ['icon' => '', 'key_title' => 'admin.pages.index', 'url' => route('pages.create') ],
+                ['icon' => '', 'key_title' => 'admin.menus.index', 'url' => route('menus.create') ],
+                ['icon' => '', 'key_title' => 'admin.medias.index', 'url' => route('medias.create') ],
+                ['icon' => '', 'key_title' => 'admin.traductions.index', 'url' => route('traductions.create') ],
+                ['icon' => '', 'key_title' => 'admin.categories.index', 'url' => route('categories.create') ]
+            ] ],
+            ['icon' => '', 'key_title' => 'admin.toolbar.modify', 'url' => function() {
+    
+            } ],
+        ),
+    ],
+
     'shortcodes' => [
     ],
 
