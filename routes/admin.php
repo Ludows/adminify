@@ -27,13 +27,16 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'admin.breadcrumb
 
     Route::post('listings', 'Ludows\Adminify\Http\Controllers\Back\ListingController@index')->name('listings');
 
-
     Route::resource('comments', 'Ludows\Adminify\Http\Controllers\Back\CommentController', ['except' => ['show', 'create']]);
     
     Route::resource('settings', 'Ludows\Adminify\Http\Controllers\Back\SettingsController', ['except' => ['show', 'update', 'delete', 'edit']]);
 	
     Route::resource('users', 'Ludows\Adminify\Http\Controllers\Back\UserController', ['except' => ['show']]);
-	
+
+    Route::get('users/profile/{user}', 'Ludows\Adminify\Http\Controllers\Back\UserController@showProfile')->name('users.profile');
+
+    Route::post('users/profile/{user}/save', 'Ludows\Adminify\Http\Controllers\Back\UserController@saveProfile')->name('users.profile.save');
+
     Route::resource('traductions', 'Ludows\Adminify\Http\Controllers\Back\TranslationsController', ['except' => ['show']]);
     
     Route::resource('tags', 'Ludows\Adminify\Http\Controllers\Back\TagsController', ['except' => ['show']]);

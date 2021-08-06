@@ -13,6 +13,7 @@ use Ludows\Adminify\Http\Controllers\Controller;
 
 use App\Forms\CreateUser;
 use App\Forms\UpdateUser;
+use App\Forms\showProfile;
 
 use App\Repositories\UserRepository;
 
@@ -142,5 +143,18 @@ class UserController extends Controller
                 // redirect
                 flash(__('admin.typed_data.deleted'))->success();
                 return redirect()->route('users.index');
+            }
+            public function showProfile(User $user) {
+                
+                $form = $formBuilder->create(showProfile::class, [
+                    'method' => 'POST',
+                    'url' => route('users.profile.save', ['user' => $user->id]),
+                    'model' => $user
+                ]);
+
+                return view("adminify::layouts.admin.pages.profile", ['form' => $form]);
+            }
+            public function saveProfile(User $user) {
+
             }
 }
