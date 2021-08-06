@@ -148,7 +148,7 @@ class UserController extends Controller
                 
                 $form = $formBuilder->create(showProfile::class, [
                     'method' => 'POST',
-                    'url' => route('users.profile.save', ['user' => $user->id]),
+                    'url' => route('users.profile.store', ['user' => $user->id]),
                     'model' => $user
                 ]);
 
