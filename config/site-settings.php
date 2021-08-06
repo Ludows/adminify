@@ -55,7 +55,7 @@ return [
                 ['icon' => '', 'key_title' => 'admin.traductions.index', 'url' => url('/traductions/create') ],
                 ['icon' => '', 'key_title' => 'admin.categories.index', 'url' => url('/categories/create') ]
             ] ],
-            ['icon' => '', 'key_title' => 'admin.toolbar.modify', 'url' => function() {
+            ['icon' => '', 'key_title' => 'admin.toolbar.modify', 'url' => function($request) {
     
             } ],
         ),
