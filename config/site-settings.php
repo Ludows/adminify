@@ -46,7 +46,7 @@ return [
     // todo showIf as function closure
     'toolbar' => [
         'menu' => array(
-            ['icon' => '', 'key_title' => 'admin.toolbar.dashboard', 'url' => route('admin.dashboard') ],
+            ['icon' => '', 'key_title' => 'admin.toolbar.dashboard', 'url' => route('home.dashboard') ],
             ['icon' => '', 'key_title' => 'admin.toolbar.create', 'paths' => [
                 ['icon' => '', 'key_title' => 'admin.posts.index', 'url' => route('posts.create') ],
                 ['icon' => '', 'key_title' => 'admin.pages.index', 'url' => route('pages.create') ],
