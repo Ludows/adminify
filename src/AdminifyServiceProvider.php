@@ -9,6 +9,7 @@ use Ludows\Adminify\Commands\RouteList;
 use Ludows\Adminify\Commands\createTranslations;
 use Ludows\Adminify\Commands\InstallPackages;
 use Ludows\Adminify\Commands\generateFeeds;
+use Ludows\Adminify\Commands\CreateUser;
 
 use Illuminate\Support\Facades\Route;
 
@@ -190,6 +191,7 @@ class AdminifyServiceProvider extends ServiceProvider {
     private function registerCommands() {
         
         $this->commands([
+            CreateUser::class,
             generateFeeds::class,
             InstallPackages::class,
             TraitGenerator::class,
