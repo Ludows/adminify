@@ -106,6 +106,12 @@ class UserRepository
             # code...
             $pref = new UserPreference();
 
+            $check = $pref->type($key)->userId($userId)->get()->first();
+
+            if($check != null) {
+                $pref = $check;
+            }
+
             $pref->type = $key;
             $pref->data = $value;
             $pref->user_id = $userId;
