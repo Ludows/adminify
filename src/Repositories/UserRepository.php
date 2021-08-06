@@ -102,6 +102,10 @@ class UserRepository
             unset($values['user_id']);
         }
 
+        if(!isset($values['topbar'])) {
+            $values['topbar'] = 0;
+        }
+
         foreach ($values as $key => $value) {
             # code...
             $pref = new UserPreference();
