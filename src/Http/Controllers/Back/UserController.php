@@ -157,6 +157,10 @@ class UserController extends Controller
             public function saveProfile(User $user, FormBuilder $formBuilder) {
 
                 $form = $this->form(showProfile::class);
+                $formValues = $form->getFieldValues();
 
+                $this->userRepository->saveProfile($formValues);
+                flash(__('admin.typed_data.updated'))->success();
+                return redirect()->route('users.index');
             }
 }

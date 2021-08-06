@@ -4,6 +4,7 @@ namespace Ludows\Adminify\Repositories;
 
 use MrAtiebatie\Repository;
 use App\Models\User;
+use App\Models\UserPreference;
 use Illuminate\Support\Facades\Hash; // Don't forget to update the model's namespace
 use App\Models\Media;
 
@@ -93,5 +94,18 @@ class UserRepository
     public function delete($model) {
 
         $model->delete();
+    }
+    public function saveProfile($values) {
+
+        foreach ($values as $key => $value) {
+            # code...
+            $pref = new UserPreference();
+
+            $pref->type = $key;
+            $pref->data = $value;
+
+            $pref->save();
+        }
+
     }
 }
