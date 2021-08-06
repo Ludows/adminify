@@ -15,10 +15,10 @@ class CreateUser extends Command
      * @var string
      */
     protected $signature = 'create:user
-            {role?* : Roles are Administrator, Editor, Subscriber}
-            {name : set the full name of the user}
-            {email : set the email of the user}
-            {password : set the password of the user}';
+            {role?* : Roles are Administrator, Editor, Subscriber,
+            name : set the full name of the user,
+            email : set the email of the user,
+            password : set the password of the user}';
 
     /**
      * The console command description.
