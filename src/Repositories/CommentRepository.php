@@ -98,8 +98,8 @@ class CommentRepository
                 # code...
                 if($sublevel->HasSublevel) {
                     $this->delete($sublevel);
-                    $sublevel->delete();
                 }
+                $sublevel->delete();
                 
             }
         }
