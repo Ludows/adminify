@@ -37,7 +37,7 @@ export default class RouteAbstract {
                     if(correctMatch.indexOf( _gets[0]+key ) === -1) {
                         str = _gets[0]+key+'='+params[key];
                     }
-                    else {
+                    else if(correctMatch.indexOf( _gets[1]+key ) === -1) {
                         str = _gets[1]+key+'='+params[key];
                     }
                     route.renderedUrl = route.renderedUrl ? route.renderedUrl+str : url+str;
