@@ -144,7 +144,7 @@ class UserController extends Controller
                 flash(__('admin.typed_data.deleted'))->success();
                 return redirect()->route('users.index');
             }
-            public function showProfile(User $user) {
+            public function showProfile(User $user, FormBuilder $formBuilder) {
                 
                 $form = $formBuilder->create(showProfile::class, [
                     'method' => 'POST',
@@ -154,7 +154,9 @@ class UserController extends Controller
 
                 return view("adminify::layouts.admin.pages.profile", ['form' => $form]);
             }
-            public function saveProfile(User $user) {
+            public function saveProfile(User $user, FormBuilder $formBuilder) {
+
+                $form = $this->form(showProfile::class);
 
             }
 }

@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Forms;
+
+use Ludows\Adminify\Forms\ShowProfile as ShowProfileBaseForm;
+
+class ShowProfile extends ShowProfileBaseForm
+{}
