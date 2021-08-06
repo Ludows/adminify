@@ -33,9 +33,9 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'admin.breadcrumb
 	
     Route::resource('users', 'Ludows\Adminify\Http\Controllers\Back\UserController', ['except' => ['show']]);
 
-    Route::get('users/profile/{user}', 'Ludows\Adminify\Http\Controllers\Back\UserController@showProfile')->name('users.profile');
+    Route::get('users/{user}/profile/', 'Ludows\Adminify\Http\Controllers\Back\UserController@showProfile')->name('users.profile.edit');
 
-    Route::post('users/profile/{user}/save', 'Ludows\Adminify\Http\Controllers\Back\UserController@saveProfile')->name('users.profile.save');
+    Route::post('users/{user}/profile/save', 'Ludows\Adminify\Http\Controllers\Back\UserController@saveProfile')->name('users.profile.store');
 
     Route::resource('traductions', 'Ludows\Adminify\Http\Controllers\Back\TranslationsController', ['except' => ['show']]);
     
