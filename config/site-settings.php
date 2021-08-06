@@ -45,7 +45,6 @@ return [
     // key_title is available for trads otherwise it's title
     // todo showIf as function closure
     'toolbar' => [
-        'class' => 'class_here', // if you want to extend toolbar for add features not present in core class toolbar
         'menu' => array(
             ['icon' => '', 'key_title' => 'admin.toolbar.dashboard', 'url' => route('admin.dashboard') ],
             ['icon' => '', 'key_title' => 'admin.toolbar.create', 'paths' => [

@@ -37,7 +37,7 @@
                     }
                 @endphp
                 @if($topbarShow)
-                    MYFUCKING TOPBAR CONTENT...
+                    {!! ToolBar::render() !!}
                 @endif
                 @include('adminify::layouts.front.navbars.navbar')
                 @yield('content')
