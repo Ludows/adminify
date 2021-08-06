@@ -65,20 +65,20 @@ class CreateUser extends Command
 
         if(isset($arguments['roles'])) {
 
-            $roles = $this->formatArgument($arguments['roles'], 'roles=', '');
-            $roles = $this->formatArgument($roles, '"', '');
+            $roles_str = $this->formatArgument($arguments['roles'], 'roles=', '');
+            $roles_str = $this->formatArgument($roles_str, '"', '');
 
-            if(str_contains($roles, ',')) {
+            if(str_contains($roles_str, ',')) {
                 //breakable roles
-                $roles = explode(',' ,$roles);
+                $roles = explode(',' ,$roles_str);
             }
             else {
-                $roles[] = $roles;
+                $roles[] = $roles_str;
             }
 
             foreach ($roles as $r) {
                 # code...
-                $asignable_role = strtolower($r);
+                $asignable_role = trim(strtolower($r));
                 if(in_array( strtolower($r),  $allowed_roles)) {
                     $u->assignRole($asignable_role);
                 }
