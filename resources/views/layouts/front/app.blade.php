@@ -28,6 +28,17 @@
         <main id="app">
             <div id="swup">
                 <root-sharing :export="{{ $export ?? '{}' }}"></root-sharing>
+
+                @php
+                    $topbarPref = get_user_preference('topbar');
+                    $topbarShow = true;
+                    if($topbarPref != null) {
+                        $topbarShow = (bool)$topbarPref;
+                    }
+                @endphp
+                @if($topbarShow)
+                    MYFUCKING TOPBAR CONTENT...
+                @endif
                 @include('adminify::layouts.front.navbars.navbar')
                 @yield('content')
 
