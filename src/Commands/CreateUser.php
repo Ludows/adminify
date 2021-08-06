@@ -59,7 +59,7 @@ class CreateUser extends Command
         $u->email = $this->formatArgument($arguments['email'], 'email=', '');
         $u->password = Hash::make( $this->formatArgument($arguments['password'], 'password=', '') );
 
-        $u = $u->save();
+        $u->save();
         // we got a new user let's go to map roles
         
 
