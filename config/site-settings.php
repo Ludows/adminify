@@ -46,14 +46,14 @@ return [
     // todo showIf as function closure
     'toolbar' => [
         'menu' => array(
-            ['icon' => '', 'key_title' => 'admin.toolbar.dashboard', 'url' => route('home.dashboard') ],
+            ['icon' => '', 'key_title' => 'admin.toolbar.dashboard', 'url' => url('/admin/dashboard') ],
             ['icon' => '', 'key_title' => 'admin.toolbar.create', 'paths' => [
-                ['icon' => '', 'key_title' => 'admin.posts.index', 'url' => route('posts.create') ],
-                ['icon' => '', 'key_title' => 'admin.pages.index', 'url' => route('pages.create') ],
-                ['icon' => '', 'key_title' => 'admin.menus.index', 'url' => route('menus.create') ],
-                ['icon' => '', 'key_title' => 'admin.medias.index', 'url' => route('medias.create') ],
-                ['icon' => '', 'key_title' => 'admin.traductions.index', 'url' => route('traductions.create') ],
-                ['icon' => '', 'key_title' => 'admin.categories.index', 'url' => route('categories.create') ]
+                ['icon' => '', 'key_title' => 'admin.posts.index', 'url' => url('/posts/create') ],
+                ['icon' => '', 'key_title' => 'admin.pages.index', 'url' => url('/pages/create') ],
+                ['icon' => '', 'key_title' => 'admin.menus.index', 'url' => url('/menus/create') ],
+                ['icon' => '', 'key_title' => 'admin.medias.index', 'url' => url('/medias/create') ],
+                ['icon' => '', 'key_title' => 'admin.traductions.index', 'url' => url('/traductions/create') ],
+                ['icon' => '', 'key_title' => 'admin.categories.index', 'url' => url('/categories/create') ]
             ] ],
             ['icon' => '', 'key_title' => 'admin.toolbar.modify', 'url' => function() {
     
