@@ -21,6 +21,8 @@ class AdminableToolbar
     }
 
     private function loopThroughtPaths(array $arrayOfItems = []) {
+        $r = $this->getRequest();
+        
         foreach ($arrayOfItems as $menuItem) {
             if(isset($menuItem['key_title'])) {
                 $menuItem['title'] = __($menuItem['key_title']);
@@ -38,7 +40,7 @@ class AdminableToolbar
     public function render() {
         
         $this->menu = get_site_key('toolbar.menu');
-        $r = $this->getRequest();
+        
 
         $this->loopThroughtPaths($this->menu);
        
