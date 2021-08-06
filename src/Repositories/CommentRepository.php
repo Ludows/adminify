@@ -93,7 +93,7 @@ class CommentRepository
         $hasSub = $m->HasSublevel;
         if($hasSub) {
             $ms = new Comment();
-            $sublevels = $ms->Sublevel($m->id);
+            $sublevels = $ms->Sublevel($m->id)->get();
             foreach ($sublevels as $sublevel) {
                 # code...
                 $sublevel->delete();
