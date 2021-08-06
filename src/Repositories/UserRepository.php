@@ -97,12 +97,18 @@ class UserRepository
     }
     public function saveProfile($values) {
 
+        $userId = $values['user_id'] ?? user()->id;
+        if(isset($values['user_id'])) {
+            unset($values['user_id']);
+        }
+
         foreach ($values as $key => $value) {
             # code...
             $pref = new UserPreference();
 
             $pref->type = $key;
             $pref->data = $value;
+            $pref->user_id = $userId;
 
             $pref->save();
         }
