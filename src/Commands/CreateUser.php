@@ -4,6 +4,8 @@ namespace Ludows\Adminify\Commands;
 
 use Illuminate\Console\Command;
 
+use Illuminate\Support\Facades\Hash;
+
 use App\Models\User;
 use App\Models\Role;
 
@@ -14,7 +16,7 @@ class CreateUser extends Command
      *
      * @var string
      */
-    protected $signature = 'create:user {role} {name} {email} {password}';
+    protected $signature = 'create:user {roles} {name} {email} {password}';
 
     /**
      * The console command description.
@@ -33,6 +35,10 @@ class CreateUser extends Command
         parent::__construct();
     }
 
+    public function formatArgument(string $argument, string $strToMatch = '', string $strClear = '') {
+        return str_replace($strToMatch, $strClear, $argument);
+    }
+
     /**
      * Execute the console command.
      *
@@ -47,14 +53,44 @@ class CreateUser extends Command
 
         dd($arguments);
 
-        if(isset($arguments['role'])) {
-            foreach ($arguments['role'] as $t) {
+        $u = new User();
+
+        $u->name = $this->formatArgument($arguments['name'], 'name=', '');
+        $u->email = $this->formatArgument($arguments['email'], 'email=', '');
+        $u->password = Hash::make( $this->formatArgument($arguments['password'], 'password=', '') );
+
+        $u = $u->save();
+        // we got a new user let's go to map roles
+        
+
+        if(isset($arguments['roles'])) {
+
+            $roles = $this->formatArgument($arguments['roles'], 'roles=', '');
+            $roles = $this->formatArgument($roles, '"', '');
+
+            if(str_contains($roles, ',')) {
+                //breakable roles
+                $roles = explode(',' ,$roles);
+            }
+            else {
+                $roles[] = $roles;
+            }
+
+            foreach ($roles as $r) {
                 # code...
-                $roles[] = str_replace('role=', '', $t);
+                $asignable_role = strtolower($r);
+                if(in_array( strtolower($r),  $allowed_roles)) {
+                    $u->assignRole($asignable_role);
+                }
+                else {
+                    $this->info('Skipping '.$r.' because no exist in db');
+                }
             }
         }
 
-        $u = new User();
+        // $roles_writtent_by_user = $this->formatArgument($arguments['roles'])
+
+        
 
         
         
