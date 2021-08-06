@@ -31,7 +31,9 @@
 
                 @php
                     $topbarPref = get_user_preference('topbar');
-                    $topbarShow = true;
+                    $topbarShow = false;
+
+                    //dd($topbarPref);
                     if($topbarPref != null) {
                         $topbarShow = (bool)$topbarPref;
                     }
