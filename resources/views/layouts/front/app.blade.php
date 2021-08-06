@@ -39,7 +39,7 @@
                     }
                 @endphp
                 @if($topbarShow)
-                    {!! ToolBar::render() !!}
+                    {!! toolbar() !!}
                 @endif
                 @include('adminify::layouts.front.navbars.navbar')
                 @yield('content')

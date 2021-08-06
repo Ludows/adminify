@@ -113,14 +113,21 @@ if(! function_exists('is_seo_model')) {
 if(! function_exists('get_user_preferences')) {
     function get_user_preferences() {
         $u = user();
-        return $u->preferences;
+        return $u != null ? $u->preferences : null;
     }
 }
 
 if(! function_exists('get_user_preference')) {
     function get_user_preference($type) {
         $u = user();
-        return $u->getPreference($type);
+        return $u != null ? $u->getPreference($type) : null;
+    }
+}
+
+if(! function_exists('toolbar')) {
+    function toolbar() {
+        $t = new ToolBar();
+        return $t->render();
     }
 }
 
