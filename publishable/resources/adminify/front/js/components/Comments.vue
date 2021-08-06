@@ -57,9 +57,9 @@
                     confirmButtonText: `Save`,
                     denyButtonText: `Don't save`,
                 }).then((result) => {
-                    
+
                     let route = this.$route('api.comments.destroy', {
-                        'comment': commentId, 
+                        'comment': commentId,
                         'token': this.$tokenFromLocalStorage()
                     });
 
@@ -125,9 +125,9 @@
             //console.log('Comments mounted.')
             this.list = this.comments;
         },
-        watch: { 
-            list: function(newVal, oldVal) { // watch it
-                // console.log('Prop changed: ', newVal, ' | was: ', oldVal)
+        watch: {
+            comments: function(newVal, oldVal) { // watch it
+                console.log('Prop changed: ', newVal, ' | was: ', oldVal)
                 this.list = newVal;
             }
         }

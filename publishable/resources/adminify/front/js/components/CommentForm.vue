@@ -50,10 +50,15 @@
                     'data' : formData
                 })
                 .then((response) => {
-                    console.log(this.$root.$refs.comments)
-                    console.log('response.data.commentList', response.data.commentList)
+                    // console.log(this.$root.$refs.comments)
+                    // console.log('response.data.commentList', response.data.commentList)
                     this.$root.$refs.comments.list = [];
                     this.$root.$refs.comments.list = response.data.commentList
+                    if(this.parent_id != 0) {
+                        // console.log('direct paraent', this.$parent)
+                        // console.log('ancestor paraent', parent)
+                        this.$parent.toggleForm('respond', this.parent_id)
+                    }
                     textarea.value = '';
                 })
                 .catch((err) => {
