@@ -49,7 +49,7 @@ class CreateUser extends Command
         $roles = array();
         $arguments = $this->arguments();
 
-        $allowed_roles = Role::where('id', '!=', Role::GUEST)->get()->pluck('name');
+        $allowed_roles = Role::where('id', '!=', Role::GUEST)->get()->pluck('name')->all();
 
         //dd($arguments);
 
@@ -79,7 +79,7 @@ class CreateUser extends Command
             foreach ($roles as $r) {
                 # code...
                 $asignable_role = trim(strtolower($r));
-                if(in_array( strtolower($r),  $allowed_roles)) {
+                if(in_array( $asignable_role,  $allowed_roles)) {
                     $u->assignRole($asignable_role);
                 }
                 else {
