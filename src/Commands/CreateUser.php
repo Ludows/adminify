@@ -14,11 +14,7 @@ class CreateUser extends Command
      *
      * @var string
      */
-    protected $signature = 'create:user
-            {role?* : Roles are Administrator, Editor, Subscriber,
-            name : set the full name of the user,
-            email : set the email of the user,
-            password : set the password of the user}';
+    protected $signature = 'create:user {role} {name} {email} {password}';
 
     /**
      * The console command description.
@@ -46,6 +42,8 @@ class CreateUser extends Command
     {
         $roles = array();
         $arguments = $this->arguments();
+
+        $allowed_roles = Role::where('id', '!=', Role::GUEST)->get()->pluck('name');
 
         dd($arguments);
 
