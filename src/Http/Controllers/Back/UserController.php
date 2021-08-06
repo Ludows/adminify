@@ -156,7 +156,9 @@ class UserController extends Controller
             }
             public function saveProfile(User $user, FormBuilder $formBuilder) {
 
-                $form = $this->form(showProfile::class);
+                $form = $this->form(showProfile::class, [
+                    'model' => $user
+                ]);
                 $formValues = $form->getFieldValues();
 
                 $this->userRepository->saveProfile($formValues);
