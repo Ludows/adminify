@@ -27,7 +27,7 @@ class AdminableToolbar
                 $menuItem['title'] = __($menuItem['key_title']);
                 unset($menuItem['key_title']);
             }
-            if(isset($menuItem['url']) && $menuItem['url'] instanceof Closure) {
+            if(isset($menuItem['url']) && $menuItem['url'] instanceof Closure && $request != null) {
                 $menuItem['url'] = $menuItem['url']($request);
             }
             if(isset($menuItem['paths']) && is_array($menuItem['paths']) && !empty($menuItem['paths'])) {
