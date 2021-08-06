@@ -8,8 +8,14 @@ class ShowProfile extends Form
 {
     public function buildForm()
     {
+        $m = $this->getModel();
+
+        $topbar = $m->getPreference('topbar');
+
         $this->add('topbar', 'checkbox', [
             'label' => __('admin.form.topbar'),
+            'checked' =>  $topbar != null ? true : false,
+            'value' => $topbar != null ? 0 : 1,
             'wrapper' => ['class' => 'custom-control custom-control-alternative custom-checkbox'],
             'attr' => ['class' => 'custom-control-input'],
             'label_attr' => ['class' => 'custom-control-label text-muted'],

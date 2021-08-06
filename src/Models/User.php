@@ -42,6 +42,12 @@ class User extends ClassicUser
         );
     }
 
+    public function getPreference($type) {
+        $pref = new UserPreference();
+        $model = $pref->type($type)->userId($this->id)->get()->first();
+        return $model->data ?? null;
+    }
+
     public function preferences() {
         return $this->hasMany(UserPreference::class, 'user_id', 'id');
     }
