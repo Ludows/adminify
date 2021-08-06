@@ -110,6 +110,20 @@ if(! function_exists('is_seo_model')) {
     }
 }
 
+if(! function_exists('get_user_preferences')) {
+    function get_user_preferences() {
+        $u = user();
+        return $u->preferences;
+    }
+}
+
+if(! function_exists('get_user_preference')) {
+    function get_user_preference($type) {
+        $u = user();
+        return $u->getPreference($type);
+    }
+}
+
 if(! function_exists('is_urlable_model')) {
     function is_urlable_model($class) {
         return method_exists($class,'url');
