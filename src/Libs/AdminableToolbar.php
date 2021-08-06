@@ -20,18 +20,18 @@ class AdminableToolbar
         return 'adminify::layouts.front.toolbar.index';
     }
 
-    private function loopThroughtPaths(array $arrayOfItems = [], $request) {
+    private function loopThroughtPaths(array $arrayOfItems = []) {
         
         foreach ($arrayOfItems as $menuItem) {
             if(isset($menuItem['key_title'])) {
                 $menuItem['title'] = __($menuItem['key_title']);
                 unset($menuItem['key_title']);
             }
-            if(isset($menuItem['url']) && $menuItem['url'] instanceof Closure && $request != null) {
-                $menuItem['url'] = $menuItem['url']($request);
+            if(isset($menuItem['url']) && $menuItem['url'] instanceof Closure) {
+                $menuItem['url'] = $menuItem['url']();
             }
             if(isset($menuItem['paths']) && is_array($menuItem['paths']) && !empty($menuItem['paths'])) {
-                $this->loopThroughtPaths($menuItem['paths'], $request);
+                $this->loopThroughtPaths($menuItem['paths']);
             }
         }
     }
@@ -40,9 +40,7 @@ class AdminableToolbar
         
         $this->menu = get_site_key('toolbar.menu');
         
-        $r = $this->getRequest();
-
-        $this->loopThroughtPaths($this->menu, $r);
+        $this->loopThroughtPaths($this->menu);
        
         $compiled = $this->view->make( $this->getView() , [
             'items' => $this->menu
