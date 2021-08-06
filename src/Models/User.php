@@ -7,6 +7,8 @@ use App\Models\Media;
 use Spatie\Searchable\SearchResult;
 use Spatie\Feed\FeedItem;
 
+use App\Models\UserPreference;
+
 use Ludows\Adminify\Models\ClassicUser;
 
 class User extends ClassicUser
@@ -38,6 +40,10 @@ class User extends ClassicUser
            $this->name,
            $url
         );
+    }
+
+    public function preferences() {
+        return $this->hasMany(UserPreference::class, 'user_id', 'id');
     }
 
     public function toFeedItem(): FeedItem {}

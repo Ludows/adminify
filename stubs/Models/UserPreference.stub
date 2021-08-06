@@ -1,0 +1,9 @@
+<?php
+
+namespace App\Models;
+
+use Ludows\Adminify\Models\UserPreference as UserPreferenceBaseModel;
+
+class UserPreference extends UserPreferenceBaseModel
+{}
+
