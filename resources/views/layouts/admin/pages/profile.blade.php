@@ -8,10 +8,16 @@
         <div class="container-fluid mt--7">
             <div class="row">
                 <div class="col-12">
+
+                    <div class="card">
+                        <div class="card-body">
+                            @if(isset($form))
+                                {!! form($form) !!}
+                            @endif
+                        </div>
+                    </div>
     
-                    @if(isset($form))
-                        {!! form($form) !!}
-                    @endif
+                    
                     
                 </div>
         
