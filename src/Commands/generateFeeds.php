@@ -14,7 +14,7 @@ class generateFeeds extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:feeds';
+    protected $signature = 'adminify:feeds';
 
     /**
      * The console command description.

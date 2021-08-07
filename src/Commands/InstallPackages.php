@@ -19,7 +19,7 @@ class InstallPackages extends Command
      */
     protected $signature = 'adminify:install
         {task?* : Tasks name are npm, coreinstall, migrations, seed, publishes, rollback, feeds, routes, caches}
-        {--force : Force all tasks}'; //todo
+        {--force : Force all tasks, --firstInstall : Tell if is the first Install  of adminify}'; //todo
 
     /**
      * The console command description.
@@ -49,8 +49,8 @@ class InstallPackages extends Command
     public function handle()
     {
 
-        $options = $this->options();
         $arguments = $this->arguments();
+        $firstInstall = $this->option('firstInstall') != null ? true : false;
 
         $cleanedTasks = [];
 
@@ -66,7 +66,11 @@ class InstallPackages extends Command
             $cleanedTasks[] = 'cache';
         }
 
-        if(in_array('*', $cleanedTasks) || in_array('rollback', $cleanedTasks)) {
+        if($firstInstall) {
+            Artisan::call('adminify:env');
+        }
+
+        if(in_array('*', $cleanedTasks) && !$firstInstall || in_array('rollback', $cleanedTasks) && !$firstInstall) {
             Artisan::call('migrate:rollback');
         }
 
@@ -92,17 +96,17 @@ class InstallPackages extends Command
 
         if(in_array('*', $cleanedTasks)  || in_array('feeds', $cleanedTasks)) {
             $this->info('Handle feeds config generation...');
-            Artisan::call('generate:feeds');
+            Artisan::call('adminify:feeds');
         }
 
         if(in_array('*', $cleanedTasks)  || in_array('routes', $cleanedTasks)) {
             $this->info('Handle route list js...');
-            Artisan::call('generate:routes');
+            Artisan::call('adminify:routes');
         }
 
         if(in_array('*', $cleanedTasks)  || in_array('translations', $cleanedTasks)) {
             $this->info('Handle Translations js...');
-            Artisan::call('generate:translations');
+            Artisan::call('adminify:translations');
         }
 
         if(in_array('*', $cleanedTasks)  || in_array('cache', $cleanedTasks)) {

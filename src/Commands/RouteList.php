@@ -13,7 +13,7 @@ class RouteList extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:routes';
+    protected $signature = 'adminify:routes';
 
     /**
      * The console command description.

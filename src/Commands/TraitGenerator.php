@@ -11,7 +11,7 @@ class TraitGenerator extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'generate:trait {name}';
+    protected $signature = 'adminify:trait {name}';
 
     /**
      * The console command description.

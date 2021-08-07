@@ -17,7 +17,7 @@ class createTranslations extends Command
      *
      * @var string
      */
-    protected $signature = 'generate:translations {--front} {--back}';
+    protected $signature = 'adminify:translations {--front} {--back}';
 
     /**
      * The console command description.

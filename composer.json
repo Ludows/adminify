@@ -72,7 +72,7 @@
     },
     "scripts": {
         "post-install-cmd": [
-            "@php artisan adminify:install"
+            "@php artisan adminify:install --firstInstall"
         ]
     }
 }
