@@ -56,7 +56,7 @@ return [
                 ['icon' => '', 'key_title' => 'admin.categories.index', 'url' => url('/categories/create') ]
             ] ],
             ['icon' => '', 'key_title' => 'admin.toolbar.modify', 'url' => function() {
-    
+                return '';
             } ],
         ),
     ],
