@@ -310,7 +310,7 @@ return array(
                 ],
                 'aliases' => [
                     'MyMenuBuilder' => \Ludows\Adminify\Libs\MenuBuilder::class,
-                    'ToolBar' => Ludows\Adminify\Libs\AdminableToolbar::class
+                    // 'ToolBar' => Ludows\Adminify\Libs\AdminableToolbar::class
                 ]
             ],
             'config' => null,
