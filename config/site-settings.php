@@ -56,7 +56,7 @@ return [
                 ['icon' => '', 'key_title' => 'admin.traductions.index', 'key_url' => 'traductions.create' ],
                 ['icon' => '', 'key_title' => 'admin.categories.index', 'key_url' => 'categories.create' ]
             ] ],
-            ['icon' => '', 'key_title' => 'admin.toolbar.modify', 'key_url' => ''],
+            ['icon' => '', 'key_title' => 'admin.toolbar.modify', 'key_url' => 'home.dashboard'],
         ),
     ],
 
