@@ -27,6 +27,10 @@ class AdminableToolbar
                 $menuItem['title'] = __($menuItem['key_title']);
                 unset($menuItem['key_title']);
             }
+            if(isset($menuItem['key_url'])) {
+                $menuItem['url'] = route($menuItem['key_url']);
+                unset($menuItem['key_url']);
+            }
             if(isset($menuItem['url']) && $menuItem['url'] instanceof Closure) {
                 $menuItem['url'] = $menuItem['url']();
             }

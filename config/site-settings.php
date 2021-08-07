@@ -43,21 +43,20 @@ return [
     ],
 
     // key_title is available for trads otherwise it's title
+    // key_url is available for trads otherwise it's url
     // todo showIf as function closure
     'toolbar' => [
         'menu' => array(
-            ['icon' => '', 'key_title' => 'admin.toolbar.dashboard', 'url' => url('/admin/dashboard') ],
+            ['icon' => '', 'key_title' => 'admin.toolbar.dashboard', 'key_url' => 'home.dashboard' ],
             ['icon' => '', 'key_title' => 'admin.toolbar.create', 'paths' => [
-                ['icon' => '', 'key_title' => 'admin.posts.index', 'url' => url('/posts/create') ],
-                ['icon' => '', 'key_title' => 'admin.pages.index', 'url' => url('/pages/create') ],
-                ['icon' => '', 'key_title' => 'admin.menus.index', 'url' => url('/menus/create') ],
-                ['icon' => '', 'key_title' => 'admin.medias.index', 'url' => url('/medias/create') ],
-                ['icon' => '', 'key_title' => 'admin.traductions.index', 'url' => url('/traductions/create') ],
-                ['icon' => '', 'key_title' => 'admin.categories.index', 'url' => url('/categories/create') ]
+                ['icon' => '', 'key_title' => 'admin.posts.index', 'key_url' => 'posts.create' ],
+                ['icon' => '', 'key_title' => 'admin.pages.index', 'key_url' => 'pages.create'],
+                ['icon' => '', 'key_title' => 'admin.menus.index', 'key_url' => 'menus.create' ],
+                ['icon' => '', 'key_title' => 'admin.medias.index', 'key_url' => 'medias.create' ],
+                ['icon' => '', 'key_title' => 'admin.traductions.index', 'key_url' => 'traductions.create' ],
+                ['icon' => '', 'key_title' => 'admin.categories.index', 'key_url' => 'categories.create' ]
             ] ],
-            ['icon' => '', 'key_title' => 'admin.toolbar.modify', 'url' => function() {
-                return '';
-            } ],
+            ['icon' => '', 'key_title' => 'admin.toolbar.modify', 'key_url' => ''],
         ),
     ],
 
