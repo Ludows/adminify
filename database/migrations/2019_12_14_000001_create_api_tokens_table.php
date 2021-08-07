@@ -13,12 +13,10 @@ class CreateApiTokensTable extends Migration
      */
     public function up()
     {
-        $c = get_site_key('restApi');
-
         Schema::create('api_tokens', function (Blueprint $table) use ($c) {
             $table->bigIncrements('id');
-            $table->string('name')->default( $c['token_name'] );
-            $table->integer('user_id')->nullable();
+            $table->string('name');
+            $table->integer('user_id');
             $table->string('ip_adress');
             $table->string('token', 64);
             $table->text('abilities')->nullable();
