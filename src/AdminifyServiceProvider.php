@@ -49,7 +49,7 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         // $this->routes(function () use ($config) {
 
-            if($config['enable']) {
+            if(isset($config) && $config['enable']) {
 
                 $routerBasicApi = Route::middleware('web');
                 if($config['prefix'] != null) {
