@@ -359,4 +359,18 @@ return array(
             'config' => null,
             'afterPublish' => [],
         ),
+        (object) array(
+            'beforePublish' => [],
+            'name' => 'sven/flex-env',
+            'publish' => null,
+            'autoload' => (object) [
+                'providers' => [
+                    Sven\FlexEnv\FlexEnvServiceProvider::class,
+                ],
+                'middlewares' => [],
+                'aliases' => []
+            ],
+            'config' => null,
+            'afterPublish' => [],
+        ),
     );

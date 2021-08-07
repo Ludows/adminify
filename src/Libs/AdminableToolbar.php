@@ -42,9 +42,7 @@ class AdminableToolbar
    
     public function render() {
         
-        $this->menu = get_site_key('toolbar.menu');
-        
-        $this->loopThroughtPaths($this->menu);
+        $this->menu = $this->loopThroughtPaths( get_site_key('toolbar.menu') );
        
         $compiled = $this->view->make( $this->getView() , [
             'items' => $this->menu
