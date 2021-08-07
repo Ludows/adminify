@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 $config = config('site-settings.restApi');
 
-if($config['enable']) {
+if(isset($config) && $config['enable']) {
     
     Route::get('/', '\Ludows\Adminify\Http\Controllers\Api\ListingController@index')->name('routelist');
     Route::post('/token', '\Ludows\Adminify\Http\Controllers\Api\TokenController@getToken')->name('api.token');
