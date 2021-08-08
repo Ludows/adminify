@@ -44,10 +44,13 @@ return [
 
     // key_title is available for trads otherwise it's title
     // key_url is available for trads otherwise it's url
+    // when you have to render dynamix urls , please to refers to dynamic_url
     // todo showIf as function closure
+    // show 
     'toolbar' => [
         'menu' => array(
             ['icon' => '', 'key_title' => 'admin.toolbar.dashboard', 'key_url' => 'home.dashboard' ],
+            ['icon' => '', 'key_title' => 'admin.toolbar.new_comment', 'key_url' => 'comments.index', 'dynamic_show' => 'Ludows\Adminify\Libs\AdminableToolbar@newComment'],
             ['icon' => '', 'key_title' => 'admin.toolbar.create', 'paths' => [
                 ['icon' => '', 'key_title' => 'admin.posts.index', 'key_url' => 'posts.create' ],
                 ['icon' => '', 'key_title' => 'admin.pages.index', 'key_url' => 'pages.create'],
@@ -56,7 +59,12 @@ return [
                 ['icon' => '', 'key_title' => 'admin.traductions.index', 'key_url' => 'traductions.create' ],
                 ['icon' => '', 'key_title' => 'admin.categories.index', 'key_url' => 'categories.create' ]
             ] ],
-            ['icon' => '', 'key_title' => 'admin.toolbar.modify', 'key_url' => 'home.dashboard'],
+            ['icon' => '', 'key_title' => 'admin.toolbar.modify', 'dynamic_url' => 'Ludows\Adminify\Libs\AdminableToolbar@modify'],
+            ['icon' => '', 'key_title' => 'admin.toolbar.user', 'paths' => [
+                ['icon' => '', 'key_title' => 'admin.user.edit', 'dynamic_url' => 'Ludows\Adminify\Libs\AdminableToolbar@userEdit' ],
+                ['icon' => '', 'key_title' => 'admin.user.profile', 'dynamic_url' => 'Ludows\Adminify\Libs\AdminableToolbar@userProfile'],
+                ['icon' => '', 'key_title' => 'admin.logout', 'url' => '/admin/logout'],
+            ] ],
         ),
     ],
 
