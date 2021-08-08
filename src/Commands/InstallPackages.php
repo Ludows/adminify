@@ -19,7 +19,8 @@ class InstallPackages extends Command
      */
     protected $signature = 'adminify:install
         {task?* : Tasks name are npm, coreinstall, migrations, seed, publishes, rollback, feeds, routes, caches}
-        {--force : Force all tasks, --firstInstall : Tell if is the first Install  of adminify}'; //todo
+        {--force : Force all tasks}
+        {--firstInstall : Tell if is the first Install  of adminify}'; //todo
 
     /**
      * The console command description.
