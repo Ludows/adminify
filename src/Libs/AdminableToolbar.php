@@ -30,7 +30,7 @@ class AdminableToolbar
         }
 
         if($withMethod) {
-            $return_data = call_user_func($clsClass[0], $clsClass[1]);
+            $return_data = call_user_func(array($clsClass[0], $clsClass[1]));
         }
         else {
             $return_data = call_user_func($clsClass);
