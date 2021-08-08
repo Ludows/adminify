@@ -10,6 +10,7 @@ use Ludows\Adminify\Commands\createTranslations;
 use Ludows\Adminify\Commands\InstallPackages;
 use Ludows\Adminify\Commands\generateFeeds;
 use Ludows\Adminify\Commands\CreateUser;
+use Ludows\Adminify\Commands\DoInstallEnv;
 
 use Illuminate\Support\Facades\Route;
 
@@ -191,6 +192,7 @@ class AdminifyServiceProvider extends ServiceProvider {
     private function registerCommands() {
         
         $this->commands([
+            DoInstallEnv::class,
             CreateUser::class,
             generateFeeds::class,
             InstallPackages::class,

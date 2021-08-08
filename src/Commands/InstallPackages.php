@@ -67,6 +67,7 @@ class InstallPackages extends Command
         }
 
         if($firstInstall) {
+            $this->info('Handle Env installation...');
             Artisan::call('adminify:env');
         }
 
