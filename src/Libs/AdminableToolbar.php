@@ -21,8 +21,9 @@ class AdminableToolbar
     }
 
     private function loopThroughtPaths(array $arrayOfItems = []) {
-        
-        foreach ($arrayOfItems as $menuItem) {
+
+
+        foreach ($arrayOfItems as $menuKey => $menuItem) {
             if(isset($menuItem['key_title'])) {
                 $menuItem['title'] = __($menuItem['key_title']);
                 unset($menuItem['key_title']);
@@ -33,21 +34,27 @@ class AdminableToolbar
             }
             if(isset($menuItem['url']) && $menuItem['url'] instanceof Closure) {
                 $menuItem['url'] = $menuItem['url']();
+
             }
             if(isset($menuItem['paths']) && is_array($menuItem['paths']) && !empty($menuItem['paths'])) {
-                $this->loopThroughtPaths($menuItem['paths']);
+                $paths = $this->loopThroughtPaths($menuItem['paths']);
+                unset($menuItem['paths']);
+                $menuItem['paths'] = $paths;
             }
+            $arrayOfItems[$menuKey] = $menuItem;
         }
+
+        return $arrayOfItems;
     }
-   
+
     public function render() {
-        
+
         $this->menu = $this->loopThroughtPaths( get_site_key('toolbar.menu') );
-       
+
         $compiled = $this->view->make( $this->getView() , [
             'items' => $this->menu
         ]);
-       
+
         return $compiled;
     }
 }
