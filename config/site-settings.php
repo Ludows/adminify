@@ -63,7 +63,7 @@ return [
             ['icon' => '', 'key_title' => 'admin.toolbar.user', 'paths' => [
                 ['icon' => '', 'key_title' => 'admin.user.edit', 'dynamic_url' => '\Ludows\Adminify\Libs\AdminableToolbar@userEdit' ],
                 ['icon' => '', 'key_title' => 'admin.user.profile', 'dynamic_url' => '\Ludows\Adminify\Libs\AdminableToolbar@userProfile'],
-                ['icon' => '', 'key_title' => 'admin.logout', 'url' => '/admin/logout'],
+                ['icon' => '', 'key_title' => 'admin.logout', 'url' => '/logout'],
             ] ],
         ),
     ],
