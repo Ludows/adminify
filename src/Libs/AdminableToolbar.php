@@ -58,11 +58,11 @@ class AdminableToolbar
             }
 
             if(isset($menuItem['dynamic_show'])) {
-                $this->callMethodOrClass($menuItem['dynamic_show'], $menuItem, 'show');
+                $menuItem = $this->callMethodOrClass($menuItem['dynamic_show'], $menuItem, 'show');
             }
 
             if(isset($menuItem['dynamic_url'])) {
-                $this->callMethodOrClass($menuItem['dynamic_url'], $menuItem, 'url');
+                $menuItem = $this->callMethodOrClass($menuItem['dynamic_url'], $menuItem, 'url');
             }
 
             if(isset($menuItem['paths']) && is_array($menuItem['paths']) && !empty($menuItem['paths'])) {
