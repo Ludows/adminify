@@ -1,8 +1,0 @@
-<?php
-
-namespace App\Repositories;
-
-use Ludows\Adminify\Repositories\SaveTranslationRepository as SaveTranslationRepositoryBaseRepo;
-
-class SaveTranslationRepository extends SaveTranslationRepositoryBaseRepo
-{}

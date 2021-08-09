@@ -34,7 +34,7 @@ class TraitGenerator extends GeneratorCommand
      */
     protected function getStub()
     {
-        return __DIR__ . '/../../stubs/trait.stub';
+        return __DIR__ . '/../../templates/trait.stub';
     }
 
     /**

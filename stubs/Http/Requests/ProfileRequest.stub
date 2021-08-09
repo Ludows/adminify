@@ -1,8 +1,0 @@
-<?php
-
-namespace App\Http\Requests;
-
-use Ludows\Adminify\Http\Requests\ProfileRequest as ProfileRequestBaseRequest;
-
-class ProfileRequest extends ProfileRequestBaseRequest
-{}

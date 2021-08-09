@@ -12,7 +12,7 @@ class CreateModel extends Command
      *
      * @var string
      */
-    protected $signature = 'adminify:model {type : can be content or classic} {--path : desired path}';
+    protected $signature = 'adminify:model {name: Name of your Model, type : can be content or classic} {--path : desired path}';
 
     /**
      * The console command description.

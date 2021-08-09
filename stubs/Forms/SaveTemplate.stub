@@ -1,9 +1,0 @@
-<?php
-
-namespace App\Forms;
-
-use Ludows\Adminify\Forms\SaveTemplate as SaveTemplateForm;
-
-class SaveTemplate extends SaveTemplateForm
-{}
-

@@ -12,7 +12,7 @@ class CreateController extends Command
      *
      * @var string
      */
-    protected $signature = 'adminify:controller {--path : desired path, --api}';
+    protected $signature = 'adminify:controller {name} {--path : desired path}';
 
     /**
      * The console command description.

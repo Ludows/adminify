@@ -1,8 +1,0 @@
-<?php
-
-namespace App\Http\Requests;
-
-use Ludows\Adminify\Http\Requests\UpdateTagRequest as TagBaseRequest;
-
-class UpdateTagRequest extends TagBaseRequest
-{}

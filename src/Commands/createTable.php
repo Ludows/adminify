@@ -12,7 +12,7 @@ class CreateTable extends Command
      *
      * @var string
      */
-    protected $signature = 'adminify:table {--path : desired path}';
+    protected $signature = 'adminify:table {name} {--path : desired path}';
 
     /**
      * The console command description.
