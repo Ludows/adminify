@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Ludows\Adminify\Http\Middleware\DisplayFullmode as DisplayFullmodeBaseMiddleware;
+
+class DisplayFullmode extends DisplayFullmodeBaseMiddleware
+{}

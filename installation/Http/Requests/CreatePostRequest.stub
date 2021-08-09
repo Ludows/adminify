@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Ludows\Adminify\Http\Requests\CreatePostRequest as CreatePostRequestBaseRequest;
+
+class CreatePostRequest extends CreatePostRequestBaseRequest
+{}

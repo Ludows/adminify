@@ -1,0 +1,12 @@
+<?php
+
+namespace App\Repositories;
+
+use MrAtiebatie\Repository;
+
+use Ludows\Adminify\Repositories\UserRepository as UserBaseRepository;
+
+class UserRepository extends UserBaseRepository
+{
+    use Repository;
+}

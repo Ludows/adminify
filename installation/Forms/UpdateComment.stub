@@ -1,0 +1,11 @@
+<?php
+
+namespace App\Forms;
+
+use Kris\LaravelFormBuilder\Form;
+use Kris\LaravelFormBuilder\Field;
+
+use Ludows\Adminify\Forms\UpdateComment as UpdateCommentBaseForm;
+
+class UpdateComment extends UpdateCommentBaseForm
+{}

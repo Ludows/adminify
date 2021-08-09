@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Models;
+
+use Ludows\Adminify\Models\Role as RoleBaseModel;
+
+
+class Role extends RoleBaseModel
+{}
+

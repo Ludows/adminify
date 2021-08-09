@@ -1,0 +1,9 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Ludows\Adminify\Http\Requests\CreateMediaRequest as CreateMediaRequestBaseRequest;
+
+class CreateMediaRequest extends CreateMediaRequestBaseRequest
+{}

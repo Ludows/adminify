@@ -1,0 +1,12 @@
+<?php
+
+namespace App\Repositories;
+
+use MrAtiebatie\Repository;
+
+use Ludows\Adminify\Repositories\MediaRepository as MediaBaseRepository;
+
+class MediaRepository extends MediaBaseRepository
+{
+    use Repository;
+}

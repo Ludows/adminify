@@ -1,0 +1,12 @@
+<?php
+
+namespace App\Repositories;
+
+use MrAtiebatie\Repository;
+
+use Ludows\Adminify\Repositories\PostRepository as PostBaseRepository;
+
+class PostRepository extends PostBaseRepository
+{
+    use Repository;
+}

@@ -1,0 +1,9 @@
+<?php
+
+namespace App\Models;
+
+use Ludows\Adminify\Models\Templates as TemplatesBaseModel;
+
+class Templates extends TemplatesBaseModel
+{}
+

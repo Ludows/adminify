@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Ludows\Adminify\Http\Requests\UpdateMediaRequest as UpdateMediaRequestBaseRequest;
+
+class UpdateMediaRequest extends UpdateMediaRequestBaseRequest
+{}

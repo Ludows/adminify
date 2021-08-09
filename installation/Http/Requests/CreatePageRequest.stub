@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Ludows\Adminify\Http\Requests\CreatePageRequest as PageRequestBaseRequest;
+
+class CreatePageRequest extends PageRequestBaseRequest
+{}

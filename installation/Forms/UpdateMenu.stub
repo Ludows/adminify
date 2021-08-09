@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Forms;
+
+use Kris\LaravelFormBuilder\Form;
+
+use Ludows\Adminify\Forms\UpdateMenu as UpdateMenuBaseForm;
+
+class UpdateMenu extends UpdateMenuBaseForm
+{}

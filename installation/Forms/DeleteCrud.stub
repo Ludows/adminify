@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Forms;
+
+use Kris\LaravelFormBuilder\Form;
+
+use Ludows\Adminify\Forms\DeleteCrud as DeleteCrudBaseForm;
+
+class DeleteCrud extends DeleteCrudBaseForm
+{}

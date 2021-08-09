@@ -11,11 +11,15 @@ use Ludows\Adminify\Commands\InstallPackages;
 use Ludows\Adminify\Commands\generateFeeds;
 use Ludows\Adminify\Commands\CreateUser;
 use Ludows\Adminify\Commands\DoInstallEnv;
+use Ludows\Adminify\Commands\CreateCrud;
+use Ludows\Adminify\Commands\CreateController;
+use Ludows\Adminify\Commands\CreateModel;
+use Ludows\Adminify\Commands\CreateTable;
+
 
 use Illuminate\Support\Facades\Route;
 
 use Illuminate\Contracts\Http\Kernel; // add kernel
-
 use Ludows\Adminify\View\Components\Modal;
 
 class AdminifyServiceProvider extends ServiceProvider {
@@ -192,6 +196,10 @@ class AdminifyServiceProvider extends ServiceProvider {
     private function registerCommands() {
         
         $this->commands([
+            CreateController::class,
+            CreateModel::class,
+            CreateTable::class,
+            CreateCrud::class,
             DoInstallEnv::class,
             CreateUser::class,
             generateFeeds::class,

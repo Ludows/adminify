@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Forms;
+
+use Ludows\Adminify\Forms\UpdatePage as UpdatePageBaseForm;
+
+class UpdatePage extends UpdatePageBaseForm
+{}

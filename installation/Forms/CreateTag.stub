@@ -1,0 +1,9 @@
+<?php
+
+namespace App\Forms;
+
+use Ludows\Adminify\Forms\CreateTag as CreateTagBaseForm;
+
+
+class CreateTag extends CreateTagBaseForm
+{}

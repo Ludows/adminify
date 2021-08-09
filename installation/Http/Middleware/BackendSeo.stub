@@ -1,0 +1,9 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Ludows\Adminify\Http\Middleware\BackendSeo as BackendSeoBaseMiddleware;
+
+class BackendSeo extends BackendSeoBaseMiddleware
+{}
+

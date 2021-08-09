@@ -1,0 +1,11 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+use Ludows\Adminify\Models\Settings as SettingsBaseModel;
+
+class Settings extends SettingsBaseModel
+{}

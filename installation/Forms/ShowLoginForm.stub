@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Forms;
+
+use Ludows\Adminify\Forms\ShowLoginForm as ShowLoginFormBaseForm;
+
+class ShowLoginForm extends ShowLoginFormBaseForm
+{}

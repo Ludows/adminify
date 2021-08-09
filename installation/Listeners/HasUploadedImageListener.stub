@@ -1,0 +1,7 @@
+<?php
+namespace App\Listeners;
+
+use Ludows\Adminify\Listeners\HasUploadedImageListener as HasUploadedImageBaseListener;
+
+class HasUploadedImageListener extends HasUploadedImageBaseListener
+{}

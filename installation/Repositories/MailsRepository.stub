@@ -1,0 +1,9 @@
+<?php
+
+namespace App\Repositories;
+
+use Ludows\Adminify\Repositories\MailsRepository as MailsRepositoryBase;
+
+
+class MailsRepository extends MailsRepositoryBase
+{}

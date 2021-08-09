@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Models;
+
+use Ludows\Adminify\Models\Statuses as StatusesBaseModel;
+
+class Statuses extends StatusesBaseModel
+{}

@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Repositories;
+use Ludows\Adminify\Repositories\TemplatesRepository as TemplatesRepoBase;
+
+class TemplatesRepository extends TemplatesRepoBase
+{}
+
