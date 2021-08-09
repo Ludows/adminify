@@ -1,0 +1,61 @@
+<?php
+
+namespace Ludows\Adminify\Models;
+
+use Spatie\Searchable\SearchResult;
+use Spatie\Feed\FeedItem;
+
+use Ludows\Adminify\Models\ContentTypeModel;
+
+class Post extends ContentTypeModel
+{
+
+    // describe your multilang fields here like this
+    // ['title', 'slug'];
+    // The package will auto handle 
+    // this works this spatie/translatable
+    //public $MultilangTranslatableSwitch = [];
+
+    // describe your mass assignable fields
+    protected $fillable = [];
+    
+    // all models are translatable friendly.
+    // you got a translation entity module
+    // Just wrote your fields are not generated for translation
+    public $excludes_savables_fields = [];
+    
+    // all models are translatable friendly.
+    // By default you give a form class to savable which auto transform your fields in field text.
+    // Just wrote your fields whick keep his type :)
+    public $unmodified_savables_fields = [];
+
+    // tell your form class like this,
+    // return \App\Forms\UpdatePost::class,
+    // Pay to attention, to give your model in site-settings.savetraductions.models
+    public function getSavableForm() {
+        return null;
+    }
+
+    // this function enable global search in the admin.
+    // Just add your model in site-settings.searchable.admin config 
+    public function getSearchResult() : SearchResult
+    {
+       //$url = route('posts.edit', ['post' => $this->id]);
+
+        //return new \Spatie\Searchable\SearchResult(
+           //$this,
+           //$this->title,
+           //$url
+        //);
+    }
+
+    // this function enable js search on page index listings.
+    // you need to give the table class like this
+    // return \Ludows\Adminify\Tables\PostTable::class;
+    public function getTableListing() {
+        return null;
+    }
+
+    // this function is to render your datas as feeds
+    public function toFeedItem(): FeedItem {}
+}
