@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 use File;
 
 
-class generateFeeds extends Command
+class GenerateFeeds extends Command
 {
     /**
      * The name and signature of the console command.

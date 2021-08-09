@@ -2,10 +2,10 @@
 
 namespace Ludows\Adminify\Commands;
 
-use Illuminate\Console\Command;
+use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Facades\Artisan;
 
-class CreateModel extends Command
+class CreateModel extends GeneratorCommand
 {
     /**
      * The name and signature of the console command.
@@ -22,28 +22,31 @@ class CreateModel extends Command
     protected $description = 'Command to make a Adminify Model';
 
     /**
-     * Create a new command instance.
+     * The type of class being generated.
      *
-     * @return void
+     * @var string
      */
-    public function __construct()
+    protected $type = 'Class';
+
+    /**
+     * Get the stub file for the generator.
+     *
+     * @return string
+     */
+    protected function getStub()
     {
-        parent::__construct();
+        return __DIR__ . '/../../templates/model.stub';
     }
 
     /**
-     * Execute the console command.
+     * Get the default namespace for the class.
      *
-     * @return int
+     * @param string $rootNamespace
+     *
+     * @return string
      */
-    public function handle()
+    protected function getDefaultNamespace($rootNamespace)
     {
-
-
-        // Artisan::call('make:model '.$model);
-        // $this->info('Model '.$model.' created');
-
-        // Artisan::call('make:controller '.$model);
-        // $this->info('Model '.$model.' created');
+        return $rootNamespace . '\Models';
     }
 }

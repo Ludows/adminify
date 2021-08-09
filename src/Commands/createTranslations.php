@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
 use File;
 
 
-class createTranslations extends Command
+class CreateTranslations extends Command
 {
     /**
      * The name and signature of the console command.
