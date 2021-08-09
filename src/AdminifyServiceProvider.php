@@ -6,9 +6,9 @@ use Illuminate\Support\ServiceProvider;
 
 use Ludows\Adminify\Commands\TraitGenerator;
 use Ludows\Adminify\Commands\RouteList;
-use Ludows\Adminify\Commands\createTranslations;
+use Ludows\Adminify\Commands\CreateTranslations;
 use Ludows\Adminify\Commands\InstallPackages;
-use Ludows\Adminify\Commands\generateFeeds;
+use Ludows\Adminify\Commands\GenerateFeeds;
 use Ludows\Adminify\Commands\CreateUser;
 use Ludows\Adminify\Commands\DoInstallEnv;
 use Ludows\Adminify\Commands\CreateCrud;
@@ -202,11 +202,11 @@ class AdminifyServiceProvider extends ServiceProvider {
             CreateCrud::class,
             DoInstallEnv::class,
             CreateUser::class,
-            generateFeeds::class,
+            GenerateFeeds::class,
             InstallPackages::class,
             TraitGenerator::class,
             RouteList::class,
-            createTranslations::class,
+            CreateTranslations::class,
         ]);
     }
 }
