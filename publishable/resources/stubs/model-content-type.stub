@@ -33,7 +33,7 @@ class {{class}} extends ContentTypeModel
     // return \App\Forms\UpdatePost::class,
     // Pay to attention, to give your model in site-settings.savetraductions.models
     public function getSavableForm() {
-        return \App\Forms\Update{{ model }}::class;
+        return \App\Forms\Update{{model}}::class;
     }
 
     protected $table = '{{table}}';
@@ -55,7 +55,7 @@ class {{class}} extends ContentTypeModel
     // you need to give the table class like this
     // return \Ludows\Adminify\Tables\PostTable::class;
     public function getTableListing() {
-        return null;
+        return \Ludows\Adminify\Tables\{{model}}Table::class;
     }
 
     // this function is to render your datas as feeds
