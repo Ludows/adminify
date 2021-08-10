@@ -5,21 +5,21 @@ namespace Ludows\Adminify\Commands;
 use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Facades\Artisan;
 
-class CreateModel extends GeneratorCommand
+class CreateDropdownManager extends GeneratorCommand
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'adminify:model {name: Name of your Model, type : can be content or classic}';
+    protected $signature = 'adminify:dropdown {name: Name of your Model}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command to make a Adminify Model';
+    protected $description = 'Command to make a Dropdown for your table listing in your back';
 
     /**
      * The type of class being generated.
@@ -35,7 +35,7 @@ class CreateModel extends GeneratorCommand
      */
     protected function getStub()
     {
-        return __DIR__ . '/../../templates/model.stub';
+        return __DIR__ . '/../../templates/dropdown.stub';
     }
 
     /**
@@ -47,6 +47,6 @@ class CreateModel extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\Models';
+        return $rootNamespace . '\Dropdowns';
     }
 }

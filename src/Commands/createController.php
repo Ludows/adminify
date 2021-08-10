@@ -12,14 +12,14 @@ class CreateController extends GeneratorCommand
      *
      * @var string
      */
-    protected $signature = 'adminify:controller {name} {--path : desired path}';
+    protected $signature = 'adminify:controller {name}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command to make a Adminify Model';
+    protected $description = 'Command to make a Adminify Controller';
 
     /**
      * The type of class being generated.
