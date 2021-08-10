@@ -13,7 +13,7 @@ class CreateCrud extends Command
      *
      * @var string
      */
-    protected $signature = 'adminify:resources {model, typeModel} {--fields=, --schema=}';
+    protected $signature = 'adminify:resources {model, type} {--fields=, --schema=}';
 
     /**
      * The console command description.
@@ -41,7 +41,7 @@ class CreateCrud extends Command
     {
 
         $model = $this->argument('model');
-        $typeModel = $this->argument('typeModel') == 'content' ? 'adminify_model_classic' : 'adminify_model_content_type';
+        $typeModel = $this->argument('type') == 'content' ? 'adminify_model_classic' : 'adminify_model_content_type';
         $fields = $this->option('fields');
         $schema = $this->option('schema');
 
