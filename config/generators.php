@@ -63,6 +63,12 @@ return [
             'postfix'             => 'Dropdown',
             'directory_namespace' => true,
         ],
+        'mailable' => [
+            'namespace'           => '\Mails',
+            'path'                => './app/Mails/',
+            'postfix'             => 'Mail',
+            'directory_namespace' => true,
+        ],
         'request' => [
             'namespace'           => '\Http\Requests',
             'path'                => './app/Http/Requests/',
@@ -197,5 +203,6 @@ return [
         'adminify_table'         => base_path() . '/resources/stubs/table.stub',
         'adminify_dropdown'         => base_path() . '/resources/stubs/dropdown.stub',
         'adminify_repository'         => base_path() . '/resources/stubs/adminify-repo.stub',
+        'mailable'         => base_path() . '/resources/stubs/mailable.stub',
     ]
 ];

@@ -1,10 +1,10 @@
 <?php
 
-namespace Ludows\Adminify\Mails;
+namespace {{namespace}};
 
 use Ludows\Adminify\Libs\MailableTemplateBase;
 
-class WelcomeMail extends MailableTemplateBase
+class {{class}} extends MailableTemplateBase
 {
     public function __construct()
     {
@@ -15,7 +15,7 @@ class WelcomeMail extends MailableTemplateBase
         return '';
     }
     public static function getSubject() {
-        return 'Welcome Mail';
+        return 'Your subject here';
     }
     
     public function getHtmlLayout(): string
