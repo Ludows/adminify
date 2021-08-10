@@ -58,6 +58,8 @@ class CreateCrud extends Command
         // ensure his plurial name
         $model = Str::plural($model);
 
+        dump('$typeModel', $typeModel);
+
 
         $this->info('Do DB file Creation for your entity...');
         Artisan::call('generate:migration', [
@@ -93,9 +95,16 @@ class CreateCrud extends Command
         ]);
 
         $this->info('Create CRUD Form Requests for your entity ...');
-        Artisan::call('generate:request', [
-            'name' => Str::singular($model) 
-        ]);
+        $formRequestNames = [
+            'Create'.Str::singular($model),
+            'Update'.Str::singular($model)
+        ];
+        foreach ($formRequestNames as $formRequestName) {
+            # code...
+            Artisan::call('generate:request', [
+                'name' =>  $formRequestName
+            ]);
+        }
 
         $this->info('Create CRUD Forms for your entity...');
         Artisan::call('adminify:form', [
