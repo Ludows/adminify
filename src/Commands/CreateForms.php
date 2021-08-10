@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 
-class CreateCrud extends Command
+class CreateForms extends Command
 {
     /**
      * The name and signature of the console command.
