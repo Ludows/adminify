@@ -76,7 +76,6 @@ class CreateCrud extends Command
         $this->info('Create Model for your entity...');
         Artisan::call('generate:model', [
             'name' => Str::singular($model) ,
-            '--schema' => $schema ?? [],
             '--stub' => $typeModel,
         ]);
 
