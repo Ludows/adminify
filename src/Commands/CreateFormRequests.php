@@ -20,7 +20,7 @@ class CreateFormRequests extends Command
      *
      * @var string
      */
-    protected $description = 'Command to scafold Crud resource for Adminify';
+    protected $description = 'Command to generate form requests according to crud pattern';
 
     /**
      * Create a new command instance.
