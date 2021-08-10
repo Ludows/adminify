@@ -84,7 +84,7 @@ class CreateCrud extends Command
             '--stub' => 'adminify_table',
             '--type' => 'table'
         ]);
-        
+    
         $this->info('Create Dropdown for Actions in your Table Listing for your entity...');
         Artisan::call('generate:file', [
             'name' => $model,

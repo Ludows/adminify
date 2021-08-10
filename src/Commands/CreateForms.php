@@ -13,7 +13,7 @@ class CreateForms extends Command
      *
      * @var string
      */
-    protected $signature = 'adminify:form {model}';
+    protected $signature = 'adminify:form {model} {--fields=}';
 
     /**
      * The console command description.
