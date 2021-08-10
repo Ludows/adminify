@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Repositories;
+
+use MrAtiebatie\Repository;
+use App\Models\Category; // Don't forget to update the model's namespace
+
+class CategoryRepository
+{
+    use Repository;
+
+    /**
+     * The model being queried.
+     *
+     * @var Model
+     */
+    protected $model;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        // Don't forget to update the model's name
+        $this->model = app(Category::class);
+    }
+    public function create($mixed, $request) {}
+    public function update($mixed, $request, $model) {}
+    public function delete($model) {}
+}
