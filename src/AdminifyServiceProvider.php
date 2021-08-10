@@ -12,14 +12,10 @@ use Ludows\Adminify\Commands\CreateUser;
 use Ludows\Adminify\Commands\DoInstallEnv;
 
 use Ludows\Adminify\Commands\CreateCrud;
-use Ludows\Adminify\Commands\CreateController;
-use Ludows\Adminify\Commands\CreateModel;
 use Ludows\Adminify\Commands\CreateTable;
 use Ludows\Adminify\Commands\CreateDropdownManager;
 use Ludows\Adminify\Commands\CreateFormRequests;
 use Ludows\Adminify\Commands\CreateForms;
-use Ludows\Adminify\Commands\CreateDbMigration;
-use Ludows\Adminify\Commands\CreateRepository;
 
 
 use Illuminate\Support\Facades\Route;
@@ -201,13 +197,9 @@ class AdminifyServiceProvider extends ServiceProvider {
     private function registerCommands() {
         
         $this->commands([
-            CreateController::class,
             CreateDropdownManager::class,
             CreateFormRequests::class,
             CreateForms::class,
-            CreateDbMigration::class,
-            CreateRepository::class,
-            CreateModel::class,
             CreateTable::class,
             CreateCrud::class,
             DoInstallEnv::class,
