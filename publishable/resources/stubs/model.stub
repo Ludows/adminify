@@ -2,7 +2,6 @@
 
 namespace {{namespace}};
 
-use App\Models\Traits\ModifyBy;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +13,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class {{class}} extends Model
 {
-    use HasFactory, SoftDeletes, ModifyBy;
+    use HasFactory, SoftDeletes;
 
     protected $table = '{{table}}';
 
