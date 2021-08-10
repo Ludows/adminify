@@ -51,7 +51,7 @@ class {{class}} extends Controller
 	{
 		//
 
-		$m = new {{ resource }}();
+		$m = new {{resource}}();
 		$singular = Str::singular( $m->getTable() );
 		$plurial = Str::plural($singular);
 
@@ -75,7 +75,7 @@ class {{class}} extends Controller
 
         ${{model}} = $this->{{model}}Repository->create($form, $request);
 		
-		$m = new {{ resource }}();
+		$m = new {{resource}}();
 		$singular = Str::singular( $m->getTable() );
 
 		$plurial = Str::plural($singular);
@@ -111,7 +111,7 @@ class {{class}} extends Controller
 	{
 		//
 
-			$m = new {{ resource }}();
+			$m = new {{resource}}();
 			$singular = Str::singular( $m->getTable() );
 			//ensure plurial 
 			$plurial = Str::plural($singular);

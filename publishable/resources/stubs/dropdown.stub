@@ -4,7 +4,7 @@ namespace {{namespace}};
 use Ludows\Adminify\Libs\DropdownsManager;
 use Ludows\Adminify\Forms\DeleteCrud;
 
-class {{ class }} extends DropdownsManager
+class {{class}} extends DropdownsManager
 {
     public function handle() {
 
