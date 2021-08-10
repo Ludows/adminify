@@ -13,7 +13,7 @@ class CreateCrud extends Command
      *
      * @var string
      */
-    protected $signature = 'adminify:resources {model, typeModel} {--fields=}';
+    protected $signature = 'adminify:resources {model, typeModel} {--fields=, --schema=}';
 
     /**
      * The console command description.
@@ -43,6 +43,7 @@ class CreateCrud extends Command
         $model = $this->argument('model');
         $typeModel = $this->argument('typeModel') == 'content' ? 'adminify_model_classic' : 'adminify_model_content_type';
         $fields = $this->option('fields');
+        $schema = $this->option('schema');
 
         $model = Str::title($model ?? '');
 
@@ -53,7 +54,7 @@ class CreateCrud extends Command
         $this->info('Do DB file Creation for your entity...');
         Artisan::call('generate:migration', [
             'name' => 'create_'. Str::lower($model) .'_table',
-            'schema' => $fields ?? [],
+            '--schema' => $schema ?? [],
             'stub' => ''
         ]);
 
@@ -66,6 +67,7 @@ class CreateCrud extends Command
         $this->info('Create Model for your entity...');
         Artisan::call('generate:model', [
             'name' => Str::singular($model) ,
+            '--schema' => $schema ?? [],
             'stub' => $typeModel
         ]);
 
@@ -94,9 +96,12 @@ class CreateCrud extends Command
 
         $this->info('Create Repository for your entity...');
         Artisan::call('generate:repository', [
-            'model' => $model 
+            'name' => $model,
+            'stub' => 'adminify_repository'
         ]);
         
+
+        $this->info('FULL CRUD PATTERN CREATED');
 
         // Artisan::call('make:model '.$model);
         // $this->info('Model '.$model.' created');

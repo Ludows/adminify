@@ -1,0 +1,57 @@
+<?php
+
+namespace {{namespace}};
+
+use MrAtiebatie\Repository;
+use App\Models\{{model}}; // Don't forget to update the model's namespace
+
+class {{model}}Repository
+{
+    use Repository;
+
+    /**
+     * The model being queried.
+     *
+     * @var Model
+     */
+    protected $model;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        // Don't forget to update the model's name
+        $this->model = app({{model}}::class);
+    }
+    public function create($mixed, $request) {
+
+        $request = request();
+        if(is_array($mixed)) {
+            $formValues = $mixed;
+        }
+        else {
+            $formValues = $mixed->getFieldValues();
+        }
+        $multilang = $request->useMultilang;
+
+        //you must return an entity
+    }
+    public function update($mixed, $request, $model) {
+
+        $request = request();
+        if(is_array($mixed)) {
+            $formValues = $mixed;
+        }
+        else {
+            $formValues = $mixed->getFieldValues();
+        }
+        $multilang = $request->useMultilang;
+
+         //you must return an entity
+    }
+    public function delete($model) {
+
+        
+    }
+}
