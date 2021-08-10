@@ -1,0 +1,10 @@
+<?php
+
+namespace {{namespace}};
+
+use Ludows\Adminify\Models\ClassicModel;
+
+class {{class}} extends ClassicModel;
+{
+    
+}

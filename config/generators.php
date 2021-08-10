@@ -145,6 +145,8 @@ return [
         'example'                => base_path() . '/resources/stubs/example.stub',
         'model'                  => base_path() . '/resources/stubs/model.stub',
         'model_plain'            => base_path() . '/resources/stubs/model.plain.stub',
+        'adminify_model_classic' => base_path() . '/resources/stubs/model-classic.stub',
+        'adminify_model_content_type'     => base_path() . '/resources/stubs/model-content-type.stub',
         'migration'              => base_path() . '/resources/stubs/migration.stub',
         'migration_plain'        => base_path() . '/resources/stubs/migration.plain.stub',
         'controller'             => base_path() . '/resources/stubs/controller.stub',

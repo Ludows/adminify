@@ -1,13 +1,13 @@
 <?php
 
-namespace Ludows\Adminify\Models;
+namespace {{namespace}};
 
 use Spatie\Searchable\SearchResult;
 use Spatie\Feed\FeedItem;
 
 use Ludows\Adminify\Models\ContentTypeModel;
 
-class Post extends ContentTypeModel
+class {{class}} extends ContentTypeModel
 {
 
     // describe your multilang fields here like this
@@ -35,6 +35,8 @@ class Post extends ContentTypeModel
     public function getSavableForm() {
         return null;
     }
+
+    protected $table = '{{table}}';
 
     // this function enable global search in the admin.
     // Just add your model in site-settings.searchable.admin config 
