@@ -49,7 +49,7 @@ class CreateCrud extends Command
     {
 
         $model =  $this->formatArgument( $this->argument('model'), 'model=', '');
-        $typeModel = $this->formatArgument( $this->argument('type') , 'model=', '') == 'content' ? 'adminify_model_classic' : 'adminify_model_content_type';
+        $typeModel = $this->formatArgument( $this->argument('type') , 'type=', '') == 'content' ? 'adminify_model_content_type' : 'adminify_model_classic';
         $fields = $this->option('fields');
         $schema = $this->option('schema');
 
