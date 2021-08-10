@@ -36,6 +36,10 @@ class CreateCrud extends Command
         parent::__construct();
     }
 
+    public function formatArgument(string $argument, string $strToMatch = '', string $strClear = '') {
+        return str_replace($strToMatch, $strClear, $argument);
+    }
+
     /**
      * Execute the console command.
      *
@@ -44,8 +48,8 @@ class CreateCrud extends Command
     public function handle()
     {
 
-        $model = $this->argument('model');
-        $typeModel = $this->argument('type') == 'content' ? 'adminify_model_classic' : 'adminify_model_content_type';
+        $model =  $this->formatArgument( $this->argument('model'), 'model=', '');
+        $typeModel = $this->formatArgument( $this->argument('type') , 'model=', '') == 'content' ? 'adminify_model_classic' : 'adminify_model_content_type';
         $fields = $this->option('fields');
         $schema = $this->option('schema');
 
