@@ -74,9 +74,10 @@ class CreateCrud extends Command
         ]);
 
         $this->info('Create Model for your entity...');
-        Artisan::call('generate:model', [
+        Artisan::call('generate:file', [
             'name' => Str::singular($model) ,
             '--stub' => $typeModel,
+            '--type' => 'model'
         ]);
 
         $this->info('Create Table Listing for your entity...');
