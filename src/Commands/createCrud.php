@@ -12,7 +12,7 @@ class CreateCrud extends Command
      *
      * @var string
      */
-    protected $signature = 'adminify:resources {model}';
+    protected $signature = 'adminify:resources {model, typeModel}';
 
     /**
      * The console command description.
@@ -40,6 +40,49 @@ class CreateCrud extends Command
     {
 
         $model = $this->argument('model');
+        $typeModel = $this->argument('typeModel') == 'content' ? 'content' : 'classic';
+
+        $this->info('Do DB file Creation for your entity...');
+        Artisan::call('adminify:migration_file', [
+            'model' => $model 
+        ]);
+
+        $this->info('Create Controller for your entity...');
+        Artisan::call('adminify:controller', [
+            'model' => $model 
+        ]);
+
+        $this->info('Create Model for your entity...');
+        Artisan::call('adminify:model', [
+            'model' => $model ,
+            'type' => $typeModel
+        ]);
+
+        $this->info('Create Table Listing for your entity...');
+        Artisan::call('adminify:table', [
+            'model' => $model 
+        ]);
+        
+        $this->info('Create Dropdown for Actions in your Table Listing for your entity...');
+        Artisan::call('adminify:dropdown', [
+            'model' => $model 
+        ]);
+
+        $this->info('Create Form Requests for your entity ...');
+        Artisan::call('adminify:form_request', [
+            'model' => $model 
+        ]);
+
+        $this->info('Create Crud Forms for your entity...');
+        Artisan::call('adminify:form', [
+            'model' => $model 
+        ]);
+
+        $this->info('Create Repository for your entity...');
+        Artisan::call('adminify:repository', [
+            'model' => $model 
+        ]);
+        
 
         // Artisan::call('make:model '.$model);
         // $this->info('Model '.$model.' created');
