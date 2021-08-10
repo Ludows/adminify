@@ -1,10 +1,10 @@
 <?php
-namespace Ludows\Adminify\Dropdowns;
+namespace {{namespace}};
 
 use Ludows\Adminify\Libs\DropdownsManager;
 use Ludows\Adminify\Forms\DeleteCrud;
 
-class Tags extends DropdownsManager
+class {{ class }} extends DropdownsManager
 {
     public function handle() {
 
@@ -15,11 +15,15 @@ class Tags extends DropdownsManager
         $form = app('Kris\LaravelFormBuilder\FormBuilder');
 
         foreach ($models as $m) {
+
+                $singular = Str::singular( $m->getTable() );
+                $plurial = Str::plural($singular);
+
                 $this->add('dropdown_'.$m->id, [
                     'template' => 'adminify::layouts.admin.dropdowns.extends.edit',
                     'vars' => [
-                        'url' => route('tags.edit', ['tag' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
-                        'name' => 'tags'
+                        'url' => route($plurial.'.edit', [$singular => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
+                        'name' => $plurial
                     ]
                 ]);
                 $this->add('dropdown_'.$m->id, [
@@ -27,7 +31,7 @@ class Tags extends DropdownsManager
                     'vars' => [
                         'form' => $form->create(DeleteCrud::class, [
                             'method' => 'DELETE',
-                            'url' => route('tags.destroy', ['tag' => $m->id])
+                            'url' => route($plurial.'.destroy', [$singular => $m->id])
                         ])
                     ]
                 ]);

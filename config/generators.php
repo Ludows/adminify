@@ -51,6 +51,18 @@ return [
             'dump_autoload'       => false,
             'repository_contract' => false,
         ],
+        'table' => [
+            'namespace'           => '\Tables',
+            'path'                => './app/Tables/',
+            'postfix'             => 'Tables',
+            'directory_namespace' => true,
+        ],
+        'dropdown' => [
+            'namespace'           => '\Dropdowns',
+            'path'                => './app/Dropdowns/',
+            'postfix'             => 'Dropdown',
+            'directory_namespace' => true,
+        ],
         'request' => [
             'namespace'           => '\Http\Requests',
             'path'                => './app/Http/Requests/',
@@ -145,8 +157,6 @@ return [
         'example'                => base_path() . '/resources/stubs/example.stub',
         'model'                  => base_path() . '/resources/stubs/model.stub',
         'model_plain'            => base_path() . '/resources/stubs/model.plain.stub',
-        'adminify_model_classic' => base_path() . '/resources/stubs/model-classic.stub',
-        'adminify_model_content_type'     => base_path() . '/resources/stubs/model-content-type.stub',
         'migration'              => base_path() . '/resources/stubs/migration.stub',
         'migration_plain'        => base_path() . '/resources/stubs/migration.plain.stub',
         'controller'             => base_path() . '/resources/stubs/controller.stub',
@@ -181,5 +191,11 @@ return [
         'contract'               => base_path() . '/resources/stubs/contract.stub',
         'factory'                => base_path() . '/resources/stubs/factory.stub',
         'test'                   => base_path() . '/resources/stubs/test.stub',
+        'adminify_controller'    => base_path() . '/resources/stubs/adminify-controller.stub',
+        'adminify_model_classic' => base_path() . '/resources/stubs/model-classic.stub',
+        'adminify_model_content_type'     => base_path() . '/resources/stubs/model-content-type.stub',
+        'adminify_table'         => base_path() . '/resources/stubs/table.stub',
+        'adminify_dropdown'         => base_path() . '/resources/stubs/dropdown.stub',
+        'adminify_repository'         => base_path() . '/resources/stubs/adminify-repo.stub',
     ]
 ];

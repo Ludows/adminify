@@ -41,7 +41,7 @@ class CreateCrud extends Command
     {
 
         $model = $this->argument('model');
-        $typeModel = $this->argument('typeModel') == 'content' ? 'content' : 'classic';
+        $typeModel = $this->argument('typeModel') == 'content' ? 'adminify_model_classic' : 'adminify_model_content_type';
         $fields = $this->option('fields');
 
         $model = Str::title($model ?? '');
@@ -60,7 +60,7 @@ class CreateCrud extends Command
         $this->info('Create Controller for your entity...');
         Artisan::call('generate:controller', [
             'name' => Str::singular($model),
-            'stub' => ''
+            'stub' => 'adminify_controller'
         ]);
 
         $this->info('Create Model for your entity...');
@@ -70,13 +70,15 @@ class CreateCrud extends Command
         ]);
 
         $this->info('Create Table Listing for your entity...');
-        Artisan::call('adminify:table', [
-            'model' => $model 
+        Artisan::call('generate:table', [
+            'name' => $model,
+            'stub' => 'adminify_table'
         ]);
         
         $this->info('Create Dropdown for Actions in your Table Listing for your entity...');
-        Artisan::call('adminify:dropdown', [
-            'model' => $model 
+        Artisan::call('generate:dropdown', [
+            'name' => $model,
+            'stub' => 'adminify_dropdown'
         ]);
 
         $this->info('Create CRUD Form Requests for your entity ...');

@@ -1,36 +1,36 @@
 <?php
 
-namespace Ludows\Adminify\Tables;
+namespace {{namespace}};
 
 use Ludows\Adminify\Libs\TableManager;
-use App\Models\Tag as TagModel;
-use Ludows\Adminify\Dropdowns\Tags as TagDropdownManager;
+use {{rootNamespace}}Models\{{model}} as {{model}}Model;
+use Ludows\Adminify\Dropdowns\{{model}}Dropdown as {{model}}DropdownManager;
 
-class TagTable extends TableManager {
+class {{ class }} extends TableManager {
     public function handle() {
 
         $config = config('site-settings.listings');
         $request = $this->getRequest();
 
-        $model = new TagModel();
+        $model = new {{model}}Model();
         $fillables = $model->getFillable();
 
         $datas = $this->getDatas();
 
         if(isset($datas['results'])) {
-            $tags = $datas['results'];
+            ${{model}} = $datas['results'];
         }
         else {
             if($request->useMultilang) {
-                $tags = TagModel::limit( $config['limit'] )->lang($request->lang)->get();
+                ${{model}} = {{model}}Model::limit( $config['limit'] )->lang($request->lang)->get();
             }
             else {
-                $tags = TagModel::limit( $config['limit'] )->get();
+                ${{model}} = {{model}}Model::limit( $config['limit'] )->get();
             }
         }
            
         //call the dropdown manager
-        $a = new TagDropdownManager($tags ,[]);
+        $a = new {{model}}DropdownManager(${{model}} ,[]);
 
         // set columns
         $default_merge_columns = ['actions'];
@@ -41,10 +41,10 @@ class TagTable extends TableManager {
 
         $this->columns( array_merge($fillables, $default_merge_columns) );
 
-        foreach ($tags as $tag) {
+        foreach (${{model}} as $entity) {
             # code...
             // pass current model
-            $table = $this->model($tag);
+            $table = $this->model($entity);
             foreach ($fillables as $fillable) {
                 # code...
                 // second parameter is a custom view if you want :)
@@ -60,7 +60,7 @@ class TagTable extends TableManager {
 
             $table->column('actions', 'adminify::layouts.admin.table.custom-cells.dropdown', [
                 'dropdown' => $a,
-                'index' => $tag->id
+                'index' => $entity->id
             ]);
         }
 

@@ -1,0 +1,174 @@
+<?php
+
+namespace {{namespace}};
+
+use Illuminate\Http\Request;
+
+use App\Http\Requests\Create{{model}}Request;
+use App\Http\Requests\Update{{model}}Request;
+
+use {{rootNamespace}}Models\{{model}};
+
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+use App\Forms\Create{{model}};
+use App\Forms\Update{{model}};
+use Illuminate\Support\Str;
+
+use App\Repositories\{{model}}Repository;
+
+use Ludows\Adminify\Traits\TableManagerable;
+use Ludows\Adminify\Tables\{{model}}Table;
+
+use Ludows\Adminify\Http\Controllers\Controller;
+
+class {{class}} extends Controller
+{
+	use FormBuilderTrait;
+    use TableManagerable;
+    private ${{model}}Repository;
+
+    public function __construct({{model}}Repository ${{model}}Repository) {
+
+        $this->{{model}}Repository = ${{model}}Repository;
+    }
+
+	/**
+	 * Display a listing of {{resource}}.
+	 */
+	public function index()
+	{
+		// 
+		$table = $this->table({{model}}Table::class);            
+
+        return view("adminify::layouts.admin.pages.index", ["table" => $table]);
+	}
+
+	/**
+	 * Show the form for creating a new {{resource}}.
+	 */
+	public function create(FormBuilder $formBuilder)
+	{
+		//
+
+		$m = new {{ resource }}();
+		$singular = Str::singular( $m->getTable() );
+		$plurial = Str::plural($singular);
+
+
+		$form = $formBuilder->create(Create{{model}}::class, [
+            'method' => 'POST',
+            'url' => route($plurial.'.store')
+        ]);
+
+        return view("adminify::layouts.admin.pages.create", ['form' => $form]);
+	}
+
+	/**
+	 * Store a newly created {{resource}} in storage.
+	 */
+	public function store(Create{{model}}Request $request)
+	{
+		//
+		// we pass context and request
+        $form = $this->form(Create{{model}}::class);
+
+        ${{model}} = $this->{{model}}Repository->create($form, $request);
+		
+		$m = new {{ resource }}();
+		$singular = Str::singular( $m->getTable() );
+
+		$plurial = Str::plural($singular);
+
+        if($request->ajax()) {
+            return response()->json([
+                '{{model}}' => ${{model}},
+                'message' => __('admin.typed_data.success')
+            ]);
+        }
+        else {
+            flash(__('admin.typed_data.success'))->success();
+            return redirect()->route($plurial.'.index');
+        }
+	}
+
+	/**
+	 * Display the specified {{resource}}.
+	 *
+	 * @param {{model}} ${{resource}}
+	 */
+	public function show({{model}} ${{resource}})
+	{
+		//
+	}
+
+	/**
+	 * Show the form for editing the specified {{resource}}.
+	 *
+	 * @param {{model}} ${{resource}}
+     */
+    public function edit(FormBuilder $formBuilder, {{model}} ${{resource}}, Request $request)
+	{
+		//
+
+			$m = new {{ resource }}();
+			$singular = Str::singular( $m->getTable() );
+			//ensure plurial 
+			$plurial = Str::plural($singular);
+
+            $form = $formBuilder->create(Update{{model}}::class, [
+                'method' => 'PUT',
+                'url' => route($plurial.'.update', [ $singular => ${{resource}}->id]),
+                'model' => ${{resource}}
+            ]);
+
+            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
+	}
+
+	/**
+	 * Update the specified {{resource}} in storage.
+	 *
+	 * @param {{model}}  ${{resource}}
+     */
+    public function update({{model}} ${{resource}}, Update{{model}}Request $request)
+	{
+		//
+		$m = ${{resource}};
+		$singular = Str::singular( $m->getTable() );
+		//ensure plurial 
+		$plurial = Str::plural($singular);
+
+		$form = $this->form(Update{{model}}::class, [
+            'method' => 'PUT',
+            'url' => route($plurial.'.update', [$singular => ${{resource}}->id]),
+            'model' => ${{resource}}
+        ]);
+
+        $this->{{model}}Repository->update($form, $request, ${{resource}});
+        flash(__('admin.typed_data.updated'))->success();
+        return redirect()->route($plurial.'.index');
+	}
+
+	/**
+	 * Remove the specified {{resource}} from storage.
+	 *
+	 * @param {{model}}  ${{resource}}
+	 */
+	public function destroy({{model}} ${{resource}})
+	{
+		//
+		$this->{{model}}Repository->delete(${{resource}});
+		
+		$m = ${{resource}};
+		$singular = Str::singular( $m->getTable() );
+		//ensure plurial 
+		$plurial = Str::plural($singular);
+
+        // redirect
+        flash(__('admin.typed_data.deleted'))->success();
+        return redirect()->route($plurial.'.index');
+	}
+}
+
+
+
