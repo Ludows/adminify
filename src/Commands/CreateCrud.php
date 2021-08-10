@@ -80,32 +80,32 @@ class CreateCrud extends Command
 
         $this->info('Create Table Listing for your entity...');
         Artisan::call('generate:file', [
-            'name' => $model,
+            'name' => Str::singular($model),
             '--stub' => 'adminify_table',
             '--type' => 'table'
         ]);
     
         $this->info('Create Dropdown for Actions in your Table Listing for your entity...');
         Artisan::call('generate:file', [
-            'name' => $model,
+            'name' => Str::singular($model),
             '--stub' => 'adminify_dropdown',
             '--type' => 'dropdown'
         ]);
 
         $this->info('Create CRUD Form Requests for your entity ...');
-        Artisan::call('adminify:form_request', [
-            'model' => $model 
+        Artisan::call('generate:request', [
+            'name' => Str::singular($model) 
         ]);
 
         $this->info('Create CRUD Forms for your entity...');
         Artisan::call('adminify:form', [
-            'model' => $model,
-            '--fields' => $fields
+            'model' => Str::singular($model),
+            '--fields' => $fields ?? []
         ]);
 
         $this->info('Create Repository for your entity...');
         Artisan::call('generate:repository', [
-            'name' => $model,
+            'name' => Str::singular($model),
             '--stub' => 'adminify_repository',
         ]);
         
