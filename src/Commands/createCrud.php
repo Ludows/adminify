@@ -13,7 +13,7 @@ class CreateCrud extends Command
      *
      * @var string
      */
-    protected $signature = 'adminify:resources {model, type} {--fields=, --schema=}';
+    protected $signature = 'adminify:resources {model : model name, type : registred types are content, classic} {--fields= : Fields for the form, --schema= : Schema db}';
 
     /**
      * The console command description.
