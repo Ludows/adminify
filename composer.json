@@ -36,7 +36,8 @@
         "laravelium/sitemap": "8.*",
         "spatie/laravel-feed" : "^4.0.4",
         "spatie/laravel-database-mail-templates" : "^3.4.2",
-        "sven/flex-env": "^2.0"
+        "sven/flex-env": "^2.0",
+        "bpocallaghan/generators": "^7.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",

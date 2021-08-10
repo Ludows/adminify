@@ -4,7 +4,6 @@ namespace Ludows\Adminify;
 
 use Illuminate\Support\ServiceProvider;
 
-use Ludows\Adminify\Commands\TraitGenerator;
 use Ludows\Adminify\Commands\RouteList;
 use Ludows\Adminify\Commands\CreateTranslations;
 use Ludows\Adminify\Commands\InstallPackages;
@@ -215,7 +214,6 @@ class AdminifyServiceProvider extends ServiceProvider {
             CreateUser::class,
             GenerateFeeds::class,
             InstallPackages::class,
-            TraitGenerator::class,
             RouteList::class,
             CreateTranslations::class,
         ]);

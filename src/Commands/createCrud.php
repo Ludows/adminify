@@ -68,12 +68,12 @@ class CreateCrud extends Command
             'model' => $model 
         ]);
 
-        $this->info('Create Form Requests for your entity ...');
+        $this->info('Create CRUD Form Requests for your entity ...');
         Artisan::call('adminify:form_request', [
             'model' => $model 
         ]);
 
-        $this->info('Create Crud Forms for your entity...');
+        $this->info('Create CRUD Forms for your entity...');
         Artisan::call('adminify:form', [
             'model' => $model 
         ]);
