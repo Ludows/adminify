@@ -79,15 +79,17 @@ class CreateCrud extends Command
         ]);
 
         $this->info('Create Table Listing for your entity...');
-        Artisan::call('generate:table', [
+        Artisan::call('generate:file', [
             'name' => $model,
-            '--stub' => 'adminify_table'
+            '--stub' => 'adminify_table',
+            '--type' => 'table'
         ]);
         
         $this->info('Create Dropdown for Actions in your Table Listing for your entity...');
-        Artisan::call('generate:dropdown', [
+        Artisan::call('generate:file', [
             'name' => $model,
-            '--stub' => 'adminify_dropdown'
+            '--stub' => 'adminify_dropdown',
+            '--type' => 'dropdown'
         ]);
 
         $this->info('Create CRUD Form Requests for your entity ...');
@@ -104,7 +106,7 @@ class CreateCrud extends Command
         $this->info('Create Repository for your entity...');
         Artisan::call('generate:repository', [
             'name' => $model,
-            '--stub' => 'adminify_repository'
+            '--stub' => 'adminify_repository',
         ]);
         
 
