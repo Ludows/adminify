@@ -50,7 +50,7 @@ class CreateForms extends Command
         foreach ($names as $n) {
             # code...
             Artisan::call('make:form', [
-                'name' => $n
+                'name' => 'Forms/'.$n
             ]);
             $this->info($n.' Created');
         }
