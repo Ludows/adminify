@@ -1,0 +1,33 @@
+<?php
+
+namespace Ludows\Adminify\Mails;
+
+use Ludows\Adminify\Libs\MailableTemplateBase;
+
+class WelcomeMail extends MailableTemplateBase
+{
+    public function __construct()
+    {
+
+    }
+
+    public static function getHtmlTemplate() {
+        return '';
+    }
+    public static function getSubject() {
+        return 'Welcome Mail';
+    }
+    
+    public function getHtmlLayout(): string
+    {
+        /**
+         * In your application you might want to fetch the layout from an external file or Blade view.
+         * 
+         * External file: `return file_get_contents(storage_path('mail-layouts/main.html'));`
+         * 
+         * Blade view: `return view('mailLayouts.main', $data)->render();`
+         */
+        
+        return '';
+    }
+}
