@@ -59,32 +59,31 @@ class CreateCrud extends Command
         Artisan::call('generate:migration', [
             'name' => 'create_'. Str::lower($model) .'_table',
             '--schema' => $schema ?? [],
-            'stub' => ''
         ]);
 
         $this->info('Create Controller for your entity...');
         Artisan::call('generate:controller', [
             'name' => Str::singular($model),
-            'stub' => 'adminify_controller'
+            '--stub' => 'adminify_controller'
         ]);
 
         $this->info('Create Model for your entity...');
         Artisan::call('generate:model', [
             'name' => Str::singular($model) ,
             '--schema' => $schema ?? [],
-            'stub' => $typeModel
+            '--stub' => $typeModel
         ]);
 
         $this->info('Create Table Listing for your entity...');
         Artisan::call('generate:table', [
             'name' => $model,
-            'stub' => 'adminify_table'
+            '--stub' => 'adminify_table'
         ]);
         
         $this->info('Create Dropdown for Actions in your Table Listing for your entity...');
         Artisan::call('generate:dropdown', [
             'name' => $model,
-            'stub' => 'adminify_dropdown'
+            '--stub' => 'adminify_dropdown'
         ]);
 
         $this->info('Create CRUD Form Requests for your entity ...');
@@ -95,13 +94,13 @@ class CreateCrud extends Command
         $this->info('Create CRUD Forms for your entity...');
         Artisan::call('adminify:form', [
             'model' => $model,
-            'fields' => $fields
+            '--fields' => $fields
         ]);
 
         $this->info('Create Repository for your entity...');
         Artisan::call('generate:repository', [
             'name' => $model,
-            'stub' => 'adminify_repository'
+            '--stub' => 'adminify_repository'
         ]);
         
 
