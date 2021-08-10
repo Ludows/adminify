@@ -33,7 +33,7 @@ class {{class}} extends ContentTypeModel
     // return \App\Forms\UpdatePost::class,
     // Pay to attention, to give your model in site-settings.savetraductions.models
     public function getSavableForm() {
-        return null;
+        return \App\Forms\Update{{ model }}::class;
     }
 
     protected $table = '{{table}}';
