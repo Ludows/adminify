@@ -54,7 +54,7 @@ class BaseRepository
 
         foreach ($fillables as $fillable) {
             # code...
-            if(isset($formValues[$fillable]) && ) {
+            if(isset($formValues[$fillable])) {
                 if(!in_array($fillable, $this->relations_columns)) {
                     $isTranslatableField = $model->isTranslatableColumn($fillable);
                     if($isTranslatableField && $multilang) {
