@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Libs;
 
 class HooksManager
 {
-    public function __construct($models, $datas = [])
+    public function __construct()
     {
         $this->hooks = [];
         $this->request = request();
@@ -27,6 +27,21 @@ class HooksManager
 
         $this->hooks[$name][] = $class;
 
+    }
+    public function run($name) {
+
+        $hooks = $this->getHooksByName($name);
+
+        if($hooks != null && count($hooks) > 0) {
+            foreach ($hooks as $hook) {
+                # code...
+
+                $r = call_user_func(array($hook, 'handle'));
+
+            }
+        }
+
+        return $this;
     }
     public function registerHooks($name, $arrayClass) {
 
