@@ -28,7 +28,7 @@ class HookManager
         $this->hooks[$name][] = $class;
 
     }
-    public function run($name) {
+    public function run($name, $datas = null) {
 
         $hooks = $this->getHooksByName($name);
 
@@ -36,7 +36,9 @@ class HookManager
             foreach ($hooks as $hook) {
                 # code...
 
-                $r = call_user_func(array($hook, 'handle'));
+                
+                $r = call_user_func_array(array($hook, 'handle'), array($datas));
+                
 
             }
         }

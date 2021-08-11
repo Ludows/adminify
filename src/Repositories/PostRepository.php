@@ -6,6 +6,7 @@ use App\Models\Category;
 use MrAtiebatie\Repository;
 use App\Models\Post; // Don't forget to update the model's namespace
 use App\Models\Media;
+use Ludows\Adminify\Libs\HookManager;
 class PostRepository
 {
     use Repository;
@@ -16,14 +17,16 @@ class PostRepository
      * @var Model
      */
     protected $model;
+    private $hookManager;
 
     /**
      * Constructor
      */
-    public function __construct()
+    public function __construct(HookManager $hookManager)
     {
         // Don't forget to update the model's name
         $this->model = app(Post::class);
+        $this->hookManager = $hookManager;
     }
     public function create($mixed, $request) {
         // $context is $this of the controller for more flexibility
@@ -38,12 +41,16 @@ class PostRepository
 
         // dd($formValues);
 
+        $this->hookManager->run('model:creating');
+
         if($multilang) {
             $lang = $request->lang;
             $post = new Post();
             $multilangsFields = $post->getMultilangTranslatableSwitch();
             $fields = $post->getFieldsExceptTranslatables();
             // dd($fields);
+
+            
 
             foreach ($multilangsFields as $multilangsField) {
                 # code...
@@ -102,6 +109,8 @@ class PostRepository
         if(isset($formValues['tags_id'])) {
             $post->createTags($formValues['tags_id']);
         }
+
+        $this->hookManager->run('model:created', $post);
 
         return $post;
     }

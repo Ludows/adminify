@@ -7,5 +7,5 @@ use Ludows\Adminify\Libs\HookInterface;
 class {{class}} extends HookInterface
 {
     public function __construct() {}
-    public function handle() {}
+    public function handle($datas = null) {}
 }

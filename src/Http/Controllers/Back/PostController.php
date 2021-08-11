@@ -24,6 +24,7 @@ use App\Repositories\SeoRepository;
 use Ludows\Adminify\Traits\TableManagerable;
 use Ludows\Adminify\Tables\PostTable;
 
+
 class PostController extends Controller
 {
     use FormBuilderTrait;
@@ -75,6 +76,7 @@ class PostController extends Controller
             //
             $form = $this->form(CreatePost::class);
             $post = $this->postRepository->create($form, $request);
+
             if($request->ajax()) {
                 return response()->json([
                     'media' => $post,

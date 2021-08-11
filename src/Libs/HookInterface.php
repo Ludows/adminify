@@ -5,5 +5,5 @@ use Ludows\Adminify\Libs\Dropdown;
 
 class HookInterface
 {
-   public function handle() {}
+   public function handle($datas = null) {}
 }
