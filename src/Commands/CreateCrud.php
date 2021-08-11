@@ -58,13 +58,14 @@ class CreateCrud extends Command
         // ensure his plurial name
         $model = Str::plural($model);
 
-        dump('$typeModel', $typeModel);
+        //dump('$typeModel', $typeModel);
 
 
         $this->info('Do DB file Creation for your entity...');
         $this->call('generate:migration', [
             'name' => 'create_'. Str::lower($model) .'_table',
             '--schema' => $schema ?? [],
+            'model' => false // disable automatic generation model
         ]);
 
         $this->info('Create Controller for your entity...');
@@ -74,10 +75,9 @@ class CreateCrud extends Command
         ]);
 
         $this->info('Create Model for your entity...');
-        $this->call('generate:file', [
+        $this->call('generate:model', [
             'name' => Str::singular($model) ,
             '--stub' => $typeModel,
-            '--type' => 'model'
         ]);
 
         $this->info('Create Table Listing for your entity...');
