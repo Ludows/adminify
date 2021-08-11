@@ -64,7 +64,7 @@ class CreateCrud extends Command
         $this->info('Do DB file Creation for your entity...');
         $this->call('generate:migration', [
             'name' => 'create_'. Str::lower($model) .'_table',
-            'model' => false, // disable automatic generation model
+            '--model' => false, // disable automatic generation model
             '--schema' => $schema ?? [],
         ]);
 
