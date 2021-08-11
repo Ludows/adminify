@@ -15,13 +15,16 @@ namespace Ludows\Adminify\Traits;
     public function scopeLang($query, $lang = 'fr', $localField = '') {
 
         if($localField == '') {
-            $localField = $this->MultilangTranslatableSwitch[0];
+            $localField = $this->MultilangTranslatableSwitch[0] ?? 'title';
         }
 
         return $query->whereNotNull($localField.'->'.$lang);
     }
     public function getMultilangTranslatableSwitch() {
         return $this->MultilangTranslatableSwitch;
+    }
+    public function isTranslatableColumn($column) {
+        return in_array($column, $this->translatable);
     }
     public function getFieldsExceptTranslatables() {
         $fillableFields = $this->fillable;
