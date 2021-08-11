@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Libs;
 use Ludows\Adminify\Libs\Dropdown;
 
-class HooksInterface
+class HookInterface
 {
    public function handle() {}
 }

@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Libs;
 
-class HooksManager
+class HookManager
 {
     public function __construct()
     {
