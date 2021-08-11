@@ -54,14 +54,31 @@ class BaseRepository
 
         foreach ($fillables as $fillable) {
             # code...
-            $isTranslatableField = $model->isTranslatableColumn($fillable);
-            if($isTranslatableField && $multilang) {
-                $model->setTranslation($fillable, $lang, $formValues[$fillable]);
+            if(isset($formValues[$fillable]) && ) {
+                if(!in_array($fillable, $this->relations_columns)) {
+                    $isTranslatableField = $model->isTranslatableColumn($fillable);
+                    if($isTranslatableField && $multilang) {
+                        $model->setTranslation($fillable, $lang, $formValues[$fillable]);
+                    }
+                    else {
+                        $model->{$fillable} = $formValues[$fillable];
+                    }
+                    unset($formValues[$fillable]);
+                }
             }
             else {
-                $model->{$fillable} = $formValues[$fillable];
+                $strFormat = Str::remove('-', $fillable);
+                $strFormat = Str::remove('_', $strFormat);
+                $strFormat = Str::replace(' ', '', $strFormat);
+                $converted = Str::camel($strFormat);
+
+                $namedMethod = 'get'.Str::ucfirst($converted).'Process';
+
+                if(method_exists($this, $namedMethod)) {
+                    call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
+                }
             }
-            unset($formValues[$fillable]);
+            
         }
 
         $this->hookManager->run('model:'.$hooks[0], $model);
@@ -75,7 +92,7 @@ class BaseRepository
                 $strFormat = Str::replace(' ', '', $strFormat);
                 $converted = Str::camel($strFormat);
 
-                $namedMethod = 'get'.$converted.'Relationship';
+                $namedMethod = 'get'.Str::ucfirst($converted).'Relationship';
 
                 if(method_exists($this, $namedMethod)) {
                     call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
@@ -88,6 +105,10 @@ class BaseRepository
 
         $this->hookManager->run('model:'.$hooks[1], $model);
 
+        return $model;
+    }
+    public function getSlugProcess($model, $formValues, $type) {
+        $model->slug = Str::slug($formValues['title']);
         return $model;
     }
     public function create($mixed) {
