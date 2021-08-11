@@ -43,39 +43,10 @@ class AdminifyServiceProvider extends ServiceProvider {
 
             $this->bootableDependencies($packages, $kernel);
         }
-        if($app->runningInConsole()) {
-            $this->publishes(array(
-                __DIR__.'/../resources/views/' => resource_path('views/vendor/adminify/'),
-            ), 'adminify-views');
-            
-            $this->publishes(array(
-                __DIR__.'/../database/views/' => database_path('migrations'),
-            ), 'adminify-migrations');
-        }
+        
+        $this->registerPublishables();
 
-        $config = config('site-settings.restApi');
-
-        // $this->routes(function () use ($config) {
-
-            if(isset($config) && $config['enable']) {
-
-                $routerBasicApi = Route::middleware('web');
-                if($config['prefix'] != null) {
-                    $routerBasicApi->prefix($config['prefix']);
-                }
-                if($config['domain'] != null) {
-                    $routerBasicApi->domain($config['domain']);
-                }
-                $routerBasicApi->namespace($this->namespace)
-                ->group(base_path('vendor/ludows/adminify/routes/api.php'));
-            }
-
-            Route::middleware('web')
-                ->namespace($this->namespace)
-                ->group(base_path('vendor/ludows/adminify/routes/web.php'));
-
-        // });
-
+        $this->loadApiRoutes();
 
         $this->mergeConfigFrom(
             __DIR__.'/../config/site-settings.php', 'adminify'
@@ -83,9 +54,6 @@ class AdminifyServiceProvider extends ServiceProvider {
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'adminify');
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'adminify');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        //$this->loadRoutesFrom(__DIR__.'/../routes/web.php');
-
-        // $this->mergeConfigFrom(__DIR__.'/../config/api.php', 'api');
 
     }
 
@@ -122,6 +90,45 @@ class AdminifyServiceProvider extends ServiceProvider {
     public function provides() {
 
         return ['adminify'];
+    }
+
+    private function registerPublishables() {
+        $app = app();
+
+        if($app->runningInConsole()) {
+            $this->publishes(array(
+                __DIR__.'/../resources/views/' => resource_path('views/vendor/adminify/'),
+            ), 'adminify-views');
+            
+            $this->publishes(array(
+                __DIR__.'/../database/views/' => database_path('migrations'),
+            ), 'adminify-migrations');
+        }
+    }
+
+    private function loadApiRoutes() {
+        $config = config('site-settings.restApi');
+
+        // $this->routes(function () use ($config) {
+
+            if(isset($config) && $config['enable']) {
+
+                $routerBasicApi = Route::middleware('web');
+                if($config['prefix'] != null) {
+                    $routerBasicApi->prefix($config['prefix']);
+                }
+                if($config['domain'] != null) {
+                    $routerBasicApi->domain($config['domain']);
+                }
+                $routerBasicApi->namespace($this->namespace)
+                ->group(base_path('vendor/ludows/adminify/routes/api.php'));
+            }
+
+            Route::middleware('web')
+                ->namespace($this->namespace)
+                ->group(base_path('vendor/ludows/adminify/routes/web.php'));
+
+        // });
     }
 
     private function bootableDependencies($packages, $kernel) {
