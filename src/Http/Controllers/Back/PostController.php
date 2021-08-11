@@ -75,7 +75,7 @@ class PostController extends Controller
         {
             //
             $form = $this->form(CreatePost::class);
-            $post = $this->postRepository->create($form, $request);
+            $post = $this->postRepository->addModel(new Post())->create($form);
 
             if($request->ajax()) {
                 return response()->json([
@@ -163,7 +163,7 @@ class PostController extends Controller
                 $seo = $this->seoRepository->findOrCreate($post, $form);
             }
             else {
-               $post = $this->postRepository->update($form, $request, $post);
+               $post = $this->postRepository>addModel($post)->update($form, $post);
             }
 
 

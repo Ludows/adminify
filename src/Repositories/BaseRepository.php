@@ -35,7 +35,7 @@ class BaseRepository
         $this->model = $class;
         return $this;
     }
-    private function getProcessDb($mixed, $modelPassed = null, $hooks = []) {
+    private function getProcessDb($mixed, $modelPassed = null, $hooks = [], $type = null) {
         $request = request();
         
         $multilang = $request->useMultilang;
@@ -78,7 +78,7 @@ class BaseRepository
                 $namedMethod = 'get'.$converted.'Relationship';
 
                 if(method_exists($this, $namedMethod)) {
-                    call_user_func_array(array($this, $namedMethod), array($model));
+                    call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
                 }
 
             }
@@ -91,10 +91,10 @@ class BaseRepository
         return $model;
     }
     public function create($mixed) {
-        return $this->getProcessDb($mixed, $this->model ?? null, ['creating', 'created']);
+        return $this->getProcessDb($mixed, $this->model ?? null, ['creating', 'created'], 'create');
     }
     public function update($mixed, $model) {
-        return $this->getProcessDb($mixed, $this->model ?? $model, ['updating', 'updated']);
+        return $this->getProcessDb($mixed, $this->model ?? $model, ['updating', 'updated'], 'update');
     }
     public function delete($model) {}
 }
