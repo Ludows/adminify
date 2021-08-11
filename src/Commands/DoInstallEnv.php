@@ -41,23 +41,23 @@ class DoInstallEnv extends Command
 
         $app_url = $this->ask(__('adminify.questions.app_url'));
         
-        Artisan::call('env:set APP_URL '.$app_url);
+        $this->call('env:set APP_URL '.$app_url);
 
         $app_name = $this->ask(__('adminify.questions.app_name'));
         
-        Artisan::call('env:set APP_NAME '.$app_name);
+        $this->call('env:set APP_NAME '.$app_name);
 
         $user_db = $this->ask(__('adminify.questions.user_db'));
         
-        Artisan::call('env:set DB_USERNAME '.$user_db);
+        $this->call('env:set DB_USERNAME '.$user_db);
 
         $password_db = $this->ask(__('adminify.questions.password_db'));
 
-        Artisan::call('env:set DB_PASSWORD '.$password_db);
+        $this->call('env:set DB_PASSWORD '.$password_db);
 
         $db_name = $this->ask(__('adminify.questions.db_name'));
 
-        Artisan::call('env:set DB_DATABASE '.$db_name);
+        $this->call('env:set DB_DATABASE '.$db_name);
 
         return 0;
     }
