@@ -69,7 +69,7 @@ class InstallPackages extends Command
 
         if($firstInstall) {
             $this->info('Handle Env installation...');
-            Artisan::call('adminify:env');
+            $this->call('adminify:env');
         }
 
         if(in_array('*', $cleanedTasks) && !$firstInstall || in_array('rollback', $cleanedTasks) && !$firstInstall) {
@@ -93,36 +93,36 @@ class InstallPackages extends Command
         
         if(in_array('*', $cleanedTasks)  || in_array('migrations', $cleanedTasks)) {
             $this->info('Handle migrations database...');
-            Artisan::call('migrate');
+            $this->call('migrate');
         }
 
         if(in_array('*', $cleanedTasks)  || in_array('feeds', $cleanedTasks)) {
             $this->info('Handle feeds config generation...');
-            Artisan::call('adminify:feeds');
+            $this->call('adminify:feeds');
         }
 
         if(in_array('*', $cleanedTasks)  || in_array('routes', $cleanedTasks)) {
             $this->info('Handle route list js...');
-            Artisan::call('adminify:routes');
+            $this->call('adminify:routes');
         }
 
         if(in_array('*', $cleanedTasks)  || in_array('translations', $cleanedTasks)) {
             $this->info('Handle Translations js...');
-            Artisan::call('adminify:translations');
+            $this->call('adminify:translations');
         }
 
         if(in_array('*', $cleanedTasks)  || in_array('cache', $cleanedTasks)) {
             $this->info('Clear all caches...');
-            Artisan::call('cache:clear');
-            Artisan::call('config:clear');
-            Artisan::call('view:clear');
+            $this->call('cache:clear');
+            $this->call('config:clear');
+            $this->call('view:clear');
         }
 
         //run seeds
         //exec("php artisan db:seed --class='Ludows\Adminify\Database\Seeders\DatabaseSeeder'");
         if(in_array('*', $cleanedTasks)  || in_array('seed', $cleanedTasks)) {
             $this->info('Handle seeding database...');
-            Artisan::call('db:seed', [
+            $this->call('db:seed', [
                 '--class' => 'Ludows\Adminify\Database\Seeders\DatabaseSeeder'
             ]);
         }
