@@ -24,6 +24,15 @@ return [
         'templates' => \App\Models\Templates::class
     ],
 
+    'hooks' => [
+        'model:creating' => [],
+        'model:created' => [],
+        'model:updating' => [],
+        'model:updated' => [],
+        'model:deleting' => [],
+        'model:deleted' => [],
+    ],
+
     'sitemap' => [
         'pages' => 'register.pages',
         'posts' => 'register.posts',

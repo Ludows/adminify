@@ -25,6 +25,8 @@ use Ludows\Adminify\View\Components\Modal;
 
 use Ludows\Adminify\Libs\HooksManager;
 
+use Config;
+
 class AdminifyServiceProvider extends ServiceProvider {
 
     /**

@@ -69,6 +69,12 @@ return [
             'postfix'             => 'Mail',
             'directory_namespace' => true,
         ],
+        'hook' => [
+            'namespace'           => '\Hooks',
+            'path'                => './app/Hooks/',
+            'postfix'             => 'Hook',
+            'directory_namespace' => true,
+        ],
         'request' => [
             'namespace'           => '\Http\Requests',
             'path'                => './app/Http/Requests/',
@@ -204,5 +210,6 @@ return [
         'adminify_dropdown'         => base_path() . '/resources/stubs/dropdown.stub',
         'adminify_repository'         => base_path() . '/resources/stubs/adminify-repo.stub',
         'mailable'         => base_path() . '/resources/stubs/mailable.stub',
+        'hook'         => base_path() . '/resources/stubs/hook.stub',
     ]
 ];
