@@ -73,7 +73,7 @@ class InstallPackages extends Command
         }
 
         if(in_array('*', $cleanedTasks) && !$firstInstall || in_array('rollback', $cleanedTasks) && !$firstInstall) {
-            Artisan::call('migrate:rollback');
+            $this->call('migrate:rollback');
         }
 
         if(in_array('*', $cleanedTasks)  || in_array('coreinstall', $cleanedTasks)) {

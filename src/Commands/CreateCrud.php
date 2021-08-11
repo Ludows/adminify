@@ -62,33 +62,33 @@ class CreateCrud extends Command
 
 
         $this->info('Do DB file Creation for your entity...');
-        Artisan::call('generate:migration', [
+        $this->call('generate:migration', [
             'name' => 'create_'. Str::lower($model) .'_table',
             '--schema' => $schema ?? [],
         ]);
 
         $this->info('Create Controller for your entity...');
-        Artisan::call('generate:controller', [
+        $this->call('generate:controller', [
             'name' => Str::singular($model),
             '--stub' => 'adminify_controller'
         ]);
 
         $this->info('Create Model for your entity...');
-        Artisan::call('generate:file', [
+        $this->call('generate:file', [
             'name' => Str::singular($model) ,
             '--stub' => $typeModel,
             '--type' => 'model'
         ]);
 
         $this->info('Create Table Listing for your entity...');
-        Artisan::call('generate:file', [
+        $this->call('generate:file', [
             'name' => Str::singular($model),
             '--stub' => 'adminify_table',
             '--type' => 'table'
         ]);
     
         $this->info('Create Dropdown for Actions in your Table Listing for your entity...');
-        Artisan::call('generate:file', [
+        $this->call('generate:file', [
             'name' => Str::singular($model),
             '--stub' => 'adminify_dropdown',
             '--type' => 'dropdown'
@@ -101,25 +101,25 @@ class CreateCrud extends Command
         ];
         foreach ($formRequestNames as $formRequestName) {
             # code...
-            Artisan::call('generate:request', [
+            $this->call('generate:request', [
                 'name' =>  $formRequestName
             ]);
         }
 
         $this->info('Create CRUD Forms for your entity...');
-        Artisan::call('adminify:form', [
+        $this->call('adminify:form', [
             'model' => Str::singular($model),
             '--fields' => $fields ?? []
         ]);
 
         $this->info('Create Repository for your entity...');
-        Artisan::call('generate:repository', [
+        $this->call('generate:repository', [
             'name' => Str::singular($model),
             '--stub' => 'adminify_repository',
         ]);
         
 
-        $this->info('FULL CRUD PATTERN CREATED');
+        $this->info('FULL CRUD PATTERN CREATED FOR '.$model);
 
         // Artisan::call('make:model '.$model);
         // $this->info('Model '.$model.' created');
