@@ -73,7 +73,7 @@ class PageController extends Controller
         {
             //
             $form = $this->form(CreatePage::class);
-            $page = $this->pageRepository->create($form, $request);
+            $page = $this->pageRepository->addModel(new Page())->create($form);
             if($request->ajax()) {
                 return response()->json([
                     'page' => $page,
@@ -154,10 +154,10 @@ class PageController extends Controller
             }
 
             if($isSeo) {
-                $seo = $this->seoRepository->findOrCreate($page, $form);
+                $seo = $this->seoRepository->addModel($page)->findOrCreate($page, $form);
             }
             else {
-                $page = $this->pageRepository->update($form, $request, $page);
+                $page = $this->pageRepository->addModel($page)->update($form, $page);
             }
 
             if($request->ajax()) {
@@ -190,7 +190,7 @@ class PageController extends Controller
         public function destroy(Page $page)
         {
             //
-            $this->pageRepository->delete($page);
+            $this->pageRepository->addModel($page)->delete($page);
 
             // redirect
             flash(__('admin.typed_data.deleted'))->success();
