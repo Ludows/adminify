@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\Http\Kernel; // add kernel
 use Ludows\Adminify\View\Components\Modal;
 
-use Ludows\Adminify\Libs\HooksManager;
+use Ludows\Adminify\Libs\HookManager;
 
 use Config;
 
@@ -75,8 +75,8 @@ class AdminifyServiceProvider extends ServiceProvider {
             return new Adminify;
         });
 
-        $this->app->singleton('HooksManager', function () {
-            return new HooksManager();
+        $this->app->singleton('HookManager', function () {
+            return new HookManager();
         });
 
         $this->loadViewComponentsAs('adminify', [
@@ -103,7 +103,7 @@ class AdminifyServiceProvider extends ServiceProvider {
         if(isset($config)) {
             foreach ($config as $hookKeyName => $hooksClasses) {
                 # code...
-                HooksManager::registerHooks($hookKeyName, $hooksClasses);
+                HookManager::registerHooks($hookKeyName, $hooksClasses);
             }
         }
     }
