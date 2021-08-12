@@ -65,7 +65,7 @@ class TagsController extends Controller
         {
             //
             $form = $this->form(CreateTagForm::class);
-            $tag = $this->tagRepository->create($form, $request);
+            $tag = $this->tagRepository->addModel(new Tag())->create($form);
             if($request->ajax()) {
                 return response()->json([
                     'tag' => $tag,
@@ -115,7 +115,7 @@ class TagsController extends Controller
                 'model' => $tag
             ]);
 
-            $this->tagRepository->update($form, $request, $tag);
+            $this->tagRepository->addModel($tag)->update($form, $tag);
 
             if($request->ajax()) {
                 return response()->json([
@@ -138,7 +138,7 @@ class TagsController extends Controller
         public function destroy(TagModel $tag)
         {
             //
-            $this->tagRepository->delete($tag);
+            $this->tagRepository->addModel($tag)->delete($tag);
 
             // redirect
             flash(__('admin.typed_data.deleted'))->success();

@@ -2,11 +2,7 @@
 
 namespace Ludows\Adminify\Repositories;
 
-use App\Models\Category;
-use MrAtiebatie\Repository;
-use App\Models\Post; // Don't forget to update the model's namespace
 use App\Models\Media;
-use Ludows\Adminify\Libs\HookManager;
 use  Ludows\Adminify\Repositories\BaseRepository;
 class PostRepository extends BaseRepository
 {
