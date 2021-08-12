@@ -25,18 +25,31 @@ return [
     ],
 
     'hooks' => [
-        'model:creating' => [],
-        'model:created' => [],
-        'model:updating' => [],
-        'model:updated' => [],
-        'model:deleting' => [],
-        'model:deleted' => [],
+        'model:creating' => [
+            \App\Hooks\OnCreatingHook::class
+        ],
+        'model:created' => [
+            \App\Hooks\OnCreatedHook::class,
+            \App\Hooks\ContentTypesHook::class
+        ],
+        'model:updating' => [
+            \App\Hooks\OnUpdatingHook::class,
+        ],
+        'model:updated' => [
+            \App\Hooks\OnUpdatedHook::class,
+            \App\Hooks\ContentTypesHook::class
+        ],
+        'model:deleting' => [
+            \App\Hooks\OnDeletingHook::class,
+        ],
+        'model:deleted' => [
+            \App\Hooks\OnDeletedHook::class,
+        ],
     ],
 
     'sitemap' => [
         'pages' => 'register.pages',
         'posts' => 'register.posts',
-        'medias' => 'register.medias'
     ],
 
     'feeds' => [
