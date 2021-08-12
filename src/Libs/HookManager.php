@@ -42,7 +42,8 @@ class HookManager
                 # code...
 
                 
-                $r = call_user_func_array(array($hook, 'handle'), array($datas));
+                $object = app($hook);
+                $r = call_user_func_array(array($object, 'handle'), array($datas));
                 
 
             }
