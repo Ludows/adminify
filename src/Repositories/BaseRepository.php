@@ -5,6 +5,7 @@ namespace Ludows\Adminify\Repositories;
 use MrAtiebatie\Repository;
 use Illuminate\Support\Str;
 
+use Ludows\Adminify\Facades\HookManagerFacade;
 
 class BaseRepository
 {
@@ -27,7 +28,7 @@ class BaseRepository
     {
         // Don't forget to update the model's name
         $this->model = null;
-        $this->hookManager = HookManager::getInstance();
+        $this->hookManager = HookManagerFacade::getInstance();
     }
     public function addModel($class) {
         $this->model = $class;
