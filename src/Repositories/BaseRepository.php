@@ -4,7 +4,6 @@ namespace Ludows\Adminify\Repositories;
 
 use MrAtiebatie\Repository;
 use Illuminate\Support\Str;
-use Ludows\Adminify\Libs\HookManager;
 
 
 class BaseRepository
@@ -17,7 +16,6 @@ class BaseRepository
      * @var Model
      */
     protected $model;
-    private $hookManager;
 
     // Define our relationship columns. The repository does'nt make treatments for this columns
     public $relations_columns = [];
@@ -25,11 +23,11 @@ class BaseRepository
     /**
      * Constructor
      */
-    public function __construct(HookManager $hookManager)
+    public function __construct()
     {
         // Don't forget to update the model's name
         $this->model = null;
-        $this->hookManager = $hookManager;
+        $this->hookManager = HookManager::getInstance();
     }
     public function addModel($class) {
         $this->model = $class;

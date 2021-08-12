@@ -9,6 +9,9 @@ class HookManager
         $this->hooks = [];
         $this->request = request();
     }
+    public function getInstance() {
+        return $this;
+    }
     public function getHooks() {
         return $this->hooks;
     }
