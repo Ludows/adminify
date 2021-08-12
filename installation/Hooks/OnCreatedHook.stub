@@ -1,0 +1,9 @@
+<?php
+
+namespace App\Hooks;
+
+use Ludows\Adminify\Hooks\OnCreatedHook as OnCreatedHookBase;
+
+class OnCreatedHook extends OnCreatedHookBase {
+    
+}

@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Hooks;
+
+use Ludows\Adminify\Hooks\OnDeletedHook as OnDeletedHookBase;
+
+class OnDeletedHook extends OnDeletedHookBase {
+    
+}
+

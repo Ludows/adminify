@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Hooks;
+
+use Ludows\Adminify\Hooks\OnUpdatedHook as OnUpdatedHookBase;
+
+class OnUpdatedHook extends OnUpdatedHookBase {
+    
+}
+
