@@ -12,21 +12,7 @@ class PostRepository extends BaseRepository
         'tags_id',
         'categories_id'
     ];
-
-    public function getMediaIdRelationship($model, $formValues, $type) {
-        if(isset($formValues['media_id']) && $formValues['media_id'] != 0) {
-            $json = json_decode($formValues['media_id']);
-        
-            $m = Media::where('src', $json[0]->name)->first();
-            if($m != null) {
-                $model->media_id = $m->id;
-                }
-            else {
-                $model->media_id = 0;
-            }
-        }
-        // return $model;
-    }
+    
     public function getTagIdRelationship($model,$formValues, $type) {
         if(isset($formValues['tags_id'])) {
             $model->createTags($formValues['tags_id']);

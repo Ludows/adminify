@@ -68,7 +68,7 @@ class CategoryController extends Controller
             // we pass context and request
             $form = $this->form(CreateCategory::class);
 
-            $category = $this->categoryRepository->create($form, $request);
+            $category = $this->categoryRepository->addModel(new Category())->create($form);
 
             if($request->ajax()) {
                 return response()->json([
@@ -131,7 +131,7 @@ class CategoryController extends Controller
                 'model' => $category
             ]);
 
-            $this->categoryRepository->update($form, $request, $category);
+            $this->categoryRepository->addModel($category)->update($form, $category);
             flash(__('admin.typed_data.updated'))->success();
             return redirect()->route('categories.index');
         }
@@ -145,7 +145,7 @@ class CategoryController extends Controller
         public function destroy(Category $category)
         {
             //
-            $this->categoryRepository->delete($category);
+            $this->categoryRepository->addModel($category)->delete($category);
 
             // redirect
             flash(__('admin.typed_data.deleted'))->success();

@@ -6,6 +6,7 @@ use MrAtiebatie\Repository;
 use Illuminate\Support\Str;
 
 use Ludows\Adminify\Facades\HookManagerFacade;
+use App\Models\Media;
 
 class BaseRepository
 {
@@ -114,6 +115,22 @@ class BaseRepository
         }
         return $model;
     }
+
+    public function getMediaIdRelationship($model, $formValues, $type) {
+        if(isset($formValues['media_id']) && $formValues['media_id'] != 0) {
+            $json = json_decode($formValues['media_id']);
+        
+            $m = Media::where('src', $json[0]->name)->first();
+            if($m != null) {
+                $model->media_id = $m->id;
+                }
+            else {
+                $model->media_id = 0;
+            }
+        }
+        // return $model;
+    }
+
     public function create($mixed) {
         return $this->getProcessDb($mixed, $this->model ?? null, ['creating', 'created'], 'create');
     }
