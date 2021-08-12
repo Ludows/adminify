@@ -22,6 +22,8 @@ class BaseRepository
     // Define our relationship columns. The repository does'nt make treatments for this columns
     public $relations_columns = [];
 
+    public $filters_on = [];
+
     /**
      * Constructor
      */
@@ -34,6 +36,17 @@ class BaseRepository
     public function addModel($class) {
         $this->model = $class;
         return $this;
+    }
+    protected function getNamedFunctionPattern($string_to_replace, $new_string, $string_base) {
+
+        
+        $strFormat = Str::remove('-', $new_string);
+        $strFormat = Str::replace(' ', '', $strFormat);
+        $converted = Str::camel($strFormat);
+
+        $strFormat = Str::replace($string_to_replace, $converted, $string_base);
+
+        return $strFormat;
     }
     private function getProcessDb($mixed, $modelPassed = null, $hooks = [], $type = null) {
         $request = request();
@@ -67,12 +80,8 @@ class BaseRepository
                 }
             }
             else {
-                $strFormat = Str::remove('-', $fillable);
-                $strFormat = Str::remove('_', $strFormat);
-                $strFormat = Str::replace(' ', '', $strFormat);
-                $converted = Str::camel($strFormat);
-
-                $namedMethod = 'get'.Str::ucfirst($converted).'Process';
+                
+                $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $fillable, 'get##PLACEHOLDER##Process');
 
                 if(method_exists($this, $namedMethod)) {
                     call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
@@ -87,12 +96,7 @@ class BaseRepository
             foreach ($this->relations_columns as $relationable) {
                 # code...
 
-                $strFormat = Str::remove('-', $relationable);
-                $strFormat = Str::remove('_', $strFormat);
-                $strFormat = Str::replace(' ', '', $strFormat);
-                $converted = Str::camel($strFormat);
-
-                $namedMethod = 'get'.Str::ucfirst($converted).'Relationship';
+                $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $relationable, 'get##PLACEHOLDER##Relationship');
 
                 if(method_exists($this, $namedMethod)) {
                     call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
