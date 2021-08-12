@@ -67,7 +67,7 @@ class TranslationsController extends Controller
         {
             //
             $form = $this->form(FormsCreateTranslation::class);
-            $traduction = $this->translationRepository->create($form, $request);
+            $traduction = $this->translationRepository->addModel(new Traductions())->create($form);
             if($request->ajax()) {
                 return response()->json([
                     'traduction' => $traduction,
@@ -128,7 +128,7 @@ class TranslationsController extends Controller
                 'model' => $traduction
             ]);
 
-            $this->translationRepository->update($form, $request, $traduction);
+            $this->translationRepository->addModel($traduction)->update($form, $traduction);
 
             if($request->ajax()) {
                 return response()->json([
@@ -151,7 +151,7 @@ class TranslationsController extends Controller
         public function destroy(Traductions $traduction)
         {
             //
-            $this->translationRepository->delete($traduction);
+            $this->translationRepository->addModel($traduction)->delete($traduction);
 
             // redirect
             flash(__('admin.typed_data.deleted'))->success();
