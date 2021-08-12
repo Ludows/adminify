@@ -70,7 +70,7 @@ class MediaController extends Controller
                 $form = $this->form(CreateMedia::class);
 
                 // the create method return the media created
-                $media = $this->mediaRepository->create($form, $request);
+                $media = $this->mediaRepository->addModel(new Media())->create($form);
                 if($request->ajax()) {
                     return response()->json([
                         'media' => $media,
@@ -129,7 +129,7 @@ class MediaController extends Controller
                 'model' => $media
             ]);
 
-            $this->mediaRepository->update($form, $request, $media);
+            $this->mediaRepository->addModel($media)->update($form, $media);
 
             if($request->ajax()) {
                 return response()->json([
@@ -154,7 +154,7 @@ class MediaController extends Controller
 
             app('UniSharp\LaravelFilemanager\Controllers\DeleteController')->getDelete();
 
-            $this->mediaRepository->delete($media);
+            $this->mediaRepository->addModel($media)->delete($media);
             // redirect
             flash(__('admin.typed_data.deleted'))->success();
             return redirect()->route('medias.index');

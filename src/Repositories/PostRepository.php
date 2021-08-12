@@ -52,6 +52,7 @@ class PostRepository extends BaseRepository
     }
     public function delete($model) {
 
+        $this->hookManager->run('model:deleting', $model);
         $insertedCategories = $model->categories;
         $insertedTags = $model->tags;
 
@@ -63,5 +64,6 @@ class PostRepository extends BaseRepository
             $model->deleteTags();
         }
         $model->delete();
+        $this->hookManager->run('model:deleted', $model);
     }
 }
