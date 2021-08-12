@@ -30,6 +30,8 @@ class HookManager
 
         $this->hooks[$name][] = $class;
 
+        return $this;
+
     }
     public function run($name, $datas = null) {
 
@@ -55,5 +57,6 @@ class HookManager
             $this->registerHook($name, $class);
         }
 
+        return $this;
     }
 }
