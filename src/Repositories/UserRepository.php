@@ -8,92 +8,39 @@ use App\Models\UserPreference;
 use Illuminate\Support\Facades\Hash; // Don't forget to update the model's namespace
 use App\Models\Media;
 
-class UserRepository
+use Ludows\Adminify\Repositories\BaseRepository;
+
+class UserRepository extends BaseRepository
 {
-    use Repository;
-
-    /**
-     * The model being queried.
-     *
-     * @var Model
-     */
-    protected $model;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        // Don't forget to update the model's name
-        $this->model = app(User::class);
-    }
-    public function create($form, $request) {
-        $formValues = $form->getFieldValues();
-        $roles = $formValues['roles'];
-        unset($formValues['roles']);
-
-        if(isset($formValues['password'])) {
-            $formValues['password'] = Hash::make($formValues['password']);
-        }
-
+    public $relations_columns = [
+        'avatar',
+        'roles'
+    ];
+    public function getAvatarRelationship($model, $formValues, $type) {
         if(isset($formValues['avatar'])) {
             $json = json_decode($formValues['avatar']);
             $m = Media::where('src', $json[0]->name)->first();
             if($m != null) {
-                $formValues['avatar'] = $m->id;
+                $model->avatar = $m->id;
             }
             else {
-                $formValues['avatar'] = null;
+                $model->avatar = null;
             }
         }
-
-
-        $user = User::create($formValues);
-
-        if(isset($roles)) {
-            $user->assignRole($roles);
-        }
-
-        $user->save();
-
-        return $user;
     }
-    public function update($form, $request, $model) {
-        $formValues = $form->getFieldValues();
-        $roles = $formValues['roles'];
-        unset($formValues['roles']);
-
-        if(!Hash::check($formValues['password'], $model->password)) {
-            $formValues['password'] = Hash::make($formValues['password']);
-        }
-        else {
-            unset($formValues['password']);
+    public function getRolesRelationship($model, $formValues, $type) {
+        if(isset($formValues['roles']) && $type == "create") {
+            $model->assignRole($formValues['roles']);
         }
 
-        if(isset($formValues['avatar'])) {
-            $json = json_decode($formValues['avatar']);
-            $m = Media::where('src', $json[0]->name)->first();
-            if($m != null) {
-                $formValues['avatar'] = $m->id;
-            }
-            else {
-                $formValues['avatar'] = null;
-            }
+        if(isset($formValues['roles']) && $type == "update") {
+            $model->syncRoles($formValues['roles']);
         }
-
-        $model->fill($formValues);
-
-        if(isset($roles)) {
-            $model->syncRoles($roles);
-        }
-
-        $model->save();
-
-        return $model;
     }
     public function delete($model) {
-
+        $this->hookManager->run('model:deleting', $model);
         $model->delete();
+        $this->hookManager->run('model:deleted', $model);
     }
     public function saveProfile($values) {
 
@@ -120,7 +67,21 @@ class UserRepository
             $pref->data = $value;
             $pref->user_id = $userId;
 
+            if($check != null) {
+                $this->hookManager->run('updating:profile', $pref);
+            }
+            else {
+                $this->hookManager->run('saving:profile', $pref);
+            }
+
             $pref->save();
+
+            if($check != null) {
+                $this->hookManager->run('update:profile', $pref);
+            }
+            else {
+                $this->hookManager->run('save:profile', $pref);
+            }
         }
 
     }
