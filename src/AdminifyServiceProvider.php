@@ -76,7 +76,7 @@ class AdminifyServiceProvider extends ServiceProvider {
             return new Adminify;
         });
 
-        $this->app->singleton('HookManager', function () {
+        $this->app->bind('HookManager', function () {
             return new HookManager();
         });
 
@@ -101,12 +101,17 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         $config = config('site-settings.hooks');
 
+
         if(isset($config)) {
             foreach ($config as $hookKeyName => $hooksClasses) {
                 # code...
                 HookManagerFacade::registerHooks($hookKeyName, $hooksClasses);
+                // dd($hookKeyName, $hooksClasses, HookManagerFacade::registerHooks($hookKeyName, $hooksClasses));
             }
         }
+
+    // HookManagerFacade::getHooks());
+
     }
 
     private function registerPublishables() {

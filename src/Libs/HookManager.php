@@ -6,7 +6,7 @@ class HookManager
 {
     public function __construct()
     {
-        $this->hooks = [];
+        $this->hooks = config('site-settings.hooks');
         $this->request = request();
     }
     public function getInstance() {
