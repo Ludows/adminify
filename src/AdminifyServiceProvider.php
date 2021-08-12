@@ -24,6 +24,7 @@ use Illuminate\Contracts\Http\Kernel; // add kernel
 use Ludows\Adminify\View\Components\Modal;
 
 use Ludows\Adminify\Libs\HookManager;
+use Ludows\Adminify\Facades\HookManagerFacade;
 
 use Config;
 
@@ -103,7 +104,7 @@ class AdminifyServiceProvider extends ServiceProvider {
         if(isset($config)) {
             foreach ($config as $hookKeyName => $hooksClasses) {
                 # code...
-                HookManager::registerHooks($hookKeyName, $hooksClasses);
+                HookManagerFacade::registerHooks($hookKeyName, $hooksClasses);
             }
         }
     }
