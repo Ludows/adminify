@@ -71,7 +71,7 @@ class MailsController extends Controller
             // we pass context and request
             $form = $this->form(CreateMail::class);
 
-            $mail = $this->mailRepository->create($form, $request);
+            $mail = $this->mailRepository->addModel(new Mailables())->create($form);
 
             if($request->ajax()) {
                 return response()->json([
@@ -121,7 +121,7 @@ class MailsController extends Controller
                 'model' => $mail
             ]);
 
-            $this->mailRepository->update($form, $request, $mail);
+            $this->mailRepository->addModel($mail)->update($form, $mail);
             flash(__('admin.typed_data.updated'))->success();
             return redirect()->route('mails.index');
         }
@@ -155,8 +155,7 @@ class MailsController extends Controller
         public function destroy(Mailables $mail)
         {
             //
-            $this->mailRepository->delete($category);
-
+            $this->mailRepository->addModel($mail)->delete($mail);
             // redirect
             flash(__('admin.typed_data.deleted'))->success();
             return redirect()->route('mails.index');

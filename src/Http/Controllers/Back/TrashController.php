@@ -35,7 +35,7 @@ class TrashController extends Controller
             return redirect(url()->previous());
         }
         else {
-            abort(403);
+            return abort(403);
         }
     }
 }
