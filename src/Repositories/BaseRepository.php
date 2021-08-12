@@ -107,7 +107,11 @@ class BaseRepository
         return $model;
     }
     public function getSlugProcess($model, $formValues, $type) {
-        $model->slug = Str::slug($formValues['title']);
+
+        $fillable = $model->getFillable();
+        if(in_array('title', $fillable)) {
+            $model->slug = Str::slug($formValues['title']);
+        }
         return $model;
     }
     public function create($mixed) {

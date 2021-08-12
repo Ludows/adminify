@@ -51,8 +51,6 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         $this->loadApiRoutes();
 
-        $this->registerHooks();
-
         $this->mergeConfigFrom(
             __DIR__.'/../config/site-settings.php', 'adminify'
         );
@@ -95,23 +93,6 @@ class AdminifyServiceProvider extends ServiceProvider {
     public function provides() {
 
         return ['adminify'];
-    }
-
-    public function registerHooks() {
-
-        $config = config('site-settings.hooks');
-
-
-        if(isset($config)) {
-            foreach ($config as $hookKeyName => $hooksClasses) {
-                # code...
-                HookManagerFacade::registerHooks($hookKeyName, $hooksClasses);
-                // dd($hookKeyName, $hooksClasses, HookManagerFacade::registerHooks($hookKeyName, $hooksClasses));
-            }
-        }
-
-    // HookManagerFacade::getHooks());
-
     }
 
     private function registerPublishables() {
