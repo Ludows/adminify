@@ -22,7 +22,7 @@ class CreateComment extends Form
         $this->add('post_id', 'select2', [
             'empty_value' => '',
             'withCreate' => false,
-            'choices' => $p['comments'],
+            'choices' => $p['posts'],
             'selected' => $p['selected'],
             'label' => __('admin.form.post_id'),
             'select2options' => [
