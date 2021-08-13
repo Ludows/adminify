@@ -8,7 +8,13 @@
             <span>{{ __('admin.profile') }}</span>
         </a>
     @endif
-    @if($user->hasPermissionTo('manage_settings'))
+    @if($user->hasPermissionTo('update_profile'))
+        <a href="{{ route('users.profile.edit', ['user' => $user->id]) }}" class="dropdown-item">
+            <i class="ni ni-settings-gear-65"></i>
+            <span>{{ __('admin.update_profile') }}</span>
+        </a>
+    @endif
+    @if($user->hasPermissionTo('create_settings'))
         <a href="{{ route('settings.index') }}" class="dropdown-item">
             <i class="ni ni-settings-gear-65"></i>
             <span>{{ __('admin.settings.index') }}</span>
