@@ -2,8 +2,6 @@
 
 namespace Ludows\Adminify\Repositories;
 
-use MrAtiebatie\Repository;
-use App\Models\User;
 use App\Models\UserPreference;
 use Illuminate\Support\Facades\Hash; // Don't forget to update the model's namespace
 use App\Models\Media;
@@ -16,6 +14,10 @@ class UserRepository extends BaseRepository
         'avatar',
         'roles'
     ];
+    public $filters_on = [
+        'password'
+    ];
+
     public function getAvatarRelationship($model, $formValues, $type) {
         if(isset($formValues['avatar'])) {
             $json = json_decode($formValues['avatar']);
