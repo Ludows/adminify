@@ -53,7 +53,7 @@ class CommentController extends Controller
             abort(403);
         };
 
-        $model = $this->CommentRepository->create($request->all());
+        $model = $this->CommentRepository->addModel(new Comment())->create($request->all());
         
         return response()->json([
             'commentList' => $model->post->commentsThree,
@@ -89,7 +89,7 @@ class CommentController extends Controller
             abort(403);
         };
 
-        $model = $this->CommentRepository->update($request->all(), $Comment);
+        $model = $this->CommentRepository->addModel($Comment)->update($request->all(), $Comment);
         
         return response()->json([
             'commentList' => $model->post->commentsThree,
@@ -113,7 +113,7 @@ class CommentController extends Controller
         //
         $m = $Comment;
 
-        $this->CommentRepository->delete($Comment);
+        $this->CommentRepository->addModel($Comment)->delete($Comment);
         
         return response()->json([
             'commentList' => $m->post->commentsThree,

@@ -55,7 +55,7 @@ class PostController extends Controller
             abort(403);
         };
 
-        $model = $this->PostRepository->create($request->all(), $request);
+        $model = $this->PostRepository->addModel(new Post())->create($request->all());
         
         return response()->json([
             'entry' => $model,
@@ -91,7 +91,7 @@ class PostController extends Controller
             abort(403);
         };
 
-        $model = $this->PostRepository->update($request->all(), $request, $Post);
+        $model = $this->PostRepository->addModel($Post)->update($request->all(), $Post);
         
         return response()->json([
             'entry' => $model,
@@ -115,7 +115,7 @@ class PostController extends Controller
 
         $m = $Post;
 
-        $this->PostRepository->delete($Post);
+        $this->PostRepository->addModel($Post)->delete($Post);
         
         return response()->json([
             'entry' => $m,

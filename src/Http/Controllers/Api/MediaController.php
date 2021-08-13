@@ -52,7 +52,7 @@ class MediaController extends Controller
             abort(403);
         };
 
-        $model = $this->MediaRepository->create($request->all(), $request);
+        $model = $this->MediaRepository->addModel(new Media())->create($request->all());
         
         return response()->json([
             'entry' => $model,
@@ -88,7 +88,7 @@ class MediaController extends Controller
             abort(403);
         };
 
-        $model = $this->MediaRepository->update($request->all(), $request, $Media);
+        $model = $this->MediaRepository->addModel($Media)->update($request->all(), $Media);
         
         return response()->json([
             'entry' => $model,
@@ -112,7 +112,7 @@ class MediaController extends Controller
 
         $m = $Media;
 
-        $this->MediaRepository->delete($Media);
+        $this->MediaRepository->addModel($Media)->delete($Media);
         
         return response()->json([
             'entry' => $m,

@@ -53,7 +53,7 @@ class CategoryController extends Controller
             abort(403);
         };
 
-        $model = $this->CategoryRepository->create($request->all(), $request);
+        $model = $this->CategoryRepository->addModel(new Category())->create($request->all());
         
         return response()->json([
             'entry' => $model,
@@ -89,7 +89,7 @@ class CategoryController extends Controller
             abort(403);
         };
 
-        $model = $this->CategoryRepository->update($request->all(), $request, $Category);
+        $model = $this->CategoryRepository->addModel($Category)->update($request->all(), $Category);
         
         return response()->json([
             'entry' => $model,
@@ -113,7 +113,7 @@ class CategoryController extends Controller
         
         $m = $Category;
 
-        $this->CategoryRepository->delete($Category);
+        $this->CategoryRepository->addModel($Category)->delete($Category);
         
         return response()->json([
             'entry' => $m,

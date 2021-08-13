@@ -54,7 +54,7 @@ class PageController extends Controller
             abort(403);
         };
 
-        $model = $this->pageRepository->create($request->all(), $request);
+        $model = $this->pageRepository->addModel(new Page())->create($request->all());
         
         return response()->json([
             'entry' => $model,
@@ -90,7 +90,7 @@ class PageController extends Controller
             abort(403);
         };
 
-        $model = $this->pageRepository->update($request->all(), $request, $page);
+        $model = $this->pageRepository->addModel($page)->update($request->all(), $page);
         
         return response()->json([
             'entry' => $model,
@@ -114,7 +114,7 @@ class PageController extends Controller
         
         $m = $page;
 
-        $this->pageRepository->delete($page);
+        $this->pageRepository->addModel($page)->delete($page);
         
         return response()->json([
             'entry' => $m,

@@ -52,7 +52,7 @@ class TranslationsController extends Controller
             abort(403);
         };
 
-        $model = $this->TranslationsRepository->create($request->all(), $request);
+        $model = $this->TranslationsRepository->addModel(new Translations())->create($request->all());
         
         return response()->json([
             'entry' => $model,
@@ -88,7 +88,7 @@ class TranslationsController extends Controller
             abort(403);
         };
 
-        $model = $this->TranslationsRepository->update($request->all(), $request, $Translations);
+        $model = $this->TranslationsRepository->addModel($Translations)->update($request->all(), $Translations);
         
         return response()->json([
             'entry' => $model,
@@ -112,7 +112,7 @@ class TranslationsController extends Controller
         
         $m = $Translations;
 
-        $this->TranslationsRepository->delete($Translations);
+        $this->TranslationsRepository->addModel($Translations)->delete($Translations);
         
         return response()->json([
             'entry' => $m,
