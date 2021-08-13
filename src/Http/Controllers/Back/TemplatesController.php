@@ -68,7 +68,7 @@ class TemplatesController extends Controller
             // we pass context and request
             $form = $this->form(CreateTemplates::class);
 
-            $content_template = $this->templatesRepository->create($form, $request);
+            $content_template = $this->templatesRepository->addModel(new Templates())->create($form);
 
             if($request->ajax()) {
                 return response()->json([
@@ -120,7 +120,7 @@ class TemplatesController extends Controller
                 'model' => $template
             ]);
 
-            $this->templatesRepository->update($form, $request, $template);
+            $this->templatesRepository->addModel($template)->update($form, $template);
             flash(__('admin.typed_data.updated'))->success();
             return redirect()->route('templates.index');
         }
