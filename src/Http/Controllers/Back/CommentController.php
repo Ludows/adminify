@@ -5,6 +5,7 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 use Illuminate\Http\Request;
 use App\Models\Comment;
 use App\Models\Post;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Ludows\Adminify\Http\Controllers\Controller;
 
@@ -27,7 +28,10 @@ class CommentController extends Controller
         * @return Response
         */
         private $commentRepository;
+
         use TableManagerable;
+        use FormBuilderTrait;
+
         public function __construct(CommentRepository $commentRepository)
         {
             $this->commentRepository = $commentRepository;
@@ -36,11 +40,27 @@ class CommentController extends Controller
         {
             //
             $table = $this->table(CommentTable::class, [
-                'showBtnCreate' => false,
+                'showBtnCreate' => true,
             ]);
 
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
+
+        /**
+            * Show the form for creating a new resource.
+            *
+            * @return Response
+            */
+            public function create(FormBuilder $formBuilder)
+            {
+                //
+                $form = $formBuilder->create(CreateComment::class, [
+                    'method' => 'POST',
+                    'url' => route('comments.store')
+                ]);
+    
+                return view("adminify::layouts.admin.pages.create", ['form' => $form]);
+            }
 
         /**
             * Store a newly created resource in storage.
@@ -49,23 +69,21 @@ class CommentController extends Controller
             */
         public function store(CreateCommentRequest $request)
         {
-            //
-            $comment = $this->commentRepository->create($request->all());
+            // we pass context and request
+            $form = $this->form(CreateComment::class);
 
-            return response()->json([
-                'commentList' => $comment->post->commentsThree
-            ]);
-        }
+            $comment = $this->commentRepository->addModel(new Comment())->create($form);
 
-        /**
-            * Display the specified resource.
-            *
-            * @param  int  $id
-            * @return Response
-            */
-        public function show($id)
-        {
-            //
+            if($request->ajax()) {
+                return response()->json([
+                    'commentList' => $comment->post->commentsThree,
+                    'message' => __('admin.typed_data.success')
+                ]);
+            }
+            else {
+                flash(__('admin.typed_data.success'))->success();
+                return redirect()->route('comments.index');
+            }
         }
 
         /**
@@ -95,7 +113,9 @@ class CommentController extends Controller
         public function update(UpdateCommentRequest $request, Comment $comment)
         {
             //
-            $comment = $this->commentRepository->update($request->all(), $comment);
+            $form = $this->form(UpdateComment::class);
+
+            $comment = $this->commentRepository->addModel($comment)->update($form, $comment);
 
             if($request->ajax()) {
                 return response()->json([
@@ -120,7 +140,7 @@ class CommentController extends Controller
 
             $all = $request->all();
 
-            $this->commentRepository->delete($comment);
+            $this->commentRepository->addModel($comment)->delete($comment);
             $m = Post::find($all['post_id']);
             if($request->ajax()) {
                 return response()->json([
