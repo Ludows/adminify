@@ -16,7 +16,7 @@ class HookManager
         return $this->hooks;
     }
     public function getHooksByName(string $name = '') {
-        return $this->hooks[$name];
+        return $this->hooks[$name] ?? null;
     }
     public function exist($name = '') {
         return array_key_exists( $name, $this->getHooks() );
@@ -40,12 +40,8 @@ class HookManager
         if($hooks != null && count($hooks) > 0) {
             foreach ($hooks as $hook) {
                 # code...
-
-                
                 $object = app($hook);
                 $r = call_user_func_array(array($object, 'handle'), array($datas));
-                
-
             }
         }
 

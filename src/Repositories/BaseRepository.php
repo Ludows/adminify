@@ -22,6 +22,7 @@ class BaseRepository
     // Define our relationship columns. The repository does'nt make treatments for this columns
     public $relations_columns = [];
 
+    // Your can Define your Manipulation datas here
     public $filters_on = [];
 
     /**
@@ -102,6 +103,16 @@ class BaseRepository
                     call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
                 }
 
+            }
+        }
+
+        if(count($this->filters_on) > 0) {
+            foreach ($this->filters_on as $filterable) {
+                $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $filterable, 'get##PLACEHOLDER##Filter');   
+                
+                if(method_exists($this, $namedMethod)) {
+                    call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
+                }
             }
         }
 

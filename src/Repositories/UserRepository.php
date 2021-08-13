@@ -28,6 +28,9 @@ class UserRepository extends BaseRepository
             }
         }
     }
+    public function getPasswordFilter($model, $formValues, $type) {
+        $model->password = Hash::make($formValues['password']);
+    }
     public function getRolesRelationship($model, $formValues, $type) {
         if(isset($formValues['roles']) && $type == "create") {
             $model->assignRole($formValues['roles']);
