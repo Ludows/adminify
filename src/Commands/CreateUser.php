@@ -49,6 +49,9 @@ class CreateUser extends Command
         $roles = array();
         $arguments = $this->arguments();
         $trigger_error = false;
+        
+        $configRest = get_site_key('restApi');
+        $tokenizable_roles = $configRest['token_capacities'];
 
         $allowed_roles = Role::where('id', '!=', Role::GUEST)->get()->pluck('name')->all();
 
@@ -86,6 +89,8 @@ class CreateUser extends Command
         $u->password = Hash::make( $this->formatArgument($arguments['password'], 'password=', '') );
 
         $u->save();
+
+        
         // we got a new user let's go to map roles
     
         
@@ -94,10 +99,11 @@ class CreateUser extends Command
                 $asignable_role = trim(strtolower($r));
                 if(in_array( $asignable_role,  $allowed_roles)) {
                     $u->assignRole($asignable_role);
+                    $u->createToken($configRest['token_name'], $tokenizable_roles[$asignable_role]);
                 }
             }
 
-        // $roles_writtent_by_user = $this->formatArgument($arguments['roles'])
+        // generate a token for api 
 
         
 
