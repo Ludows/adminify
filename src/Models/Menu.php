@@ -7,6 +7,7 @@ use Spatie\Searchable\SearchResult;
 use Spatie\Feed\FeedItem;
 
 use Ludows\Adminify\Models\ClassicModel;
+use Spatie\Menu\Laravel\Link;
 
 class Menu extends ClassicModel
 {
