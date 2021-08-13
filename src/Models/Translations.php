@@ -32,7 +32,7 @@ class Translations extends ClassicModel
 
     public function getLinks($menuBuilder, $arrayDatas) {
         if($arrayDatas['user']->hasPermissionTo('create_translations')) {
-            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/users?lang='. $arrayDatas['lang'] : '/admin/users', '<i class="ni ni-single-copy-04"></i> '.__('admin.users.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/traductions?lang='. $arrayDatas['lang'] : '/admin/traductions', '<i class="ni ni-single-copy-04"></i> '.__('admin.traductions.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
         }
     }
 
