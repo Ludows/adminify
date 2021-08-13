@@ -7,100 +7,12 @@ use App\Models\Menu;
 use App\Models\Media;
 use App\Models\MenuItem; // Don't forget to update the model's namespace
 
-class MenuRepository
+use  Ludows\Adminify\Repositories\BaseRepository;
+
+class MenuRepository extends BaseRepository
 {
-    use Repository;
-
-    /**
-     * The model being queried.
-     *
-     * @var Model
-     */
-    protected $model;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        // Don't forget to update the model's name
-        $this->model = app(Menu::class);
-    }
-    public function create($form, $request) {
-
-        $request = request();
-        $formValues = $form->getFieldValues();
-        $multilang = $request->useMultilang;
-
-        if($multilang) {
-            $lang = $request->lang;
-            $menu = new Menu();
-            $multilangsFields = $menu->getMultilangTranslatableSwitch();
-            $fields = $menu->getFieldsExceptTranslatables();
-            foreach ($multilangsFields as $multilangsField) {
-                # code...
-                if(isset($formValues[$multilangsField])) {
-                    $menu->setTranslation($multilangsField, $lang, $formValues[$multilangsField]);
-                    unset($formValues[$multilangsField]);
-                }
-
-            }
-            foreach ($fields as $field) {
-                if(isset($formValues[$field])) {
-                    $menu->{$field} = $formValues[$field];
-                }
-            }
-            // call boot method to save slug
-            $menu::booted();
-
-            $menu->save();
-
-        }
-        else {
-            // create entity
-            $menu = Menu::create($formValues);
-        }
-        return $menu;
-    }
-    protected function createEntity($entity, $formValues, $requiredBoot = false) {
-        $request = request();
-        $config = config('site-settings');
-        $multilang = $request->useMultilang;
-
-        if($multilang) {
-            $lang = $request->lang;
-            $multilangsFields = $entity->getMultilangTranslatableSwitch();
-            $fields = $entity->getFieldsExceptTranslatables();
-            // dd($fields);
-
-            foreach ($multilangsFields as $multilangsField) {
-                # code...
-                if(isset($formValues[$multilangsField])) {
-                    $entity->setTranslation($multilangsField, $lang, $formValues[$multilangsField]);
-                    unset($formValues[$multilangsField]);
-                }
-
-            }
-            foreach ($fields as $field) {
-                if(isset($formValues[$field]) && $field != "categories_id") {
-                    $entity->{$field} = $formValues[$field];
-                }
-            }
-
-            if($requiredBoot) {
-                $entity::booted();
-            }
-
-
-            $entity->save();
-
-
-        }
-        else {
-            $entity->create($formValues);
-        }
-
-        return $entity;
+    protected function createEntity($entity, $formValues) {
+        return $this->getProcessDb($formValues, $this->model ?? $entity, ['model:creating', 'model:created'], 'create');
     }
     protected function Walker($scope, $exist = false, $model, $parent_id = 0, $isChild = false) {
         $request = request();
@@ -118,14 +30,6 @@ class MenuRepository
 
             $class_model_str = $config['menu-builder']['models'][$menuitem['type']];
             $class_model_str = get_site_key($class_model_str);
-
-
-
-            // if(isset($menuitem['isnew']) && $menuitem['delete'] == '1') {
-            //     //nous savons ici que c'est un item à delete en base
-            //     $menuItem->find($menuitem['menu-id'])->delete();
-            // }
-            // else {
 
                 $check_model_item = null;
 
@@ -242,27 +146,28 @@ class MenuRepository
                     $menuItem->menu()->attach($menuItem->id, ['menu_id' => $model->id]);
                 }
 
-
-            // }
         }
     }
+    public function create($mixed) {
+        return $this->getProcessDb($mixed, $this->model ?? null, ['menu:creating', 'menu:created'], 'create');
+    }
     public function update($menuthree = [], $model) {
-
-
+        
+        $this->hookManager->run('updating:menu', $this->model ?? $model);
         $existingItems = count($model->items->all()) > 0 ? true : false;
-
-        // dd($menuthree);
 
         if($existingItems) {
             $model->items()->detach();
         }
 
         $this->Walker($menuthree, $existingItems , $model);
-
+        
+        $this->hookManager->run('updated:menu', $this->model ?? $model);
         return $model;
 
     }
     public function delete($model) {
+        $this->hookManager->run('deleting:menu', $this->model ?? $model);
         $items = $model->items->all();
         if(count($items) > 0) {
 
@@ -277,5 +182,7 @@ class MenuRepository
 
         }
         $model->delete();
+        $this->hookManager->run('deleted:menu', $this->model ?? $model);
+        return $model;
     }
 }

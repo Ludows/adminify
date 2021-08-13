@@ -49,7 +49,7 @@ class BaseRepository
 
         return $strFormat;
     }
-    private function getProcessDb($mixed, $modelPassed = null, $hooks = [], $type = null) {
+    protected function getProcessDb($mixed, $modelPassed = null, $hooks = [], $type = null) {
         $request = request();
         
         $multilang = $request->useMultilang;
