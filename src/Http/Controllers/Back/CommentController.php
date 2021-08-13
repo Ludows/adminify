@@ -14,6 +14,7 @@ use App\Repositories\CommentRepository;
 use App\Http\Requests\CreateCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
 
+use App\Forms\CreateComment;
 use App\Forms\UpdateComment;
 
 use Ludows\Adminify\Traits\TableManagerable;
