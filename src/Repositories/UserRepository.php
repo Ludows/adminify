@@ -42,11 +42,6 @@ class UserRepository extends BaseRepository
             $model->syncRoles($formValues['roles']);
         }
     }
-    public function delete($model) {
-        $this->hookManager->run('model:deleting', $model);
-        $model->delete();
-        $this->hookManager->run('model:deleted', $model);
-    }
     public function saveProfile($values) {
 
         $userId = $values['user_id'] ?? user()->id;

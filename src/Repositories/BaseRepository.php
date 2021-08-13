@@ -91,7 +91,7 @@ class BaseRepository
             
         }
 
-        $this->hookManager->run('model:'.$hooks[0], $model);
+        $this->hookManager->run($hooks[0], $model);
 
         if(count($this->relations_columns) > 0) {
             foreach ($this->relations_columns as $relationable) {
@@ -118,7 +118,7 @@ class BaseRepository
 
         $model->save();
 
-        $this->hookManager->run('model:'.$hooks[1], $model);
+        $this->hookManager->run($hooks[1], $model);
 
         return $model;
     }
@@ -147,10 +147,15 @@ class BaseRepository
     }
 
     public function create($mixed) {
-        return $this->getProcessDb($mixed, $this->model ?? null, ['creating', 'created'], 'create');
+        return $this->getProcessDb($mixed, $this->model ?? null, ['model:creating', 'model:created'], 'create');
     }
     public function update($mixed, $model) {
-        return $this->getProcessDb($mixed, $this->model ?? $model, ['updating', 'updated'], 'update');
+        return $this->getProcessDb($mixed, $this->model ?? $model, ['model:updating', 'model:updated'], 'update');
     }
-    public function delete($model) {}
+    public function delete($model) {
+        $this->hookManager->run('model:deleting', $model);
+        $model->delete();
+        $this->hookManager->run('model:deleted', $model);
+        return $model;
+    }
 }

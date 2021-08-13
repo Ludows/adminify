@@ -49,6 +49,11 @@ class PostRepository extends BaseRepository
         if(count($insertedTags) > 0) {
             $model->deleteTags();
         }
+        
+        $model->deleteUrl([
+            'from_model_id' => $model->id
+        ]);
+
         $model->delete();
         $this->hookManager->run('model:deleted', $model);
     }
