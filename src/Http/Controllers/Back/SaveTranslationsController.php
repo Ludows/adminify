@@ -32,6 +32,7 @@ class SaveTranslationsController extends Controller
                 $type = $request->get('type');
                 $originLang = $request->get('from');
                 $actualLang = $request->get('lang');
+                $return_view = [];
 
                 if($type == null && $originLang == null) {
                     abort(403);
@@ -43,22 +44,28 @@ class SaveTranslationsController extends Controller
                 $m = get_site_key($config['savetraductions']['models'][$type]);
                 $model = new $m();
 
+                $theSavableForm = $model->getSavableForm();
+                
+                $clsForm = isset($theSavableForm) ? $this->form($theSavableForm) : null;
 
-                $clsForm = $this->form($model->getSavableForm());
+                if($clsForm) {
+                    $form = $formBuilder->create(SaveMissingTraductions::class, [
+                        'method' => 'PUT',
+                        'url' => route('savetraductions.update', ['savetraduction' => $id, 'lang' => $actualLang]),
+                    ], [
+                        'id' => $id,
+                        'type' => $type,
+                        'clsForm' => $clsForm,
+                        'fromLang' => $originLang,
+                        'actualLang' => $actualLang,
+                        'model' => $model->find($id)
+                    ]);
+                    $return_view['form'] = $form;
+                }
 
-                $form = $formBuilder->create(SaveMissingTraductions::class, [
-                    'method' => 'PUT',
-                    'url' => route('savetraductions.update', ['savetraduction' => $id, 'lang' => $actualLang]),
-                ], [
-                    'id' => $id,
-                    'type' => $type,
-                    'clsForm' => $clsForm,
-                    'fromLang' => $originLang,
-                    'actualLang' => $actualLang,
-                    'model' => $model->find($id)
-                ]);
+                
 
-                return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
+                return view("adminify::layouts.admin.pages.edit", $return_view);
             }
 
         public function update(Request $request)
@@ -71,6 +78,15 @@ class SaveTranslationsController extends Controller
             $m = get_site_key($config['savetraductions']['models'][$all['type']]);
             $model = new $m();
             $model = $model->find($all['id']);
+
+            $excludes = $this->translationRepository->getExcludes();
+
+            foreach ($all as $key => $value) {
+                # code...
+                if(in_array($key, $excludes)) {
+                    unset($all[$key]);
+                }
+            }
 
             $model = $this->translationRepository->update($all, $model);
             // $this->translationRepository->update($form, $request, $traduction);

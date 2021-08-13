@@ -2,79 +2,19 @@
 
 namespace Ludows\Adminify\Repositories;
 
-use MrAtiebatie\Repository;
-
-class SaveTranslationRepository
+use  Ludows\Adminify\Repositories\BaseRepository;
+class SaveTranslationRepository extends BaseRepository
 {
-    use Repository;
+    public $excludes = [
+        '_method',
+        '_token',
+        'from',
+        'current_lang',
+        'type',
+        'id'
+    ];
 
-    /**
-     * The model being queried.
-     *
-     * @var Model
-     */
-    protected $model;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {}
-    public function update($mixed, $model) {
-
-        $request = request();
-        if(is_array($mixed)) {
-            $formValues = $mixed;
-        }
-        else {
-            $formValues = $mixed->getFieldValues();
-        }
-        $multilang = $request->useMultilang;
-
-        $excludes = [
-            '_method',
-            '_token',
-            'from',
-            'current_lang',
-            'type',
-            'id'
-        ];
-
-        foreach ($formValues as $key => $value) {
-            # code...
-            if(in_array($key, $excludes)) {
-                unset($formValues[$key]);
-            }
-        }
-
-        if($multilang) {
-            $lang = $request->lang;
-            $multilangsFields = $model->getMultilangTranslatableSwitch();
-            $fields = $model->getFieldsExceptTranslatables();
-            // dd($fields);
-
-            foreach ($multilangsFields as $multilangsField) {
-                # code...
-                if(isset($formValues[$multilangsField])) {
-                    $model->setTranslation($multilangsField, $lang, $formValues[$multilangsField]);
-                    unset($formValues[$multilangsField]);
-                }
-
-            }
-            foreach ($fields as $field) {
-                if(isset($formValues[$field])) {
-                    $model->{$field} = $formValues[$field];
-                }
-            }
-
-        }
-
-        //dd($model, $lang);
-
-        $model::booted();
-        $model->save();
-
-        return $model;
-
+    public function getExcludes() {
+        return $this->excludes;
     }
 }
