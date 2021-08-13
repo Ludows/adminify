@@ -9,6 +9,7 @@ use Ludows\Adminify\Traits\Authorable;
 use Ludows\Adminify\Models\ClassicModel;
 use Spatie\Feed\FeedItem;
 use Spatie\Searchable\SearchResult;
+use Spatie\Menu\Laravel\Link;
 
 class Media extends ClassicModel
 {
@@ -43,5 +44,12 @@ class Media extends ClassicModel
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function getLinks($menuBuilder, $arrayDatas) {
+        if($arrayDatas['user']->hasPermissionTo('create_posts')) {
+            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/medias?lang='. $arrayDatas['lang'] : '/admin/medias', '<i class="ni ni-image"></i> '.__('admin.medias.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+            // $menuBuilder->add( Link::to( $multilang ? '/admin/tags?lang='.$lang : '/admin/tags', '<i class="ni ni-single-copy-04"></i> '.__('admin.tags.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+        }
     }
 }

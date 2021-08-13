@@ -7,6 +7,8 @@ use Spatie\Searchable\SearchResult;
 use Spatie\Feed\FeedItem;
 
 use Ludows\Adminify\Models\ClassicModel;
+use Spatie\Menu\Laravel\Link;
+
 class Translations extends ClassicModel
 {
     public $MultilangTranslatableSwitch = ['text'];
@@ -26,6 +28,12 @@ class Translations extends ClassicModel
 
     public function getTableListing() {
         return \Ludows\Adminify\Tables\TranslationTable::class;
+    }
+
+    public function getLinks($menuBuilder, $arrayDatas) {
+        if($arrayDatas['user']->hasPermissionTo('create_translations')) {
+            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/users?lang='. $arrayDatas['lang'] : '/admin/users', '<i class="ni ni-single-copy-04"></i> '.__('admin.users.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+        }
     }
 
     public $excludes_savables_fields = [];

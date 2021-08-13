@@ -5,6 +5,8 @@ namespace Ludows\Adminify\Models;
 use Spatie\Searchable\SearchResult;
 
 use Ludows\Adminify\Models\ContentTypeModel;
+use Spatie\Menu\Laravel\Link;
+
 class Page extends ContentTypeModel
 {
     public $MultilangTranslatableSwitch = ['title', 'slug', 'content'];
@@ -18,6 +20,13 @@ class Page extends ContentTypeModel
            $this->title,
            $url
         );
+    }
+
+    public function getLinks($menuBuilder, $arrayDatas) {
+        if($arrayDatas['user']->hasPermissionTo('create_pages')) {
+            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/pages?lang='. $arrayDatas['lang'] : '/admin/pages', '<i class="ni ni-single-copy-04"></i> '.__('admin.pages.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+            // $menuBuilder->add( Link::to( $multilang ? '/admin/tags?lang='.$lang : '/admin/tags', '<i class="ni ni-single-copy-04"></i> '.__('admin.tags.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+        }
     }
 
     public function getTableListing() {

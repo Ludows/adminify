@@ -32,6 +32,12 @@ class Comment extends ClassicModel
         return $this->belongsTo(Post::class);
     }
 
+    public function getLinks($menuBuilder, $arrayDatas) {
+        if($arrayDatas['user']->hasPermissionTo('manage_comments')) {
+            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/comments?lang='. $arrayDatas['lang'] : '/admin/comments', '<i class="ni ni-single-copy-04"></i> '.__('admin.comments.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+        }
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

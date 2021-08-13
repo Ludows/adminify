@@ -10,6 +10,8 @@ use Spatie\Feed\FeedItem;
 use App\Models\UserPreference;
 
 use Ludows\Adminify\Models\ClassicUser;
+use Spatie\Menu\Laravel\Link;
+
 
 class User extends ClassicUser
 {    
@@ -40,6 +42,12 @@ class User extends ClassicUser
            $this->name,
            $url
         );
+    }
+
+    public function getLinks($menuBuilder, $arrayDatas) {
+        if($arrayDatas['user']->hasPermissionTo('create_users')) {
+            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/users?lang='. $arrayDatas['lang'] : '/admin/users', '<i class="ni ni-single-copy-04"></i> '.__('admin.users.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+        }
     }
 
     public function getPreference($type) {

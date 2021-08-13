@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 
 // use Ludows\Adminify\Traits\OnBootedModel;
+use Ludows\Adminify\Traits\AdminableMenu;
 use Spatie\Translatable\HasTranslations;
 use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
 use Ludows\Adminify\Traits\Helpers;
@@ -27,6 +28,7 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     // use OnBootedModel;
     // use Urlable;
     use HasTranslations;
+    use AdminableMenu;
     use MultilangTranslatableSwitch;
     // use Sitemapable;
     use Helpers;

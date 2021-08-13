@@ -10,6 +10,7 @@ use Spatie\Feed\FeedItem;
 use Ludows\Adminify\Traits\Taggable;
 
 use Ludows\Adminify\Models\ContentTypeModel;
+use Spatie\Menu\Laravel\Link;
 
 class Post extends ContentTypeModel
 {
@@ -74,6 +75,13 @@ class Post extends ContentTypeModel
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function getLinks($menuBuilder, $arrayDatas) {
+        if($arrayDatas['user']->hasPermissionTo('create_posts')) {
+            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/categories?lang='. $arrayDatas['lang'] : '/admin/categories', '<i class="ni ni-single-copy-04"></i> '.__('admin.categories.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+            // $menuBuilder->add( Link::to( $multilang ? '/admin/tags?lang='.$lang : '/admin/tags', '<i class="ni ni-single-copy-04"></i> '.__('admin.tags.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+        }
     }
 
     public function getcommentsThreeAttribute() {

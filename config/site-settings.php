@@ -24,6 +24,22 @@ return [
         'templates' => \App\Models\Templates::class
     ],
 
+    'adminMenu' => [
+        'register.pages',
+        'register.posts',
+        'register.categories',
+        'register.tags',
+        'register.medias',
+        'register.menus',
+        'register.comments',
+        'register.settings',
+        'register.traductions',
+        'register.mailables',
+        'register.templates',
+        // 'register.statistics', @todo later        
+        'register.users'
+    ],
+
     'hooks' => [
         'model:creating' => [
             \App\Hooks\OnCreatingHook::class

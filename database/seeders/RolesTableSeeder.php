@@ -93,6 +93,12 @@ class RolesTableSeeder extends Seeder
                     ],
                     24 => [
                         'name' => 'manage_mails'
+                    ],
+                    25 => [
+                        'name' => 'manage_templates'
+                    ],
+                    26 => [
+                        'name' => 'create_tags'
                     ]
                 ]
             ],
@@ -155,6 +161,12 @@ class RolesTableSeeder extends Seeder
                     ],
                     18 => [
                         'name' => 'create_translations'
+                    ],
+                    19 => [
+                        'name' => 'manage_templates'
+                    ],
+                    20 => [
+                        'name' => 'create_tags'
                     ]
                 ]
             ],
