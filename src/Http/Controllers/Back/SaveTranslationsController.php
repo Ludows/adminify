@@ -88,7 +88,7 @@ class SaveTranslationsController extends Controller
                 }
             }
 
-            $model = $this->translationRepository->update($all, $model);
+            $model = $this->translationRepository->addModel($model)->update($all, $model);
             // $this->translationRepository->update($form, $request, $traduction);
 
             if($request->ajax()) {
