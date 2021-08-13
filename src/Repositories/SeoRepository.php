@@ -7,25 +7,9 @@ use App\Models\Seo; // Don't forget to update the model's namespace
 
 use Illuminate\Support\Arr;
 
-class SeoRepository
+use  Ludows\Adminify\Repositories\BaseRepository;
+class SeoRepository extends BaseRepository
 {
-    use Repository;
-
-    /**
-     * The model being queried.
-     *
-     * @var Model
-     */
-    protected $model;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        // Don't forget to update the model's name
-        $this->model = app(Seo::class);
-    }
     public function findOrCreate($model, $form) {
         $request = request();
         $formValues = $form->getFieldValues(false);
