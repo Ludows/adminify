@@ -15,6 +15,7 @@ class CreateComment extends Form
         $c = $this->getComments();
         $p = $this->getPosts();
         $u = user();
+        $r = $u->hasRole(['editor', 'administrator']);
         
         $this->add('user_id', 'hidden', [
             'label_show' => false
@@ -48,7 +49,8 @@ class CreateComment extends Form
         ]);
         
         $this->add('is_moderated', Field::CHECKBOX, [
-            'value' => $u->hasRole(['editor', 'administrator']),
+            'value' => $r,
+            'checked' => $r,
             'label' => __('admin.form.is_moderated'),
             'wrapper' => ['class' => 'custom-control custom-control-alternative custom-checkbox'],
             'attr' => ['class' => 'custom-control-input'],
