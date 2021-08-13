@@ -6,7 +6,7 @@ use Ludows\Adminify\Models\ClassicModel;
 
 use Spatie\Searchable\SearchResult;
 use Spatie\Feed\FeedItem;
-
+use Spatie\Menu\Laravel\Link;
 class Comment extends ClassicModel
 {
     protected $table = 'comments';
