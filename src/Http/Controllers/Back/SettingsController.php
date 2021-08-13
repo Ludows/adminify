@@ -40,7 +40,7 @@ class SettingsController extends Controller
         {
             //
             $form = $this->form(CreateSettings::class);
-            $settings = $this->settingsRepository->CreateOrUpdate($form, $request);
+            $settings = $this->settingsRepository->CreateOrUpdate($form);
             if($request->ajax()) {
                 return response()->json([
                     'media' => $settings,

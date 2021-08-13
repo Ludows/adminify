@@ -2,99 +2,29 @@
 
 namespace Ludows\Adminify\Repositories;
 
-use MrAtiebatie\Repository;
 use App\Models\Settings; // Don't forget to update the model's namespace
+use Ludows\Adminify\Repositories\BaseRepository;
 
-class SettingsRepository
+class SettingsRepository extends BaseRepository
 {
-    use Repository;
+    public function CreateOrUpdate($form) {
 
-    /**
-     * The model being queried.
-     *
-     * @var Model
-     */
-    protected $model;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        // Don't forget to update the model's name
-        $this->model = app(Settings::class);
-    }
-    public function CreateOrUpdate($form, $request) {
-        $request = request();
         $formValues = $form->getFieldValues(true);
-        $multilang = $request->useMultilang;
-        if($multilang) {
-            $lang = $request->lang;
+        $a = [];
+        
+        foreach ($formValues as $key => $value) {
+            $check = Settings::where('type', $key)->first();
 
-            foreach ($formValues as $key => $value) {
-                # code...
-                $check = Settings::where('type', $key)->first();
-                $model = null;
-
-                if($check != null) {
-                    $model = $check;
-                }
-                else {
-                    $model = new Settings();
-                }
-
-                $model->type = $key;
-                $model->setTranslation('data', $lang, $value);
-                if($check != null) {
-                    // if($model->type == 'homepage') {
-                    //     dd($model);
-                    // }
-                    $model->fill([
-                        'type' => $model->type,
-                        'data' => $model->data
-                    ]);
-
-                    $model->save();
-                }
-                else {
-                    $model->save();
-                }
-
+            if($check == null) {
+               $m = $this->getProcessDb($form, $this->model ?? new Settings(), ['setting:creating', 'setting:created'], 'create');
             }
-
-
-        }
-        else {
-
-            foreach ($formValues as $key => $value) {
-                # code...
-                $check = Settings::where('type', $key)->first();
-                $model = null;
-
-                if($check != null) {
-                    $model = $check;
-                }
-                else {
-                    $model = new Settings();
-                }
-
-                $model->type = $key;
-                $model->data = $value;
-
-                if($check != null) {
-                    $model->fresh();
-                    $model->fill([
-                        'type' => $model->type,
-                        'data' => $model->data
-                    ]);
-                }
-                else {
-                    $model->save();
-                }
+            else {
+                $m = $this->getProcessDb($form, $this->model ?? $check, ['setting:updating', 'setting:updated'], 'update');
             }
-
+            $a[] = $m;
         }
+        
 
-        return $model;
+        return $a;
     }
 }
