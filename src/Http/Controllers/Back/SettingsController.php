@@ -19,6 +19,10 @@ class SettingsController extends Controller
     public function __construct(SettingsRepository $settingsRepository) {
 
         $this->settingsRepository = $settingsRepository;
+
+        $this->middleware(['permission:read|create_settings'], ['only' => ['show','create']]);
+        $this->middleware(['permission:read|edit_settings'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:read|delete_settings'], ['only' => ['destroy']]);
     }
     public function index(Settings $settings, FormBuilder $formBuilder, Request $request)
         {

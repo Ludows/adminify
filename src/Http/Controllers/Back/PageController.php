@@ -40,6 +40,10 @@ class PageController extends Controller
         {
             $this->pageRepository = $pageRepository;
             $this->seoRepository = $seoRepository;
+
+            $this->middleware(['permission:read|create_pages'], ['only' => ['show','create']]);
+            $this->middleware(['permission:read|edit_pages'], ['only' => ['edit', 'update']]);
+            $this->middleware(['permission:read|delete_pages'], ['only' => ['destroy']]);
         }
 
         public function index(FormBuilder $formBuilder, Request $request)

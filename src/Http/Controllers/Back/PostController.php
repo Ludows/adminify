@@ -36,6 +36,10 @@ class PostController extends Controller
 
         $this->postRepository = $postRepository;
         $this->seoRepository = $seoRepository;
+
+        $this->middleware(['permission:read|create_posts'], ['only' => ['show','create']]);
+        $this->middleware(['permission:read|edit_posts'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:read|delete_posts'], ['only' => ['destroy']]);
     }
     /**
         * Display a listing of the resource.

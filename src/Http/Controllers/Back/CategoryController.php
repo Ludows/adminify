@@ -29,6 +29,9 @@ class CategoryController extends Controller
     public function __construct(CategoryRepository $categoryRepository) {
 
         $this->categoryRepository = $categoryRepository;
+        $this->middleware(['permission:read|create_categories'], ['only' => ['show','create']]);
+        $this->middleware(['permission:read|edit_categories'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:read|delete_categories'], ['only' => ['destroy']]);
     }
     /**
         * Display a listing of the resource.

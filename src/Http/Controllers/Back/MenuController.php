@@ -28,6 +28,10 @@ class MenuController extends Controller
 
     public function __construct(MenuRepository $menuRepository) {
         $this->menuRepository = $menuRepository;
+
+        $this->middleware(['permission:read|create_menus'], ['only' => ['show','create']]);
+        $this->middleware(['permission:read|edit_menus'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:read|delete_menus'], ['only' => ['destroy']]);
     }
     /**
         * Display a listing of the resource.

@@ -29,6 +29,10 @@ class TranslationsController extends Controller
     public function __construct(TranslationRepository $translationRepository) {
 
         $this->translationRepository = $translationRepository;
+
+        $this->middleware(['permission:read|create_translations'], ['only' => ['show','create']]);
+        $this->middleware(['permission:read|edit_translations'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:read|delete_translations'], ['only' => ['destroy']]);
     }
     /**
         * Display a listing of the resource.

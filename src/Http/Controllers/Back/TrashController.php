@@ -8,6 +8,9 @@ use Ludows\Adminify\Http\Controllers\Controller;
 use App\Models\Statuses;
 class TrashController extends Controller
 {
+    public function __construct() {
+        $this->middleware(['permission:read|set_to_trash'], ['only' => ['index']]);
+    }
     public function index(Request $request) {
 
 

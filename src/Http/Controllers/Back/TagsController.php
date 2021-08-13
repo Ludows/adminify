@@ -27,6 +27,9 @@ class TagsController extends Controller
     public function __construct(TagRepository $tagRepository) {
 
         $this->tagRepository = $tagRepository;
+        $this->middleware(['permission:read|create_tags'], ['only' => ['show','create']]);
+        $this->middleware(['permission:read|edit_tags'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:read|delete_tags'], ['only' => ['destroy']]);
     }
     /**
         * Display a listing of the resource.

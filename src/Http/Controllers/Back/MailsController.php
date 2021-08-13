@@ -32,6 +32,10 @@ class MailsController extends Controller
     public function __construct(MailsRepository $mailRepository) {
 
         $this->mailRepository = $mailRepository;
+        $this->middleware(['permission:read|create_mails'], ['only' => ['show','create']]);
+        $this->middleware(['permission:read|edit_mails'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:read|send_mails'], ['only' => ['send']]);
+        $this->middleware(['permission:read|delete_mails'], ['only' => ['destroy']]);
     }
     /**
         * Display a listing of the resource.

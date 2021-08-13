@@ -29,6 +29,10 @@ class TemplatesController extends Controller
     public function __construct(TemplatesRepository $templatesRepository) {
 
         $this->templatesRepository = $templatesRepository;
+        
+        $this->middleware(['permission:read|create_templates'], ['only' => ['show','create', 'setContent']]);
+        $this->middleware(['permission:read|edit_templates'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:read|delete_templates'], ['only' => ['destroy']]);
     }
     /**
         * Display a listing of the resource.

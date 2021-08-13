@@ -18,6 +18,7 @@ class HomeController extends Controller
     {
         $this->interfacable = $interfacable;
         $this->middleware('auth');
+        $this->middleware(['permission:read'], ['only' => ['show']]);
     }
 
     /**

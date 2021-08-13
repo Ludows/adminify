@@ -29,6 +29,10 @@ class MediaController extends Controller
         public function __construct(MediaRepository $mediaRepository) {
 
             $this->mediaRepository = $mediaRepository;
+
+            $this->middleware(['permission:read|create_medias'], ['only' => ['show','create']]);
+            $this->middleware(['permission:read|edit_medias'], ['only' => ['edit', 'update']]);
+            $this->middleware(['permission:read|delete_medias'], ['only' => ['destroy']]);
         }
 
     /**

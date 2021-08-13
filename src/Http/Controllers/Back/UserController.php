@@ -30,6 +30,10 @@ class UserController extends Controller
     public function __construct(UserRepository $userRepository) {
 
         $this->userRepository = $userRepository;
+        
+        $this->middleware(['permission:read|create_users'], ['only' => ['show','create']]);
+        $this->middleware(['permission:read|edit_users'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:read|delete_users'], ['only' => ['destroy']]);
     }
     /**
      * Display a listing of the users

@@ -36,6 +36,10 @@ class CommentController extends Controller
         public function __construct(CommentRepository $commentRepository)
         {
             $this->commentRepository = $commentRepository;
+            
+            $this->middleware(['permission:read|create_comments'], ['only' => ['show','create']]);
+            $this->middleware(['permission:read|edit_comments'], ['only' => ['edit', 'update']]);
+            $this->middleware(['permission:read|delete_comments'], ['only' => ['destroy']]);
         }
         public function index(Request $request, FormBuilder $formBuilder)
         {
