@@ -46,6 +46,10 @@ trait HasApiTokens
     public function getCurrentToken() {
         return $this->tokens()->first();
     }
+    public function getCurrentAbilities() {
+        $abilities = $this->getCurrentToken()->abilities;
+        return explode(',', $abilities); 
+    }
 
     public function delete() {
 
