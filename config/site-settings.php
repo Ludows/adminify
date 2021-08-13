@@ -4,6 +4,8 @@ return [
     'multilang' => env('ENABLE_MULTILANG', true), // this use Translatable. Please to verify your migration for correct working..
     'headless' => false, // turn off front routing if you want to separate your front or your back
 
+    'default_role_on_registration' => 'subscriber',
+
     'register' => [
         'categories' => \App\Models\Category::class,
         'comments' => \App\Models\Comment::class,
