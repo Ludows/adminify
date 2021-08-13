@@ -40,7 +40,7 @@ class GenerateAdminMenu
 
         foreach ($menu_config as $menu_str) {
             # code...
-            $menu_class = app( $menu_str );
+            $menu_class = app( get_site_key($menu_str) );
 
             if($menu_class->showInMenu) {
                 $r = call_user_func_array( array($menu_class, 'getLinks'), array($menuAdmin, $arrayDatas) );
