@@ -5,91 +5,11 @@ namespace Ludows\Adminify\Repositories;
 use MrAtiebatie\Repository;
 use App\Models\Comment; // Don't forget to update the model's namespace
 
-class CommentRepository
+use  Ludows\Adminify\Repositories\BaseRepository;
+class CommentRepository extends BaseRepository
 {
-    use Repository;
-
-    /**
-     * The model being queried.
-     *
-     * @var Model
-     */
-    protected $model;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        // Don't forget to update the model's name
-        $this->model = app(Comment::class);
-    }
-    public function create($values) {
-        $request = request();
-        $multilang = $request->useMultilang;
-        $lang = lang();
-        $m = new Comment();
-
-        if($multilang) {
-            $multilangsFields = $m->getMultilangTranslatableSwitch();
-            $fields = $m->getFieldsExceptTranslatables();
-            foreach ($multilangsFields as $multilangsField) {
-                # code...
-                if(isset($values[$multilangsField])) {
-                    $m->setTranslation($multilangsField, $lang, $values[$multilangsField]);
-                    unset($values[$multilangsField]);
-                }
-
-            }
-            foreach ($fields as $field) {
-                if(isset($values[$field])) {
-                    $m->{$field} = $values[$field];
-                }
-            }
-
-            $m->save();
-        }
-        else {
-            $m->create($values);
-        }
-        return $m;
-    }
-    public function update($values, $model) {
-
-        $request = request();
-        $multilang = $request->useMultilang;
-        $lang = lang();
-        $m = $model;
-
-        // $values = array_merge($values, [
-        //     'lang' => lang()
-        // ]);
-
-        if($multilang) {
-            $multilangsFields = $m->getMultilangTranslatableSwitch();
-            $fields = $m->getFieldsExceptTranslatables();
-            foreach ($multilangsFields as $multilangsField) {
-                # code...
-                if(isset($values[$multilangsField])) {
-                    $m->setTranslation($multilangsField, $lang, $values[$multilangsField]);
-                    unset($values[$multilangsField]);
-                }
-            }
-            foreach ($fields as $field) {
-                if(isset($values[$field])) {
-                    $m->{$field} = $values[$field];
-                }
-            }
-        }
-        else {
-            $m->fill($values);
-        }
-
-        $m->save();
-
-        return $m;
-    }
     public function delete($m) {
+        $this->hookManager->run('model:deleting', $m);
         $hasSub = $m->HasSublevel;
         if($hasSub) {
             $ms = new Comment();
@@ -104,5 +24,7 @@ class CommentRepository
             }
         }
         $m->delete();
+        $this->hookManager->run('model:deleted', $m);
+        return $m;
     }
 }

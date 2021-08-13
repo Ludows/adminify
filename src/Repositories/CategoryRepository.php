@@ -21,6 +21,7 @@ class CategoryRepository extends BaseRepository
             // restore to default
             $childCat->fill(['parent_id' => 0]);
             $childCat->save();
+            $this->hookManager->run('model:updated', $childCat);
         }
 
         $model->delete();
