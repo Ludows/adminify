@@ -148,10 +148,10 @@ class MenuRepository extends BaseRepository
 
         }
     }
-    public function create(mixed $mixed) {
+    public function create($mixed) {
         return $this->getProcessDb($mixed, $this->model ?? null, ['menu:creating', 'menu:created'], 'create');
     }
-    public function update(mixed $menuthree = [], mixed $model) {
+    public function update($menuthree, $model) {
         
         $this->hookManager->run('updating:menu', $this->model ?? $model);
         $existingItems = count($model->items->all()) > 0 ? true : false;
@@ -160,13 +160,13 @@ class MenuRepository extends BaseRepository
             $model->items()->detach();
         }
 
-        $this->Walker($menuthree, $existingItems , $model);
+        $this->Walker($menuthree, $existingItems , $model, 0, false);
         
         $this->hookManager->run('updated:menu', $this->model ?? $model);
         return $model;
 
     }
-    public function delete(mixed $model) {
+    public function delete($model) {
         $this->hookManager->run('deleting:menu', $this->model ?? $model);
         $items = $model->items->all();
         if(count($items) > 0) {
