@@ -14,7 +14,7 @@ class MenuRepository extends BaseRepository
     protected function createEntity($entity, $formValues) {
         return $this->getProcessDb($formValues, $this->model ?? $entity, ['model:creating', 'model:created'], 'create');
     }
-    protected function Walker(mixed $scope, $exist = false, mixed $model, $parent_id = 0, $isChild = false) {
+    protected function Walker($scope, $exist, $model, $parent_id, $isChild) {
         $request = request();
         $config = config('site-settings');
         $multilang = $request->useMultilang;
