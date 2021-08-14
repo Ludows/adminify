@@ -14,7 +14,7 @@ class MenuRepository extends BaseRepository
     protected function createEntity($entity, $formValues) {
         return $this->getProcessDb($formValues, $this->model ?? $entity, ['model:creating', 'model:created'], 'create');
     }
-    protected function Walker($scope, $exist = false, $model, $parent_id = 0, $isChild = false) {
+    protected function Walker(mixed $scope, $exist = false, mixed $model, $parent_id = 0, $isChild = false) {
         $request = request();
         $config = config('site-settings');
         $multilang = $request->useMultilang;
@@ -148,10 +148,10 @@ class MenuRepository extends BaseRepository
 
         }
     }
-    public function create($mixed) {
+    public function create(mixed $mixed) {
         return $this->getProcessDb($mixed, $this->model ?? null, ['menu:creating', 'menu:created'], 'create');
     }
-    public function update($menuthree = [], $model) {
+    public function update(mixed $menuthree = [], mixed $model) {
         
         $this->hookManager->run('updating:menu', $this->model ?? $model);
         $existingItems = count($model->items->all()) > 0 ? true : false;
@@ -166,7 +166,7 @@ class MenuRepository extends BaseRepository
         return $model;
 
     }
-    public function delete($model) {
+    public function delete(mixed $model) {
         $this->hookManager->run('deleting:menu', $this->model ?? $model);
         $items = $model->items->all();
         if(count($items) > 0) {

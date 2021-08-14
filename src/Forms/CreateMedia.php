@@ -11,14 +11,14 @@ class CreateMedia extends Form
     public function buildForm()
     {
         // Add fields here...
-        $this->add('description', Field::TEXTAREA, [
+        $this->add('src', 'lfm', [
+            'label_show' => false
+        ])
+        ->add('description', Field::TEXTAREA, [
             'label' => __('admin.form.description'),
         ])
         ->add('alt', Field::TEXT, [
             'label' => __('admin.form.alt'),
-        ])
-        ->add('src', 'lfm', [
-            'label_show' => false
         ])
         ->add('user_id', 'hidden', [
             'value' => user()->id

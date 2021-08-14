@@ -6,5 +6,5 @@ use  Ludows\Adminify\Repositories\BaseRepository;
 
 class MediaRepository extends BaseRepository
 {   
-
+    public function getMimeTypeProcess() {}
 }
