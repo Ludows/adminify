@@ -31,7 +31,7 @@ class HasRenamedImageListener
                 'src' => $newInfo['basename'],
             ];
 
-            $this->MediaRepository->update($a, $request, $m);
+            $this->MediaRepository->addModel($m)->update($a, $m);
         }
 
         // dd($event);

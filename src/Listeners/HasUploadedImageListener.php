@@ -3,6 +3,7 @@ namespace Ludows\Adminify\Listeners;
 
 use Unisharp\Laravelfilemanager\Events\ImageWasUploaded;
 use App\Repositories\MediaRepository;
+use App\Models\Media;
 class HasUploadedImageListener
 {
     /**
@@ -28,7 +29,7 @@ class HasUploadedImageListener
                 'src' => $info['basename'],
             ];
 
-            $this->MediaRepository->create($a, $request);
+            $this->MediaRepository->addModel(new Media())->create($a);
         }
 
         // dd($event);
