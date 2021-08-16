@@ -126,16 +126,14 @@ export default function LFMField(fields) {
         //     GenerateSelection($el_wrapper, selectedItems);
         // }
 
-        $el.on('click', function(e) {
+        $(document).on('click', '.js-selection', function(e) {
             e.preventDefault();
-            modale.modal('show')
-            if(selectedItems.length > 0) {
-                updateStyle(ifr)
-            }
-            // window.filemanager();
-            confirm = ifr.contents().find('#actions a[data-action="use"]');
-            confirm.on('click', function(e) {
-                selectedItems = getSelection(ifr);
+
+
+        });
+
+        $(ifr).on('click', '#actions a[data-action="use"]', function() {
+            selectedItems = getSelection(ifr);
                 GenerateSelection($el_wrapper, selectedItems);
                 console.log(selectedItems);
                 requestMedia(selectedItems, function(err, d) {
@@ -153,7 +151,36 @@ export default function LFMField(fields) {
 
                     modale.modal('hide');
                 })
-            })
+        })
+
+        $el.on('click', function(e) {
+            e.preventDefault();
+            modale.modal('show')
+            if(selectedItems.length > 0) {
+                updateStyle(ifr)
+            }
+            // // window.filemanager();
+            // confirm = ifr.contents().find('#actions a[data-action="use"]');
+            // confirm.on('click', function(e) {
+            //     selectedItems = getSelection(ifr);
+            //     GenerateSelection($el_wrapper, selectedItems);
+            //     console.log(selectedItems);
+            //     requestMedia(selectedItems, function(err, d) {
+            //         if(err != null) {
+            //             console.log('whoops', err);
+            //             return false;
+            //         }
+            //         console.log('d', d);
+            //         if(d.models.length > 0) {
+            //             $hidden.val(d.models[0].id);
+            //         }
+            //         else {
+            //             $hidden.val(0);
+            //         }
+
+            //         modale.modal('hide');
+            //     })
+            // })
 
         })
 
