@@ -41,6 +41,31 @@ export default function LFMField(fields) {
         return $sel
     }
 
+    function requestMedia($selecteds, callback) {
+
+        let o = {};
+
+        $.ajax({
+            method: 'POST',
+            url: Route('finder', { type : 'medias' }),
+            data: o,
+            headers: { 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content') },
+            success: function(data) {
+                console.log(data);
+
+                if(typeof callback == 'function') {
+                    callback(data);
+                }
+            },
+            error: function(err) {
+                console.log('whoops', err);
+                if(typeof callback == 'function') {
+                    callback(err);
+                }
+            }
+        })
+    }
+
     function getSelection(ifr) {
         let items = ifr[0].contentWindow.getSelectedItems();
         let itemsHtml = ifr.contents().find('#content > a');
@@ -114,6 +139,10 @@ export default function LFMField(fields) {
             confirm.on('click', function(e) {
                 selectedItems = getSelection(ifr);
                 GenerateSelection($el_wrapper, selectedItems);
+                console.log(selectedItems);
+                requestMedia(selectedItems, function(d) {
+                    console.log('d', d);
+                })
                 // let json = formatSourcesEntries(selectedItems);
                 // $hidden.val(JSON.stringify(json));
                 // modale.modal('hide')
