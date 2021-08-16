@@ -6,6 +6,10 @@ export default function LFMField(fields) {
 
     let selectedItems = [];
 
+    function param(name) {
+        return (location.search.split(name + '=')[1] || '').split('&')[0];
+    }
+
     function GenerateSelection(el, arraySelection) {
         var sel_wrapper = el.find('.row-selection');
         sel_wrapper.html('');
@@ -112,12 +116,13 @@ export default function LFMField(fields) {
         let ifr = modale.find('iframe');
         let $hidden = $el_wrapper.find('[type="hidden"]');
         let confirm = ifr.contents().find('#actions a[data-action="use"]');
+        let fromMediaEntity = param('fromMediaCreate');
 
         function updateFieldProcess() {
             selectedItems = getSelection(ifr);
             GenerateSelection($el_wrapper, selectedItems);
             console.log(selectedItems);
-            if(selectedItems.length > 0) {
+            if(selectedItems.length > 0 && fromMediaEntity == 0) {
                 requestMedia(selectedItems, function(err, d) {
                     if(err != null) {
                         console.log('whoops', err);
@@ -130,10 +135,12 @@ export default function LFMField(fields) {
                     else {
                         $hidden.val(0);
                     }
-    
-                    modale.modal('hide');
                 })
             }
+            else {
+
+            }
+            modale.modal('hide');
         }
 
         $(document).on('click', '.js-clear-selection', function(e) {
