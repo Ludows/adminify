@@ -51,16 +51,14 @@ export default function LFMField(fields) {
             data: o,
             headers: { 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content') },
             success: function(data) {
-                console.log(data);
-
                 if(typeof callback == 'function') {
-                    callback(data);
+                    callback(null, data);
                 }
             },
             error: function(err) {
                 console.log('whoops', err);
                 if(typeof callback == 'function') {
-                    callback(err);
+                    callback(err, null);
                 }
             }
         })
@@ -140,12 +138,21 @@ export default function LFMField(fields) {
                 selectedItems = getSelection(ifr);
                 GenerateSelection($el_wrapper, selectedItems);
                 console.log(selectedItems);
-                requestMedia(selectedItems, function(d) {
+                requestMedia(selectedItems, function(err, d) {
+                    if(err != null) {
+                        console.log('whoops', err);
+                        return false;
+                    }
                     console.log('d', d);
+                    if(d.models.length > 0) {
+                        $hidden.val(d.models[0].id);
+                    }
+                    else {
+                        $hidden.val(0);
+                    }
+
+                    modale.modal('hide');
                 })
-                // let json = formatSourcesEntries(selectedItems);
-                // $hidden.val(JSON.stringify(json));
-                // modale.modal('hide')
             })
 
         })
