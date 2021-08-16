@@ -49,6 +49,9 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
 
     Route::post('{type}/trash/{id}', 'Ludows\Adminify\Http\Controllers\Back\TrashController@index')->name('trash');
 
+    Route::post('find/{type}', 'Ludows\Adminify\Http\Controllers\Back\FinderController@index')->name('finder');
+
+
     Route::get('modales/content/{name}', function ($name) {
         $returnView = view("layouts.admin.modales.contents.".$name, [])->render();
         return response()->json([
