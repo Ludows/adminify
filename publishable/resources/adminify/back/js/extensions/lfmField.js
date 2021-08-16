@@ -52,23 +52,29 @@ export default function LFMField(fields) {
 
         let o = {};
 
-        $.ajax({
-            method: 'POST',
-            url: Route('finder', { type : 'medias' }),
-            data: o,
-            headers: { 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content') },
-            success: function(data) {
-                if(typeof callback == 'function') {
-                    callback(null, data);
+        selecteds.forEach((selected) => {
+            o['src'] = selected.name;
+
+            $.ajax({
+                method: 'POST',
+                url: Route('finder', { type : 'medias' }),
+                data: o,
+                headers: { 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content') },
+                success: function(data) {
+                    if(typeof callback == 'function') {
+                        callback(null, data);
+                    }
+                },
+                error: function(err) {
+                    console.log('whoops', err);
+                    if(typeof callback == 'function') {
+                        callback(err, null);
+                    }
                 }
-            },
-            error: function(err) {
-                console.log('whoops', err);
-                if(typeof callback == 'function') {
-                    callback(err, null);
-                }
-            }
+            })
         })
+
+        
     }
 
     function getSelection(ifr) {
@@ -132,21 +138,27 @@ export default function LFMField(fields) {
                         return false;
                     }
                     if(d.models.length > 0) {
-                        $hidden.val(d.models[0].id);
+                        $hidden.val(d.models[0].src);
+                        $mime_type.val(d.models[0].mime_type);
                     }
                     else {
-                        $hidden.val(0);
+                        $hidden.val(null);
+                        $mime_type.val(null);
                     }
                 })
             }
             else {
-
+                selectedItems.forEach((sel) => {
+                    $hidden.val(sel.name);
+                    $mime_type.val( getMime(sel.url) );
+                })
             }
             modale.modal('hide');
         }
 
         $(document).on('click', '.js-clear-selection', function(e) {
             e.preventDefault();
+            e.stopPropagation();
             $('.js-selection').remove();
             $hidden.val(0);
 
@@ -170,7 +182,7 @@ export default function LFMField(fields) {
 
         $el.on('click', function(e) {
             e.preventDefault();
-            modale.modal('show')
+            modale.modal('show');
             if(selectedItems.length > 0) {
                 updateStyle(ifr);
             }
