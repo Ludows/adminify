@@ -48,6 +48,8 @@ export default function LFMField(fields) {
 
     function requestMedia($selecteds, callback) {
 
+        console.log('selecteds', selecteds);
+
         let o = {};
 
         $.ajax({
@@ -115,6 +117,7 @@ export default function LFMField(fields) {
         let modale = $('#modalFileManager');
         let ifr = modale.find('iframe');
         let $hidden = $el_wrapper.find('[type="hidden"]');
+        let $mime_type = $el_wrapper.find('[name="mime_type"]');
         let confirm = ifr.contents().find('#actions a[data-action="use"]');
         let fromMediaEntity = param('fromMediaCreate');
 
@@ -128,7 +131,6 @@ export default function LFMField(fields) {
                         console.log('whoops', err);
                         return false;
                     }
-                    console.log('d', d);
                     if(d.models.length > 0) {
                         $hidden.val(d.models[0].id);
                     }
