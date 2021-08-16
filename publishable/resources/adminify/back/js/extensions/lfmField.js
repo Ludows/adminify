@@ -87,21 +87,21 @@ export default function LFMField(fields) {
         let $hidden = $el_wrapper.find('[type="hidden"]');
         let confirm = ifr.contents().find('#actions a[data-action="use"]');
 
-        if($hidden.val().length > 0 && $hidden.val() != '0') {
-            let fieldList = [
-                {
-                    name : $hidden.val(),
-                    'file' : {
-                        'type': getMime($hidden.val())
-                    },
-                    url : $hidden.attr('data-path')
-                }
-            ];
-            let json = formatSourcesEntries(fieldList);
-            $hidden.val(JSON.stringify(json));
-            selectedItems = fieldList
-            GenerateSelection($el_wrapper, selectedItems);
-        }
+        // if($hidden.val().length > 0 && $hidden.val() != '0') {
+        //     let fieldList = [
+        //         {
+        //             name : $hidden.val(),
+        //             'file' : {
+        //                 'type': getMime($hidden.val())
+        //             },
+        //             url : $hidden.attr('data-path')
+        //         }
+        //     ];
+        //     let json = formatSourcesEntries(fieldList);
+        //     $hidden.val(JSON.stringify(json));
+        //     selectedItems = fieldList
+        //     GenerateSelection($el_wrapper, selectedItems);
+        // }
 
         $el.on('click', function(e) {
             e.preventDefault();
@@ -114,9 +114,9 @@ export default function LFMField(fields) {
             confirm.on('click', function(e) {
                 selectedItems = getSelection(ifr);
                 GenerateSelection($el_wrapper, selectedItems);
-                let json = formatSourcesEntries(selectedItems);
-                $hidden.val(JSON.stringify(json));
-                modale.modal('hide')
+                // let json = formatSourcesEntries(selectedItems);
+                // $hidden.val(JSON.stringify(json));
+                // modale.modal('hide')
             })
 
         })
