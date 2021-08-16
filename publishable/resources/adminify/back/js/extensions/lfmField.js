@@ -46,7 +46,7 @@ export default function LFMField(fields) {
         return $sel
     }
 
-    function requestMedia($selecteds, callback) {
+    function requestMedia(selecteds, callback) {
 
         console.log('selecteds', selecteds);
 
