@@ -102,6 +102,8 @@ export default function LFMField(fields) {
         return $id;
     }
 
+    
+
     $.each(fields, function(i, el) {
         let $el_wrapper = $('#'+el.selector);
         let $el = $('#'+el.selector +' [type="button"]');
@@ -109,6 +111,27 @@ export default function LFMField(fields) {
         let ifr = modale.find('iframe');
         let $hidden = $el_wrapper.find('[type="hidden"]');
         let confirm = ifr.contents().find('#actions a[data-action="use"]');
+
+        function updateFieldProcess() {
+            selectedItems = getSelection(ifr);
+            GenerateSelection($el_wrapper, selectedItems);
+            console.log(selectedItems);
+            requestMedia(selectedItems, function(err, d) {
+                if(err != null) {
+                    console.log('whoops', err);
+                    return false;
+                }
+                console.log('d', d);
+                if(d.models.length > 0) {
+                    $hidden.val(d.models[0].id);
+                }
+                else {
+                    $hidden.val(0);
+                }
+
+                modale.modal('hide');
+            })
+        }
 
         // if($hidden.val().length > 0 && $hidden.val() != '0') {
         //     let fieldList = [
@@ -128,29 +151,12 @@ export default function LFMField(fields) {
 
         $(document).on('click', '.js-selection', function(e) {
             e.preventDefault();
-
+            updateFieldProcess()
 
         });
 
-        $(ifr).on('click', '#actions a[data-action="use"]', function() {
-            selectedItems = getSelection(ifr);
-                GenerateSelection($el_wrapper, selectedItems);
-                console.log(selectedItems);
-                requestMedia(selectedItems, function(err, d) {
-                    if(err != null) {
-                        console.log('whoops', err);
-                        return false;
-                    }
-                    console.log('d', d);
-                    if(d.models.length > 0) {
-                        $hidden.val(d.models[0].id);
-                    }
-                    else {
-                        $hidden.val(0);
-                    }
-
-                    modale.modal('hide');
-                })
+        $(ifr.contents()).on('click', '#actions a[data-action="use"]', function() {
+            updateFieldProcess();
         })
 
         $el.on('click', function(e) {
