@@ -20,6 +20,7 @@ export default function LFMField(fields) {
             let tpl = `
                 <div class="${class_to_apply}">
                     <img class="img-fluid" src="${selection.url}" alt="${selection.name}" />
+                    <span class="clear-selection js-clear-selection">x</span>
                 </div>
             `;
             sel_wrapper.append(tpl);
@@ -116,84 +117,60 @@ export default function LFMField(fields) {
             selectedItems = getSelection(ifr);
             GenerateSelection($el_wrapper, selectedItems);
             console.log(selectedItems);
-            requestMedia(selectedItems, function(err, d) {
-                if(err != null) {
-                    console.log('whoops', err);
-                    return false;
-                }
-                console.log('d', d);
-                if(d.models.length > 0) {
-                    $hidden.val(d.models[0].id);
-                }
-                else {
-                    $hidden.val(0);
-                }
-
-                modale.modal('hide');
-            })
+            if(selectedItems.length > 0) {
+                requestMedia(selectedItems, function(err, d) {
+                    if(err != null) {
+                        console.log('whoops', err);
+                        return false;
+                    }
+                    console.log('d', d);
+                    if(d.models.length > 0) {
+                        $hidden.val(d.models[0].id);
+                    }
+                    else {
+                        $hidden.val(0);
+                    }
+    
+                    modale.modal('hide');
+                })
+            }
         }
 
-        // if($hidden.val().length > 0 && $hidden.val() != '0') {
-        //     let fieldList = [
-        //         {
-        //             name : $hidden.val(),
-        //             'file' : {
-        //                 'type': getMime($hidden.val())
-        //             },
-        //             url : $hidden.attr('data-path')
-        //         }
-        //     ];
-        //     let json = formatSourcesEntries(fieldList);
-        //     $hidden.val(JSON.stringify(json));
-        //     selectedItems = fieldList
-        //     GenerateSelection($el_wrapper, selectedItems);
-        // }
+        $(document).on('click', '.js-clear-selection', function(e) {
+            e.preventDefault();
+            $('.js-selection').remove();
+            $hidden.val(0);
+
+            $el.css({
+                'display': ''
+            });
+
+        })
 
         $(document).on('click', '.js-selection', function(e) {
             e.preventDefault();
-            updateFieldProcess()
-
+            modale.modal('show');
         });
 
         $(ifr.contents()).on('click', '#actions a[data-action="use"]', function() {
             updateFieldProcess();
+            $el.css({
+                'display': 'none'
+            });
         })
 
         $el.on('click', function(e) {
             e.preventDefault();
             modale.modal('show')
             if(selectedItems.length > 0) {
-                updateStyle(ifr)
+                updateStyle(ifr);
             }
-            // // window.filemanager();
-            // confirm = ifr.contents().find('#actions a[data-action="use"]');
-            // confirm.on('click', function(e) {
-            //     selectedItems = getSelection(ifr);
-            //     GenerateSelection($el_wrapper, selectedItems);
-            //     console.log(selectedItems);
-            //     requestMedia(selectedItems, function(err, d) {
-            //         if(err != null) {
-            //             console.log('whoops', err);
-            //             return false;
-            //         }
-            //         console.log('d', d);
-            //         if(d.models.length > 0) {
-            //             $hidden.val(d.models[0].id);
-            //         }
-            //         else {
-            //             $hidden.val(0);
-            //         }
-
-            //         modale.modal('hide');
-            //     })
-            // })
-
         })
 
         modale.on('show.bs.modal', function(e) {
             if($hidden.val().length > 0 && $hidden.val() != '0') {
                 selectedItems[0].id = findIndexFromName(ifr, JSON.parse($hidden.val()))
-                updateStyle(ifr)
+                updateStyle(ifr);
             }
         })
     })
