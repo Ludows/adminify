@@ -11,7 +11,7 @@
         <div class="row row-selection"></div>
         {!! Form::button($options['lfm_options']['btn']['label'], $options['lfm_options']['btn']['attr'] ) !!}
 
-        {!! Form::input('hidden', 'mime_type', null, $options['attr']) !!}
+        {{--  {!! Form::input('hidden', 'mime_type', null, $options['attr']) !!}  --}}
         {!! Form::input('hidden', $name, $options['value'], $options['attr']) !!}
 
         @include('vendor/laravel-form-builder/errors')
