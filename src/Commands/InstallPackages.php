@@ -2,13 +2,11 @@
 
 namespace Ludows\Adminify\Commands;
 
-use Symfony\Component\Process\Process;
+use Illuminate\Filesystem\Filesystem;
 
-use Illuminate\Support\Facades\Route;
+use Symfony\Component\Process\Process;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
-// use Illuminate\Support\Facades\Event;
 use File;
 class InstallPackages extends Command
 {
@@ -18,7 +16,7 @@ class InstallPackages extends Command
      * @var string
      */
     protected $signature = 'adminify:install
-        {task?* : Tasks name are npm, coreinstall, migrations, seed, publishes, rollback, feeds, routes, caches}
+        {task?* : Tasks name are npm, coreinstall, migrations, seed, publishes, feeds, routes, caches, refresh}
         {--force : Force all tasks}
         {--firstInstall : Tell if is the first Install  of adminify}'; //todo
 
@@ -70,10 +68,13 @@ class InstallPackages extends Command
         if($firstInstall) {
             $this->info('Handle Env installation...');
             $this->call('adminify:env');
+
+            $this->doClearCaches();
         }
 
-        if(in_array('*', $cleanedTasks) && !$firstInstall || in_array('rollback', $cleanedTasks) && !$firstInstall) {
-            $this->call('migrate:rollback');
+        if(in_array('*', $cleanedTasks) && !$firstInstall || in_array('refresh', $cleanedTasks) && !$firstInstall) {
+            $this->call('migrate:refresh');
+            $this->refreshImages();
         }
 
         if(in_array('*', $cleanedTasks)  || in_array('coreinstall', $cleanedTasks)) {
@@ -111,11 +112,8 @@ class InstallPackages extends Command
             $this->call('adminify:translations');
         }
 
-        if(in_array('*', $cleanedTasks)  || in_array('cache', $cleanedTasks)) {
-            $this->info('Clear all caches...');
-            $this->call('cache:clear');
-            $this->call('config:clear');
-            $this->call('view:clear');
+        if(in_array('*', $cleanedTasks) && !$firstInstall  || in_array('cache', $cleanedTasks) && !$firstInstall) {
+            $this->doClearCaches();   
         }
 
         //run seeds
@@ -145,6 +143,15 @@ class InstallPackages extends Command
      * @param [type] $command
      * @return void
      */
+
+
+    public function doClearCaches() {
+        $this->info('Clear all caches...');
+        $this->call('cache:clear');
+        $this->call('config:clear');
+        $this->call('view:clear');
+    }
+
     private function doCommand($command)
     {
         $process = Process::fromShellCommandline($command);
@@ -167,6 +174,11 @@ class InstallPackages extends Command
             }
 
         }
+    }
+
+    public function refreshImages() {
+        $file = new Filesystem;
+        $file->cleanDirectory('storage/app/public');
     }
     public function handlePublishesPackages() {
         foreach ($this->packages as $dependency) {
