@@ -104,10 +104,10 @@ export default function LFMField(fields) {
         ifr[0].contentWindow.toggleActions();
     }
 
-    function findIndexFromName(ifr, json) {
+    function findIndexFromName(ifr, strName) {
         let $id = null;
         $.each(ifr[0].contentWindow.items, function(i, item) {
-            if(item.name == json[0].name) {
+            if(item.name == strName) {
                 $id = i;
                 return false;
             }
@@ -126,7 +126,18 @@ export default function LFMField(fields) {
         let confirm = ifr.contents().find('#actions a[data-action="use"]');
         let fromMediaEntity = getParamFromIframe(ifr.attr('src'), 'fromMediaCreate');
 
-        console.log('fromMediaEntity >>>', fromMediaEntity);
+        // console.log('fromMediaEntity >>>', fromMediaEntity);
+
+        if($hidden.val().length > 0) {
+
+            GenerateSelection($el_wrapper, [
+                {
+                    url : $hidden.attr('data-path'),
+                    name: $hidden.val()
+                }
+            ]);
+
+        }
 
         function updateFieldProcess() {
             selectedItems = getSelection(ifr);
@@ -190,8 +201,8 @@ export default function LFMField(fields) {
         })
 
         modale.on('show.bs.modal', function(e) {
-            if($hidden.val().length > 0 && $hidden.val() != '0') {
-                selectedItems[0].id = findIndexFromName(ifr, JSON.parse($hidden.val()))
+            if($hidden.val().length > 0) {
+                selectedItems[0].id = findIndexFromName(ifr, $hidden.val())
                 updateStyle(ifr);
             }
         })
