@@ -8,8 +8,12 @@ class MediaRepository extends BaseRepository
 {   
     public function getMimeTypeProcess($model, $formValues, $type) {
         
-        $path = $model->getFullPath($formValues['src']) . '/' . $formValues['src'];
+        $map = new \League\MimeTypeDetection\GeneratedExtensionToMimeTypeMap();
 
-        $model->mime_type = mime_content_type($path);
+        $p = pathinfo($model->path);
+
+        $mimeType = $map->lookupMimeType($p['extension']);
+
+        $model->mime_type = $mimeType;
     }
 }
