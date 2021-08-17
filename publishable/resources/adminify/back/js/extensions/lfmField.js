@@ -142,8 +142,11 @@ export default function LFMField(fields) {
                         $mime_type.val(d.models[0].mime_type);
                     }
                     else {
-                        $hidden.val(null);
-                        $mime_type.val(null);
+                        // by defaults fallback to current name and mime type 
+                        selectedItems.forEach((sel) => {
+                            $hidden.val(sel.name);
+                            $mime_type.val( getMime(sel.url) );
+                        })
                     }
                 })
             }
