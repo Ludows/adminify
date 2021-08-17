@@ -153,7 +153,7 @@ export default function LFMField(fields) {
                         return false;
                     }
                     if(d.models.length > 0) {
-                        $hidden.val(d.models[0].src);
+                        $hidden.attr('name') != 'media_id' ? $hidden.val(d.models[0].src) : $hidden.val(d.models[0].id);
                     }
                     else {
                         // by defaults fallback to current name and mime type 
