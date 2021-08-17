@@ -6,10 +6,6 @@ export default function LFMField(fields) {
 
     let selectedItems = [];
 
-    function param(name) {
-        return (location.search.split(name + '=')[1] || '').split('&')[0];
-    }
-
     function getParamFromIframe(ifrUrl, name) {
         return (ifrUrl.split(name + '=')[1] || '').split('&')[0];
     }
@@ -35,24 +31,24 @@ export default function LFMField(fields) {
         })
     }
 
-    function formatSourcesEntries(arraySelection) {
-        var $sel = [];
+    // function formatSourcesEntries(arraySelection) {
+    //     var $sel = [];
 
-        $.each(arraySelection, function (i, selection) {
+    //     $.each(arraySelection, function (i, selection) {
 
-            $sel.push({
-                'name' : selection.name,
-                'file' : {
-                    'type': getMime(selection.name)
-                }
-            });
-        })
-        return $sel
-    }
+    //         $sel.push({
+    //             'name' : selection.name,
+    //             'file' : {
+    //                 'type': getMime(selection.name)
+    //             }
+    //         });
+    //     })
+    //     return $sel
+    // }
 
     function requestMedia(selecteds, callback) {
 
-        console.log('selecteds', selecteds);
+        // console.log('selecteds', selecteds);
 
         let o = {};
 
@@ -150,16 +146,22 @@ export default function LFMField(fields) {
                     else {
                         // by defaults fallback to current name and mime type 
                         selectedItems.forEach((sel) => {
+
+                            let Mime = getMime(sel.name);
+
                             $hidden.val(sel.name);
-                            $mime_type.val( getMime(sel.url) );
+                            $mime_type.val( Mime.type );
                         })
                     }
                 })
             }
             else {
                 selectedItems.forEach((sel) => {
+
+                    let Mime = getMime(sel.name);
+
                     $hidden.val(sel.name);
-                    $mime_type.val( getMime(sel.url) );
+                    $mime_type.val( Mime.type );
                 })
             }
             modale.modal('hide');
