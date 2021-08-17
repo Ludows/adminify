@@ -19,9 +19,6 @@ class CreateMediaRequest extends FormRequest
             'src' => [
                 'required',
             ],
-            'mime_type' => [
-                'required',
-            ]
         ];
 
         return $a;
