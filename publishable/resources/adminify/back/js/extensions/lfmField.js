@@ -151,11 +151,7 @@ export default function LFMField(fields) {
             }
             else {
                 selectedItems.forEach((sel) => {
-
-                    let Mime = getMime(sel.name);
-
                     $hidden.val(sel.name);
-                    $mime_type.val( Mime.type );
                 })
             }
             modale.modal('hide');
