@@ -28,7 +28,7 @@ class CreateSettings extends Form
         ])
         ->add('logo_id', 'lfm', [
             'label_show' => false,
-            'value' => $this->getMedia( $this->getSetting('logo_id') ?? 0 ) ?? 0
+            'value' => $this->getMedia( $this->getSetting('logo_id') ) ?? null
         ])
         ->add('homepage', 'select2', [
             'empty_value' => _('admin.select_homepage'),
