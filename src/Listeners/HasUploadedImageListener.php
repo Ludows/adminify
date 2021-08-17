@@ -19,8 +19,9 @@ class HasUploadedImageListener
     {
 
         $request = request();
+        $fromCreate = $request->fromMediaCreate;
 
-        if(!$request->fromMediaCreate) {
+        if($fromCreate == 0) {
 
             
             $info = pathinfo($event->path());
