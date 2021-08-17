@@ -8,8 +8,8 @@ class MediaRepository extends BaseRepository
 {   
     public function getMimeTypeProcess($model, $formValues, $type) {
         
-        $fullUrl = $model->getFullPath($model->src);
+        $path = $model->path;
 
-        $model->mime_type = mime_content_type($fullUrl);
+        $model->mime_type = mime_content_type($path);
     }
 }
