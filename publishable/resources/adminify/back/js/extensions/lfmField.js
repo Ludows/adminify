@@ -88,6 +88,7 @@ export default function LFMField(fields) {
                 }
             })
         });
+        console.log(items);
         return items;
     }
 
