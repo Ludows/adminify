@@ -30,7 +30,8 @@ class HasRenamedImageListener
             $a = [
                 'src' => $newInfo['basename'],
                 'description' => $m->description ?? '',
-                'alt' => $m->alt ?? ''
+                'alt' => $m->alt ?? '',
+                'user_id' => user()->id
             ];
 
             $this->MediaRepository->addModel($m)->update($a, $m);
