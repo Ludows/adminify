@@ -127,6 +127,8 @@ export default function LFMField(fields) {
         let confirm = ifr.contents().find('#actions a[data-action="use"]');
         let fromMediaEntity = param('fromMediaCreate');
 
+        console.log('fromMediaEntity >>>', fromMediaEntity);
+
         function updateFieldProcess() {
             selectedItems = getSelection(ifr);
             GenerateSelection($el_wrapper, selectedItems);
