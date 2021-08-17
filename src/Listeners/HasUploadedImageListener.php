@@ -27,6 +27,8 @@ class HasUploadedImageListener
             
             $a = [
                 'src' => $info['basename'],
+                'description' => '',
+                'alt' => ''
             ];
 
             $this->MediaRepository->addModel(new Media())->create($a);
