@@ -123,7 +123,6 @@ export default function LFMField(fields) {
         let modale = $('#modalFileManager');
         let ifr = modale.find('iframe');
         let $hidden = $el_wrapper.find('[type="hidden"]');
-        let $mime_type = $el_wrapper.find('[name="mime_type"]');
         let confirm = ifr.contents().find('#actions a[data-action="use"]');
         let fromMediaEntity = getParamFromIframe(ifr.attr('src'), 'fromMediaCreate');
 
@@ -141,16 +140,11 @@ export default function LFMField(fields) {
                     }
                     if(d.models.length > 0) {
                         $hidden.val(d.models[0].src);
-                        $mime_type.val(d.models[0].mime_type);
                     }
                     else {
                         // by defaults fallback to current name and mime type 
                         selectedItems.forEach((sel) => {
-
-                            let Mime = getMime(sel.name);
-
                             $hidden.val(sel.name);
-                            $mime_type.val( Mime.type );
                         })
                     }
                 })
