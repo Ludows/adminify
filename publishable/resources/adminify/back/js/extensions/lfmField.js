@@ -137,6 +137,9 @@ export default function LFMField(fields) {
                 }
             ]);
 
+            $el.css({
+                'display': 'none'
+            });
         }
 
         function updateFieldProcess() {
