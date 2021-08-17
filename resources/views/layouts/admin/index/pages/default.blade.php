@@ -18,6 +18,6 @@
 </div>
 
 @push('js')
-    <script src="{{ asset('argon') }}/js/listings.js"></script>
+    <script src="{{ asset('argon/back') }}/js/listings.js"></script>
 @endpush
 
