@@ -16,13 +16,11 @@ class UpdateMediaRequest extends FormRequest
     {
         $r = request();
         $a = [
-            //
-            'title' => [
-                'required',
-                'min:5'
-            ],
             'src' => [
-                'max:10000',
+                'required',
+            ],
+            'mime_type' => [
+                'required',
             ]
         ];
 

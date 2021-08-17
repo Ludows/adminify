@@ -15,12 +15,11 @@ class CreateMediaRequest extends FormRequest
     public function rules()
     {
         $r = request();
-        $a = [            
-            'title' => [
-                'required',
-                'min:5'
-            ],
+        $a = [
             'src' => [
+                'required',
+            ],
+            'mime_type' => [
                 'required',
             ]
         ];
