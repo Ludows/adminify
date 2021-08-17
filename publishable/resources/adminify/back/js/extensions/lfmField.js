@@ -10,6 +10,10 @@ export default function LFMField(fields) {
         return (location.search.split(name + '=')[1] || '').split('&')[0];
     }
 
+    function getParamFromIframe(ifrUrl, name) {
+        return (ifrUrl.split(name + '=')[1] || '').split('&')[0];
+    }
+
     function GenerateSelection(el, arraySelection) {
         var sel_wrapper = el.find('.row-selection');
         sel_wrapper.html('');
@@ -125,7 +129,7 @@ export default function LFMField(fields) {
         let $hidden = $el_wrapper.find('[type="hidden"]');
         let $mime_type = $el_wrapper.find('[name="mime_type"]');
         let confirm = ifr.contents().find('#actions a[data-action="use"]');
-        let fromMediaEntity = param('fromMediaCreate');
+        let fromMediaEntity = getParamFromIframe(ifr.attr('src'), 'fromMediaCreate');
 
         console.log('fromMediaEntity >>>', fromMediaEntity);
 
