@@ -24,7 +24,6 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
 
     Route::post('templates/content', 'Ludows\Adminify\Http\Controllers\Back\TemplatesController@setContent')->name('templates.setcontent');
 
-
     Route::post('listings', 'Ludows\Adminify\Http\Controllers\Back\ListingController@index')->name('listings');
 
     Route::resource('comments', 'Ludows\Adminify\Http\Controllers\Back\CommentController', ['except' => ['show' ]]);
