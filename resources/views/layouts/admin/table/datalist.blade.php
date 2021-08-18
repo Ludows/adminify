@@ -22,7 +22,7 @@
 @else
         <tr>
             <td>
-                {{ __('admin.noDatas') }}
+                {{ __('admin.table.modules.listings.no_datas') }}
             </td>
         </tr>
 @endif

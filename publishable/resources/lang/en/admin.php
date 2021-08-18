@@ -40,5 +40,55 @@ return [
         'site_slogan' => 'Put a catchy phrase there',
         'homepage' => 'Your Home Page',
         'blogpage' => 'Your Blog Page',
+    ],
+    'table' => [
+        'th_cells' => [
+            'title' => 'Title',
+            'slug' => 'Slug',
+            'content' => 'Content',
+            'media_id' => 'Media',
+            'parent_id' => 'Parent',
+            'user_id' => 'User',
+            'status_id' => 'Status',
+            'need_translations' => 'Need to translate',
+            'categories_id' => 'Categories',
+            'actions' => 'Actions',
+            'no_comments' => 'Allow Comments',
+            'src' => 'Source',
+            'mime_type' => 'Extension',
+            'description' => 'Description',
+            'alt' => 'Alt',
+            'key' => 'Traduction Key',
+            'text' => 'Text',
+            'mailable' => 'Email Class',
+            'subject' => 'Subject',
+            'html_template' => 'Html Template',
+            'text_template' => 'Text Template',
+            'type' => 'Type',
+            'avatar' => 'Avatar',
+            'name' => 'Name',
+            'email' => 'Email',
+            'password' => 'Password'
+        ],
+        'modules' => [
+            'statuses' => [
+                'select_status' => 'Select a Status',
+                'published' => 'Published',
+                'draft' => 'Drafted',
+                'trash' => 'Trash',
+            ],
+            'search' => 'Search :entity',
+            'listings' => [
+                'no_datas' => 'No datas',
+                'is_translated' => 'is translated',
+                'no_image' => 'No Image'
+            ],
+            'title' => 'All :entity',
+            'btn_create' => 'Create a new :entity',
+            'paginate' => [
+                'previous' => 'Previous',
+                'next' => 'Next'
+            ]
+        ],
     ]
 ];

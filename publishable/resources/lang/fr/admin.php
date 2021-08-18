@@ -40,5 +40,55 @@ return [
         'site_slogan' => 'Mettez y une phrase accrocheuse',
         'homepage' => 'Votre Page d\'accueil',
         'blogpage' => 'Votre Page de Blog',
+    ],
+    'table' => [
+        'th_cells' => [
+            'title' => 'Titre',
+            'slug' => 'Slug',
+            'content' => 'Contenu',
+            'media_id' => 'Média',
+            'parent_id' => 'Parent',
+            'user_id' => 'Utilisateur',
+            'status_id' => 'Statut',
+            'need_translations' => 'Traductions nécessaires',
+            'categories_id' => 'Catégories',
+            'actions' => 'Actions',
+            'no_comments' => 'Commentaires permis',
+            'src' => 'Source',
+            'mime_type' => 'Extension',
+            'description' => 'Description',
+            'alt' => 'Alt',
+            'key' => 'Clé de Traduction',
+            'text' => 'Texte',
+            'mailable' => 'Classe Email',
+            'subject' => 'Sujet',
+            'html_template' => 'Template Html',
+            'text_template' => 'Template Texte',
+            'type' => 'Type',
+            'avatar' => 'Avatar',
+            'name' => 'Nom',
+            'email' => 'Email',
+            'password' => 'Mot de Passe'
+        ],
+        'modules' => [
+            'statuses' => [
+                'select_status' => 'Sélectionner un Status',
+                'published' => 'Publié',
+                'draft' => 'Brouillon',
+                'trash' => 'Mis à la Corbeille',
+            ],
+            'search' => 'Rechercher :entity',
+            'listings' => [
+                'no_datas' => 'Aucune Données',
+                'is_translated' => 'Traduit',
+                'no_image' => 'Aucune Image'
+            ],
+            'title' => 'Tout :entity',
+            'btn_create' => 'Créer :entity',
+            'paginate' => [
+                'previous' => 'Précédent',
+                'next' => 'Suivant'
+            ]
+        ],
     ]
 ];

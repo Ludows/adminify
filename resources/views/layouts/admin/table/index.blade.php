@@ -49,7 +49,7 @@
             <thead class="thead-light">
                 <tr>
                     @foreach($thead as $th)
-                        <th scope="col">{{ __('admin.'.$name.'.'.$th) }}</th>
+                        <th scope="col">{{ __('admin.table.th_cells.'.$th) }}</th>
                     @endforeach
                 </tr>
             </thead>
