@@ -34,7 +34,7 @@ class Comment extends ClassicModel
 
     public function getLinks($menuBuilder, $arrayDatas) {
         if($arrayDatas['user']->hasPermissionTo('create_comments')) {
-            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/comments?lang='. $arrayDatas['lang'] : '/admin/comments', '<i class="ni ni-single-copy-04"></i> '.__('admin.comments.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/comments?lang='. $arrayDatas['lang'] : '/admin/comments', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.comments'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
         }
     }
 

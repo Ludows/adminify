@@ -24,7 +24,7 @@ class Page extends ContentTypeModel
 
     public function getLinks($menuBuilder, $arrayDatas) {
         if($arrayDatas['user']->hasPermissionTo('create_pages')) {
-            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/pages?lang='. $arrayDatas['lang'] : '/admin/pages', '<i class="ni ni-single-copy-04"></i> '.__('admin.pages.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/pages?lang='. $arrayDatas['lang'] : '/admin/pages', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.pages'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
             // $menuBuilder->add( Link::to( $multilang ? '/admin/tags?lang='.$lang : '/admin/tags', '<i class="ni ni-single-copy-04"></i> '.__('admin.tags.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
         }
     }

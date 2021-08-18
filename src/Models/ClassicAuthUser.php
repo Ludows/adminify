@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\DB;
 
 use App\Models\ApiToken;
 use App\Models\Role;
+use Ludows\Adminify\Traits\AdminableMenu;
 
 abstract class ClassicAuthUser extends Authenticatable implements MustVerifyEmail
 {
@@ -40,6 +41,7 @@ abstract class ClassicAuthUser extends Authenticatable implements MustVerifyEmai
     use Listable;
     use Searchables;
     use SavableTranslations;
+    use AdminableMenu;
 
     public function tokens() {
         return $this->hasMany(ApiToken::class, 'user_id', 'id');
