@@ -1,5 +1,44 @@
 <?php
 
 return [
-    
+    'menuback' => [
+        'dashboard' => 'dashboard',
+        'pages' => 'Pages',
+        'posts' => 'Posts',
+        'categories' => 'Categories',
+        'tags' => 'Tags',
+        'medias' => 'Medias',
+        'menus' => 'Menus',
+        'settings' => 'Settings',
+        'traductions' => 'Traductions Keys',
+        'mails' => 'Emails',
+        'templates' => 'Content Templates',
+        'users' => 'Users',
+    ],
+    'form' => [
+        'add' => 'Add',
+        'create' => 'Create',
+        'update' => 'Update',
+        'delete' => 'delete',
+        'save' => 'Save',
+        'title' => 'Title',
+        'categories_id' => 'Categories',
+        'statuses' => 'Statuses',
+        'parent_id' => 'Parent',
+        'select_media' => 'Select your Media',
+        'select_template' => 'Select your template',
+        'save_as' => 'Save as',
+        'tags_id' => 'Tags',
+        'no_comments' => 'Do not allow comments on this article',
+        'no_seo' => 'Do not allow SEO on this site',
+        'no_comments_globally' => 'Do not allow comments globally on the site',
+        'content' => 'Content',
+        'description' => 'Description',
+        'alt' => 'alt',
+        'name_menu' => 'What is the name of your menu?',
+        'site_name' => 'What is the name of the site ?',
+        'site_slogan' => 'Put a catchy phrase there',
+        'homepage' => 'Your Home Page',
+        'blogpage' => 'Your Blog Page',
+    ]
 ];

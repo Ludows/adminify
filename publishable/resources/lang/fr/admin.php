@@ -1,22 +1,44 @@
 <?php
 
 return [
-    'add' => [
-        'medias' => 'Ajouter un Media',
-        'categories' => 'Ajouter une Catégorie',
-        'posts' => 'Ajouter un Article'
+    'menuback' => [
+        'dashboard' => 'tableau de bord',
+        'pages' => 'Pages',
+        'posts' => 'Articles',
+        'categories' => 'Catégories',
+        'tags' => 'Etiquettes',
+        'medias' => 'Médias',
+        'menus' => 'Menus',
+        'settings' => 'Paramètres',
+        'traductions' => 'Clés de traductions',
+        'mails' => 'Emails',
+        'templates' => 'Templates de Contenus',
+        'users' => 'Utilisateurs',
     ],
-    'edit' => [
-        'medias' => 'Editer un Media',
-        'categories' => 'Editer une Catégorie',
-        'posts' => 'Editer un Article'
-    ],
-    'suppress' => [
-        'medias' => 'Supprimer un Media',
-        'categories' => 'Supprimer une Catégorie',
-        'posts' => 'Supprimer un Article'
-    ],
-    'fields' => [
-        'noimage' => 'Aucune Image sélectionnée'
+    'form' => [
+        'add' => 'Ajouter',
+        'create' => 'Créer',
+        'update' => 'Mettre à jour',
+        'delete' => 'Supprimer',
+        'save' => 'Sauver',
+        'title' => 'Titre',
+        'categories_id' => 'Catégories',
+        'statuses' => 'Statut',
+        'parent_id' => 'L\'Article parent',
+        'select_media' => 'Sélectionnez votre Média',
+        'select_template' => 'Sélectionnez votre Template de Contenu',
+        'save_as' => 'Sauver comme Template de Contenu',
+        'tags_id' => 'Les Etiquettes',
+        'no_comments' => 'Ne pas permettre les commentaires sur cet article',
+        'no_seo' => 'Ne pas permettre le SEO sur ce site',
+        'no_comments_globally' => 'Ne pas permettre les commentaires sur le site',
+        'content' => 'contenu',
+        'description' => 'Description',
+        'alt' => 'alt',
+        'name_menu' => 'Quel est le nom de votre menu ?',
+        'site_name' => 'Quel est le nom du site ?',
+        'site_slogan' => 'Mettez y une phrase accrocheuse',
+        'homepage' => 'Votre Page d\'accueil',
+        'blogpage' => 'Votre Page de Blog',
     ]
 ];
