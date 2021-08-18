@@ -81,7 +81,8 @@ return [
             'listings' => [
                 'no_datas' => 'No datas',
                 'is_translated' => 'is translated',
-                'no_image' => 'No Image'
+                'no_entity' => 'No :entity',
+                'has_entity' => 'Has :entity',
             ],
             'title' => 'All :entity',
             'btn_create' => 'Create a new :entity',

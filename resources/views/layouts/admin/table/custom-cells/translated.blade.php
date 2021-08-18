@@ -6,7 +6,7 @@
             </a>
         @endforeach
     @else
-        {{ __('admin.is_translated') }}
+        {{ __('admin.table.modules.listings.is_translated') }}
     @endif
     
 </td>
