@@ -4,6 +4,8 @@ return [
     'root' => 'Tableau de Bord',
     'last_entity' => 'Derniers :entity',
     'edit_entity' => 'Editer cette :entity',
+    'global_search' => 'Recherche Globale',
+    'search' => 'Rechercher',
     'breadcrumb' => [
         'root' => 'Tableau de Bord',
         'create' => 'Créer :entity',

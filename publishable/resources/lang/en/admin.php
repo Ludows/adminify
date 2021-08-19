@@ -4,6 +4,8 @@ return [
     'root' => 'Dashboard',
     'last_entity' => 'Last :entity',
     'edit_entity' => 'Edit this :entity',
+    'global_search' => "Global Search",
+    'search' => 'Search',
     'breadcrumb' => [
         'root' => 'Dashboard',
         'index' => ':entity',
