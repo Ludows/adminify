@@ -55,7 +55,7 @@
         window.admin.larabergFields.push({
             selector: "{{ $options['sibling'] }}",
             options: @json($options['laraberg_defaults']),
-            multilang: {!! $useMultilang !!},
+            multilang: {!! var_export($useMultilang,true) !!},
             currentLang: '{!! $currentLang !!}'
         })
     </script>

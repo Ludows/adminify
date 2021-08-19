@@ -50,7 +50,7 @@
                 modal_id: '#{{ $options['modal_id'] }}',
                 withCreate: @json($options['withCreate']),
                 options: @json($options['select2options']),
-                multilang: {!! $useMultilang !!},
+                multilang: {!! var_export($useMultilang,true) !!},
                 currentLang: '{!! $currentLang !!}'
             })
     </script>

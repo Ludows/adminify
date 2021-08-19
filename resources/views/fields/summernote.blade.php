@@ -30,7 +30,7 @@
             window.admin.summernoteFields.push({
                 selector: '{{ $options['sibling'] }}',
                 options: @json($options['summernote_options']),
-                multilang: {!! $useMultilang !!},
+                multilang: {!! var_export($useMultilang,true) !!},
                 currentLang: '{!! $currentLang !!}'
             })
     </script>

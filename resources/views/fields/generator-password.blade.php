@@ -33,7 +33,7 @@
         window.admin.generatorPasswordFields.push({
             selector: "{{ $options['sibling'] }}",
             options: [],
-            multilang: {!! $useMultilang !!},
+            multilang: {!! var_export($useMultilang,true) !!},
             currentLang: '{!! $currentLang !!}'
         })
     </script>
