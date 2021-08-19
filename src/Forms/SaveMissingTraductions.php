@@ -38,10 +38,10 @@ class SaveMissingTraductions extends Form
             ]);
 
             $this->add('current_trad', 'static', [
-                'label' => __('admin.current_trad'),
+                'label' => __('admin.form.current_trad'),
                 'tag' => 'div', // Tag to be used for holding static data,
                 'attr' => ['class' => 'form-control-static'], // This is the default
-                'value' => is_translatable_model($m) ? $m->getTranslation($fillables[0], $datas['fromLang']).__('admin.current_lang') : $m->{$fillables[0]}.__('admin.current_lang') // If nothing is passed, data is pulled from model if any
+                'value' => is_translatable_model($m) ? $m->getTranslation($fillables[0], $datas['fromLang']).__('admin.form.current_lang') : $m->{$fillables[0]}.__('admin.form.current_lang') // If nothing is passed, data is pulled from model if any
             ]);
 
             foreach ($fields as $fieldKey => $value) {

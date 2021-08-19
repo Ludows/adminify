@@ -12,7 +12,7 @@ class UpdateTemplates extends Form
     {
         $this->add('title', Field::TEXT, [
             'label_show' => false,
-            'attr' => ['placeholder' =>  __('admin.title') ],
+            'attr' => ['placeholder' =>  __('admin.form.title') ],
         ]);
         
         $this->add('content', 'laraberg', [
@@ -20,7 +20,7 @@ class UpdateTemplates extends Form
             'label_show' => false
         ]);
 
-        $this->add('submit', 'submit', ['label' => __('admin.update'), 'attr' => ['class' => 'btn btn-default']]);
+        $this->add('submit', 'submit', ['label' => __('admin.form.update'), 'attr' => ['class' => 'btn btn-default']]);
     }
 
 }

@@ -19,7 +19,7 @@ class CreateTemplates extends Form
             'label_show' => false
         ]);
 
-        $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
+        $this->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
 
 }

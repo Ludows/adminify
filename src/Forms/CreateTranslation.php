@@ -17,6 +17,6 @@ class CreateTranslation extends Form
             ->add('text', 'summernote', [
                 'label' => __('admin.form.text'),
             ]);
-            $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
+            $this->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
 }

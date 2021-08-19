@@ -9,6 +9,6 @@ class DeleteCrud extends Form
     public function buildForm()
     {
         // Add fields here...
-        $this->add('submit', 'submit', ['label' => __('admin.destroy') , 'attr' => ['class' => 'btn btn-danger']]);
+        $this->add('submit', 'submit', ['label' => __('admin.form.delete') , 'attr' => ['class' => 'btn btn-danger']]);
     }
 }

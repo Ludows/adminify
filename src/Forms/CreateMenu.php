@@ -15,6 +15,6 @@ class CreateMenu extends Form
             'label' => __('admin.form.name'),
             'attr' => [],
         ]);
-        $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
+        $this->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
 }

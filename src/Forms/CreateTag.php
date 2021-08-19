@@ -17,7 +17,7 @@ class CreateTag extends Form
                 'label' => __('admin.form.title'),
             ]);
             
-            $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
+            $this->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
 
 }

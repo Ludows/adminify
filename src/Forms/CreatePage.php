@@ -76,7 +76,7 @@ class CreatePage extends Form
             ->add('user_id', 'hidden', [
                 'value' => user()->id
             ])       
-            ->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
+            ->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
     public function getStatuses() {
         $hasModel = $this->getModel();

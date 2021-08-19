@@ -70,6 +70,7 @@ class CreatePost extends Form
             ]);
 
             $this->add('content', 'laraberg', [
+                'label_show' => false,
                 'label' => __('admin.form.content'),
                 'withBtnForTemplates' => true
             ]);
@@ -83,7 +84,7 @@ class CreatePost extends Form
                 'value' => user()->id
             ]);
 
-            $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
+            $this->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
 
     public function getTags() {

@@ -45,7 +45,7 @@ class CreateCategory extends Form
                 'value' => user()->id
             ]);
         // }
-        $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
+        $this->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
     public function hydrateSelect() {
         $categories = '';

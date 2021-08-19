@@ -35,7 +35,7 @@ class CreateMail extends Form
             'attr' => ['placeholder' => __('admin.form.html_template')],
         ]);
 
-        $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
+        $this->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
 
     }
     public function getMailables() {

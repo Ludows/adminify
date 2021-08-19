@@ -31,7 +31,7 @@ class CreateSettings extends Form
             'value' => $this->getMedia( $this->getSetting('logo_id') ) ?? null
         ])
         ->add('homepage', 'select2', [
-            'empty_value' => _('admin.select_homepage'),
+            'empty_value' => _('admin.form.select_entity', ['entity' => 'page']),
             'choices' => $home['datas'],
             'selected' => $home['selected'],
             'label' => __('admin.form.homepage'),
@@ -41,7 +41,7 @@ class CreateSettings extends Form
             ]
         ])
         ->add('blogpage', 'select2', [
-            'empty_value' => _('admin.select_blogpage'),
+            'empty_value' => _('admin.form.select_entity', ['entity' => 'page']),
             'choices' => $blog['datas'],
             'selected' => $blog['selected'],
             'label' => __('admin.form.blogpage'),
@@ -63,7 +63,7 @@ class CreateSettings extends Form
             'checked' => $seo != null ? true : false
         ]);
 
-        $this->add('submit', 'submit', ['label' => _('admin.save'), 'attr' => ['class' => 'btn btn-default']]);
+        $this->add('submit', 'submit', ['label' => _('admin.form.save'), 'attr' => ['class' => 'btn btn-default']]);
     }
     public function getStatePage($settingName = '') {
 

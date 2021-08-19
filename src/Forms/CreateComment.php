@@ -39,7 +39,7 @@ class CreateComment extends Form
             'selected' => $c['selected'],
             'label' => __('admin.form.parent_comment_id'),
             'select2options' => [
-                'placeholder' => __('admin.select_parent_comment_id'),
+                'placeholder' => __('admin.form.select_parent_comment_id'),
                 'multiple' => false,
                 'width' => '100%'
             ]
@@ -57,7 +57,7 @@ class CreateComment extends Form
             'label_attr' => ['class' => 'custom-control-label text-muted'],
         ]);
         
-        $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
+        $this->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
     public function getComments() {
         $comments = '';

@@ -28,10 +28,10 @@ class CreateUser extends Form
                 'choices' => $rDatas['roles'],
                 'selected' => $rDatas['selected'],
                 'attr' => [],
-                'label' => __('admin.form.select_role'),
+                'label' => __('admin.form.select_entity', ['entity' => 'role']),
                 'label_attr' => ['class' => 'control-label', 'for' => 'roles'],
                 'select2options' => [
-                    'placeholder' => __('admin.select_role'),
+                    'placeholder' => __('admin.form.select_entity', ['entity' => 'role']),
                     'multiple' => false,
                     'width' => '100%'
                 ]
@@ -40,7 +40,7 @@ class CreateUser extends Form
                 'label' => __('admin.form.password'),
             ]);
 
-        $this->add('submit', 'submit', ['label' => __('admin.create'), 'attr' => ['class' => 'btn btn-default']]);
+        $this->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
 
     }
     public function getRoles() {

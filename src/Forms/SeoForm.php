@@ -30,8 +30,8 @@ class SeoForm extends Form
         ])
         ->add('robots', Field::SELECT, [
             'choices' => [
-                'follow' => 'Oui',
-                'no-follow' => 'Non'
+                'follow' => __('admin.form.yes'),
+                'no-follow' => __('admin.form.no')
             ],
             'label' => __('admin.form.robots'),
             'selected' => $m->seoWith('robots', false) ?? ''
@@ -40,7 +40,7 @@ class SeoForm extends Form
             'label' => __('admin.form.image'),
             'value' => $m->seoWith('image', false) ?? ''
         ]);
-        $this->add('submit', 'submit', ['label' => __('admin.create') , 'attr' => ['class' => 'btn btn-default']]);
+        $this->add('submit', 'submit', ['label' => __('admin.form.save') , 'attr' => ['class' => 'btn btn-default']]);
 
     }
 }

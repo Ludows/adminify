@@ -15,7 +15,7 @@ class SelectTemplate extends Form
             'label' => __('admin.form.items'),
             'choices' => $t['templates']
         ]);
-        $this->add('submit', 'submit', ['label' => __('admin.add') , 'attr' => ['class' => 'btn btn-default']]);
+        $this->add('submit', 'submit', ['label' => __('admin.form.add') , 'attr' => ['class' => 'btn btn-default']]);
 
     }
     public function getTemplates() {

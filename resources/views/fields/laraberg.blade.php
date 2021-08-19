@@ -6,11 +6,11 @@
     @if ($options['withBtnForTemplates'])
         <div class="d-flex mb-3">
             <a href="#" class="btn btn-primary js-select-template mr-3">
-                {{ __('admin.selectTemplate') }}
+                {{ __('admin.form.select_template') }}
             </a>
     
             <a href="#" class="btn btn-primary js-save-template">
-                {{ __('admin.saveAs') }}
+                {{ __('admin.form.save_as') }}
             </a>
         </div>
        
