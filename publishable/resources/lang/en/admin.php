@@ -4,6 +4,12 @@ return [
     'root' => 'Dashboard',
     'last_entity' => 'Last :entity',
     'edit_entity' => 'Edit this :entity',
+    'breadcrumb' => [
+        'root' => 'Dashboard',
+        'index' => ':entity',
+        'create' => 'Create :entity',
+        'edit' => 'Edit :entity'
+    ],
     'menuback' => [
         'dashboard' => 'dashboard',
         'pages' => 'Pages',

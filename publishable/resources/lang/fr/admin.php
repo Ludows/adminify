@@ -6,6 +6,7 @@ return [
     'edit_entity' => 'Editer cette :entity',
     'breadcrumb' => [
         'root' => 'Tableau de Bord',
+        'create' => 'Créer :entity',
         'index' => ':entity',
         'edit' => 'Editer :entity'
     ],
