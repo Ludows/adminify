@@ -23,7 +23,7 @@
             </ul>
         @else
             <div class="card-body">
-                {{ __('admin.table.listings.no_datas') }}
+                {{ __('admin.table.modules.listings.no_datas') }}
             </div>
         @endif
 
