@@ -43,6 +43,11 @@ class AdminBreadcrumb
                 $trail->push(  __('admin.breadcrumb.index', ['entity' => $entity_name]) , route($routeSpl['0'].'.index'));
             }
             if(Str::contains($requestedNameRoute, 'create') && $this->hasRoute($routeSpl['0'].'.create')) {
+                
+                if($this->hasRoute($routeSpl['0'].'.index')) {
+                    $trail->push( __('admin.breadcrumb.index', ['entity' => $entity_name]) , route($routeSpl['0'].'.index'));
+                }
+
                 $trail->push( __('admin.breadcrumb.create', ['entity' => $entity_name]) , route($requestedNameRoute));
             }
 
