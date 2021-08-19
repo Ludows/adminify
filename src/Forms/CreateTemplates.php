@@ -12,7 +12,7 @@ class CreateTemplates extends Form
     {
         $this->add('title', Field::TEXT, [
             'label_show' => false,
-            'attr' => ['placeholder' =>  __('admin.title') ],
+            'attr' => ['placeholder' =>  __('admin.form.title') ],
         ]);
         $this->add('content', 'laraberg', [
             'label' => __('admin.form.content'),

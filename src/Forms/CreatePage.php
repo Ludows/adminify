@@ -22,7 +22,7 @@ class CreatePage extends Form
         $this
             ->add('title', Field::TEXT, [
                 'label_show' => false,
-                'attr' => ['placeholder' =>  __('admin.title') ],
+                'attr' => ['placeholder' =>  __('admin.form.title') ],
             ])
             ->add('categories_id', 'select2', [
                 'empty_value' => '',
@@ -45,7 +45,7 @@ class CreatePage extends Form
                 'attr' => [],
                 'label' => __('admin.form.statuses'),
                 'select2options' => [
-                    'placeholder' => __('admin.statuses'),
+                    'placeholder' => __('admin.table.modules.statuses.select_status'),
                     'multiple' => false,
                     'width' => '100%'
                 ]
@@ -87,7 +87,7 @@ class CreatePage extends Form
 
         foreach ($statuses as $statusId => $status) {
             # code...
-            $statuses[$statusId] = __('admin.statuses.'.$status);
+            $statuses[$statusId] = __('admin.table.modules.statuses.'.$status);
         }
 
         if(isset($hasModel->status)) {

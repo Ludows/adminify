@@ -31,6 +31,7 @@ return [
         'delete' => 'delete',
         'save' => 'Save',
         'title' => 'Title',
+        'subject' => 'Subject',
         'submit' => 'Submit',
         'topbar' => 'Topbar',
         'select' => "Select",

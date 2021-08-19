@@ -42,7 +42,7 @@ class CreatePost extends Form
                 'attr' => [],
                 'label' => __('admin.form.statuses'),
                 'select2options' => [
-                    'placeholder' => __('admin.statuses'),
+                    'placeholder' => __('admin.table.modules.statuses.select_status'),
                     'multiple' => false,
                     'width' => '100%'
                 ]
@@ -56,7 +56,7 @@ class CreatePost extends Form
                 'attr' => ['multiple' => 'multiple'],
                 'label' => __('admin.form.tags_id'),
                 'select2options' => [
-                    'placeholder' => __('admin.select_tag'),
+                    'placeholder' => __('admin.form.select_tag'),
                     'multiple' => true,
                     'width' => '100%'
                 ]
@@ -108,7 +108,7 @@ class CreatePost extends Form
 
         foreach ($statuses as $statusId => $status) {
             # code...
-            $statuses[$statusId] = __('admin.statuses.'.$status);
+            $statuses[$statusId] = __('admin.table.modules.statuses.'.$status);
         }
 
         if(isset($hasModel->status)) {

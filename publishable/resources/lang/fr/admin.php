@@ -42,6 +42,7 @@ return [
         'yes' => 'Oui',
         'no' => 'Non',
         'send' => "Envoyer",
+        'subject' => 'Sujet',
         'items' => 'Items',
         'parent_id' => 'L\'Article parent',
         'select_parentcategory' => 'Selectionnez votre Catégory Parente',
