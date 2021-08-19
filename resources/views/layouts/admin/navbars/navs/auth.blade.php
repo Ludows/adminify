@@ -3,7 +3,7 @@
     <div class="container-fluid">
         <!-- Brand -->
         <div class="">
-            <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{{ route('home.dashboard') }}">{{ __('Dashboard') }}</a>
+            <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{{ route('home.dashboard') }}">{{ __('admin.root') }}</a>
             <a href="#" class="btn btn-default js-search-btn btn-sm rounded">
                 <i class="fas fa-search"></i>
             </a>

@@ -36,7 +36,7 @@ class GenerateAdminMenu
                 ->addClass('navbar-nav')
                 ->wrap('div', ['class' => 'navigation-area'])
                 ->prepend('<h6 class="navbar-heading text-muted">Navigation</h6>');
-        $menuAdmin->add( Link::to( $multilang ? '/admin/dashboard?lang='.$lang : '/admin/dashboard', '<i class="ni ni-tv-2 text-primary"></i> '.__('admin.home.dashboard'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+        $menuAdmin->add( Link::to( $multilang ? '/admin/dashboard?lang='.$lang : '/admin/dashboard', '<i class="ni ni-tv-2 text-primary"></i> '.__('admin.root'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
 
         foreach ($menu_config as $menu_str) {
             # code...

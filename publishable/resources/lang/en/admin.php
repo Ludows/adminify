@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'root' => 'Dashboard',
     'last_entity' => 'Last :entity',
     'edit_entity' => 'Edit this :entity',
     'menuback' => [

@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'root' => 'Tableau de Bord',
     'last_entity' => 'Derniers :entity',
     'edit_entity' => 'Editer cette :entity',
     'breadcrumb' => [
