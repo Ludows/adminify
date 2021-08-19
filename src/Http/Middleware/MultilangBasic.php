@@ -47,7 +47,7 @@ class MultilangBasic
         $v->share('langs', $supported_locales);
         $v->share('currentLang', $currentLocale);
         $v->share('currentRouteName', $routeName);
-        $v->share('useMultilang', $config['multilang']);
+        $v->share('useMultilang',  (bool) $config['multilang']);
 
         foreach ($base_parameters as $key => $value) {
             # code...
