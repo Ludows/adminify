@@ -62,7 +62,7 @@ class SitemapRender
 
 
                 if($allowSitemap) {
-                    if($isTranslatableModel) {
+                    if($isTranslatableModel && (bool) $isMultilang) {
                         $all = $m->lang($options['currentLang'])->get()->all();
                     }
                     else {
