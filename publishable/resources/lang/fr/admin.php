@@ -1,6 +1,8 @@
 <?php
 
 return [
+    'last_entity' => 'Derniers :entity',
+    'edit_entity' => 'Editer cette :entity',
     'menuback' => [
         'dashboard' => 'tableau de bord',
         'pages' => 'Pages',
