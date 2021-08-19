@@ -1,5 +1,5 @@
 @php
-    $entity = __('admin.table.modules.listings.th_cells.'.$attr);
+    $entity = __('admin.table.th_cells.'.$attr);
 @endphp
 
 @if(gettype($model->{$attr}) == 'string' && strlen($model->{$attr}) > 0)

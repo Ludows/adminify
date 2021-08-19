@@ -3,6 +3,11 @@
 return [
     'last_entity' => 'Derniers :entity',
     'edit_entity' => 'Editer cette :entity',
+    'breadcrumb' => [
+        'root' => 'Tableau de Bord',
+        'index' => ':entity',
+        'edit' => 'Editer :entity'
+    ],
     'menuback' => [
         'dashboard' => 'tableau de bord',
         'pages' => 'Pages',
