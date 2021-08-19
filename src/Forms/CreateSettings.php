@@ -31,7 +31,7 @@ class CreateSettings extends Form
             'value' => $this->getMedia( $this->getSetting('logo_id') ) ?? null
         ])
         ->add('homepage', 'select2', [
-            'empty_value' => _('admin.form.select_entity', ['entity' => 'page']),
+            'empty_value' => __('admin.form.select_entity', ['entity' => 'page']),
             'choices' => $home['datas'],
             'selected' => $home['selected'],
             'label' => __('admin.form.homepage'),
@@ -41,7 +41,7 @@ class CreateSettings extends Form
             ]
         ])
         ->add('blogpage', 'select2', [
-            'empty_value' => _('admin.form.select_entity', ['entity' => 'page']),
+            'empty_value' => __('admin.form.select_entity', ['entity' => 'page']),
             'choices' => $blog['datas'],
             'selected' => $blog['selected'],
             'label' => __('admin.form.blogpage'),
@@ -52,7 +52,7 @@ class CreateSettings extends Form
         ])
         ->add('no_comments', 'checkbox', [
             'label_show' => true,
-            'label' => __('admin.form.no_comments'),
+            'label' => __('admin.form.no_comments_globally'),
             'value' => $comments != null ? 0 : 1,
             'checked' => $comments != null ? true : false
         ])
