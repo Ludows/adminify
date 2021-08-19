@@ -37,7 +37,7 @@ class MultilangBasic
         $base_parameters = [
             "isCrudPattern"=> false,
             "singleParam"=> Str::singular($routeNameSpl[0]),
-            "useMultilang" => $config['multilang'],
+            "useMultilang" => (bool) $config['multilang'],
             "lang"=> $currentLocale,
             "langs" => $supported_locales,
             "currentRouteName" => $routeName,
