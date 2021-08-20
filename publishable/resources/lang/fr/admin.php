@@ -5,6 +5,9 @@ return [
     'last_entity' => 'Derniers :entity',
     'edit_entity' => 'Editer cette :entity',
     'global_search' => 'Recherche Globale',
+    'profile' => "Votre Profile",
+    'update_profile' => "Mettre à jour ses Préférences",
+    'logout' => 'Déconnexion',
     'search' => 'Rechercher',
     'breadcrumb' => [
         'root' => 'Tableau de Bord',

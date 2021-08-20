@@ -17,7 +17,7 @@
     @if($user->hasPermissionTo('create_settings'))
         <a href="{{ route('settings.index') }}" class="dropdown-item">
             <i class="ni ni-settings-gear-65"></i>
-            <span>{{ __('admin.settings.index') }}</span>
+            <span>{{ __('admin.menuback.settings') }}</span>
         </a>
     @endif
     <div class="dropdown-divider"></div>

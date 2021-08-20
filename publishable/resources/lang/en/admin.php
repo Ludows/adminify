@@ -5,6 +5,9 @@ return [
     'last_entity' => 'Last :entity',
     'edit_entity' => 'Edit this :entity',
     'global_search' => "Global Search",
+    'profile' => "Your Profile",
+    'update_profile' => "Update Your Preference",
+    'logout' => 'Disconnect',
     'search' => 'Search',
     'breadcrumb' => [
         'root' => 'Dashboard',
