@@ -13,7 +13,10 @@ namespace Ludows\Adminify\Traits;
    public function seoWith($type, $object = true) {
        $s = new Seo();
 
-       $q = $s->type($type)->modelId($this->id)->modelName($this->getNameSpace());
+       $r = new \ReflectionClass($this);
+
+       $q = $s->type($type)->modelId($this->id)->modelName($r->name);
+
 
        $test =  $q->first();
        if($test != null) {
