@@ -40,7 +40,7 @@ class Post extends DropdownsManager
                 $this->add('dropdown_'.$m->id, [
                     'template' => 'adminify::layouts.admin.dropdowns.extends.seo',
                     'vars' => [
-                        'url' => route('seo.edit', ['type' => 'post', 'id' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
+                        'url' => route('seo.edit', ['type' => 'posts', 'id' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
                         'name' => 'seo'
                     ]
                 ]);
