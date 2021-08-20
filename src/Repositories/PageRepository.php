@@ -6,19 +6,22 @@ use  Ludows\Adminify\Repositories\BaseRepository;
 class PageRepository extends BaseRepository
 {
 
-    public $relations_columns = [
+    public $internal_relations_columns = [
         'media_id',
+    ];
+
+    public $external_relations_columns = [
         'categories_id'
     ];
 
-    public function getCategoriesIdRelationship($model, $formValues, $type) {
+    public function getExternalCategoriesIdRelationship($model, $formValues, $type) {
         if(isset($formValues['categories_id']) && count($formValues['categories_id']) > 0) {
             if($type == "update") {
                 $model->categories()->detach();
             }
             foreach ($formValues['categories_id'] as $cat => $catId) {
                 # code...
-                $model->categories()->attach((int) $catId, ['page_id' => $model->id]);
+                $model->categories()->attach((int) $catId);
             }
         }
     }

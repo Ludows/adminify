@@ -7,18 +7,21 @@ use  Ludows\Adminify\Repositories\BaseRepository;
 class PostRepository extends BaseRepository
 {
 
-    public $relations_columns = [
+    public $internal_relations_columns = [
         'media_id',
+    ];
+
+    public $external_relations_columns = [
         'tags_id',
         'categories_id'
     ];
     
-    public function getTagIdRelationship($model,$formValues, $type) {
+    public function getExternalTagIdRelationship($model,$formValues, $type) {
         if(isset($formValues['tags_id'])) {
             $model->createTags($formValues['tags_id']);
         }
     }
-    public function getCategoriesIdRelationship($model , $formValues, $type) {
+    public function getExternalCategoriesIdRelationship($model , $formValues, $type) {
         if(isset($formValues['categories_id'])) {
             if($type == 'update') {
                 $insertedCategories = $model->categories;

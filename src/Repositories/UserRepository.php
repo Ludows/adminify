@@ -10,8 +10,10 @@ use Ludows\Adminify\Repositories\BaseRepository;
 
 class UserRepository extends BaseRepository
 {
-    public $relations_columns = [
+    public $internal_relations_columns = [
         'avatar',
+    ];
+    public $external_relations_columns = [
         'roles'
     ];
     public $filters_on = [
@@ -33,7 +35,7 @@ class UserRepository extends BaseRepository
     public function getPasswordFilter($model, $formValues, $type) {
         $model->password = Hash::make($formValues['password']);
     }
-    public function getRolesRelationship($model, $formValues, $type) {
+    public function getExternalRolesRelationship($model, $formValues, $type) {
         if(isset($formValues['roles']) && $type == "create") {
             $model->assignRole($formValues['roles']);
         }

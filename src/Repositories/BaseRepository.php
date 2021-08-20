@@ -19,8 +19,12 @@ class BaseRepository
      */
     protected $model;
 
-    // Define our relationship columns. The repository does'nt make treatments for this columns
-    public $relations_columns = [];
+    // Define your internals relationship columns. The repository does'nt make treatments for this columns
+    public $internal_relations_columns = [];
+
+    // Define your externals relationship columns. The repository does'nt make treatments for this columns
+    // ex : tables pivot
+    public $external_relations_columns = [];
 
     // Your can Define your Manipulation datas here
     public $filters_on = [];
@@ -40,7 +44,7 @@ class BaseRepository
     }
     protected function getNamedFunctionPattern($string_to_replace, $new_string, $string_base) {
 
-        
+
         $strFormat = Str::remove('-', $new_string);
         $strFormat = Str::replace(' ', '', $strFormat);
         $converted = Str::camel($strFormat);
@@ -51,7 +55,7 @@ class BaseRepository
     }
     protected function getProcessDb($mixed, $modelPassed = null, $hooks = [], $type = null) {
         $request = request();
-        
+
         $multilang = $request->useMultilang;
         $lang = $request->lang;
 
@@ -66,10 +70,12 @@ class BaseRepository
 
         $fillables = $model->getFillable();
 
+        $untouchables_relations = array_merge($this->internal_relations_columns, $this->external_relations_columns);
+
         foreach ($fillables as $fillable) {
             # code...
             if(isset($formValues[$fillable])) {
-                if(!in_array($fillable, $this->relations_columns)) {
+                if(!in_array($fillable, $untouchables_relations)) {
                     $isTranslatableField = $model->isTranslatableColumn($fillable);
                     if($isTranslatableField && $multilang) {
                         $model->setTranslation($fillable, $lang, $formValues[$fillable]);
@@ -81,20 +87,20 @@ class BaseRepository
                 }
             }
             else {
-                
+
                 $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $fillable, 'get##PLACEHOLDER##Process');
 
                 if(method_exists($this, $namedMethod)) {
                     call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
                 }
             }
-            
+
         }
 
         $this->hookManager->run($hooks[0], $model);
 
-        if(count($this->relations_columns) > 0) {
-            foreach ($this->relations_columns as $relationable) {
+        if(count($this->internal_relations_columns) > 0) {
+            foreach ($this->internal_relations_columns as $relationable) {
                 # code...
 
                 $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $relationable, 'get##PLACEHOLDER##Relationship');
@@ -108,8 +114,8 @@ class BaseRepository
 
         if(count($this->filters_on) > 0) {
             foreach ($this->filters_on as $filterable) {
-                $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $filterable, 'get##PLACEHOLDER##Filter');   
-                
+                $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $filterable, 'get##PLACEHOLDER##Filter');
+
                 if(method_exists($this, $namedMethod)) {
                     call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
                 }
@@ -117,6 +123,21 @@ class BaseRepository
         }
 
         $model->save();
+
+        // now the model has been created or updated. We can chain all external relationships
+
+        if(count($this->external_relations_columns) > 0) {
+            foreach ($this->external_relations_columns as $relationable) {
+                # code...
+
+                $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $relationable, 'getExternal##PLACEHOLDER##Relationship');
+
+                if(method_exists($this, $namedMethod)) {
+                    call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
+                }
+
+            }
+        }
 
         $this->hookManager->run($hooks[1], $model);
 
@@ -134,7 +155,7 @@ class BaseRepository
     public function getMediaIdRelationship($model, $formValues, $type) {
         if(isset($formValues['media_id']) && $formValues['media_id'] != 0) {
             $id = (int) $formValues['media_id'];
-        
+
             $m = Media::where('id', $id)->first();
             if($m != null) {
                 $model->media_id = $m->id;

@@ -6,7 +6,7 @@ use App\Models\Category; // Don't forget to update the model's namespace
 use  Ludows\Adminify\Repositories\BaseRepository;
 class CategoryRepository extends BaseRepository
 {
-    public $relations_columns = [
+    public $internal_relations_columns = [
         'media_id',
     ];
 
