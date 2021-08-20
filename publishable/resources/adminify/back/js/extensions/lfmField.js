@@ -157,7 +157,7 @@ export default function LFMField(fields) {
                         return false;
                     }
                     if(d.models.length > 0) {
-                        fields_id.indexOf($hidden.attr('name')) == -1 ? $hidden.val(d.models[0].id) : $hidden.val(d.models[0].src);
+                        fields_id.indexOf($hidden.attr('name')) > -1 ? $hidden.val(d.models[0].id) : $hidden.val(d.models[0].src);
                     }
                     else {
                         // by defaults fallback to current name and mime type 
