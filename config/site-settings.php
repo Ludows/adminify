@@ -63,6 +63,9 @@ return [
         'model:deleted' => [
             \App\Hooks\OnDeletedHook::class,
         ],
+        'setting:created' => [
+            \App\Hooks\HandleSettings::class,
+        ]
     ],
 
     'sitemap' => [
