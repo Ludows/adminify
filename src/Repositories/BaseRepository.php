@@ -133,12 +133,12 @@ class BaseRepository
 
     public function getMediaIdRelationship($model, $formValues, $type) {
         if(isset($formValues['media_id']) && $formValues['media_id'] != 0) {
-            $json = json_decode($formValues['media_id']);
+            $id = (int) $formValues['media_id'];
         
-            $m = Media::where('src', $json[0]->name)->first();
+            $m = Media::where('id', $id)->first();
             if($m != null) {
                 $model->media_id = $m->id;
-                }
+            }
             else {
                 $model->media_id = 0;
             }
