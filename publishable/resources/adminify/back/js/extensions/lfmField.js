@@ -144,6 +144,9 @@ export default function LFMField(fields) {
         }
 
         function updateFieldProcess() {
+
+            let fields_id = ['media_id', 'logo_id'];
+
             selectedItems = getSelection(ifr);
             GenerateSelection($el_wrapper, selectedItems);
             console.log(selectedItems);
@@ -154,7 +157,7 @@ export default function LFMField(fields) {
                         return false;
                     }
                     if(d.models.length > 0) {
-                        $hidden.attr('name') != 'media_id' ? $hidden.val(d.models[0].src) : $hidden.val(d.models[0].id);
+                        fields_id.indexOf($hidden.attr('name')) == -1 ? $hidden.val(d.models[0].src) : $hidden.val(d.models[0].id);
                     }
                     else {
                         // by defaults fallback to current name and mime type 
