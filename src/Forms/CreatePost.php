@@ -65,7 +65,7 @@ class CreatePost extends Form
             $this->add('media_id', 'lfm',[
                 'label_show' => false,
                 'attr' => [
-                    'value' => !is_array($m) && $m->media_id != 0 ? $m->media->path : null
+                    'value' => !is_array($m) && $m->media_id != 0 ? $m->media->id : null
                 ]
             ]);
 
