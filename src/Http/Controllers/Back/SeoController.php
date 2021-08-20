@@ -13,7 +13,7 @@ use App\Repositories\SeoRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 
-class TagsController extends Controller
+class SeoController extends Controller
 {
     use FormBuilderTrait;
     private $seoRepository;
