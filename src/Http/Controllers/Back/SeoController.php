@@ -36,8 +36,8 @@ class SeoController extends Controller
 
             $seo->checkForTraduction();
             // $traduction->flashForMissing();
-            $type = $request->get('type');
-            $id = (int) $request->get('id');
+            $type = $request->type;
+            $id = (int) $request->id;
 
             if($id == null && $type == null) {
                 abort(403);
@@ -54,7 +54,7 @@ class SeoController extends Controller
 
             $form = $formBuilder->create(SeoForm::class, [
                 'method' => 'PUT',
-                'url' => route('seo.update', ['seo' => $seo->id]),
+                'url' => route('seo.update', ['type' => $type, 'id' => $id]),
                 'model' => $model
             ]);
 
@@ -71,8 +71,8 @@ class SeoController extends Controller
         {
             //
 
-            $type = $request->get('type');
-            $id = (int) $request->get('id');
+            $type = $request->type;
+            $id = (int) $request->id;
 
             if($id == null && $type == null) {
                 abort(403);
