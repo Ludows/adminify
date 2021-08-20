@@ -9,17 +9,28 @@ class SettingsRepository extends BaseRepository
 {
     public function CreateOrUpdate($form) {
 
-        $formValues = $form->getFieldValues(true);
+        $fields = $form->getFieldValues(true);
+
+        $mapping_datas = [];
+
+        foreach ($fields as $key => $value) {
+            # code...
+            $mapping_datas[] = [
+                'type' => $key,
+                'data' => $value,
+            ];
+        }
+
         $a = [];
         
-        foreach ($formValues as $key => $value) {
-            $check = Settings::where('type', $key)->first();
+        foreach ($mapping_datas as $mapping_data) {
+            $check = Settings::where('type', $mapping_data['type'])->first();
 
             if($check == null) {
-               $m = $this->getProcessDb($form, $this->model ?? new Settings(), ['setting:creating', 'setting:created'], 'create');
+               $m = $this->getProcessDb($mapping_data, $this->model ?? new Settings(), ['setting:creating', 'setting:created'], 'create');
             }
             else {
-                $m = $this->getProcessDb($form, $this->model ?? $check, ['setting:updating', 'setting:updated'], 'update');
+                $m = $this->getProcessDb($mapping_data, $this->model ?? $check, ['setting:updating', 'setting:updated'], 'update');
             }
             $a[] = $m;
         }
