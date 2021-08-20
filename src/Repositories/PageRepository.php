@@ -18,7 +18,7 @@ class PageRepository extends BaseRepository
             }
             foreach ($formValues['categories_id'] as $cat => $catId) {
                 # code...
-                $model->categories()->attach((int) $catId);
+                $model->categories()->attach((int) $catId, ['page_id' => $model->id]);
             }
         }
     }
