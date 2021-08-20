@@ -7,7 +7,7 @@
             }
         @endphp
         <a href="{{ route( $currentRouteName , $arrayParameters) }}" class="dropdown-item">
-            <img width="25" alt="{{ $lang }}" src="{{ asset('argon/img/flags') }}/{{ $lang }}.svg">
+            <img width="25" alt="{{ $lang }}" src="{{ asset('adminify/img/flags') }}/{{ $lang }}.svg">
             <span>{{ __('admin.'.$lang) }}</span>
         </a>
     @endforeach
