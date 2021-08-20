@@ -28,8 +28,10 @@ class SeoRepository extends BaseRepository
 
         foreach ($formValues as $key => $value) {
             # code...
+            $hooks = ['seo:creating', 'seo:created'];
             $hasSeo = $model->seoWith($key);
             if($hasSeo != null) {
+                $hooks = ['seo:updating', 'seo:updated'];
                 $seo = $hasSeo;
             }
             else {
@@ -52,8 +54,9 @@ class SeoRepository extends BaseRepository
                 $json = json_decode($formValues['image']);
                 $seo->setTranslation('data', $lang, $json[0]->name);
             }
-
+            $this->hookManager->run($hooks[0], $seo);
             $seo->save();
+            $this->hookManager->run($hooks[1], $seo);
         }
 
     }
