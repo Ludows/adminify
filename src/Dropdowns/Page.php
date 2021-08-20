@@ -42,8 +42,8 @@ class Page extends DropdownsManager
                 $this->add('dropdown_'.$m->id, [
                     'template' => 'adminify::layouts.admin.dropdowns.extends.seo',
                     'vars' => [
-                        'url' => route('pages.edit', ['page' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '', 'seo']),
-                        'name' => 'pages'
+                        'url' => route('seo.edit', ['type' => 'page', 'id' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
+                        'name' => 'seo'
                     ]
                 ]);
                 $this->add('dropdown_'.$m->id, [
