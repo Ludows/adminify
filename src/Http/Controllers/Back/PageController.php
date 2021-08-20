@@ -115,20 +115,20 @@ class PageController extends Controller
 
             // dd($page);
 
-            if($request->exists('seo')) {
-                $form = $formBuilder->create(SeoForm::class, [
-                    'method' => 'PUT',
-                    'url' => route('pages.update', ['page' => $page->id]),
-                    'model' => $page
-                ]);
-            }
-            else {
+            // if($request->exists('seo')) {
+            //     $form = $formBuilder->create(SeoForm::class, [
+            //         'method' => 'PUT',
+            //         'url' => route('pages.update', ['page' => $page->id]),
+            //         'model' => $page
+            //     ]);
+            // }
+            // else {
                 $form = $formBuilder->create(UpdatePage::class, [
                     'method' => 'PUT',
                     'url' => route('pages.update', ['page' => $page->id]),
                     'model' => $page
                 ]);
-            }
+            // }
 
 
             return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
@@ -143,26 +143,26 @@ class PageController extends Controller
         public function update(UpdatePageRequest $request, Page $page)
         {
             //
-            $isSeo = $request->exists('_seo');
+            // $isSeo = $request->exists('_seo');
             $seo = null;
 
-            if($isSeo) {
-                $form = $this->form(SeoForm::class, [
-                    'method' => 'PUT',
-                    'url' => route('pages.update', ['page' => $page->id]),
-                    'model' => $page
-                ]);
-            }
-            else {
+            // if($isSeo) {
+            //     $form = $this->form(SeoForm::class, [
+            //         'method' => 'PUT',
+            //         'url' => route('pages.update', ['page' => $page->id]),
+            //         'model' => $page
+            //     ]);
+            // }
+            // else {
                 $form = $this->form(UpdatePage::class);
-            }
+            // }
 
-            if($isSeo) {
-                $seo = $this->seoRepository->addModel($page)->findOrCreate($page, $form);
-            }
-            else {
+            // if($isSeo) {
+            //     $seo = $this->seoRepository->addModel($page)->findOrCreate($page, $form);
+            // }
+            // else {
                 $page = $this->pageRepository->addModel($page)->update($form, $page);
-            }
+            // }
 
             if($request->ajax()) {
 
@@ -170,12 +170,12 @@ class PageController extends Controller
                     'status' => __('admin.typed_data.updated')
                 ];
 
-                if($isSeo) {
-                    $ar['seo'] = $seo;
-                }
-                else {
+                // if($isSeo) {
+                //     $ar['seo'] = $seo;
+                // }
+                // else {
                     $ar['seo'] = $page;
-                }
+                // }
 
                 return response()->json($ar);
             }

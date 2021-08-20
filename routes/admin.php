@@ -50,6 +50,11 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
 
     Route::post('find/{type}', 'Ludows\Adminify\Http\Controllers\Back\FinderController@index')->name('finder');
 
+    Route::get('seo/{type}/{id}', 'Ludows\Adminify\Http\Controllers\Back\SeoController@edit')->name('seo.edit');
+
+    Route::put('seo/{type}/{id}', 'Ludows\Adminify\Http\Controllers\Back\SeoController@update')->name('seo.update');
+    Route::patch('seo/{type}/{id}', 'Ludows\Adminify\Http\Controllers\Back\SeoController@update')->name('seo.update');
+
 
     Route::get('modales/content/{name}', function ($name) {
         $returnView = view("layouts.admin.modales.contents.".$name, [])->render();

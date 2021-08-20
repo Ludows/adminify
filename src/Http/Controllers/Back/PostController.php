@@ -118,20 +118,20 @@ class PostController extends Controller
             $post->checkForTraduction();
             // $post->flashForMissing();
 
-            if($request->exists('seo')) {
-                $form = $formBuilder->create(SeoForm::class, [
-                    'method' => 'PUT',
-                    'url' => route('posts.update', ['post' => $post->id]),
-                    'model' => $post
-                ]);
-            }
-            else {
+            // if($request->exists('seo')) {
+            //     $form = $formBuilder->create(SeoForm::class, [
+            //         'method' => 'PUT',
+            //         'url' => route('posts.update', ['post' => $post->id]),
+            //         'model' => $post
+            //     ]);
+            // }
+            // else {
                 $form = $formBuilder->create(UpdatePost::class, [
                     'method' => 'PUT',
                     'url' => route('posts.update', ['post' => $post->id]),
                     'model' => $post
                 ]);
-            }
+            // }
 
             return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
         }
@@ -145,30 +145,30 @@ class PostController extends Controller
         public function update(Post $post, UpdatePostRequest $request)
         {
             //
-            $isSeo = $request->exists('_seo');
-            $seo = null;
+            // $isSeo = $request->exists('_seo');
+            // $seo = null;
 
-            if($isSeo) {
-                $form = $this->form(SeoForm::class, [
-                    'method' => 'PUT',
-                    'url' => route('posts.update', ['post' => $post->id]),
-                    'model' => $post
-                ]);
-            }
-            else {
+            // if($isSeo) {
+            //     $form = $this->form(SeoForm::class, [
+            //         'method' => 'PUT',
+            //         'url' => route('posts.update', ['post' => $post->id]),
+            //         'model' => $post
+            //     ]);
+            // }
+            // else {
                 $form = $this->form(UpdatePost::class, [
                     'method' => 'PUT',
                     'url' => route('posts.update', ['post' => $post->id]),
                     'model' => $post
                 ]);
-            }
+            // }
 
-            if($isSeo) {
-                $seo = $this->seoRepository->findOrCreate($post, $form);
-            }
-            else {
+            // if($isSeo) {
+            //     $seo = $this->seoRepository->findOrCreate($post, $form);
+            // }
+            // else {
                $post = $this->postRepository>addModel($post)->update($form, $post);
-            }
+            // }
 
 
             if($request->ajax()) {
