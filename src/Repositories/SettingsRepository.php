@@ -15,10 +15,13 @@ class SettingsRepository extends BaseRepository
 
         foreach ($fields as $key => $value) {
             # code...
-            $mapping_datas[] = [
-                'type' => $key,
-                'data' => $value,
-            ];
+            if(!is_null($value)) {
+                $mapping_datas[] = [
+                    'type' => $key,
+                    'data' => $value,
+                ];
+            }
+            
         }
 
         $a = [];
