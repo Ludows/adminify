@@ -28,13 +28,20 @@ class ContentTypesHook extends HookInterface {
         $parentable = $context->parent_id;
         //dump($parentable);
         $reflect = new \ReflectionClass($context);
+        $checkHomePage = setting('homepage');
+        $checkBlogPage = setting('blogpage');
+
+        $isHomePage = $checkHomePage != null && $context->id == (int) $checkHomePage;
+        $isBlogPage = $checkBlogPage != null && $context->id == (int) $checkBlogPage;
 
         if(isset($parentable) && $parentable != 0) {
             $context->syncUrl([
                 'from_model_id' => $from,
                 'model_id' => $context->id,
                 'model_name' => $reflect->name,
-                'order' => $baseOrder
+                'order' => $baseOrder,
+                'is_homepage' => $isHomePage,
+                'is_blogpage' => $isBlogPage
             ]);
             //access to parent
             $parent = $context->getParent($parentable);
@@ -46,7 +53,9 @@ class ContentTypesHook extends HookInterface {
             $context->syncUrl([
                 'from_model_id' => $from,
                 'model_name' => $reflect->name,
-                'order' => 0
+                'order' => 0,
+                'is_homepage' => $isHomePage,
+                'is_blogpage' => $isBlogPage
             ]);
         }
     }

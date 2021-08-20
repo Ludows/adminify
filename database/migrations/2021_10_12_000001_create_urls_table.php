@@ -21,6 +21,8 @@ class CreateUrlsTable extends Migration
             $table->string('model_name', 255);
             $table->bigInteger('model_id');
             $table->bigInteger('order');
+            $table->boolean('is_homepage');
+            $table->boolean('is_blogpage');
             $table->timestamps();
         });
     }
