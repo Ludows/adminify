@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Repositories;
 
 use MrAtiebatie\Repository;
 use App\Models\Seo; // Don't forget to update the model's namespace
-
+use App\Models\Media;
 use Illuminate\Support\Arr;
 
 use  Ludows\Adminify\Repositories\BaseRepository;
@@ -36,7 +36,10 @@ class SeoRepository extends BaseRepository
                 $seo = new Seo();
             }
             $seo->type = $key;
-            $seo->model_name = $model->getNameSpace();
+
+            $r = new \ReflectionClass($model);
+
+            $seo->model_name = $r->name;
             $seo->model_id = $model->id;
             if($multilang) {
                 $seo->setTranslation('data', $lang, $value);
