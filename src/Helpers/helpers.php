@@ -47,6 +47,30 @@ if(! function_exists('is_linkable_media_model') ) {
     }
 }
 
+if(! function_exists('is_homepage') ) {
+    function is_homepage($class) {
+        // the relationship model
+        $ret = false;
+        $s = setting('homepage');
+        if($s != null && $class->id == $s && $class instanceof \App\Models\Page) {
+            $ret = true;
+        }
+        return $ret;
+    }
+}
+
+if(! function_exists('is_blogpage') ) {
+    function is_blogpage($class) {
+        // the relationship model
+        $ret = false;
+        $s = setting('blogpage');
+        if($s != null && $class->id == $s && $class instanceof \App\Models\Page) {
+            $ret = true;
+        }
+        return $ret;
+    }
+}
+
 if(! function_exists('is_trashable_model')  ) {
     function is_trashable_model($class) {
         // the relationship model

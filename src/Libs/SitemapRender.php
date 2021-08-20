@@ -110,7 +110,19 @@ class SitemapRender
                         //$loc, $lastmod = null, $priority = null, $freq = null, $images = [], $title = null, $translations = [], $videos = [], $googlenews = [], $alternates = []
                         $fullpath = $modelObject->urlpath;
                         if($fullpath != null) {
-                            $sitemap->add($isUrlableModel ? $modelObject->urlpath : $modelObject->{$modelObject->sitemapCallable} , $modelObject->updated_at, '0.9', 'monthly', $images, $modelObject->sitemapTitle, $translations);
+
+                            if(!is_homepage($m) && $isUrlableModel) {
+                                $path = $modelObject->urlpath;
+                            }
+                            else {
+                                $path = $modelObject->{$modelObject->sitemapCallable};
+                            }
+
+                            if(is_homepage($m) && $isUrlableModel) {
+                                $path = '/';
+                            }
+
+                            $sitemap->add($path, $modelObject->updated_at, '0.9', 'monthly', $images, $modelObject->sitemapTitle, $translations);
                         }
                     }
 
