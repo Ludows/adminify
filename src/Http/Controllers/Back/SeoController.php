@@ -87,7 +87,9 @@ class SeoController extends Controller
             $model = new $model_key;
             $model = $model->find($id);
 
-            $form = $this->form(SeoForm::class);
+            $form = $this->form(SeoForm::class, [
+                'model' => $model
+            ]);
 
             $this->seoRepository->addModel($model)->findOrCreate($model , $form);
 
