@@ -202,9 +202,11 @@ if(! function_exists('user')) {
         $cacheUser = cache('user-'. $id);
 
         if($cacheUser == null) {
-            $cacheUser = cache(['user-'. $id => auth()->user()]);
+            $user = auth()->user();
+            $cacheUser = cache(['user-'. $id => $user]);
+            $cacheUser = $user;
         }
-        
+
         return $cacheUser;
     }
 }
