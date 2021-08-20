@@ -3,6 +3,7 @@
 namespace Ludows\Adminify\Hooks;
 
 use Ludows\Adminify\Libs\HookInterface;
+use Ludows\Adminify\Facades\HookManagerFacade;
 
 use App\Models\Url;
 
@@ -33,6 +34,10 @@ class HandleSettings extends HookInterface {
                 $m->fill([
                     $key => $val
                 ]);
+
+                if(is_urlable_model($m)) {
+                    HookManagerFacade::run('model:updated', $m);
+                }
             }
         }
 
