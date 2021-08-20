@@ -62,7 +62,10 @@ class ContentTypesHook extends HookInterface {
     public function syncToCache($context) {
         $url = $context->url;
         if($url != null) {
-            $context->encryptToCache(join('.', $url));
+
+            $isHomePage = is_homepage($context);
+
+            $context->encryptToCache( $isHomePage ? 'homepage' : join('.', $url) );
         }
     }
     

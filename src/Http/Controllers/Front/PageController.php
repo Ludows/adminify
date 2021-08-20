@@ -23,7 +23,14 @@ class PageController extends Controller
         public function index(Request $request)
         {
 
-            $page = Page::find( setting('homepage') );
+            $settings = cache('homepage');
+
+            if($settings == null) {
+                $settings = setting('homepage');
+            }
+
+
+            $page = Page::find( is_array($settings) ? $settings['model_id'] : $settings );
 
             if( $page == null ) {
                 abort("404");
