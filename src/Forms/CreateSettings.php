@@ -54,13 +54,19 @@ class CreateSettings extends Form
             'label_show' => true,
             'label' => __('admin.form.no_comments_globally'),
             'value' => $comments != null ? 0 : 1,
-            'checked' => $comments != null ? true : false
+            'checked' => $comments != null ? true : false,
+            'wrapper' => ['class' => 'custom-control custom-control-alternative custom-checkbox'],
+            'attr' => ['class' => 'custom-control-input'],
+            'label_attr' => ['class' => 'custom-control-label text-muted'],
         ])
         ->add('no_seo', 'checkbox', [
             'label_show' => true,
             'label' => __('admin.form.no_seo'),
             'value' => $seo != null ? 0 : 1,
-            'checked' => $seo != null ? true : false
+            'checked' => $seo != null ? true : false,
+            'wrapper' => ['class' => 'custom-control custom-control-alternative custom-checkbox'],
+            'attr' => ['class' => 'custom-control-input'],
+            'label_attr' => ['class' => 'custom-control-label text-muted'],
         ]);
 
         $this->add('submit', 'submit', ['label' => _('admin.form.save'), 'attr' => ['class' => 'btn btn-default']]);

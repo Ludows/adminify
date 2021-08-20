@@ -78,6 +78,9 @@ class CreatePost extends Form
             $this->add('no_comments', 'checkbox', [
                 'label_show' => true,
                 'label' => __('admin.form.no_comments'),
+                'wrapper' => ['class' => 'custom-control custom-control-alternative custom-checkbox'],
+                'attr' => ['class' => 'custom-control-input'],
+                'label_attr' => ['class' => 'custom-control-label text-muted'],
             ]);
             
             $this->add('user_id', 'hidden', [
