@@ -22,7 +22,7 @@ class CreatePostTable extends Migration
                 $table->json('slug');
                 $table->json('content')->nullable();
                 $table->boolean('no_comments')->default(false);
-                $table->bigInteger('media_id')->default(0)->unsigned();
+                $table->bigInteger('media_id')->nullable()->unsigned();
                 $table->bigInteger('user_id')->default(0)->unsigned();
                 $table->bigInteger('status_id')->unsigned();
             });
@@ -35,7 +35,7 @@ class CreatePostTable extends Migration
                 $table->string('slug', 255);
                 $table->text('content')->nullable();
                 $table->boolean('no_comments')->default(false);
-                $table->bigInteger('media_id')->default(0)->unsigned();
+                $table->bigInteger('media_id')->nullable()->unsigned();
                 $table->bigInteger('user_id')->default(0)->unsigned();
                 $table->bigInteger('status_id')->unsigned();
             });
