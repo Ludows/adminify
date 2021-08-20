@@ -28,7 +28,6 @@ class SaveSettings extends FormRequest
         $a = [
             'site_name' => ['required', 'string'],
             'site_slogan' => ['required', 'string'],
-            'logo_id' => ['integer']
         ];
 
         return $a;
