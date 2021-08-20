@@ -198,13 +198,15 @@ if(! function_exists('get_urlpath')) {
 if(! function_exists('user')) {
     function user() {
 
+        $cacheUser = null;
         $id = auth()->id();
-        $cacheUser = cache('user-'. $id);
 
-        if($cacheUser == null) {
-            $user = auth()->user();
-            $cacheUser = cache(['user-'. $id => $user]);
-            $cacheUser = $user;
+        if($id != null) {
+            $cacheUser = cache('user-'. $id);
+
+            if($cacheUser == null) {
+                $cacheUser = cache(['user-'. $id => auth()->user()]);
+            }
         }
 
         return $cacheUser;
