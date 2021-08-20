@@ -14,21 +14,27 @@ class HandleSettings extends HookInterface {
             'blogpage' => setting('blogpage')
         ];
 
-        foreach ($handles as $key => $value) {
-            # code...
-            if(!is_null($value)) {
+        $modelHook = $datas;
 
-                $m = Url::where('from_model', 'App\Models\Page')->where('model_id', (int) $value)->get()->first();
+        if($modelHook != null) {
+            $m = null;
+            if($modelHook->type == 'homepage') {
+                $m = Url::where('from_model', 'App\Models\Page')->where('model_id', (int) $handles['homepage'])->get()->first();
+                $key = 'is_homepage';
+                $val = $handles['homepage'];
+            }
+            if($modelHook->type == 'blogpage') {
+                $m = Url::where('from_model', 'App\Models\Page')->where('model_id', (int) $handles['blogpage'])->get()->first();
+                $key = 'is_blogpage';
+                $val = $handles['blogpage'];
+            }
 
-                if($m != null) {
-                    $m->fill([
-                        'is_'.$key => $value
-                    ]);
-                }
-
+            if($m != null) {
+                $m->fill([
+                    $key => $val
+                ]);
             }
         }
-
 
     }
 }
