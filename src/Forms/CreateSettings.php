@@ -18,6 +18,8 @@ class CreateSettings extends Form
         $comments = $this->getSetting('no_comments');
         $seo = $this->getSetting('no_seo');
 
+        $media = $this->getMedia( $this->getSetting('logo_id') );
+
         $this->add('site_name', Field::TEXT, [
             'label' => __('admin.form.site_name'),
             'value' => $this->getSetting('site_name')
@@ -28,7 +30,7 @@ class CreateSettings extends Form
         ])
         ->add('logo_id', 'lfm', [
             'label_show' => false,
-            'value' => $this->getMedia( $this->getSetting('logo_id') ) ?? null
+            'value' =>  $media != null ? $media->id : null
         ])
         ->add('homepage', 'select2', [
             'empty_value' => __('admin.form.select_entity', ['entity' => 'page']),
