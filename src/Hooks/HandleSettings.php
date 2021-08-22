@@ -31,9 +31,10 @@ class HandleSettings extends HookInterface {
             }
 
             if($m != null) {
-                $m->update([
-                    $key => $val
-                ]);
+
+                $m->{$key} = $val;
+               
+                $m->save();
 
                 if(is_urlable_model($m)) {
                     HookManagerFacade::run('model:updated', $m);
