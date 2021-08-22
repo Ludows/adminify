@@ -28,10 +28,10 @@ class FinderController extends Controller
             # code...
 
             if($m->isTranslatableColumn($key) && $multi) {
-                $m->where($key.'->'.$lang, $value);
+                $m = $m->where($key.'->'.$lang, $value);
             }
             else {
-                $m->where($key, $value);
+                $m = $m->where($key, $value);
             }
 
             $iterator++;
