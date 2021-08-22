@@ -65,6 +65,9 @@ return [
         ],
         'setting:created' => [
             \App\Hooks\HandleSettings::class,
+        ],
+        'setting:updated' => [
+            \App\Hooks\HandleSettings::class,
         ]
     ],
 
