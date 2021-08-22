@@ -3,11 +3,17 @@
 namespace Ludows\Adminify\Hooks;
 
 use Ludows\Adminify\Libs\HookInterface;
-use Ludows\Adminify\Facades\HookManagerFacade;
+use Ludows\Adminify\Libs\HookManager;
 
 use App\Models\Url;
 
 class HandleSettings extends HookInterface {
+
+    private $hookManager;
+    public function __construct(HookManager $hookManager)
+    {
+        $this->hookManager = $hookManager;
+    }
     public function handle($datas = null) {
         //data is the model passed
         $handles = [
@@ -36,9 +42,9 @@ class HandleSettings extends HookInterface {
                
                 $m->save();
 
-                if(is_urlable_model($m)) {
-                    HookManagerFacade::run('model:updated', $m);
-                }
+                // if(is_urlable_model($m)) {
+                $this->hookManager->run('model:updated', $m);
+                // }
             }
         }
 
