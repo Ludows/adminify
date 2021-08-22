@@ -1,7 +1,3 @@
-import { get } from 'sortablejs';
-
-const getMime = require('name2mime');
-
 export default function LFMField(fields) {
 
     let selectedItems = [];
@@ -30,21 +26,6 @@ export default function LFMField(fields) {
             sel_wrapper.append(tpl);
         })
     }
-
-    // function formatSourcesEntries(arraySelection) {
-    //     var $sel = [];
-
-    //     $.each(arraySelection, function (i, selection) {
-
-    //         $sel.push({
-    //             'name' : selection.name,
-    //             'file' : {
-    //                 'type': getMime(selection.name)
-    //             }
-    //         });
-    //     })
-    //     return $sel
-    // }
 
     function requestMedia(selecteds, callback) {
 
@@ -75,6 +56,19 @@ export default function LFMField(fields) {
         })
 
         
+    }
+
+    function getIndexFromLfm(ifr , name) {
+        let realIndex = 0;
+        let itemsHtml = ifr.contents().find('#content > a');
+        $.each(itemsHtml, function(i, it) {
+            if(name == $(it).find(".info .item_name").text()) {
+                realIndex = parseInt($(it).attr('data-id'));
+                return false;
+            }
+        })
+
+        return realIndex;
     }
 
     function getSelection(ifr) {
@@ -137,6 +131,14 @@ export default function LFMField(fields) {
                     name: $hidden.val()
                 }
             ]);
+
+            $id = getIndexFromLfm( ifr,  $hidden.attr('data-src') );
+
+            selectedItems = [
+                {
+                    id : $id,
+                }
+            ];
 
             $el.css({
                 'display': 'none'
