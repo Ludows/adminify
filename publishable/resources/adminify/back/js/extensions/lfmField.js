@@ -1,6 +1,7 @@
 export default function LFMField(fields) {
 
     let selectedItems = [];
+    let fields_id = ['media_id', 'logo_id'];
 
     function getParamFromIframe(ifrUrl, name) {
         return (ifrUrl.split(name + '=')[1] || '').split('&')[0];
@@ -147,8 +148,6 @@ export default function LFMField(fields) {
 
         function updateFieldProcess() {
 
-            let fields_id = ['media_id', 'logo_id'];
-
             selectedItems = getSelection(ifr);
             GenerateSelection($el_wrapper, selectedItems);
             console.log(selectedItems);
@@ -181,7 +180,7 @@ export default function LFMField(fields) {
             e.preventDefault();
             e.stopPropagation();
             $('.js-selection').remove();
-            $hidden.val(0);
+            $hidden.val(null);
 
             $el.css({
                 'display': ''
@@ -211,7 +210,7 @@ export default function LFMField(fields) {
 
         modale.on('show.bs.modal', function(e) {
             if($hidden.val().length > 0) {
-                selectedItems[0].id = findIndexFromName(ifr, $hidden.val())
+                selectedItems[0].id = findIndexFromName(ifr, fields_id.indexOf($hidden.attr('name')) ? $hidden.attr('data-src') :  $hidden.val())
                 updateStyle(ifr);
             }
         })
