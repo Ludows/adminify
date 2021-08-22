@@ -132,7 +132,7 @@ export default function LFMField(fields) {
                 }
             ]);
 
-            $id = getIndexFromLfm( ifr,  $hidden.attr('data-src') );
+            let $id = getIndexFromLfm( ifr,  $hidden.attr('data-src') );
 
             selectedItems = [
                 {
