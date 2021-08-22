@@ -21,6 +21,8 @@ export default function LarabergInititalization(fields) {
 
             let form = $(this);
 
+            var datas = form.serializeFormJSON();
+
             $.ajax({
                 'method' : 'POST',
                 'url' : $(this).attr('action'),
@@ -28,7 +30,7 @@ export default function LarabergInititalization(fields) {
                 'headers': {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                'data' : {}
+                'data' : datas
             })
             .done((data) => {
                 console.log('success')
@@ -49,7 +51,9 @@ export default function LarabergInititalization(fields) {
 
             let form = $(this);
 
-            form.find('[name="content"]').val( Laraberg.getContent() )
+            form.find('[name="content"]').val( Laraberg.getContent() );
+
+            var datas = form.serializeFormJSON();
 
             $.ajax({
                 'method' : 'POST',
@@ -58,7 +62,7 @@ export default function LarabergInititalization(fields) {
                 'headers': {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                'data' : {}
+                'data' : datas
             })
             .done((data) => {
                 console.log('success')
