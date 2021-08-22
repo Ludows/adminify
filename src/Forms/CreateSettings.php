@@ -30,7 +30,11 @@ class CreateSettings extends Form
         ])
         ->add('logo_id', 'lfm', [
             'label_show' => false,
-            'value' =>  $media != null ? $media->id : null
+            'value' =>  $media != null ? $media->id : null,
+            'attr' => [
+                'data-path' => $media->path ?? '',
+                'data-src' => $media->src ?? ''
+            ]
         ])
         ->add('homepage', 'select2', [
             'empty_value' => __('admin.form.select_entity', ['entity' => 'page']),
