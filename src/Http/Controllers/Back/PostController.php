@@ -167,7 +167,7 @@ class PostController extends Controller
             //     $seo = $this->seoRepository->findOrCreate($post, $form);
             // }
             // else {
-               $post = $this->postRepository>addModel($post)->update($form, $post);
+               $post = $this->postRepository->addModel($post)->update($form, $post);
             // }
 
 
