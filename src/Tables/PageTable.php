@@ -23,6 +23,10 @@ class PageTable extends TableManager {
                 # code...
                 $ret = 'adminify::layouts.admin.table.custom-cells.user-id';
                 break;
+            case 'no_comments':
+                # code...
+                $ret = 'adminify::layouts.admin.table.custom-cells.no-comments';
+                break;
             case 'status_id':
                 # code...
                 $ret = 'adminify::layouts.admin.table.custom-cells.status-id';
