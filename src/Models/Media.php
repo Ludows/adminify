@@ -3,6 +3,7 @@
 namespace Ludows\Adminify\Models;
 
 use App\Models\Post;
+use App\Models\User;
 use Ludows\Adminify\Traits\PathableMedia;
 use Ludows\Adminify\Traits\Authorable;
 
@@ -44,6 +45,10 @@ class Media extends ClassicModel
     public function posts()
     {
         return $this->hasMany(Post::class);
+    }
+
+    public function user() {
+        return $this->HasOne(User::class, 'id', 'user_id');
     }
 
     public function getLinks($menuBuilder, $arrayDatas) {
