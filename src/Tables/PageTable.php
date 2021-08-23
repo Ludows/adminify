@@ -19,6 +19,9 @@ class PageTable extends TableManager {
             case 'media_id':
                 # code...
                 $ret = 'adminify::layouts.admin.table.custom-cells.pages-media-id';
+            case 'user_id':
+                # code...
+                $ret = 'adminify::layouts.admin.table.custom-cells.user-id';
                 break;
             case 'content':
                 # code...

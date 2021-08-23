@@ -32,6 +32,9 @@ abstract class ContentTypeModel extends ClassicModel
     public function parent() {
         return $this->HasOne(Page::class, 'id', 'parent_id');
     }
+    public function user() {
+        return $this->HasOne(User::class, 'id', 'user_id');
+    }
     public function getParent($id) {
         return Page::find($id);
     }

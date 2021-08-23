@@ -21,6 +21,9 @@ class PostTable extends TableManager {
                 # code...
                 $ret = 'adminify::layouts.admin.table.custom-cells.posts-media-id';
                 break;
+            case 'user_id':
+                # code...
+                $ret = 'adminify::layouts.admin.table.custom-cells.user-id';
             case 'content':
                 # code...
                 $ret = 'adminify::layouts.admin.table.custom-cells.posts-content';
