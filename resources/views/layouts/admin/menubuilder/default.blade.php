@@ -20,5 +20,5 @@
 </div>
 
 @push('js')
-    <script src="{{ asset('adminify') }}/js/menuBuilder.js?v=1.0.0"></script>
+    <script src="{{ asset('adminify') }}/back/js/menuBuilder.js"></script>
 @endpush
