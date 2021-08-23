@@ -52,7 +52,9 @@ jQuery(document).ready(function ($) {
                     },
                     method: deleteMenuForm.attr('method'),
                     url: deleteMenuForm.attr('action'),
-                    data: {},
+                    data: {
+                        '_method': 'DELETE'
+                    },
                     success: function (data) {
                         console.log(data)
                         window.location.href = routeRedirect;
