@@ -19,6 +19,10 @@ class MenuRepository extends BaseRepository
         $config = config('site-settings');
         $multilang = $request->useMultilang;
 
+        if(is_null($scope)) {
+            return false;
+        }
+
         foreach ($scope as $menuitem) {
             # code...
             $menuItem = new MenuItem();
