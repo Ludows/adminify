@@ -1,6 +1,6 @@
 
 <div class="container-fluid" id="menuBuilder">
-    @if(count($menu_switcher) > 0)
+    @if(count($menu_switcher) > 0 && $isEditNamedRoute)
         <div class="row">
             <div class="col-12 menu-switcher-area">
                 @include('adminify::layouts.admin.menubuilder.menu-switcher')

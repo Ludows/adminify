@@ -12,6 +12,9 @@ jQuery(document).ready(function ($) {
     const FormMenuThree = menuBuilder.find('.menu-three-area form').first();
     const NestedLists = menuBuilder.find('.nested_sortable');
 
+    const deleteMenuBtn = menuBuilder.find('#deleteMenuBtn');
+    const deleteMenuForm = menuBuilder.find('#deleteMenu');
+
     menuSwitcher.attr('action', '');
     menuSwitcherSubmit.attr('disabled', 'disabled');
     sidebarForms.find('button[type="submit"]').attr('disabled', 'disabled')
@@ -27,6 +30,44 @@ jQuery(document).ready(function ($) {
         })
     }
 
+
+    deleteMenuBtn.on('click', function(e) {
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Voulez vous supprimer ce menu ? @trad",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui @trad'
+        }).then((result) => {
+            if (result.value) {
+
+                let routeRedirect = Route('menus.index');
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    method: deleteMenuForm.attr('method'),
+                    url: deleteMenuForm.attr('action'),
+                    data: {},
+                    success: function (data) {
+                        console.log(data)
+                        window.location.href = routeRedirect;
+                    },
+                    error: function (err) {
+                        console.log('err', err)
+                    }
+                })
+
+
+                
+            }
+        })
+
+    })
 
 
     FormMenuThree.on('click', 'button[type="submit"]', function (e) {
@@ -227,6 +268,15 @@ jQuery(document).ready(function ($) {
         let collapseEl = $($data_el);
 
         collapseEl.collapse(collapseEl.is(':visible') ? 'hide' : 'show');
+    })
+
+
+    menuSwitcherSubmit.on('click', function(e) {
+        e.preventDefault();
+
+        menuSwitcher.get(0).reset();
+
+        menuSwitcher.submit();
     })
 
     menuSwitcher.on('change', '.form-control', function (e) {
