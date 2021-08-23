@@ -66,7 +66,7 @@ class MenuController extends Controller
         {
             // dd($request);
             $form = $this->form(CreateMenu::class);
-            $menu = $this->menuRepository->create($form, $request);
+            $menu = $this->menuRepository->addModel(new Menu())->create($form);
             if($request->ajax()) {
                 return response()->json([
                     'menu' => $menu,
@@ -217,7 +217,7 @@ class MenuController extends Controller
         {
             $fields = $request->all();
             $menuThree = json_decode($fields['menuthree'], true);
-            $menu = $this->menuRepository->update($menuThree, $menu);
+            $menu = $this->menuRepository->addModel($menu)->update($menuThree, $menu);
 
             if($request->ajax()) {
                 return response()->json([
@@ -241,7 +241,7 @@ class MenuController extends Controller
         {
             //
 
-            $this->menuRepository->delete($menu);
+            $this->menuRepository->addModel($menu)->delete($menu);
 
             flash(__('admin.typed_data.deleted'))->success();
             return redirect()->route('menus.index');
