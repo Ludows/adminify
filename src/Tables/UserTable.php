@@ -40,7 +40,7 @@ class UserTable extends TableManager {
             $users = $datas['results'];
         }
         else {
-            $users = UserModel::whereNotNull('email')->limit( $config['limit'] )->get();
+            $users = UserModel::whereRaw('LENGTH(email) > 0')->limit( $config['limit'] )->get();
         }
 
         // set columns
