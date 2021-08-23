@@ -67,7 +67,7 @@ class ListingController extends Controller
         if(isset($datas['status']) && is_trashable_model($modelBase) && $datas['status'] != -1) {
             $m = $m->where('status_id', $datas['status']);
         }
-        else {
+        else if (is_trashable_model($modelBase) && $datas['status'] == -1) {
             $m = $m->status(Statuses::TRASHED_ID, '!=');
         }
 
