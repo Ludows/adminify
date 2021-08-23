@@ -1,1 +1,1 @@
-<td> {{ $model->user()->name }} </td>
+<td> {{ $model->user->name }} </td>
