@@ -68,7 +68,7 @@ class TagsController extends Controller
         {
             //
             $form = $this->form(CreateTagForm::class);
-            $tag = $this->tagRepository->addModel(new Tag())->create($form);
+            $tag = $this->tagRepository->addModel(new TagModel())->create($form);
             if($request->ajax()) {
                 return response()->json([
                     'tag' => $tag,
