@@ -53,10 +53,10 @@ class ListingController extends Controller
                 }
 
                 if($i == 0) {
-                    $m = $m->where($binding, 'like',  "%" . strtolower($search) . "%");
+                    $m->where($binding, 'like',  "%" . strtolower($search) . "%");
                 }
                 else {
-                    $m = $m->orWhere($binding, 'like',  "%" . strtolower($search) . "%");
+                    $m->orWhere($binding, 'like',  "%" . strtolower($search) . "%");
                 }
                 
                 $i++;
@@ -64,13 +64,13 @@ class ListingController extends Controller
         } 
 
         if(isset($datas['status']) && is_trashable_model($m) && $datas['status'] != -1) {
-            $m = $m->where('status_id', $datas['status']);
+            $m->where('status_id', $datas['status']);
         }
         else {
-            $m = $m->status(Statuses::TRASHED_ID, '!=');
+            $m->status(Statuses::TRASHED_ID, '!=');
         }
 
-        $m = $m->take( $config['limit'] );
+        $m->take( $config['limit'] );
 
         $results = $m->get();
 
