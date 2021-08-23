@@ -18,7 +18,7 @@ class CreateCategoriesTable extends Migration
                 $table->bigIncrements('id')->unsigned();
                 $table->json('title');
                 $table->json('slug');
-                $table->bigInteger('media_id')->default(0)->unsigned();
+                $table->bigInteger('media_id')->nullable()->unsigned();
                 $table->bigInteger('parent_id')->default(0)->unsigned();
                 $table->bigInteger('user_id')->default(0)->unsigned();
                 $table->timestamps();
@@ -29,7 +29,7 @@ class CreateCategoriesTable extends Migration
                 $table->bigIncrements('id')->unsigned();
                 $table->string('title', 255);
                 $table->string('slug', 255);
-                $table->bigInteger('media_id')->default(0)->unsigned();
+                $table->bigInteger('media_id')->nullable()->unsigned();
                 $table->bigInteger('parent_id')->default(0)->unsigned();
                 $table->bigInteger('user_id')->default(0)->unsigned();
                 $table->timestamps();
