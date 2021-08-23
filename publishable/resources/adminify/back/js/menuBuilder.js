@@ -207,7 +207,7 @@ jQuery(document).ready(function ($) {
         let $data_el = $(this).attr('data-el');
         let self = $(this);
         let check = $('#' + $data_el).find('[menu-three-key="delete"]');
-        if (check.val() === 1) {
+        if (parseInt(check.val()) === 1) {
             // is new , no records in db here
             $('#' + $data_el).remove();
         } else {
