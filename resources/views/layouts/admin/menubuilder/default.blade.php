@@ -20,5 +20,5 @@
 </div>
 
 @push('js')
-    <script src="{{ asset('argon') }}/js/menuBuilder.js?v=1.0.0"></script>
+    <script src="{{ asset('adminify') }}/js/menuBuilder.js?v=1.0.0"></script>
 @endpush
