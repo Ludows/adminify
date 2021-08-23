@@ -16,10 +16,14 @@ class PostRepository extends BaseRepository
         'categories_id'
     ];
     
-    public function getExternalTagIdRelationship($model,$formValues, $type) {
+    public function getExternalTagsIdRelationship($model,$formValues, $type) {
+        if($type == 'update') {
+            $model->deleteTags(null);
+        }
+
         if(isset($formValues['tags_id'])) {
             $model->createTags($formValues['tags_id']);
-        }
+        }        
     }
     public function getExternalCategoriesIdRelationship($model , $formValues, $type) {
         if($formValues['categories_id'] == null && $type == "update") {
