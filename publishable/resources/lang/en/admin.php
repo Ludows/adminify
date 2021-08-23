@@ -9,6 +9,8 @@ return [
     'update_profile' => "Update Your Preference",
     'logout' => 'Disconnect',
     'search' => 'Search',
+    'yes' => "Yes",
+    'no' => "No",
     'send_mail' => "Send an email",
     'send_trash' => "Send to trash",
     'seo' => 'Update your SEO',

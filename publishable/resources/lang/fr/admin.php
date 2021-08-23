@@ -10,6 +10,8 @@ return [
     'logout' => 'Déconnexion',
     'search' => 'Rechercher',
     'send_mail' => "Envoyer un mail",
+    'yes' => "Oui",
+    'no' => "Non",
     'send_trash' => "Mettre à la corbeille",
     'seo' => 'Mettre à jour son SEO',
     'breadcrumb' => [
