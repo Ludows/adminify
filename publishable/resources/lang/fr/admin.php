@@ -9,6 +9,9 @@ return [
     'update_profile' => "Mettre à jour ses Préférences",
     'logout' => 'Déconnexion',
     'search' => 'Rechercher',
+    'send_mail' => "Envoyer un mail",
+    'send_trash' => "Mettre à la corbeille",
+    'seo' => 'Mettre à jour son SEO',
     'breadcrumb' => [
         'root' => 'Tableau de Bord',
         'create' => 'Créer :entity',

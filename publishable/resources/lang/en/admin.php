@@ -9,6 +9,9 @@ return [
     'update_profile' => "Update Your Preference",
     'logout' => 'Disconnect',
     'search' => 'Search',
+    'send_mail' => "Send an email",
+    'send_trash' => "Send to trash",
+    'seo' => 'Update your SEO',
     'breadcrumb' => [
         'root' => 'Dashboard',
         'index' => ':entity',
