@@ -16,7 +16,8 @@ class ListingController extends Controller
         $datas = $request->all();
 
         $m_str = get_site_key($config['search'][$datas['singular']]);
-        $m = new $m_str();
+        $modelBase = new $m_str();
+        $m = $modelBase;
         $is_multilang_model = is_translatable_model($m);
         $useMultilang = $request->useMultilang;
         $lang = lang();
@@ -53,24 +54,24 @@ class ListingController extends Controller
                 }
 
                 if($i == 0) {
-                    $m->where($binding, 'like',  "%" . strtolower($search) . "%");
+                   $m = $m->where($binding, 'like',  "%" . strtolower($search) . "%");
                 }
                 else {
-                    $m->orWhere($binding, 'like',  "%" . strtolower($search) . "%");
+                    $m = $m->orWhere($binding, 'like',  "%" . strtolower($search) . "%");
                 }
                 
                 $i++;
             }
         } 
 
-        if(isset($datas['status']) && is_trashable_model($m) && $datas['status'] != -1) {
-            $m->where('status_id', $datas['status']);
+        if(isset($datas['status']) && is_trashable_model($modelBase) && $datas['status'] != -1) {
+            $m = $m->where('status_id', $datas['status']);
         }
         else {
-            $m->status(Statuses::TRASHED_ID, '!=');
+            $m = $m->status(Statuses::TRASHED_ID, '!=');
         }
 
-        $m->take( $config['limit'] );
+        $m = $m->take( $config['limit'] );
 
         $results = $m->get();
 
