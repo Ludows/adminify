@@ -76,6 +76,8 @@ return [
         'content' => 'contenu',
         'description' => 'Description',
         'alt' => 'alt',
+        'key' => 'Clé de Traduction',
+        'text' => 'Texte',
         'name_menu' => 'Quel est le nom de votre menu ?',
         'site_name' => 'Quel est le nom du site ?',
         'site_slogan' => 'Mettez y une phrase accrocheuse',
@@ -85,7 +87,10 @@ return [
         'title_navigation' => 'Titre de Navigation',
         'open_other_tab' => 'Ouvrir dans une nouvelle fenêtre ?',
         'css_classes' => 'Classes Css',
-        'close_menu_item' => 'Fermer le menu courant'
+        'close_menu_item' => 'Fermer le menu courant',
+        'avatar' => 'Avatar',
+        'key' => 'Clé de Traduction',
+        'text' => 'Texte',
     ],
     'table' => [
         'th_cells' => [

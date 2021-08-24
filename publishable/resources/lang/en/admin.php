@@ -84,7 +84,10 @@ return [
         'title_navigation' => 'Title Navigation',
         'open_other_tab' => 'Open in a new window ?',
         'css_classes' => 'Css Classes',
-        'close_menu_item' => 'Close menu item'
+        'close_menu_item' => 'Close menu item',
+        'key' => 'Traduction Key',
+        'text' => 'Text',
+        'avatar' => 'Avatar',
     ],
     'table' => [
         'th_cells' => [
