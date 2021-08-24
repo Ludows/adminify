@@ -76,7 +76,7 @@
         window.admin.lfmFields.push({
             selector: "media-{{ $identifier }}",
             options: [],
-            multilang: {!! $useMultilang !!},
+            multilang: {!! var_export(is_multilang(),true) !!},
             currentLang: '{!! $currentLang !!}'
         })
     </script>

@@ -80,7 +80,7 @@ if(! function_exists('is_multilang') ) {
         if($c != null) {
             $ret = $c;
         }
-        return $ret;
+        return (bool) $ret;
     }
 }
 
