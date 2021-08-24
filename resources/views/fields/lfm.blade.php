@@ -33,7 +33,7 @@
         window.admin.lfmFields.push({
             selector: "{{ $options['sibling'] }}",
             options: [],
-            multilang: {!! var_export($useMultilang,true) !!},
+            multilang: {!! var_export(is_multilang(),true) !!},
             currentLang: '{!! $currentLang !!}'
         })
     </script>

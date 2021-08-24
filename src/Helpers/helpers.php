@@ -71,6 +71,19 @@ if(! function_exists('is_blogpage') ) {
     }
 }
 
+if(! function_exists('is_multilang') ) {
+    function is_multilang() {
+        // the relationship model
+        $ret = false;
+        $c = get_site_key('multilang');
+
+        if($c != null) {
+            $ret = $c;
+        }
+        return $ret;
+    }
+}
+
 if(! function_exists('is_trashable_model')  ) {
     function is_trashable_model($class) {
         // the relationship model

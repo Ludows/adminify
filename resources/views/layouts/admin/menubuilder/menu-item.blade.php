@@ -18,7 +18,7 @@
 {{-- {{ dd($item->related) }} --}}
 <li class="list-group-item p-0" id="list-group-item-{{ $identifier }}" data-target="#collapse-{{ $identifier }}" aria-expanded="false" aria-controls="collapse-{{ $identifier }}">
     <span data-replace="{{ $title }}" class="handle handle-click-collapse d-block p-3">{{ $title }}</span>
-    <div class="collapse js-collapse mt-3" id="collapse-{{ $identifier }}">
+    <div class="collapse js-collapse mt-0" id="collapse-{{ $identifier }}">
         <div class="card mb-0">
             <div class="card-body">
             @if(isset($new) && $new == false)
