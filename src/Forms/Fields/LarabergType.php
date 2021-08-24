@@ -17,7 +17,7 @@ class LarabergType extends FormField {
     public function setDefaultsLaraberg() {
         return [
             'laravelFilemanager' => [
-                'prefix' => '/admin/filemanager'
+                'prefix' => '/admin/laravel-filemanager'
             ]
         ];
     }
