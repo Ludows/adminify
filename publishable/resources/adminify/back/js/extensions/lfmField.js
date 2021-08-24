@@ -1,7 +1,7 @@
 export default function LFMField(fields) {
 
     let selectedItems = [];
-    let fields_id = ['media_id', 'logo_id'];
+    let fields_id = ['media_id', 'logo_id', 'menu-three-key'];
 
     function getParamFromIframe(ifrUrl, name) {
         return (ifrUrl.split(name + '=')[1] || '').split('&')[0];
