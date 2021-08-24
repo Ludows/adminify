@@ -1,3 +1,6 @@
+@php
+    $show_breadcrumb = $isset($breadcrumb) ? $breadcrumb : true;
+@endphp
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
         <div class="header-body">
@@ -6,9 +9,12 @@
                 <div class="col-12">
                     @include('flash::message')
                 </div>
-                <div class="col-12">
-                    {{ Breadcrumbs::render(request()->route()->getName()) }}
-                </div>
+                @if($show_breadcrumb)
+                    <div class="col-12">
+                        {{ Breadcrumbs::render(request()->route()->getName()) }}
+                    </div>
+                @endif
+                
             </div>
         </div>
     </div>

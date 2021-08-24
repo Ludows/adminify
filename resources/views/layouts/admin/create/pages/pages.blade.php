@@ -1,7 +1,9 @@
-{{-- @include('adminify::layouts.admin.headers.topPageListing') --}}
+@include('adminify::layouts.admin.headers.topPageListing', [
+    'breadcrumb' => false
+])
 
 {!! form_start($form) !!}
-<div class="container-fluid editor ">
+<div class="container-fluid editor  mt--7">
     <div class="row">
 
 
@@ -25,7 +27,9 @@
                     {!! form_row($form->media_id) !!}
                 </div>
                 <div class="card-footer">
-                    {!! form_row($form->submit) !!}
+                    {!! form_row($form->submit, ['wrapper' => [
+                        'class' => 'form-group mb-0'
+                    ]]) !!}
                 </div>
             </div>
         </div>
