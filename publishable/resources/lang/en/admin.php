@@ -35,6 +35,8 @@ return [
         'users' => 'Users',
     ],
     'form' => [
+        'name' => "Name",
+        'three' => "Menu",
         'add' => 'Add',
         'create' => 'Create',
         'update' => 'Update',

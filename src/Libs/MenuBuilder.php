@@ -109,7 +109,7 @@ class MenuBuilder
                 'model' => $model
             ]);
 
-            $formCreateMenu->addBefore('submit', 'suppress_menu', 'button', ['label' => __('admin.delete') , 'attr' => [ 'data-menu-id' => $model->id, 'id' => 'deleteMenuBtn', 'class' => 'btn btn-danger']]);
+            $formCreateMenu->addBefore('submit', 'suppress_menu', 'button', ['label' => __('admin.form.delete') , 'attr' => [ 'data-menu-id' => $model->id, 'id' => 'deleteMenuBtn', 'class' => 'btn btn-danger']]);
         }
         $this->forms['formCreateMenu'] = $formCreateMenu;
 
