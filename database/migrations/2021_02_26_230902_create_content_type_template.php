@@ -26,6 +26,7 @@ class CreateContentTypeTemplate extends Migration
             $table->bigIncrements('id');
             $table->string('title', 255);
             $table->text('content')->nullable();
+            $table->timestamps();
         });
 
     }
