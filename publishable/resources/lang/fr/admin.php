@@ -79,7 +79,11 @@ return [
         'site_slogan' => 'Mettez y une phrase accrocheuse',
         'homepage' => 'Votre Page d\'accueil',
         'blogpage' => 'Votre Page de Blog',
-        'select_entity' => 'Sélectionnez votre :entity'
+        'select_entity' => 'Sélectionnez votre :entity',
+        'title_navigation' => 'Titre de Navigation',
+        'open_other_tab' => 'Ouvrir dans une nouvelle fenêtre ?',
+        'css_classes' => 'Classes Css',
+        'close_menu_item' => 'Fermer le menu courant'
     ],
     'table' => [
         'th_cells' => [

@@ -17,9 +17,9 @@
 @endphp
 {{-- {{ dd($item->related) }} --}}
 <li class="list-group-item p-0" id="list-group-item-{{ $identifier }}" data-target="#collapse-{{ $identifier }}" aria-expanded="false" aria-controls="collapse-{{ $identifier }}">
-    <span data-replace="{{ $title }}" class="handle handle-click-collapse d-block px-3 pt-3">{{ $title }}</span>
+    <span data-replace="{{ $title }}" class="handle handle-click-collapse d-block p-3">{{ $title }}</span>
     <div class="collapse js-collapse mt-3" id="collapse-{{ $identifier }}">
-        <div class="card">
+        <div class="card mb-0">
             <div class="card-body">
             @if(isset($new) && $new == false)
                 <input type="hidden" menu-three-key="menu-item-id" value="{{ $item->id }}"/>
@@ -57,7 +57,7 @@
             </div>
         </div>
     </div>
-        <div class="card-footer">
+        <div class="card-footer bg-secondary">
             <a href="#"{!! !$isNew ? 'data-menuitem-id="'.$id.'"' : '' !!} data-el="list-group-item-{{ $identifier }}" class="text-underline js-suppress text-danger">{{ __('admin.form.delete') }}</a>
             <a href="#" data-el="collapse-{{ $identifier }}" class="text-underline js-close text-default">{{ __('admin.form.close_menu_item') }}</a>
         </div>

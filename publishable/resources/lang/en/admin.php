@@ -79,6 +79,10 @@ return [
         'site_slogan' => 'Put a catchy phrase there',
         'homepage' => 'Your Home Page',
         'blogpage' => 'Your Blog Page',
+        'title_navigation' => 'Title Navigation',
+        'open_other_tab' => 'Open in a new window ?',
+        'css_classes' => 'Css Classes',
+        'close_menu_item' => 'Close menu item'
     ],
     'table' => [
         'th_cells' => [
