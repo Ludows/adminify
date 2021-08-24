@@ -34,8 +34,12 @@
 
     @if($isEditNamedRoute)
         <div class="card-footer">
-            {!! form_row($forms['formCreateMenu']->suppress_menu) !!}
-            {!! form_row($forms['formCreateMenu']->submit) !!}
+            <div class="d-flex align-items-center justify-content-between">
+                {!! form_row($forms['formCreateMenu']->suppress_menu) !!}
+                {!! form_row($forms['formCreateMenu']->submit, [
+                    'wrapper' => ['class' => 'form-group mb-0'],
+                ]) !!}
+            </div>
             {!! form_end($forms['formCreateMenu'], false) !!}
         </div>
         {!! form($forms['formDeleteMenu'], ['id' => 'deleteMenu']) !!}
