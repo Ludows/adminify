@@ -14,6 +14,10 @@ class CategoryTable extends TableManager {
                 # code...
                 $ret = 'adminify::layouts.admin.table.custom-cells.categories-media-id';
                 break;
+            case 'user_id':
+                # code...
+                $ret = 'adminify::layouts.admin.table.custom-cells.user-id';
+                break;
             case 'parent_id':
                 # code...
                 $ret = 'adminify::layouts.admin.table.custom-cells.categories-parent-id';
