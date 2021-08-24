@@ -8,9 +8,11 @@
 
 
         <div class="col-12 col-lg-9">
-            <div class="card mb-0 border-0 shadow-none">
+            <div class="card">
                 <div class="card-body">
-                    {!! form_row($form->title) !!}
+                    {!! form_row($form->title, ['wrapper' => [
+                        'class' => 'form-group mb-0'
+                    ]]) !!}
                 </div>
             </div>
             {{-- // editeur next --}}
@@ -24,7 +26,9 @@
                     {!! form_row($form->categories_id) !!}
                     {!! form_row($form->parent_id) !!}
                     {!! form_row($form->status_id) !!}
-                    {!! form_row($form->media_id) !!}
+                    {!! form_row($form->media_id, ['wrapper' => [
+                        'class' => 'form-group mb-0'
+                    ]]) !!}
                 </div>
                 <div class="card-footer">
                     {!! form_row($form->submit, ['wrapper' => [
