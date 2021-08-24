@@ -36,9 +36,9 @@
         @endauth
 
         <div class="main-content">
-            @if(!$fullmode)
+            {{-- @if(!$fullmode) --}}
                 @include('adminify::layouts.admin.navbars.navbar')
-            @endif
+            {{-- @endif --}}
            
             @yield('content')
         </div>
