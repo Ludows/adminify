@@ -1,5 +1,5 @@
 @php
-    $show_breadcrumb = $isset($breadcrumb) ? $breadcrumb : true;
+    $show_breadcrumb = isset($breadcrumb) ? $breadcrumb : true;
 @endphp
 <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
     <div class="container-fluid">
