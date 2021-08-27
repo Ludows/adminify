@@ -13,9 +13,15 @@ class Users extends DropdownsManager
         $datas = $this->getDatas();
         $r = $this->getRequest();
         $models = $this->getModels();
+        $u = user();
+
+        if(!$u->hasPermissionTo('edit_users')) {
+            return false;       
+        }
 
         foreach ($models as $m) {
-            # code...            
+            # code...   
+                     
             $this->add('dropdown_'.$m->id, [
                 'template' => 'adminify::layouts.admin.dropdowns.extends.edit',
                 'vars' => [
