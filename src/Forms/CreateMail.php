@@ -4,6 +4,7 @@ namespace Ludows\Adminify\Forms;
 
 use Kris\LaravelFormBuilder\Form;
 
+use File;
 class CreateMail extends Form
 {
     public function buildForm()
@@ -39,25 +40,40 @@ class CreateMail extends Form
 
     }
     public function getMailables() {
-        $m = app('App\Models\Mailables');
-
-        $mailables = $m->all();
         $mails = [];
         $selecteds = [];
         $r = $this->getRequest();
-        $mailables = $mailables->all();
 
         $mailFetched = $r->mail;
 
-        foreach ($mailables as $mail) {
-            # code...
-            $mails[$mail->mailable] = $mail->mailable::getSubject();
+        $pathMails = app_path('Mails');
+
+        $files = File::files(app_path('Mails'));
+
+        $namespaceBase = 'App\Mails';
+
+
+        foreach($files as $f){
+
+
+            $namedClass = str_replace('.'.$f->getExtension(), '', $f->getBaseName());
+            // dd($namedClass);
+
+            $fullModelClass = $namespaceBase . '\\'. $namedClass;
+            $m = app($fullModelClass);
+
+            $reflect = new \ReflectionClass($m);
+
+            // dd($reflect->name);
+
+            $mails[$reflect->name] = $fullModelClass::getSubject();
+
         }
+
+
 
         if($mailFetched != null) {
             // on a une selection
-
-
             $mailFetched = $r->mail;
             $selecteds = [$mailFetched->mailable];
         }
