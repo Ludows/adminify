@@ -24,11 +24,12 @@
             <div class="card shadow-lg">
                 <div class="card-body">
                     {!! form_row($form->categories_id) !!}
-                    {!! form_row($form->parent_id) !!}
+                    {!! form_row($form->tags_id) !!}
                     {!! form_row($form->status_id) !!}
                     {!! form_row($form->media_id, ['wrapper' => [
                         'class' => 'form-group mb-0'
                     ]]) !!}
+                    {!! form_row($form->no_comments) !!}
                 </div>
                 <div class="card-footer">
                     {!! form_row($form->submit, ['wrapper' => [
@@ -37,22 +38,6 @@
                 </div>
             </div>
         </div>
-
-
-        {{-- <div class="col-12">
-            @php
-                $name = request()->route()->getName();
-                $name = str_replace('.create', '', $name);
-            @endphp
-
-            <div class="card shadow">
-                <div class="card-body">
-                    @if(isset($form))
-                        {!! form($form) !!}
-                    @endif
-                </div>
-            </div>
-        </div> --}}
     </div>
 </div>
 {!! form_end($form, false) !!}
