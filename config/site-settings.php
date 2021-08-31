@@ -218,15 +218,6 @@ return [
         ]
     ],
 
-    'query_builder' => [
-        'position' => 'after_content', //stack name
-        'enable_on' => [
-            'register.pages',
-            'register.posts',
-        ],
-        'user_role' => ['administrator'] // if user_role is an empty array. No filtering on user
-    ],
-
     'dashboard' => [
         \Ludows\Adminify\Interfacable\Blocks\PageCard::class,
         \Ludows\Adminify\Interfacable\Blocks\PostCard::class,

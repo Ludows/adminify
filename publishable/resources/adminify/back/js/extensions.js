@@ -22,6 +22,5 @@ window.admin = {
     generatorPasswordFields: [],
     lfmFields : [],
     summernoteFields : [],
-    queryBuilder : []
 }
 
