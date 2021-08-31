@@ -62,6 +62,7 @@
         "@swup/scroll-plugin": "^1.1.0",
         "@wesleyhf/laravel-localization-js": "0.0.2",
         "bootstrap-vue": "^2.21.2",
+        "jQuery-QueryBuilder": "^2.6.0",
         "summernote": "^0.8.18",
         "cross-env": "^7.0.3",
         "file-type": "^16.2.0",

@@ -21,6 +21,7 @@ window.admin = {
     larabergFields : [],
     generatorPasswordFields: [],
     lfmFields : [],
-    summernoteFields : []
+    summernoteFields : [],
+    queryBuilder : []
 }
 

@@ -224,7 +224,7 @@ return [
             'register.pages',
             'register.posts',
         ],
-        'user_role' => ['administrator']
+        'user_role' => ['administrator'] // if user_role is an empty array. No filtering on user
     ],
 
     'dashboard' => [
