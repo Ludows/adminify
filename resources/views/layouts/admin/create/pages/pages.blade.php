@@ -4,6 +4,7 @@
 
 {!! form_start($form) !!}
 <div class="container-fluid editor  mt--7">
+    @yield('before_content')
     <div class="row">
 
 
@@ -16,19 +17,24 @@
                 </div>
             </div>
             {{-- // editeur next --}}
+            @yield('before_editor')
             {!! form_row($form->content) !!}
             {!! form_row($form->user_id) !!}
+            @yield('after_editor')
             {{-- {!! dd($form) !!} --}}
         </div>
         <div class="col-12 col-lg-3 sticky-top">
+            @yield('start_sidebar')
             <div class="card shadow-lg">
                 <div class="card-body">
+                    @yield('before_settings_page')
                     {!! form_row($form->categories_id) !!}
                     {!! form_row($form->parent_id) !!}
                     {!! form_row($form->status_id) !!}
                     {!! form_row($form->media_id, ['wrapper' => [
                         'class' => 'form-group mb-0'
                     ]]) !!}
+                    @yield('after_settings_page')
                 </div>
                 <div class="card-footer">
                     {!! form_row($form->submit, ['wrapper' => [
@@ -36,6 +42,7 @@
                     ]]) !!}
                 </div>
             </div>
+            @yield('end_sidebar')
         </div>
 
 
@@ -54,6 +61,7 @@
             </div>
         </div> --}}
     </div>
+    @yield('after_content')
 </div>
 {!! form_end($form, false) !!}
 
