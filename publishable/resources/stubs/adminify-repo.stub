@@ -3,55 +3,17 @@
 namespace {{namespace}};
 
 use MrAtiebatie\Repository;
-use App\Models\{{model}}; // Don't forget to update the model's namespace
+use  Ludows\Adminify\Repositories\BaseRepository;
 
-class {{model}}Repository
+class {{model}}Repository extends BaseRepository
 {
-    use Repository;
+    // Define your internals relationship columns. The repository does'nt make treatments for this columns
+    public $internal_relations_columns = [];
 
-    /**
-     * The model being queried.
-     *
-     * @var Model
-     */
-    protected $model;
+    // Define your externals relationship columns. The repository does'nt make treatments for this columns
+    // ex : tables pivot
+    public $external_relations_columns = [];
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        // Don't forget to update the model's name
-        $this->model = app({{model}}::class);
-    }
-    public function create($mixed, $request) {
-
-        $request = request();
-        if(is_array($mixed)) {
-            $formValues = $mixed;
-        }
-        else {
-            $formValues = $mixed->getFieldValues();
-        }
-        $multilang = $request->useMultilang;
-
-        //you must return an entity
-    }
-    public function update($mixed, $request, $model) {
-
-        $request = request();
-        if(is_array($mixed)) {
-            $formValues = $mixed;
-        }
-        else {
-            $formValues = $mixed->getFieldValues();
-        }
-        $multilang = $request->useMultilang;
-
-         //you must return an entity
-    }
-    public function delete($model) {
-
-        
-    }
+    // Your can Define your Manipulation datas here
+    public $filters_on = [];
 }
