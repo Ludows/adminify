@@ -6,5 +6,9 @@ use Ludows\Adminify\Models\ClassicModel;
 
 class {{class}} extends ClassicModel
 {
-    
+    public $showInMenu = true;
+    public function getLinks($menuBuilder, $arrayDatas) {}
+    public $searchable_label = 'title';
+
+    public $MultilangTranslatableSwitch = [];
 }

@@ -9,12 +9,20 @@ use Ludows\Adminify\Models\ContentTypeModel;
 
 class {{class}} extends ContentTypeModel
 {
+    public $showInMenu = true;
+    public function getLinks($menuBuilder, $arrayDatas) {}
 
     // describe your multilang fields here like this
     // ['title', 'slug'];
     // The package will auto handle 
     // this works this spatie/translatable
-    //public $MultilangTranslatableSwitch = [];
+    public $MultilangTranslatableSwitch = [];
+
+    public $allowSitemap = true;
+    public $sitemapTitle = 'title';
+    public $sitemapCallable = null;
+
+    public $searchable_label = 'title';
 
     // describe your mass assignable fields
     protected $fillable = [];
@@ -56,6 +64,11 @@ class {{class}} extends ContentTypeModel
     // return \Ludows\Adminify\Tables\PostTable::class;
     public function getTableListing() {
         return \Ludows\Adminify\Tables\{{model}}Table::class;
+    }
+
+    // if you want to specify your columns for listings search. It's here
+    public function getColumnsListing() {
+        return [];
     }
 
     // this function is to render your datas as feeds
