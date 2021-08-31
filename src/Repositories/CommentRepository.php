@@ -25,6 +25,7 @@ class CommentRepository extends BaseRepository
         }
         $m->delete();
         $this->hookManager->run('model:deleted', $m);
+        $this->hookManager->run('process:finished', $m);
         return $m;
     }
 }

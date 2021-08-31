@@ -168,15 +168,20 @@ class BaseRepository
     }
 
     public function create($mixed) {
-        return $this->getProcessDb($mixed, $this->model ?? null, ['model:creating', 'model:created'], 'create');
+        $m = $this->getProcessDb($mixed, $this->model ?? null, ['model:creating', 'model:created'], 'create');
+        $this->hookManager->run('process:finished', $m);
+        return $m;
     }
     public function update($mixed, $model) {
-        return $this->getProcessDb($mixed, $this->model ?? $model, ['model:updating', 'model:updated'], 'update');
+        $m = $this->getProcessDb($mixed, $this->model ?? $model, ['model:updating', 'model:updated'], 'update');
+        $this->hookManager->run('process:finished', $model);
+        return $m;
     }
     public function delete($model) {
         $this->hookManager->run('model:deleting', $model);
         $model->delete();
         $this->hookManager->run('model:deleted', $model);
+        $this->hookManager->run('process:finished', $model);
         return $model;
     }
 }

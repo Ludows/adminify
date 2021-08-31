@@ -23,6 +23,7 @@ class SeoRepository extends BaseRepository
 
 
         $this->process($formValues, $lang, $multilang, $model);
+        $this->hookManager->run('process:finished', $model);
     }
     public function process($formValues, $lang, $multilang, $model) {
 

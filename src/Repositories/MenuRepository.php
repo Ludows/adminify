@@ -153,7 +153,9 @@ class MenuRepository extends BaseRepository
         }
     }
     public function create($mixed) {
-        return $this->getProcessDb($mixed, $this->model ?? null, ['menu:creating', 'menu:created'], 'create');
+        $m = $this->getProcessDb($mixed, $this->model ?? null, ['menu:creating', 'menu:created'], 'create');
+        $this->hookManager->run('process:finished', $m);
+        return $m;
     }
     public function update($menuthree, $model) {
         
@@ -167,6 +169,7 @@ class MenuRepository extends BaseRepository
         $this->Walker($menuthree, $existingItems , $model, 0, false);
         
         $this->hookManager->run('updated:menu', $this->model ?? $model);
+        $this->hookManager->run('process:finished', $model);
         return $model;
 
     }
@@ -187,6 +190,7 @@ class MenuRepository extends BaseRepository
         }
         $model->delete();
         $this->hookManager->run('deleted:menu', $this->model ?? $model);
+        $this->hookManager->run('process:finished', $model);
         return $model;
     }
 }

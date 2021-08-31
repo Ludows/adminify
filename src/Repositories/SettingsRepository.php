@@ -38,7 +38,7 @@ class SettingsRepository extends BaseRepository
             $a[] = $m;
         }
         
-
+        $this->hookManager->run('process:finished', null);
         return $a;
     }
 }

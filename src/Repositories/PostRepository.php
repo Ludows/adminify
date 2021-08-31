@@ -66,5 +66,6 @@ class PostRepository extends BaseRepository
 
         $model->delete();
         $this->hookManager->run('model:deleted', $model);
+        $this->hookManager->run('process:finished', $model);
     }
 }
