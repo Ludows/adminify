@@ -48,11 +48,9 @@ class HomeController extends Controller
 
     public function getForms(Request $request, FormBuilder $formbuilder) {
 
-        $formName = $request->name;
-        $namespaceForm = $request->get('namespace');
         $all = $request->all();
 
-        $form = $formbuilder->create($namespaceForm, $all['form-attributes']);
+        $form = $formbuilder->create( $all['namespace'], $all['form-attributes']);
 
         return response()->json([
             'html' => form($form),

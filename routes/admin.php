@@ -87,7 +87,7 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
 
     }
 
-    Route::post('/forms/{name}', 'Ludows\Adminify\Http\Controllers\Back\HomeController@getForms')->name('forms.ajax');
+    Route::post('/forms/', 'Ludows\Adminify\Http\Controllers\Back\HomeController@getForms')->name('forms.ajax');
 
 
     if(isset($c['media']) && $c['media']) {
