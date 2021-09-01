@@ -5,11 +5,11 @@
 
     @if ($options['withBtnForTemplates'])
         <div class="d-flex mb-3">
-            <a href="#" class="btn btn-primary js-select-template mr-3">
+            <a href="#" data-type="select-tpl" class="btn btn-primary js-call-modal-laraberg mr-3">
                 {{ __('admin.form.select_template') }}
             </a>
     
-            <a href="#" class="btn btn-primary js-save-template">
+            <a href="#" data-type="save-tpl" class="btn btn-primary js-call-modal-laraberg">
                 {{ __('admin.form.save_as') }}
             </a>
         </div>
