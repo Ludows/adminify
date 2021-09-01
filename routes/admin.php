@@ -9,7 +9,7 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
     
     Route::post('/search', 'Ludows\Adminify\Http\Controllers\Back\SearchController@index')->name('searchable');
 
-    if(isset($c['post']) ] && $c['post') {	
+    if(isset($c['post']) && $c['post']) {	
 	    Route::resource('posts', 'Ludows\Adminify\Http\Controllers\Back\PostController', ['except' => ['show']] );
     }
     
