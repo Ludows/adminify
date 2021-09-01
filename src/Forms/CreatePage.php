@@ -28,6 +28,13 @@ class CreatePage extends Form
                 'empty_value' => '',
                 'withCreate' => true,
                 'modal' => 'adminify::layouts.admin.modales.createCategory', // simple include
+                'form' => [
+                    'namespace' => 'App\Forms\CreateCategory',
+                    'attributes' => [
+                        'url' => route('categories.store'),
+                        'method' => 'POST'
+                    ]
+                ],
                 'choices' => $hydratorCat['categories'],
                 'selected' => $hydratorCat['selected'],
                 'attr' => ['multiple' => 'multiple'],

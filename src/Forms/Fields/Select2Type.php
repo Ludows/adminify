@@ -45,11 +45,18 @@ class Select2Type extends FormField {
             $options['choices'] = [];
         }
 
+        if(!isset($options['form'])) {
+            $options['form'] = [];
+        }
+
         $b = [
             'sibling' => Str::slug('select2_'.$uniqid),
             'withCreate' => isset($options['withCreate']) ? $options['withCreate'] : false,
             'dynamic_modal' => isset($options['dynamic_modal']) ? $options['dynamic_modal'] : true,
-            'linked_form_namespace' => isset($options['linked_form_namespace']) ? $options['linked_form_namespace'] : null,
+            'form' => [
+                'namespace' => isset($options['linked_form_namespace']) ? $options['form']['linked_form_namespace'] : null,
+                'attributes' => isset($options['attributes_form']) ? $options['form']['attributes_form'] : []
+            ],
             'modal' => isset($options['modal']) ? $options['modal'] : '',
             'modal_id' => Str::slug('select2_modale_'.$uniqid),
             'select2options' => array_merge($this->setDefaultsSelect2(), isset($options['select2options']) ? $options['select2options'] : [])

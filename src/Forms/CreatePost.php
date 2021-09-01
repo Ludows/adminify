@@ -25,6 +25,13 @@ class CreatePost extends Form
                 'empty_value' => '',
                 'withCreate' => true,
                 'modal' => 'adminify::layouts.admin.modales.createCategory',
+                'form' => [
+                    'namespace' => 'App\Forms\CreateCategory',
+                    'attributes' => [
+                        'url' => route('categories.store'),
+                        'method' => 'POST'
+                    ]
+                ],
                 'choices' => $hydrator['categories'],
                 'selected' => $hydrator['selected'],
                 'attr' => ['multiple' => 'multiple'],
@@ -51,6 +58,13 @@ class CreatePost extends Form
                 'empty_value' => '',
                 'withCreate' => true,
                 'modal' => 'adminify::layouts.admin.modales.createTag',
+                'form' => [
+                    'namespace' => 'App\Forms\CreateTag',
+                    'attributes' => [
+                        'url' => route('tags.store'),
+                        'method' => 'POST'
+                    ]
+                ],
                 'choices' => $hydratorTags['tags'],
                 'selected' => $hydratorTags['selected'],
                 'attr' => ['multiple' => 'multiple'],
