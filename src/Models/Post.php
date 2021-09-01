@@ -78,7 +78,7 @@ class Post extends ContentTypeModel
     }
 
     public function getLinks($menuBuilder, $arrayDatas) {
-        if($arrayDatas['user']->hasPermissionTo('create_posts')) {
+        if($arrayDatas['user']->hasPermissionTo('create_posts') && $arrayDatas['features']['post']) {
             $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/posts?lang='. $arrayDatas['lang'] : '/admin/posts', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.posts'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
             // $menuBuilder->add( Link::to( $multilang ? '/admin/tags?lang='.$lang : '/admin/tags', '<i class="ni ni-single-copy-04"></i> '.__('admin.tags.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
         }

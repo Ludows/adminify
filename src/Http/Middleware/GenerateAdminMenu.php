@@ -21,12 +21,15 @@ class GenerateAdminMenu
         $user = user();
         $multilang = config('site-settings.multilang');
         $menu_config = get_site_key('adminMenu');
+        $enables_features = get_site_key('enables_features');
         $lang = lang();
 
         $arrayDatas = array(
             'user' => $user,
             'multilang' => $multilang,
-            'lang' => $lang
+            'lang' => $lang,
+            'features' => $enables_features
+
         );
 
         $menuAdmin = Menu::new()

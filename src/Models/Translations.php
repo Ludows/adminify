@@ -31,7 +31,7 @@ class Translations extends ClassicModel
     }
 
     public function getLinks($menuBuilder, $arrayDatas) {
-        if($arrayDatas['user']->hasPermissionTo('create_translations')) {
+        if($arrayDatas['user']->hasPermissionTo('create_translations') && $arrayDatas['features']['key_translation']) {
             $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/traductions?lang='. $arrayDatas['lang'] : '/admin/traductions', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.traductions'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
         }
     }

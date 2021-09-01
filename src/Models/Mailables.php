@@ -12,7 +12,7 @@ class Mailables extends ClassicMail
     }
 
     public function getLinks($menuBuilder, $arrayDatas) {
-        if($arrayDatas['user']->hasPermissionTo('create_mails')) {
+        if($arrayDatas['user']->hasPermissionTo('create_mails') && $arrayDatas['features']['email']) {
             $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/mails?lang='. $arrayDatas['lang'] : '/admin/mails', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.mails'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
             // $menuBuilder->add( Link::to( $multilang ? '/admin/tags?lang='.$lang : '/admin/tags', '<i class="ni ni-single-copy-04"></i> '.__('admin.tags.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
         }
