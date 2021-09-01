@@ -29,12 +29,27 @@
     @include($options['modal'])
 @endpush
 @push('js')
-    <script>
-        window.admin.lfmFields.push({
+    
+@endpush
+
+@if ($isAjax)
+    <script type="text/javascript">
+        lfmInitFunction([{
             selector: "{{ $options['sibling'] }}",
             options: [],
             multilang: {!! var_export(is_multilang(),true) !!},
             currentLang: '{!! $currentLang !!}'
-        })
+        }])
     </script>
-@endpush
+@else
+    @push('js')
+        <script type="text/javascript">
+            window.admin.lfmFields.push({
+                selector: "{{ $options['sibling'] }}",
+                options: [],
+                multilang: {!! var_export(is_multilang(),true) !!},
+                currentLang: '{!! $currentLang !!}'
+            })
+        </script>
+    @endpush
+@endif

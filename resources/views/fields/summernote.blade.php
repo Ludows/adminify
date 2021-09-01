@@ -26,12 +26,27 @@
 </div>
 
 @push('js')
-   <script type="text/javascript">
-            window.admin.summernoteFields.push({
-                selector: '{{ $options['sibling'] }}',
-                options: @json($options['summernote_options']),
-                multilang: {!! var_export(is_multilang(),true) !!},
-                currentLang: '{!! $currentLang !!}'
-            })
-    </script>
+   
 @endpush
+
+@if ($isAjax)
+    <script>
+        summernoteInitFunction([{
+            selector: '{{ $options['sibling'] }}',
+            options: @json($options['summernote_options']),
+            multilang: {!! var_export(is_multilang(),true) !!},
+            currentLang: '{!! $currentLang !!}'
+        }])
+    </script>
+@else
+    @push('js')
+            <script type="text/javascript">
+                    window.admin.summernoteFields.push({
+                        selector: '{{ $options['sibling'] }}',
+                        options: @json($options['summernote_options']),
+                        multilang: {!! var_export(is_multilang(),true) !!},
+                        currentLang: '{!! $currentLang !!}'
+                    })
+            </script>
+    @endpush
+@endif

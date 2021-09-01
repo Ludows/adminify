@@ -28,6 +28,7 @@ class GeneratorPasswordType extends FormField {
         $uniqid = Str::random(9);
         $options = $this->getOptions();
         $this->setOptions([
+            'isAjax' => request()->ajax(),
             'sibling' => Str::slug('generator_password_'.$uniqid),
             'modal' => isset($options['modal']) ? $options['modal'] : 'adminify::layouts.admin.modales.modaleMediaLibrary',
             'generate_password_options' => array_merge($this->setDefaults(), isset($options['generate_password_options']) ? $options['generate_password_options'] : [] )
