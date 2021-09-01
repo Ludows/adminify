@@ -42,7 +42,9 @@
 
 @if($options['withBtnForTemplates'])
     @push('modales')
-        @include('adminify::layouts.admin.modales.selectTemplate')
+        @include('adminify::layouts.admin.modales.modal-ajax', [
+            "id" => ''  
+        ])
         @include('adminify::layouts.admin.modales.saveTemplate')
     @endpush
 @endif
@@ -51,6 +53,9 @@
     <script src="https://unpkg.com/react@16.8.6/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@16.8.6/umd/react-dom.production.min.js"></script>
     <script src="{{ asset('vendor/laraberg/js/laraberg.js') }}"></script>
+    <script>
+        var modalAjaxLaraberg = 'modal-{{ $options['sibling'] }}';
+    </script>
     <script>
         window.admin.larabergFields.push({
             selector: "{{ $options['sibling'] }}",
