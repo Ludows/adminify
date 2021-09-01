@@ -50,8 +50,9 @@ class HomeController extends Controller
 
         $formName = $request->name;
         $namespaceForm = $request->get('namespace');
+        $all = $request->all();
 
-        $form = $formbuilder->create($namespaceForm, []);
+        $form = $formbuilder->create($namespaceForm, $all['form-attributes']);
 
         return response()->json([
             'html' => form($form),
