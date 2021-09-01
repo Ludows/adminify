@@ -51,6 +51,7 @@
                 withCreate: @json($options['withCreate']),
                 options: @json($options['select2options']),
                 dynamic_modal : @json($options['dynamic_modal']),
+                form :  @json($options['form']),
                 multilang: {!! var_export(is_multilang(),true) !!},
                 currentLang: '{!! $currentLang !!}'
             })
