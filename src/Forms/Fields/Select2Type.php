@@ -21,6 +21,17 @@ class Select2Type extends FormField {
         );
     }
 
+    public function setDefaultModalAttributes() {
+        return array(
+            'classes' => '',
+            'modalBodyClass' => '',
+            'modalDialogClasses' => '',
+            'modalTitle' => '',
+            'btnSave' => '',
+            'btnClear' => ''
+        );
+    }
+
     public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
     {
         $uniqid = Str::random(9);
@@ -49,6 +60,12 @@ class Select2Type extends FormField {
             $options['form'] = [];
         }
 
+        if(!isset($options['modal_attributes'])) {
+            $options['modal_attributes'] = [];
+        }
+
+        $options['modal_attributes']['id'] = Str::slug('select2_modale_'.$uniqid);
+
         $b = [
             'sibling' => Str::slug('select2_'.$uniqid),
             'withCreate' => isset($options['withCreate']) ? $options['withCreate'] : false,
@@ -57,8 +74,8 @@ class Select2Type extends FormField {
                 'namespace' => isset($options['linked_form_namespace']) ? $options['form']['linked_form_namespace'] : null,
                 'attributes' => isset($options['attributes_form']) ? $options['form']['attributes_form'] : []
             ],
+            'modal_attributes' => array_merge($this->setDefaultModalAttributes(), $options['modal_attributes']),
             'modal' => isset($options['modal']) ? $options['modal'] : '',
-            'modal_id' => Str::slug('select2_modale_'.$uniqid),
             'select2options' => array_merge($this->setDefaultsSelect2(), isset($options['select2options']) ? $options['select2options'] : [])
         ];
 

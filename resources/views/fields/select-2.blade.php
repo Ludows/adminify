@@ -39,7 +39,7 @@
 
 @if($options['withCreate'] && $options['modal'])
     @push('modales')
-        @include($options['modal'], ['id' => $options['modal_id']])
+        @include($options['modal'], $options['modal_attributes'])
     @endpush
 @endif
 
@@ -47,7 +47,7 @@
    <script type="text/javascript">
             window.admin.select2Fields.push({
                 selector: '#{{ $options['sibling'] }}',
-                modal_id: '#{{ $options['modal_id'] }}',
+                modal_attributes: '#{{ $options['modal_attributes'] }}',
                 withCreate: @json($options['withCreate']),
                 options: @json($options['select2options']),
                 dynamic_modal : @json($options['dynamic_modal']),
