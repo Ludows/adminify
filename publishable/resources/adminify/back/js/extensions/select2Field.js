@@ -8,7 +8,7 @@ export default function select2Inititalization(fields) {
 
         if(el.withCreate) {
             var btnCallModal = $(el.selector+ ' .js-handle-form-create');
-            var Modale = $(el.modal_id);
+            var Modale = $(el.modal_attributes.id);
             
             btnCallModal.on('click', function(e) {
                 e.preventDefault();
