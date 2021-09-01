@@ -47,7 +47,7 @@
    <script type="text/javascript">
             window.admin.select2Fields.push({
                 selector: '#{{ $options['sibling'] }}',
-                modal_attributes: '#{{ $options['modal_attributes'] }}',
+                modal_attributes: @json($options['modal_attributes']),
                 withCreate: @json($options['withCreate']),
                 options: @json($options['select2options']),
                 dynamic_modal : @json($options['dynamic_modal']),

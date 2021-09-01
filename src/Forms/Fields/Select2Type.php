@@ -71,8 +71,8 @@ class Select2Type extends FormField {
             'withCreate' => isset($options['withCreate']) ? $options['withCreate'] : false,
             'dynamic_modal' => isset($options['dynamic_modal']) ? $options['dynamic_modal'] : true,
             'form' => [
-                'namespace' => isset($options['linked_form_namespace']) ? $options['form']['linked_form_namespace'] : null,
-                'attributes' => isset($options['attributes_form']) ? $options['form']['attributes_form'] : []
+                'namespace' => isset($options['form']['namespace']) ? $options['form']['namespace'] : null,
+                'attributes' => isset($options['form']['attributes']) ? $options['form']['attributes'] : []
             ],
             'modal_attributes' => array_merge($this->setDefaultModalAttributes(), $options['modal_attributes']),
             'modal' => isset($options['modal']) ? $options['modal'] : '',
