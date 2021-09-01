@@ -9,35 +9,54 @@ export default function select2Inititalization(fields) {
         if(el.withCreate) {
             var btnCallModal = $(el.selector+ ' .js-handle-form-create');
             var Modale = $(el.modal_id);
-
+            
             btnCallModal.on('click', function(e) {
                 e.preventDefault();
                 if(Modale.length > 0) {
                     Modale.modal('show');
                 }
             })
+
+            if(el.dynamic_modal) {
+                callAjaxForForm(Modale.find('.modal-body'));
+
+                $('#myModal').on('show.bs.modal', function (event) {
+                    // do something...
+                    if(Modale.find('.modal-body').children().length == 0) {
+                        callAjaxForForm(Modale.find('.modal-body'));
+                    }
+                })
+                $('#myModal').on('hidden.bs.modal', function (event) {
+                    // do something...
+                    Modale.find('.modal-body').html('');
+                })
+            }
+            else {
+                loadDefaultProcess(Modale);
+            }
+
         }
 
-        if(el.dynamic_modal) {
-            $.ajax({
-                method: 'GET',
-                url: Route('forms.ajax', { name : 'medias' }),
-                data: {},
-                headers: { 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content') },
-                success: function(data) {
-                    loadDefaultProcess(Modale);
-                },
-                error: function(err) {
-                    console.log('whoooops', err);
-                }
-            })
-        }
-        else {
-            loadDefaultProcess(Modale);
-        }
+        
 
         select2boxe.select2(el.options);
     })
+
+    function callAjaxForForm(context, namedForm = 'medias') {
+        $.ajax({
+            method: 'GET',
+            url: Route('forms.ajax', { name : namedForm }),
+            data: {},
+            headers: { 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content') },
+            success: function(data) {
+                context.append(data.html)
+                loadDefaultProcess(Modale);
+            },
+            error: function(err) {
+                console.log('whoooops', err);
+            }
+        })
+    }
 
     function loadDefaultProcess(Modale) {
         var ModaleForm = Modale.find('form');
