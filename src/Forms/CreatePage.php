@@ -27,7 +27,7 @@ class CreatePage extends Form
             ->add('categories_id', 'select2', [
                 'empty_value' => '',
                 'withCreate' => true,
-                'modal' => 'adminify::layouts.admin.modales.createCategory', // simple include
+                'modal' => 'adminify::layouts.admin.modales.modal-ajax', // simple include
                 'form' => [
                     'namespace' => 'App\Forms\CreateCategory',
                     'attributes' => [

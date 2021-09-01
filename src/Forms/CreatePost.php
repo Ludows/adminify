@@ -24,7 +24,7 @@ class CreatePost extends Form
             $this->add('categories_id', 'select2', [
                 'empty_value' => '',
                 'withCreate' => true,
-                'modal' => 'adminify::layouts.admin.modales.createCategory',
+                'modal' => 'adminify::layouts.admin.modales.modal-ajax',
                 'form' => [
                     'namespace' => 'App\Forms\CreateCategory',
                     'attributes' => [
@@ -57,7 +57,7 @@ class CreatePost extends Form
             $this->add('tags_id', 'select2', [
                 'empty_value' => '',
                 'withCreate' => true,
-                'modal' => 'adminify::layouts.admin.modales.createTag',
+                'modal' => 'adminify::layouts.admin.modales.modal-ajax',
                 'form' => [
                     'namespace' => 'App\Forms\CreateTag',
                     'attributes' => [
