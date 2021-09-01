@@ -48,6 +48,7 @@ class Select2Type extends FormField {
         $b = [
             'sibling' => Str::slug('select2_'.$uniqid),
             'withCreate' => isset($options['withCreate']) ? $options['withCreate'] : false,
+            'dynamic_modal' => isset($options['dynamic_modal']) ? $options['dynamic_modal'] : true,
             'modal' => isset($options['modal']) ? $options['modal'] : '',
             'modal_id' => Str::slug('select2_modale_'.$uniqid),
             'select2options' => array_merge($this->setDefaultsSelect2(), isset($options['select2options']) ? $options['select2options'] : [])
