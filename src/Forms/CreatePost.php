@@ -25,6 +25,14 @@ class CreatePost extends Form
                 'empty_value' => '',
                 'withCreate' => true,
                 'modal' => 'adminify::layouts.admin.modales.modal-ajax',
+                'modal_attributes' => [
+                    'classes' => '',
+                    'modalBodyClass' => '',
+                    'modalDialogClasses' => '',
+                    'modalTitle' => _('admin.modal_title'),
+                    'btnSave' => null,
+                    'btnClear' => null
+                ],
                 'form' => [
                     'namespace' => 'App\Forms\CreateCategory',
                     'attributes' => [
@@ -58,6 +66,14 @@ class CreatePost extends Form
                 'empty_value' => '',
                 'withCreate' => true,
                 'modal' => 'adminify::layouts.admin.modales.modal-ajax',
+                'modal_attributes' => [
+                    'classes' => '',
+                    'modalBodyClass' => '',
+                    'modalDialogClasses' => '',
+                    'modalTitle' => _('admin.modal_title'),
+                    'btnSave' => null,
+                    'btnClear' => null
+                ],
                 'form' => [
                     'namespace' => 'App\Forms\CreateTag',
                     'attributes' => [
