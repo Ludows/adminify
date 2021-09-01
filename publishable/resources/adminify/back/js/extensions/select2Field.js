@@ -18,12 +18,12 @@ export default function select2Inititalization(fields) {
             })
 
             if(el.dynamic_modal) {
-                callAjaxForForm(Modale.find('.modal-body'));
+                callAjaxForForm(Modale.find('.modal-body'), el.form.length > 0 ? el.form.namespace : '', el.form.attributes);
 
                 $('#myModal').on('show.bs.modal', function (event) {
                     // do something...
                     if(Modale.find('.modal-body').children().length == 0) {
-                        callAjaxForForm(Modale.find('.modal-body'));
+                        callAjaxForForm(Modale.find('.modal-body'), el.form.length > 0 ? el.form.namespace : '', el.form.attributes);
                     }
                 })
                 $('#myModal').on('hidden.bs.modal', function (event) {
@@ -42,11 +42,11 @@ export default function select2Inititalization(fields) {
         select2boxe.select2(el.options);
     })
 
-    function callAjaxForForm(context, namedForm = 'medias') {
+    function callAjaxForForm(context, namedForm = 'medias', datas = {}) {
         $.ajax({
-            method: 'GET',
+            method: 'POST',
             url: Route('forms.ajax', { name : namedForm }),
-            data: {},
+            data: datas,
             headers: { 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content') },
             success: function(data) {
                 context.append(data.html)

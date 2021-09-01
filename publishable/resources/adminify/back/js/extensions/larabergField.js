@@ -11,6 +11,12 @@ export default function LarabergInititalization(fields) {
             modal_select.modal('show');
         })
 
+
+
+        // $('#myModal').on('hidden.bs.modal', function (event) {
+        //     // do something...
+        // })
+
         $("#"+el.selector).on('click', '.js-save-template', function(e) {
             e.preventDefault();
             modal_save.modal('show');
