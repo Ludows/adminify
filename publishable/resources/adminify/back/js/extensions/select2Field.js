@@ -18,12 +18,12 @@ export default function select2Inititalization(fields) {
             })
 
             if(el.dynamic_modal) {
-                callAjaxForForm(Modale.find('.modal-body'), el.form.length > 0 ? Object.keys(el.form).namespace : '', el.form.attributes);
+                callAjaxForForm(Modale.find('.modal-body'), Object.keys(el.form).length > 0 ? el.form.namespace : '', el.form.attributes);
 
                 Modale.on('show.bs.modal', function (event) {
                     // do something...
                     if(Modale.find('.modal-body').children().length == 0) {
-                        callAjaxForForm(Modale.find('.modal-body'), el.form.length > 0 ? Object.keys(el.form).namespace : '', el.form.attributes);
+                        callAjaxForForm(Modale.find('.modal-body'), Object.keys(el.form).length > 0 ? el.form.namespace : '', el.form.attributes);
                     }
                 })
                 Modale.on('hidden.bs.modal', function (event) {
