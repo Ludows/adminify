@@ -9,23 +9,23 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
     
     Route::post('/search', 'Ludows\Adminify\Http\Controllers\Back\SearchController@index')->name('searchable');
 
-    if($c['post'] && isset($c['post'])) {	
+    if(isset($c['post']) ] && $c['post') {	
 	    Route::resource('posts', 'Ludows\Adminify\Http\Controllers\Back\PostController', ['except' => ['show']] );
     }
     
-    if($c['media'] && isset($c['media'])) {
+    if(isset($c['media']) && $c['media']) {
         Route::resource('medias', 'Ludows\Adminify\Http\Controllers\Back\MediaController', ['except' => ['show']]);
     }
 	
-    if($c['category'] && isset($c['category'])) {
+    if(isset($c['category']) && $c['category']) {
         Route::resource('categories', 'Ludows\Adminify\Http\Controllers\Back\CategoryController', ['except' => ['show']]);
     }
 
-    if($c['page'] && isset($c['page'])) {	
+    if(isset($c['page']) &&  $c['page']) {	
         Route::resource('pages', 'Ludows\Adminify\Http\Controllers\Back\PageController', ['except' => ['show']]);
     }
     
-    if($c['menu'] && isset($c['menu'])) {
+    if(isset($c['menu']) && $c['menu']) {
         Route::resource('menus', 'Ludows\Adminify\Http\Controllers\Back\MenuController', ['except' => ['show']]);
         Route::post('menus/set-items-to-menu/{id}/{type}', 'Ludows\Adminify\Http\Controllers\Back\MenuController@setItemsToMenu')->name('menus.setItemsToMenu');
         Route::post('menus/remove-items-to-menu/{id}', 'Ludows\Adminify\Http\Controllers\Back\MenuController@removeItemsToMenu')->name('menus.removeItemsToMenu');
@@ -33,21 +33,21 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
     }
 
     
-    if($c['templates_content'] && isset($c['templates_content'])) {
+    if(isset($c['templates_content']) && $c['templates_content']) {
         Route::resource('templates', 'Ludows\Adminify\Http\Controllers\Back\TemplatesController', ['except' => ['show']]);
         Route::post('templates/content', 'Ludows\Adminify\Http\Controllers\Back\TemplatesController@setContent')->name('templates.setcontent');
     }
 
     Route::post('listings', 'Ludows\Adminify\Http\Controllers\Back\ListingController@index')->name('listings');
 
-    if($c['comment'] && isset($c['comment'])) {
+    if(isset($c['comment']) && $c['comment']) {
         Route::resource('comments', 'Ludows\Adminify\Http\Controllers\Back\CommentController', ['except' => ['show' ]]);
     }
 
-    if($c['setting'] && isset($c['setting'])) {
+    if(isset($c['setting']) && $c['setting']) {
         Route::resource('settings', 'Ludows\Adminify\Http\Controllers\Back\SettingsController', ['except' => ['show', 'update', 'delete', 'edit']]);
     }
-    if($c['user'] && isset($c['user'])) {
+    if(isset($c['user']) && $c['user']) {
         Route::resource('users', 'Ludows\Adminify\Http\Controllers\Back\UserController', ['except' => ['show']]);
 
         Route::get('users/{user}/profile/', 'Ludows\Adminify\Http\Controllers\Back\UserController@showProfile')->name('users.profile.edit');
@@ -55,14 +55,14 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
         Route::post('users/{user}/profile/save', 'Ludows\Adminify\Http\Controllers\Back\UserController@saveProfile')->name('users.profile.store');
     }
 
-    if($c['key_translation'] && isset($c['key_translation'])) {
+    if(isset($c['key_translation']) && $c['key_translation']) {
         Route::resource('traductions', 'Ludows\Adminify\Http\Controllers\Back\TranslationsController', ['except' => ['show']]);
     }
 
-    if($c['tag'] && isset($c['tag'])) {
+    if(isset($c['tag']) && $c['tag']) {
         Route::resource('tags', 'Ludows\Adminify\Http\Controllers\Back\TagsController', ['except' => ['show']]);
     }
-    if($c['email'] && isset($c['email'])) {
+    if(isset($c['email']) && $c['email']) {
         Route::resource('mails', 'Ludows\Adminify\Http\Controllers\Back\MailsController', ['except' => ['show']]);
 
         Route::post('mails/send/{mail}', 'Ludows\Adminify\Http\Controllers\Back\MailsController@send')->name('mails.send');
@@ -72,13 +72,13 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
         Route::resource('savetraductions', 'Ludows\Adminify\Http\Controllers\Back\SaveTranslationsController', ['except' => ['show', 'create', 'store', 'index', 'destroy']]);
     }
 
-    if($c['post'] && isset($c['post'])) {	
+    if(isset($c['post']) && $c['post']) {	
         Route::post('{type}/trash/{id}', 'Ludows\Adminify\Http\Controllers\Back\TrashController@index')->name('trash');
     }
 
     Route::post('find/{type}', 'Ludows\Adminify\Http\Controllers\Back\FinderController@index')->name('finder');
 
-    if($c['seo'] && isset($c['seo'])) {	
+    if(isset($c['seo']) && $c['seo']) {	
 
         Route::get('seo/{type}/{id}', 'Ludows\Adminify\Http\Controllers\Back\SeoController@edit')->name('seo.edit');
 
@@ -102,7 +102,7 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
         ]);
     })->name('modale.getModale');
 
-    if($c['media'] && isset($c['media'])) {
+    if(isset($c['media']) && $c['media']) {
         Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
             \UniSharp\LaravelFilemanager\Lfm::routes();
         });
