@@ -3,6 +3,8 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 use Ludows\Adminify\Http\Controllers\Controller;
 
+use Kris\LaravelFormBuilder\FormBuilder;
+
 use Ludows\Adminify\Interfacable\DashboardManager;
 
 class HomeController extends Controller
@@ -39,5 +41,17 @@ class HomeController extends Controller
         }
 
         return view('adminify::layouts.admin.pages.dashboard', ['interfacable' => $this->interfacable]);
+    }
+
+    public function getForms(Request $request, FormBuilder $formbuilder) {
+
+        $formName = $request->name;
+
+        $form = $formbuilder->create('App\Forms'. '\\'. $formName , []);
+
+        return response()->json([
+            'html' => form($form),
+            'status' => 'OK'
+        ]);
     }
 }

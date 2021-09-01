@@ -87,20 +87,8 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
 
     }
 
+    Route::get('/forms/{name}', 'Ludows\Adminify\Http\Controllers\Back\HomeController@getForms')->name('forms.ajax');
 
-    Route::get('modales/content/{name}', function ($name) {
-        $returnView = view("layouts.admin.modales.contents.".$name, [])->render();
-        return response()->json([
-            'html' => $returnView,
-        ]);
-    })->name('modale.content');
-
-    Route::get('modales/{name}', function ($name) {
-        $returnView = view("layouts.admin.modales.".$name, [])->render();
-        return response()->json([
-            'html' => $returnView,
-        ]);
-    })->name('modale.getModale');
 
     if(isset($c['media']) && $c['media']) {
         Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
