@@ -138,6 +138,22 @@ return [
         'fr'
     ],
 
+    'enables_features' => [
+        'media' => true,
+        'category' => true,
+        'page' => true,
+        'post' => true,
+        'tag' => true,
+        'comment' => true,
+        'menu' => true,
+        'setiing' => true,
+        'key_translation' => true,
+        'email' => true,
+        'seo' => true,
+        'templates_content' => true,
+        'user' => true
+    ],
+
     // please to pay attention that your models implements Searchable.
     'searchable' => [
         'admin' => [

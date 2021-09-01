@@ -1,59 +1,91 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
+$c = config('site-settings.enables_features');
+
 Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrator|editor', 'admin.breadcrumb', 'admin.menu', 'autoload.forms', 'check.permissions', 'admin.deletemedia', 'admin.fullmode', 'admin.seo'])->group( function () {
 
     Route::get('/dashboard', 'Ludows\Adminify\Http\Controllers\Back\HomeController@index')->name('home.dashboard');
     
     Route::post('/search', 'Ludows\Adminify\Http\Controllers\Back\SearchController@index')->name('searchable');
 
-	Route::resource('posts', 'Ludows\Adminify\Http\Controllers\Back\PostController', ['except' => ['show']] );
+    if($c['post'] && isset($c['post'])) {	
+	    Route::resource('posts', 'Ludows\Adminify\Http\Controllers\Back\PostController', ['except' => ['show']] );
+    }
     
-    Route::resource('medias', 'Ludows\Adminify\Http\Controllers\Back\MediaController', ['except' => ['show']]);
+    if($c['media'] && isset($c['media'])) {
+        Route::resource('medias', 'Ludows\Adminify\Http\Controllers\Back\MediaController', ['except' => ['show']]);
+    }
 	
-    Route::resource('categories', 'Ludows\Adminify\Http\Controllers\Back\CategoryController', ['except' => ['show']]);
-	
-    Route::resource('pages', 'Ludows\Adminify\Http\Controllers\Back\PageController', ['except' => ['show']]);
+    if($c['category'] && isset($c['category'])) {
+        Route::resource('categories', 'Ludows\Adminify\Http\Controllers\Back\CategoryController', ['except' => ['show']]);
+    }
+
+    if($c['page'] && isset($c['page'])) {	
+        Route::resource('pages', 'Ludows\Adminify\Http\Controllers\Back\PageController', ['except' => ['show']]);
+    }
     
-    Route::resource('menus', 'Ludows\Adminify\Http\Controllers\Back\MenuController', ['except' => ['show']]);
-    Route::post('menus/set-items-to-menu/{id}/{type}', 'Ludows\Adminify\Http\Controllers\Back\MenuController@setItemsToMenu')->name('menus.setItemsToMenu');
-    Route::post('menus/remove-items-to-menu/{id}', 'Ludows\Adminify\Http\Controllers\Back\MenuController@removeItemsToMenu')->name('menus.removeItemsToMenu');
-    Route::post('menus/check-entity/{id}/{type}', 'Ludows\Adminify\Http\Controllers\Back\MenuController@checkEntity')->name('menus.checkEntity');
+    if($c['menu'] && isset($c['menu'])) {
+        Route::resource('menus', 'Ludows\Adminify\Http\Controllers\Back\MenuController', ['except' => ['show']]);
+        Route::post('menus/set-items-to-menu/{id}/{type}', 'Ludows\Adminify\Http\Controllers\Back\MenuController@setItemsToMenu')->name('menus.setItemsToMenu');
+        Route::post('menus/remove-items-to-menu/{id}', 'Ludows\Adminify\Http\Controllers\Back\MenuController@removeItemsToMenu')->name('menus.removeItemsToMenu');
+        Route::post('menus/check-entity/{id}/{type}', 'Ludows\Adminify\Http\Controllers\Back\MenuController@checkEntity')->name('menus.checkEntity');
+    }
 
-    Route::resource('templates', 'Ludows\Adminify\Http\Controllers\Back\TemplatesController', ['except' => ['show']]);
-
-    Route::post('templates/content', 'Ludows\Adminify\Http\Controllers\Back\TemplatesController@setContent')->name('templates.setcontent');
+    
+    if($c['templates_content'] && isset($c['templates_content'])) {
+        Route::resource('templates', 'Ludows\Adminify\Http\Controllers\Back\TemplatesController', ['except' => ['show']]);
+        Route::post('templates/content', 'Ludows\Adminify\Http\Controllers\Back\TemplatesController@setContent')->name('templates.setcontent');
+    }
 
     Route::post('listings', 'Ludows\Adminify\Http\Controllers\Back\ListingController@index')->name('listings');
 
-    Route::resource('comments', 'Ludows\Adminify\Http\Controllers\Back\CommentController', ['except' => ['show' ]]);
-    
-    Route::resource('settings', 'Ludows\Adminify\Http\Controllers\Back\SettingsController', ['except' => ['show', 'update', 'delete', 'edit']]);
-	
-    Route::resource('users', 'Ludows\Adminify\Http\Controllers\Back\UserController', ['except' => ['show']]);
+    if($c['comment'] && isset($c['comment'])) {
+        Route::resource('comments', 'Ludows\Adminify\Http\Controllers\Back\CommentController', ['except' => ['show' ]]);
+    }
 
-    Route::get('users/{user}/profile/', 'Ludows\Adminify\Http\Controllers\Back\UserController@showProfile')->name('users.profile.edit');
+    if($c['setting'] && isset($c['setting'])) {
+        Route::resource('settings', 'Ludows\Adminify\Http\Controllers\Back\SettingsController', ['except' => ['show', 'update', 'delete', 'edit']]);
+    }
+    if($c['user'] && isset($c['user'])) {
+        Route::resource('users', 'Ludows\Adminify\Http\Controllers\Back\UserController', ['except' => ['show']]);
 
-    Route::post('users/{user}/profile/save', 'Ludows\Adminify\Http\Controllers\Back\UserController@saveProfile')->name('users.profile.store');
+        Route::get('users/{user}/profile/', 'Ludows\Adminify\Http\Controllers\Back\UserController@showProfile')->name('users.profile.edit');
 
-    Route::resource('traductions', 'Ludows\Adminify\Http\Controllers\Back\TranslationsController', ['except' => ['show']]);
-    
-    Route::resource('tags', 'Ludows\Adminify\Http\Controllers\Back\TagsController', ['except' => ['show']]);
+        Route::post('users/{user}/profile/save', 'Ludows\Adminify\Http\Controllers\Back\UserController@saveProfile')->name('users.profile.store');
+    }
 
-    Route::resource('mails', 'Ludows\Adminify\Http\Controllers\Back\MailsController', ['except' => ['show']]);
+    if($c['key_translation'] && isset($c['key_translation'])) {
+        Route::resource('traductions', 'Ludows\Adminify\Http\Controllers\Back\TranslationsController', ['except' => ['show']]);
+    }
 
-    Route::post('mails/send/{mail}', 'Ludows\Adminify\Http\Controllers\Back\MailsController@send')->name('mails.send');
+    if($c['tag'] && isset($c['tag'])) {
+        Route::resource('tags', 'Ludows\Adminify\Http\Controllers\Back\TagsController', ['except' => ['show']]);
+    }
+    if($c['email'] && isset($c['email'])) {
+        Route::resource('mails', 'Ludows\Adminify\Http\Controllers\Back\MailsController', ['except' => ['show']]);
 
-    Route::resource('savetraductions', 'Ludows\Adminify\Http\Controllers\Back\SaveTranslationsController', ['except' => ['show', 'create', 'store', 'index', 'destroy']]);
+        Route::post('mails/send/{mail}', 'Ludows\Adminify\Http\Controllers\Back\MailsController@send')->name('mails.send');
+    }
 
-    Route::post('{type}/trash/{id}', 'Ludows\Adminify\Http\Controllers\Back\TrashController@index')->name('trash');
+    if(is_multilang()) {
+        Route::resource('savetraductions', 'Ludows\Adminify\Http\Controllers\Back\SaveTranslationsController', ['except' => ['show', 'create', 'store', 'index', 'destroy']]);
+    }
+
+    if($c['post'] && isset($c['post'])) {	
+        Route::post('{type}/trash/{id}', 'Ludows\Adminify\Http\Controllers\Back\TrashController@index')->name('trash');
+    }
 
     Route::post('find/{type}', 'Ludows\Adminify\Http\Controllers\Back\FinderController@index')->name('finder');
 
-    Route::get('seo/{type}/{id}', 'Ludows\Adminify\Http\Controllers\Back\SeoController@edit')->name('seo.edit');
+    if($c['seo'] && isset($c['seo'])) {	
 
-    Route::put('seo/{type}/{id}', 'Ludows\Adminify\Http\Controllers\Back\SeoController@update')->name('seo.update');
-    Route::patch('seo/{type}/{id}', 'Ludows\Adminify\Http\Controllers\Back\SeoController@update')->name('seo.update');
+        Route::get('seo/{type}/{id}', 'Ludows\Adminify\Http\Controllers\Back\SeoController@edit')->name('seo.edit');
+
+        Route::put('seo/{type}/{id}', 'Ludows\Adminify\Http\Controllers\Back\SeoController@update')->name('seo.update');
+        Route::patch('seo/{type}/{id}', 'Ludows\Adminify\Http\Controllers\Back\SeoController@update')->name('seo.update');
+
+    }
 
 
     Route::get('modales/content/{name}', function ($name) {
@@ -70,8 +102,10 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
         ]);
     })->name('modale.getModale');
 
-    Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-        \UniSharp\LaravelFilemanager\Lfm::routes();
-    });
+    if($c['media'] && isset($c['media'])) {
+        Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+            \UniSharp\LaravelFilemanager\Lfm::routes();
+        });
+    }
 
 });
