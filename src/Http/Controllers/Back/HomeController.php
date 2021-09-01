@@ -5,6 +5,9 @@ use Ludows\Adminify\Http\Controllers\Controller;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 
+use Illuminate\Http\Request;
+
+
 use Ludows\Adminify\Interfacable\DashboardManager;
 
 class HomeController extends Controller
