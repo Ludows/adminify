@@ -45,7 +45,6 @@
         @include('adminify::layouts.admin.modales.modal-ajax', [
             "id" => ''  
         ])
-        @include('adminify::layouts.admin.modales.saveTemplate')
     @endpush
 @endif
 
