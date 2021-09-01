@@ -146,7 +146,7 @@ return [
         'tag' => true,
         'comment' => true,
         'menu' => true,
-        'setiing' => true,
+        'setting' => true,
         'key_translation' => true,
         'email' => true,
         'seo' => true,
