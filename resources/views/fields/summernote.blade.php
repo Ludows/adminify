@@ -29,7 +29,7 @@
    
 @endpush
 
-@if ($isAjax)
+@if ($options['isAjax'])
     <script>
         summernoteInitFunction([{
             selector: '{{ $options['sibling'] }}',

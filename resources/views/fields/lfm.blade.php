@@ -32,7 +32,7 @@
     
 @endpush
 
-@if ($isAjax)
+@if ($options['isAjax'])
     <script type="text/javascript">
         lfmInitFunction([{
             selector: "{{ $options['sibling'] }}",

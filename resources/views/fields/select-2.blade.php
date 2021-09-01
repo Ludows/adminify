@@ -44,7 +44,7 @@
 @endif
 
 
-@if ($isAjax)
+@if ($options['isAjax'])
     <script type="text/javascript">
         Select2InitFunction([{
             selector: '#{{ $options['sibling'] }}',

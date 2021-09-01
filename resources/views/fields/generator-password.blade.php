@@ -29,7 +29,7 @@
 
 </div>
 
-@if ($isAjax)
+@if ($options['isAjax'])
     <script type="text/javascript">
         PasswordGeneratorInitFunction([{
             selector: "{{ $options['sibling'] }}",
