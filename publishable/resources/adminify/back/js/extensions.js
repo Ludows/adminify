@@ -1,6 +1,12 @@
 // Show packages.json
 window.jQuery = window.$ = require('jquery');
 
+import {
+    createLaravelLocalization
+} from '@wesleyhf/laravel-localization-js';
+
+window.createTranslationable = createLaravelLocalization;
+
 require('select2');
 
 require('bootstrap');
