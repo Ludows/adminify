@@ -43,7 +43,8 @@
 @if($options['withBtnForTemplates'])
     @push('modales')
         @include('adminify::layouts.admin.modales.modal-ajax', [
-            "id" => 'modal-'.$options['sibling']
+            "id" => 'modal-'.$options['sibling'],
+            "modalTitle" => 'Mon faux titre'
         ])
     @endpush
 @endif
