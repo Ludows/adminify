@@ -56,7 +56,8 @@ export default function LarabergInititalization(fields) {
                     $(form).find('[name]').not('[name="_token"]').setResponseFromAjax(err.responseJSON);
                 }
 
-                
+                $(form).clearValues();
+                $(modal).modal('hide');
             });
         })
 
