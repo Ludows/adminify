@@ -7,14 +7,14 @@ export default function LarabergInititalization(fields) {
 
         let Interfaces = {
             'select-tpl' : {
-                'namespace' : 'App\Forms\SelectTemplate',
+                'namespace' : 'App\\Forms\\SelectTemplate',
                 'form-attributes' : {
                     'method' : 'POST',
                     'url' : Route('templates.store')
                 }
             },
             'save-tpl' : {
-                'namespace' : 'App\Forms\SaveTemplate',
+                'namespace' : 'App\\Forms\\SaveTemplate',
                 'form-attributes' : {
                     'method' : 'POST',
                     'url' : Route('templates.setcontent')
