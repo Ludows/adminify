@@ -49,6 +49,7 @@
 
         {{--  <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>  --}}
         <script src="{{ asset('myuploads') }}/routes.js"></script>
+        <script src="{{ asset('myuploads') }}/traductions-{{ str_replace('_', '-', app()->getLocale()) }}.js"></script>
         <script src="{{ asset('adminify/back') }}/js/extensions.js"></script>
         {{--  <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>  --}}
 
