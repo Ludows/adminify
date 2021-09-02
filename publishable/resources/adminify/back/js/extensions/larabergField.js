@@ -4,6 +4,7 @@ export default function LarabergInititalization(fields) {
         let laraberg = Laraberg.init(textarea.attr('id'), el.options);
 
         let modal = $(window.modalAjaxLaraberg);
+        let type = null;
 
         let Interfaces = {
             'select-tpl' : {
@@ -30,7 +31,7 @@ export default function LarabergInititalization(fields) {
         $("#" + el.selector).on('click', '.js-call-modal-laraberg', function (e) {
             e.preventDefault();
 
-            let type = $(this).attr('data-type');
+            type =  $(this).attr('data-type');
 
             createFormFromAjax(Interfaces[type], function(err, data) {
                 if(err != null) {
@@ -42,10 +43,52 @@ export default function LarabergInititalization(fields) {
             })
         })
 
+        modal.on('submit', '[type="submit"]', function(e) {
+            e.preventDefault();
+
+            let obj = Interfaces[type];
+            let form = $(this).get(0).form;
+
+            let formValues = $(form).serializeFormJSON();
+            obj.values = formValues;
+            makeProcess(Interfaces[type], function(err, data) {
+                if(err != null) {
+                    $(form).find('[name]').not('[name="_token"]').setResponseFromAjax(err.responseJSON);
+                }
+
+                
+            });
+        })
+
         modal.on('hidden.bs.modal', function (event) {
             // do something...
             modal.find('.modal-body').html('');
         })
+
+        function makeProcess(objectInterface, callback) {
+
+            let route = objectInterface['form-attributes'].url;
+            let method = objectInterface['form-attributes'].method;
+
+            $.ajax({
+                'method': method,
+                url: route,
+                data: objectInterface.values,
+                'headers': {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+            })
+            .done((data) => {
+                if(typeof callback == 'function') {
+                    callback(null, data);
+                }
+            })
+            .fail((err) => {
+                if(typeof callback == 'function') {
+                    callback(err, null);
+                }
+            })
+        }
 
         function createFormFromAjax(objectInterface, callback) {
             $.ajax({
