@@ -1,85 +1,66 @@
 export default function LarabergInititalization(fields) {
-    $.each(fields, function(i, el) {
-        let textarea = $('#'+el.selector+' textarea');
-        let laraberg =  Laraberg.init(textarea.attr('id'), el.options);
+    $.each(fields, function (i, el) {
+        let textarea = $('#' + el.selector + ' textarea');
+        let laraberg = Laraberg.init(textarea.attr('id'), el.options);
 
-        let modal_select = $('#modalSelectTemplate');
-        let modal_save = $('#modalSaveTemplate');
+        let modal = $(window.modalAjaxLaraberg);
 
-        $("#"+el.selector).on('click', '.js-select-template', function(e) {
+        let Interfaces = {
+            'select-tpl' : {
+                'namespace' : 'App\Forms\SelectTemplate',
+                'form-attributes' : {
+                    'method' : 'POST',
+                    'url' : Route('templates.store')
+                }
+            },
+            'save-tpl' : {
+                'namespace' : 'App\Forms\SaveTemplate',
+                'form-attributes' : {
+                    'method' : 'POST',
+                    'url' : Route('templates.setcontent')
+                }
+            },
+        }
+
+        $("#" + el.selector).on('click', '.js-call-modal-laraberg', function (e) {
             e.preventDefault();
-            modal_select.modal('show');
+
+            let type = $(this).attr('data-type');
+
+            createFormFromAjax(Interfaces[type], function(err, data) {
+                if(err != null) {
+                    throw new Error('whoops', err);
+                }
+
+                modal.find('.modal-body').append(data.html);
+                modal.modal('show');
+            })
         })
 
-
-
-        // $('#myModal').on('hidden.bs.modal', function (event) {
-        //     // do something...
-        // })
-
-        $("#"+el.selector).on('click', '.js-save-template', function(e) {
-            e.preventDefault();
-            modal_save.modal('show');
+        modal.on('hidden.bs.modal', function (event) {
+            // do something...
+            Modale.find('.modal-body').html('');
         })
 
-        modal_select.on('submit', 'form', function(e) {
-            e.preventDefault();
-
-            let form = $(this);
-
-            var datas = form.serializeFormJSON();
-
+        function createFormFromAjax(objectInterface, callback) {
             $.ajax({
-                'method' : 'POST',
-                'url' : $(this).attr('action'),
-                'dataType' : 'json',
-                'headers': {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                'data' : datas
-            })
-            .done((data) => {
-                console.log('success')
-                $(form).clearValues();
-
-                let c = Laraberg.getContent() + data.html;
-
-                Laraberg.setContent( c );
-                modal_save.modal('close');
-            })
-            .fail((err) => {
-                console.log(err)
-            })
-        })
-
-        modal_save.on('submit', 'form', function(e) {
-            e.preventDefault();
-
-            let form = $(this);
-
-            form.find('[name="content"]').val( Laraberg.getContent() );
-
-            var datas = form.serializeFormJSON();
-
-            $.ajax({
-                'method' : 'POST',
-                'url' : $(this).attr('action'),
-                'dataType' : 'json',
-                'headers': {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                'data' : datas
-            })
-            .done((data) => {
-                console.log('success')
-                $(form).find('[name]').not('[name="_token"]').setResponseFromAjax()
-                $(form).clearValues();
-                modal_save.modal('close');
-            })
-            .fail((err) => {
-                console.log(err)
-                $(form).find('[name]').not('[name="_token"]').setResponseFromAjax(err.responseJSON)
-            })
-        })
+                    'method': 'POST',
+                    url: Route('forms.ajax'),
+                    data: objectInterface,
+                    'headers': {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                })
+                .done((data) => {
+                    if(typeof callback == 'function') {
+                        callback(null, data);
+                    }
+                })
+                .fail((err) => {
+                    if(typeof callback == 'function') {
+                        callback(err, null);
+                    }
+                })
+        }
     })
 }
