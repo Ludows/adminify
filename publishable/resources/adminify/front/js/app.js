@@ -8,7 +8,7 @@ import {
     createLaravelLocalization
 } from '@wesleyhf/laravel-localization-js';
 
-window.createTranslationable = createLaravelLocalization;
+window.createLaravelLocalization = createLaravelLocalization;
 
 require('./bootstrap');
 
