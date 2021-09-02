@@ -22,6 +22,11 @@ export default function LarabergInititalization(fields) {
             },
         }
 
+        let titles = {
+            'select-tpl' : __('admin.modal_title'),
+            'save-tpl' : __('admin.modal_title')
+        }
+
         $("#" + el.selector).on('click', '.js-call-modal-laraberg', function (e) {
             e.preventDefault();
 
@@ -31,7 +36,7 @@ export default function LarabergInititalization(fields) {
                 if(err != null) {
                     throw new Error('whoops', err);
                 }
-
+                modal.find('.modal-title').text( titles[type] );
                 modal.find('.modal-body').append(data.html);
                 modal.modal('show');
             })
