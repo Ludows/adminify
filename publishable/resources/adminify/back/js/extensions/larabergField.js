@@ -39,7 +39,7 @@ export default function LarabergInititalization(fields) {
 
         modal.on('hidden.bs.modal', function (event) {
             // do something...
-            Modale.find('.modal-body').html('');
+            modal.find('.modal-body').html('');
         })
 
         function createFormFromAjax(objectInterface, callback) {
