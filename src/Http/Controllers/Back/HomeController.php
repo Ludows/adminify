@@ -57,4 +57,16 @@ class HomeController extends Controller
             'status' => 'OK'
         ]);
     }
+    
+    public function getContents(Request $request) {
+
+        $all = $request->all();
+        
+        $view = view($all['view_name'], $all['view_vars'])->render();
+
+        return response()->json([
+            'html' => $view,
+            'status' => 'OK'
+        ]);
+    }
 }

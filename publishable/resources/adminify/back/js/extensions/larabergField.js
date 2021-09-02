@@ -28,6 +28,31 @@ export default function LarabergInititalization(fields) {
             'save-tpl' : __('admin.modal_title')
         }
 
+        modal.on('submit', 'form', function(e) {
+            e.preventDefault();
+
+            console.log('logged')
+
+            let obj = Interfaces[type];
+            let form = $(this).get(0).form;
+
+            let formValues = $(form).serializeFormJSON();
+            obj.values = formValues;
+            makeProcess(Interfaces[type], function(err, data) {
+                if(err != null) {
+                    console.log(err)
+                    $(form).find('[name]').not('[name="_token"]').setResponseFromAjax(err.responseJSON);
+                }
+
+                $(form).clearValues();
+                $(modal).modal('hide');
+
+                if(type == 'select-tpl') {
+                    Laraberg.setContent(data.content)
+                }
+            });
+        })
+
         $("#" + el.selector).on('click', '.js-call-modal-laraberg', function (e) {
             e.preventDefault();
 
@@ -43,23 +68,7 @@ export default function LarabergInititalization(fields) {
             })
         })
 
-        modal.on('submit', '[type="submit"]', function(e) {
-            e.preventDefault();
 
-            let obj = Interfaces[type];
-            let form = $(this).get(0).form;
-
-            let formValues = $(form).serializeFormJSON();
-            obj.values = formValues;
-            makeProcess(Interfaces[type], function(err, data) {
-                if(err != null) {
-                    $(form).find('[name]').not('[name="_token"]').setResponseFromAjax(err.responseJSON);
-                }
-
-                $(form).clearValues();
-                $(modal).modal('hide');
-            });
-        })
 
         modal.on('hidden.bs.modal', function (event) {
             // do something...

@@ -12,6 +12,7 @@ class CreateCategory extends Form
     {
         $categories = $this->hydrateSelect();
         $m = $this->getModel();
+        $r = $this->getRequest();
         // Add fields here...
         $this->add('title', Field::TEXT, [
             'label' => __('admin.form.title'),
@@ -20,8 +21,10 @@ class CreateCategory extends Form
                 'id' => 'cat_title'
             ],
         ]);
+        // $options['fromAjax']
         $this->add('media_id', 'lfm', [
             'label_show' => false,
+            'fromAjax' => $r->ajax(),
             'attr' => [
                 'value' => !is_array($m) && $m->media_id != 0 ? $m->media->path : null
             ]

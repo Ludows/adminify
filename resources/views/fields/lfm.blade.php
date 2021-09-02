@@ -37,6 +37,7 @@
         lfmInitFunction([{
             selector: "{{ $options['sibling'] }}",
             options: [],
+            fromAjax : {!! var_export($options['fromAjax'] ,true) !!},
             multilang: {!! var_export(is_multilang(),true) !!},
             currentLang: '{!! $currentLang !!}'
         }])
@@ -47,6 +48,7 @@
             window.admin.lfmFields.push({
                 selector: "{{ $options['sibling'] }}",
                 options: [],
+                fromAjax : {!! var_export($options['fromAjax'] ,true) !!},
                 multilang: {!! var_export(is_multilang(),true) !!},
                 currentLang: '{!! $currentLang !!}'
             })
