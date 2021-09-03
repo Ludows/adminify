@@ -112,9 +112,11 @@ export default function LFMField(fields) {
     }
 
     function generateListenersIframe(ifr, datas = {}) {
-        $(ifr.contents()).on('click', '#actions a[data-action="use"]', function() {
+        let ifr_content = ifr.contents();
+
+        $(ifr_content).on('click', '#actions a[data-action="use"]', function() {
             updateFieldProcess(datas);
-            $el.css({
+            datas.el.css({
                 'display': 'none'
             });
         })
@@ -122,6 +124,16 @@ export default function LFMField(fields) {
 
     function loadListenersModale(modale, datas = {}) {
         modale.on('show.bs.modal', function(e) {
+            let ifr = modale.find('iframe');
+            if(selectedItems.length == 0) {
+                let $id = getIndexFromLfm( ifr,  datas.hidden.attr('data-src') );
+
+                selectedItems = [
+                    {
+                        id : $id,
+                    }
+                ];
+            }
             if(datas.hidden.val().length > 0) {
                 selectedItems[0].id = findIndexFromName(ifr, fields_id.indexOf(datas.hidden.attr('name')) ? datas.hidden.attr('data-src') :  datas.hidden.val())
                 updateStyle(ifr);
@@ -163,7 +175,7 @@ export default function LFMField(fields) {
         $.ajax({
             'method': ObjectInterface.method,
             url: ObjectInterface.route,
-            data: objectInterface.values,
+            data: ObjectInterface.values,
             'headers': {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -180,52 +192,26 @@ export default function LFMField(fields) {
         })
     }
 
-    
+
 
     $.each(fields, function(i, el) {
         let $el_wrapper = $('#'+el.selector);
         let $el = $('#'+el.selector +' [type="button"]');
         let $hidden = $el_wrapper.find('[type="hidden"]');
-        let fromMediaEntity = getParamFromIframe(ifr.attr('src'), 'fromMediaCreate');
 
-        // let modale = $('#modalFileManager');
-        // let ifr = modale.find('iframe');
-            
+        if($hidden.val().length > 0) {
 
-        // if(el.fromAjax) {
-        //     // on ne connait pas la modale, on doit la générer
-        //     modale = null;
-        //     ifr = null;
-        // } 
-        // else {
-        //     generateListenersIframe(ifr, {
-                
-        //     });
-        // }
+            GenerateSelection($el_wrapper, [
+                {
+                    url : $hidden.attr('data-path'),
+                    name: $hidden.val()
+                }
+            ]);
 
-        // console.log('fromMediaEntity >>>', fromMediaEntity);
-
-        // if($hidden.val().length > 0) {
-
-        //     GenerateSelection($el_wrapper, [
-        //         {
-        //             url : $hidden.attr('data-path'),
-        //             name: $hidden.val()
-        //         }
-        //     ]);
-
-        //     let $id = getIndexFromLfm( ifr,  $hidden.attr('data-src') );
-
-        //     selectedItems = [
-        //         {
-        //             id : $id,
-        //         }
-        //     ];
-
-        //     $el.css({
-        //         'display': 'none'
-        //     });
-        // }
+            $el.css({
+                'display': 'none'
+            });
+        }
 
         $($el_wrapper).on('click', '.js-clear-selection', function(e) {
             e.preventDefault();
@@ -239,22 +225,25 @@ export default function LFMField(fields) {
 
         })
 
-        
+
 
         $($el_wrapper).on('click', '.js-selection', function(e) {
             e.preventDefault();
-            modale.modal('show');
+            $el.trigger('click');
         });
 
         $el.on('click', function(e) {
             e.preventDefault();
+            // $(this).prop('disabled', 'disabled');
 
                 callJajax({
                     'method' : 'POST',
                     'route' : Route('content.ajax'),
                     'values' : {
                         'view_name' : 'adminify::layouts.admin.modales.modaleFileManager',
-                        'view_vars' : []
+                        'view_vars' : {
+                            "tata": 'toto'
+                        }
                     }
                 }, function(err, datas) {
 
@@ -262,20 +251,42 @@ export default function LFMField(fields) {
                         throw new Error(err);
                     }
 
-                    let html = $(datas.html);
+                    let modale = $(datas.html);
+                    let modaleId = modale.attr('id');
+                    $('body').append(modale);
 
-                    let modaleId = html.find('.modal').attr('id');
-                    $('body').append(html);
+                    // console.log('modaleId', modaleId)
 
-                    let modale = $('#'+modaleId);
-                    let ifr = modale.find('iframe');    
-                    
-                    loadListenersModale(modale, {
-                        hidden : $hidden
+                    console.log('modale', modale)
+                    let ifr = modale.find('iframe');
+
+                    ifr.get(0).addEventListener('load', function(e) {
+                        console.log('iframe loaded');
+
+                        generateListenersIframe(ifr, {
+                            ifr : ifr,
+                            el_wrapper : $el_wrapper,
+                            fromMediaEntity : getParamFromIframe(ifr.attr('src'), 'fromMediaCreate'),
+                            hidden : $hidden,
+                            modale : modale,
+                            el : $el
+                        });
+
+                        loadListenersModale(modale, {
+                            hidden : $hidden
+                        })
+
+                        modale.modal('show')
+
+                        modale.on('hidden.bs.modal', function(e) {
+                            modale.remove();
+                        })
+
+
                     })
 
                 })
-            
+
         })
     })
 }
