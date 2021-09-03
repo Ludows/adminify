@@ -14,7 +14,7 @@ class HandleSettings extends HookInterface {
     {
         $this->hookManager = $hookManager;
     }
-    public function handle($datas = null) {
+    public function handle($hookName,$datas = null) {
         //data is the model passed
         $handles = [
             'homepage' => setting('homepage'),

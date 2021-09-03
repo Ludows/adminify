@@ -41,7 +41,7 @@ class HookManager
             foreach ($hooks as $hook) {
                 # code...
                 $object = app($hook);
-                $r = call_user_func_array(array($object, 'handle'), array($datas));
+                $r = call_user_func_array(array($object, 'handle'), array($name ,$datas));
             }
         }
 
