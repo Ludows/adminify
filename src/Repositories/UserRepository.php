@@ -22,14 +22,7 @@ class UserRepository extends BaseRepository
 
     public function getAvatarRelationship($model, $formValues, $type) {
         if(isset($formValues['avatar'])) {
-            $json = json_decode($formValues['avatar']);
-            $m = Media::where('src', $json[0]->name)->first();
-            if($m != null) {
-                $model->avatar = $m->id;
-            }
-            else {
-                $model->avatar = null;
-            }
+            $model->avatar = $formValues['avatar'];
         }
     }
     public function getPasswordFilter($model, $formValues, $type) {
