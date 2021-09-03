@@ -9,19 +9,16 @@ class SettingsRepository extends BaseRepository
 {
     public function CreateOrUpdate($form) {
 
-        $fields = $form->getFieldValues(true);
+        $fields = $form->getFieldValues();
 
         $mapping_datas = [];
 
         foreach ($fields as $key => $value) {
             # code...
-            if(!is_null($value)) {
-                $mapping_datas[] = [
-                    'type' => $key,
-                    'data' => $value,
-                ];
-            }
-            
+            $mapping_datas[] = [
+                'type' => $key,
+                'data' => $value,
+            ];        
         }
 
         $a = [];
