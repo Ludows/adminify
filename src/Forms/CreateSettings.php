@@ -18,6 +18,14 @@ class CreateSettings extends Form
         $comments = $this->getSetting('no_comments');
         $seo = $this->getSetting('no_seo');
 
+        if(is_null($comments)) {
+            $comments = 0;
+        }
+        
+        if(is_null($seo)) {
+            $seo = 0;
+        }
+
         $media = $this->getMedia( $this->getSetting('logo_id') );
 
         $this->add('site_name', Field::TEXT, [
