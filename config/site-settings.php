@@ -62,6 +62,7 @@ return [
         ],
         'model:deleted' => [
             \App\Hooks\OnDeletedHook::class,
+            \App\Hooks\ContentTypesHook::class
         ],
         'setting:created' => [
             \App\Hooks\HandleSettings::class,
