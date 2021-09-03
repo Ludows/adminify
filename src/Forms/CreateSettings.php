@@ -59,8 +59,8 @@ class CreateSettings extends Form
         ->add('no_comments', 'checkbox', [
             'label_show' => true,
             'label' => __('admin.form.no_comments_globally'),
-            'value' => $comments != null ? 0 : 1,
-            'checked' => $comments != null ? true : false,
+            'value' => $comments != null ? (int) $comments : 0,
+            'checked' => $comments != null && $comments != 0 ? true : false,
             'wrapper' => ['class' => 'custom-control custom-control-alternative custom-checkbox'],
             'attr' => ['class' => 'custom-control-input'],
             'label_attr' => ['class' => 'custom-control-label text-muted'],
@@ -68,8 +68,8 @@ class CreateSettings extends Form
         ->add('no_seo', 'checkbox', [
             'label_show' => true,
             'label' => __('admin.form.no_seo'),
-            'value' => $seo != null ? 0 : 1,
-            'checked' => $seo != null ? true : false,
+            'value' => $seo != null ? (int) $seo : 0,
+            'checked' => $seo != null && $seo != 0 ? true : false,
             'wrapper' => ['class' => 'custom-control custom-control-alternative custom-checkbox'],
             'attr' => ['class' => 'custom-control-input'],
             'label_attr' => ['class' => 'custom-control-label text-muted'],
