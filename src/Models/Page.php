@@ -68,7 +68,6 @@ class Page extends ContentTypeModel
         'content' => NULL,
         'media_id' => NULL,
         'parent_id' => 0,
-        'class' => NULL,
         'user_id' => 0,
     ];
 
