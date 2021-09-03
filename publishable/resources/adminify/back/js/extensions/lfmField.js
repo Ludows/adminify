@@ -1,7 +1,6 @@
 export default function LFMField(fields) {
 
     let selectedItems = [];
-    console.log(selectedItems);
     let fields_id = ['media_id', 'logo_id', 'menu-three-key', 'avatar_id'];
 
     function getParamFromIframe(ifrUrl, name) {
@@ -112,22 +111,97 @@ export default function LFMField(fields) {
         return $id;
     }
 
+    function generateListenersIframe(ifr, datas = {}) {
+        $(ifr.contents()).on('click', '#actions a[data-action="use"]', function() {
+            updateFieldProcess(datas);
+            $el.css({
+                'display': 'none'
+            });
+        })
+    }
 
-    let modale = $('#modalFileManager');
-    let ifr = modale.find('iframe');
+    function loadListenersModale(modale, datas = {}) {
+        modale.on('show.bs.modal', function(e) {
+            if(datas.hidden.val().length > 0) {
+                selectedItems[0].id = findIndexFromName(ifr, fields_id.indexOf(datas.hidden.attr('name')) ? datas.hidden.attr('data-src') :  datas.hidden.val())
+                updateStyle(ifr);
+            }
+        })
+    }
 
-    $(ifr.contents()).on('click', '#actions a[data-action="use"]', function() {
-                updateFieldProcess();
-                $el.css({
-                    'display': 'none'
-                });
+    function updateFieldProcess(ObjectInterface) {
+
+        selectedItems = getSelection(ObjectInterface.ifr);
+        console.log('TEST>>')
+        GenerateSelection(ObjectInterface.el_wrapper, selectedItems);
+        if(selectedItems.length > 0 && ObjectInterface.fromMediaEntity == 0) {
+            requestMedia(selectedItems, function(err, d) {
+                if(err != null) {
+                    console.log('whoops', err);
+                    return false;
+                }
+                if(d.models.length > 0) {
+                    fields_id.indexOf(ObjectInterface.hidden.attr('name')) > -1 ? ObjectInterface.hidden.val(d.models[0].id) : ObjectInterface.hidden.val(d.models[0].src);
+                }
+                else {
+                    // by defaults fallback to current name and mime type
+                    selectedItems.forEach((sel) => {
+                        ObjectInterface.hidden.val(sel.name);
+                    })
+                }
             })
+        }
+        else {
+            selectedItems.forEach((sel) => {
+                ObjectInterface.hidden.val(sel.name);
+            })
+        }
+        ObjectInterface.modale.modal('hide');
+    }
+
+    function callJajax(ObjectInterface, callback) {
+        $.ajax({
+            'method': ObjectInterface.method,
+            url: ObjectInterface.route,
+            data: objectInterface.values,
+            'headers': {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+        })
+        .done((data) => {
+            if(typeof callback == 'function') {
+                callback(null, data);
+            }
+        })
+        .fail((err) => {
+            if(typeof callback == 'function') {
+                callback(err, null);
+            }
+        })
+    }
+
+    
 
     $.each(fields, function(i, el) {
         let $el_wrapper = $('#'+el.selector);
         let $el = $('#'+el.selector +' [type="button"]');
         let $hidden = $el_wrapper.find('[type="hidden"]');
         let fromMediaEntity = getParamFromIframe(ifr.attr('src'), 'fromMediaCreate');
+
+        let modale = $('#modalFileManager');
+        let ifr = modale.find('iframe');
+            
+
+        if(el.fromAjax) {
+            // on ne connait pas la modale, on doit la générer
+            modale = null;
+            ifr = null;
+        } 
+        else {
+            generateListenersIframe(ifr, {
+                
+            });
+        }
 
         // console.log('fromMediaEntity >>>', fromMediaEntity);
 
@@ -165,36 +239,7 @@ export default function LFMField(fields) {
 
         })
 
-        function updateFieldProcess() {
-
-            selectedItems = getSelection(ifr);
-            console.log('TEST>>')
-            GenerateSelection($el_wrapper, selectedItems);
-            console.log(selectedItems);
-            if(selectedItems.length > 0 && fromMediaEntity == 0) {
-                requestMedia(selectedItems, function(err, d) {
-                    if(err != null) {
-                        console.log('whoops', err);
-                        return false;
-                    }
-                    if(d.models.length > 0) {
-                        fields_id.indexOf($hidden.attr('name')) > -1 ? $hidden.val(d.models[0].id) : $hidden.val(d.models[0].src);
-                    }
-                    else {
-                        // by defaults fallback to current name and mime type
-                        selectedItems.forEach((sel) => {
-                            $hidden.val(sel.name);
-                        })
-                    }
-                })
-            }
-            else {
-                selectedItems.forEach((sel) => {
-                    $hidden.val(sel.name);
-                })
-            }
-            modale.modal('hide');
-        }
+        
 
         $($el_wrapper).on('click', '.js-selection', function(e) {
             e.preventDefault();
@@ -203,20 +248,49 @@ export default function LFMField(fields) {
 
         $el.on('click', function(e) {
             e.preventDefault();
-            modale.modal('show');
 
+            if(el.fromAjax) {
+                callJajax({
+                    'method' : 'POST',
+                    'route' : Route('content.ajax'),
+                    'values' : {
+                        'view_name' : 'adminify::layouts.admin.modales.modaleFileManager',
+                        'view_vars' : []
+                    }
+                }, function(err, datas) {
 
+                    if(err != null) {
+                        throw new Error(err);
+                    }
 
-            if(selectedItems.length > 0) {
-                updateStyle(ifr);
+                    let html = $(datas.html);
+
+                    let modaleId = html.find('.modal').attr('id');
+                    $('body').append(html);
+
+                    let modale = $('#'+modaleId);
+                    let ifr = modale.find('iframe');    
+                    
+                    loadListenersModale(modale, {
+                        hidden : $hidden
+                    })
+
+                })
+            } 
+            else {
+        
+                modale.modal('show');
+                if(selectedItems.length > 0) {
+                    updateStyle(ifr);
+                }
+
             }
+
+            
         })
 
-        modale.on('show.bs.modal', function(e) {
-            if($hidden.val().length > 0) {
-                selectedItems[0].id = findIndexFromName(ifr, fields_id.indexOf($hidden.attr('name')) ? $hidden.attr('data-src') :  $hidden.val())
-                updateStyle(ifr);
-            }
+        loadListenersModale(modale, {
+            hidden : $hidden
         })
     })
 }

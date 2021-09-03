@@ -34,7 +34,6 @@ class LarabergType extends FormField {
         $options['attr']['id'] = Str::slug('laraberg_textarea_'.$uniqid);
 
         $this->setOptions([
-            'isAjax' => request()->ajax(),
             'attr' => [
                 'id' => Str::slug('laraberg_textarea_'.$uniqid)
             ],

@@ -24,7 +24,6 @@ class CreateCategory extends Form
         // $options['fromAjax']
         $this->add('media_id', 'lfm', [
             'label_show' => false,
-            'fromAjax' => $r->ajax(),
             'attr' => [
                 'value' => !is_array($m) && $m->media_id != 0 ? $m->media->path : null
             ]

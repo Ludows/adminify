@@ -25,19 +25,12 @@
 
 
 </div>
-@push('modales')
-    @include($options['modal'])
-@endpush
-@push('js')
-    
-@endpush
 
 @if ($options['isAjax'])
     <script type="text/javascript">
         lfmInitFunction([{
             selector: "{{ $options['sibling'] }}",
             options: [],
-            fromAjax : {!! var_export($options['fromAjax'] ,true) !!},
             multilang: {!! var_export(is_multilang(),true) !!},
             currentLang: '{!! $currentLang !!}'
         }])
@@ -48,7 +41,6 @@
             window.admin.lfmFields.push({
                 selector: "{{ $options['sibling'] }}",
                 options: [],
-                fromAjax : {!! var_export($options['fromAjax'] ,true) !!},
                 multilang: {!! var_export(is_multilang(),true) !!},
                 currentLang: '{!! $currentLang !!}'
             })
