@@ -27,6 +27,17 @@ class Comment extends ClassicModel
         'post_id',
         'is_moderated',
     ];
+
+    /**
+     * Default values for attributes
+     * @var  array an array with attribute as key and default as value
+     */
+    protected $attributes = [
+        'media_id' => NULL,
+        'user_id' => NULL,
+        'is_moderated' => 0,
+    ];
+
     public function post()
     {
         return $this->belongsTo(Post::class);
