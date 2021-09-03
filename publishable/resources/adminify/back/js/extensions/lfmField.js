@@ -188,44 +188,44 @@ export default function LFMField(fields) {
         let $hidden = $el_wrapper.find('[type="hidden"]');
         let fromMediaEntity = getParamFromIframe(ifr.attr('src'), 'fromMediaCreate');
 
-        let modale = $('#modalFileManager');
-        let ifr = modale.find('iframe');
+        // let modale = $('#modalFileManager');
+        // let ifr = modale.find('iframe');
             
 
-        if(el.fromAjax) {
-            // on ne connait pas la modale, on doit la générer
-            modale = null;
-            ifr = null;
-        } 
-        else {
-            generateListenersIframe(ifr, {
+        // if(el.fromAjax) {
+        //     // on ne connait pas la modale, on doit la générer
+        //     modale = null;
+        //     ifr = null;
+        // } 
+        // else {
+        //     generateListenersIframe(ifr, {
                 
-            });
-        }
+        //     });
+        // }
 
         // console.log('fromMediaEntity >>>', fromMediaEntity);
 
-        if($hidden.val().length > 0) {
+        // if($hidden.val().length > 0) {
 
-            GenerateSelection($el_wrapper, [
-                {
-                    url : $hidden.attr('data-path'),
-                    name: $hidden.val()
-                }
-            ]);
+        //     GenerateSelection($el_wrapper, [
+        //         {
+        //             url : $hidden.attr('data-path'),
+        //             name: $hidden.val()
+        //         }
+        //     ]);
 
-            let $id = getIndexFromLfm( ifr,  $hidden.attr('data-src') );
+        //     let $id = getIndexFromLfm( ifr,  $hidden.attr('data-src') );
 
-            selectedItems = [
-                {
-                    id : $id,
-                }
-            ];
+        //     selectedItems = [
+        //         {
+        //             id : $id,
+        //         }
+        //     ];
 
-            $el.css({
-                'display': 'none'
-            });
-        }
+        //     $el.css({
+        //         'display': 'none'
+        //     });
+        // }
 
         $($el_wrapper).on('click', '.js-clear-selection', function(e) {
             e.preventDefault();
@@ -249,7 +249,6 @@ export default function LFMField(fields) {
         $el.on('click', function(e) {
             e.preventDefault();
 
-            if(el.fromAjax) {
                 callJajax({
                     'method' : 'POST',
                     'route' : Route('content.ajax'),
@@ -276,21 +275,7 @@ export default function LFMField(fields) {
                     })
 
                 })
-            } 
-            else {
-        
-                modale.modal('show');
-                if(selectedItems.length > 0) {
-                    updateStyle(ifr);
-                }
-
-            }
-
             
-        })
-
-        loadListenersModale(modale, {
-            hidden : $hidden
         })
     })
 }
