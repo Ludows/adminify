@@ -38,6 +38,15 @@ abstract class ClassicMail extends SpatieMailTemplate
         'text_template',
     ];
 
+    /**
+     * Default values for attributes
+     * @var  array an array with attribute as key and default as value
+     */
+    protected $attributes = [
+        'subject' => NULL,
+        'text_template' => NULL,
+     ];
+
     public function getTableListing() {
         return \Ludows\Adminify\Tables\MailsTable::class;
     }

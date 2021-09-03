@@ -22,6 +22,16 @@ class Category extends ContentTypeModel
         'user_id'
     ];
 
+    /**
+     * Default values for attributes
+     * @var  array an array with attribute as key and default as value
+     */
+    protected $attributes = [
+      'media_id' => NULL,
+      'user_id' => 0,
+      'parent_id' => 0,
+   ];
+
     public $excludes_savables_fields = [
       'media_id',
       'parent_id'

@@ -29,6 +29,14 @@ class User extends ClassicUser
         'password',
     ];
 
+     /**
+     * Default values for attributes
+     * @var  array an array with attribute as key and default as value
+     */
+    protected $attributes = [
+        'avatar' => NULL,
+    ];
+
     public function getTableListing() {
         return \Ludows\Adminify\Tables\UserTable::class;
     }

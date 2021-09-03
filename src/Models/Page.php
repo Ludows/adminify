@@ -59,6 +59,20 @@ class Page extends ContentTypeModel
         'user_id',
         'status_id'
     ];
+
+    /**
+     * Default values for attributes
+     * @var  array an array with attribute as key and default as value
+     */
+    protected $attributes = [
+        'content' => NULL,
+        'media_id' => NULL,
+        'parent_id' => 0,
+        'class' => NULL,
+        'user_id' => 0,
+    ];
+
+
     public function media()
     {
         return $this->belongsTo(Media::class,'media_id', 'id');

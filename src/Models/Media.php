@@ -30,6 +30,16 @@ class Media extends ClassicModel
         'alt',
         'user_id'
     ];
+    
+    /**
+     * Default values for attributes
+     * @var  array an array with attribute as key and default as value
+     */
+    protected $attributes = [
+        'alt' => NULL,
+        'description' => NULL,
+        'user_id' => 0,
+     ];
 
     public function getTableListing() {
         return \Ludows\Adminify\Tables\MediaTable::class;

@@ -22,6 +22,20 @@ class MenuItem extends ClassicModel
         'open_new_tab'
     ];
 
+    /**
+     * Default values for attributes
+     * @var  array an array with attribute as key and default as value
+     */
+    protected $attributes = [
+        'model_id' => NULL,
+        'type' => NULL,
+        'overwrite_title' => NULL,
+        'media_id' => 0,
+        'parent_id' => 0,
+        'class' => NULL,
+        'open_new_tab' => 0,
+     ];
+
     public function toFeedItem(): FeedItem {}
     public function getSearchResult() : SearchResult {}
 

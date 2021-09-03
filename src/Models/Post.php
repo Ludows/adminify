@@ -27,6 +27,17 @@ class Post extends ContentTypeModel
         'user_id',
         'status_id'
     ];
+
+    /**
+     * Default values for attributes
+     * @var  array an array with attribute as key and default as value
+     */
+    protected $attributes = [
+        'content' => NULL,
+        'no_comments' => NULL,
+        'media_id' => NULL,
+        'parent_id' => 0,
+    ];
     
     public $excludes_savables_fields = [
         'media_id',
