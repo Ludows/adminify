@@ -18,12 +18,12 @@ export default function select2Inititalization(fields) {
             })
 
             if(el.dynamic_modal) {
-                callAjaxForForm(Modale.find('.modal-body'), Object.keys(el.form).length > 0 ? el.form.namespace : '', el.form.attributes, el);
+                callAjaxForForm(Modale.find('.modal-body'), Object.keys(el.form).length > 0 ? el.form.namespace : '', el.form.attributes, el, select2boxe);
 
                 Modale.on('show.bs.modal', function (event) {
                     // do something...
                     if(Modale.find('.modal-body').children().length == 0) {
-                        callAjaxForForm(Modale.find('.modal-body'), Object.keys(el.form).length > 0 ? el.form.namespace : '', el.form.attributes, el);
+                        callAjaxForForm(Modale.find('.modal-body'), Object.keys(el.form).length > 0 ? el.form.namespace : '', el.form.attributes, el, select2boxe);
                     }
                 })
                 Modale.on('hidden.bs.modal', function (event) {
@@ -42,7 +42,7 @@ export default function select2Inititalization(fields) {
         select2boxe.select2(el.options);
     })
 
-    function callAjaxForForm(context, namedForm = 'medias', datas = {}, el) {
+    function callAjaxForForm(context, namedForm = 'medias', datas = {}, el, select2boxe) {
         $.ajax({
             method: 'POST',
             url: Route('forms.ajax'),
@@ -61,7 +61,7 @@ export default function select2Inititalization(fields) {
         })
     }
 
-    function loadDefaultProcess(Modale, el) {
+    function loadDefaultProcess(Modale, el, select2boxe) {
         var ModaleForm = Modale.find('form');
 
         ModaleForm.on('click', '[type="submit"]', function(e) {
