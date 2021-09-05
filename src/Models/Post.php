@@ -34,7 +34,7 @@ class Post extends ContentTypeModel
      */
     protected $attributes = [
         'content' => NULL,
-        'no_comments' => NULL,
+        'no_comments' => 0,
         'media_id' => NULL,
     ];
     
