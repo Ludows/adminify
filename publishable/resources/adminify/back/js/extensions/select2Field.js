@@ -18,12 +18,12 @@ export default function select2Inititalization(fields) {
             })
 
             if(el.dynamic_modal) {
-                callAjaxForForm(Modale.find('.modal-body'), Object.keys(el.form).length > 0 ? el.form.namespace : '', el.form.attributes);
+                callAjaxForForm(Modale.find('.modal-body'), Object.keys(el.form).length > 0 ? el.form.namespace : '', el.form.attributes, el);
 
                 Modale.on('show.bs.modal', function (event) {
                     // do something...
                     if(Modale.find('.modal-body').children().length == 0) {
-                        callAjaxForForm(Modale.find('.modal-body'), Object.keys(el.form).length > 0 ? el.form.namespace : '', el.form.attributes);
+                        callAjaxForForm(Modale.find('.modal-body'), Object.keys(el.form).length > 0 ? el.form.namespace : '', el.form.attributes, el);
                     }
                 })
                 Modale.on('hidden.bs.modal', function (event) {
@@ -42,7 +42,7 @@ export default function select2Inititalization(fields) {
         select2boxe.select2(el.options);
     })
 
-    function callAjaxForForm(context, namedForm = 'medias', datas = {}) {
+    function callAjaxForForm(context, namedForm = 'medias', datas = {}, el) {
         $.ajax({
             method: 'POST',
             url: Route('forms.ajax'),
@@ -53,7 +53,7 @@ export default function select2Inititalization(fields) {
             headers: { 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content') },
             success: function(data) {
                 context.append(data.html)
-                loadDefaultProcess(context.parent());
+                loadDefaultProcess(context.parent(), el);
             },
             error: function(err) {
                 console.log('whoooops', err);
@@ -61,7 +61,7 @@ export default function select2Inititalization(fields) {
         })
     }
 
-    function loadDefaultProcess(Modale) {
+    function loadDefaultProcess(Modale, el) {
         var ModaleForm = Modale.find('form');
 
         ModaleForm.on('click', '[type="submit"]', function(e) {
