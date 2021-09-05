@@ -36,7 +36,6 @@ class Post extends ContentTypeModel
         'content' => NULL,
         'no_comments' => NULL,
         'media_id' => NULL,
-        'parent_id' => 0,
     ];
     
     public $excludes_savables_fields = [
