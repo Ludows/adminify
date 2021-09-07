@@ -14,7 +14,7 @@
             </div>
         @endif
         <div class="menu-three-area {{ $isEditNamedRoute ? 'col-lg-8' : 'col-lg-12' }} col-12">
-            @include('adminify::layouts.admin.menubuilder.menu-three')
+            @include('adminify::layouts.admin.menubuilder.menu-three', 'mediaMode' => $canAttachMedia)
         </div>
     </div>
 </div>

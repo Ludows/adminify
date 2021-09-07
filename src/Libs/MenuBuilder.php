@@ -231,6 +231,7 @@ class MenuBuilder
         $sidebarVars = $this->getSidebarVars();
         $menuSwitcherVars = $this->getMenuSwitcherVars();
         $menuThreeVars = $this->getMenuSwitcherVars();
+        $enabled_features = get_site_key('enables_features');
 
 
         $this->runHydratorForms([
@@ -241,6 +242,6 @@ class MenuBuilder
 
 
 
-        return view($view, ['isCreatedNamedRoute' => $this->isNamedRoute('create'), 'isEditNamedRoute' => $this->isNamedRoute('edit'),  'sidebar' => $sidebarVars, 'menu_switcher' => $menuSwitcherVars, 'menu_three' => $model, 'forms' => $this->getForms()]);
+        return view($view, ['isCreatedNamedRoute' => $this->isNamedRoute('create'), 'isEditNamedRoute' => $this->isNamedRoute('edit'),  'sidebar' => $sidebarVars, 'menu_switcher' => $menuSwitcherVars, 'menu_three' => $model, 'forms' => $this->getForms(), 'canAttachMedia' => $enabled_features['media']]);
     }
 }

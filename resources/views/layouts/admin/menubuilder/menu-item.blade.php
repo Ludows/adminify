@@ -37,13 +37,16 @@
                 <label for="title_nav_{{ $identifier }}">{{ __('admin.form.title_navigation') }}</label>
                 <input type="text" menu-three-key="overwrite_title" data-sel="#list-group-item-{{ $identifier }} .handle-click-collapse" value="{{ $item->overwrite_title }}" class="form-control js-change-title" id="title_nav_{{ $identifier }}">
             </div>
-            <div class="call_media" id="media-{{ $identifier }}">
-                <div class="row row-selection"></div>
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary">{{ __('admin.form.select_media') }}</button>
-                    <input type="hidden" data-path="{{ $item->media->path ?? '' }}" menu-three-key="media_id" value="{{ $item->media->id ?? '' }}" />
+            @if($mediaMode)
+                <div class="call_media" id="media-{{ $identifier }}">
+                    <div class="row row-selection"></div>
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary">{{ __('admin.form.select_media') }}</button>
+                        <input type="hidden" data-path="{{ $item->media->path ?? '' }}" menu-three-key="media_id" value="{{ $item->media->id ?? '' }}" />
+                    </div>
                 </div>
-            </div>
+            @endif
+            
 
             <div class="form-group">
                 <div class="custom-control custom-checkbox">
@@ -70,16 +73,18 @@
         @endif
     </ul>
 </li>
+@if($mediaMode)
+    @push('js')
+        <script>
+            window.admin.lfmFields.push({
+                selector: "media-{{ $identifier }}",
+                options: [],
+                multilang: {!! var_export(is_multilang(),true) !!},
+                currentLang: '{!! $currentLang !!}'
+            })
+        </script>
+    @endpush
+@endif
 
-@push('js')
-    <script>
-        window.admin.lfmFields.push({
-            selector: "media-{{ $identifier }}",
-            options: [],
-            multilang: {!! var_export(is_multilang(),true) !!},
-            currentLang: '{!! $currentLang !!}'
-        })
-    </script>
-@endpush
 
 

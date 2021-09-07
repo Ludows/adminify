@@ -21,7 +21,7 @@
             @if(count($three) > 0)
                 <ul id="sortable" class="list-group zone_menu_items">
                     @foreach($three as $menu_item)
-                        @include('adminify::layouts.admin.menubuilder.menu-item', ['item' => $menu_item, 'new' => false, 'isCustom' => $menu_item->type == 'custom'])
+                        @include('adminify::layouts.admin.menubuilder.menu-item', ['mediaMode' => $mediaMode, 'item' => $menu_item, 'new' => false, 'isCustom' => $menu_item->type == 'custom'])
                     @endforeach
                 </ul>
             @else
@@ -45,7 +45,3 @@
         {!! form($forms['formDeleteMenu'], ['id' => 'deleteMenu']) !!}
     @endif
 </div>
-
-@push('modales')
-    @include('adminify::layouts.admin.modales.modaleFileManager')
-@endpush
