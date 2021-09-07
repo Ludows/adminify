@@ -15,12 +15,15 @@ class CreatePost extends Form
         $hydrator = $this->hydrateSelect();
         $hydratorTags = $this->getTags();
         $statuses = $this->getStatuses();
+        $enabled_features = get_site_key('enables_features');
 
         $m = $this->getModel();
 
             $this->add('title', Field::TEXT, [
                 'label' => __('admin.form.title'),
             ]);
+        if(isset($enabled_features['category']) && $enabled_features['category']) {
+
             $this->add('categories_id', 'select2', [
                 'empty_value' => '',
                 'withCreate' => true,
@@ -50,6 +53,7 @@ class CreatePost extends Form
                     'width' => '100%'
                 ]
             ]);
+        }
             $this->add('status_id', 'select2', [
                 'empty_value' => '',
                 'choices' => $statuses['statuses'],
@@ -62,6 +66,8 @@ class CreatePost extends Form
                     'width' => '100%'
                 ]
             ]);
+        if(isset($enabled_features['tag']) && $enabled_features['tag']) {
+
             $this->add('tags_id', 'select2', [
                 'empty_value' => '',
                 'withCreate' => true,
@@ -91,13 +97,15 @@ class CreatePost extends Form
                     'width' => '100%'
                 ]
             ]);
-            
+        }   
+        if(isset($enabled_features['media']) && $enabled_features['media']) { 
             $this->add('media_id', 'lfm',[
                 'label_show' => false,
                 'attr' => [
                     'value' => !is_array($m) && $m->media_id != 0 ? $m->media->id : null
                 ]
             ]);
+        }
 
             $this->add('content', 'laraberg', [
                 'label_show' => false,

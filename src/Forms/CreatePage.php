@@ -17,14 +17,17 @@ class CreatePage extends Form
         $m = $this->getModel();
         $r = $this->getRequest();
         $statuses = $this->getStatuses();
+        $enabled_features = get_site_key('enables_features');
         // $translations = $m->translations;
 
         $this
             ->add('title', Field::TEXT, [
                 'label_show' => false,
                 'attr' => ['placeholder' =>  __('admin.form.title') ],
-            ])
-            ->add('categories_id', 'select2', [
+            ]);
+        if(isset($enabled_features['category']) && $enabled_features['category']) {
+
+            $this->add('categories_id', 'select2', [
                 'empty_value' => '',
                 'withCreate' => true,
                 'modal' => 'adminify::layouts.admin.modales.modal-ajax', // simple include,
@@ -52,8 +55,9 @@ class CreatePage extends Form
                     'multiple' => true,
                     'width' => '100%'
                 ]
-            ])
-            ->add('status_id', 'select2', [
+            ]);
+        }
+        $this->add('status_id', 'select2', [
                 'empty_value' => '',
                 'choices' => $statuses['statuses'],
                 'selected' => $statuses['selected'],
@@ -78,13 +82,15 @@ class CreatePage extends Form
                     'width' => '100%'
                 ]
             ])
-            ->add('media_id', 'lfm', [
+        if(isset($enabled_features['media']) && $enabled_features['media']) {
+            $this->add('media_id', 'lfm', [
                 'label_show' => false,
                 'attr' => [
                     'value' => !is_array($m) && $m->media_id != 0 ? $m->media->id : null
                 ]
-            ])
-            ->add('content', 'laraberg', [
+                ]);
+        }
+            $this->add('content', 'laraberg', [
                 'label_show' => false,
                 'withBtnForTemplates' => true
             ])   

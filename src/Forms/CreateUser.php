@@ -12,15 +12,18 @@ class CreateUser extends Form
         // Add fields here...
 
         $rDatas = $this->getRoles();
+        $enabled_features = get_site_key('enables_features');
 
         $this
             ->add('name', Field::TEXT, [
                 'label' => __('admin.form.name'),
-            ])
-            ->add('avatar', 'lfm', [
-                'label' => __('admin.form.avatar'),
-            ])
-            ->add('email', Field::EMAIL, [
+            ]);
+            if(isset($enabled_features['media']) && $enabled_features['media']) { 
+                $this->add('avatar', 'lfm', [
+                    'label' => __('admin.form.avatar'),
+                ]);
+            }
+            $this->add('email', Field::EMAIL, [
                 'label' => __('admin.form.email'),
             ])
             ->add('roles', 'select2', [

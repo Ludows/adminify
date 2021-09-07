@@ -13,6 +13,8 @@ class CreateCategory extends Form
         $categories = $this->hydrateSelect();
         $m = $this->getModel();
         $r = $this->getRequest();
+        $enabled_features = get_site_key('enables_features');
+
         // Add fields here...
         $this->add('title', Field::TEXT, [
             'label' => __('admin.form.title'),
@@ -22,12 +24,15 @@ class CreateCategory extends Form
             ],
         ]);
         // $options['fromAjax']
-        $this->add('media_id', 'lfm', [
-            'label_show' => false,
-            'attr' => [
-                'value' => !is_array($m) && $m->media_id != 0 ? $m->media->path : null
-            ]
-        ]);
+        if(isset($enabled_features['media']) && $enabled_features['media']) {
+            $this->add('media_id', 'lfm', [
+                'label_show' => false,
+                'attr' => [
+                    'value' => !is_array($m) && $m->media_id != 0 ? $m->media->path : null
+                ]
+            ]);
+        }
+       
         // if(count($categories) > 0) {
             $this->add('parent_id', 'select2', [
                 'empty_value' => '',

@@ -11,6 +11,7 @@ class SeoForm extends Form
     {
         // Add fields here...
         $m = $this->getModel();
+        $enabled_features = get_site_key('enables_features');
 
         // dd($this->getSeoData('title', $s));
         $this->add('_seo', Field::HIDDEN, [
@@ -35,11 +36,14 @@ class SeoForm extends Form
             ],
             'label' => __('admin.form.robots'),
             'selected' => $m->seoWith('robots', false) ?? ''
-        ])
-        ->add('image', 'lfm', [
-            'label' => __('admin.form.image'),
-            'value' => $m->seoWith('image', false) ?? ''
         ]);
+        if(isset($enabled_features['media']) && $enabled_features['media']) { 
+            $this->add('image', 'lfm', [
+                'label' => __('admin.form.image'),
+                'value' => $m->seoWith('image', false) ?? ''
+            ]);
+        }
+        
         $this->add('submit', 'submit', ['label' => __('admin.form.save') , 'attr' => ['class' => 'btn btn-default']]);
 
     }

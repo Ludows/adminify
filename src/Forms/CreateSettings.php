@@ -17,6 +17,7 @@ class CreateSettings extends Form
         $blog = $this->getStatePage('blogpage');
         $comments = $this->getSetting('no_comments');
         $seo = $this->getSetting('no_seo');
+        $enabled_features = get_site_key('enables_features');
 
         if(is_null($comments)) {
             $comments = 0;
@@ -35,16 +36,19 @@ class CreateSettings extends Form
         ->add('site_slogan', Field::TEXT, [
             'label' => __('admin.form.site_slogan'),
             'value' => $this->getSetting('site_slogan')
-        ])
-        ->add('logo_id', 'lfm', [
-            'label_show' => false,
-            'value' =>  $media != null ? $media->id : null,
-            'attr' => [
-                'data-path' => $media->path ?? '',
-                'data-src' => $media->src ?? ''
-            ]
-        ])
-        ->add('homepage', 'select2', [
+        ]);
+        if(isset($enabled_features['media']) && $enabled_features['media']) { 
+
+            $this->add('logo_id', 'lfm', [
+                'label_show' => false,
+                'value' =>  $media != null ? $media->id : null,
+                'attr' => [
+                    'data-path' => $media->path ?? '',
+                    'data-src' => $media->src ?? ''
+                ]
+            ]);
+        }
+        $this->add('homepage', 'select2', [
             'empty_value' => __('admin.form.select_entity', ['entity' => 'page']),
             'choices' => $home['datas'],
             'selected' => $home['selected'],
