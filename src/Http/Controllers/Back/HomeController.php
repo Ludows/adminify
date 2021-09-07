@@ -42,7 +42,8 @@ class HomeController extends Controller
 
         foreach ($blocks as $block) {
             # code...
-            if( $enabled_features[ singular( $block::getNamedBlock() ) ] ) {
+            $a = new $block();
+            if( isset( $enabled_features[ singular( $a->getPlural() ) ] ) &&  $enabled_features[ singular( $a->getPlural() ) ] ) {
                 $this->interfacable->registerBlock( $block::getNamedBlock(), $block );
             }
         }
