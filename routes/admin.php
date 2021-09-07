@@ -72,9 +72,8 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
         Route::resource('savetraductions', 'Ludows\Adminify\Http\Controllers\Back\SaveTranslationsController', ['except' => ['show', 'create', 'store', 'index', 'destroy']]);
     }
 
-    if(isset($c['post']) && $c['post']) {	
-        Route::post('{type}/trash/{id}', 'Ludows\Adminify\Http\Controllers\Back\TrashController@index')->name('trash');
-    }
+    // if(isset($c['post']) && $c['post']) {	
+    // }
 
     Route::post('find/{type}', 'Ludows\Adminify\Http\Controllers\Back\FinderController@index')->name('finder');
 
@@ -89,6 +88,7 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
 
     Route::post('/forms/', 'Ludows\Adminify\Http\Controllers\Back\HomeController@getForms')->name('forms.ajax');
     Route::post('/content/', 'Ludows\Adminify\Http\Controllers\Back\HomeController@getContents')->name('content.ajax');
+    Route::post('{type}/trash/{id}', 'Ludows\Adminify\Http\Controllers\Back\TrashController@index')->name('trash');
 
 
     if(isset($c['media']) && $c['media']) {
