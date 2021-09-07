@@ -81,7 +81,7 @@ class CreatePage extends Form
                     'multiple' => false,
                     'width' => '100%'
                 ]
-            ])
+            ]);
         if(isset($enabled_features['media']) && $enabled_features['media']) {
             $this->add('media_id', 'lfm', [
                 'label_show' => false,
