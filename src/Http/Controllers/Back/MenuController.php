@@ -141,6 +141,7 @@ class MenuController extends Controller
             $model = $config['models'][$type];
             $m_str = get_site_key($model);
             $m = new $m_str;
+            $enabled_features = get_site_key('enables_features');
 
             $three = [];
             $html = [];
@@ -171,7 +172,7 @@ class MenuController extends Controller
 
             foreach ($three as $b) {
                 # code...
-                $html[] = $v->make('adminify::layouts.admin.menubuilder.menu-item', ['item' => $b, 'type' => $type, 'new' => true, 'isCustom' => $type == 'custom'])->render();
+                $html[] = $v->make('adminify::layouts.admin.menubuilder.menu-item', ['mediaMode' => isset($enabled_features['media']) && $enabled_features['media'], 'item' => $b, 'type' => $type, 'new' => true, 'isCustom' => $type == 'custom'])->render();
             }
             
 
