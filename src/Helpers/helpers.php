@@ -4,6 +4,7 @@ use App\Models\Translations as Traduction;
 use App\Models\Menu;
 use App\Models\Settings;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 if (! function_exists('do_shortcode')) {
     function do_shortcode($shortcodeName, $parameters = []) {
@@ -37,6 +38,18 @@ if (! function_exists('parse_shortcode')) {
         $result = $parser->parse($string);
         //dd($result);
         return $result;
+    }
+}
+
+if (! function_exists('singular')) {
+    function singular($name = '') {
+        return Str::singular($name);
+    }
+}
+
+if (! function_exists('plural')) {
+    function plural($name = '') {
+        return Str::plural($name);
     }
 }
 

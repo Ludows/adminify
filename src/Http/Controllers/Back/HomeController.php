@@ -38,9 +38,13 @@ class HomeController extends Controller
         $blocks = get_site_key('dashboard');
         $request = request();
 
+        $enabled_features = get_site_key('enables_features');
+
         foreach ($blocks as $block) {
             # code...
-            $this->interfacable->registerBlock( $block::getNamedBlock(), $block );
+            if( $enabled_features[ singular( $block::getNamedBlock() ) ] ) {
+                $this->interfacable->registerBlock( $block::getNamedBlock(), $block );
+            }
         }
 
         return view('adminify::layouts.admin.pages.dashboard', ['interfacable' => $this->interfacable]);
