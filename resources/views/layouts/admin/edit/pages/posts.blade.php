@@ -23,12 +23,12 @@
         <div class="col-12 col-lg-3 sticky-top">
             <div class="card shadow-lg">
                 <div class="card-body">
-                    {!! form_row($form->categories_id) ?? '' !!}
-                    {!! form_row($form->tags_id) ?? '' !!}
+                    {!! isset($form->categories_id) ? form_row($form->categories_id) : '' !!}
+                    {!! isset($form->tags_id) ? form_row($form->tags_id) : '' !!}
                     {!! form_row($form->status_id) !!}
-                    {!! form_row($form->media_id, ['wrapper' => [
+                    {!! isset($form->media_id) ? form_row($form->media_id, ['wrapper' => [
                         'class' => 'form-group mb-0'
-                    ]]) ?? '' !!}
+                    ]]) : '' !!}
                     {!! form_row($form->no_comments) !!}
                 </div>
                 <div class="card-footer">

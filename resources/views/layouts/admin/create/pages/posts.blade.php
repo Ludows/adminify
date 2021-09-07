@@ -28,12 +28,12 @@
             <div class="card shadow-lg">
                 <div class="card-body">
                     @yield('before_settings_page')
-                    {!! form_row($form->categories_id) ?? '' !!}
-                    {!! form_row($form->tags_id) ?? '' !!}
+                    {!! isset($form->categories_id) ? form_row($form->categories_id) : '' !!}
+                    {!! isset($form->tags_id) ? form_row($form->tags_id) : '' !!}
                     {!! form_row($form->status_id) !!}
-                    {!! form_row($form->media_id, ['wrapper' => [
+                    {!! isset($form->media_id) ? form_row($form->media_id, ['wrapper' => [
                         'class' => 'form-group mb-0'
-                    ]]) ?? '' !!}
+                    ]]) : '' !!}
                     {!! form_row($form->no_comments) !!}
                     @yield('after_settings_page')
                 </div>
