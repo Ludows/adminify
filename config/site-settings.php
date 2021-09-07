@@ -59,10 +59,10 @@ return [
         ],
         'model:deleting' => [
             \App\Hooks\OnDeletingHook::class,
+            \App\Hooks\ContentTypesHook::class
         ],
         'model:deleted' => [
             \App\Hooks\OnDeletedHook::class,
-            \App\Hooks\ContentTypesHook::class
         ],
         'setting:created' => [
             \App\Hooks\HandleSettings::class,
