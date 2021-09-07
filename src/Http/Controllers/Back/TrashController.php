@@ -18,8 +18,10 @@ class TrashController extends Controller
         $id = $request->id;
 
         $cl = get_site_key('register.'.$type);
+        $enable_features = get_site_key('enables_features');
+        $singular = singular($type);
 
-        if($cl == null) {
+        if($cl == null && isset($enable_features[$singular]) && $enable_features[$singular] == false) {
             abort(403);
         }
 
