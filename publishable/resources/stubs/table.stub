@@ -4,7 +4,7 @@ namespace {{namespace}};
 
 use Ludows\Adminify\Libs\TableManager;
 use {{rootNamespace}}Models\{{model}} as {{model}}Model;
-use Ludows\Adminify\Dropdowns\{{model}}Dropdown as {{model}}DropdownManager;
+use App\Dropdowns\{{model}}Dropdown as {{model}}DropdownManager;
 
 class {{class}} extends TableManager {
     public function handle() {
