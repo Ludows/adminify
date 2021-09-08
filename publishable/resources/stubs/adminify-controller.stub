@@ -39,7 +39,7 @@ class {{class}} extends Controller
 	public function index()
 	{
 		// 
-		$table = $this->table({{model}}Table::class);            
+		$table = $this->table({{model}}Tables::class);            
 
         return view("adminify::layouts.admin.pages.index", ["table" => $table]);
 	}

@@ -3,6 +3,9 @@
 namespace {{namespace}};
 
 use Ludows\Adminify\Models\ClassicModel;
+use Spatie\Feed\FeedItem;
+use Spatie\Menu\Laravel\Link;
+use Spatie\Searchable\SearchResult;
 
 class {{class}} extends ClassicModel
 {
@@ -11,4 +14,16 @@ class {{class}} extends ClassicModel
     public $searchable_label = 'title';
 
     public $MultilangTranslatableSwitch = [];
+
+    public function getSearchResult() : SearchResult
+     {
+        // $url = route('categories.edit', ['category' => $this->id]);
+
+        //  return new \Spatie\Searchable\SearchResult(
+        //     $this,
+        //     $this->title,
+        //     $url
+        //  );
+    }
+    public function toFeedItem(): FeedItem {}
 }
