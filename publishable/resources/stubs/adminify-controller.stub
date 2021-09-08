@@ -11,14 +11,14 @@ use {{rootNamespace}}Models\{{model}};
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use App\Forms\Create{{model}};
-use App\Forms\Update{{model}};
+use App\Forms\Create{{model}}Form;
+use App\Forms\Update{{model}}Form;
 use Illuminate\Support\Str;
 
 use App\Repositories\{{model}}Repository;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use App\Tables\{{model}}Table;
+use App\Tables\{{model}}Tables;
 
 use Ludows\Adminify\Http\Controllers\Controller;
 
