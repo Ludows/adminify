@@ -15,7 +15,7 @@
     @else
         @include('adminify::layouts.front.pages.default')
     @endif
-    @if($type == "post")
+    @if($enabled_features['post'] && $type == "post")
         @php
             $allowForm = true;
             $showTitle = true;

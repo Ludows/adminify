@@ -56,6 +56,7 @@ class PageController extends Controller
 
             $reflection = new ReflectionClass($slug);
             $type = $reflection->getShortName();
+            $enabled_features = get_site_key('enables_features');
 
             $seo = $this->handleSeo($slug);
 
@@ -68,7 +69,7 @@ class PageController extends Controller
             $export = ['seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => lang()];
 
 
-            return view("adminify::layouts.front.pages.index", ['seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => lang(), 'export' => json_encode($export)]);
+            return view("adminify::layouts.front.pages.index", ['enabled_features' => $enabled_features, 'seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => lang(), 'export' => json_encode($export)]);
 
         }
 
