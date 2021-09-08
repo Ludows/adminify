@@ -29,4 +29,10 @@ if(isset($config) && $config['enable']) {
             }
         }
     }
+
+    $path_admin_file = app_path('routes/adminify_api.php');
+
+    if(file_exists($path_admin_file)){
+        include($path_admin_file);
+    }
 }
