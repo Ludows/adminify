@@ -10,7 +10,7 @@ if(isset($c) && request()->segment(1) != $c['prefix'] || isset($c) && $headless)
         $router->get('{slug}', 'Ludows\Adminify\Http\Controllers\Front\PageController@getPages')->where('slug', '([A-Za-z0-9\-\/]+)')->name('pages.front.show')->middleware('front.blogpage');
         $router->bind('slug', 'Ludows\Adminify\Http\Controllers\Front\PageController@handleSlug');
 
-        $path_admin_file = app_path('routes/adminify_front.php');
+        $path_admin_file = base_path('routes/adminify_front.php');
 
         if(file_exists($path_admin_file)){
             include($path_admin_file);

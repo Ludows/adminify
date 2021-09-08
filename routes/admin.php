@@ -97,7 +97,7 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
         });
     }
 
-    $path_admin_file = app_path('routes/adminify_admin.php');
+    $path_admin_file = base_path('routes/adminify_admin.php');
 
     if(file_exists($path_admin_file)){
         include($path_admin_file);

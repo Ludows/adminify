@@ -18,7 +18,7 @@ use Illuminate\Support\Str;
 use App\Repositories\{{model}}Repository;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use Ludows\Adminify\Tables\{{model}}Table;
+use App\Tables\{{model}}Table;
 
 use Ludows\Adminify\Http\Controllers\Controller;
 
