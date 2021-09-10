@@ -26,7 +26,7 @@ class PostRepository extends BaseRepository
         }        
     }
     public function getExternalCategoriesIdRelationship($model , $formValues, $type) {
-        if($formValues['categories_id'] == null && $type == "update") {
+        if(!isset($formValues['categories_id']) && $type == "update") {
             $model->categories()->detach();
         }
         if(isset($formValues['categories_id'])) {
