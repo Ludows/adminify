@@ -1,6 +1,8 @@
 <div class="col d-flex justify-content-between align-items-center text-right">
-    <input id="" class="form-control js-search-entity" placeholder="{{ __('admin.table.modules.search', ['entity' => $name]) }}" type="text">
-    @if($showCreate)
+    @if(isset($showSearchBar) && $showSearchBar)
+        <input id="" class="form-control js-search-entity" placeholder="{{ __('admin.table.modules.search', ['entity' => $name]) }}" type="text">
+    @endif
+    @if(isset($showCreate) && $showCreate)
         <div class="ml-lg-3 mt-3 mt-lg-0">
             @php
                 $a = [];

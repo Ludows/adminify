@@ -155,16 +155,13 @@ class TableManager
     public function handle() {}
     public function render() {
 
+        $listings = get_site_key('listings');
 
         if($this->showTitle) {
             $this->module('title', 'top-left', 'adminify::layouts.admin.table.core.title');
         }
 
-        if($this->showSearch) {
-            $this->module('search', 'top-right', 'adminify::layouts.admin.table.core.search', [
-                'showCreate' => $this->showBtnCreate
-            ]);
-        }
+       
 
         $this->handle();
 
@@ -184,6 +181,13 @@ class TableManager
             'name' => $name,
             'areas' => $areas
         ];
+
+        if($this->showSearch) {
+            $this->module('search', 'top-right', 'adminify::layouts.admin.table.core.search', [
+                'showSearchBar' => isset($listings['search'][ singular( $name ) ]) ? true : false,
+                'showCreate' => $this->showBtnCreate
+            ]);
+        }
 
         $addtoVars = $this->addVarsToRender();
 
