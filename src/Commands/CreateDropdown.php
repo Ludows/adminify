@@ -13,7 +13,7 @@ class CreateTable extends Command
      *
      * @var string
      */
-    protected $signature = 'adminify:table
+    protected $signature = 'adminify:dropdown
                                 {model : model name}';
 
     /**
@@ -21,7 +21,7 @@ class CreateTable extends Command
      *
      * @var string
      */
-    protected $description = 'Command to create a Adminify Table Listing';
+    protected $description = 'Command to create a Dropdown Actions for Table listings';
 
     /**
      * Create a new command instance.
@@ -49,11 +49,17 @@ class CreateTable extends Command
 
         $model = Str::title($model ?? '');
 
-        $this->call('generate:file', [
+        $this->call('adminify:dropdown', [
             'name' => Str::singular($model),
-            '--stub' => 'adminify_table',
-            '--type' => 'table'
+            '--stub' => 'adminify_dropdown',
+            '--type' => 'dropdown'
         ]);
+
+        // $this->call('adminify:dropdown', [
+        //     'model' => Str::singular($model),
+        //     '--stub' => 'adminify_dropdown',
+        //     '--type' => 'dropdown'
+        // ]);
 
     }
 }

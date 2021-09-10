@@ -75,21 +75,19 @@ class CreateCrud extends Command
         ]);
 
         $this->info('Create Model for your entity...');
-        $this->call('generate:model', [
-            'name' => Str::singular($model) ,
-            '--stub' => $typeModel,
+        $this->call('adminify:model', [
+            'model' => Str::singular($model) ,
+            'type' => $typeModel,
         ]);
 
         $this->info('Create Table Listing for your entity...');
-        $this->call('generate:file', [
-            'name' => Str::singular($model),
-            '--stub' => 'adminify_table',
-            '--type' => 'table'
+        $this->call('adminify:table', [
+            'model' => Str::singular($model),
         ]);
     
         $this->info('Create Dropdown for Actions in your Table Listing for your entity...');
-        $this->call('generate:file', [
-            'name' => Str::singular($model),
+        $this->call('adminify:dropdown', [
+            'model' => Str::singular($model),
             '--stub' => 'adminify_dropdown',
             '--type' => 'dropdown'
         ]);

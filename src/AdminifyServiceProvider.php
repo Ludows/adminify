@@ -9,11 +9,12 @@ use Ludows\Adminify\Commands\CreateTranslations;
 use Ludows\Adminify\Commands\InstallPackages;
 use Ludows\Adminify\Commands\GenerateFeeds;
 use Ludows\Adminify\Commands\CreateUser;
+use Ludows\Adminify\Commands\CreateModel;
 use Ludows\Adminify\Commands\DoInstallEnv;
 
 use Ludows\Adminify\Commands\CreateCrud;
 use Ludows\Adminify\Commands\CreateTable;
-use Ludows\Adminify\Commands\CreateDropdownManager;
+use Ludows\Adminify\Commands\CreateDropdown;
 use Ludows\Adminify\Commands\CreateFormRequests;
 use Ludows\Adminify\Commands\CreateForms;
 
@@ -221,12 +222,13 @@ class AdminifyServiceProvider extends ServiceProvider {
     private function registerCommands() {
         
         $this->commands([
-            CreateDropdownManager::class,
             CreateFormRequests::class,
             CreateForms::class,
             CreateTable::class,
             CreateCrud::class,
             DoInstallEnv::class,
+            CreateModel::class,
+            CreateDropdown::class,
             CreateUser::class,
             GenerateFeeds::class,
             InstallPackages::class,
