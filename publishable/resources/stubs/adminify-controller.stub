@@ -56,7 +56,7 @@ class {{class}} extends Controller
 		$plurial = Str::plural($singular);
 
 
-		$form = $formBuilder->create(Create{{model}}::class, [
+		$form = $formBuilder->create(Create{{model}}Form::class, [
             'method' => 'POST',
             'url' => route($plurial.'.store')
         ]);
@@ -71,7 +71,7 @@ class {{class}} extends Controller
 	{
 		//
 		// we pass context and request
-        $form = $this->form(Create{{model}}::class);
+        $form = $this->form(Create{{model}}Form::class);
 
         ${{model}} = $this->{{model}}Repository->create($form, $request);
 		
@@ -116,7 +116,7 @@ class {{class}} extends Controller
 			//ensure plurial 
 			$plurial = Str::plural($singular);
 
-            $form = $formBuilder->create(Update{{model}}::class, [
+            $form = $formBuilder->create(Update{{model}}Form::class, [
                 'method' => 'PUT',
                 'url' => route($plurial.'.update', [ $singular => ${{resource}}->id]),
                 'model' => ${{resource}}
@@ -138,7 +138,7 @@ class {{class}} extends Controller
 		//ensure plurial 
 		$plurial = Str::plural($singular);
 
-		$form = $this->form(Update{{model}}::class, [
+		$form = $this->form(Update{{model}}Form::class, [
             'method' => 'PUT',
             'url' => route($plurial.'.update', [$singular => ${{resource}}->id]),
             'model' => ${{resource}}

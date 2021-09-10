@@ -132,7 +132,7 @@ jQuery(document).ready(function ($) {
         
     }
 
-    if (searchEntity && searchEntity.val().length > 0) {
+    if (searchEntity.length > 0 && searchEntity.val().length > 0) {
         searchEntity.trigger('keyup');
     }
 
