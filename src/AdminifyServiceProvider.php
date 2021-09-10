@@ -10,6 +10,8 @@ use Ludows\Adminify\Commands\InstallPackages;
 use Ludows\Adminify\Commands\GenerateFeeds;
 use Ludows\Adminify\Commands\CreateUser;
 use Ludows\Adminify\Commands\CreateModel;
+use Ludows\Adminify\Commands\CreateController;
+use Ludows\Adminify\Commands\CreateRepository;
 use Ludows\Adminify\Commands\DoInstallEnv;
 
 use Ludows\Adminify\Commands\CreateCrud;
@@ -225,6 +227,8 @@ class AdminifyServiceProvider extends ServiceProvider {
             CreateFormRequests::class,
             CreateForms::class,
             CreateTable::class,
+            CreateRepository::class,
+            CreateController::class,
             CreateCrud::class,
             DoInstallEnv::class,
             CreateModel::class,

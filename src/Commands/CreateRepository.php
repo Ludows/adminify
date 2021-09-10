@@ -6,14 +6,14 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 
-class CreateDropdown extends Command
+class CreateRepository extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'adminify:dropdown
+    protected $signature = 'adminify:repository
                                 {model : model name}';
 
     /**
@@ -21,7 +21,7 @@ class CreateDropdown extends Command
      *
      * @var string
      */
-    protected $description = 'Command to create a Dropdown Actions for Table listings';
+    protected $description = 'Command to create a Adminify Repository';
 
     /**
      * Create a new command instance.
@@ -49,10 +49,9 @@ class CreateDropdown extends Command
 
         $model = Str::title($model ?? '');
 
-        $this->call('generate:file', [
+        $this->call('generate:repository', [
             'name' => Str::singular($model),
-            '--stub' => 'adminify_dropdown',
-            '--type' => 'dropdown'
+            '--stub' => 'adminify_repository',
         ]);
 
         // $this->call('adminify:dropdown', [

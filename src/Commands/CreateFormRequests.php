@@ -42,17 +42,15 @@ class CreateFormRequests extends Command
 
         $model = $this->argument('model');
 
-        $names = [
-            'Create'.Str::title($model).'Request',
-            'Update'.Str::title($model).'Request',
+        $formRequestNames = [
+            'Create'.Str::singular($model),
+            'Update'.Str::singular($model)
         ];
-
-        foreach ($names as $n) {
+        foreach ($formRequestNames as $formRequestName) {
             # code...
-            Artisan::call('make:request', [
-                'name' => $n
+            $this->call('generate:request', [
+                'name' =>  $formRequestName
             ]);
-            $this->info($n.' Created');
         }
     }
 }

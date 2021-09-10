@@ -69,9 +69,8 @@ class CreateCrud extends Command
         ]);
 
         $this->info('Create Controller for your entity...');
-        $this->call('generate:controller', [
-            'name' => Str::singular($model),
-            '--stub' => 'adminify_controller'
+        $this->call('adminify:controller', [
+            'model' => Str::singular($model),
         ]);
 
         $this->info('Create Model for your entity...');
@@ -88,21 +87,12 @@ class CreateCrud extends Command
         $this->info('Create Dropdown for Actions in your Table Listing for your entity...');
         $this->call('adminify:dropdown', [
             'model' => Str::singular($model),
-            '--stub' => 'adminify_dropdown',
-            '--type' => 'dropdown'
         ]);
 
         $this->info('Create CRUD Form Requests for your entity ...');
-        $formRequestNames = [
-            'Create'.Str::singular($model),
-            'Update'.Str::singular($model)
-        ];
-        foreach ($formRequestNames as $formRequestName) {
-            # code...
-            $this->call('generate:request', [
-                'name' =>  $formRequestName
-            ]);
-        }
+        $this->call('adminify:form_request', [
+            'model' => Str::singular($model),
+        ]);
 
         $this->info('Create CRUD Forms for your entity...');
         $this->call('adminify:form', [
@@ -111,9 +101,8 @@ class CreateCrud extends Command
         ]);
 
         $this->info('Create Repository for your entity...');
-        $this->call('generate:repository', [
-            'name' => Str::singular($model),
-            '--stub' => 'adminify_repository',
+        $this->call('adminify:repository', [
+            'model' => Str::singular($model),
         ]);
         
 
