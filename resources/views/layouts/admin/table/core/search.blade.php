@@ -1,3 +1,7 @@
+@php
+ $showCreate = isset($showCreate) ? $showCreate : true;
+ $showSearchBar = isset($showSearchBar) ? $showSearchBar : true;
+@endphp
 <div class="col d-flex justify-content-between align-items-center text-right">
     @if(isset($showSearchBar) && $showSearchBar)
         <input id="" class="form-control js-search-entity" placeholder="{{ __('admin.table.modules.search', ['entity' => $name]) }}" type="text">
