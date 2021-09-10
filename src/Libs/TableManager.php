@@ -151,36 +151,17 @@ class TableManager
     public function getAreas() {
         return $this->areas;
     }
-    
+
     public function handle() {}
     public function render() {
 
         $listings = get_site_key('listings');
+        $name = $this->getRequest()->route()->getName();
+        $name = str_replace('.index', '', $name);
 
         if($this->showTitle) {
             $this->module('title', 'top-left', 'adminify::layouts.admin.table.core.title');
         }
-
-       
-
-        $this->handle();
-
-        $tpl = $this->getView();
-        $cols = $this->getColumns();
-        $areas = $this->getAreas();
-
-        $name = $this->getRequest()->route()->getName();
-        $name = str_replace('.index', '', $name);
-
-        $defaults = [
-            'datas' => $this->_columns, 
-            'thead' => $cols, 
-            'count' => count($this->_columns[$cols[0]]), 
-            'css' => $this->getCss(), 
-            'js' => $this->getJs(),
-            'name' => $name,
-            'areas' => $areas
-        ];
 
         if($this->showSearch) {
             $this->module('search', 'top-right', 'adminify::layouts.admin.table.core.search', [
@@ -188,6 +169,26 @@ class TableManager
                 'showCreate' => $this->showBtnCreate
             ]);
         }
+
+        $this->handle();
+
+        $tpl = $this->getView();
+        $cols = $this->getColumns();
+        $areas = $this->getAreas();
+
+
+
+        $defaults = [
+            'datas' => $this->_columns,
+            'thead' => $cols,
+            'count' => count($this->_columns[$cols[0]]),
+            'css' => $this->getCss(),
+            'js' => $this->getJs(),
+            'name' => $name,
+            'areas' => $areas
+        ];
+
+
 
         $addtoVars = $this->addVarsToRender();
 
@@ -206,7 +207,7 @@ class TableManager
 
         $defaults = [
             'datas' => $this->_columns,
-            'thead' => $cols, 
+            'thead' => $cols,
             'count' => count($this->_columns[$cols[0]]),
             'name' => $name
         ];
