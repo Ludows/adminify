@@ -6,6 +6,15 @@ return [
 
     'default_role_on_registration' => 'subscriber',
 
+    // you can your named config searchable.
+    // You must extend the classic Model Adminify to have this feature.
+    'searchable' => [
+        'admin' => [
+            'limit' => 5,
+            'name' => 'query'
+        ]
+    ],
+
     'register' => [
         'categories' => \App\Models\Category::class,
         'comments' => \App\Models\Comment::class,
@@ -154,23 +163,6 @@ return [
         'templates_content' => true,
         'user' => true
     ],
-
-    // please to pay attention that your models implements Searchable.
-    'searchable' => [
-        'admin' => [
-            'models' => [
-                'posts' => 'register.posts',
-                'users' => 'register.users',
-                'menus' => 'register.menus',
-                'pages' => 'register.pages',
-                'tags' => 'register.tags',
-                'traductions' => 'register.traductions'
-            ],
-            'limit' => 5,
-            'name' => 'query'
-        ]
-    ],
-
     
     'savetraductions' => [
         'models' => [

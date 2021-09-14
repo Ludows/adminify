@@ -16,17 +16,17 @@ class SearchController extends Controller
         $searchResults = (new Search());
 
         $labels = [];
+
+        $models = $this->getModels();
         
-        if($config) {
+        if(!empty($config) && !empty($models)) {
             
-            foreach ($config['models'] as $nameModel => $classModel) {
+            foreach ($models as $model) {
                 # code...
-                $m_str = get_site_key($classModel);
-                $m = new $m_str();
 
-                $labels[$nameModel] = $m->searchable_label;
+                $labels[ singular($model->getTable()) ] = $model->searchable_label;
 
-                $searchResults->registerModel($m_str, $m->searchable_label );
+                $searchResults->registerModel($model, $m->searchable_label );
             }
 
             $searchResults->limitAspectResults($config['limit']);
@@ -43,5 +43,35 @@ class SearchController extends Controller
         ];
 
         return response()->json($a);
+    }
+    public function getModels() {
+
+        $pathModels = app_path('Models');
+
+        $files = File::files($pathModels);
+
+        $namespaceBase = 'App\Models';
+
+        $a = [];
+
+        $groups = array_keys( get_site_key('searchable') );
+
+
+
+        foreach($files as $f){
+            $namedClass = str_replace('.'.$f->getExtension(), '', $f->getBaseName());
+            // dd($namedClass);
+
+            $fullModelClass = $namespaceBase . '\\'. $namedClass;
+            $m = app($fullModelClass);
+
+            if($m->enable_searchable) {
+                if(in_array($m->groups_searchable, $groups)) {
+                    $a[] = $m;
+                }
+            }
+        }
+
+        return $a;
     }
 }

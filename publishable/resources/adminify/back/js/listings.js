@@ -22,7 +22,7 @@ jQuery(document).ready(function ($) {
     }, 300))
 
     listingBlock.on('click', '.js-listing-btn', function (e) {
-        triggerSearch(searchEntity.val(), true, $(this));
+        triggerSearch(searchEntity ? searchEntity.val() : null, true, $(this));
     });
 
     function loadSearch(value, isStatusable) {
@@ -41,9 +41,9 @@ jQuery(document).ready(function ($) {
     }
 
     function syncBtns() {
-        
+
         let dataPage = parseInt(listingBlock.attr('data-page'));
-        
+
         if(dataPage = 1) {
             btnsListing.eq(0).attr('disabled', 'disabled');
         }
@@ -63,6 +63,9 @@ jQuery(document).ready(function ($) {
         if(window.listingConfig.isEnd) {
             btnsListing.eq(1).attr('disabled', 'disabled');
         }
+        else {
+            btnsListing.eq(1).removeAttr('disabled');
+        }
 
     }
 
@@ -70,10 +73,10 @@ jQuery(document).ready(function ($) {
         // window.listingConfig
 
         console.log('debounced')
-        
+
         let o = window.listingConfig;
 
-        if(valInput.length > 0) {
+        if(valInput != null && valInput.length > 0) {
             o['search'] = valInput.toLowerCase().trim();
         }
 
@@ -88,7 +91,7 @@ jQuery(document).ready(function ($) {
             let direction = btnElement.attr('data-direction');
         }
         if(searchhasbeenTriggered == false) {
-            
+
             searchhasbeenTriggered = true;
 
             $.ajax({
@@ -101,16 +104,16 @@ jQuery(document).ready(function ($) {
                 success: function (data) {
                     listingBlock.find('.js-datatable tbody').html('');
                     listingBlock.find('.js-datatable tbody').append(data.html);
-    
+
                     window.listingConfig.isEnd = data.isEnd;
-    
+
                     if(!fromBtns) {
                         listingBlock.attr('data-page', '1')
                     }
                     else {
-    
+
                         let dataPage = parseInt(listingBlock.attr('data-page'));
-    
+
                         if(btnElement != null) {
                             if(direction == 'next') {
                                 listingBlock.attr('data-page', dataPage + 1);
@@ -119,20 +122,20 @@ jQuery(document).ready(function ($) {
                                 listingBlock.attr('data-page', dataPage - 1);
                             }
                         }
-    
+
                     }
-    
+
                     syncBtns()
-    
+
                     searchhasbeenTriggered = false;
-                    
+
                 },
                 error: function (err) {
                     console.log('err', err)
                 }
             })
         }
-        
+
     }
 
     if (searchEntity.length > 0 && searchEntity.val().length > 0) {
