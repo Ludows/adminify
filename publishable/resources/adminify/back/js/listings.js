@@ -56,6 +56,9 @@ jQuery(document).ready(function ($) {
             btnsListing.eq(0).attr('disabled', 'disabled');
             btnsListing.eq(1).attr('disabled', 'disabled');
         }
+        else {
+            btnsListing.eq(1).removeAttr('disabled');
+        }
 
         if(window.listingConfig.isEnd) {
             btnsListing.eq(1).attr('disabled', 'disabled');
