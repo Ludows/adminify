@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Ludows\Adminify\Http\Controllers\Controller;
 use Spatie\Searchable\Search;
 
+use File;
+
 class SearchController extends Controller
 {
     public function index(Request $request) {

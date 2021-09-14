@@ -177,7 +177,7 @@ return [
     ],
 
     // all routes search are binded to singular route name.
-    'listings' => [
+    'tables' => [
         'limit' => env('LISTINGS_LIMIT', 5),
         'searchType' => 'fillable', // or manual. In manual mode, columns is necessary.
         'search' => [
