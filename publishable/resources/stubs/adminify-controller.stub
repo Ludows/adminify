@@ -72,10 +72,10 @@ class {{class}} extends Controller
 		//
 		// we pass context and request
         $form = $this->form(Create{{model}}Form::class);
-
-        ${{model}} = $this->{{model}}Repository->create($form, $request);
-		
 		$m = new {{resource}}();
+
+        ${{model}} = $this->{{model}}Repository->addModel($m)->create($form);
+		
 		$singular = Str::singular( $m->getTable() );
 
 		$plurial = Str::plural($singular);
@@ -144,7 +144,7 @@ class {{class}} extends Controller
             'model' => ${{resource}}
         ]);
 
-        $this->{{model}}Repository->update($form, $request, ${{resource}});
+        $this->{{model}}Repository->addModel($m)->update($form, ${{resource}});
         flash(__('admin.typed_data.updated'))->success();
         return redirect()->route($plurial.'.index');
 	}
