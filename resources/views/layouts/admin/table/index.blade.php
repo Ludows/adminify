@@ -2,8 +2,8 @@
     window.listingConfig = {
         limit : {{ config('site-settings.listings.limit') }},
         singular : '{{ Str::singular($name) }}',
-        maxItems : {{ $count }},
-        isEnd : {{ $count <=  config('site-settings.listings.limit') ? var_export(true, true) : var_export(false, true) }}
+        maxItems : {{ $total }},
+        isEnd : {{ $total <=  config('site-settings.listings.limit') ? var_export(true, true) : var_export(false, true) }}
     }
 </script>
 

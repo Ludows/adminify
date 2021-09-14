@@ -176,11 +176,19 @@ class TableManager
         $cols = $this->getColumns();
         $areas = $this->getAreas();
 
+        $classModel = get_site_key('register.'.$name);
+        $count = null;
+
+        if($classModel != null) {
+            $classModel = new $classModel;
+            $count = $classModel->count();
+        }
 
 
         $defaults = [
             'datas' => $this->_columns,
             'thead' => $cols,
+            'total' => $count,
             'count' => count($this->_columns[$cols[0]]),
             'css' => $this->getCss(),
             'js' => $this->getJs(),
