@@ -26,7 +26,7 @@ class SearchController extends Controller
 
                 $labels[ singular($model->getTable()) ] = $model->searchable_label;
 
-                $searchResults->registerModel($model, $m->searchable_label );
+                $searchResults->registerModel($model, $model->searchable_label );
             }
 
             $searchResults->limitAspectResults($config['limit']);
@@ -55,8 +55,6 @@ class SearchController extends Controller
         $a = [];
 
         $groups = array_keys( get_site_key('searchable') );
-
-
 
         foreach($files as $f){
             $namedClass = str_replace('.'.$f->getExtension(), '', $f->getBaseName());
