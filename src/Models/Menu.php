@@ -31,17 +31,6 @@ class Menu extends ClassicModel
         return \Ludows\Adminify\Tables\MenuTable::class;
     }
 
-    public function getSearchResult() : SearchResult
-    {
-       $url = route('menus.edit', ['menu' => $this->id]);
-
-        return new \Spatie\Searchable\SearchResult(
-           $this,
-           $this->title,
-           $url
-        );
-    }
-
     public function getLinks($menuBuilder, $arrayDatas) {
         if($arrayDatas['user']->hasPermissionTo('create_menus') && $arrayDatas['features']['menu']) {
             $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/menus?lang='. $arrayDatas['lang'] : '/admin/menus', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.menus'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );

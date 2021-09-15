@@ -57,17 +57,6 @@ class Post extends ContentTypeModel
         return \App\Forms\UpdatePost::class;
     }
 
-    public function getSearchResult() : SearchResult
-    {
-       $url = route('posts.edit', ['post' => $this->id]);
-
-        return new \Spatie\Searchable\SearchResult(
-           $this,
-           $this->title,
-           $url
-        );
-    }
-
     public function getTableListing() {
         return \Ludows\Adminify\Tables\PostTable::class;
     }

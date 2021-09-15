@@ -14,7 +14,6 @@ class Tag extends ClassicModel
     public $MultilangTranslatableSwitch = ['title','slug'];
 
     public function toFeedItem(): FeedItem {}
-    public function getSearchResult() : SearchResult {}
 
     public $excludes_savables_fields = [];
     public $unmodified_savables_fields = [

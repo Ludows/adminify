@@ -23,7 +23,6 @@ class Seo extends ClassicModel
     public $enable_searchable = false;
 
     public function toFeedItem(): FeedItem {}
-    public function getSearchResult() : SearchResult {}
 
     public function scopeType($query, $type) {
         return $query->where('type', $type);

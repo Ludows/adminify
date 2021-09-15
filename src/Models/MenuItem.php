@@ -39,7 +39,6 @@ class MenuItem extends ClassicModel
      ];
 
     public function toFeedItem(): FeedItem {}
-    public function getSearchResult() : SearchResult {}
 
     public function media()
     {

@@ -11,17 +11,6 @@ class Page extends ContentTypeModel
 {
     public $MultilangTranslatableSwitch = ['title', 'slug', 'content'];
 
-    public function getSearchResult() : SearchResult
-    {
-       $url = route('pages.edit', ['page' => $this->id]);
-
-        return new \Spatie\Searchable\SearchResult(
-           $this,
-           $this->title,
-           $url
-        );
-    }
-
     public function getLinks($menuBuilder, $arrayDatas) {
         if($arrayDatas['user']->hasPermissionTo('create_pages') && $arrayDatas['features']['page']) {
             $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/pages?lang='. $arrayDatas['lang'] : '/admin/pages', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.pages'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
