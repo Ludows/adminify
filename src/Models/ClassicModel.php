@@ -38,4 +38,17 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     use Listable;
     use Searchables;
     use SavableTranslations;
+    
+    public function getSearchResult() : SearchResult
+    {
+       $tableName = $this->getTable();
+
+       $url = route( plural($tableName).'.edit', [ singular( $tableName ) => $this->id]);
+
+        return new \Spatie\Searchable\SearchResult(
+           $this,
+           $this->{$this->searchable_label},
+           $url
+        );
+    }
 }

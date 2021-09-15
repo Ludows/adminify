@@ -20,15 +20,16 @@ class SearchController extends Controller
         $labels = [];
 
         $models = $this->getModels();
-        
+
         if(!empty($config) && !empty($models)) {
-            
+
             foreach ($models as $model) {
                 # code...
+                $m = new $model;
 
-                $labels[ singular($model->getTable()) ] = $model->searchable_label;
+                $labels[ singular($m->getTable()) ] = $m->searchable_label;
 
-                $searchResults->registerModel($model, $model->searchable_label );
+                $searchResults->registerModel($model, $m->searchable_label );
             }
 
             $searchResults->limitAspectResults($config['limit']);
@@ -66,9 +67,14 @@ class SearchController extends Controller
             $m = app($fullModelClass);
 
             if($m->enable_searchable) {
-                if(in_array($m->groups_searchable, $groups)) {
-                    $a[] = $m;
+                $groups_model = $m->groups_searchable;
+                foreach ($groups_model as $group) {
+                    # code...
+                    if(in_array($group, $groups)) {
+                        $a[] = $fullModelClass;
+                    }
                 }
+
             }
         }
 

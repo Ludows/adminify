@@ -15,7 +15,10 @@ use Ludows\Adminify\Traits\AdminableMenu;
 
 use Spatie\MailTemplates\Models\MailTemplate as SpatieMailTemplate;
 
-abstract class ClassicMail extends SpatieMailTemplate
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
+
+abstract class ClassicMail extends SpatieMailTemplate implements Searchable
 {
     use HasFactory;
     use AdminableMenu;
@@ -37,6 +40,17 @@ abstract class ClassicMail extends SpatieMailTemplate
         'html_template',
         'text_template',
     ];
+
+    public function getSearchResult() : SearchResult
+    {
+       $url = route('mailables.edit', ['mailable' => $this->id]);
+
+        return new \Spatie\Searchable\SearchResult(
+           $this,
+           $this->{$this->searchable_label},
+           $url
+        );
+    }
 
     /**
      * Default values for attributes
