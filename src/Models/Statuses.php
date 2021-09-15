@@ -17,6 +17,8 @@ class Statuses extends ClassicModel
     const DRAFTED_ID = 2;
     const TRASHED_ID = 3;
 
+    public $enable_searchable = false;
+
     public $statuses = [
         'published',
         'draft',

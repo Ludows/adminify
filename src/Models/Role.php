@@ -10,4 +10,6 @@ class Role extends RoleBaseModel
     const EDITOR = 2;
     const SUBSCRIBER = 3;
     const GUEST = 4;
+
+    public $enable_searchable = false;
 }

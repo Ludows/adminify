@@ -20,6 +20,9 @@ class Tag extends ClassicModel
     public $unmodified_savables_fields = [
         'submit'
     ];
+
+    public $enable_searchable = true;
+
     public function getSavableForm() {
         return \App\Forms\CreateTag::class;
     }

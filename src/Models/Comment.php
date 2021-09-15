@@ -18,6 +18,8 @@ class Comment extends ClassicModel
         return \Ludows\Adminify\Tables\CommentTable::class;
     }
 
+    public $enable_searchable = false;
+
     public $MultilangTranslatableSwitch = ['comment'];
 
     protected $fillable = [

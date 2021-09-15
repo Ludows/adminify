@@ -22,6 +22,7 @@ class Menu extends ClassicModel
     public $unmodified_savables_fields = [
         'submit'
     ];
+
     public function getSavableForm() {
         return null;
     }

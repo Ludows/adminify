@@ -22,6 +22,8 @@ class Settings extends ClassicModel
         'data',
     ];
 
+    public $enable_searchable = false;
+
     public function getLinks($menuBuilder, $arrayDatas) {
         if($arrayDatas['user']->hasPermissionTo('create_settings') && $arrayDatas['features']['setting']) {
             $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/settings?lang='. $arrayDatas['lang'] : '/admin/settings', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.settings'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );

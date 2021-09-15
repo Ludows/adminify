@@ -13,6 +13,7 @@ class Category extends ContentTypeModel
 {
     public $allowSitemap = false;
     public $MultilangTranslatableSwitch = ['title', 'slug'];
+    public $enable_searchable = true;
 
     protected $fillable = [
         'title',

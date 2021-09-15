@@ -11,6 +11,8 @@ class Url extends ClassicModel
     // use HasFactory;
     // use Helpers;
 
+    public $enable_searchable = false;
+
     public function toFeedItem(): FeedItem {}
     public function getSearchResult() : SearchResult {}
 

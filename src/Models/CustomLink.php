@@ -15,6 +15,8 @@ class CustomLink extends ClassicModel
     public function toFeedItem(): FeedItem {}
     public function getSearchResult() : SearchResult {}
 
+    public $enable_searchable = false;
+
     protected $fillable = [
         'title',
         'slug',

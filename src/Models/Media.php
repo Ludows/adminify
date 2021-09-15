@@ -23,6 +23,8 @@ class Media extends ClassicModel
 
     public $sitemapCallable = 'path';
 
+    public $searchable_label = 'src';
+
     protected $fillable = [
         'src', //the path you uploaded the image
         'mime_type',

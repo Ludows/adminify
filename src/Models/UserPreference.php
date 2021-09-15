@@ -18,6 +18,7 @@ class UserPreference extends ClassicModel
         return null;
     }
 
+    public $enable_searchable = false;
 
     public $MultilangTranslatableSwitch = [];
 
