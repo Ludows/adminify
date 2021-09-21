@@ -35,7 +35,7 @@ class FileManagerType extends FormField {
             $m = $this->parent->getModel();
 
             if(isset($options['override_media_method']) && $options['override_media_method'] instanceof Closure && !is_array($m)) {
-                $options['override_media_method']($m);
+                $options = $options['override_media_method']($m, $options);
             }
 
             if($m instanceof \App\Models\Media == false && !is_array($m) && !isset($options['override_media_method'])) {
