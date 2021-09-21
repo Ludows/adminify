@@ -85,12 +85,16 @@ jQuery(document).ready(function ($) {
         // }
         // if(fromBtns) {
         o['offset'] = parseInt( listingBlock.attr('data-page') ) * window.listingConfig.limit;
+
+        console.log('offset', o['offset']);
         // }
 
-        if(btnElement != null) {
-            let direction = btnElement.attr('data-direction');
-        }
+
         if(searchhasbeenTriggered == false) {
+
+            if(btnElement != null) {
+                var _direction = btnElement.attr('data-direction');
+            }
 
             searchhasbeenTriggered = true;
 
@@ -102,8 +106,9 @@ jQuery(document).ready(function ($) {
                 url: Route('listings'),
                 data: o,
                 success: function (data) {
-                    listingBlock.find('.js-datatable tbody').html('');
-                    listingBlock.find('.js-datatable tbody').append(data.html);
+                    console.log('data', data);
+                    listingBlock.find('.js-datatable table tbody').html('');
+                    listingBlock.find('.js-datatable table tbody').append(data.html);
 
                     window.listingConfig.isEnd = data.isEnd;
 
@@ -115,7 +120,7 @@ jQuery(document).ready(function ($) {
                         let dataPage = parseInt(listingBlock.attr('data-page'));
 
                         if(btnElement != null) {
-                            if(direction == 'next') {
+                            if(_direction == 'next') {
                                 listingBlock.attr('data-page', dataPage + 1);
                             }
                             else {
