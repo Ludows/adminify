@@ -53,12 +53,16 @@ class FileManagerType extends FormField {
 
         }
 
-        $this->setOptions([
+        $b = [
             'isAjax' => request()->ajax(),
             'sibling' => Str::slug('media_library_'.$uniqid),
             'modal' => isset($options['modal']) ? $options['modal'] : 'adminify::layouts.admin.modales.modaleFileManager',
             'lfm_options' => array_merge($this->setDefaults(), isset($options['lfm_options']) ? $options['lfm_options'] : [])
-        ]);
+        ];
+
+        $options = array_merge($options, $b);
+
+        $this->setOptions($options);
 
         return parent::render($options, $showLabel, $showField, $showError);
     }

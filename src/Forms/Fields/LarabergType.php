@@ -33,7 +33,7 @@ class LarabergType extends FormField {
         }
         $options['attr']['id'] = Str::slug('laraberg_textarea_'.$uniqid);
 
-        $this->setOptions([
+        $b = [
             'attr' => [
                 'id' => Str::slug('laraberg_textarea_'.$uniqid)
             ],
@@ -41,7 +41,11 @@ class LarabergType extends FormField {
             'fromAjax' => isset($options['fromAjax']) ? $options['fromAjax'] : false,
             'withBtnForTemplates' => isset($options['withBtnForTemplates']) ? $options['withBtnForTemplates'] : false,
             'laraberg_defaults' => array_merge($this->setDefaultsLaraberg(), isset($options['laraberg_defaults']) ? $options['laraberg_defaults'] : [])
-        ]);
+        ];
+
+        $options = array_merge($options, $b);  
+        
+        $this->setOptions($options);
 
         return parent::render($options, $showLabel, $showField, $showError);
     }

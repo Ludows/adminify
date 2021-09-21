@@ -28,11 +28,16 @@ class SummernoteType extends FormField {
             $options['summernote_options'] = array();
         }
 
-        $this->setOptions([
+        $b = [
             'isAjax' => request()->ajax(),
             'sibling' => Str::slug('summernote_'.$uniqid),
             'summernote_options' => array_merge($this->setDefaultsSummernoteOptions(), isset($options['summernote_options']) ? $options['summernote_options'] : [])
-        ]);
+        ];
+
+        $options = array_merge($options, $b);  
+
+        $this->setOptions($options);
+
         // dd($options);
         // dd($this);
 
