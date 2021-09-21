@@ -3,6 +3,7 @@ namespace Ludows\Adminify\Forms\Fields;
 
 use Kris\LaravelFormBuilder\Fields\FormField;
 use Illuminate\Support\Str;
+use Closure;
 
 class FileManagerType extends FormField {
 
@@ -16,6 +17,7 @@ class FileManagerType extends FormField {
 
     public function setDefaults() {
         return array(
+            'override_media_method' => null,
             'btn' => [
                 'label' => __('admin.form.select_media'),
                 'attr' => ['class' => 'btn btn-default'],
@@ -32,11 +34,15 @@ class FileManagerType extends FormField {
         if(isset($options['value']) && $options['value'] != "") {
             $m = $this->parent->getModel();
 
-            if($m instanceof \App\Models\Media == false && !is_array($m)) {
+            if(isset($options['override_media_method']) && $options['override_media_method'] instanceof Closure && !is_array($m)) {
+                $options['override_media_method']($m);
+            }
+
+            if($m instanceof \App\Models\Media == false && !is_array($m) && !isset($options['override_media_method'])) {
                 $options['attr']['data-path'] = $m->media->path ?? '';
                 $options['attr']['data-src'] = $m->media->src ?? '';
             }
-            if($m instanceof \App\Models\Media == true) {
+            if($m instanceof \App\Models\Media == true && !isset($options['override_media_method'])) {
                 $options['attr']['data-path'] = $m->path ?? '';
                 $options['attr']['data-src'] = $m->src ?? '';
             }
