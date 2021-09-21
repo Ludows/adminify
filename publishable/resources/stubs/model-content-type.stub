@@ -63,7 +63,7 @@ class {{class}} extends ContentTypeModel
     // you need to give the table class like this
     // return \Ludows\Adminify\Tables\PostTable::class;
     public function getTableListing() {
-        return \Ludows\Adminify\Tables\{{model}}Table::class;
+        return  \App\Tables\{{model}}Tables::class;
     }
 
     // if you want to specify your columns for listings search. It's here
