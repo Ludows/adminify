@@ -73,7 +73,7 @@ class ListingController extends Controller
 
         $m = $m->take( $config['limit'] );
 
-        if( !empty($datas['offset']) ) {
+        if( !empty($datas['offset']) &&  intval($datas['offset']) != 0) {
             $m = $m->skip($datas['offset']);
         }
 
