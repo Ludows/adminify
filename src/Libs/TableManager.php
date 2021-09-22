@@ -155,7 +155,7 @@ class TableManager
     public function handle() {}
     public function render() {
 
-        $listings = get_site_key('listings');
+        $listings = get_site_key('tables');
         $name = $this->getRequest()->route()->getName();
         $name = str_replace('.index', '', $name);
 
