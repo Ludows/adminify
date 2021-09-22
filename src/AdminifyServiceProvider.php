@@ -173,7 +173,7 @@ class AdminifyServiceProvider extends ServiceProvider {
                 $aliases = $model->getAliases();
                 foreach ($aliases as $alias) {
                     # code...
-                    $models[$alias] = $m;
+                    $models[ singular( $alias ) ] = $m;
                 }
             }
 
