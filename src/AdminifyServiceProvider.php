@@ -52,7 +52,7 @@ class AdminifyServiceProvider extends ServiceProvider {
             $this->bootableDependencies($packages, $kernel);
         }
 
-        // $this->bootModels();
+        $this->bootModels();
 
         // dd(config('site-settings'));
 
