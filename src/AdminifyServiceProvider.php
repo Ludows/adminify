@@ -29,6 +29,8 @@ use Ludows\Adminify\View\Components\Modal;
 use Ludows\Adminify\Libs\HookManager;
 use Ludows\Adminify\Facades\HookManagerFacade;
 
+
+use File;
 use Config;
 
 class AdminifyServiceProvider extends ServiceProvider {
@@ -49,7 +51,11 @@ class AdminifyServiceProvider extends ServiceProvider {
 
             $this->bootableDependencies($packages, $kernel);
         }
-        
+
+        // $this->bootModels();
+
+        // dd(config('site-settings'));
+
         $this->registerPublishables();
 
         $this->loadApiRoutes();
@@ -76,6 +82,7 @@ class AdminifyServiceProvider extends ServiceProvider {
 
             return new Adminify;
         });
+
 
         $this->app->bind('HookManager', function () {
             return new HookManager();
@@ -113,7 +120,7 @@ class AdminifyServiceProvider extends ServiceProvider {
             $this->publishes(array(
                 __DIR__.'/../resources/views/layouts/admin' => resource_path('views/vendor/adminify/layouts/admin'),
             ), 'adminify-views-admin');
-            
+
             $this->publishes(array(
                 __DIR__.'/../database/views/' => database_path('migrations'),
             ), 'adminify-migrations');
@@ -143,6 +150,29 @@ class AdminifyServiceProvider extends ServiceProvider {
                 ->group(base_path('vendor/ludows/adminify/routes/web.php'));
 
         // });
+    }
+
+    private function bootModels() {
+        $c = config('site-settings');
+        $models = [];
+
+        $pathModels = app_path('Models');
+
+        $files = File::files($pathModels);
+
+        $namespaceBase = 'App\Models';
+
+        foreach($files as $f){
+            $namedClass = str_replace('.'.$f->getExtension(), '', $f->getBaseName());
+
+            $fullModelClass = $namespaceBase . '\\'. $namedClass;
+            $m = $fullModelClass;
+            $model = app($fullModelClass);
+
+            $models[ singular( $model->getTable() ) ] = $m;
+        }
+
+        config(['site-settings.register' => $models]);
     }
 
     private function bootableDependencies($packages, $kernel) {
@@ -217,12 +247,12 @@ class AdminifyServiceProvider extends ServiceProvider {
             }
 
         }
-        
+
 
     }
 
     private function registerCommands() {
-        
+
         $this->commands([
             CreateFormRequests::class,
             CreateForms::class,
