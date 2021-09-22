@@ -159,13 +159,15 @@ class TableManager
         $name = $this->getRequest()->route()->getName();
         $name = str_replace('.index', '', $name);
 
+        $singular = singular( $name );
+
         if($this->showTitle) {
             $this->module('title', 'top-left', 'adminify::layouts.admin.table.core.title');
         }
 
         if($this->showSearch) {
             $this->module('search', 'top-right', 'adminify::layouts.admin.table.core.search', [
-                'showSearchBar' => isset($listings['search'][ singular( $name ) ]) ? true : false,
+                'showSearchBar' => isset($listings['search'][ $singular ]) ? true : false,
                 'showCreate' => $this->showBtnCreate
             ]);
         }
@@ -176,7 +178,7 @@ class TableManager
         $cols = $this->getColumns();
         $areas = $this->getAreas();
 
-        $classModel = get_site_key('register.'.$name);
+        $classModel = get_site_key('register.'.$singular);
         $count = null;
 
         if($classModel != null) {

@@ -14,6 +14,12 @@ class Mailables extends ClassicMail
     public $enable_searchable = true;
     public $searchable_label = 'subject';
 
+    public function getAliases() {
+        return [
+            'mails', 'mailables'
+        ];
+    }
+
     public function getLinks($menuBuilder, $arrayDatas) {
         if($arrayDatas['user']->hasPermissionTo('create_mails') && $arrayDatas['features']['email']) {
             $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/mails?lang='. $arrayDatas['lang'] : '/admin/mails', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.mails'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );

@@ -169,6 +169,14 @@ class AdminifyServiceProvider extends ServiceProvider {
             $m = $fullModelClass;
             $model = app($fullModelClass);
 
+            if(method_exists($model, 'getAliases')) {
+                $aliases = $model->getAliases();
+                foreach ($aliases as $alias) {
+                    # code...
+                    $models[$alias] = $m;
+                }
+            }
+
             $models[ singular( $model->getTable() ) ] = $m;
         }
 
