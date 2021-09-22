@@ -15,40 +15,20 @@ return [
         ]
     ],
 
-    'register' => [
-        'categories' => \App\Models\Category::class,
-        'comments' => \App\Models\Comment::class,
-        'custom_links' => \App\Models\CustomLink::class,
-        'medias' => \App\Models\Media::class,
-        'menus' => \App\Models\Menu::class,
-        'menu_items' => \App\Models\MenuItem::class,
-        'pages' => \App\Models\Page::class,
-        'posts' => \App\Models\Post::class,
-        'seo' => \App\Models\Seo::class,
-        'settings' => \App\Models\Settings::class,
-        'traductions' => \App\Models\Translations::class,
-        'url' => \App\Models\Url::class,
-        'users' => \App\Models\User::class,
-        'tags' => \App\Models\Tag::class,
-        'mailables' => \App\Models\Mailables::class,
-        'statistics' => \App\Models\Statistics::class,
-        'templates' => \App\Models\Templates::class
-    ],
-
     'adminMenu' => [
-        'register.pages',
-        'register.posts',
-        'register.categories',
-        'register.tags',
-        'register.medias',
-        'register.menus',
-        'register.comments',
-        'register.settings',
-        'register.traductions',
-        'register.mailables',
-        'register.templates',
-        // 'register.statistics', @todo later        
-        'register.users'
+        'register.page',
+        'register.post',
+        'register.category',
+        'register.tag',
+        'register.media',
+        'register.menu',
+        'register.comment',
+        'register.setting',
+        'register.traduction',
+        'register.mail_template',
+        'register.content_type_template',
+        // 'register.statistics', @todo later
+        'register.user'
     ],
 
     'hooks' => [
@@ -130,9 +110,9 @@ return [
     // menu builder is automatic sync with multilang param.
     'menu-builder' => [
         'models' => [
-            'page' => 'register.pages',
-            'post' => 'register.posts',
-            'custom' => 'register.custom_links'
+            'page' => 'register.page',
+            'post' => 'register.post',
+            'custom' => 'register.custom_link'
         ],
         'showAlways' => [
             'custom' => [ // you can pass some field to build your form
@@ -166,13 +146,13 @@ return [
     
     'savetraductions' => [
         'models' => [
-            'post' => 'register.posts',
-            'page' => 'register.pages',
-            'translation' => 'register.traductions',
-            'category' => 'register.categories',
-            'menu' => 'register.menus',
-            'tag' => 'register.tags',
-            'mailable' => 'register.mailable'
+            'post' => 'register.post',
+            'page' => 'register.page',
+            'translation' => 'register.traduction',
+            'category' => 'register.categoriy',
+            'menu' => 'register.menu',
+            'tag' => 'register.tag',
+            'mailable' => 'register.mail_template'
         ],
     ],
 
@@ -181,17 +161,17 @@ return [
         'limit' => env('LISTINGS_LIMIT', 5),
         'searchType' => 'fillable', // or manual. In manual mode, columns is necessary.
         'search' => [
-            'media' => 'register.medias',
-            'post' => 'register.posts',
-            'user' => 'register.users',
-            'menu' => 'register.users',
-            'page' => 'register.pages',
-            'category' => 'register.categories',
-            'comment' => 'register.comments',
-            'traduction' => 'register.traductions',
-            'tag' => 'register.tags',
-            'mail' => 'register.mailable',
-            'template' => 'register.templates'
+            'media' => 'register.media',
+            'post' => 'register.post',
+            'user' => 'register.user',
+            'menu' => 'register.user',
+            'page' => 'register.page',
+            'category' => 'register.category',
+            'comment' => 'register.comment',
+            'traduction' => 'register.traduction',
+            'tag' => 'register.tag',
+            'mail' => 'register.mail_template',
+            'template' => 'register.content_type_template'
         ]
     ],
 
