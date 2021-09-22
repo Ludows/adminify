@@ -24,7 +24,7 @@ class MediaTable extends TableManager {
     }
     public function handle() {
 
-        $config = config('site-settings.listings');
+        $config = config('site-settings.tables');
 
         $model = new MediaModel();
         $fillables = $model->getFillable();

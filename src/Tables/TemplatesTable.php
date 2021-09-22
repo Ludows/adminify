@@ -25,7 +25,7 @@ class TemplatesTable extends TableManager {
     public function handle() {
 
         //
-        $config = config('site-settings.listings');
+        $config = config('site-settings.tables');
         $request = $this->getRequest();
         $datas = $this->getDatas();
 

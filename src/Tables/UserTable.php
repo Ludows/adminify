@@ -31,7 +31,7 @@ class UserTable extends TableManager {
 
         $u = new UserModel();
 
-        $config = config('site-settings.listings');
+        $config = config('site-settings.tables');
         $fillables = $u->getFillable();
 
         $datas = $this->getDatas();

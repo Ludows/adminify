@@ -11,7 +11,7 @@ class ListingController extends Controller
     public function index(Request $request) {
 
 
-        $config = config('site-settings.listings');
+        $config = config('site-settings.tables');
 
         $datas = $request->all();
 

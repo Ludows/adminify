@@ -1,9 +1,9 @@
 <script>
     window.listingConfig = {
-        limit : {{ config('site-settings.listings.limit') }},
+        limit : {{ config('site-settings.tables.limit') }},
         singular : '{{ Str::singular($name) }}',
         maxItems : {{ $total }},
-        isEnd : {{ $total <=  config('site-settings.listings.limit') ? var_export(true, true) : var_export(false, true) }}
+        isEnd : {{ $total <=  config('site-settings.tables.limit') ? var_export(true, true) : var_export(false, true) }}
     }
 </script>
 
