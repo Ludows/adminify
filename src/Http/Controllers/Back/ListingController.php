@@ -59,10 +59,10 @@ class ListingController extends Controller
                 else {
                     $m = $m->orWhere($binding, 'like',  "%" . strtolower($search) . "%");
                 }
-                
+
                 $i++;
             }
-        } 
+        }
 
         if(isset($datas['status']) && is_trashable_model($modelBase) && $datas['status'] != -1) {
             $m = $m->where('status_id', $datas['status']);
@@ -73,9 +73,9 @@ class ListingController extends Controller
 
         $m = $m->take( $config['limit'] );
 
-        if( !empty($datas['offset']) &&  intval($datas['offset']) != 0) {
-            $m = $m->skip($datas['offset']);
-        }
+        // if( !empty($datas['offset']) &&  intval($datas['offset']) != 0) {
+        $m = $m->skip($datas['offset']);
+        // }
 
         $results = $m->get();
 
@@ -83,7 +83,7 @@ class ListingController extends Controller
         // $TableManager = $m->getTableListing();
 
         $table = new $TableManager(); // for disable autohandling
-        $table->datas('results', $results); 
+        $table->datas('results', $results);
 
         //render only listing not entierely table
         $v = $table->list();
