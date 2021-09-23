@@ -75,6 +75,18 @@ return [
             'postfix'             => 'Hook',
             'directory_namespace' => true,
         ],
+        'interfacable' => [
+            'namespace'           => '\Interfacable',
+            'path'                => './app/Interfacable/',
+            'postfix'             => 'Manager',
+            'directory_namespace' => true,
+        ],
+        'interfacable_blocks' => [
+            'namespace'           => '\Interfacable\Blocks',
+            'path'                => './app/Interfacable/Blocks/',
+            'postfix'             => 'Block',
+            'directory_namespace' => true,
+        ],
         'request' => [
             'namespace'           => '\Http\Requests',
             'path'                => './app/Http/Requests/',
@@ -211,5 +223,7 @@ return [
         'adminify_repository'         => base_path() . '/resources/stubs/adminify-repo.stub',
         'mailable'         => base_path() . '/resources/stubs/mailable.stub',
         'hook'         => base_path() . '/resources/stubs/hook.stub',
+        'interfacable'         => base_path() . '/resources/stubs/interfacable.stub',
+        'interfacable_blocks'         => base_path() . '/resources/stubs/interfacable_blocks.stub',
     ]
 ];
