@@ -55,7 +55,7 @@ if (! function_exists('slug')) {
 
 if (! function_exists('interfaces')) {
     function interfaces($name = '') {
-        $interface = config('interfaces.'.$name);
+        $interface = config('site-settings.interfaces.'.$name);
         return app($interface);
     }
 }
