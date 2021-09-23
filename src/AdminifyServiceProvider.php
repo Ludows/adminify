@@ -13,6 +13,8 @@ use Ludows\Adminify\Commands\CreateModel;
 use Ludows\Adminify\Commands\CreateController;
 use Ludows\Adminify\Commands\CreateRepository;
 use Ludows\Adminify\Commands\DoInstallEnv;
+use Ludows\Adminify\Commands\CreateInterfacable;
+use Ludows\Adminify\Commands\CreateInterfacableBlock;
 
 use Ludows\Adminify\Commands\CreateCrud;
 use Ludows\Adminify\Commands\CreateTable;
@@ -276,6 +278,8 @@ class AdminifyServiceProvider extends ServiceProvider {
             InstallPackages::class,
             RouteList::class,
             CreateTranslations::class,
+            CreateInterfacable::class,
+            CreateInterfacableBlock::class
         ]);
     }
 }
