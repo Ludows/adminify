@@ -47,6 +47,19 @@ if (! function_exists('singular')) {
     }
 }
 
+if (! function_exists('slug')) {
+    function slug($name = '') {
+        return Str::slug($name);
+    }
+}
+
+if (! function_exists('interfaces')) {
+    function interfaces($name = '') {
+        $interface = config('interfaces.'.$name);
+        return app($interface);
+    }
+}
+
 if (! function_exists('plural')) {
     function plural($name = '') {
         return Str::plural($name);

@@ -17,6 +17,11 @@ class InterfacableManager
 
     // ex $this->registerBlocks('tata', 'MaSuperClasse');
 
+    public function blocks() {
+        return [
+        ];
+    }
+
     public function registerBlock($name, $phpClass = null, $autoHandle = true) {
 
         $block = new $phpClass;
@@ -29,7 +34,12 @@ class InterfacableManager
             $block->handle();
         }
 
-        $this->blocks[ Str::slug($name) ] = $block;
+        $this->blocks[ slug($name) ] = $block;
+        return $this;
+    }
+
+    public function unregisterBlock($name) {
+        unset( $this->blocks[ slug($name) ] );
         return $this;
     }
 
@@ -76,7 +86,18 @@ class InterfacableManager
     public function render() {
 
         $tpl = $this->getView();
+        
+        $installBlocks = $this->blocks();
+
+        if(!empty($installBlocks)) {
+            foreach ($installBlocks as $installableBlock) {
+                # code...
+                $this->registerBlock( $installableBlock::getNamedBlock(), $installableBlock);
+            }
+        }
+
         $blocks = $this->getBlocks();
+
         $compiled = $this->view->make($tpl, ['blocks' => $blocks, 'css' => $this->getCss(), 'js' => $this->getJs() ]);
         return $compiled;
     }

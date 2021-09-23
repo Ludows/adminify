@@ -62,8 +62,8 @@ return [
     ],
 
     'sitemap' => [
-        'pages' => 'register.pages',
-        'posts' => 'register.posts',
+        'pages' => 'register.page',
+        'posts' => 'register.post',
     ],
 
     'feeds' => [
@@ -207,14 +207,18 @@ return [
         ]
     ],
 
-    'dashboard' => [
-        \Ludows\Adminify\Interfacable\Blocks\PageCard::class,
-        \Ludows\Adminify\Interfacable\Blocks\PostCard::class,
-        \Ludows\Adminify\Interfacable\Blocks\CategoryCard::class,
-        \Ludows\Adminify\Interfacable\Blocks\TranslationsCard::class,
-        \Ludows\Adminify\Interfacable\Blocks\MediaCard::class,
-        \Ludows\Adminify\Interfacable\Blocks\TagCard::class,
-        \Ludows\Adminify\Interfacable\Blocks\MailCard::class,
-        \Ludows\Adminify\Interfacable\Blocks\MenuCard::class,
-    ]
+    'interfaces' => [
+        'home' => \Ludows\Adminify\Interfacable\DashboardManager::class
+    ],
+
+    // 'dashboard' => [
+    //     \Ludows\Adminify\Interfacable\Blocks\PageCard::class,
+    //     \Ludows\Adminify\Interfacable\Blocks\PostCard::class,
+    //     \Ludows\Adminify\Interfacable\Blocks\CategoryCard::class,
+    //     \Ludows\Adminify\Interfacable\Blocks\TranslationsCard::class,
+    //     \Ludows\Adminify\Interfacable\Blocks\MediaCard::class,
+    //     \Ludows\Adminify\Interfacable\Blocks\TagCard::class,
+    //     \Ludows\Adminify\Interfacable\Blocks\MailCard::class,
+    //     \Ludows\Adminify\Interfacable\Blocks\MenuCard::class,
+    // ]
 ];

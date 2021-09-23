@@ -8,7 +8,7 @@ use Kris\LaravelFormBuilder\FormBuilder;
 use Illuminate\Http\Request;
 
 
-use Ludows\Adminify\Interfacable\DashboardManager;
+// use Ludows\Adminify\Interfacable\DashboardManager;
 
 class HomeController extends Controller
 {
@@ -17,11 +17,11 @@ class HomeController extends Controller
      *
      * @return void
      */
-    private $interfacable;
+    // private $interfacable;
     
-    public function __construct(DashboardManager $interfacable)
+    public function __construct()
     {
-        $this->interfacable = $interfacable;
+           // $this->interfacable = $interfacable;
         $this->middleware('auth');
         $this->middleware(['permission:read'], ['only' => ['show']]);
     }
@@ -40,15 +40,25 @@ class HomeController extends Controller
 
         $enabled_features = get_site_key('enables_features');
 
+        $interface = interfaces('home');
+
+        $blocks = $interface->getBlocks();
+
         foreach ($blocks as $block) {
             # code...
             $a = new $block();
-            if( isset( $enabled_features[ singular( $a->getPlural() ) ] ) &&  $enabled_features[ singular( $a->getPlural() ) ] ) {
-                $this->interfacable->registerBlock( $block::getNamedBlock(), $block );
+            if(empty( $enabled_features[ singular( $a->getPlural() ) ] ) ) {
+                $interface->unregisterBlock( $block::getNamedBlock() );
             }
+            if(!empty( $enabled_features[ singular( $a->getPlural() ) ] ) &&  $enabled_features[ singular( $a->getPlural() ) ] == false ) {
+                $interface->unregisterBlock( $block::getNamedBlock() );
+            }
+            // if( isset( $enabled_features[ singular( $a->getPlural() ) ] ) &&  $enabled_features[ singular( $a->getPlural() ) ] ) {
+            //     $this->interfacable->registerBlock( $block::getNamedBlock(), $block );
+            // }
         }
 
-        return view('adminify::layouts.admin.pages.dashboard', ['interfacable' => $this->interfacable]);
+        return view('adminify::layouts.admin.pages.dashboard', ['interfacable' => $interface]);
     }
 
     public function getForms(Request $request, FormBuilder $formbuilder) {
