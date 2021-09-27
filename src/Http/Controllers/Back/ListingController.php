@@ -11,11 +11,12 @@ class ListingController extends Controller
     public function index(Request $request) {
 
 
-        $config = config('register');
+        $registering = get_site_key('register');
+        $config = get_site_key('tables');
 
         $datas = $request->all();
 
-        $m_str = $config[$datas['singular']] ?? null;
+        $m_str = $registering[$datas['singular']] ?? null;
 
         if(empty($m_str)) {
             abort(403);

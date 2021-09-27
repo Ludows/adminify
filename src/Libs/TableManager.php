@@ -155,7 +155,7 @@ class TableManager
     public function handle() {}
     public function render() {
 
-        $listings = get_site_key('tables');
+        $listings = get_site_key('register');        
         $name = $this->getRequest()->route()->getName();
         $name = str_replace('.index', '', $name);
 
@@ -167,7 +167,7 @@ class TableManager
 
         if($this->showSearch) {
             $this->module('search', 'top-right', 'adminify::layouts.admin.table.core.search', [
-                'showSearchBar' => isset($listings['search'][ $singular ]) ? true : false,
+                'showSearchBar' => isset($listings[ $singular ]) ? true : false,
                 'showCreate' => $this->showBtnCreate
             ]);
         }
