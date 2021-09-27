@@ -141,7 +141,8 @@ return [
         'email' => true,
         'seo' => true,
         'templates_content' => true,
-        'user' => true
+        'user' => true,
+        'form' => true
     ],
     
     'savetraductions' => [
@@ -160,19 +161,6 @@ return [
     'tables' => [
         'limit' => env('LISTINGS_LIMIT', 5),
         'searchType' => 'fillable', // or manual. In manual mode, columns is necessary.
-        'search' => [
-            'media' => 'register.media',
-            'post' => 'register.post',
-            'user' => 'register.user',
-            'menu' => 'register.user',
-            'page' => 'register.page',
-            'category' => 'register.category',
-            'comment' => 'register.comment',
-            'traduction' => 'register.traduction',
-            'tag' => 'register.tag',
-            'mail' => 'register.mail_template',
-            'template' => 'register.content_type_template'
-        ]
     ],
 
     // this is possible for all website ( front and back )
@@ -210,15 +198,4 @@ return [
     'interfaces' => [
         'home' => \Ludows\Adminify\Interfacable\DashboardManager::class
     ],
-
-    // 'dashboard' => [
-    //     \Ludows\Adminify\Interfacable\Blocks\PageCard::class,
-    //     \Ludows\Adminify\Interfacable\Blocks\PostCard::class,
-    //     \Ludows\Adminify\Interfacable\Blocks\CategoryCard::class,
-    //     \Ludows\Adminify\Interfacable\Blocks\TranslationsCard::class,
-    //     \Ludows\Adminify\Interfacable\Blocks\MediaCard::class,
-    //     \Ludows\Adminify\Interfacable\Blocks\TagCard::class,
-    //     \Ludows\Adminify\Interfacable\Blocks\MailCard::class,
-    //     \Ludows\Adminify\Interfacable\Blocks\MenuCard::class,
-    // ]
 ];

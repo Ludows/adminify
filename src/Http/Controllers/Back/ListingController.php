@@ -11,11 +11,15 @@ class ListingController extends Controller
     public function index(Request $request) {
 
 
-        $config = config('site-settings.tables');
+        $config = config('register');
 
         $datas = $request->all();
 
-        $m_str = get_site_key($config['search'][$datas['singular']]);
+        $m_str = $config[$datas['singular']] ?? null;
+
+        if(empty($m_str)) {
+            abort(403);
+        }
         $modelBase = new $m_str();
         $m = $modelBase;
         $is_multilang_model = is_translatable_model($m);
