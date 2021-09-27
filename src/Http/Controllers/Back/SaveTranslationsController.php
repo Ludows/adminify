@@ -41,7 +41,10 @@ class SaveTranslationsController extends Controller
                 $config = get_site_key('register');
                 $id = \Route::current()->parameter($request->singleParam);
 
-                $m = get_site_key($config[$type]);
+                $m = $config[$type] ?? null;
+                if(empty($m)) {
+                    abort(403);
+                }
                 $model = new $m();
 
                 $theSavableForm = $model->getSavableForm();
@@ -74,8 +77,14 @@ class SaveTranslationsController extends Controller
             $all = $request->all();
             //dd($all);
 
-            $config = config('site-settings');
-            $m = get_site_key($config['savetraductions']['models'][$all['type']]);
+            $config = get_site_key('register');
+            $type = $all['type'];
+            $m = $config[$type] ?? null;
+
+            if(empty($m)) {
+                abort(403);
+            }
+
             $model = new $m();
             $model = $model->find($all['id']);
 
