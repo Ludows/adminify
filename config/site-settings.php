@@ -144,18 +144,6 @@ return [
         'user' => true,
         'form' => true
     ],
-    
-    'savetraductions' => [
-        'models' => [
-            'post' => 'register.post',
-            'page' => 'register.page',
-            'translation' => 'register.traduction',
-            'category' => 'register.categoriy',
-            'menu' => 'register.menu',
-            'tag' => 'register.tag',
-            'mailable' => 'register.mail_template'
-        ],
-    ],
 
     // all routes search are binded to singular route name.
     'tables' => [

@@ -38,10 +38,10 @@ class SaveTranslationsController extends Controller
                     abort(403);
                 }
 
-                $config = config('site-settings');
+                $config = get_site_key('register');
                 $id = \Route::current()->parameter($request->singleParam);
 
-                $m = get_site_key($config['savetraductions']['models'][$type]);
+                $m = get_site_key($config[$type]);
                 $model = new $m();
 
                 $theSavableForm = $model->getSavableForm();
