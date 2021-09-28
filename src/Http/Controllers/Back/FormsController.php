@@ -20,7 +20,7 @@ use App\Forms\UpdateForms;
 use Ludows\Adminify\Traits\TableManagerable;
 use Ludows\Adminify\Tables\FormsTable;
 
-class MediaController extends Controller
+class FormsController extends Controller
 {
     use FormBuilderTrait;
     use TableManagerable;
