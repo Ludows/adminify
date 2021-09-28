@@ -155,6 +155,13 @@ return [
             'postfix'             => 'Test',
             'path'                => './tests/',
         ],
+        'adminify:install:commands' => [
+            'namespace'           => '\Adminify\Commands',
+            'path'                => './app/Interfacable/Blocks/',
+            'postfix'             => '',
+            'directory_namespace' => true,
+        ],
+        
     ],
 
     /*
@@ -225,5 +232,6 @@ return [
         'hook'         => base_path() . '/resources/stubs/hook.stub',
         'interfacable'         => base_path() . '/resources/stubs/interfacable.stub',
         'interfacable_blocks'         => base_path() . '/resources/stubs/interfacable_blocks.stub',
+        'adminify:install:commands'         => base_path() . '/resources/stubs/commands_install.stub',
     ]
 ];

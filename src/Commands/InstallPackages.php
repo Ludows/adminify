@@ -82,7 +82,7 @@ class InstallPackages extends Command
             $this->handleCoreTasks();
 
             $this->info('Handle stubs install...');
-            $this->handleStubs(base_path('vendor/ludows/adminify/installation'));
+            $this->handleStubs(base_path('vendor/ludows/adminify/src'));
             if(!in_array('*', $cleanedTasks)) {
                 $this->doCommand('composer dump-autoload');
             }
@@ -91,7 +91,7 @@ class InstallPackages extends Command
         if(in_array('*', $cleanedTasks)  || in_array('publishes', $cleanedTasks)) {
             $this->handlePublishesPackages();
         }
-        
+
         if(in_array('*', $cleanedTasks)  || in_array('migrations', $cleanedTasks)) {
             $this->info('Handle migrations database...');
             $this->call('migrate');
@@ -113,7 +113,7 @@ class InstallPackages extends Command
         }
 
         if(in_array('*', $cleanedTasks) && !$firstInstall  || in_array('cache', $cleanedTasks) && !$firstInstall) {
-            $this->doClearCaches();   
+            $this->doClearCaches();
         }
 
         //run seeds
@@ -290,22 +290,37 @@ class InstallPackages extends Command
        return join(DIRECTORY_SEPARATOR, $path);
 
     }
-    public function handleStubs($path = '', $log = true) {
+    public function handleStubs($path = '', $type = null, $log = true) {
         $hasDirs = File::directories($path);
         $hasFiles = File::files($path);
+
+        dump($type);
 
         if(!empty($hasDirs)) {
             foreach ($hasDirs as $dirPath) {
                 # code...
-                $this->handleStubs($dirPath);
+                $list = explode(DIRECTORY_SEPARATOR, $dirPath);
+                $typologie = strtolower( $list[ count($list) - 1 ] );
+
+                $this->handleStubs($dirPath, $typologie);
             }
-           
+
         }
 
-        if(!empty($hasFiles)) {
+        if(!empty($hasFiles) && !empty($type)) {
 
             $this->info('Files detected in '.$path);
 
+            // dd($hasFiles);
+
+            foreach ($hasFiles as $fileObject) {
+                # code...
+                 $this->call('generate:file', [
+                    'name' => Str::singular( str_replace('.'.$fileObject->getExtension(), '',  $fileObject->getBasename()) ),
+                    '--stub' => 'adminify:install:'.$type,
+                    '--type' => 'adminify:install:'.$type,
+                ]);
+            }
             // $m = app($fullModelClass);
             // $reflect = new \ReflectionClass($m);
 
