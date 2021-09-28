@@ -157,7 +157,7 @@ return [
         ],
         'adminify:install:commands' => [
             'namespace'           => '\Adminify\Commands',
-            'path'                => './app/Interfacable/Blocks/',
+            'path'                => './app/Adminify/Commands/',
             'postfix'             => '',
             'directory_namespace' => true,
         ],
