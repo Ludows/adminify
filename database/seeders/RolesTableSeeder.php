@@ -141,6 +141,15 @@ class RolesTableSeeder extends Seeder
                     ],
                     36 => [
                         'name' => 'delete_tags'
+                    ],
+                    37 => [
+                        'name' => 'create_forms'
+                    ],
+                    38 => [
+                        'name' => 'edit_forms'
+                    ],
+                    39 => [
+                        'name' => 'delete_forms'
                     ]
                 ]
             ],
@@ -254,6 +263,15 @@ class RolesTableSeeder extends Seeder
                     ],
                     35 => [
                         'name' => 'delete_tags'
+                    ],
+                    36 => [
+                        'name' => 'create_forms'
+                    ],
+                    37 => [
+                        'name' => 'edit_forms'
+                    ],
+                    38 => [
+                        'name' => 'delete_forms'
                     ]
                 ]
             ],
