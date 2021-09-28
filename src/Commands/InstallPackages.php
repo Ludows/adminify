@@ -290,52 +290,79 @@ class InstallPackages extends Command
        return join(DIRECTORY_SEPARATOR, $path);
 
     }
-    public function handleStubs($path = '', $namespaceStr = "\App",  $log = true) {
+    public function handleStubs($path = '', $log = true) {
+        $hasDirs = File::directories($path);
+        $hasFiles = File::files($path);
 
-        $currentPath = $path;
-        // dump($currentPath);
-        $mixed =  $this->dif_scandir(scandir($currentPath));
-        // dump($mixed_types, $namespaceStr);
-        $namespace = $namespaceStr;
-
-        foreach ($mixed as $mixed_type) {
-            # code...
-            // dump($mixed_type);
-            if(!is_file($currentPath.'/'.$mixed_type) ){
-                $namespaced = Str::title($mixed_type);
-                $checkDirectories = scandir($currentPath.'/'.$mixed_type);
-                if(count($checkDirectories) > 0) {
-                    $this->handleStubs($currentPath.DIRECTORY_SEPARATOR.$mixed_type, $namespace.'\\'.$namespaced);
-                }
-
-                if($log) {
-                    $this->info('Handle directory stub:  '. $currentPath.DIRECTORY_SEPARATOR.$mixed_type);
-                    $this->info('Handle namespace stub:  '. $namespace.'\\'.$namespaced);
-                }
+        if(!empty($hasDirs)) {
+            foreach ($hasDirs as $dirPath) {
+                # code...
+                $this->handleStubs($dirPath);
             }
-            if(is_file($currentPath.DIRECTORY_SEPARATOR.$mixed_type) && $namespace != '\App') {
-                if(!class_exists($namespace)) {
-                    $p = $this->constructPathFromNamespace($namespace);
-
-                    if(!File::exists(base_path().DIRECTORY_SEPARATOR.$p)) {
-                        \File::makeDirectory(base_path().DIRECTORY_SEPARATOR.$p, 0755, true, true);
-                    }
-
-                    $this->info('Handle copy of '.$namespace.'\\'.$mixed_type);
-                    $info = pathinfo($currentPath.DIRECTORY_SEPARATOR.$mixed_type);
-                    \File::copy( $currentPath.DIRECTORY_SEPARATOR.$mixed_type ,  base_path().DIRECTORY_SEPARATOR.$p.DIRECTORY_SEPARATOR.$info['filename'].'.php' );
-                }
-                else {
-                    $this->info('Skipping '.$namespace.'\\'.$mixed_type.' already present');
-                }
-
-                // if(!File::exists($backupLoc)) {
-                //     File::makeDirectory($backupLoc, 0755, true, true);
-                // }
-            }
+           
         }
 
+        if(!empty($hasFiles)) {
 
+            $this->info('Files detected in '.$path);
 
+            // $m = app($fullModelClass);
+            // $reflect = new \ReflectionClass($m);
+
+            // $this->call('generate:file', [
+            //     'name' => Str::singular($model),
+            //     '--stub' => 'adminify_table',
+            //     '--type' => 'table'
+            // ]);
+        }
     }
+    //the old way to install Adminify..
+    // public function handleStubs($path = '', $namespaceStr = "\App",  $log = true) {
+
+    //     $currentPath = $path;
+    //     // dump($currentPath);
+    //     $mixed =  $this->dif_scandir(scandir($currentPath));
+    //     // dump($mixed_types, $namespaceStr);
+    //     $namespace = $namespaceStr;
+
+    //     foreach ($mixed as $mixed_type) {
+    //         # code...
+    //         // dump($mixed_type);
+    //         if(!is_file($currentPath.'/'.$mixed_type) ){
+    //             $namespaced = Str::title($mixed_type);
+    //             $checkDirectories = scandir($currentPath.'/'.$mixed_type);
+    //             if(count($checkDirectories) > 0) {
+    //                 $this->handleStubs($currentPath.DIRECTORY_SEPARATOR.$mixed_type, $namespace.'\\'.$namespaced);
+    //             }
+
+    //             if($log) {
+    //                 $this->info('Handle directory stub:  '. $currentPath.DIRECTORY_SEPARATOR.$mixed_type);
+    //                 $this->info('Handle namespace stub:  '. $namespace.'\\'.$namespaced);
+    //             }
+    //         }
+    //         if(is_file($currentPath.DIRECTORY_SEPARATOR.$mixed_type) && $namespace != '\App') {
+    //             if(!class_exists($namespace)) {
+    //                 $p = $this->constructPathFromNamespace($namespace);
+
+    //                 if(!File::exists(base_path().DIRECTORY_SEPARATOR.$p)) {
+    //                     \File::makeDirectory(base_path().DIRECTORY_SEPARATOR.$p, 0755, true, true);
+    //                 }
+
+    //                 $this->info('Handle copy of '.$namespace.'\\'.$mixed_type);
+    //                 $info = pathinfo($currentPath.DIRECTORY_SEPARATOR.$mixed_type);
+    //                 \File::copy( $currentPath.DIRECTORY_SEPARATOR.$mixed_type ,  base_path().DIRECTORY_SEPARATOR.$p.DIRECTORY_SEPARATOR.$info['filename'].'.php' );
+    //             }
+    //             else {
+    //                 $this->info('Skipping '.$namespace.'\\'.$mixed_type.' already present');
+    //             }
+
+    //             // if(!File::exists($backupLoc)) {
+    //             //     File::makeDirectory($backupLoc, 0755, true, true);
+    //             // }
+    //         }
+    //     }
+
+
+
+    // }
 }
