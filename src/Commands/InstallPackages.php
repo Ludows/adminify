@@ -39,6 +39,10 @@ class InstallPackages extends Command
 
         $this->packages = require_once(__DIR__.'/../../config/packagelist.php');
         $this->tasks = require_once(__DIR__.'/../../config/coretasks.php');
+        $this->excludes = [
+            'facades', 'helpers', 'libs', 'traits', 'view', 'fields'
+        ];
+
     }
     /**
      * Execute the console command.
@@ -294,15 +298,15 @@ class InstallPackages extends Command
         $hasDirs = File::directories($path);
         $hasFiles = File::files($path);
 
-        dump($type);
-
         if(!empty($hasDirs)) {
             foreach ($hasDirs as $dirPath) {
                 # code...
                 $list = explode(DIRECTORY_SEPARATOR, $dirPath);
                 $typologie = strtolower( $list[ count($list) - 1 ] );
 
-                $this->handleStubs($dirPath, $typologie);
+                if(!in_array($typologie, $this->excludes)) {
+                    $this->handleStubs($dirPath, $typologie);
+                }
             }
 
         }
@@ -316,7 +320,7 @@ class InstallPackages extends Command
             foreach ($hasFiles as $fileObject) {
                 # code...
                  $this->call('generate:file', [
-                    'name' => Str::singular( str_replace('.'.$fileObject->getExtension(), '',  $fileObject->getBasename()) ),
+                    'name' => str_replace('.'.$fileObject->getExtension(), '',  $fileObject->getBasename()) ,
                     '--stub' => 'adminify:install:'.$type,
                     '--type' => 'adminify:install:'.$type,
                 ]);

@@ -1,0 +1,7 @@
+<?php
+
+namespace {{namespace}};
+
+use Ludows\Adminify\Dropdowns\{{class}} as {{class}}Dropdown;
+
+class {{class}} extends {{class}}Dropdown {}

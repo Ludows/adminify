@@ -1,6 +1,6 @@
 <?php
 
-namespace {{namepace}};
+namespace {{namespace}};
 
 use Ludows\Adminify\Commands\{{class}} as {{class}}Command;
 

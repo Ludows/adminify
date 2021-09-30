@@ -1,0 +1,9 @@
+<?php
+
+namespace {{namespace}};
+
+use Ludows\Adminify\Hooks\{{class}}Hook as {{class}}HookBase;
+
+class {{class}} extends {{class}}HookBase {
+    
+}
