@@ -186,7 +186,7 @@ class AdminifyServiceProvider extends ServiceProvider {
             $pathAdminifyModels
         ];
 
-        dd($paths);
+        //dd($paths);
         
         foreach ($paths as $pathable) {
             # code...
