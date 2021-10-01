@@ -22,6 +22,8 @@ use Ludows\Adminify\Commands\CreateDropdown;
 use Ludows\Adminify\Commands\CreateFormRequests;
 use Ludows\Adminify\Commands\CreateForms;
 
+use Illuminate\Support\Str;
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +36,7 @@ use Ludows\Adminify\Facades\HookManagerFacade;
 
 use File;
 use Config;
+use Directory;
 
 class AdminifyServiceProvider extends ServiceProvider {
 
@@ -55,7 +58,7 @@ class AdminifyServiceProvider extends ServiceProvider {
             $this->registerInstallablesCommands();
         }
 
-        $this->bootDependencies();
+        $this->registerLaravelApp();
 
         // dd(config('site-settings'));
 
@@ -170,56 +173,104 @@ class AdminifyServiceProvider extends ServiceProvider {
         config(['generators.stubs' => $mergeStubs]);
     }
 
-    private function buildNamespace() {
+    private function getDirectories($path) {
+        return File::directories($path);
+    }
+
+    private function hasSubDirectories($path) {
+        return count(File::directories($path)) > 0 ? true : false;
+    }
+
+    private function bootDependencies($path, $labelOverride,  $array) {
+        $hasDirs = $this->getDirectories($path);
+
+        $namespaces = [];
+
+        if(!empty($hasDirs)) {
+
+            foreach ($hasDirs as $dirPath) {
+                # code...
+                $explode_path = explode(DIRECTORY_SEPARATOR, $dirPath);
+
+                $getN = array_slice($explode_path, 6);
+
+                foreach ($getN as $NKey => $N) {
+                    # code...
+                    $getN[$NKey] = Str::ucfirst($N);
+
+                }
+
+                $namescaped = join('\\', $getN);
+
+                // dd($getN, $namescaped);
+
+                $labelize = join(':' , $getN);
+
+                $folder = strtolower($labelize);
+
+                if($this->hasSubDirectories($dirPath)) {
+
+                    $subfolder = $this->bootDependencies($dirPath, $folder, $array);
+                    $namespaces = array_merge($namespaces, $subfolder);
+                }
+
+                $namespaces[ strtolower($folder) ] = $namescaped;
+
+
+
+            }
+
+        }
+
+        return $namespaces;
+    }
+
+    private function registerLaravelApp() {
+
+        // $pathModels = app_path('Models');
+        // $pathAdminifyModels = app_path('Adminify/Models');
+        if(cache('adminify.autoload')) {
+            $globals = cache('adminify.autoload');
+        }
+        else {
+            $bootables = $this->bootDependencies(app_path(), null, []);
+            $globals = $this->getClassesBootables($bootables);
+        }
+        if(!cache('adminify.autoload')) {
+            cache(['adminify.autoload' => $globals]);
+        }
+
+
+        config(['adminify-container' => $globals]);
 
     }
 
-    private function bootDependencies() {
-        $c = config('site-settings');
-        $models = [];
+    private function getClassesBootables($bootables) {
 
-        $pathModels = app_path('Models');
-        $pathAdminifyModels = app_path('Adminify/Models');
+        $gloablBoot = $bootables;
 
-        $paths = [
-            $pathModels,
-            $pathAdminifyModels
-        ];
-
-        //dd($paths);
-        
-        foreach ($paths as $pathable) {
+        foreach ($bootables as $bootableKey => $bootable) {
             # code...
-            if (!file_exists($pathable)) {
-                // path does not exist
-                return false;
-            }
-            $files = File::files($pathable);
+            $classes = \HaydenPierce\ClassFinder\ClassFinder::getClassesInNamespace($bootable);
 
-            $namespaceBase = 'App\Models';
+            if(!empty($classes)) {
 
-            foreach($files as $f){
-                $namedClass = str_replace('.'.$f->getExtension(), '', $f->getBaseName());
+                $registrar = [];
 
-                $fullModelClass = $namespaceBase . '\\'. $namedClass;
-                $m = $fullModelClass;
-                $model = app($fullModelClass);
+                foreach ($classes as $laravelNamespace) {
+                    # code...
+                    $split = explode('\\', $laravelNamespace);
+                    $label = $split[ count($split) - 1 ];
 
-                if(method_exists($model, 'getAliases')) {
-                    $aliases = $model->getAliases();
-                    foreach ($aliases as $alias) {
-                        # code...
-                        $models[ singular( $alias ) ] = $m;
-                    }
+                    $registrar[ strtolower($label) ] = $laravelNamespace;
+
+
                 }
-
-                $models[ singular( $model->getTable() ) ] = $m;
+                $gloablBoot[$bootableKey] = $registrar;
             }
         }
 
-        
-
-        config(['site-settings.register' => $models]);
+        return $gloablBoot;
     }
 
     private function bootableDependencies($packages, $kernel) {
