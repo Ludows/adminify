@@ -55,7 +55,7 @@ class AdminifyServiceProvider extends ServiceProvider {
             $this->registerInstallablesCommands();
         }
 
-        $this->bootModels();
+        $this->bootDependencies();
 
         // dd(config('site-settings'));
 
@@ -170,7 +170,11 @@ class AdminifyServiceProvider extends ServiceProvider {
         config(['generators.stubs' => $mergeStubs]);
     }
 
-    private function bootModels() {
+    private function buildNamespace() {
+
+    }
+
+    private function bootDependencies() {
         $c = config('site-settings');
         $models = [];
 
@@ -181,10 +185,12 @@ class AdminifyServiceProvider extends ServiceProvider {
             $pathModels,
             $pathAdminifyModels
         ];
+
+        dd($paths);
         
         foreach ($paths as $pathable) {
             # code...
-            $files = File::files($pathModels);
+            $files = File::files($pathable);
 
             $namespaceBase = 'App\Models';
 
