@@ -190,6 +190,10 @@ class AdminifyServiceProvider extends ServiceProvider {
         
         foreach ($paths as $pathable) {
             # code...
+            if (!file_exists($pathable)) {
+                // path does not exist
+                return false;
+            }
             $files = File::files($pathable);
 
             $namespaceBase = 'App\Models';
