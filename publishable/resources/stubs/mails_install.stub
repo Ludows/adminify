@@ -1,0 +1,7 @@
+<?php
+
+namespace {{namespace}};
+
+use Ludows\Adminify\Mails\{{class}} as {{class}}Base;
+
+class {{class}} extends {{class}}Base {}

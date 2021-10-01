@@ -86,7 +86,7 @@ class InstallPackages extends Command
             $this->handleCoreTasks();
 
             $this->info('Handle stubs install...');
-            $this->handleStubs(base_path('vendor/ludows/adminify/src'));
+            $this->handleStubs(base_path('vendor/ludows/adminify/src'), 'adminify:install');
             if(!in_array('*', $cleanedTasks)) {
                 $this->doCommand('composer dump-autoload');
             }
@@ -302,7 +302,8 @@ class InstallPackages extends Command
             foreach ($hasDirs as $dirPath) {
                 # code...
                 $list = explode(DIRECTORY_SEPARATOR, $dirPath);
-                $typologie = strtolower( $list[ count($list) - 1 ] );
+                
+                $typologie = $type .':'. strtolower( $list[ count($list) - 1 ] );
 
                 if(!in_array($typologie, $this->excludes)) {
                     $this->handleStubs($dirPath, $typologie);
@@ -321,8 +322,8 @@ class InstallPackages extends Command
                 # code...
                  $this->call('generate:file', [
                     'name' => str_replace('.'.$fileObject->getExtension(), '',  $fileObject->getBasename()) ,
-                    '--stub' => 'adminify:install:'.$type,
-                    '--type' => 'adminify:install:'.$type,
+                    '--stub' => $type,
+                    '--type' => $type,
                 ]);
             }
             // $m = app($fullModelClass);

@@ -59,7 +59,7 @@ return [
         ],
         'dropdown' => [
             'namespace'           => '\Dropdowns',
-            'path'                => './app/Adminify/Dropdowns/',
+            'path'                => './app/Dropdowns/',
             'postfix'             => 'Dropdown',
             'directory_namespace' => true,
         ],

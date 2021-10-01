@@ -52,6 +52,7 @@ class AdminifyServiceProvider extends ServiceProvider {
             $packages = require_once(__DIR__.'/../config/packagelist.php');
 
             $this->bootableDependencies($packages, $kernel);
+            $this->registerInstallablesCommands();
         }
 
         $this->bootModels();
@@ -154,33 +155,59 @@ class AdminifyServiceProvider extends ServiceProvider {
         // });
     }
 
+    private function registerInstallablesCommands() {
+        $config = config('generators');
+        $adminInstall = require_once(__DIR__.'/../config/adminify_generator_installation.php');
+
+        $mergeSettings = array_merge($config['settings'], $adminInstall['settings']);
+        $mergeStubs = array_merge($config['stubs'], $adminInstall['stubs']);
+
+
+        config(['generators.settings' => []]);
+        config(['generators.stubs' => []]);
+
+        config(['generators.settings' => $mergeSettings]);
+        config(['generators.stubs' => $mergeStubs]);
+    }
+
     private function bootModels() {
         $c = config('site-settings');
         $models = [];
 
         $pathModels = app_path('Models');
+        $pathAdminifyModels = app_path('Adminify/Models');
 
-        $files = File::files($pathModels);
+        $paths = [
+            $pathModels,
+            $pathAdminifyModels
+        ];
+        
+        foreach ($paths as $pathable) {
+            # code...
+            $files = File::files($pathModels);
 
-        $namespaceBase = 'App\Models';
+            $namespaceBase = 'App\Models';
 
-        foreach($files as $f){
-            $namedClass = str_replace('.'.$f->getExtension(), '', $f->getBaseName());
+            foreach($files as $f){
+                $namedClass = str_replace('.'.$f->getExtension(), '', $f->getBaseName());
 
-            $fullModelClass = $namespaceBase . '\\'. $namedClass;
-            $m = $fullModelClass;
-            $model = app($fullModelClass);
+                $fullModelClass = $namespaceBase . '\\'. $namedClass;
+                $m = $fullModelClass;
+                $model = app($fullModelClass);
 
-            if(method_exists($model, 'getAliases')) {
-                $aliases = $model->getAliases();
-                foreach ($aliases as $alias) {
-                    # code...
-                    $models[ singular( $alias ) ] = $m;
+                if(method_exists($model, 'getAliases')) {
+                    $aliases = $model->getAliases();
+                    foreach ($aliases as $alias) {
+                        # code...
+                        $models[ singular( $alias ) ] = $m;
+                    }
                 }
-            }
 
-            $models[ singular( $model->getTable() ) ] = $m;
+                $models[ singular( $model->getTable() ) ] = $m;
+            }
         }
+
+        
 
         config(['site-settings.register' => $models]);
     }
