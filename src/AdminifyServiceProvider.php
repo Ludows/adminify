@@ -51,6 +51,8 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         $app = app();
 
+        $this->registerLaravelApp();
+
         if(!$app->runningInConsole()) {
             $packages = require_once(__DIR__.'/../config/packagelist.php');
 
@@ -58,7 +60,7 @@ class AdminifyServiceProvider extends ServiceProvider {
             $this->registerInstallablesCommands();
         }
 
-        $this->registerLaravelApp();
+
 
         // dd(config('site-settings'));
 
@@ -171,6 +173,8 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         config(['generators.settings' => $mergeSettings]);
         config(['generators.stubs' => $mergeStubs]);
+
+        // dd(config());
     }
 
     private function getDirectories($path) {

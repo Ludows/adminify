@@ -302,7 +302,7 @@ class InstallPackages extends Command
             foreach ($hasDirs as $dirPath) {
                 # code...
                 $list = explode(DIRECTORY_SEPARATOR, $dirPath);
-                
+
                 $typologie = $type .':'. strtolower( $list[ count($list) - 1 ] );
 
                 if(!in_array($typologie, $this->excludes)) {
@@ -316,7 +316,7 @@ class InstallPackages extends Command
 
             $this->info('Files detected in '.$path);
 
-            // dd($hasFiles);
+            dump($type, config('generators'));
 
             foreach ($hasFiles as $fileObject) {
                 # code...
