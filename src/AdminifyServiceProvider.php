@@ -15,6 +15,7 @@ use Ludows\Adminify\Commands\CreateRepository;
 use Ludows\Adminify\Commands\DoInstallEnv;
 use Ludows\Adminify\Commands\CreateInterfacable;
 use Ludows\Adminify\Commands\CreateInterfacableBlock;
+use Ludows\Adminify\Commands\GenerateAdminifyContainer;
 
 use Ludows\Adminify\Commands\CreateCrud;
 use Ludows\Adminify\Commands\CreateTable;
@@ -51,13 +52,11 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         $app = app();
 
-        $this->registerLaravelApp();
-
         if(!$app->runningInConsole()) {
             $packages = require_once(__DIR__.'/../config/packagelist.php');
 
             $this->bootableDependencies($packages, $kernel);
-            $this->registerInstallablesCommands();
+            
         }
 
 
@@ -159,123 +158,7 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         // });
     }
-
-    private function registerInstallablesCommands() {
-        $config = config('generators');
-        $adminInstall = require_once(__DIR__.'/../config/adminify_generator_installation.php');
-
-        $mergeSettings = array_merge($config['settings'], $adminInstall['settings']);
-        $mergeStubs = array_merge($config['stubs'], $adminInstall['stubs']);
-
-
-        config(['generators.settings' => []]);
-        config(['generators.stubs' => []]);
-
-        config(['generators.settings' => $mergeSettings]);
-        config(['generators.stubs' => $mergeStubs]);
-
-        // dd(config());
-    }
-
-    private function getDirectories($path) {
-        return File::directories($path);
-    }
-
-    private function hasSubDirectories($path) {
-        return count(File::directories($path)) > 0 ? true : false;
-    }
-
-    private function bootDependencies($path, $labelOverride,  $array) {
-        $hasDirs = $this->getDirectories($path);
-
-        $namespaces = [];
-
-        if(!empty($hasDirs)) {
-
-            foreach ($hasDirs as $dirPath) {
-                # code...
-                $explode_path = explode(DIRECTORY_SEPARATOR, $dirPath);
-
-                $getN = array_slice($explode_path, 6);
-
-                foreach ($getN as $NKey => $N) {
-                    # code...
-                    $getN[$NKey] = Str::ucfirst($N);
-
-                }
-
-                $namescaped = join('\\', $getN);
-
-                // dd($getN, $namescaped);
-
-                $labelize = join(':' , $getN);
-
-                $folder = strtolower($labelize);
-
-                if($this->hasSubDirectories($dirPath)) {
-
-                    $subfolder = $this->bootDependencies($dirPath, $folder, $array);
-                    $namespaces = array_merge($namespaces, $subfolder);
-                }
-
-                $namespaces[ strtolower($folder) ] = $namescaped;
-
-
-
-            }
-
-        }
-
-        return $namespaces;
-    }
-
-    private function registerLaravelApp() {
-
-        // $pathModels = app_path('Models');
-        // $pathAdminifyModels = app_path('Adminify/Models');
-        if(cache('adminify.autoload')) {
-            $globals = cache('adminify.autoload');
-        }
-        else {
-            $bootables = $this->bootDependencies(app_path(), null, []);
-            $globals = $this->getClassesBootables($bootables);
-        }
-        if(!cache('adminify.autoload')) {
-            cache(['adminify.autoload' => $globals]);
-        }
-
-
-        config(['adminify-container' => $globals]);
-
-    }
-
-    private function getClassesBootables($bootables) {
-
-        $gloablBoot = $bootables;
-
-        foreach ($bootables as $bootableKey => $bootable) {
-            # code...
-            $classes = \HaydenPierce\ClassFinder\ClassFinder::getClassesInNamespace($bootable);
-
-            if(!empty($classes)) {
-
-                $registrar = [];
-
-                foreach ($classes as $laravelNamespace) {
-                    # code...
-                    $split = explode('\\', $laravelNamespace);
-                    $label = $split[ count($split) - 1 ];
-
-                    $registrar[ strtolower($label) ] = $laravelNamespace;
-
-
-                }
-                $gloablBoot[$bootableKey] = $registrar;
-            }
-        }
-
-        return $gloablBoot;
-    }
+    
 
     private function bootableDependencies($packages, $kernel) {
 
@@ -357,6 +240,7 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         $this->commands([
             CreateFormRequests::class,
+            GenerateAdminifyContainer::class,
             CreateForms::class,
             CreateTable::class,
             CreateRepository::class,

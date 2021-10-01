@@ -69,6 +69,7 @@ class InstallPackages extends Command
             $cleanedTasks[] = 'cache';
         }
 
+
         if($firstInstall) {
             $this->info('Handle Env installation...');
             $this->call('adminify:env');
@@ -86,6 +87,8 @@ class InstallPackages extends Command
             $this->handleCoreTasks();
 
             $this->info('Handle stubs install...');
+            $this->registerInstallablesCommands();
+
             $this->handleStubs(base_path('vendor/ludows/adminify/src'), 'adminify:install');
             if(!in_array('*', $cleanedTasks)) {
                 $this->doCommand('composer dump-autoload');
@@ -118,6 +121,8 @@ class InstallPackages extends Command
 
         if(in_array('*', $cleanedTasks) && !$firstInstall  || in_array('cache', $cleanedTasks) && !$firstInstall) {
             $this->doClearCaches();
+            $this->info('Handle Adminify cache...');
+            $this->call('adminify:container');
         }
 
         //run seeds
@@ -184,6 +189,24 @@ class InstallPackages extends Command
         $file = new Filesystem;
         $file->cleanDirectory('storage/app/public');
     }
+
+    private function registerInstallablesCommands() {
+        $config = config('generators');
+        $adminInstall = require_once(__DIR__.'/../config/adminify_generator_installation.php');
+
+        $mergeSettings = array_merge($config['settings'], $adminInstall['settings']);
+        $mergeStubs = array_merge($config['stubs'], $adminInstall['stubs']);
+
+
+        config(['generators.settings' => []]);
+        config(['generators.stubs' => []]);
+
+        config(['generators.settings' => $mergeSettings]);
+        config(['generators.stubs' => $mergeStubs]);
+
+        // dd(config());
+    }
+
     public function handlePublishesPackages() {
         foreach ($this->packages as $dependency) {
             # code...
