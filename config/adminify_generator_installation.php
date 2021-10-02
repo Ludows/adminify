@@ -110,6 +110,12 @@ return [
             'postfix'             => '',
             'directory_namespace' => true,
         ],
+        'adminify:install:feeds' => [
+            'namespace'           => '\Adminify\Feeds',
+            'path'                => './app/Adminify/Feeds',
+            'postfix'             => '',
+            'directory_namespace' => true,
+        ],
     ],
     'stubs' => [
         'adminify:install:commands'         => base_path() . '/resources/stubs/commands_install.stub',
