@@ -40,7 +40,7 @@ class InstallPackages extends Command
         $this->packages = require_once(__DIR__.'/../../config/packagelist.php');
         $this->tasks = require_once(__DIR__.'/../../config/coretasks.php');
         $this->excludes = [
-            'adminify:install:facades', 'adminify:install:helpers', 'adminify:install:libs', 'adminify:install:traits', 'adminify:install:view', 'adminify:install:fields'
+            'adminify:install:facades', 'adminify:install:helpers', 'adminify:install:libs', 'adminify:install:traits', 'adminify:install:view', 'adminify:install:forms:fields'
         ];
 
     }
