@@ -33,31 +33,31 @@ return [
 
     'hooks' => [
         'model:creating' => [
-            \App\Hooks\OnCreatingHook::class
+            \App\Adminify\Hooks\OnCreatingHook::class
         ],
         'model:created' => [
-            \App\Hooks\OnCreatedHook::class,
-            \App\Hooks\ContentTypesHook::class
+            \App\Adminify\Hooks\OnCreatedHook::class,
+            \App\Adminify\Hooks\ContentTypesHook::class
         ],
         'model:updating' => [
-            \App\Hooks\OnUpdatingHook::class,
+            \App\Adminify\Hooks\OnUpdatingHook::class,
         ],
         'model:updated' => [
-            \App\Hooks\OnUpdatedHook::class,
-            \App\Hooks\ContentTypesHook::class
+            \App\Adminify\Hooks\OnUpdatedHook::class,
+            \App\Adminify\Hooks\ContentTypesHook::class
         ],
         'model:deleting' => [
-            \App\Hooks\OnDeletingHook::class,
-            \App\Hooks\ContentTypesHook::class
+            \App\Adminify\Hooks\OnDeletingHook::class,
+            \App\Adminify\Hooks\ContentTypesHook::class
         ],
         'model:deleted' => [
-            \App\Hooks\OnDeletedHook::class,
+            \App\Adminify\Hooks\OnDeletedHook::class,
         ],
         'setting:created' => [
-            \App\Hooks\HandleSettings::class,
+            \App\Adminify\Hooks\HandleSettings::class,
         ],
         'setting:updated' => [
-            \App\Hooks\HandleSettings::class,
+            \App\Adminify\Hooks\HandleSettings::class,
         ]
     ],
 
@@ -184,6 +184,6 @@ return [
     ],
 
     'interfaces' => [
-        'home' => \Ludows\Adminify\Interfacable\DashboardManager::class
+        'home' => \App\Adminify\Interfacable\DashboardManager::class
     ],
 ];

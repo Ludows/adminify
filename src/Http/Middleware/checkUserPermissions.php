@@ -5,7 +5,7 @@ namespace Ludows\Adminify\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class checkUserPermissions
+class CheckUserPermissions
 {
     function __construct(Request $request) {
         $this->needRedirect = false;

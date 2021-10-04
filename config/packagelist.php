@@ -299,20 +299,20 @@ return array(
                 'providers' => [],
                 'middlewares' => [
                     'named' => [
-                        'autoload.forms' => \App\Http\Middleware\RequiredForms::class,
-                        'admin.menu' => \App\Http\Middleware\GenerateAdminMenu::class,
-                        'check.permissions' => \App\Http\Middleware\checkUserPermissions::class,
-                        'multilang.basic' => \App\Http\Middleware\MultilangBasic::class,
-                        'admin.breadcrumb' => \App\Http\Middleware\AdminBreadcrumb::class,
-                        'front.blogpage' => \App\Http\Middleware\checkBlogPage::class,
-                        'admin.deletemedia' => \App\Http\Middleware\DeleteMedia::class,
-                        'admin.fullmode' => \App\Http\Middleware\DisplayFullmode::class,
-                        'admin.seo' => \App\Http\Middleware\BackendSeo::class,
-                        'api.verify_token' => \App\Http\Middleware\VerifyApiToken::class,
-                        'api.verify_abilities' => \App\Http\Middleware\VerifyAbilitiesToken::class
+                        'autoload.forms' => \App\Adminify\Http\Middleware\RequiredForms::class,
+                        'admin.menu' => \App\Adminify\Http\Middleware\GenerateAdminMenu::class,
+                        'check.permissions' => \App\Adminify\Http\Middleware\CheckUserPermissions::class,
+                        'multilang.basic' => \App\Adminify\Http\Middleware\MultilangBasic::class,
+                        'admin.breadcrumb' => \App\Adminify\Http\Middleware\AdminBreadcrumb::class,
+                        'front.blogpage' => \App\Adminify\Http\Middleware\CheckBlogPage::class,
+                        'admin.deletemedia' => \App\Adminify\Http\Middleware\DeleteMedia::class,
+                        'admin.fullmode' => \App\Adminify\Http\Middleware\DisplayFullmode::class,
+                        'admin.seo' => \App\Adminify\Http\Middleware\BackendSeo::class,
+                        'api.verify_token' => \App\Adminify\Http\Middleware\VerifyApiToken::class,
+                        'api.verify_abilities' => \App\Adminify\Http\Middleware\VerifyAbilitiesToken::class
                     ],
                     'web' => [
-                        \App\Http\Middleware\ShareCurrentUser::class
+                        \App\Adminify\Http\Middleware\ShareCurrentUser::class
                     ]
                 ],
                 'aliases' => [
