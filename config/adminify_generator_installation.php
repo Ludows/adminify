@@ -32,43 +32,43 @@ return [
             'postfix'             => '',
             'directory_namespace' => true,
         ],
-        'adminify:install:controllers' => [
+        'adminify:install:http:controllers' => [
             'namespace'           => '\Adminify\Http\Controllers',
             'path'                => './app/Adminify/Http/Controllers/',
             'postfix'             => '',
             'directory_namespace' => true,
         ],
-        'adminify:install:controllers:api' => [
+        'adminify:install:http:controllers:api' => [
             'namespace'           => '\Adminify\Http\Controllers\Api',
             'path'                => './app/Adminify/Http/Controllers/Api/',
             'postfix'             => '',
             'directory_namespace' => true,
         ],
-        'adminify:install:controllers:auth' => [
+        'adminify:install:http:controllers:auth' => [
             'namespace'           => '\Adminify\Http\Controllers\Auth',
             'path'                => './app/Adminify/Http/Controllers/Auth/',
             'postfix'             => '',
             'directory_namespace' => true,
         ],
-        'adminify:install:controllers:back' => [
+        'adminify:install:http:controllers:back' => [
             'namespace'           => '\Adminify\Http\Controllers\Back',
             'path'                => './app/Adminify/Http/Controllers/Back/',
             'postfix'             => '',
             'directory_namespace' => true,
         ],
-        'adminify:install:controllers:front' => [
+        'adminify:install:http:controllers:front' => [
             'namespace'           => '\Adminify\Http\Controllers\Front',
             'path'                => './app/Adminify/Http/Controllers/Front/',
             'postfix'             => '',
             'directory_namespace' => true,
         ],
-        'adminify:install:middleware' => [
+        'adminify:install:http:middleware' => [
             'namespace'           => '\Adminify\Http\Middleware',
             'path'                => './app/Adminify/Http/Middleware/',
             'postfix'             => '',
             'directory_namespace' => true,
         ],
-        'adminify:install:requests' => [
+        'adminify:install:http:requests' => [
             'namespace'           => '\Adminify\Http\Requests',
             'path'                => './app/Adminify/Http/Requests/',
             'postfix'             => '',
@@ -129,13 +129,13 @@ return [
         'adminify:install:feeds'         => base_path() . '/resources/stubs/feeds_install.stub',
         'adminify:install:forms'         => base_path() . '/resources/stubs/forms_install.stub',
         'adminify:install:hooks'         => base_path() . '/resources/stubs/hooks_install.stub',
-        'adminify:install:controllers' => base_path() . '/resources/stubs/ctrl_install.stub',
-        'adminify:install:controllers:api' => base_path() . '/resources/stubs/ctrl_api_install.stub',
-        'adminify:install:controllers:auth' => base_path() . '/resources/stubs/ctrl_auth_install.stub',
-        'adminify:install:controllers:back' => base_path() . '/resources/stubs/ctrl_back_install.stub',
-        'adminify:install:controllers:front' => base_path() . '/resources/stubs/ctrl_front_install.stub',
-        'adminify:install:middleware' => base_path() . '/resources/stubs/mdlware_install.stub',
-        'adminify:install:requests' => base_path() . '/resources/stubs/requests_install.stub',
+        'adminify:install:http:controllers' => base_path() . '/resources/stubs/ctrl_install.stub',
+        'adminify:install:http:controllers:api' => base_path() . '/resources/stubs/ctrl_api_install.stub',
+        'adminify:install:http:controllers:auth' => base_path() . '/resources/stubs/ctrl_auth_install.stub',
+        'adminify:install:http:controllers:back' => base_path() . '/resources/stubs/ctrl_back_install.stub',
+        'adminify:install:http:controllers:front' => base_path() . '/resources/stubs/ctrl_front_install.stub',
+        'adminify:install:http:middleware' => base_path() . '/resources/stubs/mdlware_install.stub',
+        'adminify:install:http:requests' => base_path() . '/resources/stubs/requests_install.stub',
         'adminify:install:interfacable' => base_path() . '/resources/stubs/interfacable_install.stub',
         'adminify:install:interfacable:blocks' => base_path() . '/resources/stubs/interfacable_block_install.stub',
         'adminify:install:interfacable:listeners' => base_path() . '/resources/stubs/listeners_install.stub',
