@@ -86,7 +86,7 @@ return [
             'postfix'             => '',
             'directory_namespace' => true,
         ],
-        'adminify:install:interfacable:listeners' => [
+        'adminify:install:listeners' => [
             'namespace'           => '\Adminify\Listeners',
             'path'                => './app/Adminify/Listeners/',
             'postfix'             => '',
@@ -138,7 +138,7 @@ return [
         'adminify:install:http:requests' => base_path() . '/resources/stubs/requests_install.stub',
         'adminify:install:interfacable' => base_path() . '/resources/stubs/interfacable_install.stub',
         'adminify:install:interfacable:blocks' => base_path() . '/resources/stubs/interfacable_block_install.stub',
-        'adminify:install:interfacable:listeners' => base_path() . '/resources/stubs/listeners_install.stub',
+        'adminify:install:listeners' => base_path() . '/resources/stubs/listeners_install.stub',
         'adminify:install:mails' => base_path() . '/resources/stubs/mails_install.stub',
         'adminify:install:models' => base_path() . '/resources/stubs/models_install.stub',
         'adminify:install:repositories' => base_path() . '/resources/stubs/repositories_install.stub',
