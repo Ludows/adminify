@@ -71,7 +71,7 @@ class GenerateAdminifyContainer extends Command
                     $split = explode('\\', $laravelNamespace);
                     $label = $split[ count($split) - 1 ];
 
-                    $registrar[ strtolower($label) ] = $laravelNamespace;
+                    $registrar[ $label ] = $laravelNamespace;
 
 
                 }
