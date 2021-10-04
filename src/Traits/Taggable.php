@@ -1,7 +1,7 @@
 <?php
 
   namespace Ludows\Adminify\Traits;
-  use App\Models\Tag;
+  use App\Adminify\Models\Tag;
 
   trait Taggable
   {

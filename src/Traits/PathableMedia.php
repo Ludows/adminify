@@ -1,7 +1,7 @@
 <?php
 
 namespace Ludows\Adminify\Traits;
-use App\Models\Media;
+use App\Adminify\Models\Media;
   //
   trait PathableMedia
   {

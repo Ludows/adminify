@@ -1,7 +1,7 @@
 <?php
 
 namespace Ludows\Adminify\Traits;
-use App\Models\User;
+use App\Adminify\Models\User;
 
 
 trait Authorable

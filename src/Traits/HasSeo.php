@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Traits;
 
-  use Ludows\Adminify\Models\Seo;
+  use App\Adminify\Models\Seo;
 
   trait HasSeo
   {

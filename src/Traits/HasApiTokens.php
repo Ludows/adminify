@@ -1,7 +1,7 @@
 <?php
 
 namespace Ludows\Adminify\Traits;
-use App\Models\ApiToken;
+use App\Adminify\Models\ApiToken;
 use Illuminate\Support\Str;
 
 use Carbon\Carbon;

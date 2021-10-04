@@ -2,7 +2,7 @@
 
   namespace Ludows\Adminify\Traits;
 
-  use App\Models\Url;
+  use App\Adminify\Models\Url;
   use Illuminate\Support\Facades\Crypt;
   trait Urlable
   {

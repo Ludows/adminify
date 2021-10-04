@@ -2,7 +2,7 @@
 
   namespace Ludows\Adminify\Traits;
 
-  use Ludows\Adminify\Models\Url;
+  use App\Adminify\Models\Url;
   trait TableManagerable
   {
    //
