@@ -7,9 +7,9 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
-use App\Listeners\HasUploadedImageListener;
-use App\Listeners\HasDeletedImageListener;
-use App\Listeners\HasRenamedImageListener;
+use App\Adminify\Listeners\HasUploadedImageListener;
+use App\Adminify\Listeners\HasDeletedImageListener;
+use App\Adminify\Listeners\HasRenamedImageListener;
 use UniSharp\LaravelFilemanager\Events\ImageWasDeleted;
 use UniSharp\LaravelFilemanager\Events\ImageWasUploaded;
 use UniSharp\LaravelFilemanager\Events\ImageWasRenamed;
