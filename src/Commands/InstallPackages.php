@@ -338,10 +338,9 @@ class InstallPackages extends Command
 
             
             foreach ($hasFiles as $fileObject) {
-                $typologie = $fileObject->getBasename() . '.'. $fileObject->getExtension();
+                $typologie = $fileObject->getFilename();
 
                 if(!in_array($typologie, $this->excludesFiles)) {
-                    dump($type);
                     # code...
                      $this->call('generate:file', [
                         'name' => str_replace('.'.$fileObject->getExtension(), '',  $fileObject->getBasename()) ,
