@@ -1,9 +1,0 @@
-<?php
-
-namespace App\Hooks;
-
-use Ludows\Adminify\Hooks\HandleSettings as HandleSettingsHookBase;
-
-class HandleSettings extends HandleSettingsHookBase {
-    
-}

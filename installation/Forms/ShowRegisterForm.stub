@@ -1,8 +1,0 @@
-<?php
-
-namespace App\Forms;
-
-use Ludows\Adminify\Forms\ShowRegisterForm as ShowRegisterFormBaseForm;
-
-class ShowRegisterForm extends ShowRegisterFormBaseForm
-{}

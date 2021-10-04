@@ -1,7 +1,0 @@
-<?php
-
-namespace App\Repositories;
-use Ludows\Adminify\Repositories\TagRepository as TagRepoBase;
-
-class TagRepository extends TagRepoBase
-{}

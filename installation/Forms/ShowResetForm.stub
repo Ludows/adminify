@@ -1,8 +1,0 @@
-<?php
-
-namespace App\Forms;
-
-use Ludows\Adminify\Forms\ShowResetForm as ShowResetFormBaseForm;
-
-class ShowResetForm extends ShowResetFormBaseForm
-{}

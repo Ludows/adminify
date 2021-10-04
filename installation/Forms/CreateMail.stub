@@ -1,8 +1,0 @@
-<?php
-
-namespace App\Forms;
-
-use Ludows\Adminify\Forms\CreateMail as CreateMailBase;
-
-class CreateMail extends CreateMailBase
-{}

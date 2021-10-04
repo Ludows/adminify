@@ -1,8 +1,0 @@
-<?php
-
-namespace App\Http\Requests;
-
-use Ludows\Adminify\Http\Requests\UserUpdateRequest as UserUpdateRequestBaseRequest;
-
-class UserUpdateRequest extends UserUpdateRequestBaseRequest
-{}

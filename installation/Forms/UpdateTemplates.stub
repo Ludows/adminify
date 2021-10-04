@@ -1,8 +1,0 @@
-<?php
-
-namespace App\Forms;
-
-use Ludows\Adminify\Forms\UpdateTemplates as CreateBaseForm;
-
-class UpdateTemplates extends CreateBaseForm
-{}

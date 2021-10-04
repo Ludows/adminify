@@ -1,9 +1,0 @@
-<?php
-
-namespace App\Http\Requests;
-
-use Ludows\Adminify\Http\Requests\UpdateCommentRequest as UpdateCommentRequestRequestBase;
-
-class UpdateCommentRequest extends UpdateCommentRequestRequestBase
-{}
-

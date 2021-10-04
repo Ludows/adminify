@@ -1,8 +1,0 @@
-<?php
-
-namespace App\Forms;
-
-use Ludows\Adminify\Forms\CreateComment as CreateCommentBaseForm;
-
-class CreateComment extends CreateCommentBaseForm
-{}

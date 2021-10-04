@@ -1,9 +1,0 @@
-<?php
-
-namespace App\Hooks;
-
-use Ludows\Adminify\Hooks\ContentTypesHook as ContentTypesHookBase;
-
-class ContentTypesHook extends ContentTypesHookBase {
-    
-}

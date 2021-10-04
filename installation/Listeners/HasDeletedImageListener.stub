@@ -1,7 +1,0 @@
-<?php
-namespace App\Listeners;
-
-use Ludows\Adminify\Listeners\HasDeletedImageListener as HasDeletedImageBaseListener;
-
-class HasDeletedImageListener extends HasDeletedImageBaseListener
-{}

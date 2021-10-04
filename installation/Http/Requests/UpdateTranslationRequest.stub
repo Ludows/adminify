@@ -1,8 +1,0 @@
-<?php
-
-namespace App\Http\Requests;
-
-use Ludows\Adminify\Http\Requests\UpdateTranslationRequest as UpdateTranslationBaseRequest;
-
-class UpdateTranslationRequest extends UpdateTranslationBaseRequest
-{}
