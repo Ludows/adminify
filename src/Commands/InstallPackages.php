@@ -39,12 +39,19 @@ class InstallPackages extends Command
 
         $this->packages = require_once(__DIR__.'/../../config/packagelist.php');
         $this->tasks = require_once(__DIR__.'/../../config/coretasks.php');
-        $this->excludes = [
+        $this->excludesTasks = [
             'adminify:install:facades', 
             'adminify:install:helpers', 
             'adminify:install:libs', 
             'adminify:install:traits', 
             'adminify:install:view'
+        ];
+        $this->excludesFiles = [
+            'ClassicMail.php',
+            'ClassicAuthUser.php',
+            'ClassicModel.php',
+            'ClassicUser.php',
+            'ContentTypeModel.php'
         ];
 
     }
@@ -329,16 +336,21 @@ class InstallPackages extends Command
 
             $this->info('Files detected in '.$path);
 
-            dump($type);
-
+            
             foreach ($hasFiles as $fileObject) {
-                # code...
-                 $this->call('generate:file', [
-                    'name' => str_replace('.'.$fileObject->getExtension(), '',  $fileObject->getBasename()) ,
-                    '--stub' => $type,
-                    '--type' => $type,
-                ]);
+                $typologie = $fileObject->getBasename() . '.'. $fileObject->getExtension();
+
+                if(!in_array($typologie, $this->excludesFiles)) {
+                    dump($type);
+                    # code...
+                     $this->call('generate:file', [
+                        'name' => str_replace('.'.$fileObject->getExtension(), '',  $fileObject->getBasename()) ,
+                        '--stub' => $type,
+                        '--type' => $type,
+                    ]);
+                }
             }
+           
         }
 
         if(!empty($hasDirs)) {
@@ -348,7 +360,7 @@ class InstallPackages extends Command
 
                 $typologie = $type .':'. strtolower( $list[ count($list) - 1 ] );
 
-                if(!in_array($typologie, $this->excludes)) {
+                if(!in_array($typologie, $this->excludesTasks)) {
                     $this->handleStubs($dirPath, $typologie);
                 }
             }
