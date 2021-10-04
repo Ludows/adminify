@@ -2,17 +2,17 @@
 
 namespace Ludows\Adminify\Http\Controllers\Api;
 
-use App\Models\Page;
-use App\Repositories\PageRepository;
+use App\Adminify\Models\Page;
+use App\Adminify\Repositories\PageRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
-use App\Http\Requests\CreatePageRequest;
-use App\Http\Requests\UpdatePageRequest;
+use App\Adminify\Http\Requests\CreatePageRequest;
+use App\Adminify\Http\Requests\UpdatePageRequest;
 
 
 use Illuminate\Http\Request;
 
-use App\Models\User;
-use App\Models\Role;
+use App\Adminify\Models\User;
+use App\Adminify\Models\Role;
 
 class PageController extends Controller
 {

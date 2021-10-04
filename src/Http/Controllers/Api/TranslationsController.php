@@ -2,16 +2,16 @@
 
 namespace Ludows\Adminify\Http\Controllers\Api;
 
-use App\Models\Translations;
-use App\Repositories\TranslationRepository;
+use App\Adminify\Models\Translations;
+use App\Adminify\Repositories\TranslationRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
-use App\Http\Requests\CreateTranslationRequest;
-use App\Http\Requests\UpdateTranslationRequest;
+use App\Adminify\Http\Requests\CreateTranslationRequest;
+use App\Adminify\Http\Requests\UpdateTranslationRequest;
 
 
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Role;
+use App\Adminify\Models\User;
+use App\Adminify\Models\Role;
 
 class TranslationsController extends Controller
 {

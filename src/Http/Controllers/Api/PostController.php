@@ -2,17 +2,17 @@
 
 namespace Ludows\Adminify\Http\Controllers\Api;
 
-use App\Models\Post;
-use App\Repositories\PostRepository;
+use App\Adminify\Models\Post;
+use App\Adminify\Repositories\PostRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
-use App\Http\Requests\CreatePostRequest;
-use App\Http\Requests\UpdatePostRequest;
+use App\Adminify\Http\Requests\CreatePostRequest;
+use App\Adminify\Http\Requests\UpdatePostRequest;
 
 
 use Illuminate\Http\Request;
 
-use App\Models\User;
-use App\Models\Role;
+use App\Adminify\Models\User;
+use App\Adminify\Models\Role;
 
 class PostController extends Controller
 {

@@ -2,17 +2,17 @@
 
 namespace Ludows\Adminify\Http\Controllers\Api;
 
-use App\Models\Category;
-use App\Repositories\CategoryRepository;
+use App\Adminify\Models\Category;
+use App\Adminify\Repositories\CategoryRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
-use App\Http\Requests\CreateCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
+use App\Adminify\Http\Requests\CreateCategoryRequest;
+use App\Adminify\Http\Requests\UpdateCategoryRequest;
 
 
 
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Role;
+use App\Adminify\Models\User;
+use App\Adminify\Models\Role;
 
 class CategoryController extends Controller
 {

@@ -2,16 +2,16 @@
 
 namespace Ludows\Adminify\Http\Controllers\Api;
 
-use App\Models\Media;
-use App\Repositories\MediaRepository;
+use App\Adminify\Models\Media;
+use App\Adminify\Repositories\MediaRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
-use App\Http\Requests\CreateMediaRequest;
-use App\Http\Requests\UpdateMediaRequest;
+use App\Adminify\Http\Requests\CreateMediaRequest;
+use App\Adminify\Http\Requests\UpdateMediaRequest;
 
 
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Role;
+use App\Adminify\Models\User;
+use App\Adminify\Models\Role;
 
 class MediaController extends Controller
 {

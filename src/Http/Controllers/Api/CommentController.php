@@ -2,17 +2,17 @@
 
 namespace Ludows\Adminify\Http\Controllers\Api;
 
-use App\Models\Comment;
-use App\Repositories\CommentRepository;
+use App\Adminify\Models\Comment;
+use App\Adminify\Repositories\CommentRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 
-use App\Http\Requests\CreateCommentRequest;
-use App\Http\Requests\UpdateCommentRequest;
+use App\Adminify\Http\Requests\CreateCommentRequest;
+use App\Adminify\Http\Requests\UpdateCommentRequest;
 
 
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Role;
+use App\Adminify\Models\User;
+use App\Adminify\Models\Role;
 
 class CommentController extends Controller
 {
