@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Forms;
 
 use Kris\LaravelFormBuilder\Form;
 
-use App\Models\Templates;
+use App\Adminify\Models\Templates;
 class SelectTemplate extends Form
 {
     public function buildForm()

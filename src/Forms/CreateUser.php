@@ -49,8 +49,8 @@ class CreateUser extends Form
     public function getRoles() {
 
         $request = request();
-        $roleModel = app('Spatie\Permission\Models\Role');
-        $userModel = app('App\Models\User');
+        $roleModel = app('App\Adminify\Models\Role');
+        $userModel = app('App\Adminify\Models\User');
 
         $user = $request->user ?? null;
 

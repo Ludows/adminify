@@ -5,8 +5,8 @@ namespace Ludows\Adminify\Forms;
 use Kris\LaravelFormBuilder\Form;
 use Kris\LaravelFormBuilder\Field;
 
-use App\Models\Comment;
-use App\Models\Post;
+use App\Adminify\Models\Comment;
+use App\Adminify\Models\Post;
 
 class CreateComment extends Form
 {

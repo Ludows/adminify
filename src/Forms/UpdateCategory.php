@@ -9,6 +9,6 @@ class UpdateCategory extends Form
     public function buildForm()
     {
         // Add fields here...
-        $this->compose('Ludows\Adminify\Forms\CreateCategory');
+        $this->compose('App\Adminify\Forms\CreateCategory');
     }
 }

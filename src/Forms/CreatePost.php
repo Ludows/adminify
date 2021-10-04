@@ -4,8 +4,8 @@ namespace Ludows\Adminify\Forms;
 
 use Kris\LaravelFormBuilder\Form;
 use Kris\LaravelFormBuilder\Field;
-use App\Models\Category;
-use App\Models\Tag;
+use App\Adminify\Models\Category;
+use App\Adminify\Models\Tag;
 
 
 class CreatePost extends Form
@@ -37,7 +37,7 @@ class CreatePost extends Form
                     'btnClear' => null
                 ],
                 'form' => [
-                    'namespace' => 'App\Forms\CreateCategory',
+                    'namespace' => 'App\Adminify\Forms\CreateCategory',
                     'attributes' => [
                         'url' => route('categories.store'),
                         'method' => 'POST'
@@ -142,7 +142,7 @@ class CreatePost extends Form
     }
     public function getStatuses() {
         $hasModel = $this->getModel();
-        $statuses = app('App\Models\Statuses')->where('id' , '!=', 3)->pluck('name' ,'id');
+        $statuses = app('App\Adminify\Models\Statuses')->where('id' , '!=', 3)->pluck('name' ,'id');
         $selecteds = [];
 
         $statuses = $statuses->all();

@@ -5,8 +5,8 @@ namespace Ludows\Adminify\Forms;
 use Kris\LaravelFormBuilder\Form;
 use Kris\LaravelFormBuilder\Field;
 
-use App\Models\Page;
-use App\Models\Settings;
+use App\Adminify\Models\Page;
+use App\Adminify\Models\Settings;
 
 class CreateSettings extends Form
 {
@@ -113,7 +113,7 @@ class CreateSettings extends Form
         return $typed == 'val' && $query != null ? $query->data : $query;
     }
     public function getMedia($id) {
-        $mediaModel = app('App\Models\Media');
+        $mediaModel = app('App\Adminify\Models\Media');
 
         return $mediaModel->find($id);
     }

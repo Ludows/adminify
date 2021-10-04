@@ -10,7 +10,7 @@ class UpdateComment extends Form
     public function buildForm()
     {
         // Add fields here...
-        $this->compose('Ludows\Adminify\Forms\CreateComment');
+        $this->compose('App\Adminify\Forms\CreateComment');
 
     }
 }

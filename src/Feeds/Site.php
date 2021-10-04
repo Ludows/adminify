@@ -2,8 +2,8 @@
 
 namespace Ludows\Adminify\Feeds;
 
-use App\Models\Page;
-use App\Models\Post;
+use App\Adminify\Models\Page;
+use App\Adminify\Models\Post;
 
 class Site {
     public function all() {

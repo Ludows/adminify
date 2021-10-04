@@ -9,6 +9,6 @@ class UpdatePost extends Form
     public function buildForm()
     {
         // Add fields here...
-        $this->compose('Ludows\Adminify\Forms\CreatePost');
+        $this->compose('App\Adminify\Forms\CreatePost');
     }
 }

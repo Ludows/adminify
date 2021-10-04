@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Forms;
 
 use Kris\LaravelFormBuilder\Form;
 use Kris\LaravelFormBuilder\Field;
-use App\Models\Category;
+use App\Adminify\Models\Category;
 
 class CreateCategory extends Form
 {
