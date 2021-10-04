@@ -41,6 +41,68 @@ if (! function_exists('parse_shortcode')) {
     }
 }
 
+if (! function_exists('adminify_autoload')) {
+    function adminify_autoload() {
+        return cache('adminify.autoload');
+    }
+}
+
+if (! function_exists('adminify_get_classes')) {
+    function adminify_get_classes($name) {
+
+        if(!isset($loadClass)) {
+            $loadClass = false;
+        }
+
+        $r = null;
+        $cache = adminify_autoload();
+
+        if($cache != null && is_array($cache[$name])) {
+            $r = $cache[$name];
+        }
+
+        return $r;
+    }
+}
+
+if (! function_exists('adminify_get_class')) {
+    function adminify_get_class($name, $loadClass) {
+
+        if(!isset($loadClass)) {
+            $loadClass = false;
+        }
+
+        $r = null;
+        $cache = adminify_autoload();
+        $keys = array_keys($cache);
+
+        foreach ($keys as $k) {
+            # code...
+            if($r != null) {
+                break;
+            }
+            if(is_array($cache[$k])) {
+
+                $a = $cache[$k];
+                $keyeds = array_keys($a);
+
+                foreach ($keyeds as $keyed) {
+                    # code...
+                    if($keyed == $name) {
+                        $r = $a[$keyed];
+                        break;
+                    }
+                }
+
+            }
+
+        }
+
+
+        return $r;
+    }
+}
+
 if (! function_exists('singular')) {
     function singular($name = '') {
         return Str::singular($name);
