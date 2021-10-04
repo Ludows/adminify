@@ -325,7 +325,7 @@ class InstallPackages extends Command
         $hasDirs = File::directories($path);
         $hasFiles = File::files($path);
 
-        if(!empty($hasFiles) && !empty($type)) {
+        if(!empty($hasFiles) && $type != 'adminify:install') {
 
             $this->info('Files detected in '.$path);
 
