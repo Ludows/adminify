@@ -73,7 +73,7 @@ if (! function_exists('adminify_get_classes_by_folder')) {
         $r = null;
         $cache = adminify_autoload();
 
-        if($cache != null && !empty($folder) && is_array($cache[$folder])) {
+        if($cache != null && !empty($folder) && !empty($cache[$folder]) && is_array($cache[$folder])) {
             $r = $cache[$folder];
         }
 
