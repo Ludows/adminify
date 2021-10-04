@@ -20,6 +20,12 @@ return [
             'postfix'             => '',
             'directory_namespace' => true,
         ],
+        'adminify:install:forms:fields' => [
+            'namespace'           => '\Adminify\Forms\Fields',
+            'path'                => './app/Adminify/Forms/Fields',
+            'postfix'             => '',
+            'directory_namespace' => true,
+        ],
         'adminify:install:hooks' => [
             'namespace'           => '\Adminify\Hooks',
             'path'                => './app/Adminify/Hooks/',
@@ -137,5 +143,6 @@ return [
         'adminify:install:models' => base_path() . '/resources/stubs/models_install.stub',
         'adminify:install:repositories' => base_path() . '/resources/stubs/repositories_install.stub',
         'adminify:install:tables' => base_path() . '/resources/stubs/tables_install.stub',
+        'adminify:install:forms:fields' => base_path() . '/resources/stubs/form_fields_install.stub'
     ]
 ];
