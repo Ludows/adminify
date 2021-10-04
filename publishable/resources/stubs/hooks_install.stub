@@ -2,8 +2,8 @@
 
 namespace {{namespace}};
 
-use Ludows\Adminify\Hooks\{{class}}Hook as {{class}}HookBase;
+use Ludows\Adminify\Hooks\{{class}} as {{class}}Base;
 
-class {{class}} extends {{class}}HookBase {
+class {{class}} extends {{class}}Base {
     
 }
