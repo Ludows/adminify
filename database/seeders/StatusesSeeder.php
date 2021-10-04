@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Database\Seeders;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
-use App\Models\Statuses;
+use App\Adminify\Models\Statuses;
 
 class StatusesSeeder extends Seeder
 {
