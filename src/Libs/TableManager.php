@@ -46,7 +46,15 @@ class TableManager
         return $this;
     }
 
-    public function module($name, $position = 'top-left', $viewName, $extraVars = []) {
+    public function module($name, $position, $viewName, $extraVars) {
+
+        if(!isset($position)) {
+            $position = 'top-left';
+        }
+
+        if(!isset($extraVars)) {
+            $extraVars = [];
+        }
 
         if(isset($this->areas[$position])) {
             $this->setToArea($name, $position, view($viewName, $extraVars));
