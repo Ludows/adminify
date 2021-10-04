@@ -339,7 +339,7 @@ class InstallPackages extends Command
 
             $this->info('Files detected in '.$path);
 
-            dump($type, config('generators'));
+            dump($type);
 
             foreach ($hasFiles as $fileObject) {
                 # code...
