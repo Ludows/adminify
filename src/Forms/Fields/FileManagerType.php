@@ -38,11 +38,11 @@ class FileManagerType extends FormField {
                 $options = $options['override_media_method']($m, $options);
             }
 
-            if($m instanceof \App\Models\Media == false && !is_array($m) && !isset($options['override_media_method'])) {
+            if($m instanceof \App\Adminify\Models\Media == false && !is_array($m) && !isset($options['override_media_method'])) {
                 $options['attr']['data-path'] = $m->media->path ?? '';
                 $options['attr']['data-src'] = $m->media->src ?? '';
             }
-            if($m instanceof \App\Models\Media == true && !isset($options['override_media_method'])) {
+            if($m instanceof \App\Adminify\Models\Media == true && !isset($options['override_media_method'])) {
                 $options['attr']['data-path'] = $m->path ?? '';
                 $options['attr']['data-src'] = $m->src ?? '';
             }
