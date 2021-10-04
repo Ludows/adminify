@@ -3,8 +3,8 @@
 namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
-use App\Models\Tag as TagModel;
-use Ludows\Adminify\Dropdowns\Tags as TagDropdownManager;
+use App\Adminify\Models\Tag as TagModel;
+use App\Adminify\Dropdowns\Tags as TagDropdownManager;
 
 class TagTable extends TableManager {
     // public function getTemplateByName($name) {

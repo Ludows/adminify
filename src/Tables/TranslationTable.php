@@ -3,8 +3,8 @@
 namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
-use App\Models\Translations as TranslationModel;
-use Ludows\Adminify\Dropdowns\Translations as TranslationDropdownManager;
+use App\Adminify\Models\Translations as TranslationModel;
+use App\Adminify\Dropdowns\Translations as TranslationDropdownManager;
 
 class TranslationTable extends TableManager {
     // public function getTemplateByName($name) {

@@ -3,8 +3,8 @@
 namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
-use App\Models\Templates as TemplatesModel;
-use Ludows\Adminify\Dropdowns\Templates as TemplatesDropdownsManager;
+use App\Adminify\Models\Templates as TemplatesModel;
+use App\Adminify\Dropdowns\Templates as TemplatesDropdownsManager;
 
 class TemplatesTable extends TableManager {
     // public function getTemplateByName($name) {

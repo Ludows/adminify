@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Repositories;
 
 use MrAtiebatie\Repository;
-use App\Models\Comment; // Don't forget to update the model's namespace
+use App\Adminify\Models\Comment; // Don't forget to update the model's namespace
 
 use  Ludows\Adminify\Repositories\BaseRepository;
 class CommentRepository extends BaseRepository

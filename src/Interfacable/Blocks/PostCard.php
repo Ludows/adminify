@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Interfacable\Blocks;
 
 use Ludows\Adminify\Libs\InterfacableBlock;
 
-use App\Models\Post;
+use App\Adminify\Models\Post;
 
 class PostCard extends InterfacableBlock {
     public static function getNamedBlock() {

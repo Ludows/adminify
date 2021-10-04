@@ -3,10 +3,10 @@
 namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
-use App\Models\Forms as FormModel;
-use Ludows\Adminify\Dropdowns\Form as FormDropdownsManager;
+use App\Adminify\Models\Forms as FormModel;
+use App\Adminify\Dropdowns\Form as FormDropdownsManager;
 
-use App\Models\Statuses;
+use App\Adminify\Models\Statuses;
 
 
 class FormsTable extends TableManager {

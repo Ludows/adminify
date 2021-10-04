@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Interfacable\Blocks;
 
 use Ludows\Adminify\Libs\InterfacableBlock;
 
-use App\Models\Page;
+use App\Adminify\Models\Page;
 
 class PageCard extends InterfacableBlock {
     public static function getNamedBlock() {

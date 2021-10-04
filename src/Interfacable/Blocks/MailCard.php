@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Interfacable\Blocks;
 
 use Ludows\Adminify\Libs\InterfacableBlock;
 
-use App\Models\Mailables;
+use App\Adminify\Models\Mailables;
 
 class MailCard extends InterfacableBlock {
     public static function getNamedBlock() {

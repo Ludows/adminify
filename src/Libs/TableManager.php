@@ -170,7 +170,7 @@ class TableManager
         $singular = singular( $name );
 
         if($this->showTitle) {
-            $this->module('title', 'top-left', 'adminify::layouts.admin.table.core.title');
+            $this->module('title', 'top-left', 'adminify::layouts.admin.table.core.title', []);
         }
 
         if($this->showSearch) {

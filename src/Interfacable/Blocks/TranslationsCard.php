@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Interfacable\Blocks;
 
 use Ludows\Adminify\Libs\InterfacableBlock;
 
-use App\Models\Translations;
+use App\Adminify\Models\Translations;
 
 class TranslationsCard extends InterfacableBlock {
     public static function getNamedBlock() {

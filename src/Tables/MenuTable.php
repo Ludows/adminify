@@ -3,8 +3,8 @@
 namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
-use App\Models\Menu as MenuModel;
-use Ludows\Adminify\Dropdowns\Menu as MenuDropdownsManager;
+use App\Adminify\Models\Menu as MenuModel;
+use App\Adminify\Dropdowns\Menu as MenuDropdownsManager;
 
 class MenuTable extends TableManager {
     public function getTemplateByName($name) {

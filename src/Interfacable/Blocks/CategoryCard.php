@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Interfacable\Blocks;
 
 use Ludows\Adminify\Libs\InterfacableBlock;
 
-use App\Models\Category;
+use App\Adminify\Models\Category;
 
 class CategoryCard extends InterfacableBlock {
     public static function getNamedBlock() {

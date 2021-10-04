@@ -5,8 +5,8 @@ namespace Ludows\Adminify\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-use App\Models\Role;
-use App\Models\User;
+use App\Adminify\Models\Role;
+use App\Adminify\Models\User;
 
 class VerifyAbilitiesToken
 {

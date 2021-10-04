@@ -2,8 +2,8 @@
 
 namespace Ludows\Adminify\Models;
 
-use App\Models\Menu;
-use App\Models\Media;
+use App\Adminify\Models\Menu;
+use App\Adminify\Models\Media;
 use Spatie\Searchable\SearchResult;
 use Spatie\Feed\FeedItem;
 

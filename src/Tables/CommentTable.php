@@ -3,8 +3,8 @@
 namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
-use App\Models\Comment as CommentModel;
-use Ludows\Adminify\Dropdowns\Comment as CommentDropdownsManager;
+use App\Adminify\Models\Comment as CommentModel;
+use App\Adminify\Dropdowns\Comment as CommentDropdownsManager;
 
 class CommentTable extends TableManager {
     public function getTemplateByName($name) {

@@ -21,8 +21,8 @@ use Ludows\Adminify\Traits\SavableTranslations;
 
 use Illuminate\Support\Facades\DB;
 
-use App\Models\ApiToken;
-use App\Models\Role;
+use App\Adminify\Models\ApiToken;
+use App\Adminify\Models\Role;
 use Ludows\Adminify\Traits\AdminableMenu;
 
 abstract class ClassicAuthUser extends Authenticatable implements MustVerifyEmail

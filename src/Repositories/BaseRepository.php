@@ -6,7 +6,7 @@ use MrAtiebatie\Repository;
 use Illuminate\Support\Str;
 
 use Ludows\Adminify\Facades\HookManagerFacade;
-use App\Models\Media;
+use App\Adminify\Models\Media;
 
 class BaseRepository
 {

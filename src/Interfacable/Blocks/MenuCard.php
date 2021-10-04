@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Interfacable\Blocks;
 
 use Ludows\Adminify\Libs\InterfacableBlock;
 
-use App\Models\Menu;
+use App\Adminify\Models\Menu;
 
 class MenuCard extends InterfacableBlock {
     public static function getNamedBlock() {

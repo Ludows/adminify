@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Repositories;
 
-use App\Models\Category; // Don't forget to update the model's namespace
+use App\Adminify\Models\Category; // Don't forget to update the model's namespace
 use  Ludows\Adminify\Repositories\BaseRepository;
 class CategoryRepository extends BaseRepository
 {

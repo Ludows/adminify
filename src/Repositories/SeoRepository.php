@@ -3,8 +3,8 @@
 namespace Ludows\Adminify\Repositories;
 
 use MrAtiebatie\Repository;
-use App\Models\Seo; // Don't forget to update the model's namespace
-use App\Models\Media;
+use App\Adminify\Models\Seo; // Don't forget to update the model's namespace
+use App\Adminify\Models\Media;
 use Illuminate\Support\Arr;
 
 use  Ludows\Adminify\Repositories\BaseRepository;

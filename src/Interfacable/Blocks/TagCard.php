@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Interfacable\Blocks;
 
 use Ludows\Adminify\Libs\InterfacableBlock;
 
-use App\Models\Tag;
+use App\Adminify\Models\Tag;
 
 class TagCard extends InterfacableBlock {
     public static function getNamedBlock() {

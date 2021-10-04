@@ -1,8 +1,8 @@
 <?php
 use Thunder\Shortcode\ShortcodeFacade;
-use App\Models\Translations as Traduction;
-use App\Models\Menu;
-use App\Models\Settings;
+use App\Adminify\Models\Translations as Traduction;
+use App\Adminify\Models\Menu;
+use App\Adminify\Models\Settings;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 

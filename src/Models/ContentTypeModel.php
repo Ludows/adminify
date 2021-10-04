@@ -8,9 +8,9 @@ use Ludows\Adminify\Traits\HasSeo;
 use VanOns\Laraberg\Models\Gutenbergable;
 use Ludows\Adminify\Traits\Authorable;
 
-use App\Models\User;
-use App\Models\Page;
-use App\Models\Statuses;
+use App\Adminify\Models\User;
+use App\Adminify\Models\Page;
+use App\Adminify\Models\Statuses;
 
 use Ludows\Adminify\Models\ClassicModel;
 use Spatie\Feed\FeedItem;

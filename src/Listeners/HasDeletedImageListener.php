@@ -2,8 +2,8 @@
 namespace Ludows\Adminify\Listeners;
 
 use Unisharp\Laravelfilemanager\Events\ImageWasDeleted;
-use App\Repositories\MediaRepository;
-use App\Models\Media;
+use App\Adminify\Repositories\MediaRepository;
+use App\Adminify\Models\Media;
 
 class HasDeletedImageListener
 {

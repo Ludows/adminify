@@ -2,12 +2,12 @@
 
 namespace Ludows\Adminify\Models;
 
-use App\Models\Media;
+use App\Adminify\Models\Media;
 
 use Spatie\Searchable\SearchResult;
 use Spatie\Feed\FeedItem;
 
-use App\Models\UserPreference;
+use App\Adminify\Models\UserPreference;
 
 use Ludows\Adminify\Models\ClassicUser;
 use Spatie\Menu\Laravel\Link;

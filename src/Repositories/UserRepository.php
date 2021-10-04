@@ -2,9 +2,9 @@
 
 namespace Ludows\Adminify\Repositories;
 
-use App\Models\UserPreference;
+use App\Adminify\Models\UserPreference;
 use Illuminate\Support\Facades\Hash; // Don't forget to update the model's namespace
-use App\Models\Media;
+use App\Adminify\Models\Media;
 
 use Ludows\Adminify\Repositories\BaseRepository;
 

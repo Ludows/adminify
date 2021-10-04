@@ -5,7 +5,7 @@ namespace Ludows\Adminify\Hooks;
 use Ludows\Adminify\Libs\HookInterface;
 use Ludows\Adminify\Libs\HookManager;
 
-use App\Models\Url;
+use App\Adminify\Models\Url;
 
 class HandleSettings extends HookInterface {
 

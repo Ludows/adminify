@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Interfacable\Blocks;
 
 use Ludows\Adminify\Libs\InterfacableBlock;
 
-use App\Models\Media;
+use App\Adminify\Models\Media;
 
 class MediaCard extends InterfacableBlock {
     public static function getNamedBlock() {

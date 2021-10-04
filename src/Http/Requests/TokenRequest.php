@@ -2,7 +2,6 @@
 
 namespace Ludows\Adminify\Http\Requests;
 
-use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 

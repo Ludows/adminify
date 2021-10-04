@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Models;
 
-use App\Models\MenuItem;
+use App\Adminify\Models\MenuItem;
 use Spatie\Searchable\SearchResult;
 use Spatie\Feed\FeedItem;
 

@@ -3,8 +3,8 @@
 namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
-use App\Models\Media as MediaModel;
-use Ludows\Adminify\Dropdowns\Media as MediaDropdownsManager;
+use App\Adminify\Models\Media as MediaModel;
+use App\Adminify\Dropdowns\Media as MediaDropdownsManager;
 
 class MediaTable extends TableManager {
     public function getTemplateByName($name) {

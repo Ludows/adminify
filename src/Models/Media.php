@@ -2,8 +2,8 @@
 
 namespace Ludows\Adminify\Models;
 
-use App\Models\Post;
-use App\Models\User;
+use App\Adminify\Models\Post;
+use App\Adminify\Models\User;
 use Ludows\Adminify\Traits\PathableMedia;
 use Ludows\Adminify\Traits\Authorable;
 

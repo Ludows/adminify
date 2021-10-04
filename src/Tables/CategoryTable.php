@@ -3,8 +3,8 @@
 namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
-use App\Models\Category as CategoryModel;
-use Ludows\Adminify\Dropdowns\Category as CategoryDropdownsManager;
+use App\Adminify\Models\Category as CategoryModel;
+use App\Adminify\Dropdowns\Category as CategoryDropdownsManager;
 
 class CategoryTable extends TableManager {
     public function getTemplateByName($name) {

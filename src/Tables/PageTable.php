@@ -3,10 +3,10 @@
 namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
-use App\Models\Page as PageModel;
-use Ludows\Adminify\Dropdowns\Page as PageDropdownsManager;
+use App\Adminify\Models\Page as PageModel;
+use App\Adminify\Dropdowns\Page as PageDropdownsManager;
 
-use App\Models\Statuses;
+use App\Adminify\Models\Statuses;
 
 class PageTable extends TableManager {
     public function getTemplateByName($name) {

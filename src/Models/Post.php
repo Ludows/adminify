@@ -2,8 +2,8 @@
 
 namespace Ludows\Adminify\Models;
 
-use App\Models\Category;
-use App\Models\Comment;
+use App\Adminify\Models\Category;
+use App\Adminify\Models\Comment;
 
 use Spatie\Searchable\SearchResult;
 use Spatie\Feed\FeedItem;

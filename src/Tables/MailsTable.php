@@ -3,8 +3,8 @@
 namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
-use App\Models\Mailables as MailableModel;
-use Ludows\Adminify\Dropdowns\Mail as MailDropdownManager;
+use App\Adminify\Models\Mailables as MailableModel;
+use App\Adminify\Dropdowns\Mail as MailDropdownManager;
 
 class MailsTable extends TableManager {
     // public function getTemplateByName($name) {

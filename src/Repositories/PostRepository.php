@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Repositories;
 
-use App\Models\Media;
+use App\Adminify\Models\Media;
 use  Ludows\Adminify\Repositories\BaseRepository;
 class PostRepository extends BaseRepository
 {

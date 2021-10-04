@@ -2,8 +2,8 @@
 
 namespace Ludows\Adminify\Models;
 
-use App\Models\Post;
-use App\Models\Media;
+use App\Adminify\Models\Post;
+use App\Adminify\Models\Media;
 use Ludows\Adminify\Models\ContentTypeModel;
 
 use Spatie\Searchable\SearchResult;

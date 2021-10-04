@@ -5,11 +5,11 @@ namespace Ludows\Adminify\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-use App\Forms\UpdateMediaLibrary;
-use App\Forms\CreateCategory;
-use App\Forms\CreateTag;
-use App\Forms\SelectTemplate;
-use App\Forms\SaveTemplate;
+use App\Adminify\Forms\UpdateMediaLibrary;
+use App\Adminify\Forms\CreateCategory;
+use App\Adminify\Forms\CreateTag;
+use App\Adminify\Forms\SelectTemplate;
+use App\Adminify\Forms\SaveTemplate;
 use Kris\LaravelFormBuilder\FormBuilder;
 
 

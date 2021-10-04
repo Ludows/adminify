@@ -3,10 +3,10 @@
 namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
-use App\Models\Post as PostModel;
-use Ludows\Adminify\Dropdowns\Post as PostDropdownsManager;
+use App\Adminify\Models\Post as PostModel;
+use App\Adminify\Dropdowns\Post as PostDropdownsManager;
 
-use App\Models\Statuses;
+use App\Adminify\Models\Statuses;
 
 
 class PostTable extends TableManager {
