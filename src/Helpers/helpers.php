@@ -48,17 +48,33 @@ if (! function_exists('adminify_autoload')) {
 }
 
 if (! function_exists('adminify_get_classes')) {
-    function adminify_get_classes($name) {
+    function adminify_get_classes($array, $loadClass) {
+        $r = [];
 
         if(!isset($loadClass)) {
             $loadClass = false;
         }
 
+        if(is_array($array)) {
+            foreach ($array as $a) {
+                # code...
+                $the_class = adminify_get_class($a, $loadClass);
+                if(!empty($the_class)) {
+                    $r[] = $the_class;
+                }
+            }
+        }
+        return $r;
+    }
+}
+
+if (! function_exists('adminify_get_classes_by_folder')) {
+    function adminify_get_classes_by_folder($folder) {
         $r = null;
         $cache = adminify_autoload();
 
-        if($cache != null && is_array($cache[$name])) {
-            $r = $cache[$name];
+        if($cache != null && !empty($folder) && is_array($cache[$folder])) {
+            $r = $cache[$folder];
         }
 
         return $r;
@@ -90,6 +106,9 @@ if (! function_exists('adminify_get_class')) {
                     # code...
                     if($keyed == $name) {
                         $r = $a[$keyed];
+                        if($loadClass) {
+                            $r = app($r);
+                        }
                         break;
                     }
                 }
