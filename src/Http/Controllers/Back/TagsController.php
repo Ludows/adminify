@@ -4,18 +4,18 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use App\Forms\CreateTag as CreateTagForm;
+use App\Adminify\Forms\CreateTag as CreateTagForm;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateTagRequest as CreateTagRequest;
-use App\Http\Requests\UpdateTagRequest as UpdateTagRequest;
-use App\Models\Tag as TagModel;
+use App\Adminify\Http\Requests\CreateTagRequest as CreateTagRequest;
+use App\Adminify\Http\Requests\UpdateTagRequest as UpdateTagRequest;
+use App\Adminify\Models\Tag as TagModel;
 
-use App\Repositories\TagRepository;
+use App\Adminify\Repositories\TagRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use Ludows\Adminify\Tables\TagTable;
+use App\Adminify\Tables\TagTable;
 
 
 class TagsController extends Controller

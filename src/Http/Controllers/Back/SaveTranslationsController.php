@@ -5,9 +5,9 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
-use App\Forms\SaveMissingTraductions;
+use App\Adminify\Forms\SaveMissingTraductions;
 
-use App\Repositories\SaveTranslationRepository;
+use App\Adminify\Repositories\SaveTranslationRepository;
 use Illuminate\Http\Request;
 
 use Ludows\Adminify\Http\Controllers\Controller;

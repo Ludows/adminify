@@ -2,23 +2,23 @@
 
 namespace Ludows\Adminify\Http\Controllers\Back;
 
-use App\Models\User;
+use App\Adminify\Models\User;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
-use App\Http\Requests\CreateUserRequest;
-use App\Http\Requests\UserUpdateRequest;
+use App\Adminify\Http\Requests\CreateUserRequest;
+use App\Adminify\Http\Requests\UserUpdateRequest;
 use Ludows\Adminify\Http\Controllers\Controller;
 
-use App\Forms\CreateUser;
-use App\Forms\UpdateUser;
-use App\Forms\showProfile;
+use App\Adminify\Forms\CreateUser;
+use App\Adminify\Forms\UpdateUser;
+use App\Adminify\Forms\ShowProfile;
 
-use App\Repositories\UserRepository;
+use App\Adminify\Repositories\UserRepository;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use Ludows\Adminify\Tables\UserTable;
+use App\Adminify\Adminify\Tables\UserTable;
 
 class UserController extends Controller
 {
@@ -151,7 +151,7 @@ class UserController extends Controller
             }
             public function showProfile(User $user, FormBuilder $formBuilder) {
                 
-                $form = $formBuilder->create(showProfile::class, [
+                $form = $formBuilder->create(ShowProfile::class, [
                     'method' => 'POST',
                     'url' => route('users.profile.store', ['user' => $user->id]),
                     'model' => $user
@@ -161,7 +161,7 @@ class UserController extends Controller
             }
             public function saveProfile(User $user, FormBuilder $formBuilder) {
 
-                $form = $this->form(showProfile::class, [
+                $form = $this->form(ShowProfile::class, [
                     'model' => $user
                 ]);
                 $formValues = $form->getFieldValues();

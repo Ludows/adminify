@@ -4,12 +4,12 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use App\Forms\SeoForm;
+use App\Adminify\Forms\SeoForm;
 
 use Illuminate\Http\Request;
-use App\Models\Seo;
+use App\Adminify\Models\Seo;
 
-use App\Repositories\SeoRepository;
+use App\Adminify\Repositories\SeoRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 

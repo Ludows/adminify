@@ -5,19 +5,19 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
-use App\Forms\CreateTranslation as FormsCreateTranslation;
-use App\Forms\UpdateTranslation;
+use App\Adminify\Forms\CreateTranslation as FormsCreateTranslation;
+use App\Adminify\Forms\UpdateTranslation;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateTranslationRequest;
-use App\Http\Requests\UpdateTranslationRequest;
-use App\Models\Translations as Traductions;
+use App\Adminify\Http\Requests\CreateTranslationRequest;
+use App\Adminify\Http\Requests\UpdateTranslationRequest;
+use App\Adminify\Models\Translations as Traductions;
 
-use App\Repositories\TranslationRepository;
+use App\Adminify\Repositories\TranslationRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use Ludows\Adminify\Tables\TranslationTable;
+use App\Adminify\Tables\TranslationTable;
 
 
 class TranslationsController extends Controller

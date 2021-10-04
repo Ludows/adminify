@@ -3,20 +3,20 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
+use App\Adminify\Http\Requests\CreateCategoryRequest;
+use App\Adminify\Http\Requests\UpdateCategoryRequest;
 
-use App\Models\Category;
+use App\Adminify\Models\Category;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use App\Forms\CreateCategory;
-use App\Forms\UpdateCategory;
+use App\Adminify\Forms\CreateCategory;
+use App\Adminify\Forms\UpdateCategory;
 
-use App\Repositories\CategoryRepository;
+use App\Adminify\Repositories\CategoryRepository;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use Ludows\Adminify\Tables\CategoryTable;
+use App\Adminify\Tables\CategoryTable;
 
 use Ludows\Adminify\Http\Controllers\Controller;
 

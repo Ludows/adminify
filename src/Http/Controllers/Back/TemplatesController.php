@@ -3,20 +3,20 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateTemplatesRequest;
-use App\Http\Requests\UpdateTemplatesRequest;
+use App\Adminify\Http\Requests\CreateTemplatesRequest;
+use App\Adminify\Http\Requests\UpdateTemplatesRequest;
 
-use App\Models\Templates;
+use App\Adminify\Models\Templates;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
-use App\Forms\CreateTemplates;
-use App\Forms\UpdateTemplates;
+use App\Adminify\Forms\CreateTemplates;
+use App\Adminify\Forms\UpdateTemplates;
 
-use App\Repositories\TemplatesRepository;
+use App\Adminify\Repositories\TemplatesRepository;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use Ludows\Adminify\Tables\TemplatesTable;
+use App\Adminify\Tables\TemplatesTable;
 
 use Ludows\Adminify\Http\Controllers\Controller;
 

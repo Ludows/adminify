@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Http\Controllers\Back;
 
-use App\Models\Page;
+use App\Adminify\Models\Page;
 
 use Illuminate\Http\Request;
 use Ludows\Adminify\Http\Controllers\Controller;
@@ -10,19 +10,19 @@ use Ludows\Adminify\Http\Controllers\Controller;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
-use App\Forms\CreatePage;
-use App\Forms\UpdatePage;
+use App\Adminify\Forms\CreatePage;
+use App\Adminify\Forms\UpdatePage;
 
-use App\Forms\SeoForm;
+use App\Adminify\Forms\SeoForm;
 
-use App\Http\Requests\CreatePageRequest;
-use App\Http\Requests\UpdatePageRequest;
+use App\Adminify\Http\Requests\CreatePageRequest;
+use App\Adminify\Http\Requests\UpdatePageRequest;
 
-use App\Repositories\PageRepository;
-use App\Repositories\SeoRepository;
+use App\Adminify\Repositories\PageRepository;
+use App\Adminify\Repositories\SeoRepository;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use Ludows\Adminify\Tables\PageTable;
+use App\Adminify\Tables\PageTable;
 class PageController extends Controller
 {
      /**

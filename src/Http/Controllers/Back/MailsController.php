@@ -3,23 +3,23 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateMailRequest;
-use App\Http\Requests\UpdateMailRequest;
+use App\Adminify\Http\Requests\CreateMailRequest;
+use App\Adminify\Http\Requests\UpdateMailRequest;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
-use Ludows\Adminify\Http\Controllers\Controller;
+use App\Adminify\Http\Controllers\Controller;
 
-use App\Repositories\MailsRepository;
+use App\Adminify\Repositories\MailsRepository;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use Ludows\Adminify\Tables\MailsTable;
+use App\Adminify\Tables\MailsTable;
 
-use App\Forms\CreateMail;
-use App\Forms\UpdateMail;
+use App\Adminify\Forms\CreateMail;
+use App\Adminify\Forms\UpdateMail;
 
-use App\Models\Mailables;
+use App\Adminify\Models\Mailables;
 use Mail;
 
 

@@ -3,22 +3,22 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 
-use App\Models\Forms;
+use App\Adminify\Models\Forms;
 
-use App\Http\Requests\CreateFormsRequest;
-use App\Http\Requests\UpdateFormsRequest;
-use App\Repositories\FormsRepository;
+use App\Adminify\Http\Requests\CreateFormsRequest;
+use App\Adminify\Http\Requests\UpdateFormsRequest;
+use App\Adminify\Repositories\FormsRepository;
 
 use Ludows\Adminify\Http\Controllers\Controller;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
-use App\Forms\CreateForms;
-use App\Forms\UpdateForms;
+use App\Adminify\Forms\CreateForms;
+use App\Adminify\Forms\UpdateForms;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use Ludows\Adminify\Tables\FormsTable;
+use App\Adminify\Tables\FormsTable;
 
 class FormsController extends Controller
 {

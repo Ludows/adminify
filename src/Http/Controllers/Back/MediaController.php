@@ -3,22 +3,22 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 
-use App\Models\Media;
+use App\Adminify\Models\Media;
 
-use App\Http\Requests\CreateMediaRequest;
-use App\Http\Requests\UpdateMediaRequest;
-use App\Repositories\MediaRepository;
+use App\Adminify\Http\Requests\CreateMediaRequest;
+use App\Adminify\Http\Requests\UpdateMediaRequest;
+use App\Adminify\Repositories\MediaRepository;
 
 use Ludows\Adminify\Http\Controllers\Controller;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
-use App\Forms\CreateMedia;
-use App\Forms\UpdateMedia;
+use App\Adminify\Forms\CreateMedia;
+use App\Adminify\Forms\UpdateMedia;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use Ludows\Adminify\Tables\MediaTable;
+use App\Adminify\Tables\MediaTable;
 
 class MediaController extends Controller
 {

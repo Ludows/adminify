@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\CreateMenuRequest;
+use App\Adminify\Http\Requests\CreateMenuRequest;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -14,11 +14,11 @@ use App\Models\Menu;
 use Ludows\Adminify\Libs\MenuBuilder;
 use Illuminate\Support\Str;
 
-use App\Repositories\MenuRepository;
+use App\Adminify\Repositories\MenuRepository;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use Ludows\Adminify\Tables\MenuTable;
+use App\Adminify\Tables\MenuTable;
 
 class MenuController extends Controller
 {

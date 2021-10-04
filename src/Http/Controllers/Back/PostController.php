@@ -3,26 +3,26 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\CreatePostRequest;
-use App\Http\Requests\UpdatePostRequest;
+use App\Adminify\Http\Requests\CreatePostRequest;
+use App\Adminify\Http\Requests\UpdatePostRequest;
 
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
-use App\Forms\CreatePost;
-use App\Forms\UpdatePost;
-use App\Forms\SeoForm;
+use App\Adminify\Forms\CreatePost;
+use App\Adminify\Forms\UpdatePost;
+use App\Adminify\Forms\SeoForm;
 
-use App\Models\Post;
+use App\Adminify\Models\Post;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 
-use App\Repositories\PostRepository;
-use App\Repositories\SeoRepository;
+use App\Adminify\Repositories\PostRepository;
+use App\Adminify\Repositories\SeoRepository;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use Ludows\Adminify\Tables\PostTable;
+use App\Adminify\Tables\PostTable;
 
 
 class PostController extends Controller

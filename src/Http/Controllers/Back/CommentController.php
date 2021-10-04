@@ -3,22 +3,22 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
-use App\Models\Comment;
-use App\Models\Post;
+use App\Adminify\Models\Comment;
+use App\Adminify\Models\Post;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Ludows\Adminify\Http\Controllers\Controller;
 
-use App\Repositories\CommentRepository;
+use App\Adminify\Repositories\CommentRepository;
 
-use App\Http\Requests\CreateCommentRequest;
-use App\Http\Requests\UpdateCommentRequest;
+use App\Adminify\Http\Requests\CreateCommentRequest;
+use App\Adminify\Http\Requests\UpdateCommentRequest;
 
-use App\Forms\CreateComment;
-use App\Forms\UpdateComment;
+use App\Adminify\Forms\CreateComment;
+use App\Adminify\Forms\UpdateComment;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use Ludows\Adminify\Tables\CommentTable;
+use App\Adminify\Tables\CommentTable;
 
 
 class CommentController extends Controller
