@@ -54,11 +54,11 @@ class Post extends ContentTypeModel
     ];
 
     public function getSavableForm() {
-        return \App\Forms\UpdatePost::class;
+        return \App\Adminify\Forms\UpdatePost::class;
     }
 
     public function getTableListing() {
-        return \Ludows\Adminify\Tables\PostTable::class;
+        return \App\Adminify\Tables\PostTable::class;
     }
 
     public function toFeedItem(): FeedItem {}

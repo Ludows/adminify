@@ -27,7 +27,7 @@ class Forms extends ClassicModel
     protected $attributes = [];
 
     public function getTableListing() {
-        return \Ludows\Adminify\Tables\FormsTable::class;
+        return \App\Adminify\Tables\FormsTable::class;
     }
 
     public function toFeedItem(): FeedItem {}

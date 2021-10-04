@@ -19,7 +19,7 @@ class Page extends ContentTypeModel
     }
 
     public function getTableListing() {
-        return \Ludows\Adminify\Tables\PageTable::class;
+        return \App\Adminify\Tables\PageTable::class;
     }
 
     public $excludes_savables_fields = [
@@ -36,7 +36,7 @@ class Page extends ContentTypeModel
     ];
 
     public function getSavableForm() {
-        return \App\Forms\CreatePage::class;
+        return \App\Adminify\Forms\CreatePage::class;
     }
 
     protected $fillable = [

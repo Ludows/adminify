@@ -62,7 +62,7 @@ abstract class ClassicMail extends SpatieMailTemplate implements Searchable
      ];
 
     public function getTableListing() {
-        return \Ludows\Adminify\Tables\MailsTable::class;
+        return \App\Adminify\Tables\MailsTable::class;
     }
 
     public function getSavableForm() {

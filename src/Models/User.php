@@ -38,7 +38,7 @@ class User extends ClassicUser
     ];
 
     public function getTableListing() {
-        return \Ludows\Adminify\Tables\UserTable::class;
+        return \App\Adminify\Tables\UserTable::class;
     }
 
     public function getSearchResult() : SearchResult

@@ -44,7 +44,7 @@ class Media extends ClassicModel
      ];
 
     public function getTableListing() {
-        return \Ludows\Adminify\Tables\MediaTable::class;
+        return \App\Adminify\Tables\MediaTable::class;
     }
 
     public function toFeedItem(): FeedItem {}

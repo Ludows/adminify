@@ -15,7 +15,7 @@ class Comment extends ClassicModel
     public function getSearchResult() : SearchResult {}
 
     public function getTableListing() {
-        return \Ludows\Adminify\Tables\CommentTable::class;
+        return \App\Adminify\Tables\CommentTable::class;
     }
 
     public $enable_searchable = false;

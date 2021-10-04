@@ -8,7 +8,7 @@ class Mailables extends ClassicMail
 {
 
     public function getTableListing() {
-        return \Ludows\Adminify\Tables\MailsTable::class;
+        return \App\Adminify\Tables\MailsTable::class;
     }
 
     public $enable_searchable = true;

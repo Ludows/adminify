@@ -27,7 +27,7 @@ class Translations extends ClassicModel
     }
 
     public function getTableListing() {
-        return \Ludows\Adminify\Tables\TranslationTable::class;
+        return \App\Adminify\Tables\TranslationTable::class;
     }
 
     public $enable_searchable = true;
@@ -41,7 +41,7 @@ class Translations extends ClassicModel
     public $excludes_savables_fields = [];
     public $unmodified_savables_fields = [];
     public function getSavableForm() {
-        return \App\Forms\UpdateTranslation::class;
+        return \App\Adminify\Forms\UpdateTranslation::class;
     }
 
     protected static function makeTranslations($context) {

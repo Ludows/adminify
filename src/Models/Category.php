@@ -41,11 +41,11 @@ class Category extends ContentTypeModel
       'submit'
    ];
     public function getSavableForm() {
-       return \App\Forms\UpdateCategory::class;
+       return \App\Adminify\Forms\UpdateCategory::class;
     }
 
     public function getTableListing() {
-      return \Ludows\Adminify\Tables\CategoryTable::class;
+      return \App\Adminify\Tables\CategoryTable::class;
    }
 
     public function getSearchResult() : SearchResult

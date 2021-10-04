@@ -23,11 +23,11 @@ class Tag extends ClassicModel
     public $enable_searchable = true;
 
     public function getSavableForm() {
-        return \App\Forms\CreateTag::class;
+        return \App\Adminify\Forms\CreateTag::class;
     }
 
     public function getTableListing() {
-        return \Ludows\Adminify\Tables\TagTable::class;
+        return \App\Adminify\Tables\TagTable::class;
     }
 
     public function getLinks($menuBuilder, $arrayDatas) {
