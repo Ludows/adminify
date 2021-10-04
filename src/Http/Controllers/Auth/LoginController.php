@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
-use App\Forms\showLoginForm;
+use App\Adminify\Forms\ShowLoginForm;
 
 class LoginController extends Controller
 {

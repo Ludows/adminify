@@ -8,7 +8,7 @@ use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
-use App\Forms\ShowResetForm;
+use App\Adminify\Forms\ShowResetForm;
 class ForgotPasswordController extends Controller
 {
     use FormBuilderTrait;

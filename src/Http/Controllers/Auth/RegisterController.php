@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Http\Controllers\Auth;
 
 use Ludows\Adminify\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Models\User;
+use App\Adminify\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
-use App\Forms\ShowRegisterForm;
+use App\Adminify\Forms\ShowRegisterForm;
 
 
 class RegisterController extends Controller

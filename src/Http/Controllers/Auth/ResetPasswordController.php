@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
-use App\Forms\ShowResetForm;
+use App\Adminify\Forms\ShowResetForm;
 
 class ResetPasswordController extends Controller
 {
