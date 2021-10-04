@@ -40,7 +40,11 @@ class InstallPackages extends Command
         $this->packages = require_once(__DIR__.'/../../config/packagelist.php');
         $this->tasks = require_once(__DIR__.'/../../config/coretasks.php');
         $this->excludes = [
-            'adminify:install:facades', 'adminify:install:helpers', 'adminify:install:libs', 'adminify:install:traits', 'adminify:install:view'
+            'adminify:install:facades', 
+            'adminify:install:helpers', 
+            'adminify:install:libs', 
+            'adminify:install:traits', 
+            'adminify:install:view'
         ];
 
     }
@@ -321,20 +325,6 @@ class InstallPackages extends Command
         $hasDirs = File::directories($path);
         $hasFiles = File::files($path);
 
-        if(!empty($hasDirs)) {
-            foreach ($hasDirs as $dirPath) {
-                # code...
-                $list = explode(DIRECTORY_SEPARATOR, $dirPath);
-
-                $typologie = $type .':'. strtolower( $list[ count($list) - 1 ] );
-
-                if(!in_array($typologie, $this->excludes)) {
-                    $this->handleStubs($dirPath, $typologie);
-                }
-            }
-
-        }
-
         if(!empty($hasFiles) && !empty($type)) {
 
             $this->info('Files detected in '.$path);
@@ -349,14 +339,20 @@ class InstallPackages extends Command
                     '--type' => $type,
                 ]);
             }
-            // $m = app($fullModelClass);
-            // $reflect = new \ReflectionClass($m);
+        }
 
-            // $this->call('generate:file', [
-            //     'name' => Str::singular($model),
-            //     '--stub' => 'adminify_table',
-            //     '--type' => 'table'
-            // ]);
+        if(!empty($hasDirs)) {
+            foreach ($hasDirs as $dirPath) {
+                # code...
+                $list = explode(DIRECTORY_SEPARATOR, $dirPath);
+
+                $typologie = $type .':'. strtolower( $list[ count($list) - 1 ] );
+
+                if(!in_array($typologie, $this->excludes)) {
+                    $this->handleStubs($dirPath, $typologie);
+                }
+            }
+
         }
     }
     //the old way to install Adminify..
