@@ -15,10 +15,16 @@ class SitemapController extends Controller
 
         $classCheck = null;
         if($sitemapPart != null && array_key_exists($sitemapPart, $configSitemap)) {
-            $classCheck = $configSitemap[$sitemapPart];
+            $classCheck = adminify_get_class($configSitemap[$sitemapPart], ['app:adminify:models', 'app:models'], false);
         }
         else if($sitemapPart == null) {
             $classCheck = $configSitemap;
+            $i = 0;
+            foreach ($classCheck as $cls) {
+                # code...
+                $classCheck[$i] = adminify_get_class($cls, ['app:adminify:models', 'app:models'], false);
+                $i++;
+            }
         }
 
         if($classCheck == null) {
