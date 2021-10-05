@@ -163,9 +163,9 @@ class TableManager
     public function handle() {}
     public function render() {
 
-        $listings = get_site_key('register');        
         $name = $this->getRequest()->route()->getName();
         $name = str_replace('.index', '', $name);
+        $listings = adminify_get_class( Str::title( singular( $name ) ) , ['app:models', 'app:adminify:models'], false);        
 
         $singular = singular( $name );
 
@@ -186,7 +186,7 @@ class TableManager
         $cols = $this->getColumns();
         $areas = $this->getAreas();
 
-        $classModel = get_site_key('register.'.$singular);
+        $classModel = $listings;
         $count = null;
 
         if($classModel != null) {
