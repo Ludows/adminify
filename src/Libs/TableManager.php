@@ -165,7 +165,7 @@ class TableManager
 
         $name = $this->getRequest()->route()->getName();
         $name = str_replace('.index', '', $name);
-        $listings = adminify_get_class( Str::title( singular( $name ) ) , ['app:models', 'app:adminify:models'], false);        
+        $listings = adminify_get_class( Str::title( singular( $name ) ) , ['app:models', 'app:adminify:models'], false);
 
         $singular = singular( $name );
 
@@ -175,7 +175,7 @@ class TableManager
 
         if($this->showSearch) {
             $this->module('search', 'top-right', 'adminify::layouts.admin.table.core.search', [
-                'showSearchBar' => isset($listings[ $singular ]) ? true : false,
+                'showSearchBar' => true,
                 'showCreate' => $this->showBtnCreate
             ]);
         }

@@ -23,7 +23,7 @@ class Templates extends ClassicModel
 
     public $enable_searchable = false;
 
-    public function getAliases() {
+    public function getAdminifyAliases() {
         return [
             'templates', 'tpls'
         ];

@@ -14,7 +14,7 @@ class Mailables extends ClassicMail
     public $enable_searchable = true;
     public $searchable_label = 'subject';
 
-    public function getAliases() {
+    public function getAdminifyAliases() {
         return [
             'mails', 'mailables'
         ];
