@@ -48,17 +48,21 @@ if (! function_exists('adminify_autoload')) {
 }
 
 if (! function_exists('adminify_get_classes')) {
-    function adminify_get_classes($array, $loadClass) {
+    function adminify_get_classes($array, $context, $loadClass) {
         $r = [];
 
         if(!isset($loadClass)) {
             $loadClass = false;
         }
 
+        if(!isset($context)) {
+            $context = null;
+        }
+
         if(is_array($array)) {
             foreach ($array as $a) {
                 # code...
-                $the_class = adminify_get_class($a, $loadClass);
+                $the_class = adminify_get_class($a, $context,  $loadClass);
                 if(!empty($the_class)) {
                     $r[] = $the_class;
                 }
@@ -96,7 +100,7 @@ if (! function_exists('adminify_get_classes_by_folders')) {
 }
 
 if (! function_exists('adminify_get_class')) {
-    function adminify_get_class($name, $loadClass) {
+    function adminify_get_class($name, $context, $loadClass) {
 
         if(!isset($loadClass)) {
             $loadClass = false;
@@ -104,6 +108,24 @@ if (! function_exists('adminify_get_class')) {
 
         $r = null;
         $cache = adminify_autoload();
+
+        if(!empty($context) && is_string($context) && !empty($cache[$context])) {
+            $cache = $cache[$context];
+        }
+
+        if(!empty($context) && is_array($context)) {
+            $newcache = [];
+            if(count($context) > 0) {
+                foreach ($context as $cntxt) {
+                    # code...
+                    if(!empty($cache[$cntxt])) {
+                        $newcache = array_merge($newcache, $cache[$cntxt]);
+                    }
+                }
+            }
+            $cache = $newcache;
+        }
+
         $keys = array_keys($cache);
 
         foreach ($keys as $k) {

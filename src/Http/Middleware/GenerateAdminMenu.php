@@ -42,7 +42,7 @@ class GenerateAdminMenu
 
         foreach ($menu_config as $menu_str) {
             # code...
-            $menu_class = app( adminify_get_class($menu_str, false) );
+            $menu_class = app( adminify_get_class($menu_str, ['app:adminify:models', 'app:models'], false) );
 
             if($menu_class->showInMenu) {
                 $r = call_user_func_array( array($menu_class, 'getLinks'), array($menuAdmin, $arrayDatas) );
