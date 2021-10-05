@@ -84,7 +84,9 @@ class ContentTypesHook extends HookInterface {
         $s = app()->make('Ludows\Adminify\Libs\SitemapRender');
 
         $reflect = new \ReflectionClass($context);
-        $cls = adminify_get_class($reflect->name, ['app:adminify:models', 'app:models'], false);
+        $cls = adminify_get_class(class_basename($reflect->name), ['app:adminify:models', 'app:models'], false);
+
+        // dd($cls, $reflect);
 
         $s->setOptions([
             'models' => [$context->getTable() => $cls],
