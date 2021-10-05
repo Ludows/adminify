@@ -47,7 +47,7 @@ class LoginController extends Controller
     public function showLoginForm()
 
     {
-        $form = $this->form(showLoginForm::class, [
+        $form = $this->form(ShowLoginForm::class, [
             'method' => 'POST',
             'url' => route('login')
         ]);
