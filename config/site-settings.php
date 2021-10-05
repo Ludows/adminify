@@ -166,12 +166,12 @@ return [
         ],
         'crud' => [
             // controllers here we binded like the CRUD pattern
-           'pages' => \Ludows\Adminify\Http\Controllers\Api\PageController::class,
-           'comments' => \Ludows\Adminify\Http\Controllers\Api\CommentController::class,
-           'posts' => \Ludows\Adminify\Http\Controllers\Api\PostController::class,
-           'medias' => \Ludows\Adminify\Http\Controllers\Api\MediaController::class,
-           'categories' => \Ludows\Adminify\Http\Controllers\Api\CategoryController::class,
-           'translations' => \Ludows\Adminify\Http\Controllers\Api\TranslationsController::class,
+        //    'pages' => \App\Adminify\Http\Controllers\Api\PageController::class,
+        //    'comments' => \App\Adminify\Http\Controllers\Api\CommentController::class,
+        //    'posts' => \App\Adminify\Http\Controllers\Api\PostController::class,
+        //    'medias' => \App\Adminify\Http\Controllers\Api\MediaController::class,
+        //    'categories' => \App\Adminify\Http\Controllers\Api\CategoryController::class,
+        //    'translations' => \App\Adminify\Http\Controllers\Api\TranslationsController::class,
         ],
         'customRoutes' => [
             // ex : [
