@@ -299,7 +299,6 @@ return array(
                 'providers' => [],
                 'middlewares' => [
                     'named' => [
-                        'autoload.forms' => \App\Adminify\Http\Middleware\RequiredForms::class,
                         'admin.menu' => \App\Adminify\Http\Middleware\GenerateAdminMenu::class,
                         'check.permissions' => \App\Adminify\Http\Middleware\CheckUserPermissions::class,
                         'multilang.basic' => \App\Adminify\Http\Middleware\MultilangBasic::class,
