@@ -153,7 +153,7 @@ class MenuBuilder
         if(count($models) > 0) {
             foreach ($models as $model => $key) {
                 # code...
-                $m_str = adminify_get_class($key, false);
+                $m_str = adminify_get_class($key, ['app:models', 'app:adminify:models'], false);
                 $class_call = new $m_str;
                 if(!array_key_exists($model, $defaultsVars['config']['menu-builder']['showAlways'])) {
 
