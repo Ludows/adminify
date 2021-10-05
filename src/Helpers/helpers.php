@@ -133,7 +133,7 @@ if (! function_exists('adminify_get_class')) {
             if($r != null) {
                 break;
             }
-            if(is_array($cache[$k])) {
+            if(is_array($cache[$k]) && empty($context)) {
 
                 $a = $cache[$k];
                 $keyeds = array_keys($a);
@@ -149,6 +149,16 @@ if (! function_exists('adminify_get_class')) {
                     }
                 }
 
+            }
+
+            if(is_string($cache[$k]) && !empty($context)) {
+                $index_a = array_search($name, $keys);
+                if($name == $keys[$index_a] && !empty($cache[$name])) {
+                    $r = $cache[$name];
+                    if($loadClass) {
+                        $r = app($r);
+                    }
+                }
             }
 
         }
