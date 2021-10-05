@@ -73,17 +73,21 @@ class GenerateAdminifyContainer extends Command
 
                     $registrar[ $label ] = $laravelNamespace;
                     
-                    $m = new $laravelNamespace;
-                    if(method_exists($m, 'getAdminifyAliases')) {
-                        $aliases = $m->getAdminifyAliases();
-                        foreach ($aliases as $alias) {
-                            # code...
-                            $registrar[ $alias ] = $laravelNamespace;
+                    if(in_array($bootableKey, ['app:models', 'app:adminify:models'])) {
+                        $m = new $laravelNamespace;
+                        if(method_exists($m, 'getAdminifyAliases')) {
+                            $aliases = $m->getAdminifyAliases();
+                            foreach ($aliases as $alias) {
+                                # code...
+                                $registrar[ $alias ] = $laravelNamespace;
+                            }
                         }
                     }
-
                 }
                 $gloablBoot[$bootableKey] = $registrar;
+            }
+            else {
+                unset($gloablBoot[$bootableKey]);
             }
         }
 
