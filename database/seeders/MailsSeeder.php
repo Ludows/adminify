@@ -15,14 +15,7 @@ class MailsSeeder extends Seeder
      */
     public function run()
     {
-
-        $cls = [];
-        foreach (['app:mails', 'app:adminify:mails'] as $key) {
-            # code...
-            $cls = array_merge($cls, adminify_get_classes_by_folder($key) ?? [] );
-        }
-
-        $this->mails = $cls;
+        $this->mails = adminify_get_classes_by_folders(['app:mails', 'app:adminify:mails']);
         
         $base_i = 1;
         $multilang = config('site-settings.multilang');

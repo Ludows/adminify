@@ -16,19 +16,18 @@ return [
     ],
 
     'adminMenu' => [
-        'register.page',
-        'register.post',
-        'register.category',
-        'register.tag',
-        'register.media',
-        'register.menu',
-        'register.comment',
-        'register.setting',
-        'register.traduction',
-        'register.mail_template',
-        'register.content_type_template',
-        // 'register.statistics', @todo later
-        'register.user'
+        'Page',
+        'Post',
+        'Category',
+        'Tag',
+        'Media',
+        'Menu',
+        'Comment',
+        'Settings',
+        'Translations',
+        'Mailables',
+        'Templates',
+        'User'
     ],
 
     'hooks' => [
@@ -62,8 +61,8 @@ return [
     ],
 
     'sitemap' => [
-        'pages' => 'register.page',
-        'posts' => 'register.post',
+        'pages' => 'Page',
+        'posts' => 'Post',
     ],
 
     'feeds' => [
@@ -73,8 +72,8 @@ return [
             'description' => "##DATA## description"
         ],
         'hydrate' => [
-            'pages',
-            'posts'
+            'Page',
+            'Post'
         ]
     ],
 
@@ -110,9 +109,9 @@ return [
     // menu builder is automatic sync with multilang param.
     'menu-builder' => [
         'models' => [
-            'page' => 'register.page',
-            'post' => 'register.post',
-            'custom' => 'register.custom_link'
+            'page' => 'Page',
+            'post' => 'Post',
+            'custom' => 'CustomLink'
         ],
         'showAlways' => [
             'custom' => [ // you can pass some field to build your form

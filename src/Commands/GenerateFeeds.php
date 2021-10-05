@@ -42,10 +42,13 @@ class GenerateFeeds extends Command
     {
 
         $feeds = get_site_key('feeds');
+
+        $allFeedsClasses = adminify_get_classes_by_folders(['app:feeds', 'app:adminify:feeds']);
+
         $array = [
             'feeds' => [
                 'main' => [
-                    'items' => ['App\Feeds\Site', 'all'],
+                    'items' => ['App\Adminify\Feeds\Site', 'all'],
 
                     'url' => '/feeds',
 
@@ -77,7 +80,7 @@ class GenerateFeeds extends Command
                  * You can also pass an argument to that method.  Note that their key must be the name of the parameter:             *
                  * [App\Model::class, 'getAllFeedItems', 'parameterName' => 'argument']
                  */
-                'items' => ['App\Feeds\Site', $feedableKey],
+                'items' => ['App\Adminify\Feeds\Site', $feedableKey],
 
                 /*
                  * The feed will be available on this url.

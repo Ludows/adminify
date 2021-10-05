@@ -81,6 +81,20 @@ if (! function_exists('adminify_get_classes_by_folder')) {
     }
 }
 
+if (! function_exists('adminify_get_classes_by_folders')) {
+    function adminify_get_classes_by_folders($array) {
+        $r = [];
+        foreach ($array as $a) {
+            # code...
+            $res = adminify_get_classes_by_folder($a);
+            if(!empty($res)) {
+                $r = array_merge($r, $res);
+            }
+        }
+        return $r;
+    }
+}
+
 if (! function_exists('adminify_get_class')) {
     function adminify_get_class($name, $loadClass) {
 
