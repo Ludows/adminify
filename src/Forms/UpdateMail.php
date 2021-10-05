@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Forms;
 
-use App\Forms\CreateMail;
+use App\Adminify\Forms\CreateMail;
 
 class UpdateMail extends CreateMail
 {}
