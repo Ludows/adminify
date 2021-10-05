@@ -18,7 +18,7 @@ use App\Adminify\Forms\ShowProfile;
 use App\Adminify\Repositories\UserRepository;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use App\Adminify\Adminify\Tables\UserTable;
+use App\Adminify\Tables\UserTable;
 
 class UserController extends Controller
 {
