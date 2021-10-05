@@ -53,8 +53,7 @@ class SitemapRender
                 $sitemap->setCache('laravel.sitemap.'.$options['modelName'], 5);
             }
             if (!$sitemap->isCached()) {
-                $model = get_site_key( $modelClass );
-                $m = new $model();
+                $m = new $modelClass();
                 $allowSitemap = $m->allowSitemap;
                 $isTranslatableModel = is_translatable_model($m);
                 $isUrlableModel = is_urlable_model($m);
