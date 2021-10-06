@@ -116,12 +116,12 @@ jQuery(document).ready(function ($) {
                 data: o,
                 success: function (data) {
                     console.log('data', data);
-                    console.log(listingBlock.find('.js-datatable tbody'))
+                    // console.log(listingBlock.find('.js-datatable tbody'))
                     listingBlock.find('.js-datatable tbody').html('');
                     listingBlock.find('.js-datatable tbody').append(data.html);
 
                     window.listingConfig.isEnd = data.isEnd;
-                    console.log('after change is end', window.listingConfig);
+                    // console.log('after change is end', window.listingConfig);
 
                     if(!fromBtns) {
                         listingBlock.attr('data-page', '1')

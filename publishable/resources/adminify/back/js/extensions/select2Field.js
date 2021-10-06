@@ -84,10 +84,10 @@ export default function select2Inititalization(fields) {
                     $(ModaleForm).clearValues();
                     // console.log(data[0])
                     if(el.multilang == 1) {
-                        var newOption = new Option(data[keys[0]].title[el.currentLang], data[keys[0]].id, false, true);
+                        var newOption = new Option(data['model'].title[el.currentLang], data['model'].id, false, true);
                     }
                     else {
-                        var newOption = new Option(data[keys[0]].title, data[keys[0]].id, false, true);
+                        var newOption = new Option(data['model'].title, data['model'].id, false, true);
                     }
 
 
