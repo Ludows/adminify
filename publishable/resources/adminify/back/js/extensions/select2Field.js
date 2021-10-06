@@ -53,7 +53,7 @@ export default function select2Inititalization(fields) {
             headers: { 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content') },
             success: function(data) {
                 context.append(data.html)
-                loadDefaultProcess(context.parent(), , select2boxe);
+                loadDefaultProcess(context.parent(), el, select2boxe);
             },
             error: function(err) {
                 console.log('whoooops', err);
