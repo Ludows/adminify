@@ -227,7 +227,7 @@ class TableManager
             'datas' => $this->_columns,
             'thead' => $cols,
             'count' => count($this->_columns[$cols[0]]),
-            'name' => $name
+            'name' => Str::title($name)
         ];
 
         $compiled = $this->view->make( $this->getViewList() , array_merge($defaults, $addtoVars) );
