@@ -45,28 +45,18 @@ class CreateMail extends Form
         $r = $this->getRequest();
 
         $mailFetched = $r->mail;
+        
+        $Mails = adminify_get_classes_by_folders(['app:mails', 'app:adminify:mails']);
 
-        $pathMails = app_path('Mails');
-
-        $files = File::files(app_path('Mails'));
-
-        $namespaceBase = 'App\Mails';
+        foreach($Mails as $MailKey => $Mail){
 
 
-        foreach($files as $f){
-
-
-            $namedClass = str_replace('.'.$f->getExtension(), '', $f->getBaseName());
             // dd($namedClass);
-
-            $fullModelClass = $namespaceBase . '\\'. $namedClass;
-            $m = app($fullModelClass);
-
-            $reflect = new \ReflectionClass($m);
+            $m = app($Mail);
 
             // dd($reflect->name);
 
-            $mails[$reflect->name] = $fullModelClass::getSubject();
+            $mails[$MailKey] = $Mail::getSubject();
 
         }
 
@@ -74,7 +64,6 @@ class CreateMail extends Form
 
         if($mailFetched != null) {
             // on a une selection
-            $mailFetched = $r->mail;
             $selecteds = [$mailFetched->mailable];
         }
 
