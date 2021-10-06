@@ -29,15 +29,19 @@ class Users extends DropdownsManager
                     'name' => 'users'
                 ]
             ]);
-            $this->add('dropdown_'.$m->id, [
-                'template' => 'adminify::layouts.admin.dropdowns.extends.delete',
-                'vars' => [
-                    'form' => $form->create(DeleteCrud::class, [
-                        'method' => 'DELETE',
-                        'url' => route('users.destroy', ['user' => $m->id])
-                    ])
-                ]
-            ]);
+            
+            if($u->hasPermissionTo('delete_users')) {
+                $this->add('dropdown_'.$m->id, [
+                    'template' => 'adminify::layouts.admin.dropdowns.extends.delete',
+                    'vars' => [
+                        'form' => $form->create(DeleteCrud::class, [
+                            'method' => 'DELETE',
+                            'url' => route('users.destroy', ['user' => $m->id])
+                        ])
+                    ]
+                ]);      
+            }
+            
         }
     }
 }

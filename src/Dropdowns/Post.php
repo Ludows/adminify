@@ -32,7 +32,7 @@ class Post extends DropdownsManager
                     $this->add('dropdown_'.$m->id, [
                         'template' => 'adminify::layouts.admin.dropdowns.extends.trash',
                         'vars' => [
-                            'url' => route('trash', ['type' => 'posts', 'id' => $m->id]),
+                            'url' => route('trash', ['type' => 'Post', 'id' => $m->id]),
                             'name' => 'posts'
                         ]
                     ]);
@@ -40,7 +40,7 @@ class Post extends DropdownsManager
                 $this->add('dropdown_'.$m->id, [
                     'template' => 'adminify::layouts.admin.dropdowns.extends.seo',
                     'vars' => [
-                        'url' => route('seo.edit', ['type' => 'posts', 'id' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
+                        'url' => route('seo.edit', ['type' => 'Post', 'id' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
                         'name' => 'seo'
                     ]
                 ]);

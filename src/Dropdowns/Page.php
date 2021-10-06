@@ -34,7 +34,7 @@ class Page extends DropdownsManager
                     $this->add('dropdown_'.$m->id, [
                         'template' => 'adminify::layouts.admin.dropdowns.extends.trash',
                         'vars' => [
-                            'url' => route('trash', ['type' => 'pages', 'id' => $m->id]),
+                            'url' => route('trash', ['type' => 'Page', 'id' => $m->id]),
                             'name' => 'pages'
                         ]
                     ]);
@@ -42,7 +42,7 @@ class Page extends DropdownsManager
                 $this->add('dropdown_'.$m->id, [
                     'template' => 'adminify::layouts.admin.dropdowns.extends.seo',
                     'vars' => [
-                        'url' => route('seo.edit', ['type' => 'pages', 'id' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
+                        'url' => route('seo.edit', ['type' => 'Page', 'id' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
                         'name' => 'seo'
                     ]
                 ]);
