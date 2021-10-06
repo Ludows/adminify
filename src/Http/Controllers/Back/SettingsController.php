@@ -10,7 +10,7 @@ use App\Adminify\Forms\CreateSettings;
 use App\Adminify\Http\Requests\SaveSettings;
 use App\Adminify\Repositories\SettingsRepository;
 use App\Adminify\Models\Settings;
-use Ludows\Adminify\Http\Controllers\Controller;
+use App\Adminify\Http\Controllers\Controller;
 
 
 class SettingsController extends Controller
@@ -45,15 +45,7 @@ class SettingsController extends Controller
             //
             $form = $this->form(CreateSettings::class);
             $settings = $this->settingsRepository->CreateOrUpdate($form);
-            if($request->ajax()) {
-                return response()->json([
-                    'media' => $settings,
-                    'status' => __('admin.typed_data.success')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.success'))->success();
-                return redirect()->route('settings.index');
-            }
+
+            return $this->sendResponse($settings, 'settings.index', 'admin.typed_data.success');
         }
 }

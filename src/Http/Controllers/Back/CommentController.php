@@ -7,7 +7,7 @@ use App\Adminify\Models\Comment;
 use App\Adminify\Models\Post;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Kris\LaravelFormBuilder\FormBuilder;
-use Ludows\Adminify\Http\Controllers\Controller;
+use App\Adminify\Http\Controllers\Controller;
 
 use App\Adminify\Repositories\CommentRepository;
 
@@ -79,16 +79,7 @@ class CommentController extends Controller
 
             $comment = $this->commentRepository->addModel(new Comment())->create($form);
 
-            if($request->ajax()) {
-                return response()->json([
-                    'commentList' => $comment->post->commentsThree,
-                    'message' => __('admin.typed_data.success')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.success'))->success();
-                return redirect()->route('comments.index');
-            }
+            return $this->sendResponse($comment->post->commentsThree, 'comments.index', 'admin.typed_data.success', 'commentList');
         }
 
         /**
@@ -122,15 +113,7 @@ class CommentController extends Controller
 
             $comment = $this->commentRepository->addModel($comment)->update($form, $comment);
 
-            if($request->ajax()) {
-                return response()->json([
-                    'commentList' => $comment->post->commentsThree
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.updated'))->success();
-                return redirect()->route('comments.index');
-            }
+            return $this->sendResponse($comment->post->commentsThree, 'comments.index', 'admin.typed_data.updated', 'commentList');
         }
 
         /**
@@ -147,15 +130,7 @@ class CommentController extends Controller
 
             $this->commentRepository->addModel($comment)->delete($comment);
             $m = Post::find($all['post_id']);
-            if($request->ajax()) {
-                return response()->json([
-                    'commentList' => $m->commentsThree,
-                    'status' => __('admin.typed_data.deleted')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.deleted'))->success();
-                return redirect()->route('comments.index');
-            }
+
+            return $this->sendResponse($m->commentsThree, 'comments.index', 'admin.typed_data.deleted', 'commentList');
         }
 }

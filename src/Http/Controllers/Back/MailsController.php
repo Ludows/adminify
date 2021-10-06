@@ -77,16 +77,7 @@ class MailsController extends Controller
 
             $mail = $this->mailRepository->addModel(new Mailables())->create($form);
 
-            if($request->ajax()) {
-                return response()->json([
-                    'category' => $mail,
-                    'message' => __('admin.typed_data.success')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.success'))->success();
-                return redirect()->route('mails.index');
-            }
+            return $this->sendResponse($mail, 'mails.index', 'admin.typed_data.success');
         }
 
         /**
@@ -126,8 +117,8 @@ class MailsController extends Controller
             ]);
 
             $this->mailRepository->addModel($mail)->update($form, $mail);
-            flash(__('admin.typed_data.updated'))->success();
-            return redirect()->route('mails.index');
+
+            return $this->sendResponse($mail, 'mails.index', 'admin.typed_data.updated');
         }
 
         public function send(Mailables $mail, Request $request) {
@@ -138,16 +129,18 @@ class MailsController extends Controller
 
             Mail::to($user->email)->send($mail_class);
 
-            if($request->ajax()) {
-                return response()->json([
-                    'mail' => $mail,
-                    'message' => __('admin.typed_data.success')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.success'))->success();
-                return redirect()->route('mails.index');
-            }
+            return $this->sendResponse($mail_class, 'mails.index', 'admin.typed_data.success');
+
+            // if($request->ajax()) {
+            //     return response()->json([
+            //         'mail' => $mail,
+            //         'message' => __('admin.typed_data.success')
+            //     ]);
+            // }
+            // else {
+            //     flash(__('admin.typed_data.success'))->success();
+            //     return redirect()->route('mails.index');
+            // }
         }
 
         /**
@@ -161,7 +154,7 @@ class MailsController extends Controller
             //
             $this->mailRepository->addModel($mail)->delete($mail);
             // redirect
-            flash(__('admin.typed_data.deleted'))->success();
-            return redirect()->route('mails.index');
+            return $this->sendResponse($mail, 'mails.index', 'admin.typed_data.deleted');
+
         }
 }

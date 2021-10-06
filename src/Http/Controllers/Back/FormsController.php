@@ -9,7 +9,7 @@ use App\Adminify\Http\Requests\CreateFormsRequest;
 use App\Adminify\Http\Requests\UpdateFormsRequest;
 use App\Adminify\Repositories\FormsRepository;
 
-use Ludows\Adminify\Http\Controllers\Controller;
+use App\Adminify\Http\Controllers\Controller;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -75,17 +75,8 @@ class FormsController extends Controller
 
                 // the create method return the media created
                 $Form = $this->Repository->addModel(new Forms())->create($form);
-                if($request->ajax()) {
-                    return response()->json([
-                        'form' => $Form,
-                        'status' => __('admin.typed_data.success')
-                    ]);
-                }
-                else {
-                    flash(__('admin.typed_data.success'))->success();
-                    return redirect()->route('forms.index');
-                }
 
+                return $this->sendResponse($Form, 'forms.index', 'admin.typed_data.success');
         }
 
         /**
@@ -135,16 +126,7 @@ class FormsController extends Controller
 
             $this->Repository->addModel($Form)->update($form, $Form);
 
-            if($request->ajax()) {
-                return response()->json([
-                    'form' => $Form,
-                    'status' => __('admin.typed_data.updated')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.updated'))->success();
-                return redirect()->route('forms.index');
-            }
+            return $this->sendResponse($Form, 'forms.index', 'admin.typed_data.updated');
         }
 
         /**
@@ -158,7 +140,7 @@ class FormsController extends Controller
 
             $this->Repository->addModel($Form)->delete($Form);
             // redirect
-            flash(__('admin.typed_data.deleted'))->success();
-            return redirect()->route('forms.index');
+            return $this->sendResponse($Form, 'forms.index', 'admin.typed_data.deleted');
+
         }
 }

@@ -1,7 +1,7 @@
 <?php
 
 namespace Ludows\Adminify\Http\Controllers\Back;
-use Ludows\Adminify\Http\Controllers\Controller;
+use App\Adminify\Http\Controllers\Controller;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 

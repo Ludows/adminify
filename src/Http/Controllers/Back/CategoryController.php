@@ -18,7 +18,7 @@ use App\Adminify\Repositories\CategoryRepository;
 use Ludows\Adminify\Traits\TableManagerable;
 use App\Adminify\Tables\CategoryTable;
 
-use Ludows\Adminify\Http\Controllers\Controller;
+use App\Adminify\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
@@ -40,7 +40,7 @@ class CategoryController extends Controller
         */
         public function index(FormBuilder $formBuilder, Request $request)
         {
-            $table = $this->table(CategoryTable::class);            
+            $table = $this->table(CategoryTable::class);
 
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
@@ -73,16 +73,17 @@ class CategoryController extends Controller
 
             $category = $this->categoryRepository->addModel(new Category())->create($form);
 
-            if($request->ajax()) {
-                return response()->json([
-                    'category' => $category,
-                    'message' => __('admin.typed_data.success')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.success'))->success();
-                return redirect()->route('categories.index');
-            }
+            return $this->sendResponse($category, 'categories.index', 'admin.typed_data.success');
+            // if($request->ajax()) {
+            //     return response()->json([
+            //         'category' => $category,
+            //         'message' => __('admin.typed_data.success')
+            //     ]);
+            // }
+            // else {
+            //     flash(__('admin.typed_data.success'))->success();
+            //     return redirect()->route('categories.index');
+            // }
         }
 
         /**
@@ -135,8 +136,11 @@ class CategoryController extends Controller
             ]);
 
             $this->categoryRepository->addModel($category)->update($form, $category);
-            flash(__('admin.typed_data.updated'))->success();
-            return redirect()->route('categories.index');
+
+            return $this->sendResponse($category, 'categories.index', 'admin.typed_data.updated');
+
+            // flash(__('admin.typed_data.updated'))->success();
+            // return redirect()->route('categories.index');
         }
 
         /**
@@ -150,8 +154,7 @@ class CategoryController extends Controller
             //
             $this->categoryRepository->addModel($category)->delete($category);
 
-            // redirect
-            flash(__('admin.typed_data.deleted'))->success();
-            return redirect()->route('categories.index');
+            //redirect
+            return $this->sendResponse($category, 'categories.index', 'admin.typed_data.deleted');
         }
 }

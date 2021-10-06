@@ -15,7 +15,7 @@ use Ludows\Adminify\Libs\MenuBuilder;
 use Illuminate\Support\Str;
 
 use App\Adminify\Repositories\MenuRepository;
-use Ludows\Adminify\Http\Controllers\Controller;
+use App\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Traits\TableManagerable;
 use App\Adminify\Tables\MenuTable;
@@ -67,19 +67,7 @@ class MenuController extends Controller
             // dd($request);
             $form = $this->form(CreateMenu::class);
             $menu = $this->menuRepository->addModel(new Menu())->create($form);
-            if($request->ajax()) {
-                return response()->json([
-                    'menu' => $menu,
-                    'status' => __('admin.typed_data.success')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.success'))->success();
-                return redirect()->route('menus.index');
-            }
-            // $name = $request->input('name');
-
-            //
+            return $this->sendResponse($menu, 'menus.index', 'admin.typed_data.success');  
         }
 
         /**
@@ -191,7 +179,7 @@ class MenuController extends Controller
             $id = $request->id;
             $v = view();
 
-            $m = new \Ludows\Adminify\Models\MenuItem();
+            $m = new \App\Adminify\Models\MenuItem();
             $three = [];
             $html = [];
 
@@ -220,16 +208,7 @@ class MenuController extends Controller
             $menuThree = json_decode($fields['menuthree'], true);
             $menu = $this->menuRepository->addModel($menu)->update($menuThree, $menu);
 
-            if($request->ajax()) {
-                return response()->json([
-                    'menu' => $menu,
-                    'status' => __('admin.typed_data.updated')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.updated'))->success();
-                return redirect()->route('menus.index');
-            }
+            return $this->sendResponse($menu, 'menus.index', 'admin.typed_data.updated');  
         }
 
         /**
@@ -244,8 +223,7 @@ class MenuController extends Controller
 
             $this->menuRepository->addModel($menu)->delete($menu);
 
-            flash(__('admin.typed_data.deleted'))->success();
-            return redirect()->route('menus.index');
+            return $this->sendResponse($menu, 'menus.index', 'admin.typed_data.deleted');  
 
         }
 }

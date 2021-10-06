@@ -9,7 +9,7 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 use App\Adminify\Http\Requests\CreateUserRequest;
 use App\Adminify\Http\Requests\UserUpdateRequest;
-use Ludows\Adminify\Http\Controllers\Controller;
+use App\Adminify\Http\Controllers\Controller;
 
 use App\Adminify\Forms\CreateUser;
 use App\Adminify\Forms\UpdateUser;
@@ -76,16 +76,8 @@ class UserController extends Controller
             //
             $form = $this->form(CreateUser::class);
             $user = $this->userRepository->create($form, $request);
-            if($request->ajax()) {
-                return response()->json([
-                    'user' => $user,
-                    'status' => __('admin.typed_data.success')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.success'))->success();
-                return redirect()->route('users.index');
-            }
+
+            return $this->sendResponse($user, 'users.index', 'admin.typed_data.success');
         }
 
         /**
@@ -122,16 +114,7 @@ class UserController extends Controller
 
                 $this->userRepository->update($form, $request, $user);
 
-                if($request->ajax()) {
-                    return response()->json([
-                        'user' => $user,
-                        'status' => __('admin.typed_data.updated')
-                    ]);
-                }
-                else {
-                    flash(__('admin.typed_data.updated'))->success();
-                    return redirect()->route('users.index');
-                }
+                return $this->sendResponse($user, 'users.index', 'admin.typed_data.updated');
             }
             /**
             * Remove the specified resource from storage.
@@ -146,8 +129,7 @@ class UserController extends Controller
                 $this->userRepository->delete($user);
 
                 // redirect
-                flash(__('admin.typed_data.deleted'))->success();
-                return redirect()->route('users.index');
+                return $this->sendResponse($user, 'users.index', 'admin.typed_data.deleted');
             }
             public function showProfile(User $user, FormBuilder $formBuilder) {
                 
@@ -167,7 +149,6 @@ class UserController extends Controller
                 $formValues = $form->getFieldValues();
 
                 $this->userRepository->saveProfile($formValues);
-                flash(__('admin.typed_data.updated'))->success();
-                return redirect()->route('users.index');
+                return $this->sendResponse($user, 'users.index', 'admin.typed_data.updated');
             }
 }

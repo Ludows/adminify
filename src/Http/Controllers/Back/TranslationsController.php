@@ -14,7 +14,7 @@ use App\Adminify\Http\Requests\UpdateTranslationRequest;
 use App\Adminify\Models\Translations as Traductions;
 
 use App\Adminify\Repositories\TranslationRepository;
-use Ludows\Adminify\Http\Controllers\Controller;
+use App\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Traits\TableManagerable;
 use App\Adminify\Tables\TranslationTable;
@@ -72,16 +72,8 @@ class TranslationsController extends Controller
             //
             $form = $this->form(FormsCreateTranslation::class);
             $traduction = $this->translationRepository->addModel(new Traductions())->create($form);
-            if($request->ajax()) {
-                return response()->json([
-                    'traduction' => $traduction,
-                    'status' => __('admin.typed_data.success')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.success'))->success();
-                return redirect()->route('traductions.index');
-            }
+
+            return $this->sendResponse($traduction, 'traductions.index', 'admin.typed_data.success');
         }
 
         /**
@@ -134,16 +126,7 @@ class TranslationsController extends Controller
 
             $this->translationRepository->addModel($traduction)->update($form, $traduction);
 
-            if($request->ajax()) {
-                return response()->json([
-                    'traduction' => $traduction,
-                    'status' => __('admin.typed_data.updated')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.updated'))->success();
-                return redirect()->route('traductions.index');
-            }
+            return $this->sendResponse($traduction, 'traductions.index', 'admin.typed_data.updated');
         }
 
         /**
@@ -158,7 +141,6 @@ class TranslationsController extends Controller
             $this->translationRepository->addModel($traduction)->delete($traduction);
 
             // redirect
-            flash(__('admin.typed_data.deleted'))->success();
-            return redirect()->route('traductions.index');
+            return $this->sendResponse($traduction, 'traductions.index', 'admin.typed_data.deleted');
         }
 }

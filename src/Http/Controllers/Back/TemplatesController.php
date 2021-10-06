@@ -18,7 +18,7 @@ use App\Adminify\Repositories\TemplatesRepository;
 use Ludows\Adminify\Traits\TableManagerable;
 use App\Adminify\Tables\TemplatesTable;
 
-use Ludows\Adminify\Http\Controllers\Controller;
+use App\Adminify\Http\Controllers\Controller;
 
 class TemplatesController extends Controller
 {
@@ -74,16 +74,7 @@ class TemplatesController extends Controller
 
             $content_template = $this->templatesRepository->addModel(new Templates())->create($form);
 
-            if($request->ajax()) {
-                return response()->json([
-                    'templates' => $content_template,
-                    'message' => __('admin.typed_data.success')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.success'))->success();
-                return redirect()->route('templates.index');
-            }
+            return $this->sendResponse($content_template, 'templates.index', 'admin.typed_data.success');
         }
 
         /**
@@ -125,8 +116,7 @@ class TemplatesController extends Controller
             ]);
 
             $this->templatesRepository->addModel($template)->update($form, $template);
-            flash(__('admin.typed_data.updated'))->success();
-            return redirect()->route('templates.index');
+            return $this->sendResponse($template, 'templates.index', 'admin.typed_data.updated');
         }
 
         public function setContent(Request $request) {
@@ -154,7 +144,6 @@ class TemplatesController extends Controller
             $this->templatesRepository->delete($template);
 
             // redirect
-            flash(__('admin.typed_data.deleted'))->success();
-            return redirect()->route('templates.index');
+            return $this->sendResponse($template, 'templates.index', 'admin.typed_data.deleted');
         }
 }

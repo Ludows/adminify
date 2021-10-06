@@ -15,7 +15,7 @@ use App\Adminify\Forms\UpdatePost;
 use App\Adminify\Forms\SeoForm;
 
 use App\Adminify\Models\Post;
-use Ludows\Adminify\Http\Controllers\Controller;
+use App\Adminify\Http\Controllers\Controller;
 
 
 use App\Adminify\Repositories\PostRepository;
@@ -81,16 +81,7 @@ class PostController extends Controller
             $form = $this->form(CreatePost::class);
             $post = $this->postRepository->addModel(new Post())->create($form);
 
-            if($request->ajax()) {
-                return response()->json([
-                    'media' => $post,
-                    'status' => __('admin.typed_data.success')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.success'))->success();
-                return redirect()->route('posts.index');
-            }
+            return $this->sendResponse($post, 'posts.index', 'admin.typed_data.success');
         }
 
         /**
@@ -170,17 +161,7 @@ class PostController extends Controller
                $post = $this->postRepository->addModel($post)->update($form, $post);
             // }
 
-
-            if($request->ajax()) {
-                return response()->json([
-                    'post' => $post,
-                    'status' => __('admin.typed_data.updated')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.updated'))->success();
-                return redirect()->route('posts.index');
-            }
+            return $this->sendResponse($post, 'posts.index', 'admin.typed_data.updated');
         }
 
         /**
@@ -196,7 +177,6 @@ class PostController extends Controller
             $this->postRepository->delete($post);
 
             // redirect
-            flash(__('admin.typed_data.deleted'))->success();
-            return redirect()->route('posts.index');
+            return $this->sendResponse($post, 'posts.index', 'admin.typed_data.deleted');
         }
 }

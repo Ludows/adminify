@@ -9,7 +9,7 @@ use App\Adminify\Http\Requests\CreateMediaRequest;
 use App\Adminify\Http\Requests\UpdateMediaRequest;
 use App\Adminify\Repositories\MediaRepository;
 
-use Ludows\Adminify\Http\Controllers\Controller;
+use App\Adminify\Http\Controllers\Controller;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
@@ -75,17 +75,7 @@ class MediaController extends Controller
 
                 // the create method return the media created
                 $media = $this->mediaRepository->addModel(new Media())->create($form);
-                if($request->ajax()) {
-                    return response()->json([
-                        'media' => $media,
-                        'status' => __('admin.typed_data.success')
-                    ]);
-                }
-                else {
-                    flash(__('admin.typed_data.success'))->success();
-                    return redirect()->route('medias.index');
-                }
-
+                return $this->sendResponse($media, 'medias.index', 'admin.typed_data.success');
         }
 
         /**
@@ -135,16 +125,7 @@ class MediaController extends Controller
 
             $this->mediaRepository->addModel($media)->update($form, $media);
 
-            if($request->ajax()) {
-                return response()->json([
-                    'media' => $media,
-                    'status' => __('admin.typed_data.updated')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.updated'))->success();
-                return redirect()->route('medias.index');
-            }
+            return $this->sendResponse($media, 'medias.index', 'admin.typed_data.updated');
         }
 
         /**
@@ -159,8 +140,6 @@ class MediaController extends Controller
             app('UniSharp\LaravelFilemanager\Controllers\DeleteController')->getDelete();
 
             $this->mediaRepository->addModel($media)->delete($media);
-            // redirect
-            flash(__('admin.typed_data.deleted'))->success();
-            return redirect()->route('medias.index');
+            return $this->sendResponse($media, 'medias.index', 'admin.typed_data.deleted');            
         }
 }

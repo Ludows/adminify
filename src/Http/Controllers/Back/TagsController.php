@@ -12,7 +12,7 @@ use App\Adminify\Http\Requests\UpdateTagRequest as UpdateTagRequest;
 use App\Adminify\Models\Tag as TagModel;
 
 use App\Adminify\Repositories\TagRepository;
-use Ludows\Adminify\Http\Controllers\Controller;
+use App\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Traits\TableManagerable;
 use App\Adminify\Tables\TagTable;
@@ -69,16 +69,8 @@ class TagsController extends Controller
             //
             $form = $this->form(CreateTagForm::class);
             $tag = $this->tagRepository->addModel(new TagModel())->create($form);
-            if($request->ajax()) {
-                return response()->json([
-                    'tag' => $tag,
-                    'status' => __('admin.typed_data.success')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.success'))->success();
-                return redirect()->route('tags.index');
-            }
+
+            return $this->sendResponse($tag, 'tags.index', 'admin.typed_data.success');
         }
 
         /**
@@ -120,16 +112,7 @@ class TagsController extends Controller
 
             $this->tagRepository->addModel($tag)->update($form, $tag);
 
-            if($request->ajax()) {
-                return response()->json([
-                    'tag' => $tag,
-                    'status' => __('admin.typed_data.updated')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.updated'))->success();
-                return redirect()->route('tags.index');
-            }
+            return $this->sendResponse($tag, 'tags.index', 'admin.typed_data.updated');
         }
 
         /**
@@ -144,7 +127,6 @@ class TagsController extends Controller
             $this->tagRepository->addModel($tag)->delete($tag);
 
             // redirect
-            flash(__('admin.typed_data.deleted'))->success();
-            return redirect()->route('tags.index');
+            return $this->sendResponse($tag, 'tags.index', 'admin.typed_data.deleted');
         }
 }

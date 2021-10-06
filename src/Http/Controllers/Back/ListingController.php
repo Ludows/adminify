@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
-use Ludows\Adminify\Http\Controllers\Controller;
+use App\Adminify\Http\Controllers\Controller;
 
 use App\Adminify\Models\Statuses;
 class ListingController extends Controller

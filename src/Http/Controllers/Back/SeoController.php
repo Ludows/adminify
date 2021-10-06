@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use App\Adminify\Models\Seo;
 
 use App\Adminify\Repositories\SeoRepository;
-use Ludows\Adminify\Http\Controllers\Controller;
+use App\Adminify\Http\Controllers\Controller;
 
 
 class SeoController extends Controller
@@ -93,15 +93,6 @@ class SeoController extends Controller
 
             $this->seoRepository->addModel($model)->findOrCreate($model , $form);
 
-            if($request->ajax()) {
-                return response()->json([
-                    'seo' => $seo,
-                    'status' => __('admin.typed_data.updated')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.updated'))->success();
-                return redirect( url()->previous() );
-            }
+            return $this->sendResponseWith($model, url()->previous() , 'admin.typed_data.updated');
         }
 }

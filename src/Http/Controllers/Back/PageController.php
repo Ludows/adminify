@@ -5,15 +5,13 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 use App\Adminify\Models\Page;
 
 use Illuminate\Http\Request;
-use Ludows\Adminify\Http\Controllers\Controller;
+use App\Adminify\Http\Controllers\Controller;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 use App\Adminify\Forms\CreatePage;
 use App\Adminify\Forms\UpdatePage;
-
-use App\Adminify\Forms\SeoForm;
 
 use App\Adminify\Http\Requests\CreatePageRequest;
 use App\Adminify\Http\Requests\UpdatePageRequest;
@@ -78,16 +76,8 @@ class PageController extends Controller
             //
             $form = $this->form(CreatePage::class);
             $page = $this->pageRepository->addModel(new Page())->create($form);
-            if($request->ajax()) {
-                return response()->json([
-                    'page' => $page,
-                    'status' => __('admin.typed_data.success')
-                ]);
-            }
-            else {
-                flash(__('admin.typed_data.success'))->success();
-                return redirect()->route('pages.index');
-            }
+
+            return $this->sendResponse($page, 'pages.index', 'admin.typed_data.success');
         }
 
         /**
@@ -111,25 +101,11 @@ class PageController extends Controller
         {
             //
             $page->checkForTraduction();
-            // $page->flashForMissing();
-
-            // dd($page);
-
-            // if($request->exists('seo')) {
-            //     $form = $formBuilder->create(SeoForm::class, [
-            //         'method' => 'PUT',
-            //         'url' => route('pages.update', ['page' => $page->id]),
-            //         'model' => $page
-            //     ]);
-            // }
-            // else {
                 $form = $formBuilder->create(UpdatePage::class, [
                     'method' => 'PUT',
                     'url' => route('pages.update', ['page' => $page->id]),
                     'model' => $page
                 ]);
-            // }
-
 
             return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
         }
@@ -164,25 +140,8 @@ class PageController extends Controller
                 $page = $this->pageRepository->addModel($page)->update($form, $page);
             // }
 
-            if($request->ajax()) {
+            return $this->sendResponse($page, 'pages.index', 'admin.typed_data.updated');
 
-                $ar = [
-                    'status' => __('admin.typed_data.updated')
-                ];
-
-                // if($isSeo) {
-                //     $ar['seo'] = $seo;
-                // }
-                // else {
-                    $ar['seo'] = $page;
-                // }
-
-                return response()->json($ar);
-            }
-            else {
-                flash(__('admin.typed_data.updated'))->success();
-                return redirect()->route('pages.index');
-            }
         }
 
         /**
@@ -197,7 +156,6 @@ class PageController extends Controller
             $this->pageRepository->addModel($page)->delete($page);
 
             // redirect
-            flash(__('admin.typed_data.deleted'))->success();
-            return redirect()->route('pages.index');
+            return $this->sendResponse($page, 'pages.index', 'admin.typed_data.deleted');
         }
 }

@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
-use Ludows\Adminify\Http\Controllers\Controller;
+use App\Adminify\Http\Controllers\Controller;
 
 use App\Adminify\Models\Statuses;
 class TrashController extends Controller
@@ -36,8 +36,7 @@ class TrashController extends Controller
 
             $m->save();
 
-            flash(__('admin.typed_data.updated'))->success();
-            return redirect(url()->previous());
+            return $this->sendResponseWith($m, url()->previous(), 'admin.typed_data.updated');
         }
         else {
             return abort(403);
