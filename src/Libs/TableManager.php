@@ -202,7 +202,7 @@ class TableManager
             'count' => count($this->_columns[$cols[0]]),
             'css' => $this->getCss(),
             'js' => $this->getJs(),
-            'name' => $name,
+            'name' => Str::title($name),
             'areas' => $areas
         ];
 
