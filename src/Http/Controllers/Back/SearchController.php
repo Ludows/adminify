@@ -49,29 +49,20 @@ class SearchController extends Controller
     }
     public function getModels() {
 
-        $pathModels = app_path('Models');
-
-        $files = File::files($pathModels);
-
-        $namespaceBase = 'App\Models';
-
-        $a = [];
+        $Models = adminify_get_classes_by_folders(['app:models', 'app:adminify:models']);
 
         $groups = array_keys( get_site_key('searchable') );
 
-        foreach($files as $f){
-            $namedClass = str_replace('.'.$f->getExtension(), '', $f->getBaseName());
+        foreach($Models as $Model){
             // dd($namedClass);
+            $m = app($Model);
 
-            $fullModelClass = $namespaceBase . '\\'. $namedClass;
-            $m = app($fullModelClass);
-
-            if($m->enable_searchable) {
+            if(property_exists($m, 'enable_searchable') && $m->enable_searchable) {
                 $groups_model = $m->groups_searchable;
                 foreach ($groups_model as $group) {
                     # code...
                     if(in_array($group, $groups)) {
-                        $a[] = $fullModelClass;
+                        $a[] = $Model;
                     }
                 }
 

@@ -43,7 +43,7 @@ class SeoController extends Controller
                 abort(403);
             }
 
-            $model_key = get_site_key('register.'.$type);
+            $model_key = adminify_get_class($type, ['app:models', 'app:adminify:models'], false);
 
             if($model_key == null) {
                 abort(403);
@@ -78,7 +78,7 @@ class SeoController extends Controller
                 abort(403);
             }
 
-            $model_key = get_site_key('register.'.$type);
+            $model_key = adminify_get_class($type, ['app:models', 'app:adminify:models'], false);
 
             if($model_key == null) {
                 abort(403);

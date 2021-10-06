@@ -12,7 +12,7 @@ class FinderController extends Controller
     public function index(Request $request) {
 
         $resource = $request->type;
-        $resoucable = get_site_key('register.'.$resource);
+        $resoucable = adminify_get_class($resource, ['app:models', 'app:adminify:models'], false);
         $multi = $request->useMultilang;
         $lang = lang();
 
