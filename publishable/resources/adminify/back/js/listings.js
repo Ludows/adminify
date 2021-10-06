@@ -94,11 +94,13 @@ jQuery(document).ready(function ($) {
         // if(statusId != -1) {
         o['status'] = statusId;
         // }
-        // if(fromBtns) {
-        o['offset'] = _direction == 'next' ? parseInt( listingBlock.attr('data-page') ) * window.listingConfig.limit : ( parseInt( listingBlock.attr('data-page') ) * window.listingConfig.limit ) - (window.listingConfig.limit * 2);
-
-        console.log('offset', o['offset']);
-        // }
+        if(_direction) {
+            o['offset'] = _direction == 'next' ? parseInt( listingBlock.attr('data-page') ) * window.listingConfig.limit : ( parseInt( listingBlock.attr('data-page') ) * window.listingConfig.limit ) - (window.listingConfig.limit * 2);
+            console.log('offset', o['offset']);
+        }
+        else {
+            o['offset'] = 0;
+        }
 
 
         if(searchhasbeenTriggered == false) {
