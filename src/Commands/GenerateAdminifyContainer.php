@@ -79,7 +79,7 @@ class GenerateAdminifyContainer extends Command
                             $aliases = $m->getAdminifyAliases();
                             foreach ($aliases as $alias) {
                                 # code...
-                                $registrar[ $alias ] = $laravelNamespace;
+                                $registrar[ Str::title($alias) ] = $laravelNamespace;
                             }
                         }
                     }

@@ -4,6 +4,7 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
 use App\Adminify\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 
 use Ludows\Adminify\Libs\SitemapRender;
 
@@ -11,7 +12,7 @@ class FinderController extends Controller
 {
     public function index(Request $request) {
 
-        $resource = $request->type;
+        $resource = Str::title($request->type);
         $resoucable = adminify_get_class($resource, ['app:models', 'app:adminify:models'], false);
         $multi = $request->useMultilang;
         $lang = lang();
