@@ -9,7 +9,7 @@ export default function select2Inititalization(fields) {
         if(el.withCreate) {
             var btnCallModal = $(el.selector+ ' .js-handle-form-create');
             var Modale = $('#'+el.modal_attributes.id);
-            
+
             btnCallModal.on('click', function(e) {
                 e.preventDefault();
                 if(Modale.length > 0) {
@@ -32,12 +32,12 @@ export default function select2Inititalization(fields) {
                 })
             }
             else {
-                loadDefaultProcess(Modale);
+                loadDefaultProcess(Modale, el, select2boxe);
             }
 
         }
 
-        
+
 
         select2boxe.select2(el.options);
     })
@@ -53,7 +53,8 @@ export default function select2Inititalization(fields) {
             headers: { 'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content') },
             success: function(data) {
                 context.append(data.html)
-                loadDefaultProcess(context.parent(), el, select2boxe);
+                // console.log(context.parents('.modal'));
+                loadDefaultProcess(context.parents('.modal'), el, select2boxe);
             },
             error: function(err) {
                 console.log('whoooops', err);
@@ -68,7 +69,7 @@ export default function select2Inititalization(fields) {
             e.preventDefault();
 
             var datas = ModaleForm.serializeFormJSON();
-            
+
             // console.log(datas)
             $.ajax({
                 method: ModaleForm.attr('method'),
