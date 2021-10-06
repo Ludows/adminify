@@ -17,11 +17,11 @@ class TrashController extends Controller
         $type = $request->type;
         $id = $request->id;
 
-        $cl = get_site_key('register.'.$type);
+        $cl = adminify_get_class($type, ['app:models', 'app:adminify:models'], false);
         $enable_features = get_site_key('enables_features');
         $singular = singular($type);
 
-        if($cl == null && isset($enable_features[$singular]) && $enable_features[$singular] == false) {
+        if($cl == null && isset($enable_features[$singular]) && $enable_features[ strtolower($singular) ] == false) {
             abort(403);
         }
 
