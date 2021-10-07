@@ -1,3 +1,3 @@
 @if (isset($interface))
-    {!! interface->render() !!}
+    {!! $interface->render() !!}
 @endif
