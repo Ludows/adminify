@@ -55,12 +55,15 @@ class FormsController extends Controller
             */
         public function create(FormBuilder $formBuilder)
         {
-            $form = $formBuilder->create(CreateForms::class, [
-                'method' => 'POST',
-                'url' => route('forms.store')
-            ]);
+
+            $interface = interfaces('formbuilder');
+
+            // $form = $formBuilder->create(CreateForms::class, [
+            //     'method' => 'POST',
+            //     'url' => route('forms.store')
+            // ]);
             //
-            return view("adminify::layouts.admin.pages.create", ['form' => $form]);
+            return view("adminify::layouts.admin.pages.create", ['interface' => $interface]);
         }
 
         /**

@@ -184,6 +184,7 @@ return [
     ],
 
     'interfaces' => [
-        'home' => \App\Adminify\Interfacable\DashboardManager::class
+        'home' => \App\Adminify\Interfacable\DashboardManager::class,
+        'formbuilder' => \App\Adminify\Interfacable\FormBuilderManager::class,
     ],
 ];
