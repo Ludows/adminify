@@ -11,14 +11,9 @@ class FormBuilderManager extends InterfacableManager {
 
     public function blocks() {
         return [
-        //     \App\Adminify\Interfacable\Blocks\PageCard::class,
-        //     \App\Adminify\Interfacable\Blocks\PostCard::class,
-        //     \App\Adminify\Interfacable\Blocks\CategoryCard::class,
-        //     \App\Adminify\Interfacable\Blocks\TranslationsCard::class,
-        //     \App\Adminify\Interfacable\Blocks\MediaCard::class,
-        //     \App\Adminify\Interfacable\Blocks\TagCard::class,
-        //     \App\Adminify\Interfacable\Blocks\MailCard::class,
-        //     \App\Adminify\Interfacable\Blocks\MenuCard::class, 
+            \App\Adminify\Interfacable\Blocks\FormBuilder\TemplateBlock::class,
+            \App\Adminify\Interfacable\Blocks\FormBuilder\FormBlock::class,
+            \App\Adminify\Interfacable\Blocks\FormBuilder\FieldsBlock::class,
         ];
     }
 }
