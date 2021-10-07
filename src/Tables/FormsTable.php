@@ -4,10 +4,7 @@ namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
 use App\Adminify\Models\Forms as FormModel;
-use App\Adminify\Dropdowns\Form as FormDropdownsManager;
-
-use App\Adminify\Models\Statuses;
-
+use App\Adminify\Dropdowns\Forms as FormDropdownsManager;
 
 class FormsTable extends TableManager {
     public function getTemplateByName($name) {
@@ -57,11 +54,11 @@ class FormsTable extends TableManager {
         }
         else {
             if($request->useMultilang) {
-                $forms = FormModel::limit( $config['limit'] )->status(Statuses::TRASHED_ID, '!=')->lang($request->lang)->get();
+                $forms = FormModel::limit( $config['limit'] )->lang($request->lang)->get();
                 // dd($categories);
             }
             else {
-                $forms = FormModel::limit( $config['limit'] )->status(Statuses::TRASHED_ID, '!=')->get();
+                $forms = FormModel::limit( $config['limit'] )->get();
             }
         }
             $model = new FormModel();
