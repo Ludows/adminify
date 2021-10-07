@@ -18,6 +18,10 @@ class Forms extends ClassicModel
     public $searchable_label = 'title';
 
     protected $fillable = [
+        'title',
+        'slug',
+        'fields_id',
+        'user_id'
     ];
     
     /**

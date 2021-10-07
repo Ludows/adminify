@@ -21,6 +21,7 @@ return [
         'Category',
         'Tag',
         'Media',
+        'Forms',
         'Menu',
         'Comment',
         'Settings',
