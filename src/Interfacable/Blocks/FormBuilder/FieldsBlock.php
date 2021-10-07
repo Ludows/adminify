@@ -4,6 +4,7 @@ namespace Ludows\Adminify\Interfacable\Blocks\FormBuilder;
 
 use Ludows\Adminify\Libs\InterfacableBlock;
 
+use Kris\LaravelFormBuilder\Field;
 class FieldsBlock extends InterfacableBlock {
     public static function getNamedBlock() {
         return 'Fields Block';
@@ -18,5 +19,14 @@ class FieldsBlock extends InterfacableBlock {
     }
     public function getView() {
         return 'adminify::layouts.admin.interfacable.formbuilder.fields';
+    }
+
+    public function addToRender() {
+
+        $reflexion = new \ReflectionClass(Field::class);
+
+        return [
+            'fields' => []
+        ]
     }
 }
