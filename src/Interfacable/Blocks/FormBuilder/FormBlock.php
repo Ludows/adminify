@@ -17,6 +17,6 @@ class FormBlock extends InterfacableBlock {
 
     }
     public function getView() {
-        return 'adminify::layouts.admin.interfacable.block.formbuilder.form';
+        return 'adminify::layouts.admin.interfacable.formbuilder.form';
     }
 }
