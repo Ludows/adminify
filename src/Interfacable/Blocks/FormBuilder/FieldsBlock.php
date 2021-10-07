@@ -5,6 +5,9 @@ namespace Ludows\Adminify\Interfacable\Blocks\FormBuilder;
 use Ludows\Adminify\Libs\InterfacableBlock;
 
 use Kris\LaravelFormBuilder\Field;
+use Illuminate\Support\Arr;
+
+
 class FieldsBlock extends InterfacableBlock {
     public static function getNamedBlock() {
         return 'Fields Block';
@@ -24,9 +27,13 @@ class FieldsBlock extends InterfacableBlock {
     public function addToRender() {
 
         $reflexion = new \ReflectionClass(Field::class);
+        $constants = $reflexion->getConstants();
+        $configBuilder = array_keys(config('laravel-form-builder.custom_fields'));
+
+        $concat =  Arr::flatten(array_merge($constants, $configBuilder));
 
         return [
-            'fields' => []
-        ]
+            'fields' => $concat
+        ];
     }
 }
