@@ -7,20 +7,19 @@ use Spatie\Feed\FeedItem;
 use Spatie\Searchable\SearchResult;
 use Spatie\Menu\Laravel\Link;
 
+use App\Adminify\Models\FormField;
+
 class Forms extends ClassicModel
 {
     protected $table = 'forms';
 
     public $MultilangTranslatableSwitch = ['title'];
 
-    public $sitemapCallable = 'title';
-
     public $searchable_label = 'title';
 
     protected $fillable = [
         'title',
         'slug',
-        'fields_id',
         'user_id'
     ];
     
@@ -32,6 +31,11 @@ class Forms extends ClassicModel
 
     public function getTableListing() {
         return \App\Adminify\Tables\FormsTable::class;
+    }
+
+    public function fields()
+    {
+        return $this->hasMany(FormField::class);
     }
 
     public function toFeedItem(): FeedItem {}

@@ -3,6 +3,10 @@
 namespace Ludows\Adminify\Interfacable\Blocks\FormBuilder;
 
 use Ludows\Adminify\Libs\InterfacableBlock;
+use App\Adminify\Models\Forms;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Route;
+
 
 class FormBlock extends InterfacableBlock {
     public static function getNamedBlock() {
@@ -11,7 +15,19 @@ class FormBlock extends InterfacableBlock {
     public function query() {
         $r = $this->getRequest();
         $query = null;
-        return $query;
+        $requestedNameRoute = $r->route()->getName();
+        $routeSpl = explode('.', $requestedNameRoute);
+
+        $singular = Str::singular($routeSpl['0']);
+        $model = \Route::current()->parameter($singular);
+        if($model != null) {
+            return $model;
+        }
+        else {
+            $query = new Forms();
+            // dd($query->fields());
+            return $query;
+        }
     }
     public function handle() {
 
