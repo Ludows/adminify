@@ -21,13 +21,9 @@ class FormBlock extends InterfacableBlock {
         $singular = Str::singular($routeSpl['0']);
         $model = \Route::current()->parameter($singular);
         if($model != null) {
-            return $model;
+            return $model->fields;
         }
-        else {
-            $query = new Forms();
-            // dd($query->fields());
-            return $query;
-        }
+        return $query;
     }
     public function handle() {
 

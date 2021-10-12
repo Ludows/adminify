@@ -3,11 +3,24 @@
 namespace Ludows\Adminify\Forms;
 
 use Kris\LaravelFormBuilder\Form;
-use Kris\LaravelFormBuilder\Field;
-
 class CreateForms extends Form
 {
     public function buildForm()
     {
+        $this->add('user_id', 'hidden', [
+            'value' => user()->id
+        ]);
+        $this->add('title', 'text', [
+            'attr' => [
+                'placeholder' => __('adminify.formbuilder.form')
+            ]
+        ]);
+        $this->add('fields', 'collection', [
+            'type' => 'form',
+            'options' => [    // these are options for a single type
+                'class' => 'App\Adminify\Forms\CreateFields',
+                'label' => false,
+            ]
+        ]);
     }
 }
