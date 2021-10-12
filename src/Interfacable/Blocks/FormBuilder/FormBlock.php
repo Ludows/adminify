@@ -6,9 +6,12 @@ use Ludows\Adminify\Libs\InterfacableBlock;
 use App\Adminify\Models\Forms;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
-
+use App\Adminify\Forms\CreateForms;
+use Kris\LaravelFormBuilder\FormBuilder;
+use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 class FormBlock extends InterfacableBlock {
+    use FormBuilderTrait;
     public static function getNamedBlock() {
         return 'Form Block';
     }
@@ -30,5 +33,15 @@ class FormBlock extends InterfacableBlock {
     }
     public function getView() {
         return 'adminify::layouts.admin.interfacable.formbuilder.form';
+    }
+    public function addToRender() {
+        $f = $this->form(CreateForms::class, [
+            'method' => 'POST',
+            'action' => route('forms.store')
+        ]);
+
+        return [
+            'form' => $f
+        ];
     }
 }
