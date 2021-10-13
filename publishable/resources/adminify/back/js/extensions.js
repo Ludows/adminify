@@ -5,6 +5,10 @@ import {
     createLaravelLocalization
 } from '@wesleyhf/laravel-localization-js';
 
+import Sortable from 'sortablejs';
+
+window.Sortable = Sortable;
+
 window.createLaravelLocalization = createLaravelLocalization;
 
 require('select2');

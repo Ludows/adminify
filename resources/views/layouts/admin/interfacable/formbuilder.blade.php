@@ -10,3 +10,7 @@
         </div>
     </div>
 </div>
+
+@push('js')
+    <script src="{{ asset('adminify') }}/back/js/formbuilder.js"></script>  
+@endpush

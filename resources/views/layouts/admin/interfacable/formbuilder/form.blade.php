@@ -5,7 +5,7 @@
         </div>
         <div class="card-body">
             <div class="row js-dropzone">
-                <div class="#Accordion_zone">
+                <div id="Accordion_zone">
                     <div class="accordion" id="formBuilderAccordion">
                         @if($isCreate && empty($query))
                             {{--  // aucun champ et c'est une création  --}}
