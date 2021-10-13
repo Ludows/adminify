@@ -8,8 +8,5 @@
         <div class="col-lg-4 col-12">
             {!! $blocks['fields-block']->render() !!}
         </div>
-        <div id="templateFormField" class="d-none">
-            {!! $blocks['template-block']->render() !!}
-        </div>
     </div>
 </div>

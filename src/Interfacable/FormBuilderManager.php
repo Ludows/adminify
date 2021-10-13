@@ -11,7 +11,6 @@ class FormBuilderManager extends InterfacableManager {
 
     public function blocks() {
         return [
-            \App\Adminify\Interfacable\Blocks\FormBuilder\TemplateBlock::class,
             \App\Adminify\Interfacable\Blocks\FormBuilder\FormBlock::class,
             \App\Adminify\Interfacable\Blocks\FormBuilder\FieldsBlock::class,
         ];
