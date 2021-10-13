@@ -6,7 +6,7 @@
     <div class="card">
       <div class="card-header" id="heading{{ $identifier }}">
         <h2 class="mb-0">
-          <button id="titleChange{{ $identifier }}" class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <button id="titleChange{{ $identifier }}" class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse{{ $identifier }}" aria-expanded="false" aria-controls="collapse{{ $identifier }}">
             {{ $title }}
           </button>
         </h2>

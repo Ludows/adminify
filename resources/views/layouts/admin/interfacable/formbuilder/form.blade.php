@@ -8,7 +8,7 @@
                 <div class="#Accordion_zone">
                     <div class="accordion" id="formBuilderAccordion">
                         @if($isCreate && empty($query))
-                            // aucun champ et c'est une création
+                            {{--  // aucun champ et c'est une création  --}}
                             {{ __('admin.formbuilder.noFields') }}
                         @endif
                         @if(!empty($query) && !$isCreate)

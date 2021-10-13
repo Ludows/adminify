@@ -22,5 +22,6 @@ class CreateForms extends Form
                 'label' => false,
             ]
         ]);
+        $this->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
 }
