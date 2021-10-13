@@ -14,15 +14,17 @@
                         @if(!empty($query) && !$isCreate)
                             @foreach ($query as $field)
                                 @include('adminify::layouts.admin.interfacable.formbuilder.card-group', [
-                                    'item' => $field
+                                    'item' => $field,
+                                    'fields' => $form->fields->getChildren()[0],
+                                    'index' => $loop->index
                                 ])
                             @endforeach
                         @endif
                     </div>
-                    
+
                 </div>
-                
-                
+
+
             </div>
         </div>
     </div>
