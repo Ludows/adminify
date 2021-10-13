@@ -13,10 +13,7 @@ class CreateFields extends Form
             ]
         ]);
 
-        $this->add('required', 'hidden', [
-            'value' => 0
-        ])
-        ->add('required', 'checkbox', [
+        $this->add('required', 'checkbox', [
             'label_show' => true,
             'label' => __('admin.formbuilder.required'),
             'wrapper' => ['class' => 'custom-control custom-control-alternative custom-checkbox'],
@@ -28,9 +25,9 @@ class CreateFields extends Form
                 'placeholder' => __('adminify.formbuilder.max_length')
             ]
         ])
-        ->add('label_show', 'hidden', [
-            'value' => 0
-        ])
+        // ->add('label_show', 'hidden', [
+        //     'value' => 0
+        // ])
         ->add('label_show', 'checkbox', [
             'label_show' => true,
             'label' => __('admin.formbuilder.label_show'),
