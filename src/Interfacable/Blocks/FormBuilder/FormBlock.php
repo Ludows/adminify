@@ -23,6 +23,9 @@ class FormBlock extends InterfacableBlock {
 
         $singular = Str::singular($routeSpl['0']);
         $model = \Route::current()->parameter($singular);
+
+        $this->share('model_by_route', $model);
+
         if($model != null) {
             return $model->fields;
         }
@@ -40,14 +43,11 @@ class FormBlock extends InterfacableBlock {
             'url' => route('forms.store')
         ]);
 
-        $model = \Route::current()->parameter($singular);
-        if($model != null) {
-            return $model->fields;
-        }
+       $shared = $this->getShared('model_by_route');
 
         return [
             'form' => $f,
-            'isCreate' => empty($model) ? true : false
+            'isCreate' => empty($shared) ? true : false
         ];
     }
 }

@@ -16,6 +16,7 @@ class InterfacableBlock
         $this->query = null;
         $this->show = true;
         $this->limit = $this->limit();
+        $this->shares = [];
     }
     public function getModel() {
         return $this->model;
@@ -30,6 +31,21 @@ class InterfacableBlock
 
     public function limit() {
         return -1;
+    }
+
+    public function share($name, $array = [], $remove = false) {
+
+        if($remove) {
+           unset($this->shares[$name]);
+        }
+        else {
+            $this->shares[$name] = $array;
+        }
+        return $this;
+    }
+
+    public function getShared($name) {
+        return $this->shares[$name] ?? null;
     }
 
     public function getLimit() {
