@@ -5,11 +5,11 @@
         </div>
         <div class="card-body">
             <div class="row js-dropzone">
-                <div id="Accordion_zone">
+                <div id="Accordion_zone" class="col-12">
                     <div class="accordion" id="formBuilderAccordion">
                         @if($isCreate && empty($query))
                             {{--  // aucun champ et c'est une création  --}}
-                            {{ __('admin.formbuilder.noFields') }}
+                            <span id="noFieldsText">{{ __('admin.formbuilder.noFields') }}</span>
                         @endif
                         @if(!empty($query) && !$isCreate)
                             @foreach ($query as $field)
