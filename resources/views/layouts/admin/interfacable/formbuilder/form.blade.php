@@ -7,10 +7,16 @@
             <div class="row js-dropzone">
                 <div class="#Accordion_zone">
                     <div class="accordion" id="formBuilderAccordion">
-                        @if(!empty($query))
-    
-                        @else
-                            Create your fields
+                        @if($isCreate && empty($query))
+                            // aucun champ et c'est une création
+                            {{ __('admin.formbuilder.noFields') }}
+                        @endif
+                        @if(!empty($query) && !$isCreate)
+                            @foreach ($query as $field)
+                                @include('adminify::layouts.admin.interfacable.formbuilder.card-group', [
+                                    'item' => $field
+                                ])
+                            @endforeach
                         @endif
                     </div>
                     

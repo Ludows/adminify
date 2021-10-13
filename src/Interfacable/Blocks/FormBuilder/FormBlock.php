@@ -37,11 +37,17 @@ class FormBlock extends InterfacableBlock {
     public function addToRender() {
         $f = $this->form(CreateForms::class, [
             'method' => 'POST',
-            'action' => route('forms.store')
+            'url' => route('forms.store')
         ]);
 
+        $model = \Route::current()->parameter($singular);
+        if($model != null) {
+            return $model->fields;
+        }
+
         return [
-            'form' => $f
+            'form' => $f,
+            'isCreate' => empty($model) ? true : false
         ];
     }
 }
