@@ -20,6 +20,8 @@ class CreateForms extends Form
             'options' => [    // these are options for a single type
                 'class' => 'App\Adminify\Forms\CreateFields',
                 'label' => false,
+                'items' => [],
+                'template' => 'adminify::layouts.admin.interfacable.formbuilder.card-group'
             ]
         ]);
         $this->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
