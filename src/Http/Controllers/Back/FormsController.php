@@ -5,6 +5,7 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 
 use App\Adminify\Models\Forms;
 
+use Illuminate\Http\Request;
 use App\Adminify\Http\Requests\CreateFormsRequest;
 use App\Adminify\Http\Requests\UpdateFormsRequest;
 use App\Adminify\Repositories\FormsRepository;
