@@ -26,11 +26,30 @@ jQuery(document).ready(function ($) {
     function onAddToAccordion(evt) {
         console.log(evt);
         let noFieldsTextSpan = $('#noFieldsText');
+        let cloned_btn = $(evt.target);
 
-        if(Accordion_zone.children() > 0) {
+        console.log(noFieldsTextSpan)
+        if(Accordion_zone.children().length > 0) {
             if(noFieldsTextSpan.length > 0) {
                 noFieldsTextSpan.remove();
             }
+
+            $.ajax({
+                'method' : 'POST',
+                'url' : Route('forms.addField'),
+                'headers': {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                'data' : {}
+            })
+            .done((data) => {
+                console.log('success', data);
+            })
+            .fail((err) => {
+                console.log(err)
+            })
+
+
         }
         else {
             Accordion_zone.append('<span id="noFieldsText">'+ noFieldText +'</span>');

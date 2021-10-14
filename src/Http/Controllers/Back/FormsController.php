@@ -146,4 +146,10 @@ class FormsController extends Controller
             return $this->sendResponse($Form, 'forms.index', 'admin.typed_data.deleted');
 
         }
+
+        public function addField(Request $request) {
+            return view('adminify::layouts.admin.interfacable.formbuilder.card-group', [
+                'new' => true,
+            ]);
+        }
 }

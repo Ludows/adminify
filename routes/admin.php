@@ -88,6 +88,7 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
 
     if(isset($c['form']) && $c['form']) {
         Route::resource('forms', 'App\Adminify\Http\Controllers\Back\FormsController', ['except' => ['show']]);
+        Route::post('forms/addfield', 'App\Adminify\Http\Controllers\Back\FormsController@addField')->name('forms.addField');
     }
 
     Route::post('/forms/ajax/', 'App\Adminify\Http\Controllers\Back\HomeController@getForms')->name('forms.ajax');
