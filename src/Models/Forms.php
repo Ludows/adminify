@@ -21,7 +21,7 @@ class Forms extends ClassicModel
         'title',
         'slug',
         'user_id',
-        'fields_id'
+        'fields'
     ];
     
     /**
