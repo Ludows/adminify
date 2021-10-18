@@ -11,6 +11,7 @@ jQuery(document).ready(function ($) {
         },
         animation: 150,
         onAdd: onAddToAccordion,
+        handle: '.js-handle'
     });
 
     const Fields_zone_Sortable = new Sortable(Fields_zone.get(0), {
@@ -26,7 +27,8 @@ jQuery(document).ready(function ($) {
     function onAddToAccordion(evt) {
         console.log(evt);
         let noFieldsTextSpan = $('#noFieldsText');
-        let cloned_btn = $(evt.target);
+        let cloned_btn = $(evt.item).find('.btn');
+        let FieldAccordion = $(evt.to);
 
         console.log(noFieldsTextSpan)
         if(Accordion_zone.children().length > 0) {
@@ -34,16 +36,34 @@ jQuery(document).ready(function ($) {
                 noFieldsTextSpan.remove();
             }
 
+            console.log('cloned_btn', cloned_btn.attr('data-name'), cloned_btn)
+
             $.ajax({
                 'method' : 'POST',
                 'url' : Route('forms.addField'),
                 'headers': {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                'data' : {}
+                'data' : {
+                    'type' : cloned_btn.attr('data-name')
+                }
             })
             .done((data) => {
                 console.log('success', data);
+
+                var count = FieldAccordion.children('.card').length;
+                var proto = $('#prototypeField').data('proto').replace(/__NAME__/g, count);
+
+                // var previewHydrated = $(proto).find('#PreviewComponent'+count).append(data.html);
+
+                $(evt.item).replaceWith(proto);
+
+                let previewContainer = $('#card'+count).find('#PreviewComponent'+count);
+
+                previewContainer.append(data.html);
+
+                previewContainer.find('.form-control').removeAttr('name');
+
             })
             .fail((err) => {
                 console.log(err)
