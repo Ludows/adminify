@@ -28,10 +28,11 @@
 
             </div>
         </div>
+        <div class="card-footer">
+            {!! form_row($form->submit) !!}
+        </div>
     </div>
 
-    <div id="prototypeField" class="d-none">
-        {!! form_row($form->fields->prototype()) !!}
-    </div>
+    <div id="prototypeField" class="d-none" data-proto="{{ form_row($form->fields->prototype()) }}"></div>
 {!! form_end($form, false) !!}
 

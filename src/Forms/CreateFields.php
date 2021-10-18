@@ -7,7 +7,22 @@ class CreateFields extends Form
 {
     public function buildForm()
     {
+        $this->add('default_value', 'text', [
+            'label' => __('adminify.formbuilder.default_value'),
+            'attr' => [
+                'placeholder' => __('adminify.formbuilder.default_value')
+            ]
+        ]);
+
+        $this->add('choices', 'textarea', [
+            'label' => __('adminify.formbuilder.choices'),
+            'attr' => [
+                'placeholder' => __('adminify.formbuilder.choices')
+            ]
+        ]);
+
         $this->add('label', 'text', [
+            'label' => __('adminify.formbuilder.label'),
             'attr' => [
                 'placeholder' => __('adminify.formbuilder.label')
             ]
@@ -20,7 +35,8 @@ class CreateFields extends Form
             'attr' => ['class' => 'custom-control-input'],
             'label_attr' => ['class' => 'custom-control-label text-muted'],
         ])
-        ->add('max_length', 'text', [
+        ->add('max_length', 'number', [
+            'label' => __('adminify.formbuilder.max_length'),
             'attr' => [
                 'placeholder' => __('adminify.formbuilder.max_length')
             ]
@@ -35,17 +51,26 @@ class CreateFields extends Form
             'attr' => ['class' => 'custom-control-input'],
             'label_attr' => ['class' => 'custom-control-label text-muted'],
         ])
-        ->add('label_attr', 'text', [
+        ->add('custom_error_message', 'text', [
+            'label' => __('adminify.formbuilder.custom_error_message'),
+            'attr' => [
+                'placeholder' => __('adminify.formbuilder.custom_error_message')
+            ]
+        ])
+        ->add('label_attr', 'textarea', [
+            'label' => __('adminify.formbuilder.label_attr'),
             'attr' => [
                 'placeholder' => __('adminify.formbuilder.label_attr')
             ]
         ])
-        ->add('attr', 'text', [
+        ->add('attr', 'textarea', [
+            'label' => __('adminify.formbuilder.attr'),
             'attr' => [
                 'placeholder' => __('adminify.formbuilder.attr')
             ]
         ])
-        ->add('wrapper', 'text', [
+        ->add('wrapper', 'textarea', [
+            'label' => __('adminify.formbuilder.wrapper'),
             'attr' => [
                 'placeholder' => __('adminify.formbuilder.wrapper')
             ]
