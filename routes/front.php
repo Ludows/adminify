@@ -10,6 +10,8 @@ if(isset($c) && request()->segment(1) != $c['prefix'] || isset($c) && $headless)
         $router->get('{slug}', 'Ludows\Adminify\Http\Controllers\Front\PageController@getPages')->where('slug', '([A-Za-z0-9\-\/]+)')->name('pages.front.show')->middleware('front.blogpage');
         $router->bind('slug', 'Ludows\Adminify\Http\Controllers\Front\PageController@handleSlug');
 
+        $router->post('/forms/validate/', 'Ludows\Adminify\Http\Controllers\Front\PageController@validateForms')->name('forms.validate');
+
         $path_admin_file = base_path('routes/adminify_front.php');
 
         if(file_exists($path_admin_file)){

@@ -73,6 +73,8 @@ class PageController extends Controller
 
         }
 
+        public function validateForms(Request $request) {}
+
         public function handleSlug($slug) {
 
             $config = config('site-settings');

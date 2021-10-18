@@ -43,7 +43,7 @@ class FormsController extends Controller
         */
         public function index(FormBuilder $formBuilder)
         {
-            
+
             $table = $this->table(FormsTable::class);
             // dd($forms);
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
@@ -148,9 +148,32 @@ class FormsController extends Controller
 
         }
 
-        public function addField(Request $request) {
-            return view('adminify::layouts.admin.interfacable.formbuilder.card-group', [
-                'new' => true,
+        public function addField(Request $request, FormBuilder $FormBuilder) {
+
+            $all = $request->all();
+
+            if(!isset($all['type'])) {
+                abort(403);
+            }
+            $key = \Str::random(10);
+            $pattern_name = 'example_'.$key;
+
+
+            $form = $FormBuilder->createByArray([
+                    [
+                        'name' => $pattern_name,
+                        'type' => $all['type'],
+                    ],
+            ]
+                ,[
+                'method' => 'POST',
+                'url' => route('forms.validate')
             ]);
+
+            return response()->json([
+                'status' => 'OK',
+                'html' => form_row($form->{$pattern_name})
+            ]);
+
         }
 }
