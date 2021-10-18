@@ -15,6 +15,9 @@ class UpdateFormsRequest extends FormRequest
     public function rules()
     {
         //@todo
-        return [];
+        return [
+            'title' => ['required'],
+            'user_id' => ['required'],
+        ];
     }
 }
