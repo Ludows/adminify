@@ -20,7 +20,8 @@ class Forms extends ClassicModel
     protected $fillable = [
         'title',
         'slug',
-        'user_id'
+        'user_id',
+        'fields_id'
     ];
     
     /**

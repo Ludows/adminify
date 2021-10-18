@@ -17,7 +17,6 @@ class CreateFormFormField extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->bigInteger('form_id')->unsigned();
-            $table->string('validation_name');
             $table->bigInteger('form_field_id')->unsigned();
             $table->foreign('form_id')->references('id')->on('forms');
             $table->foreign('form_field_id')->references('id')->on('form_fields');
