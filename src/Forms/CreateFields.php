@@ -24,6 +24,7 @@ class CreateFields extends Form
         $this->add('label', 'text', [
             'label' => __('adminify.formbuilder.label'),
             'attr' => [
+                'class' => 'form-control js-labelize',
                 'placeholder' => __('adminify.formbuilder.label')
             ]
         ]);
@@ -32,12 +33,13 @@ class CreateFields extends Form
             'label_show' => true,
             'label' => __('admin.formbuilder.required'),
             'wrapper' => ['class' => 'custom-control custom-control-alternative custom-checkbox'],
-            'attr' => ['class' => 'custom-control-input'],
+            'attr' => ['class' => 'custom-control-input js-check-required'],
             'label_attr' => ['class' => 'custom-control-label text-muted'],
         ])
         ->add('max_length', 'number', [
             'label' => __('adminify.formbuilder.max_length'),
             'attr' => [
+                'class' => 'form-control js-max-length',
                 'placeholder' => __('adminify.formbuilder.max_length')
             ]
         ])
@@ -48,7 +50,7 @@ class CreateFields extends Form
             'label_show' => true,
             'label' => __('admin.formbuilder.label_show'),
             'wrapper' => ['class' => 'custom-control custom-control-alternative custom-checkbox'],
-            'attr' => ['class' => 'custom-control-input'],
+            'attr' => ['class' => 'custom-control-input js-show-label'],
             'label_attr' => ['class' => 'custom-control-label text-muted'],
         ])
         ->add('custom_error_message', 'text', [
