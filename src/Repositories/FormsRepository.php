@@ -10,6 +10,17 @@ class FormsRepository extends BaseRepository
     ];
 
     public function getExternalFieldsId($model, $formValues, $type) {
-
+        if(!isset($formValues['fields_id']) && $type == "update") {
+            $model->fields()->detach();
+        }
+        if(isset($formValues['fields_id']) && count($formValues['fields_id']) > 0) {
+            if($type == "update") {
+                $model->fields()->detach();
+            }
+            foreach ($formValues['fields_id'] as $field => $fieldId) {
+                # code...
+                $model->fields()->attach((int) $fieldId);
+            }
+        }
     }
 }
