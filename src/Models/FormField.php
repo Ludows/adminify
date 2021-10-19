@@ -22,18 +22,29 @@ class FormField extends ClassicModel
     protected $fillable = [
         'label',
         'required',
+        'default_value',
+        'choices',
         'max_length',
         'label_show',
         'label_attr',
         'attr',
         'wrapper',
     ];
-    
+
     /**
      * Default values for attributes
      * @var  array an array with attribute as key and default as value
      */
-    protected $attributes = [];
+    protected $attributes = [
+        'required' => 0,
+        'max_length' => '',
+        'default_value' => '',
+        'label_show' => 1,
+        'label_attr' => '',
+        'attr' => '',
+        'wrapper' => '',
+        'choices' => []
+    ];
 
     public function getTableListing() {
         return null;

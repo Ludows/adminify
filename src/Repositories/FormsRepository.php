@@ -4,15 +4,27 @@ namespace Ludows\Adminify\Repositories;
 
 use  Ludows\Adminify\Repositories\BaseRepository;
 use App\Adminify\Models\FormField;
+use App\Adminify\Repositories\FormFieldsRepository;
 
 class FormsRepository extends BaseRepository
 {
+    // set for only linking to pivot table
     public $external_relations_columns = [
         'fields'
     ];
 
-    public function getExternalFields($model, $formValues, $type) {
-        dd($formValues);
+    //set as interval for register or update fields objects
+    public $internal_relations_columns = [
+        'fields'
+    ];
+
+    public function getInternalFieldsRelationship($model, $formValues, $type) {
+        dd('internal', $formValues);
+    }
+
+
+    public function getExternalFieldsRelationship($model, $formValues, $type) {
+        dd('external',$formValues);
         // if(!isset($formValues['fields']) && $type == "update") {
         //     $model->fields()->detach();
         // }
