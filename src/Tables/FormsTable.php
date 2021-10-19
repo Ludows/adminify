@@ -64,6 +64,10 @@ class FormsTable extends TableManager {
             $model = new FormModel();
             $fillables = $model->getFillable();
 
+            unset($fillables['fields']);
+
+
+
             $a = new FormDropdownsManager($forms, []);
 
             // if(isset($posts) && count($posts) > 0) {
