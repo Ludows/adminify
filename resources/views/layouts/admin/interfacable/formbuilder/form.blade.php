@@ -1,5 +1,6 @@
 {!! form_start($form) !!}
     <div class="card">
+        {!! form_row($form->user_id) !!}
         <div class="card-header">
             {!! form_row($form->title) !!}
         </div>
