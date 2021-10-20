@@ -69,6 +69,7 @@
 
                             {!! form_row($options['children']['value'], [
                                 'attr' => [
+                                    'data-functional' => $functionnal_identifier,
                                     'data-replace' => 'fields[__REPLACE__][value]'
                                 ]
                             ]) !!}

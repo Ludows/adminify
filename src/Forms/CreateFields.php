@@ -56,6 +56,7 @@ class CreateFields extends Form
         ->add('max_length', 'number', [
             'label' => __('adminify.formbuilder.max_length'),
             'attr' => [
+                'minlength' => 0,
                 'class' => 'form-control js-max-length',
                 'placeholder' => __('adminify.formbuilder.max_length')
             ]
