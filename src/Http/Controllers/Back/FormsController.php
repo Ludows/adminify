@@ -158,36 +158,40 @@ class FormsController extends Controller
             $key = uuid(20);
             $pattern_name = 'example_'.$key;
 
-
-            $form = $FormBuilder->createByArray([
-                    [
-                        'name' => $pattern_name,
-                        'type' => $all['type'],
-                        'attr' => [
-                            'data-functional' => $key,
-                            'data-original-label' => $pattern_name
-                        ],
-                        'help_block' => [
-                            'text' => null,
-                            'tag' => 'p',
-                            'attr' => ['id' => 'helpblock_'.$key,  'class' => 'help-block d-none']
-                        ],
-                        'errors' => [
-                            'id' => 'errors_'.$key,
-                            'class' => 'text-danger',
-                            'text' => 'Some Dummy Text'
-                        ],
+            $optionsFields = [
+                [
+                    'name' => $pattern_name,
+                    'type' => $all['type'],
+                    'attr' => [
+                        'data-functional' => $key,
+                        'data-original-label' => $pattern_name
                     ],
-            ]
-                ,[
+                    'help_block' => [
+                        'text' => null,
+                        'tag' => 'p',
+                        'attr' => ['id' => 'helpblock_'.$key,  'class' => 'help-block d-none']
+                    ],
+                    'errors' => [
+                        'id' => 'errors_'.$key,
+                        'class' => 'text-danger',
+                        'text' => 'Some Dummy Text'
+                    ],
+                ],
+            ];
+
+            $optionForm = [
                 'method' => 'POST',
                 'url' => route('forms.validate')
-            ]);
+            ];
+
+
+            $form = $FormBuilder->createByArray($optionsFields,$optionForm);
 
             return response()->json([
                 'status' => 'OK',
                 'html' => form_row($form->{$pattern_name}),
-                'uuid_field_key' => $key
+                'uuid_field_key' => $key,
+                'preview_form_options' => $optionsFields,
             ]);
 
         }
