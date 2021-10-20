@@ -18,7 +18,7 @@ class FormsRepository extends BaseRepository
         'fields'
     ];
 
-    public function getInternalFieldsRelationship($model, $formValues, $type) {
+    public function getFieldsRelationship($model, $formValues, $type) {
         dd('internal', $formValues);
     }
 

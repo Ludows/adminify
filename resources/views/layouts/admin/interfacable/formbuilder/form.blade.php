@@ -8,6 +8,15 @@
             <div class="row js-dropzone">
                 <div id="Accordion_zone" class="col-12">
                     <div class="accordion" id="formBuilderAccordion">
+                        @php
+                            $errors = session()->get('errors');
+                        @endphp
+                        @if(isset($errors))
+                            <div id="alertNoFields" class="alert alert-danger">
+                                {!! !empty($errors) ? $errors->first() : '' !!}
+                            </div>
+                        @endif
+
                         @if($isCreate && empty($query))
                             {{--  // aucun champ et c'est une création  --}}
                             <span id="noFieldsText">{{ __('admin.formbuilder.noFields') }}</span>

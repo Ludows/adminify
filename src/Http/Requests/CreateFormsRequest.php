@@ -16,6 +16,7 @@ class CreateFormsRequest extends FormRequest
     {
         //@todo
         return [
+            'fields' => ['required'],
             'title' => ['required', 'unique:forms'],
             'user_id' => ['required'],
         ];
