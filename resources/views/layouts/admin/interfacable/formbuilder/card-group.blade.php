@@ -21,8 +21,8 @@
                     </button>
                 </div>
                 <div>
-                    <button data-functional="{{ $functionnal_identifier }}" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="{{ __('admin.formbuilder.delete') }}" type="button"><i style="font-size:14px" class="ni ni-fat-remove"></i></button>
-                    <button data-functional="{{ $functionnal_identifier }}" class="btn btn-secondary" data-toggle="tooltip" data-placement="top" title="{{ __('admin.formbuilder.dupplicate') }}" type="button"><i style="font-size:14px" class="ni ni-single-copy-04"></i></button>
+                    <button data-functional="{{ $functionnal_identifier }}" {!! !$isNew ? "data-field-id='". $item->id ."'" : ''  !!} class="btn btn-danger js-delete" data-toggle="tooltip" data-placement="top" title="{{ __('admin.formbuilder.delete') }}" type="button"><i style="font-size:14px" class="ni ni-fat-remove"></i></button>
+                    <button data-functional="{{ $functionnal_identifier }}" {!! !$isNew ? "data-field-id='". $item->id ."'" : ''  !!} class="btn btn-secondary js-dupplicate" data-toggle="tooltip" data-placement="top" title="{{ __('admin.formbuilder.dupplicate') }}" type="button"><i style="font-size:14px" class="ni ni-single-copy-04"></i></button>
                 </div>
             </div>
 
