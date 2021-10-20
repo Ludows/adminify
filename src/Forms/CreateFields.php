@@ -17,7 +17,7 @@ class CreateFields extends Form
         $this->add('value', 'text', [
             'label' => __('adminify.formbuilder.value'),
             'attr' => [
-                'class' => 'js-value',
+                'class' => 'js-value form-control',
                 'placeholder' => __('adminify.formbuilder.value')
             ]
         ]);
@@ -25,7 +25,7 @@ class CreateFields extends Form
         $this->add('choices', 'textarea', [
             'label' => __('adminify.formbuilder.choices'),
             'attr' => [
-                'class' => 'js-choices',
+                'class' => 'js-choices form-control',
                 'placeholder' => __('adminify.formbuilder.choices')
             ]
         ]);
