@@ -10,6 +10,11 @@
     $functionnal_identifier = '__FUNCTIONAL__';
     $title = isset($new) && $new == true ? __('admin.formbuilder.newItem') : isset($item) ?? $item->label;
 @endphp
+
+    <script id="config_{{ $functionnal_identifier }}">
+        window.formfields['{{ $functionnal_identifier }}'] = @json($options);
+    </script>
+
     <div id="card{{ $functionnal_identifier }}" class="card">
       <div class="card-header" id="heading{{ $functionnal_identifier }}">
         <h2 class="mb-0">

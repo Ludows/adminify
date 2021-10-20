@@ -174,7 +174,7 @@ class FormsController extends Controller
                         ],
                         'errors' => [
                             'id' => 'errors_'.$key,
-                            'class' => 'text-danger d-none',
+                            'class' => 'text-danger',
                             'text' => 'Some Dummy Text'
                         ],
                     ],
