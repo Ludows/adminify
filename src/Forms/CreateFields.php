@@ -48,7 +48,7 @@ class CreateFields extends Form
         ])
         ->add('checked', 'checkbox', [
             'label_show' => true,
-            'label' => __('admin.formbuilder.required'),
+            'label' => __('admin.formbuilder.checked'),
             'wrapper' => ['class' => 'custom-control custom-control-alternative custom-checkbox'],
             'attr' => ['class' => 'custom-control-input js-check-checked'],
             'label_attr' => ['class' => 'custom-control-label text-muted'],
