@@ -80,18 +80,23 @@ class CreateFields extends Form
         ->add('label_attr', 'textarea', [
             'label' => __('adminify.formbuilder.label_attr'),
             'attr' => [
+                'class' => 'form-control js-attrs',
+                'data-location' => 'label',
                 'placeholder' => __('adminify.formbuilder.label_attr')
             ]
         ])
         ->add('attr', 'textarea', [
             'label' => __('adminify.formbuilder.attr'),
             'attr' => [
+                'class' => 'form-control js-attrs',
                 'placeholder' => __('adminify.formbuilder.attr')
             ]
         ])
         ->add('wrapper', 'textarea', [
             'label' => __('adminify.formbuilder.wrapper'),
             'attr' => [
+                'class' => 'form-control js-attrs',
+                'data-location' => '.form-group',
                 'placeholder' => __('adminify.formbuilder.wrapper')
             ]
         ]);

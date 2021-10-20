@@ -113,6 +113,7 @@
                             ]) !!}
                             {!! form_row($options['children']['attr'], [
                                 'attr' => [
+                                    'data-location' => '#example_'.$functionnal_identifier,
                                     'data-functional' => $functionnal_identifier,
                                     'data-replace' => 'fields[__REPLACE__][attr]'
                                 ]
