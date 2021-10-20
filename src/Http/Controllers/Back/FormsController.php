@@ -173,8 +173,8 @@ class FormsController extends Controller
                     ],
                     'errors' => [
                         'id' => 'errors_'.$key,
-                        'class' => 'text-danger',
-                        'text' => 'Some Dummy Text'
+                        'class' => 'text-danger d-none',
+                        'text' => null
                     ],
                 ],
             ];
