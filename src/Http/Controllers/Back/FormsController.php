@@ -166,7 +166,17 @@ class FormsController extends Controller
                         'attr' => [
                             'data-functional' => $key,
                             'data-original-label' => $pattern_name
-                        ]
+                        ],
+                        'help_block' => [
+                            'text' => null,
+                            'tag' => 'p',
+                            'attr' => ['id' => 'helpblock_'.$key,  'class' => 'help-block d-none']
+                        ],
+                        'errors' => [
+                            'id' => 'errors_'.$key,
+                            'class' => 'text-danger d-none',
+                            'text' => 'Some Dummy Text'
+                        ],
                     ],
             ]
                 ,[
