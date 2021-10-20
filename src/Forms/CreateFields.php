@@ -17,6 +17,7 @@ class CreateFields extends Form
         $this->add('value', 'text', [
             'label' => __('adminify.formbuilder.value'),
             'attr' => [
+                'class' => 'js-value',
                 'placeholder' => __('adminify.formbuilder.value')
             ]
         ]);
@@ -24,6 +25,7 @@ class CreateFields extends Form
         $this->add('choices', 'textarea', [
             'label' => __('adminify.formbuilder.choices'),
             'attr' => [
+                'class' => 'js-choices',
                 'placeholder' => __('adminify.formbuilder.choices')
             ]
         ]);
@@ -48,7 +50,7 @@ class CreateFields extends Form
             'label_show' => true,
             'label' => __('admin.formbuilder.required'),
             'wrapper' => ['class' => 'custom-control custom-control-alternative custom-checkbox'],
-            'attr' => ['class' => 'custom-control-input js-check-required'],
+            'attr' => ['class' => 'custom-control-input js-check-checked'],
             'label_attr' => ['class' => 'custom-control-label text-muted'],
         ])
         ->add('max_length', 'number', [
