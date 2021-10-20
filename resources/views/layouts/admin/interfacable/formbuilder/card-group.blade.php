@@ -11,7 +11,7 @@
     $title = isset($new) && $new == true ? __('admin.formbuilder.newItem') : isset($item) ?? $item->label;
 @endphp
 
-    <div id="card{{ $functionnal_identifier }}" class="card">
+    <div style="display:none;" id="card{{ $functionnal_identifier }}" class="card">
       <div class="card-header" id="heading{{ $functionnal_identifier }}">
         <h2 class="mb-0">
             <div class="d-flex align-items-center justify-content-between">
