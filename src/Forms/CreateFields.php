@@ -74,6 +74,7 @@ class CreateFields extends Form
         ->add('custom_error_message', 'text', [
             'label' => __('adminify.formbuilder.custom_error_message'),
             'attr' => [
+                'class' => 'form-control js-error-message',
                 'placeholder' => __('adminify.formbuilder.custom_error_message')
             ]
         ])
