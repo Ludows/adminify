@@ -66,6 +66,13 @@
                                     'data-replace' => 'fields[__REPLACE__][max_length]'
                                 ]
                             ]) !!}
+
+                            {!! form_row($options['children']['value'], [
+                                'attr' => [
+                                    'data-replace' => 'fields[__REPLACE__][value]'
+                                ]
+                            ]) !!}
+
                             {!! form_row($options['children']['default_value'], [
                                 'attr' => [
                                     'data-replace' => 'fields[__REPLACE__][default_value]'
@@ -78,6 +85,14 @@
                                     'data-replace' => 'fields[__REPLACE__][label_show]'
                                 ]
                             ]) !!}
+
+                            {!! form_row($options['children']['checked'], [
+                                'attr' => [
+                                    'data-functional' => $functionnal_identifier,
+                                    'data-replace' => 'fields[__REPLACE__][checked]'
+                                ]
+                            ]) !!}
+
                             {!! form_row($options['children']['required'], [
                                 'attr' => [
                                     'data-functional' => $functionnal_identifier,

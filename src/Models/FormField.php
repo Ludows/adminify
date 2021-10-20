@@ -22,6 +22,8 @@ class FormField extends ClassicModel
     protected $fillable = [
         'label',
         'required',
+        'checked',
+        'value',
         'default_value',
         'choices',
         'max_length',
@@ -39,6 +41,8 @@ class FormField extends ClassicModel
         'required' => 0,
         'max_length' => '',
         'default_value' => '',
+        'checked' => 0,
+        'value' => '',
         'label_show' => 1,
         'label_attr' => '',
         'attr' => '',

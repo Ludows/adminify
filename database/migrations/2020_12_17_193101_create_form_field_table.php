@@ -18,8 +18,10 @@ class CreateFormFieldTable extends Migration
                 $table->bigIncrements('id')->unsigned();
                 $table->json('label');
                 $table->boolean('required');
+                $table->boolean('checked');
                 $table->string('max_length');
                 $table->json('choices');
+                $table->json('value');
                 $table->json('default_value');
                 $table->boolean('label_show');
                 $table->string('label_attr');
@@ -33,6 +35,8 @@ class CreateFormFieldTable extends Migration
                 $table->bigIncrements('id')->unsigned();
                 $table->string('label');
                 $table->boolean('required');
+                $table->boolean('checked');
+                $table->string('value');
                 $table->string('default_value');
                 $table->json('choices');
                 $table->string('max_length');
