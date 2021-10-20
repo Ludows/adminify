@@ -11,6 +11,7 @@ jQuery(document).ready(function ($) {
         },
         animation: 150,
         onAdd: onAddToAccordion,
+        onEnd:onEndWithinFields,
         handle: '.js-handle'
     });
 
@@ -24,13 +25,65 @@ jQuery(document).ready(function ($) {
         animation: 150,
     });
 
+    Accordion_zone.on('arrange:fields', arrangeFields);
+
+    $(document.body).on('keyup', '.js-labelize', function(e) {
+        e.preventDefault();
+
+        let theval = $(this).val().trim();
+        let identifier = $(this).attr('data-functional');
+        let el = $('#titleChange'+identifier);
+        let el_label = $('label[for="example_'+identifier+'"]')
+
+        if(theval.length > 0) {
+            el.text(theval);
+            el_label.text(theval);
+        }
+        else {
+            el.text( el.attr('data-original-label') );
+            el_label.text( el_label.next().attr('data-original-label') );
+        }
+    })
+
+
+    function arrangeFields() {
+        let cards = Accordion_zone.children('.card');
+        console.log('ARRANGE>>', cards)
+
+        $.each(cards, function(i, card) {
+            let form_els = $(card).find('[data-replace]');
+
+            $.each(form_els, function(k, formEl) {
+                let theDataPattern = $(formEl).attr('data-replace');
+                theDataPattern = theDataPattern.replace('__REPLACE__', i);
+                $(formEl).attr('name', theDataPattern);
+                $(formEl).attr('id', theDataPattern);
+                $(formEl).prev('label').attr('for', theDataPattern)
+            })
+        })
+    }
+
+    function onEndWithinFields(evt) {
+        Accordion_zone.trigger('arrange:fields');
+    }
+
+    // function get
+
     function onAddToAccordion(evt) {
         console.log(evt);
         let noFieldsTextSpan = $('#noFieldsText');
         let cloned_btn = $(evt.item).find('.btn');
         let FieldAccordion = $(evt.to);
+        let dataName = cloned_btn.attr('data-name');
 
-        console.log(noFieldsTextSpan)
+        let allowed_choice_field_types = [
+            'select',
+            'checkbox',
+            'radio',
+            'choice'
+        ];
+
+        // console.log(noFieldsTextSpan)
         if(Accordion_zone.children().length > 0) {
             if(noFieldsTextSpan.length > 0) {
                 noFieldsTextSpan.remove();
@@ -51,18 +104,26 @@ jQuery(document).ready(function ($) {
             .done((data) => {
                 console.log('success', data);
 
-                var count = FieldAccordion.children('.card').length;
-                var proto = $('#prototypeField').data('proto').replace(/__NAME__/g, count);
+                var proto = $('#prototypeField').data('proto').replace(/__NAME__/g, '__REPLACE__');
+                proto = proto.replace(/__FUNCTIONAL__/g, data.uuid_field_key);
 
                 // var previewHydrated = $(proto).find('#PreviewComponent'+count).append(data.html);
 
                 $(evt.item).replaceWith(proto);
 
-                let previewContainer = $('#card'+count).find('#PreviewComponent'+count);
+                let previewContainer = $('#card'+data.uuid_field_key).find('#PreviewComponent'+data.uuid_field_key);
+
+                if(allowed_choice_field_types.indexOf(dataName) == -1) {
+                    $('#card'+data.uuid_field_key).find('#choices_'+data.uuid_field_key).css('display' ,'none');
+                }
 
                 previewContainer.append(data.html);
 
                 previewContainer.find('.form-control').removeAttr('name');
+
+                Accordion_zone.trigger('arrange:fields');
+
+
 
             })
             .fail((err) => {

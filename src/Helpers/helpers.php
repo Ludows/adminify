@@ -47,6 +47,12 @@ if (! function_exists('adminify_autoload')) {
     }
 }
 
+if (! function_exists('uuid')) {
+    function uuid($length = 10) {
+        return Str::random($length);
+    }
+}
+
 if (! function_exists('adminify_get_classes')) {
     function adminify_get_classes($array, $context, $loadClass) {
         $r = [];

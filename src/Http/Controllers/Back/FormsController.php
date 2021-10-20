@@ -155,7 +155,7 @@ class FormsController extends Controller
             if(!isset($all['type'])) {
                 abort(403);
             }
-            $key = \Str::random(10);
+            $key = uuid(20);
             $pattern_name = 'example_'.$key;
 
 
@@ -163,6 +163,10 @@ class FormsController extends Controller
                     [
                         'name' => $pattern_name,
                         'type' => $all['type'],
+                        'attr' => [
+                            'data-functional' => $key,
+                            'data-original-label' => $pattern_name
+                        ]
                     ],
             ]
                 ,[
@@ -172,7 +176,8 @@ class FormsController extends Controller
 
             return response()->json([
                 'status' => 'OK',
-                'html' => form_row($form->{$pattern_name})
+                'html' => form_row($form->{$pattern_name}),
+                'uuid_field_key' => $key
             ]);
 
         }
