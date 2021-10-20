@@ -88,6 +88,9 @@
                             ]) !!}
 
                             {!! form_row($options['children']['checked'], [
+                                'wrapper' => [
+                                    'id' => 'checked_'.$functionnal_identifier,
+                                ],
                                 'attr' => [
                                     'data-functional' => $functionnal_identifier,
                                     'data-replace' => 'fields[__REPLACE__][checked]'
