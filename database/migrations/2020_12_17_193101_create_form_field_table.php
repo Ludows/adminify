@@ -22,6 +22,7 @@ class CreateFormFieldTable extends Migration
                 $table->boolean('multiple');
                 $table->boolean('required');
                 $table->json('selected');
+                $table->json('content');
                 $table->boolean('checked');
                 $table->string('max_length');
                 $table->json('choices');
@@ -41,6 +42,7 @@ class CreateFormFieldTable extends Migration
                 $table->string('field_type');
                 $table->boolean('expanded');
                 $table->boolean('multiple');
+                $table->json('content');
                 $table->boolean('required');
                 $table->json('selected');
                 $table->boolean('checked');

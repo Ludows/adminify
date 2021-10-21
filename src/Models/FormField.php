@@ -13,7 +13,7 @@ class FormField extends ClassicModel
 {
     protected $table = 'form_fields';
 
-    public $MultilangTranslatableSwitch = ['label'];
+    public $MultilangTranslatableSwitch = ['label', 'value', 'default_value', 'choices', 'content'];
 
     public $sitemapCallable = 'title';
 
@@ -26,6 +26,7 @@ class FormField extends ClassicModel
         'multiple',
         'selected',
         'field_type',
+        'content',
         'expanded',
         'value',
         'default_value',
@@ -54,6 +55,7 @@ class FormField extends ClassicModel
         'label_attr' => '',
         'attr' => '',
         'wrapper' => '',
+        'content' => '{}',
         'choices' => '{}',
         'selected' => '{}'
     ];
