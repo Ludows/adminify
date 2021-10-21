@@ -17,7 +17,11 @@ class CreateFormFieldTable extends Migration
             Schema::create('form_fields', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
                 $table->json('label');
+                $table->string('field_type');
+                $table->boolean('expanded');
+                $table->boolean('multiple');
                 $table->boolean('required');
+                $table->json('selected');
                 $table->boolean('checked');
                 $table->string('max_length');
                 $table->json('choices');
@@ -34,7 +38,11 @@ class CreateFormFieldTable extends Migration
             Schema::create('form_fields', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
                 $table->string('label');
+                $table->string('field_type');
+                $table->boolean('expanded');
+                $table->boolean('multiple');
                 $table->boolean('required');
+                $table->json('selected');
                 $table->boolean('checked');
                 $table->string('value');
                 $table->string('default_value');

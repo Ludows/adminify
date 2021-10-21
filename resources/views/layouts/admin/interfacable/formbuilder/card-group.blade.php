@@ -46,10 +46,22 @@
                 <div class="card-body">
                     <div class="tab-content" id="TabContent{{ $functionnal_identifier }}">
                         <div class="tab-pane fade show active" id="General{{ $functionnal_identifier }}" role="tabpanel">
-                            {!! form_row($options['children']['label'], [
+                            {!! form_row($options['children']['field_type'], [
                                 'attr' => [
                                     'data-functional' => $functionnal_identifier,
-                                    'data-replace' => 'fields[__REPLACE__][label]'
+                                    'data-replace' => 'fields[__REPLACE__][field_type]'
+                                ]
+                            ]) !!}
+                            {!! form_row($options['children']['multiple'], [
+                                'attr' => [
+                                    'data-functional' => $functionnal_identifier,
+                                    'data-replace' => 'fields[__REPLACE__][multiple]'
+                                ]
+                            ]) !!}
+                            {!! form_row($options['children']['expanded'], [
+                                'attr' => [
+                                    'data-functional' => $functionnal_identifier,
+                                    'data-replace' => 'fields[__REPLACE__][expanded]'
                                 ]
                             ]) !!}
                             {!! form_row($options['children']['choices'], [
@@ -59,6 +71,15 @@
                                 'attr' => [
                                     'data-functional' => $functionnal_identifier,
                                     'data-replace' => 'fields[__REPLACE__][choices]'
+                                ]
+                            ]) !!}
+                            {!! form_row($options['children']['selected'], [
+                                'wrapper' => [
+                                    'id' => 'selected_'.$functionnal_identifier,
+                                ],
+                                'attr' => [
+                                    'data-functional' => $functionnal_identifier,
+                                    'data-replace' => 'fields[__REPLACE__][selected]'
                                 ]
                             ]) !!}
                             {!! form_row($options['children']['max_length'], [

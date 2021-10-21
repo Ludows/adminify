@@ -7,6 +7,29 @@ class CreateFields extends Form
 {
     public function buildForm()
     {
+
+        $this->add('field_type', 'hidden', [
+            'attr' => [
+                'value' => '__TYPEDFORM__'
+            ]
+        ]);
+
+        $this->add('multiple', 'hidden', [
+            'attr' => [
+                'value' => 0
+            ]
+        ]);
+
+        $this->add('expanded', 'hidden', [
+            'attr' => [
+                'value' => 0
+            ]
+        ]);
+
+        $this->add('selected', 'select', [
+
+        ]);
+
         $this->add('default_value', 'text', [
             'label' => __('adminify.formbuilder.default_value'),
             'attr' => [

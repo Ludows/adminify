@@ -45,20 +45,22 @@ class FieldsBlock extends InterfacableBlock {
 
         $concat =  Arr::flatten(array_merge($constants, $configBuilder));
 
-        // gestion 
+        // gestion
 
         $types_choices = [
-            'radio', 
-            'select', 
+            'radio',
+            'select:single',
+            'select:multiple',
             'checkbox'
         ];
 
-        if(isset($concat['choice'])) {
+        if(in_array('choice', $concat)) {
             foreach ($types_choices as $types_choice) {
                 # code...
                 $concat[] = 'choice.'.$types_choice;
             }
         }
+
 
         $concat = array_filter($concat, function($v) {
             if(!in_array($v, $this->excludes)) {

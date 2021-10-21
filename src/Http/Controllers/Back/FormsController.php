@@ -148,15 +148,63 @@ class FormsController extends Controller
 
         }
 
+        public function getChoiceOptionsRenderer($type) {
+
+            $expanded = false;
+            $multiple = false;
+            $config = config('laravel-form-builder.defaults');
+
+            $choice_option = [];
+
+            switch ($type) {
+                case 'select:multiple':
+                    # code...
+                    $multiple = true;
+                    $choice_option = [];
+                    break;
+                case 'radio':
+                    # code...
+                    $expanded = true;
+                    $choice_option = $config['radio'];
+
+                    break;
+                case 'checkbox':
+                    # code...
+                    $expanded = true;
+                    $multiple = true;
+
+                    $choice_option = $config['checkbox'];
+                    break;
+            }
+
+            return [
+                'choices' => [],
+                'choice_options' => $choice_option,
+                'selected' => [],
+                'expanded' => $expanded,
+                'multiple' => $multiple
+            ];
+        }
+
         public function addField(Request $request, FormBuilder $FormBuilder) {
 
             $all = $request->all();
+            $concat_arr = array();
 
             if(!isset($all['type'])) {
                 abort(403);
             }
             $key = uuid(20);
             $pattern_name = 'example_'.$key;
+
+
+            if(is_integer( strpos($all['type'], 'choice') )) {
+                $spl_str = explode('.', $all['type']);
+
+                $concat_arr = $this->getChoiceOptionsRenderer($spl_str[1]);
+                $all['type'] = 'choice';
+            }
+
 
             $optionsFields = [
                 [
@@ -178,6 +226,10 @@ class FormsController extends Controller
                     ],
                 ],
             ];
+
+            $optionsFields[0] = array_merge($optionsFields[0] , $concat_arr);
+
+            // dd($optionsFields);
 
             $optionForm = [
                 'method' => 'POST',

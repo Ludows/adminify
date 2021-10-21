@@ -23,6 +23,10 @@ class FormField extends ClassicModel
         'label',
         'required',
         'checked',
+        'multiple',
+        'selected',
+        'field_type',
+        'expanded',
         'value',
         'default_value',
         'choices',
@@ -40,6 +44,9 @@ class FormField extends ClassicModel
     protected $attributes = [
         'required' => 0,
         'max_length' => '',
+        'field_type' => '',
+        'multiple' => 0,
+        'expanded' => 0,
         'default_value' => '',
         'checked' => 0,
         'value' => '',
@@ -47,7 +54,8 @@ class FormField extends ClassicModel
         'label_attr' => '',
         'attr' => '',
         'wrapper' => '',
-        'choices' => []
+        'choices' => '{}',
+        'selected' => '{}'
     ];
 
     public function getTableListing() {
