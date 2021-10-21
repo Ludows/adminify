@@ -16,6 +16,7 @@ require('select2');
 require('bootstrap');
 
 require('summernote');
+require('summernote/dist/summernote-bs4.js');
 // require('bootstra');
 require('./serializeAsObject')
 require('./clearValues')
