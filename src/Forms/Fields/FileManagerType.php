@@ -30,6 +30,11 @@ class FileManagerType extends FormField {
         $uniqid = Str::random(9);
 
         $options = $this->getOptions();
+        $isAjax = request()->ajax();
+
+        if(isset($options['force_js']) && $options['force_js'] == true) {
+            $isAjax = true;
+        }
 
         if(isset($options['value']) && $options['value'] != "") {
             $m = $this->parent->getModel();
@@ -54,7 +59,7 @@ class FileManagerType extends FormField {
         }
 
         $b = [
-            'isAjax' => request()->ajax(),
+            'isAjax' => $isAjax,
             'sibling' => Str::slug('media_library_'.$uniqid),
             'modal' => isset($options['modal']) ? $options['modal'] : 'adminify::layouts.admin.modales.modaleFileManager',
             'lfm_options' => array_merge($this->setDefaults(), isset($options['lfm_options']) ? $options['lfm_options'] : [])

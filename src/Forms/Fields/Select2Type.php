@@ -37,6 +37,8 @@ class Select2Type extends FormField {
         $uniqid = Str::random(9);
 
         $options = $this->getOptions();
+        $isAjax = request()->ajax();
+
 
         if(!isset($options['select2options'])) {
             $options['select2options'] = array();
@@ -64,10 +66,14 @@ class Select2Type extends FormField {
             $options['modal_attributes'] = [];
         }
 
+        if(isset($options['force_js']) && $options['force_js'] == true) {
+            $isAjax = true;
+        }
+
         $options['modal_attributes']['id'] = Str::slug('select2_modale_'.$uniqid);
 
         $b = [
-            'isAjax' => request()->ajax(),
+            'isAjax' => $isAjax,
             'sibling' => Str::slug('select2_'.$uniqid),
             'withCreate' => isset($options['withCreate']) ? $options['withCreate'] : false,
             'dynamic_modal' => isset($options['dynamic_modal']) ? $options['dynamic_modal'] : true,

@@ -25,6 +25,8 @@ class LarabergType extends FormField {
     public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
     {
         $uniqid = Str::random(9);
+
+        $isAjax = request()->ajax();
         
         $options = $this->getOptions();
 
@@ -33,7 +35,12 @@ class LarabergType extends FormField {
         }
         $options['attr']['id'] = Str::slug('laraberg_textarea_'.$uniqid);
 
+        if(isset($options['force_js']) && $options['force_js'] == true) {
+            $isAjax = true;
+        }
+
         $b = [
+            'isAjax' => $isAjax,
             'attr' => [
                 'id' => Str::slug('laraberg_textarea_'.$uniqid)
             ],
