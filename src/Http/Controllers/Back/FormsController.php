@@ -178,7 +178,7 @@ class FormsController extends Controller
             }
 
             return [
-                'choices' => [],
+                'choices' => ['example-1' => 'Example 1', 'example-2' => 'Example 2', 'example-3' => 'Example 3'],
                 'choice_options' => $choice_option,
                 'selected' => [],
                 'expanded' => $expanded,
