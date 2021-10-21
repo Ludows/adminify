@@ -53,6 +53,14 @@ class CreateFields extends Form
             ]
         ]);
 
+        $this->add('content', 'summernote', [
+            'label' => __('adminify.formbuilder.content'),
+            'attr' => [
+                'class' => 'form-control',
+                'placeholder' => __('adminify.formbuilder.content')
+            ]
+        ]);
+
         $this->add('label', 'text', [
             'required' => true,
             'label' => __('adminify.formbuilder.label'),

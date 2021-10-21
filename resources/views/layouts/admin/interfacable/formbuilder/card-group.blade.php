@@ -76,6 +76,16 @@
                                 ]
                             ]) !!}
 
+                            {!! form_row($options['children']['content'], [
+                                'wrapper' => [
+                                    'id' => 'content_'.$functionnal_identifier,
+                                ],
+                                'attr' => [
+                                    'data-functional' => $functionnal_identifier,
+                                    'data-replace' => 'fields[__REPLACE__][content]'
+                                ]
+                            ]) !!}
+
                             {!! form_row($options['children']['choices'], [
                                 'wrapper' => [
                                     'id' => 'choices_'.$functionnal_identifier,

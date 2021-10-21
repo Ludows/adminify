@@ -14,10 +14,21 @@ jQuery(document).ready(function ($) {
 
     const allowed_choice_field_types = [
         'select',
+        'select2',
         'choice',
         'choice.select:single',
+        'choice.select:multiple',
         'choice.checkbox',
         'choice.radio'
+    ];
+
+    const not_allowed_to_classic_fields = [
+        'choice.select:single',
+        'choice.select:multiple',
+        'choice.checkbox',
+        'choice.radio',
+        'select2',
+        'static'
     ];
 
     const Accordion_zone_Sortable = new Sortable(Accordion_zone.get(0), {
@@ -80,19 +91,18 @@ jQuery(document).ready(function ($) {
 
         let isChecked = $(this).is(':checked');
         let id = $(this).attr('data-functional');
-        let el = $('#example_'+id);
+        let el = $('label[for="example_'+id+'"]');
 
         if(isChecked) {
-            el.prev('label').css('display', 'none');
-            el.next('label').css('display', 'none');
+            el.css('display', 'none');
+            el.css('display', 'none');
         }
         else {
-            el.prev('label').css('display', '');
-            el.next('label').css('display', '');
+            el.css('display', '');
+            el.css('display', '');
         }
 
     })
-    
 
     $(document.body).on('change', '.js-check-checked', function(e) {
         e.preventDefault();
@@ -116,7 +126,7 @@ jQuery(document).ready(function ($) {
         let errorsBlock = `<div id="${config.preview_form_options[0].errors.id}" class="${config.preview_form_options[0].errors.class}">${config.preview_form_options[0].errors.text}</div>`;
 
         let previewContainer = $('#PreviewComponent'+config.uuid_field_key+ ' #example_'+config.uuid_field_key);
-        console.log(previewContainer)
+        // console.log(previewContainer)
         $(errorsBlock).insertAfter(previewContainer)
         $(helpBlock).insertAfter(previewContainer)
     }
@@ -124,7 +134,11 @@ jQuery(document).ready(function ($) {
     function formatAttributes(value) {
         let breaks = value.split(',');
         let o = {};
-        console.log('breaks', breaks);
+        // console.log('breaks', breaks);
+
+        $.each(breaks, function(i, breakableVal) {
+            breaks[i] = breakableVal.trim();
+        })
 
         $.each(breaks, function(i, breakableVal) {
             let breakables = breakableVal.trim().split(':');
@@ -136,8 +150,78 @@ jQuery(document).ready(function ($) {
         return o;
     }
 
+    function hydrateSelectedField(attribs, uuid) {
+        let selected_select = $('#selected_'+uuid+' select');
+        let AttribsKeys = Object.keys(attribs);
+
+        selected_select.children().remove();
+
+        $.each(AttribsKeys, function(i, Attrib) {
+            selected_select.append('<option value="'+ Attrib +'">'+ attribs[Attrib] +'</option>');
+        })
+
+        selected_select.children().first().attr('selected', 'selected');
+    }
+
     $(document.body).on('blur', '.js-choices', function(e) {
         e.preventDefault();
+
+        let id = $(this).attr('data-functional');
+        let type = getTypeField(id);
+        let previewContainer = $('#PreviewComponent'+id);
+        let val = $(this).val() ?? null;
+
+        if(val != null && val.length > 0) {
+            let attributes = formatAttributes( val );
+            let AttribsKeys = Object.keys(attributes);
+            let el = null;
+            let label_for_el = null;
+
+            if(AttribsKeys.length > 0) {
+                // 'choice.select:single',
+                // 'choice.select:multiple',
+                // 'choice.checkbox',
+                // 'choice.radio'
+                switch (type) {
+                    case 'select':
+                    case 'select2':
+                    case 'choice.select:single':
+                    case 'choice.select:multiple':
+                        el = previewContainer.find('select');
+                        el.children().remove();
+                        $.each(AttribsKeys, function(i, Attrib) {
+                            el.append('<option value="'+ Attrib +'">'+ attributes[Attrib] +'</option>');
+                        })
+                        break;
+                    case 'choice.checkbox':
+                    case 'choice.radio':
+                        el = previewContainer.find('input').first().clone(true);
+                        label_for_el = previewContainer.find('input').first().next().clone(true);
+
+                        let elements = previewContainer.find('.form-group').children().not('label:eq(0)');
+                        let block = previewContainer.find('.form-group');
+                        elements.remove();
+                        $.each(AttribsKeys, function(i, Attrib) {
+
+                            el = el.clone(true);
+                            label_for_el = label_for_el.clone(true);
+                            console.log('log')
+                            el.attr('value', Attrib);
+                            el.attr('id', 'example_'+ id +'_example-'+i+'')
+                            label_for_el.text(attributes[Attrib]);
+                            label_for_el.attr('for', 'example_'+ id +'_example-'+i+'');
+
+                            block.append(el)
+                            block.append(label_for_el);
+                        })
+
+                        break;
+                }
+
+                hydrateSelectedField(attributes, id);
+            }
+        }
+
     })
 
     $(document.body).on('blur', '.js-attrs', function(e) {
@@ -191,6 +275,8 @@ jQuery(document).ready(function ($) {
             el.addClass('d-none').text('');
         }
     })
+
+
 
     $(document.body).on('click', '.js-delete', function(e) {
         e.preventDefault();
@@ -251,8 +337,20 @@ jQuery(document).ready(function ($) {
         Accordion_zone.trigger('arrange:fields');
     }
 
-    function conditionalFields(check, list, selector) {
-        if(list.indexOf(check) == -1) {
+    function getTypeField(uuid) {
+        return $('#card'+uuid+' .js-dupplicate').attr('data-type');
+    }
+
+    function conditionalFields(check, list, selector, condional = 'equal') {
+
+        if(condional == 'diff') {
+            condional = eval(list.indexOf(check) != -1);
+        }
+        else {
+            condional = eval(list.indexOf(check) == -1);
+        }
+
+        if(condional) {
             $(selector).css('display' ,'none');
         }
     }
@@ -294,6 +392,7 @@ jQuery(document).ready(function ($) {
 
                 var proto = $('#prototypeField').data('proto').replace(/__NAME__/g, '__REPLACE__');
                 proto = proto.replace(/__FUNCTIONAL__/g, data.uuid_field_key);
+                proto = proto.replace(/__TOREPLACE__/g, dataName);
 
                 // var previewHydrated = $(proto).find('#PreviewComponent'+count).append(data.html);
 
@@ -310,6 +409,11 @@ jQuery(document).ready(function ($) {
                 conditionalFields(dataName, allowed_choice_field_types, '#card'+data.uuid_field_key+ ' #choices_'+data.uuid_field_key);
                 conditionalFields(dataName, allowed_choice_field_types, '#card'+data.uuid_field_key+ ' #selected_'+data.uuid_field_key);
                 conditionalFields(dataName, allowed_for_checked, '#card'+data.uuid_field_key+ ' #checked_'+data.uuid_field_key);
+
+
+                conditionalFields(dataName, not_allowed_to_classic_fields, '#card'+data.uuid_field_key+ ' #max_length_'+data.uuid_field_key, 'diff');
+                conditionalFields(dataName, not_allowed_to_classic_fields, '#card'+data.uuid_field_key+ ' #value_'+data.uuid_field_key, 'diff');
+                conditionalFields(dataName, not_allowed_to_classic_fields, '#card'+data.uuid_field_key+ ' #default_value_'+data.uuid_field_key, 'diff');
 
                 previewContainer.append(data.html);
 

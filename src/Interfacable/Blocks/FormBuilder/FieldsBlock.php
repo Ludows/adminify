@@ -17,9 +17,6 @@ class FieldsBlock extends InterfacableBlock {
             'submit',
             'image',
             'choice',
-            'radio',
-            'select',
-            'checkbox'
         ];
     }
     public static function getNamedBlock() {
