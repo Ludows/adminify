@@ -65,6 +65,17 @@
                                     'data-replace' => 'fields[__REPLACE__][expanded]'
                                 ]
                             ]) !!}
+                            
+                            {!! form_row($options['children']['label'], [
+                                'wrapper' => [
+                                    'id' => 'label_'.$functionnal_identifier,
+                                ],
+                                'attr' => [
+                                    'data-functional' => $functionnal_identifier,
+                                    'data-replace' => 'fields[__REPLACE__][label]'
+                                ]
+                            ]) !!}
+
                             {!! form_row($options['children']['choices'], [
                                 'wrapper' => [
                                     'id' => 'choices_'.$functionnal_identifier,
