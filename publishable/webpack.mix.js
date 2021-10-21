@@ -26,3 +26,9 @@ mix.js('resources/adminify/back/js/argon.js', 'public/adminify/back/js')
     .sass('resources/adminify/back/sass/argon.scss', 'public/adminify/back/css')
     .sass('resources/adminify/front/sass/front.scss', 'public/adminify/front/css')
     .sass('resources/adminify/back/sass/extensions.scss', 'public/adminify/back/css');
+
+    mix.copy('resources/adminify/back/font/summernote.ttf', 'public/adminify/back/css/font/summernote.ttf');
+    mix.copy('resources/adminify/back/font/summernote.eot', 'public/adminify/back/css/font/summernote.eot');
+    mix.copy('resources/adminify/back/font/summernote.woff', 'public/adminify/back/css/font/summernote.woff');
+    mix.copy('resources/adminify/back/font/summernote.woff2', 'public/adminify/back/css/font/summernote.woff2');
+
