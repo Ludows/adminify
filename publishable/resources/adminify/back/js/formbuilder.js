@@ -22,6 +22,10 @@ jQuery(document).ready(function ($) {
         'choice.radio'
     ];
 
+    const show_only_to = [
+        'static'
+    ];
+
     const not_allowed_to_classic_fields = [
         'choice.select:single',
         'choice.select:multiple',
@@ -205,7 +209,6 @@ jQuery(document).ready(function ($) {
 
                             el = el.clone(true);
                             label_for_el = label_for_el.clone(true);
-                            console.log('log')
                             el.attr('value', Attrib);
                             el.attr('id', 'example_'+ id +'_example-'+i+'')
                             label_for_el.text(attributes[Attrib]);
@@ -414,6 +417,8 @@ jQuery(document).ready(function ($) {
                 conditionalFields(dataName, not_allowed_to_classic_fields, '#card'+data.uuid_field_key+ ' #max_length_'+data.uuid_field_key, 'diff');
                 conditionalFields(dataName, not_allowed_to_classic_fields, '#card'+data.uuid_field_key+ ' #value_'+data.uuid_field_key, 'diff');
                 conditionalFields(dataName, not_allowed_to_classic_fields, '#card'+data.uuid_field_key+ ' #default_value_'+data.uuid_field_key, 'diff');
+
+                conditionalFields(dataName, show_only_to, '#card'+data.uuid_field_key+ ' #content_'+data.uuid_field_key);
 
                 previewContainer.append(data.html);
 
