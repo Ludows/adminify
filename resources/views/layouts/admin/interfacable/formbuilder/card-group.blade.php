@@ -48,6 +48,7 @@
                         <div class="tab-pane fade show active" id="General{{ $functionnal_identifier }}" role="tabpanel">
                             {!! form_row($options['children']['field_type'], [
                                 'attr' => [
+                                    'datatype' => '__TOREPLACE__',
                                     'data-functional' => $functionnal_identifier,
                                     'data-replace' => 'fields[__REPLACE__][field_type]'
                                 ]

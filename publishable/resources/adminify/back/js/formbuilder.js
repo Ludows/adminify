@@ -92,6 +92,7 @@ jQuery(document).ready(function ($) {
         }
 
     })
+    
 
     $(document.body).on('change', '.js-check-checked', function(e) {
         e.preventDefault();
@@ -134,6 +135,10 @@ jQuery(document).ready(function ($) {
 
         return o;
     }
+
+    $(document.body).on('blur', '.js-choices', function(e) {
+        e.preventDefault();
+    })
 
     $(document.body).on('blur', '.js-attrs', function(e) {
         e.preventDefault();
