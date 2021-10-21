@@ -84,6 +84,9 @@
                                 ]
                             ]) !!}
                             {!! form_row($options['children']['max_length'], [
+                                'wrapper' => [
+                                    'id' => 'max_length_'.$functionnal_identifier,
+                                ],
                                 'attr' => [
                                     'data-functional' => $functionnal_identifier,
                                     'data-replace' => 'fields[__REPLACE__][max_length]'
@@ -91,6 +94,9 @@
                             ]) !!}
 
                             {!! form_row($options['children']['value'], [
+                                'wrapper' => [
+                                    'id' => 'value_'.$functionnal_identifier,
+                                ],
                                 'attr' => [
                                     'data-functional' => $functionnal_identifier,
                                     'data-replace' => 'fields[__REPLACE__][value]'
@@ -98,6 +104,9 @@
                             ]) !!}
 
                             {!! form_row($options['children']['default_value'], [
+                                'wrapper' => [
+                                    'id' => 'default_value_'.$functionnal_identifier,
+                                ],
                                 'attr' => [
                                     'data-replace' => 'fields[__REPLACE__][default_value]'
                                 ]
