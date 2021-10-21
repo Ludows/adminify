@@ -35,6 +35,14 @@ class LarabergType extends FormField {
         }
         $options['attr']['id'] = Str::slug('laraberg_textarea_'.$uniqid);
 
+        $sibling = '';
+        if(isset($options['force_sibling']) && $options['force_sibling'] == true && isset($options['sibling'])) {
+            $sibling = $options['sibling'];
+        }
+        else {
+            $sibling = Str::slug('laraberg_'.$uniqid);
+        }
+
         if(isset($options['force_js']) && $options['force_js'] == true) {
             $isAjax = true;
         }
@@ -44,7 +52,7 @@ class LarabergType extends FormField {
             'attr' => [
                 'id' => Str::slug('laraberg_textarea_'.$uniqid)
             ],
-            'sibling' => Str::slug('laraberg_'.$uniqid),
+            'sibling' => $sibling,
             'fromAjax' => isset($options['fromAjax']) ? $options['fromAjax'] : false,
             'withBtnForTemplates' => isset($options['withBtnForTemplates']) ? $options['withBtnForTemplates'] : false,
             'laraberg_defaults' => array_merge($this->setDefaultsLaraberg(), isset($options['laraberg_defaults']) ? $options['laraberg_defaults'] : [])

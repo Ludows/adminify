@@ -56,7 +56,11 @@ class CreateFields extends Form
         $this->add('content', 'summernote', [
             'label' => __('adminify.formbuilder.content'),
             'force_js' => true,
+            'force_sibling' => true,
+            'sibling' => 'content___FUNCTIONAL__',
             'attr' => [
+                'data-functional' => '__FUNCTIONAL__',
+                'data-replace' => 'fields[__REPLACE__][content]',
                 'class' => 'form-control',
                 'placeholder' => __('adminify.formbuilder.content')
             ]

@@ -33,9 +33,17 @@ class GeneratorPasswordType extends FormField {
             $isAjax = true;
         }
 
+        $sibling = '';
+        if(isset($options['force_sibling']) && $options['force_sibling'] == true && isset($options['sibling'])) {
+            $sibling = $options['sibling'];
+        }
+        else {
+            $sibling = Str::slug('generator_password_'.$uniqid);
+        }
+
         $b = [
             'isAjax' => $isAjax,
-            'sibling' => Str::slug('generator_password_'.$uniqid),
+            'sibling' => $sibling,
             'modal' => isset($options['modal']) ? $options['modal'] : 'adminify::layouts.admin.modales.modaleMediaLibrary',
             'generate_password_options' => array_merge($this->setDefaults(), isset($options['generate_password_options']) ? $options['generate_password_options'] : [] )
         ];

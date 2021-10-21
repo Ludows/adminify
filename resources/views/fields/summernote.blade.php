@@ -9,7 +9,6 @@
     @endif
 
     @if($showField)
-        {{-- {{ dd($options['choices']) }} --}}
         {!! Form::hidden($name, $options['value'], $options['attr']) !!}
         <div class="summernote_editor">{!! $options['value'] !!}</div>
 
@@ -26,7 +25,7 @@
 </div>
 
 @push('js')
-   
+
 @endpush
 
 @if ($options['isAjax'])

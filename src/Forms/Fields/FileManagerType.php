@@ -58,9 +58,17 @@ class FileManagerType extends FormField {
 
         }
 
+        $sibling = '';
+        if(isset($options['force_sibling']) && $options['force_sibling'] == true && isset($options['sibling'])) {
+            $sibling = $options['sibling'];
+        }
+        else {
+            $sibling = Str::slug('media_library_'.$uniqid);
+        }
+
         $b = [
             'isAjax' => $isAjax,
-            'sibling' => Str::slug('media_library_'.$uniqid),
+            'sibling' => $sibling,
             'modal' => isset($options['modal']) ? $options['modal'] : 'adminify::layouts.admin.modales.modaleFileManager',
             'lfm_options' => array_merge($this->setDefaults(), isset($options['lfm_options']) ? $options['lfm_options'] : [])
         ];
