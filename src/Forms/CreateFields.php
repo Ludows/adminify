@@ -67,7 +67,6 @@ class CreateFields extends Form
         ]);
 
         $this->add('label', 'text', [
-            'required' => true,
             'label' => __('adminify.formbuilder.label'),
             'attr' => [
                 'class' => 'form-control js-labelize',
