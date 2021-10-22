@@ -38,7 +38,6 @@ class FormBlock extends InterfacableBlock {
         $f = $this->form(CreateForms::class, [
             'method' => 'POST',
             "id" => "formBuilderCreateForm",
-            "novalidate" => "novalidate",
             'url' => route('forms.store')
         ]);
 
