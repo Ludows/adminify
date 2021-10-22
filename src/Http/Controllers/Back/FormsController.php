@@ -148,6 +148,7 @@ class FormsController extends Controller
 
         }
 
+        //todo more cleaner as helper func ?
         public function getChoiceOptionsRenderer($type) {
 
             $expanded = false;

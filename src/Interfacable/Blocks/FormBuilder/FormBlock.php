@@ -37,6 +37,7 @@ class FormBlock extends InterfacableBlock {
     public function addToRender() {
         $f = $this->form(CreateForms::class, [
             'method' => 'POST',
+            "id" => "formBuilderCreateForm",
             'url' => route('forms.store')
         ]);
 
