@@ -18,10 +18,10 @@ class FormsRepository extends BaseRepository
         'fields'
     ];
 
-    //set as interval for register or update fields objects
-    public $internal_relations_columns = [
-        'fields'
-    ];
+    // //set as interval for register or update fields objects
+    // public $internal_relations_columns = [
+    //     'fields'
+    // ];
 
     // public function getFieldsRelationship($model, $formValues, $type) {
     //     dd('internal', $formValues);
@@ -30,7 +30,6 @@ class FormsRepository extends BaseRepository
 
 
     public function getExternalFieldsRelationship($model, $formValues, $type) {
-        dd('external',$formValues);
         if(!isset($formValues['fields']) && $type == "update") {
             $model->detach();
         }
@@ -39,6 +38,11 @@ class FormsRepository extends BaseRepository
         if(isset($formValues['fields']) && count($formValues['fields']) > 0) {
             foreach ($formValues['fields'] as $fieldKey => $field) {
                 # code...
+
+                if(empty($formValues['fields'][$fieldKey]['label'])) {
+                    $formValues['fields'][$fieldKey]['label'] = 'Field_'.$fieldKey;
+                }
+                
                 if($type == "create") {
                    $field = $this->formFieldRepo->addModel(new FormField())->create($field);
                    $attachements[$model->id] = ['field_id' => $field->id];
