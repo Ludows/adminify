@@ -60,6 +60,20 @@ jQuery(document).ready(function ($) {
 
     Accordion_zone.on('arrange:fields', arrangeFields);
 
+    jQuery.validator.setDefaults({
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
+
     $(document.body).on('keyup', '.js-labelize', function(e) {
         e.preventDefault();
 
@@ -338,6 +352,26 @@ jQuery(document).ready(function ($) {
         })
     }
 
+    function giveForChoicesFields(config) {
+        if(config.preview_form_options[0].type.indexOf('choice') > -1) {
+            // sibling all hidden not content;
+            let $hiddens = $('#TabContent'+config.uuid_field_key+' input[type="hidden"]:not(:eq(0)):not(:eq(3))');
+
+            $.each($hiddens, function(i, hiddenField) {
+
+                let the_field = $(hiddenField);
+                let id = the_field.attr('id');
+
+                if( config.preview_form_options[0].hasOwnProperty(id)) {
+                    console.log('config.preview_form_options[0][id]', config.preview_form_options[0][id])
+                    the_field.val(config.preview_form_options[0][id] ? 1 : 0);
+                }
+
+            });
+
+        }
+    }
+
     function onEndWithinFields(evt) {
         Accordion_zone.trigger('arrange:fields');
     }
@@ -425,8 +459,11 @@ jQuery(document).ready(function ($) {
                 previewContainer.append(data.html);
 
                 generateBlocks(data);
+                giveForChoicesFields(data);
 
                 previewContainer.find('.form-control').removeAttr('name');
+
+                $('#General'+data.uuid_field_key+' input[type="hidden"]:eq(0)').val(dataName);
 
                 Accordion_zone.trigger('arrange:fields');
 
