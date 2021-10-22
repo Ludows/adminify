@@ -1,6 +1,8 @@
 // Show packages.json
 window.jQuery = window.$ = require('jquery');
 
+require('jquery-validation');
+
 import {
     createLaravelLocalization
 } from '@wesleyhf/laravel-localization-js';

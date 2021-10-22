@@ -11,6 +11,7 @@ class CreateForms extends Form
             'value' => user()->id
         ]);
         $this->add('title', 'text', [
+            'required' => true,
             'attr' => [
                 'placeholder' => __('adminify.formbuilder.form')
             ]
