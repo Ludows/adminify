@@ -25,7 +25,7 @@ class FormsRepository extends BaseRepository
 
     // public function getFieldsRelationship($model, $formValues, $type) {
     //     dd('internal', $formValues);
-        
+
     // }
 
 
@@ -35,14 +35,29 @@ class FormsRepository extends BaseRepository
         }
         $attachements = [];
 
+        $sampleFormField = new FormField();
+        $defaults_attributes = $sampleFormField->getAttributes();
+
         if(isset($formValues['fields']) && count($formValues['fields']) > 0) {
             foreach ($formValues['fields'] as $fieldKey => $field) {
                 # code...
 
+                $keys = array_keys($field);
+                unset($keys['label']);
+
                 if(empty($formValues['fields'][$fieldKey]['label'])) {
                     $formValues['fields'][$fieldKey]['label'] = 'Field_'.$fieldKey;
                 }
-                
+
+                // enable checking
+                foreach ($keys as $key) {
+                    # code...
+                    if(empty($formValues['fields'][$fieldKey][$key])) {
+                        $formValues['fields'][$fieldKey][$key] = $defaults_attributes[$key];
+                    }
+                }
+
+
                 if($type == "create") {
                    $field = $this->formFieldRepo->addModel(new FormField())->create($field);
                    $attachements[$model->id] = ['field_id' => $field->id];
@@ -57,6 +72,6 @@ class FormsRepository extends BaseRepository
                 $model->attach($attachements);
             }
         }
-        
+
     }
 }

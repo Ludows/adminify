@@ -19,6 +19,13 @@ class FormField extends ClassicModel
 
     public $enable_searchable = false;
 
+    public function __construct() {
+        parent::__construct();
+
+        $this->attributes['content'] = is_multilang() ? '{}' : '';
+        $this->attributes['custom_error_message'] = is_multilang() ? '{}' : '';
+    }
+
     protected $fillable = [
         'label',
         'required',
@@ -30,6 +37,7 @@ class FormField extends ClassicModel
         'expanded',
         'value',
         'default_value',
+        'custom_error_message',
         'choices',
         'max_length',
         'label_show',
@@ -55,7 +63,6 @@ class FormField extends ClassicModel
         'label_attr' => '',
         'attr' => '',
         'wrapper' => '',
-        'content' => '{}',
         'choices' => '{}',
         'selected' => '{}'
     ];
