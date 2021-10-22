@@ -10,18 +10,20 @@ class CreateFields extends Form
 
         $this->add('field_type', 'hidden', [
             'attr' => [
-                'value' => '__TYPEDFORM__'
+                'value' => '__TOREPLACE__'
             ]
         ]);
 
         $this->add('multiple', 'hidden', [
             'attr' => [
+                'id' => 'multiple',
                 'value' => 0
             ]
         ]);
 
         $this->add('expanded', 'hidden', [
             'attr' => [
+                'id' => 'expanded',
                 'value' => 0
             ]
         ]);
