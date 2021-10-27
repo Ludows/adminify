@@ -63,7 +63,7 @@ class FormsRepository extends BaseRepository
                 // enable checking
                 foreach ($keys as $key) {
                     # code...
-                    if(empty($formValues['fields'][$fieldKey][$key])) {
+                    if(isset($defaults_attributes[$key]) && empty($formValues['fields'][$fieldKey][$key])) {
                         $field[$key] = $defaults_attributes[$key];
                     }
                 }
