@@ -7,6 +7,7 @@ use App\Adminify\Models\Forms;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 use App\Adminify\Forms\CreateForms;
+use App\Adminify\Forms\UpdateForms;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
@@ -35,13 +36,28 @@ class FormBlock extends InterfacableBlock {
         return 'adminify::layouts.admin.interfacable.formbuilder.form';
     }
     public function addToRender() {
-        $f = $this->form(CreateForms::class, [
-            'method' => 'POST',
+
+        $shared = $this->getShared('model_by_route');
+
+        $namedForm = CreateForms::class;
+        $methodForm = 'POST';
+        $urlForm = route('forms.store');
+        $theModel = null;
+
+        if(!empty($shared)) {
+            $namedForm = UpdateForms::class;
+            $methodForm = 'PUT';
+            $urlForm = route('forms.update', ['form' => $shared->id]);
+            $theModel = $shared;
+        }
+
+        $f = $this->form($namedForm, [
+            'method' => $methodForm,
             "id" => "formBuilderCreateForm",
-            'url' => route('forms.store')
+            'url' => $urlForm,
+            'model' => $theModel
         ]);
 
-       $shared = $this->getShared('model_by_route');
 
         return [
             'form' => $f,

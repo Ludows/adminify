@@ -21,16 +21,11 @@
                             {{--  // aucun champ et c'est une création  --}}
                             <span id="noFieldsText">{{ __('admin.formbuilder.noFields') }}</span>
                         @endif
-                        {{--  @if(!empty($query) && !$isCreate)
+                         @if(!empty($query) && !$isCreate)
                             @foreach ($query as $field)
-                                @include('adminify::layouts.admin.interfacable.formbuilder.card-group', [
-                                    'item' => $field,
-                                    'fields' => $form->fields->getChildren()[0],
-                                    'index' => $loop->index,
-                                    'form' => $form
-                                ])
+                               {!! form_row($form->fields) !!}
                             @endforeach
-                        @endif  --}}
+                        @endif 
                     </div>
 
                 </div>
