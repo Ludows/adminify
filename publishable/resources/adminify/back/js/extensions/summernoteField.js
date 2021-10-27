@@ -7,7 +7,7 @@ export default function summernoteInititalization(fields) {
             let hiddenField = $('#'+el.selector+' input[type="hidden"]');
             let summernote = textField.summernote(el.options);
 
-            console.log('hiddenField', hiddenField, $('#'+el.selector))
+            // console.log('hiddenField', hiddenField, $('#'+el.selector))
 
             let form = hiddenField.closest("form");
 

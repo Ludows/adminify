@@ -103,13 +103,15 @@ class FormsController extends Controller
         public function edit(Forms $Form, FormBuilder $formBuilder)
         {
             //
-            $form = $formBuilder->create(UpdateForms::class, [
-                'method' => 'PUT',
-                'url' => route('forms.update', ['form' => $Form->id]),
-                'model' => $Form
-            ]);
+            // $form = $formBuilder->create(UpdateForms::class, [
+            //     'method' => 'PUT',
+            //     'url' => route('forms.update', ['form' => $Form->id]),
+            //     'model' => $Form
+            // ]);
+            $interface = interfaces('formbuilder');
 
-            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
+
+            return view("adminify::layouts.admin.pages.edit", ['interface' => $interface]);
         }
 
         /**
@@ -187,17 +189,19 @@ class FormsController extends Controller
             ];
         }
 
-        public function addField(Request $request, FormBuilder $FormBuilder) {
+        public function getFieldExample($all = [], $json = true) {
+            $key = uuid(20);
 
-            $all = $request->all();
-            $concat_arr = array();
+            if(!empty($all['key'])) {
+                $key = $all['key'];
+            }
+            $pattern_name = 'example_'.$key;
+
+            $FormBuilder = app('Kris\LaravelFormBuilder\FormBuilder');
 
             if(!isset($all['type'])) {
                 abort(403);
             }
-            $key = uuid(20);
-            $pattern_name = 'example_'.$key;
-
 
             if(is_integer( strpos($all['type'], 'choice') )) {
                 $spl_str = explode('.', $all['type']);
@@ -206,6 +210,7 @@ class FormsController extends Controller
                 $all['type'] = 'choice';
             }
 
+            $concat_arr = array();
 
             $optionsFields = [
                 [
@@ -237,15 +242,30 @@ class FormsController extends Controller
                 'url' => route('forms.validate')
             ];
 
-
             $form = $FormBuilder->createByArray($optionsFields,$optionForm);
 
-            return response()->json([
+            $return_statement = [
                 'status' => 'OK',
                 'html' => form_row($form->{$pattern_name}),
                 'uuid_field_key' => $key,
                 'preview_form_options' => $optionsFields,
-            ]);
+            ];
+
+            if($json) {
+                return response()->json($return_statement);
+            }
+            else {
+                return $return_statement;
+            }
+        }
+
+        public function addField(Request $request, FormBuilder $FormBuilder) {
+
+            $all = $request->all();
+
+            $response_field = $this->getFieldExample($all);
+
+            return $response_field;
 
         }
 }

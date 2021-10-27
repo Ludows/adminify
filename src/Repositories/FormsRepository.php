@@ -30,8 +30,9 @@ class FormsRepository extends BaseRepository
 
 
     public function getExternalFieldsRelationship($model, $formValues, $type) {
-        if(!isset($formValues['fields']) && $type == "update") {
-            $model->detach();
+
+        if($type == "update") {
+            $model->fields()->detach();
         }
         $attachements = [];
 
@@ -42,34 +43,45 @@ class FormsRepository extends BaseRepository
             foreach ($formValues['fields'] as $fieldKey => $field) {
                 # code...
 
+                //remove label
                 $keys = array_keys($field);
-                unset($keys['label']);
+                $indexKey = array_search('label', $keys);
+                $m = new FormField();
+                $todoCreate = true;
 
                 if(empty($formValues['fields'][$fieldKey]['label'])) {
-                    $formValues['fields'][$fieldKey]['label'] = 'Field_'.$fieldKey;
+                    $field['label'] = 'Field_'.$fieldKey;
+                    unset($keys[$indexKey]);
                 }
 
                 // enable checking
                 foreach ($keys as $key) {
                     # code...
                     if(empty($formValues['fields'][$fieldKey][$key])) {
-                        $formValues['fields'][$fieldKey][$key] = $defaults_attributes[$key];
+                        $field[$key] = $defaults_attributes[$key];
                     }
                 }
 
+                if(!empty($formValues['fields'][$fieldKey]['fromdb'])) {
+                    $todoCreate = false;
+                    $m = $m->find((int) $formValues['fields'][$fieldKey]['fromdb']);
 
-                if($type == "create") {
-                   $field = $this->formFieldRepo->addModel(new FormField())->create($field);
-                   $attachements[$model->id] = ['field_id' => $field->id];
+                    unset($formValues['fields'][$fieldKey]['fromdb']);
+                }
+
+
+                if($todoCreate) {
+                   $field = $this->formFieldRepo->addModel($m)->create($field);
                 }
                 else {
-                    dd('todo update');
-                    $this->formFieldRepo->addModel(new FormField())->update($field, new FormField());
+                    $field = $this->formFieldRepo->addModel($m)->update($field, $m);
                 }
+
+                $attachements[] = $field->id;
             }
 
             if(count($attachements) > 0) {
-                $model->attach($attachements);
+                $model->fields()->attach($attachements);
             }
         }
 

@@ -8,10 +8,18 @@ class CreateFields extends Form
     public function buildForm()
     {
 
+        // dd(view()->getShared());
+        // $cuurentRouteName = explode('.', view()->shared('currentRouteName'));
+
+
         $this->add('field_type', 'hidden', [
             'attr' => [
                 'value' => '__TOREPLACE__'
             ]
+        ]);
+
+        $this->add('fromdb', 'hidden', [
+
         ]);
 
         $this->add('multiple', 'hidden', [
@@ -59,10 +67,7 @@ class CreateFields extends Form
             'label' => __('adminify.formbuilder.content'),
             'force_js' => true,
             'force_sibling' => true,
-            'sibling' => 'content___FUNCTIONAL__',
             'attr' => [
-                'data-functional' => '__FUNCTIONAL__',
-                'data-replace' => 'fields[__REPLACE__][content]',
                 'class' => 'form-control',
                 'placeholder' => __('adminify.formbuilder.content')
             ]

@@ -21,7 +21,8 @@ class SummernoteType extends FormField {
     public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
     {
         $uniqid = Str::random(9);
-        $options = $this->getOptions();
+        $options = array_merge($this->getOptions() , $options);
+
         $isAjax = request()->ajax();
 
         $sibling = '';
@@ -31,6 +32,7 @@ class SummernoteType extends FormField {
         else {
             $sibling = Str::slug('summernote_'.$uniqid);
         }
+
 
 
         if(!isset($options['summernote_options'])) {

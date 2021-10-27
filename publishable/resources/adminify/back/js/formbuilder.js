@@ -183,6 +183,7 @@ jQuery(document).ready(function ($) {
         selected_select.children().first().attr('selected', 'selected');
     }
 
+
     $(document.body).on('blur', '.js-choices', function(e) {
         e.preventDefault();
 
@@ -243,6 +244,7 @@ jQuery(document).ready(function ($) {
 
     })
 
+
     $(document.body).on('blur', '.js-attrs', function(e) {
         e.preventDefault();
 
@@ -267,6 +269,7 @@ jQuery(document).ready(function ($) {
         }
     })
 
+
     $(document.body).on('change', '.js-max-length', function(e) {
 
         let val = parseInt($(this).val());
@@ -280,6 +283,8 @@ jQuery(document).ready(function ($) {
         }
 
     });
+
+
 
     $(document.body).on('keyup', '.js-error-message', function(e) {
         e.preventDefault();
@@ -350,6 +355,10 @@ jQuery(document).ready(function ($) {
                 $(formEl).next('label').attr('for', theDataPattern)
             })
         })
+
+        cards.fadeIn(function() {
+
+        })
     }
 
     function giveForChoicesFields(config) {
@@ -399,6 +408,47 @@ jQuery(document).ready(function ($) {
     }
     // function get
 
+    function SetupFields(fieldIds = [], data = [], isAjax = false) {
+
+        $.each(fieldIds, function(i,fieldId) {
+
+            let theDataAttchedToField = data[i];
+            let previewContainer = $('#card'+fieldId).find('#PreviewComponent'+fieldId);
+            console.log('data', data);
+
+            // setting up type field
+            $('#card'+fieldId+' .js-dupplicate').attr('data-type', theDataAttchedToField.dataName);
+
+            // if(allowed_choice_field_types.indexOf(dataName) == -1) {
+            //     $('#card'+data.uuid_field_key).find('#choices_'+data.uuid_field_key).css('display' ,'none');
+            // }
+            conditionalFields(theDataAttchedToField.dataName, allowed_choice_field_types, '#card'+fieldId+ ' #choices_'+fieldId);
+            conditionalFields(theDataAttchedToField.dataName, allowed_choice_field_types, '#card'+fieldId+ ' #selected_'+fieldId);
+            conditionalFields(theDataAttchedToField.dataName, allowed_for_checked, '#card'+fieldId+ ' #checked_'+fieldId);
+
+
+            conditionalFields(theDataAttchedToField.dataName, not_allowed_to_classic_fields, '#card'+fieldId+ ' #max_length_'+fieldId, 'diff');
+            conditionalFields(theDataAttchedToField.dataName, not_allowed_to_classic_fields, '#card'+fieldId+ ' #value_'+fieldId, 'diff');
+            conditionalFields(theDataAttchedToField.dataName, not_allowed_to_classic_fields, '#card'+fieldId+ ' #default_value_'+fieldId, 'diff');
+
+            conditionalFields(theDataAttchedToField.dataName, show_only_to, '#card'+fieldId+ ' #content_'+fieldId);
+
+            if(isAjax) {
+                previewContainer.append(theDataAttchedToField.html);
+                generateBlocks(theDataAttchedToField);
+                giveForChoicesFields(theDataAttchedToField);
+            }
+
+            previewContainer.find('.form-control').removeAttr('name');
+
+            $('#General'+fieldId+' input[type="hidden"]:eq(0)').val(theDataAttchedToField.dataName);
+        })
+
+
+
+        Accordion_zone.trigger('arrange:fields');
+    }
+
     function onAddToAccordion(evt) {
         console.log(evt);
         let noFieldsTextSpan = $('#noFieldsText');
@@ -414,7 +464,7 @@ jQuery(document).ready(function ($) {
                 noFieldsTextSpan.remove();
             }
 
-            console.log('cloned_btn', cloned_btn.attr('data-name'), cloned_btn)
+            // console.log('cloned_btn', cloned_btn.attr('data-name'), cloned_btn)
 
             $.ajax({
                 'method' : 'POST',
@@ -433,44 +483,14 @@ jQuery(document).ready(function ($) {
                 proto = proto.replace(/__FUNCTIONAL__/g, data.uuid_field_key);
                 proto = proto.replace(/__TOREPLACE__/g, dataName);
 
+                data.dataName = dataName;
+
                 // var previewHydrated = $(proto).find('#PreviewComponent'+count).append(data.html);
 
                 $(evt.item).replaceWith(proto);
 
-                let previewContainer = $('#card'+data.uuid_field_key).find('#PreviewComponent'+data.uuid_field_key);
+                SetupFields([data.uuid_field_key], [data], true);
 
-                // setting up type field
-                $('#card'+data.uuid_field_key+' .js-dupplicate').attr('data-type', dataName);
-
-                // if(allowed_choice_field_types.indexOf(dataName) == -1) {
-                //     $('#card'+data.uuid_field_key).find('#choices_'+data.uuid_field_key).css('display' ,'none');
-                // }
-                conditionalFields(dataName, allowed_choice_field_types, '#card'+data.uuid_field_key+ ' #choices_'+data.uuid_field_key);
-                conditionalFields(dataName, allowed_choice_field_types, '#card'+data.uuid_field_key+ ' #selected_'+data.uuid_field_key);
-                conditionalFields(dataName, allowed_for_checked, '#card'+data.uuid_field_key+ ' #checked_'+data.uuid_field_key);
-
-
-                conditionalFields(dataName, not_allowed_to_classic_fields, '#card'+data.uuid_field_key+ ' #max_length_'+data.uuid_field_key, 'diff');
-                conditionalFields(dataName, not_allowed_to_classic_fields, '#card'+data.uuid_field_key+ ' #value_'+data.uuid_field_key, 'diff');
-                conditionalFields(dataName, not_allowed_to_classic_fields, '#card'+data.uuid_field_key+ ' #default_value_'+data.uuid_field_key, 'diff');
-
-                conditionalFields(dataName, show_only_to, '#card'+data.uuid_field_key+ ' #content_'+data.uuid_field_key);
-
-                previewContainer.append(data.html);
-
-                generateBlocks(data);
-                giveForChoicesFields(data);
-
-                previewContainer.find('.form-control').removeAttr('name');
-
-                $('#General'+data.uuid_field_key+' input[type="hidden"]:eq(0)').val(dataName);
-
-                Accordion_zone.trigger('arrange:fields');
-
-
-                $('#card'+data.uuid_field_key).fadeIn(function() {
-
-                })
 
 
             })
@@ -484,5 +504,26 @@ jQuery(document).ready(function ($) {
             generateSpanNoFields();
         }
     }
+
+
+    let field_ids_in_dom = [];
+    let dataNames = [];
+    let btns_duplicate = Accordion_zone.find('.card .js-dupplicate');
+
+    $.each(btns_duplicate, function(i, btn_duplicate) {
+        field_ids_in_dom.push($(btn_duplicate).attr('data-functional'));
+        dataNames[i] = {};
+        dataNames[i].dataName = $(btn_duplicate).attr('data-type');
+    });
+
+    SetupFields(field_ids_in_dom, dataNames);
+    $(".js-labelize").trigger("keyup");
+    $(".js-value").trigger("keyup");
+    $(".js-show-label").trigger("change");
+    $(".js-check-checked").trigger("change");
+    $(".js-choices").trigger("blur");
+    $(".js-attrs").trigger("blur");
+    $(".js-max-length").trigger("change");
+    $(".js-error-message").trigger("keyup");
 
 });

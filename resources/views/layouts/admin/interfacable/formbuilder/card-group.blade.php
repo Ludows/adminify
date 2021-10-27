@@ -5,10 +5,18 @@
 
     $unique = uuid(20);
 
+    //dd($options, $options['value']);
+    $item = $options['value'] ?? null;
+
     $isNew = isset($new) ? $new : false;
     $identifier = '__NAME__';
     $functionnal_identifier = '__FUNCTIONAL__';
-    $title = isset($new) && $new == true ? __('admin.formbuilder.newItem') : isset($item) ?? $item->label;
+    $title = isset($new) && $new == true ? __('admin.formbuilder.newItem') : $item->label;
+
+    $cuurentRouteName = explode('.', view()->shared('currentRouteName'));
+    if(!$isNew) {
+        $functionnal_identifier = $unique;
+    }
 @endphp
 
     <div style="display:none;" id="card{{ $functionnal_identifier }}" class="card">
@@ -22,17 +30,39 @@
                 </div>
                 <div>
                     <button data-functional="{{ $functionnal_identifier }}" {!! !$isNew ? "data-field-id='". $item->id ."'" : ''  !!} class="btn btn-danger js-delete" data-toggle="tooltip" data-placement="top" title="{{ __('admin.formbuilder.delete') }}" type="button"><i style="font-size:14px" class="ni ni-fat-remove"></i></button>
-                    <button data-functional="{{ $functionnal_identifier }}" {!! !$isNew ? "data-field-id='". $item->id ."'" : ''  !!} class="btn btn-secondary js-dupplicate" data-toggle="tooltip" data-placement="top" title="{{ __('admin.formbuilder.dupplicate') }}" type="button"><i style="font-size:14px" class="ni ni-single-copy-04"></i></button>
+                    <button data-type="{{ !$isNew ? $item->field_type : '' }}" data-functional="{{ $functionnal_identifier }}" {!! !$isNew ? "data-field-id='". $item->id ."'" : ''  !!} class="btn btn-secondary js-dupplicate" data-toggle="tooltip" data-placement="top" title="{{ __('admin.formbuilder.dupplicate') }}" type="button"><i style="font-size:14px" class="ni ni-single-copy-04"></i></button>
                 </div>
             </div>
 
         </h2>
       </div>
 
+      @if(!empty($item))
+        {!! form_row($options['children']['fromdb'], [
+            'value' => $item->id,
+            'attr' => [
+                'data-functional' => $functionnal_identifier,
+                'data-replace' => 'fields[__REPLACE__][fromdb]',
+            ],
+        ]) !!}
+      @endif
+
       <div id="collapse{{ $functionnal_identifier }}" class="collapse" aria-labelledby="heading{{ $functionnal_identifier }}" data-parent="#formBuilderAccordion">
         <div class="card-body p-0">
             <div class="card shadow-none">
-                <div class="p-4 bg-secondary" id="PreviewComponent{{ $functionnal_identifier }}"></div>
+                <div class="p-4 bg-secondary" id="PreviewComponent{{ $functionnal_identifier }}">
+                    @if(!empty($item))
+                        @php
+                            $cls = app('App\Adminify\Http\Controllers\Back\FormsController');
+                            $theExampleField = $cls->getFieldExample([
+                                'type' => $item->field_type,
+                                'key' => $functionnal_identifier
+                            ], false);
+                        @endphp
+
+                        {!! $theExampleField['html'] !!}
+                    @endif
+                </div>
                 <div class="card-header">
                   <ul class="nav nav-pills card-header-pills">
                     <li class="nav-item">
@@ -48,7 +78,7 @@
                         <div class="tab-pane fade show active" id="General{{ $functionnal_identifier }}" role="tabpanel">
                             {!! form_row($options['children']['field_type'], [
                                 'attr' => [
-                                    'datatype' => '__TOREPLACE__',
+                                    'datatype' => empty($item) ? '__TOREPLACE__' : $options['children']['field_type']->getValue(),
                                     'data-functional' => $functionnal_identifier,
                                     'data-replace' => 'fields[__REPLACE__][field_type]'
                                 ]
@@ -77,10 +107,16 @@
                             ]) !!}
 
                             {!! form_row($options['children']['content'], [
-                                'wrapper' => [
-                                    'id' => 'content_'.$functionnal_identifier,
+                                'sibling' => 'content_'.$functionnal_identifier,
+                                'attr' => [
+                                    'data-functional' => $functionnal_identifier,
+                                    'data-replace' => 'fields[__REPLACE__][content]',
                                 ],
                             ]) !!}
+                            {{-- {!! dd($options['children']['content'], 'content_'.$functionnal_identifier) !!} --}}
+
+
+                            {{-- {!! dd($cuurentRouteName[1] == 'edit' ? 'content_'.$functionnal_identifier : $options['children']['content']->getOptions()['sibling'], $options['children']['content']) !!} --}}
 
                             {!! form_row($options['children']['choices'], [
                                 'wrapper' => [
