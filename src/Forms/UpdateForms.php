@@ -9,5 +9,6 @@ class UpdateForms extends Form
 {
     public function buildForm()
     {
+        $this->compose('App\Adminify\Forms\CreateForms');
     }
 }
