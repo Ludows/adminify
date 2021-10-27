@@ -19,6 +19,8 @@ class CreateForms extends Form
         $this->add('fields', 'collection', [
             'type' => 'form',
             'prefer_input' => true,
+            'label_show' => false,
+            'wrapper' => false,
             'options' => [    // these are options for a single type
                 'class' => 'App\Adminify\Forms\CreateFields',
                 'label' => false,
