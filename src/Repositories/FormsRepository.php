@@ -54,6 +54,12 @@ class FormsRepository extends BaseRepository
                     unset($keys[$indexKey]);
                 }
 
+                if(!empty($formValues['fields'][$fieldKey]['fromdb'])) {
+                    $todoCreate = false;
+                    $m = $m->find((int) $formValues['fields'][$fieldKey]['fromdb']);
+                }
+                unset($formValues['fields'][$fieldKey]['fromdb']);
+
                 // enable checking
                 foreach ($keys as $key) {
                     # code...
@@ -62,12 +68,7 @@ class FormsRepository extends BaseRepository
                     }
                 }
 
-                if(!empty($formValues['fields'][$fieldKey]['fromdb'])) {
-                    $todoCreate = false;
-                    $m = $m->find((int) $formValues['fields'][$fieldKey]['fromdb']);
-
-                    unset($formValues['fields'][$fieldKey]['fromdb']);
-                }
+               
 
 
                 if($todoCreate) {
