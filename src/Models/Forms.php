@@ -36,7 +36,7 @@ class Forms extends ClassicModel
 
     public function fields()
     {
-        return $this->hasMany(FormField::class);
+        return $this->belongsToMany(FormField::class, 'form_form_field', 'form_id');
     }
 
     public function toFeedItem(): FeedItem {}
