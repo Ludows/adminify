@@ -68,9 +68,9 @@ class CreateSettings extends Form
                 'width' => '100%'
             ]
         ])
-        ->add('no_comments', 'hidden', [
-            'value' => 0
-        ])
+        // ->add('no_comments', 'hidden', [
+        //     'value' => 0
+        // ])
         ->add('no_comments', 'checkbox', [
             'label_show' => true,
             'label' => __('admin.form.no_comments_globally'),
@@ -80,9 +80,9 @@ class CreateSettings extends Form
             'attr' => ['class' => 'custom-control-input'],
             'label_attr' => ['class' => 'custom-control-label text-muted'],
         ])
-        ->add('no_seo', 'hidden', [
-            'value' => 0
-        ])
+        // ->add('no_seo', 'hidden', [
+        //     'value' => 0
+        // ])
         ->add('no_seo', 'checkbox', [
             'label_show' => true,
             'label' => __('admin.form.no_seo'),
