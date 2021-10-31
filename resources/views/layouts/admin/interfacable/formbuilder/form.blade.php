@@ -22,9 +22,7 @@
                             <span id="noFieldsText">{{ __('admin.formbuilder.noFields') }}</span>
                         @endif
                          @if(!empty($query) && !$isCreate)
-                            @foreach ($query as $field)
-                               {!! form_row($form->fields) !!}
-                            @endforeach
+                            {!! form_row($form->fields) !!}
                         @endif 
                     </div>
 
