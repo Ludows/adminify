@@ -1,6 +1,7 @@
 <?php
 use Thunder\Shortcode\ShortcodeFacade;
 use App\Adminify\Models\Translations as Traduction;
+use App\Adminify\Models\Forms;
 use App\Adminify\Models\Menu;
 use App\Adminify\Models\Settings;
 use Illuminate\Support\Facades\Cache;
@@ -223,7 +224,7 @@ if(! function_exists('is_blogpage') ) {
         // the relationship model
         $ret = false;
         $s = setting('blogpage');
-        if($s != null && $class->id == $s && $class instanceof \App\Models\Page) {
+        if($s != null && $class->id == $s && $class instanceof \App\Adminify\Models\Page) {
             $ret = true;
         }
         return $ret;
@@ -561,6 +562,53 @@ if (! function_exists('menu')) {
 
 
         return $m->first()->makeThree;
+    }
+}
+
+if (! function_exists('get_form')) {
+    function get_form($mixed) {
+        $m = new Forms();
+
+        if(is_int($mixed)) {
+            $m = $m->where('id', $mixed);
+        }
+
+        if(is_string($mixed)) {
+            $m = $m->where('slug', $mixed);
+        }
+
+
+        return $m;
+    }
+}
+
+if (! function_exists('generate_form')) {
+
+    function format_formbuilder_attributes($model) {
+
+    }
+
+    function generate_form($mixed) {
+
+        $theForm = get_form($mixed);
+        $dynamics_fields = [];
+
+        $theFields = $theForm->fields;
+
+        $dynamics_fields[] = [
+            'name' => 'form_id',
+            'type' => 'hidden',
+        ];
+
+        if(!empty($theFields)) {
+            dd($theFields);
+            foreach ($theFields as $fieldKey => $field) {
+                # code...
+
+            }
+        }
+
+        return $dynamics_fields;
     }
 }
 
