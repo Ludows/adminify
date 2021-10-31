@@ -3,8 +3,8 @@
 namespace Ludows\Adminify\Http\Controllers\Front;
 
 use Illuminate\Http\Request;
-use App\Models\Page;
-use App\Models\Url;
+use App\Adminify\Models\Page;
+use App\Adminify\Models\Url;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Traits\SeoGenerator;
