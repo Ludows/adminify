@@ -38,6 +38,9 @@ class FormsRepository extends BaseRepository
 
         $sampleFormField = new FormField();
         $defaults_attributes = $sampleFormField->getAttributes();
+        $is_multilang = is_multilang();
+
+        dd($formValues);
 
         if(isset($formValues['fields']) && count($formValues['fields']) > 0) {
             foreach ($formValues['fields'] as $fieldKey => $field) {
