@@ -40,7 +40,7 @@ class FormsRepository extends BaseRepository
         $defaults_attributes = $sampleFormField->getAttributes();
         $is_multilang = is_multilang();
 
-        dd($formValues);
+        //dd($formValues);
 
         if(isset($formValues['fields']) && count($formValues['fields']) > 0) {
             foreach ($formValues['fields'] as $fieldKey => $field) {
@@ -55,6 +55,31 @@ class FormsRepository extends BaseRepository
                 if(empty($formValues['fields'][$fieldKey]['label'])) {
                     $field['label'] = 'Field_'.$fieldKey;
                     unset($keys[$indexKey]);
+                }
+
+                if(!empty($formValues['fields'][$fieldKey]['choices'])) {
+                    $choicesOptions = array();
+                    $selectedsOptions = array();
+                    $multilignes = explode(',', $formValues['fields'][$fieldKey]['choices']);
+                    $multilignes_selecteds = explode(',', $formValues['fields'][$fieldKey]['selected']);
+
+                    $base_iterator = 0;
+                    foreach ($multilignes as $multiligne) {
+                        # code...
+                        $multilignes = explode(':', $multiligne);
+                        $multilignes_selecteds = explode(':', $multilignes_selecteds[$base_iterator]);
+
+                        if(count($multilignes) > 1) {
+                            $choicesOptions[trim($multilignes[0])] = trim($multilignes[1]);
+                        }
+                        if(count($multilignes_selecteds) > 0 && $multilignes_selecteds[0] == $multilignes[0]) {
+                            $selectedsOptions[trim($multilignes[0])] = trim($multilignes[1]);
+                        }
+                        $base_iterator++;
+                    }
+
+                    $field['choices'] = $choicesOptions;
+                    $field['selected'] = $multilignes_selecteds;
                 }
 
                 if(!empty($formValues['fields'][$fieldKey]['fromdb'])) {
