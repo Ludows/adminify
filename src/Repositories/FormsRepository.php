@@ -67,7 +67,6 @@ class FormsRepository extends BaseRepository
                     foreach ($multilignes as $multiligne) {
                         # code...
                         $multilignes = explode(':', $multiligne);
-                        $multilignes_selecteds = explode(':', $multilignes_selecteds[$base_iterator]);
 
                         if(count($multilignes) > 1) {
                             $choicesOptions[trim($multilignes[0])] = trim($multilignes[1]);
@@ -78,8 +77,8 @@ class FormsRepository extends BaseRepository
                         $base_iterator++;
                     }
 
-                    $field['choices'] = $choicesOptions;
-                    $field['selected'] = $multilignes_selecteds;
+                    $field['choices'] = json_encode($choicesOptions);
+                    $field['selected'] = json_encode($multilignes_selecteds);
                 }
 
                 if(!empty($formValues['fields'][$fieldKey]['fromdb'])) {
@@ -96,7 +95,7 @@ class FormsRepository extends BaseRepository
                     }
                 }
 
-               
+
 
 
                 if($todoCreate) {

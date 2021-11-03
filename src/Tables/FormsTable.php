@@ -9,36 +9,36 @@ use App\Adminify\Dropdowns\Forms as FormDropdownsManager;
 class FormsTable extends TableManager {
     public function getTemplateByName($name) {
         $ret = null;
-        // switch ($name) {
-        //     case 'categories_id':
-        //         # code...
-        //         $ret = 'adminify::layouts.admin.table.custom-cells.posts-categories-id';
-        //         break;
-        //     case 'media_id':
-        //         # code...
-        //         $ret = 'adminify::layouts.admin.table.custom-cells.posts-media-id';
-        //         break;
-        //     case 'user_id':
-        //         # code...
-        //         $ret = 'adminify::layouts.admin.table.custom-cells.user-id';
-        //         break;
-        //     case 'no_comments':
-        //         # code...
-        //         $ret = 'adminify::layouts.admin.table.custom-cells.no-comments';
-        //         break;
-        //     case 'status_id':
-        //         # code...
-        //         $ret = 'adminify::layouts.admin.table.custom-cells.status-id';
-        //         break;
-        //     case 'content':
-        //         # code...
-        //         $ret = 'adminify::layouts.admin.table.custom-cells.posts-content';
-        //         break;
-        //     case 'parent_id':
-        //         # code...
-        //         $ret = 'adminify::layouts.admin.table.custom-cells.posts-parent-id';
-        //         break;
-        // }
+        switch ($name) {
+            // case 'categories_id':
+            //     # code...
+            //     $ret = 'adminify::layouts.admin.table.custom-cells.posts-categories-id';
+            //     break;
+            // case 'media_id':
+            //     # code...
+            //     $ret = 'adminify::layouts.admin.table.custom-cells.posts-media-id';
+            //     break;
+            // case 'user_id':
+            //     # code...
+            //     $ret = 'adminify::layouts.admin.table.custom-cells.user-id';
+            //     break;
+            // case 'no_comments':
+            //     # code...
+            //     $ret = 'adminify::layouts.admin.table.custom-cells.no-comments';
+            //     break;
+            // case 'status_id':
+            //     # code...
+            //     $ret = 'adminify::layouts.admin.table.custom-cells.status-id';
+            //     break;
+            // case 'content':
+            //     # code...
+            //     $ret = 'adminify::layouts.admin.table.custom-cells.posts-content';
+            //     break;
+            // case 'parent_id':
+            //     # code...
+            //     $ret = 'adminify::layouts.admin.table.custom-cells.posts-parent-id';
+            //     break;
+        }
 
         return $ret;
     }
@@ -50,7 +50,7 @@ class FormsTable extends TableManager {
         $datas = $this->getDatas();
 
         if(isset($datas['results'])) {
-            $posts = $datas['results'];
+            $forms = $datas['results'];
         }
         else {
             if($request->useMultilang) {
@@ -64,7 +64,11 @@ class FormsTable extends TableManager {
             $model = new FormModel();
             $fillables = $model->getFillable();
 
-            unset($fillables['fields']);
+            $index = array_search('fields', $fillables);
+
+            unset($fillables[$index]);
+
+            // dd($fillables);
 
 
 
@@ -79,6 +83,7 @@ class FormsTable extends TableManager {
             if($request->useMultilang && is_translatable_model($model)) {
                 array_unshift($default_merge_columns, 'need_translations');
             }
+
 
             $this->columns( array_merge($fillables, $default_merge_columns) );
 

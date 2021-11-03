@@ -114,12 +114,12 @@ jQuery(document).ready(function ($) {
         let el = $('label[for="example_'+id+'"]');
 
         if(isChecked) {
-            el.css('display', 'none');
-            el.css('display', 'none');
+            el.css('display', '');
+            el.css('display', '');
         }
         else {
-            el.css('display', '');
-            el.css('display', '');
+            el.css('display', 'none');
+            el.css('display', 'none');
         }
 
     })

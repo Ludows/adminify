@@ -268,4 +268,8 @@ class FormsController extends Controller
             return $response_field;
 
         }
+        public function getConfirmation() {}
+        public function getEntries() {}
+        public function storeConfirmation() {}
+        public function storeEntries() {}
 }

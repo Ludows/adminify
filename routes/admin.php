@@ -89,6 +89,12 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
     if(isset($c['form']) && $c['form']) {
         Route::resource('forms', 'App\Adminify\Http\Controllers\Back\FormsController', ['except' => ['show']]);
         Route::post('forms/addfield', 'App\Adminify\Http\Controllers\Back\FormsController@addField')->name('forms.addField');
+
+        Route::get('forms/{id}/entries', 'App\Adminify\Http\Controllers\Back\FormsController@getEntries')->name('forms.entries');
+        Route::post('forms/{id}/entries', 'App\Adminify\Http\Controllers\Back\FormsController@storeEntries')->name('forms.entries.store');
+        Route::get('forms/{id}/confirmation', 'App\Adminify\Http\Controllers\Back\FormsController@getConfirmation')->name('forms.confirmation');
+        Route::post('forms/{id}/confirmation', 'App\Adminify\Http\Controllers\Back\FormsController@storeConfirmation')->name('forms.confirmation.store');
+
     }
 
     Route::post('/forms/ajax/', 'App\Adminify\Http\Controllers\Back\HomeController@getForms')->name('forms.ajax');
