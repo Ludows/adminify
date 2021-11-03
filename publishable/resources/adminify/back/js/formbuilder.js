@@ -305,20 +305,11 @@ jQuery(document).ready(function ($) {
     $(document.body).on('click', '.js-delete', function(e) {
         e.preventDefault();
         let hasFieldId = $(this).attr('data-field-id') ? true : false;
+        let fieldId = $(this).attr('data-field-id');
         let id = $(this).attr('data-functional');
         let el = $('#card'+id);
 
-        // Swal.fire({
-        //     icon: 'error',
-        //     title: 'Oops...',
-        //     text: 'Something went wrong!',
-        //     footer: '<a href="">Why do I have this issue?</a>'
-        // })
-
-        if(hasFieldId) {
-            alert('todo');
-        }
-        else {
+        function delCard() {
             el.fadeOut('slow', function() {
                 el.remove();
                 if(Accordion_zone.children('.card').length == 0) {
@@ -326,6 +317,61 @@ jQuery(document).ready(function ($) {
                 }
             });
         }
+
+        Swal.fire({
+            icon: 'warning',
+            title: __('admin.formbuilder.deleteFieldTitle'),
+            text: __('admin.formbuilder.deleteFieldText'),
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: __('admin.formbuilder.yes'),
+            denyButtonText: __('admin.formbuilder.no'),
+        })
+        .then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed && hasFieldId) {
+
+                $.ajax({
+                    'method' : 'POST',
+                    'url' : Route('forms.fields.delete', {
+                        'id': window.currentForm,
+                        'field_id' : fieldId
+                    }),
+                    'headers': {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    'data' : {
+                        'id': window.currentForm,
+                        'field_id' : fieldId
+                    }
+                })
+                .done((data) => {
+                    console.log('success', data);
+
+                    // var proto = $('#prototypeField').data('proto').replace(/__NAME__/g, '__REPLACE__');
+                    // proto = proto.replace(/__FUNCTIONAL__/g, data.uuid_field_key);
+                    // proto = proto.replace(/__TOREPLACE__/g, dataName);
+
+                    // data.dataName = dataName;
+
+                    // // var previewHydrated = $(proto).find('#PreviewComponent'+count).append(data.html);
+
+                    // $(evt.item).replaceWith(proto);
+
+                    // SetupFields([data.uuid_field_key], [data], true);
+
+
+
+                })
+                .fail((err) => {
+                    console.log(err)
+                })
+            }
+            else if(result.isConfirmed && !hasFieldId) {
+                delCard();
+            }
+
+        })
     })
 
     $(document.body).on('click', '.js-dupplicate', function(e) {
@@ -379,7 +425,6 @@ jQuery(document).ready(function ($) {
                 let id = the_field.attr('id');
 
                 if( config.preview_form_options[0].hasOwnProperty(id)) {
-                    console.log('config.preview_form_options[0][id]', config.preview_form_options[0][id])
                     the_field.val(config.preview_form_options[0][id] ? 1 : 0);
                 }
 
