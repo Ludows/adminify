@@ -61,7 +61,7 @@ class FormBlock extends InterfacableBlock {
 
         return [
             'form' => $f,
-            'formIdInDb' => $shared->id,
+            'formIdInDb' => empty($shared) ? 0 : $shared->id,
             'isCreate' => empty($shared) ? true : false
         ];
     }
