@@ -16,8 +16,7 @@ class CreateFormConfirmationsTable extends Migration
         if(config('site-settings.multilang') == true) {
             Schema::create('form_confirmations', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
-                $table->boolean('active')->default(0);
-                $table->string('type');
+                $table->string('type'); //page , redirect, form
                 $table->bigInteger('page_id')->nullable()->unsigned();
                 $table->string('redirect_url')->nullable();
                 $table->json('content');
@@ -28,7 +27,6 @@ class CreateFormConfirmationsTable extends Migration
         else {
             Schema::create('form_confirmations', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
-                $table->boolean('active')->default(0);
                 $table->string('type');
                 $table->bigInteger('page_id')->nullable()->unsigned();
                 $table->string('redirect_url')->nullable();
