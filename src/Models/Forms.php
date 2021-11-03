@@ -23,7 +23,7 @@ class Forms extends ClassicModel
         'user_id',
         'fields'
     ];
-    
+
     /**
      * Default values for attributes
      * @var  array an array with attribute as key and default as value
@@ -36,7 +36,7 @@ class Forms extends ClassicModel
 
     public function fields()
     {
-        return $this->belongsToMany(FormField::class, 'form_form_field', 'form_id');
+        return $this->belongsToMany(FormField::class, 'form_form_field', 'form_id')->orderBy('pivot_order','desc');
     }
 
     public function toFeedItem(): FeedItem {}

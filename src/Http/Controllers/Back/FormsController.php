@@ -277,11 +277,13 @@ class FormsController extends Controller
 
             $Form = new Forms();
             $FormField = new FormField();
-            $FormFieldsId = $FormField->where('id', '!=', $all['field_id'])->get()->pluck('id')->toArray();
-            $Form = $Form->where('id', $all['id'])->get();
+            $FormFieldsId = $FormField->where('id', '!=', $all['field_id'])->get()->pluck('id')->all();
+            $Form = $Form->where('id', $all['id'])->get()->first();
+
+            dd($Form, $FormFieldsId);
 
             $synced = $Form->fields()->sync($FormFieldsId);
-            
+
             return $this->sendResponse($Form, 'forms.index', 'admin.typed_data.updated');
         }
         public function getConfirmation() {}
