@@ -54,7 +54,6 @@ class FormBlock extends InterfacableBlock {
         $f = $this->form($namedForm, [
             'method' => $methodForm,
             "id" => "formBuilderCreateForm",
-            'data-id' => $shared->id,
             'url' => $urlForm,
             'model' => $theModel
         ]);
@@ -62,6 +61,7 @@ class FormBlock extends InterfacableBlock {
 
         return [
             'form' => $f,
+            'formIdInDb' => $shared->id,
             'isCreate' => empty($shared) ? true : false
         ];
     }

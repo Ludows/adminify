@@ -1,4 +1,9 @@
 {!! form_start($form) !!}
+
+    <script>
+        window.currentForm = {!! $formIdInDb !!};
+    </script>
+
     <div class="card">
         {!! form_row($form->user_id) !!}
         <div class="card-header">
