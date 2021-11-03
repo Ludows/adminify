@@ -347,7 +347,9 @@ jQuery(document).ready(function ($) {
                 })
                 .done((data) => {
                     console.log('success', data);
+                    delCard();
 
+                    Accordion_zone.trigger('arrange:fields');
                     // var proto = $('#prototypeField').data('proto').replace(/__NAME__/g, '__REPLACE__');
                     // proto = proto.replace(/__FUNCTIONAL__/g, data.uuid_field_key);
                     // proto = proto.replace(/__TOREPLACE__/g, dataName);
@@ -369,6 +371,7 @@ jQuery(document).ready(function ($) {
             }
             else if(result.isConfirmed && !hasFieldId) {
                 delCard();
+                Accordion_zone.trigger('arrange:fields');
             }
 
         })

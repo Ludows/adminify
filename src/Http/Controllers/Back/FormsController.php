@@ -276,13 +276,17 @@ class FormsController extends Controller
             }
 
             $Form = new Forms();
-            $FormField = new FormField();
-            $FormFieldsId = $FormField->where('id', '!=', $all['field_id'])->get()->pluck('id')->all();
             $Form = $Form->where('id', $all['id'])->get()->first();
+            $FormFieldsId = $Form->fields()->wherePivot('form_field_id', '!=', $all['field_id'])->get()->all();
 
-            dd($Form, $FormFieldsId);
+            $a = [];
 
-            $synced = $Form->fields()->sync($FormFieldsId);
+            foreach ($FormFieldsId as $FormFieldId) {
+                # code...
+                $a[$FormFieldId->id] = ['order' => $FormFieldId->pivot->order];
+            }
+
+            $synced = $Form->fields()->sync($a);
 
             return $this->sendResponse($Form, 'forms.index', 'admin.typed_data.updated');
         }
