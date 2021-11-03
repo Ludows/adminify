@@ -15,9 +15,9 @@ class CreateFormFormField extends Migration
     {
         Schema::create('form_form_field', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
             $table->bigInteger('form_id')->unsigned();
             $table->bigInteger('form_field_id')->unsigned();
+            $table->bigInteger('order')->unsigned();
             $table->foreign('form_id')->references('id')->on('forms');
             $table->foreign('form_field_id')->references('id')->on('form_fields');
         });
