@@ -10,7 +10,7 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 use Ludows\Adminify\Forms\CreateMenu;
 
-use App\Models\Menu;
+use App\Adminify\Models\Menu;
 use Ludows\Adminify\Libs\MenuBuilder;
 use Illuminate\Support\Str;
 
