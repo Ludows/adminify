@@ -25,7 +25,9 @@ class ContentTypesHook extends HookInterface {
 
         if(in_array($hookName, $only_for_deleting)) {
             $this->syncToCache($model, true);
-            $this->syncronizeUrl($model, true);
+            if(is_urlable_model($model) && $model->allowSitemap) {
+                $this->syncronizeUrl($model, true);
+            }
             if(is_sitemapable_model($model) && $model->allowSitemap) {
                 $this->loadGenerateSitemap($model);
             }
