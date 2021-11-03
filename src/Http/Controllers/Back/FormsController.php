@@ -4,6 +4,7 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 
 
 use App\Adminify\Models\Forms;
+use App\Adminify\Models\FormField;
 
 use Illuminate\Http\Request;
 use App\Adminify\Http\Requests\CreateFormsRequest;
@@ -20,6 +21,7 @@ use App\Adminify\Forms\UpdateForms;
 
 use Ludows\Adminify\Traits\TableManagerable;
 use App\Adminify\Tables\FormsTable;
+use Ludows\Adminify\Models\FormField as ModelsFormField;
 
 class FormsController extends Controller
 {
@@ -266,8 +268,25 @@ class FormsController extends Controller
             return $response_field;
 
         }
+        public function getDeleteField(Request $request) {
+            $all = $request->all();
+
+            if(!isset($all['id']) && !isset($all['field_id'])) {
+                abort(403);
+            }
+
+            $Form = new Forms();
+            $FormField = new FormField();
+            $FormFieldsId = $FormField->where('id', '!=', $all['field_id'])->pluck('id')->toArray();
+            $Form = $Form->where('id', $all['id'])->get();
+
+            $synced = $Form->fields()->sync($FormFieldsId);
+            
+            return $this->sendResponse($Form, 'forms.index', 'admin.typed_data.updated');
+        }
         public function getConfirmation() {}
         public function getEntries() {}
         public function storeConfirmation() {}
         public function storeEntries() {}
+        public function deleteEntries() {}
 }

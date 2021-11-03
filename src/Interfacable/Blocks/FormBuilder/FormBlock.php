@@ -54,6 +54,7 @@ class FormBlock extends InterfacableBlock {
         $f = $this->form($namedForm, [
             'method' => $methodForm,
             "id" => "formBuilderCreateForm",
+            'data-id' => $shared->id,
             'url' => $urlForm,
             'model' => $theModel
         ]);

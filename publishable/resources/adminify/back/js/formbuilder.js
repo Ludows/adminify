@@ -308,6 +308,13 @@ jQuery(document).ready(function ($) {
         let id = $(this).attr('data-functional');
         let el = $('#card'+id);
 
+        // Swal.fire({
+        //     icon: 'error',
+        //     title: 'Oops...',
+        //     text: 'Something went wrong!',
+        //     footer: '<a href="">Why do I have this issue?</a>'
+        // })
+
         if(hasFieldId) {
             alert('todo');
         }
