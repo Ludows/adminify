@@ -28,7 +28,7 @@ class LarabergType extends FormField {
 
         $isAjax = request()->ajax();
         
-        $options = $this->getOptions();
+        $options = array_merge($this->getOptions(), $options);
 
         if(!isset($options['attr'])) {
             $options['attr'] = [];

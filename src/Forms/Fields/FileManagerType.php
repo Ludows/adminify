@@ -29,7 +29,7 @@ class FileManagerType extends FormField {
     {
         $uniqid = Str::random(9);
 
-        $options = $this->getOptions();
+        $options = array_merge($this->getOptions(), $options);
         $isAjax = request()->ajax();
 
         if(isset($options['force_js']) && $options['force_js'] == true) {

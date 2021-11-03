@@ -36,7 +36,7 @@ class Select2Type extends FormField {
     {
         $uniqid = Str::random(9);
 
-        $options = $this->getOptions();
+        $options = array_merge($this->getOptions(), $options);
         $isAjax = request()->ajax();
 
         $sibling = '';

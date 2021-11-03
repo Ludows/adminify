@@ -30,12 +30,18 @@
 
 @if ($options['isAjax'])
     <script>
+        @if (isset($options['force_js']) && $options['force_js'])
+            document.addEventListener("DOMContentLoaded", function(event) { 
+        @endif
         summernoteInitFunction([{
             selector: '{{ $options['sibling'] }}',
             options: @json($options['summernote_options']),
             multilang: {!! var_export(is_multilang(),true) !!},
             currentLang: '{!! $currentLang !!}'
         }])
+        @if (isset($options['force_js']) && $options['force_js'])
+            });
+        @endif
     </script>
 @else
     @push('js')
