@@ -13,6 +13,7 @@ class FormBuilderManager extends InterfacableManager {
         return [
             \App\Adminify\Interfacable\Blocks\FormBuilder\FormBlock::class,
             \App\Adminify\Interfacable\Blocks\FormBuilder\FieldsBlock::class,
+            \App\Adminify\Interfacable\Blocks\FormBuilder\ToolBarBlock::class,
         ];
     }
 }

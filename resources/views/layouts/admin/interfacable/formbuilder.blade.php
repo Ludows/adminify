@@ -2,6 +2,9 @@
 
 <div class="container mt--7">
     <div class="row">
+        <div class="col-12">
+            {!! $blocks['toolbar-block']->render() !!}
+        </div>
         <div class="col-lg-8 col-12">
             {!! $blocks['form-block']->render() !!}
         </div>
