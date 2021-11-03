@@ -277,7 +277,7 @@ class FormsController extends Controller
 
             $Form = new Forms();
             $FormField = new FormField();
-            $FormFieldsId = $FormField->where('id', '!=', $all['field_id'])->pluck('id')->toArray();
+            $FormFieldsId = $FormField->where('id', '!=', $all['field_id'])->get()->pluck('id')->toArray();
             $Form = $Form->where('id', $all['id'])->get();
 
             $synced = $Form->fields()->sync($FormFieldsId);
