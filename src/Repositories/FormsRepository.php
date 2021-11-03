@@ -102,7 +102,7 @@ class FormsRepository extends BaseRepository
                     $field = $this->formFieldRepo->addModel($m)->update($field, $m);
                 }
 
-                $attachements[] = $field->id;
+                $attachements[$field->id] = ['order' => $fieldKey];
             }
 
             if(count($attachements) > 0) {
