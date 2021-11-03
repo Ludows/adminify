@@ -106,7 +106,7 @@ class FormsRepository extends BaseRepository
             }
 
             if(count($attachements) > 0) {
-                $model->fields()->syncWithoutDetaching($attachements);
+                $model->fields()->attach($attachements);
             }
         }
 
