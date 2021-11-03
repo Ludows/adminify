@@ -202,6 +202,7 @@ class FormsController extends Controller
             if(!isset($all['type'])) {
                 abort(403);
             }
+            $concat_arr = array();
 
             if(is_integer( strpos($all['type'], 'choice') )) {
                 $spl_str = explode('.', $all['type']);
@@ -210,7 +211,6 @@ class FormsController extends Controller
                 $all['type'] = 'choice';
             }
 
-            $concat_arr = array();
 
             $optionsFields = [
                 [
@@ -234,8 +234,6 @@ class FormsController extends Controller
             ];
 
             $optionsFields[0] = array_merge($optionsFields[0] , $concat_arr);
-
-            // dd($optionsFields);
 
             $optionForm = [
                 'method' => 'POST',
