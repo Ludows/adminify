@@ -71,7 +71,7 @@ class FormsRepository extends BaseRepository
                         if(count($multilignes) > 1) {
                             $choicesOptions[trim($multilignes[0])] = trim($multilignes[1]);
                         }
-                        if(count($multilignes_selecteds) > 0 && $multilignes_selecteds[0] == $multilignes[0]) {
+                        if(count($multilignes_selecteds) > 0 && count($multilignes) > 1 && $multilignes_selecteds[0] == $multilignes[0]) {
                             $selectedsOptions[trim($multilignes[0])] = trim($multilignes[1]);
                         }
                         $base_iterator++;
@@ -94,9 +94,6 @@ class FormsRepository extends BaseRepository
                         $field[$key] = $defaults_attributes[$key];
                     }
                 }
-
-
-
 
                 if($todoCreate) {
                    $field = $this->formFieldRepo->addModel($m)->create($field);
