@@ -36,7 +36,7 @@ class Forms extends ClassicModel
 
     public function fields()
     {
-        return $this->belongsToMany(FormField::class, 'form_form_field', 'form_id')->orderBy('pivot_order','desc');
+        return $this->belongsToMany(FormField::class, 'form_form_field', 'form_id')->orderBy('order','asc');
     }
 
     public function toFeedItem(): FeedItem {}
