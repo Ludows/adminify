@@ -9,7 +9,7 @@ use Spatie\Menu\Laravel\Link;
 
 use App\Adminify\Models\FormField;
 
-class Forms extends ClassicModel
+class FormConfirmations extends ClassicModel
 {
     protected $table = 'form_confirmations';
 
