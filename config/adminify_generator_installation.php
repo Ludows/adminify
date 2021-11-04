@@ -128,6 +128,12 @@ return [
             'postfix'             => '',
             'directory_namespace' => true,
         ],
+        'adminify:install:shortcodes' => [
+            'namespace'           => '\Adminify\Shortcodes',
+            'path'                => './app/Adminify/Shortcodes/',
+            'postfix'             => '',
+            'directory_namespace' => true,
+        ],
     ],
     'stubs' => [
         'adminify:install:commands'         => base_path() . '/resources/stubs/commands_install.stub',
@@ -150,6 +156,7 @@ return [
         'adminify:install:models' => base_path() . '/resources/stubs/models_install.stub',
         'adminify:install:repositories' => base_path() . '/resources/stubs/repositories_install.stub',
         'adminify:install:tables' => base_path() . '/resources/stubs/tables_install.stub',
-        'adminify:install:forms:fields' => base_path() . '/resources/stubs/form_fields_install.stub'
+        'adminify:install:forms:fields' => base_path() . '/resources/stubs/form_fields_install.stub',
+        'adminify:install:shortcodes' => base_path() . '/resources/stubs/shortcodes_install.stub'
     ]
 ];
