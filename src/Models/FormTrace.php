@@ -9,7 +9,7 @@ use Spatie\Menu\Laravel\Link;
 
 use App\Adminify\Models\FormEntries;
 
-class FormSendedTrace extends ClassicModel
+class FormTrace extends ClassicModel
 {
     protected $table = 'forms_trace';
 
@@ -36,7 +36,7 @@ class FormSendedTrace extends ClassicModel
 
     public function entries()
     {
-        return $this->belongsToMany(FormEntries::class, 'form_form_entry', 'form_id');
+        return $this->belongsToMany(FormEntries::class, 'form_form_entry', 'trace_id');
     }
 
     public function toFeedItem(): FeedItem {}

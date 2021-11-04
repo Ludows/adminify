@@ -8,7 +8,7 @@ use Spatie\Searchable\SearchResult;
 use Spatie\Menu\Laravel\Link;
 
 use App\Adminify\Models\FormField;
-use App\Adminify\Models\FormEntries;
+use App\Adminify\Models\FormTrace;
 
 class Forms extends ClassicModel
 {
@@ -40,9 +40,9 @@ class Forms extends ClassicModel
         return $this->belongsToMany(FormField::class, 'form_form_field', 'form_id')->orderBy('order','asc')->withPivot('order');
     }
 
-    public function entries()
+    public function traces()
     {
-        return $this->belongsToMany(FormEntries::class, 'form_form_entry', 'form_id');
+        return $this->belongsToMany(FormTrace::class, 'form_trace', 'form_id');
     }
 
     public function toFeedItem(): FeedItem {}
