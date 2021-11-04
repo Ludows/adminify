@@ -21,6 +21,7 @@ use App\Adminify\Forms\UpdateForms;
 
 use Ludows\Adminify\Traits\TableManagerable;
 use App\Adminify\Tables\FormsTable;
+use App\Adminify\Tables\FormEntriesTable;
 use Ludows\Adminify\Models\FormField as ModelsFormField;
 
 class FormsController extends Controller
@@ -292,7 +293,9 @@ class FormsController extends Controller
         }
         public function getConfirmation() {}
         public function getEntries() {
-            
+            $table = $this->table(FormEntriesTable::class);
+            // dd($forms);
+            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
         public function storeConfirmation() {}
         public function storeEntries() {}
