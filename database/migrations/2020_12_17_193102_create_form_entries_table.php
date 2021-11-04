@@ -17,7 +17,6 @@ class CreateFormEntriesTable extends Migration
                 $table->bigIncrements('id')->unsigned();
                 $table->string('field_name');
                 $table->string('content');
-                $table->bigInteger('form_id');
                 $table->timestamps();
             });
        

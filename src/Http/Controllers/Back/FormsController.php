@@ -291,7 +291,9 @@ class FormsController extends Controller
             return $this->sendResponse($Form, 'forms.index', 'admin.typed_data.updated');
         }
         public function getConfirmation() {}
-        public function getEntries() {}
+        public function getEntries() {
+            
+        }
         public function storeConfirmation() {}
         public function storeEntries() {}
         public function deleteEntries() {}

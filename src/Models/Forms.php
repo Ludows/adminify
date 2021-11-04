@@ -8,6 +8,7 @@ use Spatie\Searchable\SearchResult;
 use Spatie\Menu\Laravel\Link;
 
 use App\Adminify\Models\FormField;
+use App\Adminify\Models\FormEntries;
 
 class Forms extends ClassicModel
 {
@@ -37,6 +38,11 @@ class Forms extends ClassicModel
     public function fields()
     {
         return $this->belongsToMany(FormField::class, 'form_form_field', 'form_id')->orderBy('order','asc')->withPivot('order');
+    }
+
+    public function entries()
+    {
+        return $this->belongsToMany(FormEntries::class, 'form_form_entry', 'form_id');
     }
 
     public function toFeedItem(): FeedItem {}

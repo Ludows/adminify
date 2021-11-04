@@ -2,8 +2,8 @@
     <div class="card">
         <ul class="list-group list-group-horizontal">
             <li class="list-group-item">
-                <a href="{{ route('forms.create') }}" class="btn btn-primary">
-                    {{ __('adminify.formbuilder.create') }}
+                <a href="{{ route('forms.edit', ['form' => $model->id]) }}" class="btn btn-primary">
+                    {{ __('adminify.formbuilder.modify') }}
                 </a>
             </li>
             <li class="list-group-item">
