@@ -11,7 +11,7 @@ use App\Adminify\Models\FormEntries;
 
 class FormTrace extends ClassicModel
 {
-    protected $table = 'forms_traces';
+    protected $table = 'form_traces';
 
     public $MultilangTranslatableSwitch = ['label'];
 
@@ -31,7 +31,7 @@ class FormTrace extends ClassicModel
     protected $attributes = [];
 
     public function getTableListing() {
-        return \App\Adminify\Tables\FormsTable::class;
+        return \App\Adminify\Tables\FormTracesTable::class;
     }
 
     public function entries()

@@ -54,16 +54,18 @@ class FormTracesTable extends TableManager {
 
         $datas = $this->getDatas();
 
+        $queried = $this->view->shared('model');
+
         if(isset($datas['results'])) {
             $entries = $datas['results'];
         }
         else {
             if($request->useMultilang) {
-                $entries = FormModel::limit( $config['limit'] )->lang($request->lang)->get();
+                $entries = FormModel::limit( $config['limit'] )->where('form_id', $queried->id)->lang($request->lang)->get();
                 // dd($categories);
             }
             else {
-                $entries = FormModel::limit( $config['limit'] )->get();
+                $entries = FormModel::limit( $config['limit'] )->where('form_id', $queried->id)->get();
             }
         }
             $model = new FormModel();
