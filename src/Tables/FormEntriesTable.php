@@ -64,7 +64,7 @@ class FormEntriesTable extends TableManager {
             $model = new FormModel();
             $fillables = $model->getFillable();
 
-            $a = new FormDropdownsManager($forms, []);
+            $a = new FormDropdownsManager($entries, []);
 
             // if(isset($posts) && count($posts) > 0) {
             //     $posts[0]->flashForMissing();
