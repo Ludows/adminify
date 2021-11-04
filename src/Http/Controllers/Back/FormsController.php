@@ -292,12 +292,18 @@ class FormsController extends Controller
             return $this->sendResponse($Form, 'forms.index', 'admin.typed_data.updated');
         }
         public function getConfirmation() {}
-        public function getEntries() {
+        public function getTrace(Forms $Form) {}
+        public function getTraces(Forms $Form) {
+
+            if(empty($Form->id)) {
+                abort(404);
+            }
+
             $table = $this->table(FormEntriesTable::class);
             // dd($forms);
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
         public function storeConfirmation() {}
-        public function storeEntries() {}
+        public function storeTraces() {}
         public function deleteEntries() {}
 }

@@ -90,9 +90,10 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
         Route::resource('forms', 'App\Adminify\Http\Controllers\Back\FormsController', ['except' => ['show']]);
         Route::post('forms/addfield', 'App\Adminify\Http\Controllers\Back\FormsController@addField')->name('forms.addField');
 
-        Route::get('forms/{id}/entries', 'App\Adminify\Http\Controllers\Back\FormsController@getEntries')->name('forms.entries');
-        Route::post('forms/{id}/entries', 'App\Adminify\Http\Controllers\Back\FormsController@storeEntries')->name('forms.entries.store');
-        Route::post('forms/{id}/entries/delete', 'App\Adminify\Http\Controllers\Back\FormsController@deleteEntries')->name('forms.entries.delete');
+        Route::get('forms/{id}/traces', 'App\Adminify\Http\Controllers\Back\FormsController@getTraces')->name('forms.traces');
+        Route::post('forms/{id}/traces', 'App\Adminify\Http\Controllers\Back\FormsController@storeTraces')->name('forms.traces.store');
+        Route::post('forms/{id}/traces/{trace_id}', 'App\Adminify\Http\Controllers\Back\FormsController@getTrace')->name('forms.traces.show');
+        Route::post('forms/{id}/traces/delete', 'App\Adminify\Http\Controllers\Back\FormsController@deleteEntries')->name('forms.traces.delete');
         Route::get('forms/{id}/confirmation', 'App\Adminify\Http\Controllers\Back\FormsController@getConfirmation')->name('forms.confirmation');
         Route::post('forms/{id}/confirmation', 'App\Adminify\Http\Controllers\Back\FormsController@storeConfirmation')->name('forms.confirmation.store');
         Route::post('forms/{id}/removefield/{field_id}', 'App\Adminify\Http\Controllers\Back\FormsController@getDeleteField')->name('forms.fields.delete');
