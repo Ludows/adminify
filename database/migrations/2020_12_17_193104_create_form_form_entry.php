@@ -19,7 +19,7 @@ class CreateFormFormEntry extends Migration
             $table->bigInteger('trace_id')->unsigned();
             $table->bigInteger('order')->unsigned();
             $table->foreign('form_id')->references('id')->on('forms');
-            $table->foreign('trace_id')->references('id')->on('form_trace');
+            $table->foreign('trace_id')->references('id')->on('form_traces');
         });
         
     }

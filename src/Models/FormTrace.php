@@ -11,7 +11,7 @@ use App\Adminify\Models\FormEntries;
 
 class FormTrace extends ClassicModel
 {
-    protected $table = 'forms_trace';
+    protected $table = 'forms_traces';
 
     public $MultilangTranslatableSwitch = ['label'];
 

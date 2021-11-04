@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFormTrace extends Migration
+class CreateFormTraces extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateFormTrace extends Migration
      */
     public function up()
     {
-        Schema::create('form_trace', function (Blueprint $table) {
+        Schema::create('form_traces', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('label');
             $table->bigInteger('form_id')->unsigned();
@@ -30,6 +30,6 @@ class CreateFormTrace extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('form_trace');
+        Schema::dropIfExists('form_traces');
     }
 }
