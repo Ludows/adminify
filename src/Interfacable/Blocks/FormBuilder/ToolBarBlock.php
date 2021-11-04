@@ -13,8 +13,11 @@ class ToolBarBlock extends InterfacableBlock {
         $query = null;
         return $query;
     }
-    public function handle() {
+    public function addToRender() {
 
+        return [
+            'isCreate' => $this->view->shared('isCreate')
+        ];
     }
     public function getView() {
         return 'adminify::layouts.admin.interfacable.formbuilder.toolbar';

@@ -34,23 +34,33 @@ class MultilangBasic
         $currentLocale = App::currentLocale();
         $routeNameSpl = explode('.', $routeName);
 
+        $singular = Str::singular($routeNameSpl['0']);
+        $model = \Route::current()->parameter($singular);
+
+        $named = join('.',array_diff($routeNameSpl, ['index', 'edit', 'create']));
+
         $base_parameters = [
+            "name" => $named,
             "isCrudPattern"=> false,
             "singleParam"=> Str::singular($routeNameSpl[0]),
             "useMultilang" => (bool) $config['multilang'],
             "lang"=> $currentLocale,
+            "currentLang" => $currentLocale,
             "langs" => $supported_locales,
             "currentRouteName" => $routeName,
+            "isCreate" => strpos($routeName, '.create') != false ? true : false,
+            "model" => $model
         ];
 
-        $v->share('name', join('.',array_diff($routeNameSpl, ['index', 'edit', 'create'])));
-        $v->share('langs', $supported_locales);
-        $v->share('currentLang', $currentLocale);
-        $v->share('currentRouteName', $routeName);
-        $v->share('useMultilang',  (bool) $config['multilang']);
+        // $v->share('name', $named);
+        // $v->share('langs', $supported_locales);
+        // $v->share('currentLang', $currentLocale);
+        // $v->share('currentRouteName', $routeName);
+        // $v->share('useMultilang',  (bool) $config['multilang']);
 
         foreach ($base_parameters as $key => $value) {
             # code...
+            $v->share($key, $value);
             add_to_request($key, $value);
         }
 
