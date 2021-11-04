@@ -7,6 +7,10 @@ use App\Adminify\Models\FormEntries as FormModel;
 use App\Adminify\Dropdowns\FormEntries as FormDropdownsManager;
 
 class FormEntriesTable extends TableManager {
+    public function __construct() {
+        parent::__construct();
+        $this->showBtnCreate = false;
+    }
     public function getTemplateByName($name) {
         $ret = null;
         switch ($name) {
