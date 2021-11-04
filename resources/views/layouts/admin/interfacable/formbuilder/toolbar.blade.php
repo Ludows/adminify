@@ -7,8 +7,8 @@
                 </a>
             </li>
             <li class="list-group-item">
-                <a href="{{ route('forms.entries', ['id' => $model->id]) }}" class="btn btn-primary">
-                    {{ __('adminify.formbuilder.entries') }}
+                <a href="{{ route('forms.traces', ['id' => $model->id]) }}" class="btn btn-primary">
+                    {{ __('adminify.formbuilder.traces') }}
                 </a>
             </li>
             <li class="list-group-item">
