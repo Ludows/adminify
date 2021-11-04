@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 
 
 use App\Adminify\Models\Forms;
-use App\Adminify\Models\FormField;
+use App\Adminify\Models\FormTrace;
 
 use Illuminate\Http\Request;
 use App\Adminify\Http\Requests\CreateFormsRequest;
@@ -21,8 +21,7 @@ use App\Adminify\Forms\UpdateForms;
 
 use Ludows\Adminify\Traits\TableManagerable;
 use App\Adminify\Tables\FormsTable;
-use App\Adminify\Tables\FormEntriesTable;
-use Ludows\Adminify\Models\FormField as ModelsFormField;
+use App\Adminify\Tables\FormTracesTable;
 
 class FormsController extends Controller
 {
@@ -292,14 +291,14 @@ class FormsController extends Controller
             return $this->sendResponse($Form, 'forms.index', 'admin.typed_data.updated');
         }
         public function getConfirmation() {}
-        public function getTrace(Forms $Form) {}
+        public function getTrace(Forms $Form, FormTrace $trace_id) {}
         public function getTraces(Forms $Form) {
 
             if(empty($Form->id)) {
                 abort(404);
             }
 
-            $table = $this->table(FormEntriesTable::class);
+            $table = $this->table(FormTracesTable::class);
             // dd($forms);
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }

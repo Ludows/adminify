@@ -3,10 +3,11 @@
 namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
-use App\Adminify\Models\FormEntries as FormModel;
-use App\Adminify\Dropdowns\FormEntries as FormDropdownsManager;
+use App\Adminify\Models\FormTrace as FormModel;
+// use App\Adminify\Models\FormTrace as FormModel;
+use App\Adminify\Dropdowns\FormTraces as FormDropdownsManager;
 
-class FormEntriesTable extends TableManager {
+class FormTracesTable extends TableManager {
     public function __construct() {
         parent::__construct();
         $this->showBtnCreate = false;
