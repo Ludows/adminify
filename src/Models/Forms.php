@@ -42,7 +42,7 @@ class Forms extends ClassicModel
 
     public function traces()
     {
-        return $this->belongsToMany(FormTrace::class, 'form_traces', 'form_id');
+        return $this->belongsToMany(FormTrace::class, 'form_traces', 'form_id', 'trace_id');
     }
 
     public function toFeedItem(): FeedItem {}
