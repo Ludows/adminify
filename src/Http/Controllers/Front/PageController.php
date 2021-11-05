@@ -119,9 +119,6 @@ class PageController extends Controller
                 'send_time' => now()
             ]);
 
-            // now we make a traced form.
-            $formDb->traces()->attach([ $trace_model->id ]);
-
             // formattage des entrées
             foreach ($values as $key => $val) {
                 # code...
