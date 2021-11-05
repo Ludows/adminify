@@ -15,6 +15,10 @@ return [
         ]
     ],
 
+    'dynamic_forms' => [
+        'default_email_user' => 'theartist768@gmail.com', // if your want to overwrite the default user. Specify form with his slug
+    ],
+
     'adminMenu' => [
         'Page',
         'Post',

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Adminify\Models\Page;
 use App\Adminify\Models\FormTrace;
 use App\Adminify\Models\FormEntries;
+use App\Adminify\Models\Mailables;
 use App\Adminify\Models\Url;
 use Ludows\Adminify\Http\Controllers\Controller;
 
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Adminify\Repositories\FormTraceRepository;
 use App\Adminify\Repositories\FormEntriesRepository;
 
-
+use Mail;
 
 class PageController extends Controller
 {
@@ -88,6 +89,9 @@ class PageController extends Controller
         public function validateForms(Request $request) {
             $all = $request->all();
 
+            $dynamic_form_config = get_site_key('dynamic_forms');
+            $mail_sender = $dynamic_form_config['default_email_user'];
+
             if(empty($all['form_id'])) {
                 abort(404);
             }
@@ -99,13 +103,57 @@ class PageController extends Controller
             }
             
             // le formulaire est valide 
+            $formDb = get_form((int) $all['form_id']);
             $FormTrace = new FormTrace();
+            $FormEntries = new FormEntries();
+
+            $values = $theFormClass->getFieldValues();
+            $a = [];
+            $attachements = [];
+
             $trace_model = $this->formTraceRepo->addModel($FormTrace)->create([
                 'label' => __('admin.formbuilder.newTrace'),
                 'form_id' => $all['form_id'],
                 'send_time' => now()
             ]);
 
+            // now we make a traced form.
+            $formDb->traces()->attach([ $trace_model->id ]);
+
+            // formattage des entrées
+            foreach ($values as $key => $val) {
+                # code...
+                $a[] = [
+                    'field_name' => $key,
+                    'content' => $val
+                ];
+            }
+
+            // et hop on inscrit en db
+            foreach ($a as $entryKey => $entryVal) {
+                $entry_model = $this->formEntryRepo->addModel($FormEntries)->create($entryVal);
+                $attachements[] = $entry_model->id;
+            }
+
+
+            if(count($attachements) > 0) {
+                $trace_model->entries()->attach($attachements);
+            }
+
+            // now we prepare to send the email.
+            
+            if(!empty($dynamic_form_config[$formDb->slug])) {
+                $mail_sender = $dynamic_form_config[$formDb->slug]['email_user'];
+            }
+
+            //find the App\Adminify\Mails\FormEntriesListingMail
+            $mail = Mailables::where('mailable', 'App\Adminify\Mails\FormEntriesListingMail')->get()->first();
+            if(!empty($mail->mailable)) {
+                $mail = $mail->mailable;
+            }
+
+            Mail::to($mail_sender)
+            ->send(new $mail( $formDb ) );
         }
 
         public function handleSlug($slug) {

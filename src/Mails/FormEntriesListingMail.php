@@ -9,11 +9,8 @@ use App\Adminify\Models\Forms;
 class FormEntriesListingMail extends MailableTemplateBase
 {
     /** @var array */
-    public $fields;
-
-    public function __construct(Forms $Forms, $fieldsCollection)
+    public function __construct($Forms)
     {
-        $this->fields = $fieldsCollection ?? [];
         $this->form = $Forms;
     }
 
