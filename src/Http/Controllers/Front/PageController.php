@@ -131,7 +131,7 @@ class PageController extends Controller
             // et hop on inscrit en db
             foreach ($a as $entryKey => $entryVal) {
                 $entry_model = $this->formEntryRepo->addModel($FormEntries)->create($entryVal);
-                $attachements[] = $entry_model->id;
+                $attachements[] = [$trace_model->id, $entry_model->id];
             }
 
 
