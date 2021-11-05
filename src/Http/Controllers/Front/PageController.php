@@ -11,10 +11,17 @@ use Ludows\Adminify\Traits\SeoGenerator;
 use ReflectionClass;
 use Illuminate\Support\Facades\Crypt;
 
+use App\Adminify\Repositories\FormTraceRepository;
+
+
 
 class PageController extends Controller
 {
     use SeoGenerator;
+    public $formTraceRepo;
+    public function __construct(FormTraceRepository $formTraceRepo) {
+        $this->formTraceRepo = $formTraceRepo;
+    }
     /**
         * Display a listing of the resource.
         *
@@ -73,7 +80,24 @@ class PageController extends Controller
 
         }
 
-        public function validateForms(Request $request) {}
+        public function validateForms(Request $request) {
+            $all = $request->all();
+
+            if(empty($all['form_id'])) {
+                abort(404);
+            }
+
+            $theFormClass = generate_form($all['form_id'], false); // html parameter generation is disabled. the formClass is returned
+
+            if (!$theFormClass->isValid()) {
+                return redirect()->back()->withErrors($theFormClass->getErrors())->withInput();
+            }
+            
+            // le formulaire est valide 
+            $FormTrace = new FormTrace();
+            $this->formTraceRepo->addModel($FormTrace)->create($theFormClass);
+
+        }
 
         public function handleSlug($slug) {
 
@@ -97,14 +121,6 @@ class PageController extends Controller
 
                 $model = $model->find($cached['model_id']);
 
-                // if($cached['parent_id'] != null) {
-                //     $model = $model->find($cached['parent_id']);
-                //     dd($cached, $model);
-                // }
-                // else {
-                //     $model = $model->find($cached['model_id']);
-                // }
-
                 $url_model = $model->url;
 
                 //dd($segments, $url_model);
@@ -117,8 +133,6 @@ class PageController extends Controller
                     $defaultResponse = $model;
                 }
             }
-
-            //dd($defaultResponse);
 
             return $defaultResponse;
         }

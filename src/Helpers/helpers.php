@@ -587,7 +587,6 @@ if (! function_exists('generate_form')) {
 
     function format_formbuilder_attributes($array) {
 
-        $laravel_kris_config = config('laravel-form-builder.defaults');
 
         $defaults = [
             'help_block' => [
@@ -598,7 +597,7 @@ if (! function_exists('generate_form')) {
             'default_value' => null, // Fallback value if none provided by value property or model
             'value_property' => null, // Only use this if you want to take the default value from another property in the model
             'label_show' => true,
-            'rules' => [],           // Validation rules
+            'rules' => '',           // Validation rules
             'error_messages' => []   // Validation error messages
         ];
 
@@ -606,6 +605,9 @@ if (! function_exists('generate_form')) {
             # code...
             foreach ($arrayValue as $subArrayKey => $subArrayValue) {
                 # code...
+                if($arrayValue['required'] == true) {
+                    $array[$arrayKey]['rules'] = 'required';
+                }
                 if($arrayValue['field_type'] != 'static') {
                     unset($array[$arrayKey]['content']);
                 }
@@ -656,7 +658,7 @@ if (! function_exists('generate_form')) {
         return $array;
     }
 
-    function generate_form($mixed) {
+    function generate_form($mixed, $html = true) {
 
         $theForm = get_form($mixed);
         $dynamics_fields = [];
@@ -698,7 +700,7 @@ if (! function_exists('generate_form')) {
                 'url' => route('forms.validate')
             ]);
 
-        return form($form);
+        return $html ? form($form) : $form;
     }
 }
 
