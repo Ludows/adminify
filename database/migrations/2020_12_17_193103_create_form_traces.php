@@ -19,6 +19,7 @@ class CreateFormTraces extends Migration
             $table->bigInteger('form_id')->unsigned();
             $table->datetime('send_time');
             $table->foreign('form_id')->references('id')->on('forms');
+            $table->timestamps();
         });
         
     }
