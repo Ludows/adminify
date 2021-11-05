@@ -4,6 +4,8 @@ namespace Ludows\Adminify\Http\Controllers\Front;
 
 use Illuminate\Http\Request;
 use App\Adminify\Models\Page;
+use App\Adminify\Models\FormTrace;
+use App\Adminify\Models\FormEntries;
 use App\Adminify\Models\Url;
 use Ludows\Adminify\Http\Controllers\Controller;
 
@@ -12,6 +14,7 @@ use ReflectionClass;
 use Illuminate\Support\Facades\Crypt;
 
 use App\Adminify\Repositories\FormTraceRepository;
+use App\Adminify\Repositories\FormEntriesRepository;
 
 
 
@@ -19,8 +22,10 @@ class PageController extends Controller
 {
     use SeoGenerator;
     public $formTraceRepo;
-    public function __construct(FormTraceRepository $formTraceRepo) {
+    public $formEntryRepo;
+    public function __construct(FormTraceRepository $formTraceRepo, FormEntriesRepository $formEntryRepo) {
         $this->formTraceRepo = $formTraceRepo;
+        $this->formEntryRepo = $formEntryRepo;
     }
     /**
         * Display a listing of the resource.
@@ -95,7 +100,11 @@ class PageController extends Controller
             
             // le formulaire est valide 
             $FormTrace = new FormTrace();
-            $this->formTraceRepo->addModel($FormTrace)->create($theFormClass);
+            $trace_model = $this->formTraceRepo->addModel($FormTrace)->create([
+                'label' => __('admin.formbuilder.newTrace'),
+                'form_id' => $all['form_id'],
+                'send_time' => now()
+            ]);
 
         }
 
