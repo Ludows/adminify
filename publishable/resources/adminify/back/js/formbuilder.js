@@ -31,8 +31,6 @@ jQuery(document).ready(function ($) {
         'choice.select:multiple',
         'choice.checkbox',
         'choice.radio',
-        'radio',
-        'checkbox',
         'select2',
         'static'
     ];

@@ -59,7 +59,7 @@ class PageController extends Controller
                 $user->role = $user->roles->first();
                 unset($user->roles);
             }
-            
+
             $export = ['seo' => $seo, 'type' => $type, 'model' => $page, 'user' => $user, 'lang' => lang()];
 
             return view("adminify::layouts.front.pages.index", ['seo' => $seo, 'type' => $type, 'model' => $page, 'user' => $user, 'lang' => lang(), 'export' => json_encode($export)]);
@@ -95,15 +95,17 @@ class PageController extends Controller
             if(empty($all['form_id'])) {
                 abort(404);
             }
+            $formId = (int) $all['form_id'];
 
-            $theFormClass = generate_form($all['form_id'], false); // html parameter generation is disabled. the formClass is returned
+            $theFormClass = generate_form($formId, false); // html parameter generation is disabled. the formClass is returned
 
             if (!$theFormClass->isValid()) {
                 return redirect()->back()->withErrors($theFormClass->getErrors())->withInput();
             }
-            
-            // le formulaire est valide 
-            $formDb = get_form((int) $all['form_id']);
+
+
+            // le formulaire est valide
+            $formDb = get_form($formId);
             $FormTrace = new FormTrace();
             $FormEntries = new FormEntries();
 
@@ -113,7 +115,7 @@ class PageController extends Controller
 
             $trace_model = $this->formTraceRepo->addModel($FormTrace)->create([
                 'label' => __('admin.formbuilder.newTrace'),
-                'form_id' => $all['form_id'],
+                'form_id' => $formId,
                 'send_time' => now()
             ]);
 
@@ -141,7 +143,7 @@ class PageController extends Controller
             }
 
             // now we prepare to send the email.
-            
+
             if(!empty($dynamic_form_config[$formDb->slug])) {
                 $mail_sender = $dynamic_form_config[$formDb->slug]['email_user'];
             }
