@@ -292,7 +292,37 @@ class FormsController extends Controller
         }
         public function getConfirmation() {}
         public function getTrace(Forms $Form, FormTrace $trace) {
-            return view("adminify::layouts.admin.pages.show", ['formDb' => $Form, 'trace' => $trace, 'entries' => $trace->entries]);
+
+            $entries = $trace->entries;
+
+            $html = '';
+
+            $html .= '<div class="table-responsive">
+            <table class="table align-items-center table-dark">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">'. __('admin.formbuilder.namedfield') .'</th>
+                    <th scope="col">'. __('admin.formbuilder.content') .'</th>
+                    
+                </tr>
+            </thead>
+            <tbody>';
+
+            foreach ($entries as $entry) {
+                # code...
+                $html .= '<tr>
+                    <td>'. $entry->field_name .'</td>
+                    <td>'. $entry->content .'</td>
+                </tr>';
+            }
+                
+            $html .= '</tbody>
+        </table>
+        </div>';
+
+
+            
+            return view("adminify::layouts.admin.pages.show", ['renderShow' => $html]);
         }
         public function getTraces(Forms $Form) {
 
