@@ -6,25 +6,25 @@ $c = config('site-settings.enables_features');
 Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrator|editor', 'admin.breadcrumb', 'admin.menu', 'check.permissions', 'admin.deletemedia', 'admin.fullmode', 'admin.seo'])->group( function () use ($c) {
 
     Route::get('/dashboard', 'App\Adminify\Http\Controllers\Back\HomeController@index')->name('home.dashboard');
-    
+
     Route::post('/search', 'App\Adminify\Http\Controllers\Back\SearchController@index')->name('searchable');
 
-    if(isset($c['post']) && $c['post']) {	
+    if(isset($c['post']) && $c['post']) {
 	    Route::resource('posts', 'App\Adminify\Http\Controllers\Back\PostController', ['except' => ['show']] );
     }
-    
+
     if(isset($c['media']) && $c['media']) {
         Route::resource('medias', 'App\Adminify\Http\Controllers\Back\MediaController', ['except' => ['show']]);
     }
-	
+
     if(isset($c['category']) && $c['category']) {
         Route::resource('categories', 'App\Adminify\Http\Controllers\Back\CategoryController', ['except' => ['show']]);
     }
 
-    if(isset($c['page']) &&  $c['page']) {	
+    if(isset($c['page']) &&  $c['page']) {
         Route::resource('pages', 'App\Adminify\Http\Controllers\Back\PageController', ['except' => ['show']]);
     }
-    
+
     if(isset($c['menu']) && $c['menu']) {
         Route::resource('menus', 'App\Adminify\Http\Controllers\Back\MenuController', ['except' => ['show']]);
         Route::post('menus/set-items-to-menu/{id}/{type}', 'App\Adminify\Http\Controllers\Back\MenuController@setItemsToMenu')->name('menus.setItemsToMenu');
@@ -32,7 +32,7 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
         Route::post('menus/check-entity/{id}/{type}', 'App\Adminify\Http\Controllers\Back\MenuController@checkEntity')->name('menus.checkEntity');
     }
 
-    
+
     if(isset($c['templates_content']) && $c['templates_content']) {
         Route::resource('templates', 'App\Adminify\Http\Controllers\Back\TemplatesController', ['except' => ['show']]);
         Route::post('templates/content', 'App\Adminify\Http\Controllers\Back\TemplatesController@setContent')->name('templates.setcontent');
@@ -72,12 +72,12 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
         Route::resource('savetraductions', 'App\Adminify\Http\Controllers\Back\SaveTranslationsController', ['except' => ['show', 'create', 'store', 'index', 'destroy']]);
     }
 
-    // if(isset($c['post']) && $c['post']) {	
+    // if(isset($c['post']) && $c['post']) {
     // }
 
     Route::post('find/{type}', 'App\Adminify\Http\Controllers\Back\FinderController@index')->name('finder');
 
-    if(isset($c['seo']) && $c['seo']) {	
+    if(isset($c['seo']) && $c['seo']) {
 
         Route::get('seo/{type}/{id}', 'App\Adminify\Http\Controllers\Back\SeoController@edit')->name('seo.edit');
 
@@ -91,8 +91,7 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
         Route::post('forms/addfield', 'App\Adminify\Http\Controllers\Back\FormsController@addField')->name('forms.addField');
 
         Route::get('forms/{form}/traces', 'App\Adminify\Http\Controllers\Back\FormsController@getTraces')->name('forms.traces');
-        Route::post('forms/{form}/traces', 'App\Adminify\Http\Controllers\Back\FormsController@storeTraces')->name('forms.traces.store');
-        Route::post('forms/{form}/traces/{trace_id}', 'App\Adminify\Http\Controllers\Back\FormsController@getTrace')->name('forms.traces.show');
+        Route::get('forms/{form}/traces/{trace}', 'App\Adminify\Http\Controllers\Back\FormsController@getTrace')->name('forms.traces.show');
         Route::post('forms/{form}/traces/delete', 'App\Adminify\Http\Controllers\Back\FormsController@deleteEntries')->name('forms.traces.delete');
         Route::get('forms/{form}/confirmation', 'App\Adminify\Http\Controllers\Back\FormsController@getConfirmation')->name('forms.confirmation');
         Route::post('forms/{form}/confirmation', 'App\Adminify\Http\Controllers\Back\FormsController@storeConfirmation')->name('forms.confirmation.store');

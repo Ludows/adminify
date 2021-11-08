@@ -107,11 +107,11 @@ class PageController extends Controller
             // le formulaire est valide
             $formDb = get_form($formId);
             $FormTrace = new FormTrace();
-            $FormEntries = new FormEntries();
+
 
             $values = $theFormClass->getFieldValues();
             $a = [];
-            $attachements = [];
+            $entries = [];
 
             $trace_model = $this->formTraceRepo->addModel($FormTrace)->create([
                 'label' => __('admin.formbuilder.newTrace'),
@@ -122,22 +122,29 @@ class PageController extends Controller
             // formattage des entrées
             foreach ($values as $key => $val) {
                 # code...
-                $a[] = [
-                    'field_name' => $key,
-                    'content' => $val
-                ];
+                if($key != "form_id") {
+                    $a[] = [
+                        'field_name' => $key,
+                        'content' => empty($val) ? '' : $val
+                    ];
+                }
             }
+
+
 
             // et hop on inscrit en db
             foreach ($a as $entryKey => $entryVal) {
-                $entry_model = $this->formEntryRepo->addModel($FormEntries)->create($entryVal);
-                $attachements[] = [$trace_model->id, $entry_model->id];
+                $FormEntries = new FormEntries();
+
+                $entry_model = $this->formEntryRepo->addModel($FormEntries)->create($a[$entryKey]);
+                $entries[] = $entry_model;
+
+                $trace_model->entries()->attach([
+                    $trace_model->id => ['form_entries_id' => $entry_model->id]
+                ]);
             }
 
-
-            if(count($attachements) > 0) {
-                $trace_model->entries()->attach($attachements);
-            }
+            dd($a, $entries);
 
             // now we prepare to send the email.
 

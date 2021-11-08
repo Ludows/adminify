@@ -291,7 +291,9 @@ class FormsController extends Controller
             return $this->sendResponse($Form, 'forms.index', 'admin.typed_data.updated');
         }
         public function getConfirmation() {}
-        public function getTrace(Forms $Form, FormTrace $trace_id) {}
+        public function getTrace(Forms $Form, FormTrace $trace) {
+            return view("adminify::layouts.admin.pages.show", ['formDb' => $Form, 'trace' => $trace, 'entries' => $trace->entries]);
+        }
         public function getTraces(Forms $Form) {
 
             if(empty($Form->id)) {
@@ -303,6 +305,5 @@ class FormsController extends Controller
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
         public function storeConfirmation() {}
-        public function storeTraces() {}
         public function deleteEntries() {}
 }
