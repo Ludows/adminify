@@ -18,6 +18,7 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 use App\Adminify\Forms\CreateForms;
 use App\Adminify\Forms\UpdateForms;
+use App\Adminify\Forms\FormConfirmation;
 
 use Ludows\Adminify\Traits\TableManagerable;
 use App\Adminify\Tables\FormsTable;
@@ -290,7 +291,20 @@ class FormsController extends Controller
 
             return $this->sendResponse($Form, 'forms.index', 'admin.typed_data.updated');
         }
-        public function getConfirmation() {}
+        public function getConfirmation(Forms $Form, FormBuilder $FormBuilder) {
+            //
+
+            //retrieve the confirmation type
+            $confirmation = $Form->confirmation;
+
+            $form = $formBuilder->create(FormConfirmation::class, [
+                'method' => 'POST',
+                'url' => route('forms.confirmation.store', ['form' => $Form->id]),
+                'model' => $confirmation
+            ]);
+
+            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
+        }
         public function getTrace(Forms $Form, FormTrace $trace) {
 
             $entries = $trace->entries;
