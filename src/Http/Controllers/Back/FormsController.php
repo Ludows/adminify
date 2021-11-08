@@ -297,7 +297,7 @@ class FormsController extends Controller
             //retrieve the confirmation type
             $confirmation = $Form->confirmation;
 
-            $form = $formBuilder->create(FormConfirmation::class, [
+            $form = $FormBuilder->create(FormConfirmation::class, [
                 'method' => 'POST',
                 'url' => route('forms.confirmation.store', ['form' => $Form->id]),
                 'model' => $confirmation
