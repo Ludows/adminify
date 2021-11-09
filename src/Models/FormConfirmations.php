@@ -8,6 +8,7 @@ use Spatie\Searchable\SearchResult;
 use Spatie\Menu\Laravel\Link;
 
 use App\Adminify\Models\FormField;
+use App\Adminify\Models\Forms;
 
 class FormConfirmations extends ClassicModel
 {
@@ -33,6 +34,11 @@ class FormConfirmations extends ClassicModel
 
     public function getTableListing() {
         return null;
+    }
+
+    public function form()
+    {
+        return $this->belongsTo(Forms::class);
     }
 
     public function toFeedItem(): FeedItem {}

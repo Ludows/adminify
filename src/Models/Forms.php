@@ -9,6 +9,7 @@ use Spatie\Menu\Laravel\Link;
 
 use App\Adminify\Models\FormField;
 use App\Adminify\Models\FormTrace;
+use App\Adminify\Models\FormConfirmations;
 
 class Forms extends ClassicModel
 {
@@ -38,6 +39,11 @@ class Forms extends ClassicModel
     public function fields()
     {
         return $this->belongsToMany(FormField::class, 'form_form_field', 'form_id')->orderBy('order','asc')->withPivot('order');
+    }
+
+    public function confirmation()
+    {
+        return $this->belongsToMany(FormConfirmations::class, 'form_form_confirmation', 'form_id')->first();
     }
 
     public function traces()
