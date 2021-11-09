@@ -1,5 +1,13 @@
 @extends('adminify::layouts.admin.app')
 
+@if (!empty($adminCssLinks))
+    @push('css')
+        @foreach ($adminCssLinks as $adminCssPath)
+            <link rel="stylesheet" href="{{ $adminCssPath }}">
+        @endforeach
+    @endpush
+@endif
+
 @section('content')
     @php
         $name = request()->route()->getName();
@@ -10,8 +18,13 @@
     @else
         @include('adminify::layouts.admin.index.pages.default')
     @endif
+    
 @endsection
 
-@push('js')
-
-@endpush
+@if (!empty($adminJsLinks))
+    @push('js')
+        @foreach ($adminJsLinks as $adminJsPath)
+            <script type="text/javascript" src="{{ $adminJsPath }}"></script>
+        @endforeach
+    @endpush
+@endif

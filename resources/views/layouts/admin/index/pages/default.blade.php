@@ -20,4 +20,3 @@
 @push('js')
     <script src="{{ asset('adminify/back') }}/js/listings.js"></script>
 @endpush
-

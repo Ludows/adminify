@@ -303,6 +303,8 @@ class FormsController extends Controller
                 'model' => $confirmation
             ]);
 
+            $this->addJS(asset('adminify/back/js/confirmation.js'));
+
             return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
         }
         public function getTrace(Forms $Form, FormTrace $trace) {
