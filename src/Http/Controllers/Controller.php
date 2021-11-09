@@ -7,6 +7,8 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
+use Illuminate\Support\Facades\View;
+
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
@@ -14,11 +16,12 @@ class Controller extends BaseController
     public function __construct() {
         $this->admin_css = [];
         $this->admin_js = [];
-        $this->view = view();
     }
 
     public function addJS($mixed) {
         $links = [];
+
+        $view = view();
         if(is_array($mixed)) {
             $links = $mixed;
         }
@@ -26,17 +29,18 @@ class Controller extends BaseController
         if(is_string($mixed)) {
             $links[] = $mixed;
         }
-        
+
         foreach ($links as $link) {
             # code...
             $this->admin_js[] = $link;
         }
 
-        $this->view->share('adminJsLinks', $this->admin_js);
+        $view->share('adminJsLinks', $this->admin_js);
     }
 
     public function addCss($mixed) {
         $links = [];
+        $view = view();
         if(is_array($mixed)) {
             $links = $mixed;
         }
@@ -44,13 +48,13 @@ class Controller extends BaseController
         if(is_string($mixed)) {
             $links[] = $mixed;
         }
-        
+
         foreach ($links as $link) {
             # code...
             $this->admin_css[] = $link;
         }
 
-        $this->view->share('adminCssLinks', $this->admin_css);
+        $view->share('adminCssLinks', $this->admin_css);
     }
 
     public function sendResponse($model, $routeName, $traductionKey, $ajaxKey = 'model') {
