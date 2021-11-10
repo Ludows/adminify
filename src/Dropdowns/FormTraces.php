@@ -20,10 +20,12 @@ class FormTraces extends DropdownsManager
         
         foreach ($models as $m) {
             # code...
+            //bounded by request
+            $local_trace =  $r->routeParameters['form'];
                 $this->add('dropdown_'.$m->id, [
                     'template' => 'adminify::layouts.admin.dropdowns.extends.show',
                     'vars' => [
-                        'url' => route('forms.traces.show', ['form' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '', 'trace' => $m->trace->id ]),
+                        'url' => route('forms.traces.show', ['form' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '', 'trace' => $local_trace->trace->id ]),
                         'name' => 'traces',
                         'id' => $m->id
                     ]
