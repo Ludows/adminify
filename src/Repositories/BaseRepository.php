@@ -20,6 +20,7 @@ class BaseRepository
     protected $model;
 
     // Define your internals relationship columns. The repository does'nt make treatments for this columns
+    // Example You've got form_id in form trace
     public $internal_relations_columns = [];
 
     // Define your externals relationship columns. The repository does'nt make treatments for this columns
@@ -27,6 +28,7 @@ class BaseRepository
     public $external_relations_columns = [];
 
     // Your can Define your Manipulation datas here
+    // Example : Hash your password
     public $filters_on = [];
 
     /**
@@ -97,6 +99,10 @@ class BaseRepository
 
         }
 
+        if(method_exists($this, 'beforeRun')) {
+            call_user_func_array(array($this, 'beforeRun'), array($model, $formValues,  $type));
+        }
+
         $this->hookManager->run($hooks[0], $model);
 
         if(count($this->internal_relations_columns) > 0) {
@@ -140,6 +146,10 @@ class BaseRepository
         }
 
         $this->hookManager->run($hooks[1], $model);
+
+        if(method_exists($this, 'afterRun')) {
+            call_user_func_array(array($this, 'afterRun'), array($model, $formValues,  $type));
+        }
 
         return $model;
     }

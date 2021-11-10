@@ -16,5 +16,6 @@ jQuery(document).ready(function() {
 
     });
 
+    $('#selectTypeBlock select').trigger('change');
 
 })

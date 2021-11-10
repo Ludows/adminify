@@ -5,6 +5,7 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 
 use App\Adminify\Models\Forms;
 use App\Adminify\Models\FormTrace;
+use App\Adminify\Models\FormConfirmations;
 
 use Illuminate\Http\Request;
 use App\Adminify\Http\Requests\CreateFormsRequest;
@@ -324,7 +325,7 @@ class FormsController extends Controller
                 <tr>
                     <th scope="col">'. __('admin.formbuilder.namedfield') .'</th>
                     <th scope="col">'. __('admin.formbuilder.content') .'</th>
-                    
+
                 </tr>
             </thead>
             <tbody>';
@@ -336,13 +337,13 @@ class FormsController extends Controller
                     <td>'. $entry->content .'</td>
                 </tr>';
             }
-                
+
             $html .= '</tbody>
         </table>
         </div>';
 
 
-            
+
             return view("adminify::layouts.admin.pages.show", ['renderShow' => $html]);
         }
         public function getTraces(Forms $Form) {
@@ -355,10 +356,23 @@ class FormsController extends Controller
             // dd($forms);
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
-        public function storeConfirmation(FormConfirmationRequest $request, FormBuilder $FormBuilder) {
+        public function storeConfirmation(FormConfirmationRequest $request, Forms $Form, FormBuilder $FormBuilder) {
 
             $form = $FormBuilder->create(FormConfirmation::class);
 
+            //retrieve the confirmation type
+            $confirmation = $Form->confirmation->first();
+
+            if(empty($confirmation)) {
+                $m = new FormConfirmations();
+                $this->formConfirmationRepository->addModel($m)->create($form);
+            }
+            else {
+                $m = $confirmation;
+                $this->formConfirmationRepository->addModel($m)->create($form, $m);
+            }
+
+            return $this->sendResponse($Form, 'forms.index', 'admin.typed_data.updated');
         }
         public function deleteEntries() {}
 }
