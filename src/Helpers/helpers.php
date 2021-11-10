@@ -708,13 +708,13 @@ if (! function_exists('generate_form')) {
                 'method' => 'POST',
                 'url' => route('forms.validate')
             ]);
-        
-            
+
+
         if($html) {
             $isSubmit = session()->get('formSubmitted');
             $showForm = true;
 
-            if(!empty($dynamic_form_config['show_form_when_validated'])) {
+            if(isset($dynamic_form_config['show_form_when_validated']) && $isSubmit) {
                 $showForm = $dynamic_form_config['show_form_when_validated'];
             }
 
@@ -722,10 +722,10 @@ if (! function_exists('generate_form')) {
                 'form' => $form,
                 'showConfirmation' => $isSubmit ? true : false,
                 'showForm' => $showForm,
-                'confirmation' => $form->confirmation
+                'confirmation' => $theForm->confirmation->first()
             ])->render();
         }
-        
+
 
         return $html ? $renderer : $form;
     }
