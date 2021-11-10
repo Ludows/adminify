@@ -5,13 +5,13 @@ namespace Ludows\Adminify\Repositories;
 use  Ludows\Adminify\Repositories\BaseRepository;
 use App\Adminify\Models\FormField;
 use App\Adminify\Repositories\FormFieldsRepository;
-use App\Adminify\Repositories\FormTracesRepository;
+use App\Adminify\Repositories\FormTraceRepository;
 
 class FormsRepository extends BaseRepository
 {
     private $formFieldRepo;
     private $FormTracesRepository;
-    public function __construct(FormFieldsRepository $formFieldRepo, FormTracesRepository $FormTracesRepository) {
+    public function __construct(FormFieldsRepository $formFieldRepo, FormTraceRepository $FormTracesRepository) {
         parent::__construct();
         $this->formFieldRepo = $formFieldRepo;
         $this->FormTracesRepository = $FormTracesRepository;
