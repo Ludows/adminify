@@ -163,8 +163,8 @@ class TableManager
     public function handle() {}
     public function render() {
 
-        $name = $this->getRequest()->route()->getName();
-        $name = str_replace('.index', '', $name);
+        $r = $this->getRequest();
+        $name = $r->name;
         $listings = adminify_get_class( Str::title( singular( $name ) ) , ['app:models', 'app:adminify:models'], false);
 
         $singular = singular( $name );
