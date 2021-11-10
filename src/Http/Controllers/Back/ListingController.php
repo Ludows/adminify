@@ -28,6 +28,7 @@ class ListingController extends Controller
         $lang = lang();
 
         $columns = $m->getFillable();
+        $tableColumns = $m->getConnection()->getDoctrineSchemaManager()->getColumns();
         $TableManager = $m->getTableListing();
         $translatableFields = [];
         if($is_multilang_model) {
@@ -50,22 +51,24 @@ class ListingController extends Controller
             $i = 0;
             foreach ($searchColumns as $column) {
                 # code...
-                $binding = null;
-                if($is_multilang_model && $useMultilang && in_array($column , $translatableFields)) {
-                    $binding = $column.'->'.$lang;
+                if( in_array($column, $tableColumns)) {
+                    $binding = null;
+                    if($is_multilang_model && $useMultilang && in_array($column , $translatableFields)) {
+                        $binding = $column.'->'.$lang;
+                    }
+                    else {
+                        $binding = $column;
+                    }
+    
+                    if($i == 0) {
+                       $m = $m->where($binding, 'like',  "%" . strtolower($search) . "%");
+                    }
+                    else {
+                        $m = $m->orWhere($binding, 'like',  "%" . strtolower($search) . "%");
+                    }
+    
+                    $i++;
                 }
-                else {
-                    $binding = $column;
-                }
-
-                if($i == 0) {
-                   $m = $m->where($binding, 'like',  "%" . strtolower($search) . "%");
-                }
-                else {
-                    $m = $m->orWhere($binding, 'like',  "%" . strtolower($search) . "%");
-                }
-
-                $i++;
             }
         }
 
