@@ -21,10 +21,10 @@ class FormTraces extends DropdownsManager
         foreach ($models as $m) {
             # code...
                 $this->add('dropdown_'.$m->id, [
-                    'template' => 'adminify::layouts.admin.dropdowns.extends.sendMail',
+                    'template' => 'adminify::layouts.admin.dropdowns.extends.show',
                     'vars' => [
-                        'url' => route('mails.send', ['mail' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
-                        'name' => 'mails',
+                        'url' => route('forms.traces.show', ['form' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '', 'trace' => $r->routeParameters['trace']]),
+                        'name' => 'traces',
                         'id' => $m->id
                     ]
                 ]);
