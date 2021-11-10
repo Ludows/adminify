@@ -39,10 +39,13 @@ class MultilangBasic
 
         $named = join('.',array_diff($routeNameSpl, ['index', 'edit', 'create']));
 
+
         $base_parameters = [
             "name" => $named,
             "isCrudPattern"=> false,
             "singleParam"=> Str::singular($routeNameSpl[0]),
+            "currentRouteSplitting" => $routeNameSpl,
+            "routeParameters" => $request->route()->parameters(),
             "useMultilang" => (bool) $config['multilang'],
             "lang"=> $currentLocale,
             "currentLang" => $currentLocale,
@@ -72,6 +75,7 @@ class MultilangBasic
             }
         }
 
+        dd($request);
 
         if($config['multilang']) {
 
