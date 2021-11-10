@@ -144,22 +144,45 @@ class PageController extends Controller
                 ]);
             }
 
-            dd($a, $entries);
+            if(!empty($dynamic_form_config['skip_autosend']) && $dynamic_form_config['skip_autosend'] == false) {
+                // now we prepare to send the email.
 
-            // now we prepare to send the email.
+                if(!empty($dynamic_form_config[$formDb->slug])) {
+                    $mail_sender = $dynamic_form_config[$formDb->slug]['email_user'];
+                }
 
-            if(!empty($dynamic_form_config[$formDb->slug])) {
-                $mail_sender = $dynamic_form_config[$formDb->slug]['email_user'];
+                //find the App\Adminify\Mails\FormEntriesListingMail
+                $mail = Mailables::where('mailable', 'App\Adminify\Mails\FormEntriesListingMail')->get()->first();
+                if(!empty($mail->mailable)) {
+                    $mail = $mail->mailable;
+                }
+
+                Mail::to($mail_sender)
+                ->send(new $mail( $formDb ) );
             }
 
-            //find the App\Adminify\Mails\FormEntriesListingMail
-            $mail = Mailables::where('mailable', 'App\Adminify\Mails\FormEntriesListingMail')->get()->first();
-            if(!empty($mail->mailable)) {
-                $mail = $mail->mailable;
+            // now we prepare the redirection type process..
+            $confirmation = $formDb->confirmation->first();
+
+            if(!empty($confirmation) && $confirmation->type == 'samepage') {
+                $url = url()->previous();
             }
 
-            Mail::to($mail_sender)
-            ->send(new $mail( $formDb ) );
+            if(!empty($confirmation) && $confirmation->type == 'page') {
+                $page = Page::find( (int) $confirmation->page_id );
+                $url = $page->url;
+            }
+
+            if(!empty($confirmation) && $confirmation->type == 'redirect') {
+                $url = $confirmation->redirect_url;
+            }
+
+            if(empty($confirmation)) {
+                // fallback to previous url
+                $url = url()->previous();
+            }
+            
+            return redirect()->to($url);
         }
 
         public function handleSlug($slug) {
