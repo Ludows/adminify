@@ -22,6 +22,12 @@ class Translations extends ClassicModel
         'text'
     ];
 
+    public function getAdminifyAliases() {
+        return [
+            'translation', 'translations', 'traduction', 'traductions'
+        ];
+    }
+
     public function scopeKey($query, $key) {
         return $query->where('key', $key);
     }
