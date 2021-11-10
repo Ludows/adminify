@@ -12,6 +12,7 @@ class FormShortcode extends ShortcodeBaseRender {
         $adapter = null;
         $idParam = $s->getParameter('id');
         $elementParam = $s->getParameter('element');
+        $templateParam = $s->getParameter('template');
 
         if(empty($idParam) && empty($elementParam)) {
             return '';

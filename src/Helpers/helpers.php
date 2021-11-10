@@ -658,12 +658,13 @@ if (! function_exists('generate_form')) {
         return $array;
     }
 
-    function generate_form($mixed, $html = true) {
+    function generate_form($mixed, $html = true, $templatePath = 'adminify::layouts.commons.forms.default') {
 
         $theForm = get_form($mixed);
         $dynamics_fields = [];
 
         $formBuilder = app('Kris\LaravelFormBuilder\FormBuilder');
+        $v = view();
 
         if(empty($theForm)) {
             return null;
@@ -699,8 +700,12 @@ if (! function_exists('generate_form')) {
                 'method' => 'POST',
                 'url' => route('forms.validate')
             ]);
+        
+        $renderer = $v->make($templatePath, [
+            'form' => $form
+        ])->render();
 
-        return $html ? form($form) : $form;
+        return $html ? $renderer : $form;
     }
 }
 
