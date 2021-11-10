@@ -9,7 +9,10 @@ use App\Adminify\Models\FormTrace;
 use Illuminate\Http\Request;
 use App\Adminify\Http\Requests\CreateFormsRequest;
 use App\Adminify\Http\Requests\UpdateFormsRequest;
+use App\Adminify\Http\Requests\FormConfirmationRequest;
+
 use App\Adminify\Repositories\FormsRepository;
+use App\Adminify\Repositories\FormConfirmationRepository;
 
 use App\Adminify\Http\Controllers\Controller;
 
@@ -29,10 +32,12 @@ class FormsController extends Controller
     use FormBuilderTrait;
     use TableManagerable;
     private $Repository;
+    private $formConfirmationRepository;
 
-        public function __construct(FormsRepository $Repository) {
+        public function __construct(FormsRepository $Repository, FormConfirmationRepository $formConfirmationRepository) {
 
             $this->Repository = $Repository;
+            $this->formConfirmationRepository = $formConfirmationRepository;
 
             $this->middleware(['permission:read|create_forms'], ['only' => ['show','create']]);
             $this->middleware(['permission:read|edit_forms'], ['only' => ['edit', 'update']]);
@@ -295,7 +300,7 @@ class FormsController extends Controller
             //
 
             //retrieve the confirmation type
-            $confirmation = $Form->confirmation;
+            $confirmation = $Form->confirmation->first();
 
             $form = $FormBuilder->create(FormConfirmation::class, [
                 'method' => 'POST',
@@ -350,6 +355,10 @@ class FormsController extends Controller
             // dd($forms);
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
-        public function storeConfirmation() {}
+        public function storeConfirmation(FormConfirmationRequest $request, FormBuilder $FormBuilder) {
+
+            $form = $FormBuilder->create(FormConfirmation::class);
+
+        }
         public function deleteEntries() {}
 }

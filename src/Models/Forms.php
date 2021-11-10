@@ -43,7 +43,7 @@ class Forms extends ClassicModel
 
     public function confirmation()
     {
-        return $this->belongsToMany(FormConfirmations::class, 'form_form_confirmation', 'form_id')->first();
+        return $this->belongsToMany(FormConfirmations::class, 'form_form_confirmation', 'form_id');
     }
 
     public function traces()

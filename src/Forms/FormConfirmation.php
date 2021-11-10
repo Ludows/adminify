@@ -16,6 +16,9 @@ class FormConfirmation extends Form
             'empty_value' => '',
             'withCreate' => false,
             'modal' => '', // simple include
+            'wrapper' => [
+                'id' => 'selectTypeBlock'
+            ],
             'choices' => [
                 'page' => __('admin.formbuilder.choice_page'),
                 'redirect' => __('admin.formbuilder.choice_redirect'),
@@ -61,7 +64,7 @@ class FormConfirmation extends Form
                 'data-show-type' => 'samepage'
             ]
         ])
-        ->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);        
+        ->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
     public function hydrateSelectPage() {
         $pages = '';
