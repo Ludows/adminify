@@ -11,21 +11,23 @@ class FormTraces extends DropdownsManager
         $datas = $this->getDatas();
         $r = $this->getRequest();
         $models = $this->getModels();
-                
+
         $form = app('Kris\LaravelFormBuilder\FormBuilder');
+
+        $theForm = $r->routeParameters['form'];
 
         if(count($models) > 0 && is_translatable_model($models[0])) {
             check_traductions($models);
         }
-        
+
+
         foreach ($models as $m) {
             # code...
             //bounded by request
-            $local_trace =  $r->routeParameters['form'];
                 $this->add('dropdown_'.$m->id, [
                     'template' => 'adminify::layouts.admin.dropdowns.extends.show',
                     'vars' => [
-                        'url' => route('forms.traces.show', ['form' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '', 'trace' => $local_trace->trace->id ]),
+                        'url' => route('forms.traces.show', ['form' => $theForm->id, 'lang' => $r->useMultilang ? $r->lang : '', 'trace' => $m->id ]),
                         'name' => 'traces',
                         'id' => $m->id
                     ]
@@ -40,6 +42,6 @@ class FormTraces extends DropdownsManager
                     ]
                 ]);
         }
-        
+
     }
 }
