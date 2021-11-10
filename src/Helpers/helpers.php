@@ -711,7 +711,7 @@ if (! function_exists('generate_form')) {
         
             
         if($html) {
-            $isSubmit = session('formSubmitted');
+            $isSubmit = session()->get('formSubmitted');
             $showForm = true;
 
             if(!empty($dynamic_form_config['show_form_when_validated'])) {
