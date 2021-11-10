@@ -16,6 +16,7 @@ return [
     ],
 
     'dynamic_forms' => [
+        'default_form_template' => 'adminify::layouts.commons.forms.default',
         'skip_autosend' => true,
         'default_email_user' => 'theartist768@gmail.com', // if your want to overwrite the default user. Specify form with his slug
     ],

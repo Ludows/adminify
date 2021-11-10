@@ -13,6 +13,9 @@ class FormShortcode extends ShortcodeBaseRender {
         $idParam = $s->getParameter('id');
         $elementParam = $s->getParameter('element');
         $templateParam = $s->getParameter('template');
+        $dynamic_form_config = get_site_key('dynamic_forms');
+        $template = $dynamic_form_config['default_form_template'];
+
 
         if(empty($idParam) && empty($elementParam)) {
             return '';
@@ -25,7 +28,11 @@ class FormShortcode extends ShortcodeBaseRender {
             $adapter = $elementParam;
         }
 
-        return generate_form($adapter);
+        if(!empty($templateParam) && is_string($templateParam)) {
+            $template = $templateParam;
+        }
+
+        return generate_form($adapter, true, $template);
 
     }
 }
