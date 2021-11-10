@@ -23,7 +23,7 @@ class FormTraces extends DropdownsManager
                 $this->add('dropdown_'.$m->id, [
                     'template' => 'adminify::layouts.admin.dropdowns.extends.show',
                     'vars' => [
-                        'url' => route('forms.traces.show', ['form' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '', 'trace' => $r->routeParameters['trace']]),
+                        'url' => route('forms.traces.show', ['form' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '', 'trace' => $m->trace->id ]),
                         'name' => 'traces',
                         'id' => $m->id
                     ]
