@@ -16,10 +16,6 @@ class ShowProfile extends Form
             'value' => $m->id
         ]);
 
-        $this->add('topbar', 'hidden', [
-            'value' => 0
-        ]);
-
         $this->add('topbar', 'checkbox', [
             'label' => __('admin.form.topbar'),
             'checked' =>  $topbar != null && $topbar == 1 ? true : false,
@@ -28,6 +24,7 @@ class ShowProfile extends Form
             'attr' => ['class' => 'custom-control-input'],
             'label_attr' => ['class' => 'custom-control-label text-muted'],
         ]);
+        
         $this->add('submit', 'submit', [
             'label' => __('admin.form.submit'),
             'attr' => ['class' => 'btn btn-primary my-4'],
