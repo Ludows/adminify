@@ -21,8 +21,8 @@ class AdminBreadcrumb
     }
     public function handle(Request $request, Closure $next)
     {
-        // dd(app());
-        $routeName = request()->route()->getName();
+        $routeName = $request->currentRouteName;
+
 
 
 
@@ -36,14 +36,14 @@ class AdminBreadcrumb
             // we find the model mapped by the crud mode
             $model = \Route::current()->parameter($singular);
 
-            $entity_name = __('admin.menuback.'.$routeSpl['0']); 
+            $entity_name = __('admin.menuback.'.$routeSpl['0']);
 
             $trail->push( __('admin.breadcrumb.root') , route('home.dashboard'));
             if(Str::contains($requestedNameRoute, 'index') && $this->hasRoute($routeSpl['0'].'.index')) {
                 $trail->push(  __('admin.breadcrumb.index', ['entity' => $entity_name]) , route($routeSpl['0'].'.index'));
             }
             if(Str::contains($requestedNameRoute, 'create') && $this->hasRoute($routeSpl['0'].'.create')) {
-                
+
                 if($this->hasRoute($routeSpl['0'].'.index')) {
                     $trail->push( __('admin.breadcrumb.index', ['entity' => $entity_name]) , route($routeSpl['0'].'.index'));
                 }
@@ -57,7 +57,7 @@ class AdminBreadcrumb
                     $trail->push( __('admin.breadcrumb.index', ['entity' => $entity_name]) , route($routeSpl['0'].'.index'));
                 }
 
-                
+
                 if($model != null && $model instanceof \Illuminate\Database\Eloquent\Model) {
                     $trail->push( __('admin.breadcrumb.edit', ['entity' => $entity_name]) , route($requestedNameRoute, [$singular => $model->id]));
                 }

@@ -75,8 +75,6 @@ class MultilangBasic
             }
         }
 
-        dd($request);
-
         if($config['multilang']) {
 
             $langParameter = $request->get('lang');
