@@ -24,6 +24,12 @@ class FormTrace extends ClassicModel
         'send_time',
     ];
 
+    public function getAdminifyAliases() {
+        return [
+            'trace', 'formtrace', 'form_trace'
+        ];
+    }
+
     /**
      * Default values for attributes
      * @var  array an array with attribute as key and default as value
