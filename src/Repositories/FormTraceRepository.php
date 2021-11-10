@@ -13,8 +13,8 @@ class FormTraceRepository extends BaseRepository
             foreach ($entries as $entry) {
                 # code...
                 $idEntry = $entry->id;
-                $entry->delete();
                 $model->entries()->detach([$idEntry]);
+                $entry->delete();
             }
         }
     }
