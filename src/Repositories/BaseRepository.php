@@ -189,7 +189,15 @@ class BaseRepository
     }
     public function delete($model) {
         $this->hookManager->run('model:deleting', $model);
+        if(method_exists($this, 'beforeRun')) {
+            call_user_func_array(array($this, 'beforeRun'), array($model, [],  'destroy'));
+        }
+
         $model->delete();
+
+        if(method_exists($this, 'afterRun')) {
+            call_user_func_array(array($this, 'afterRun'), array($model, [],  'destroy'));
+        }
         $this->hookManager->run('model:deleted', $model);
         $this->hookManager->run('process:finished', $model);
         return $model;

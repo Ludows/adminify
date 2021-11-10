@@ -37,7 +37,7 @@ class FormTraces extends DropdownsManager
                     'vars' => [
                         'form' => $form->create(DeleteCrud::class, [
                             'method' => 'DELETE',
-                            'url' => route('forms.destroy', ['form' => $m->id])
+                            'url' => route('forms.traces.destroy', ['form' => $theForm->id, 'trace' => $m->id])
                         ])
                     ]
                 ]);

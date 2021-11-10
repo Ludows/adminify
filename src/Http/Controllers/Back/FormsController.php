@@ -14,6 +14,7 @@ use App\Adminify\Http\Requests\FormConfirmationRequest;
 
 use App\Adminify\Repositories\FormsRepository;
 use App\Adminify\Repositories\FormConfirmationRepository;
+use App\Adminify\Repositories\FormTraceRepository;
 
 use App\Adminify\Http\Controllers\Controller;
 
@@ -34,11 +35,13 @@ class FormsController extends Controller
     use TableManagerable;
     private $Repository;
     private $formConfirmationRepository;
+    private $formTraceRepository;
 
-        public function __construct(FormsRepository $Repository, FormConfirmationRepository $formConfirmationRepository) {
+        public function __construct(FormsRepository $Repository, FormConfirmationRepository $formConfirmationRepository, FormTraceRepository $formTraceRepository) {
 
             $this->Repository = $Repository;
             $this->formConfirmationRepository = $formConfirmationRepository;
+            $this->formTraceRepository = $formTraceRepository;
 
             $this->middleware(['permission:read|create_forms'], ['only' => ['show','create']]);
             $this->middleware(['permission:read|edit_forms'], ['only' => ['edit', 'update']]);
@@ -380,5 +383,11 @@ class FormsController extends Controller
 
             return $this->sendResponse($Form, 'forms.index', 'admin.typed_data.updated');
         }
-        public function deleteEntries() {}
+        public function destroyTrace(Forms $Form, FormTrace $trace) {
+
+            $this->formTraceRepository->addModel($trace)->delete($trace);
+            // redirect
+            return $this->sendResponse($trace, 'forms.index', 'admin.typed_data.deleted');
+
+        }
 }
