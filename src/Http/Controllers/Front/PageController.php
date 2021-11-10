@@ -170,7 +170,7 @@ class PageController extends Controller
 
             if(!empty($confirmation) && $confirmation->type == 'page') {
                 $page = Page::find( (int) $confirmation->page_id );
-                $url = $page->url;
+                $url = $page->urlPath;
             }
 
             if(!empty($confirmation) && $confirmation->type == 'redirect') {
@@ -182,7 +182,8 @@ class PageController extends Controller
                 $url = url()->previous();
             }
             
-            return redirect()->to($url);
+            
+            return redirect()->to($url)->with(['formSubmitted' => true]);
         }
 
         public function handleSlug($slug) {

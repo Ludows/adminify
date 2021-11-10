@@ -711,8 +711,18 @@ if (! function_exists('generate_form')) {
         
             
         if($html) {
+            $isSubmit = session('formSubmitted');
+            $showForm = true;
+
+            if(!empty($dynamic_form_config['show_form_when_validated'])) {
+                $showForm = $dynamic_form_config['show_form_when_validated'];
+            }
+
             $renderer = $v->make($template, [
-                'form' => $form
+                'form' => $form,
+                'showConfirmation' => $isSubmit ? true : false,
+                'showForm' => $showForm,
+                'confirmation' => $form->confirmation
             ])->render();
         }
         
