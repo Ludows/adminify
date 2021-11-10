@@ -5,13 +5,16 @@ namespace Ludows\Adminify\Repositories;
 use  Ludows\Adminify\Repositories\BaseRepository;
 use App\Adminify\Models\FormField;
 use App\Adminify\Repositories\FormFieldsRepository;
+use App\Adminify\Repositories\FormTracesRepository;
 
 class FormsRepository extends BaseRepository
 {
     private $formFieldRepo;
-    public function __construct(FormFieldsRepository $formFieldRepo) {
+    private $FormTracesRepository;
+    public function __construct(FormFieldsRepository $formFieldRepo, FormTracesRepository $FormTracesRepository) {
         parent::__construct();
         $this->formFieldRepo = $formFieldRepo;
+        $this->FormTracesRepository = $FormTracesRepository;
     }
     // set for only linking to pivot table
     public $external_relations_columns = [
@@ -114,7 +117,20 @@ class FormsRepository extends BaseRepository
 
     public function delete($model) {
         $this->hookManager->run('model:deleting', $model);
-        $model->fields()->detach();
+
+        $traces = $model->traces;
+        $fields = $model->fields;
+
+        foreach($fields as $field) {
+            $model->fields()->detach([$field->id]);
+            $this->formFieldRepo->addModel($field)->delete($field);
+        }
+
+        foreach($traces as $trace) {
+            $model->traces()->detach([$trace->id]);
+            $this->FormTracesRepository->addModel($trace)->delete($trace);
+        }
+        
         $model->delete();
         $this->hookManager->run('model:deleted', $model);
         $this->hookManager->run('process:finished', $model);

@@ -378,7 +378,7 @@ class FormsController extends Controller
             }
             else {
                 $m = $confirmation;
-                $this->formConfirmationRepository->addModel($m)->create($form, $m);
+                $this->formConfirmationRepository->addModel($m)->update($form, $m);
             }
 
             return $this->sendResponse($Form, 'forms.index', 'admin.typed_data.updated');
