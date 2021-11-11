@@ -30,7 +30,7 @@ class UserController extends Controller
     public function __construct(UserRepository $userRepository) {
 
         $this->userRepository = $userRepository;
-        
+
         $this->middleware(['permission:read|create_users'], ['only' => ['show','create']]);
         $this->middleware(['permission:read|edit_users'], ['only' => ['edit', 'update']]);
         $this->middleware(['permission:read|update_profile'], ['only' => ['showProfile', 'saveProfile']]);
@@ -46,7 +46,7 @@ class UserController extends Controller
     {
 
             $table = $this->table(UserTable::class);
-            
+
 
             return view("adminify::layouts.admin.pages.index", ['table' => $table]);
     }
@@ -75,8 +75,7 @@ class UserController extends Controller
         {
             //
             $form = $this->form(CreateUser::class);
-            $user = $this->userRepository->create($form, $request);
-
+            $user = $this->userRepository->addModel(new User())->create($form);
             return $this->sendResponse($user, 'users.index', 'admin.typed_data.success');
         }
 
@@ -112,7 +111,7 @@ class UserController extends Controller
                     'model' => $user
                 ]);
 
-                $this->userRepository->update($form, $request, $user);
+                $this->userRepository->addModel($user)->update($form, $user);
 
                 return $this->sendResponse($user, 'users.index', 'admin.typed_data.updated');
             }
@@ -132,7 +131,7 @@ class UserController extends Controller
                 return $this->sendResponse($user, 'users.index', 'admin.typed_data.deleted');
             }
             public function showProfile(User $user, FormBuilder $formBuilder) {
-                
+
                 $form = $formBuilder->create(ShowProfile::class, [
                     'method' => 'POST',
                     'url' => route('users.profile.store', ['user' => $user->id]),

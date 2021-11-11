@@ -78,7 +78,13 @@ class BaseRepository
             # code...
             if(isset($formValues[$fillable])) {
                 if(!in_array($fillable, $untouchables_relations)) {
-                    $isTranslatableField = $model->isTranslatableColumn($fillable);
+                    if(method_exists($model, 'isTranslatableColumn')) {
+                        $isTranslatableField = $model->isTranslatableColumn($fillable);
+                    }
+                    else {
+                        // Support for non translateble friendly models;
+                        $isTranslatableField = false;
+                    }
                     if($isTranslatableField && $multilang) {
                         $model->setTranslation($fillable, $lang, $formValues[$fillable]);
                     }

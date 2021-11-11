@@ -17,7 +17,7 @@ class GenerateAdminMenu
      * @param  \Closure  $next
      * @return mixed
      */
-    public function manageMenu() {
+    public function manageMenu($request) {
         $user = user();
         $multilang = config('site-settings.multilang');
         $menu_config = get_site_key('adminMenu');
@@ -51,7 +51,7 @@ class GenerateAdminMenu
         if($user->hasRole('subscriber')) {
             $menuAdmin->add( Link::to($multilang ? '/admin/users'.'/'.$user->id. '/edit?lang='.$lang : '/admin/users'.'/'.$user->id. '/edit', '<i class="ni ni-circle-08"></i> '.__('admin.users.edit'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
         }
-        
+        $menuAdmin->setActive( join('/',$request->segments()) );
         return $menuAdmin;
 
     }
@@ -60,8 +60,8 @@ class GenerateAdminMenu
 
         // dd($request->user()->hasPermissionTo('create_posts'));
 
-        $menuAdmin = $this->manageMenu();
-        
+        $menuAdmin = $this->manageMenu($request);
+
         view()->share('menuAdmin', $menuAdmin);
 
         return $next($request);

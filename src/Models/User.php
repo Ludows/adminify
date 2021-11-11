@@ -14,7 +14,7 @@ use Spatie\Menu\Laravel\Link;
 
 
 class User extends ClassicUser
-{    
+{
     public $searchable_label = 'name';
 
     /**
