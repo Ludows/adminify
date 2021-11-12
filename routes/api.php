@@ -13,19 +13,19 @@ if(isset($c) && $c['enable']) {
     Route::post('/token/refresh', '\Ludows\Adminify\Http\Controllers\Api\TokenController@refreshToken')->name('api.token.refresh');
 
     if(isset($features['post']) && $features['post']) {	
-	    Route::resource('posts', 'App\Adminify\Http\Controllers\Api\PostController', ['except' => ['show']] )->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic'])->name('api.posts');
+	    Route::resource('posts', 'App\Adminify\Http\Controllers\Api\PostController', ['except' => ['show']] )->name('api.posts')->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
     }
     
     if(isset($features['media']) && $features['media']) {
-        Route::resource('medias', 'App\Adminify\Http\Controllers\Api\MediaController', ['except' => ['show']])->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic'])->name('api.medias');
+        Route::resource('medias', 'App\Adminify\Http\Controllers\Api\MediaController', ['except' => ['show']])->name('api.medias')->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
     }
 	
     if(isset($features['category']) && $features['category']) {
-        Route::resource('categories', 'App\Adminify\Http\Controllers\Api\CategoryController', ['except' => ['show']])->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic'])->name('api.categories');
+        Route::resource('categories', 'App\Adminify\Http\Controllers\Api\CategoryController', ['except' => ['show']])->name('api.categories')->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
     }
 
     if(isset($features['page']) &&  $features['page']) {	
-        Route::resource('pages', 'Api\Adminify\Http\Controllers\Api\PageController', ['except' => ['show']])->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic'])->name('api.pages');
+        Route::resource('pages', 'Api\Adminify\Http\Controllers\Api\PageController', ['except' => ['show']])->name('api.pages')->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
     }
     
     if(isset($features['menu']) && $features['menu']) {
@@ -36,7 +36,7 @@ if(isset($c) && $c['enable']) {
     }
 
     if(isset($features['comment']) && $features['comment']) {
-        Route::resource('comments', 'App\Adminify\Http\Controllers\Api\CommentController', ['except' => ['show' ]])->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic'])->name('api.comments');
+        Route::resource('comments', 'App\Adminify\Http\Controllers\Api\CommentController', ['except' => ['show' ]])->name('api.comments')->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
     }
 
     if(isset($features['setting']) && $features['setting']) {
@@ -44,7 +44,7 @@ if(isset($c) && $c['enable']) {
     }
 
     if(isset($features['key_translation']) && $features['key_translation']) {
-        Route::resource('traductions', 'App\Adminify\Http\Controllers\Api\TranslationsController', ['except' => ['show']])->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic'])->name('api.translations');
+        Route::resource('traductions', 'App\Adminify\Http\Controllers\Api\TranslationsController', ['except' => ['show']])->name('api.translations')->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
     }
 
     if(isset($features['email']) && $features['email']) {
@@ -72,7 +72,7 @@ if(isset($c) && $c['enable']) {
             # code...
             foreach ($arrayValues['verbs'] as $verb) {
                 # code...
-                Route::{$verb}($arrayValues['route'], $arrayValues['controller'])->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic'])->name('api.custom_route_'.$iterator_custom_routes);
+                Route::{$verb}($arrayValues['route'], $arrayValues['controller'])->name('api.custom_route_'.$iterator_custom_routes)->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
             }
             $iterator_custom_routes++;
         }
