@@ -546,7 +546,9 @@ if(! function_exists('is_translatable_model')) {
 if(! function_exists('lang')) {
     function lang() {
         $request = request();
-        return $request->lang;
+        // we check to get lang from request. if not provided like commands. We take current locale as fallback.
+        $lang = $request->lang;
+        return !empty($lang) ? $lang : app()->locale();
     }
 }
 
