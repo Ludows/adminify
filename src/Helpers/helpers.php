@@ -394,6 +394,22 @@ if(! function_exists('get_site_key')) {
     }
 }
 
+if(! function_exists('is_admin')) {
+    function is_admin() {
+        $request = request();
+
+        return in_array('admin', $request->currentRouteSplitting);
+    }
+}
+
+if(! function_exists('is_front')) {
+    function is_front() {
+        $request = request();
+
+        return !in_array('admin', $request->currentRouteSplitting);
+    }
+}
+
 if(! function_exists('get_missing_translations_routes') ) {
     function get_missing_translations_routes($routeName, $singular, $model, $extraVarsRoute = []) {
 
