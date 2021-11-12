@@ -11,10 +11,10 @@ class Site {
         $b = Post::all();
         return $a->merge($b);
     }
-    public function pages() {
+    public function page() {
         return Page::all();
     }
-    public function posts() {
+    public function post() {
         return Post::all();
     }
 }
