@@ -71,7 +71,9 @@ class GenerateFeeds extends Command
 
         foreach ($feeds['hydrate'] as $feedableKey) {
             # code...
-            $array["feeds"][$feedableKey] = [
+            $toLowerfeedKey = strtolower($feedableKey);
+
+            $array["feeds"][$toLowerfeedKey] = [
                 /*
                  * Here you can specify which class and method will return
                  * the items that should appear in the feed. For example:
@@ -80,15 +82,15 @@ class GenerateFeeds extends Command
                  * You can also pass an argument to that method.  Note that their key must be the name of the parameter:             *
                  * [App\Model::class, 'getAllFeedItems', 'parameterName' => 'argument']
                  */
-                'items' => ['App\Adminify\Feeds\Site', $feedableKey],
+                'items' => ['App\Adminify\Feeds\Site', $toLowerfeedKey],
 
                 /*
                  * The feed will be available on this url.
                  */
-                'url' => '/feeds/'. $feedableKey .'',
+                'url' => '/feeds/'. $toLowerfeedKey .'',
 
-                'title' => str_replace('##DATA##', $feedableKey, $feeds['trad']['title']),
-                'description' => str_replace('##DATA##', $feedableKey, $feeds['trad']['description']),
+                'title' => str_replace('##DATA##', $toLowerfeedKey, $feeds['trad']['title']),
+                'description' => str_replace('##DATA##', $toLowerfeedKey, $feeds['trad']['description']),
                 'language' => lang(),
 
                 /*
