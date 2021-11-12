@@ -12,50 +12,49 @@ if(isset($c) && $c['enable']) {
     Route::post('/token/verify', '\Ludows\Adminify\Http\Controllers\Api\TokenController@verifyToken')->name('api.token.verify');
     Route::post('/token/refresh', '\Ludows\Adminify\Http\Controllers\Api\TokenController@refreshToken')->name('api.token.refresh');
 
-    if(isset($features['post']) && $features['post']) {	
-	    Route::resource('posts', 'App\Adminify\Http\Controllers\Api\PostController', ['except' => ['show']] )->name('api.posts')->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
-    }
+    Route::prefix('api')->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic'])->group( function () use ($c, $features) {
+        if(isset($features['post']) && $features['post']) {	
+            Route::resource('posts', 'App\Adminify\Http\Controllers\Api\PostController', ['except' => ['show']] )->name('api.posts')->middleware();
+        }
+        
+        if(isset($features['media']) && $features['media']) {
+            Route::resource('medias', 'App\Adminify\Http\Controllers\Api\MediaController', ['except' => ['show']])->name('api.medias');
+        }
+        
+        if(isset($features['category']) && $features['category']) {
+            Route::resource('categories', 'App\Adminify\Http\Controllers\Api\CategoryController', ['except' => ['show']])->name('api.categories');
+        }
     
-    if(isset($features['media']) && $features['media']) {
-        Route::resource('medias', 'App\Adminify\Http\Controllers\Api\MediaController', ['except' => ['show']])->name('api.medias')->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
-    }
-	
-    if(isset($features['category']) && $features['category']) {
-        Route::resource('categories', 'App\Adminify\Http\Controllers\Api\CategoryController', ['except' => ['show']])->name('api.categories')->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
-    }
-
-    if(isset($features['page']) &&  $features['page']) {	
-        Route::resource('pages', 'Api\Adminify\Http\Controllers\Api\PageController', ['except' => ['show']])->name('api.pages')->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
-    }
+        if(isset($features['page']) &&  $features['page']) {	
+            Route::resource('pages', 'Api\Adminify\Http\Controllers\Api\PageController', ['except' => ['show']])->name('api.pages');
+        }
+        
+        if(isset($features['menu']) && $features['menu']) {
+            
+        }
     
-    if(isset($features['menu']) && $features['menu']) {
-        // Route::resource('menus', 'Ludows\Adminify\Http\Controllers\Back\MenuController', ['except' => ['show']]);
-        // Route::post('menus/set-items-to-menu/{id}/{type}', 'Ludows\Adminify\Http\Controllers\Back\MenuController@setItemsToMenu')->name('menus.setItemsToMenu');
-        // Route::post('menus/remove-items-to-menu/{id}', 'Ludows\Adminify\Http\Controllers\Back\MenuController@removeItemsToMenu')->name('menus.removeItemsToMenu');
-        // Route::post('menus/check-entity/{id}/{type}', 'Ludows\Adminify\Http\Controllers\Back\MenuController@checkEntity')->name('menus.checkEntity');
-    }
+        if(isset($features['comment']) && $features['comment']) {
+            Route::resource('comments', 'App\Adminify\Http\Controllers\Api\CommentController', ['except' => ['show' ]])->name('api.comments');
+        }
+    
+        if(isset($features['setting']) && $features['setting']) {
 
-    if(isset($features['comment']) && $features['comment']) {
-        Route::resource('comments', 'App\Adminify\Http\Controllers\Api\CommentController', ['except' => ['show' ]])->name('api.comments')->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
-    }
+        }
+    
+        if(isset($features['key_translation']) && $features['key_translation']) {
+            Route::resource('traductions', 'App\Adminify\Http\Controllers\Api\TranslationsController', ['except' => ['show']])->name('api.translations');
+        }
+    
+        if(isset($features['email']) && $features['email']) {
+    
+        }
+    
+        if(isset($features['form']) && $features['form']) {
 
-    if(isset($features['setting']) && $features['setting']) {
-        // Route::resource('settings', 'Ludows\Adminify\Http\Controllers\Back\SettingsController', ['except' => ['show', 'update', 'delete', 'edit']]);
-    }
+        }
+    });
 
-    if(isset($features['key_translation']) && $features['key_translation']) {
-        Route::resource('traductions', 'App\Adminify\Http\Controllers\Api\TranslationsController', ['except' => ['show']])->name('api.translations')->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
-    }
-
-    if(isset($features['email']) && $features['email']) {
-        // Route::resource('mails', 'Ludows\Adminify\Http\Controllers\Back\MailsController', ['except' => ['show']]);
-
-        // Route::post('mails/send/{mail}', 'Ludows\Adminify\Http\Controllers\Back\MailsController@send')->name('mails.send');
-    }
-
-    if(isset($features['form']) && $features['form']) {
-        // Route::resource('forms', 'Ludows\Adminify\Http\Controllers\Back\FormsController', ['except' => ['show']]);
-    }
+    
     //$config crud
     if(count($c['crud']) > 0) {
         foreach ($c['crud'] as $key => $classValue) {
