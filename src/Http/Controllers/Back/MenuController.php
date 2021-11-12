@@ -127,7 +127,7 @@ class MenuController extends Controller
             $v = view();
 
             $model = $config['models'][$type];
-            $m_str = get_site_key($model);
+            $m_str = adminify_get_class($model, ['app:models', 'app:adminify:models'], false);
             $m = new $m_str;
             $enabled_features = get_site_key('enables_features');
 
