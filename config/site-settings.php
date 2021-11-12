@@ -16,7 +16,7 @@ return [
     ],
 
     'editor' => [
-        'provider' => 'laraberg' // or native, tinymce 
+        'provider' => 'laraberg' // or native
     ],
 
     'dynamic_forms' => [
