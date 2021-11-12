@@ -7,8 +7,8 @@
                 <div class="commentlist" v-if="list.length > 0">
                     <div class="comment" v-for="(comment, index) in list" :key="index">
 
-                        <p :id="'comment_'+_uid+'_'+comment.id">{{ comment.comment[lang] }}</p>
-                        <update-comment v-if="allow_form" :id="'update_'+_uid+'_'+comment.id" class="d-none" :lang="lang" :comment_id="comment.id" :value="comment.comment[lang]"></update-comment>
+                        <p :id="'comment_'+_uid+'_'+comment.id">{{ multilang ? comment.comment[lang]: comment.comment }}</p>
+                        <update-comment v-if="allow_form" :id="'update_'+_uid+'_'+comment.id" class="d-none" :lang="lang" :comment_id="comment.id" :value="multilang ? comment.comment[lang] : comment.comment"></update-comment>
 
                         <div  v-if="user.id === comment.user_id" class="">
                             <a href="#" @click.prevent="toggleForm('respond', comment.id)" class="btn btn-default">Répondre</a>
@@ -116,6 +116,10 @@
             parent_id : {
                 type : Number,
                 default: 0
+            },
+            mutlilang : {
+                type: Boolean,
+                required : true
             }
         },
         created() {
