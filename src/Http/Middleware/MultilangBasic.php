@@ -56,7 +56,8 @@ class MultilangBasic
             "langs" => $supported_locales,
             "currentRouteName" => $routeName,
             "isCreate" => strpos($routeName, '.create') != false ? true : false,
-            "model" => $model
+            "model" => $model,
+            "user" => user()
         ];
 
         // $v->share('name', $named);

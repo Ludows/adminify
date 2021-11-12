@@ -370,19 +370,21 @@ if(! function_exists('get_urlpath')) {
 
 if(! function_exists('user')) {
     function user() {
+        $request = request();
+        //multilang basic middleware appends automatic to the request the current user;
+        if(empty($request->user)) {
+            $userLoggued = auth()->user();
 
-        $cacheUser = null;
-        $id = auth()->id();
-
-        if($id != null) {
-            $cacheUser = cache('user-'. $id);
-
-            if($cacheUser == null) {
-                $cacheUser = cache(['user-'. $id => auth()->user()]);
+            if(empty($userLoggued)) {
+                $roleModel = app('App\Adminify\Models\Role');
+                $userLoggued = app('App\Adminify\Models\User')->find($roleModel::GUEST);
             }
         }
+        else {
+            $userLoggued = $request->user;
+        }
 
-        return $cacheUser;
+        return $userLoggued;
     }
 }
 
