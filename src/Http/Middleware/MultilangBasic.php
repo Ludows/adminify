@@ -68,6 +68,8 @@ class MultilangBasic
             "currentRouteName" => $routeName,
             "isCreate" => strpos($routeName, '.create') != false ? true : false,
             "isEdit" => strpos($routeName, '.edit') != false ? true : false,
+            "isUpdate" => strpos($routeName, '.update') != false ? true : false,
+            "isDestroy" => strpos($routeName, '.destroy') != false ? true : false,
             "model" => $model,
             "user" => user(),
             "posts" => $posts
