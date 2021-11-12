@@ -25,6 +25,16 @@ class MultilangBasic
         $routeName = $request->route()->getName();
         $v = view();
 
+        $blogpage = setting('blogpage');
+        $posts = null;
+        // si c'est la page de blog. Autoappend des posts.
+        if($request->slug instanceof \App\Adminify\Models\Page && (int) $blogpage != 0) {
+            if($request->slug->id === (int) $blogpage) {
+               $posts = new \Ludows\Adminify\Models\Post();
+               $posts = $posts->all();
+            }
+        }
+
         $checkedKeys = [
             'update',
             'edit',
@@ -57,7 +67,8 @@ class MultilangBasic
             "currentRouteName" => $routeName,
             "isCreate" => strpos($routeName, '.create') != false ? true : false,
             "model" => $model,
-            "user" => user()
+            "user" => user(),
+            "posts" => $posts
         ];
 
         // $v->share('name', $named);
