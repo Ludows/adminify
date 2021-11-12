@@ -29,7 +29,7 @@ class TemplatesController extends Controller
     public function __construct(TemplatesRepository $templatesRepository) {
 
         $this->templatesRepository = $templatesRepository;
-        
+
         $this->middleware(['permission:read|create_templates'], ['only' => ['show','create', 'setContent']]);
         $this->middleware(['permission:read|edit_templates'], ['only' => ['edit', 'update']]);
         $this->middleware(['permission:read|delete_templates'], ['only' => ['destroy']]);
@@ -41,7 +41,7 @@ class TemplatesController extends Controller
         */
         public function index(FormBuilder $formBuilder, Request $request)
         {
-            $table = $this->table(TemplatesTable::class);            
+            $table = $this->table(TemplatesTable::class);
 
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
@@ -91,7 +91,7 @@ class TemplatesController extends Controller
 
             $form = $formBuilder->create(UpdateTemplates::class, [
                 'method' => 'PUT',
-                'url' => route('templates.update', ['category' => $template->id]),
+                'url' => route('templates.update', ['template' => $template->id]),
                 'model' => $template
             ]);
 
@@ -111,7 +111,7 @@ class TemplatesController extends Controller
 
             $form = $this->form(UpdateTemplates::class, [
                 'method' => 'PUT',
-                'url' => route('templates.update', ['category' => $template->id]),
+                'url' => route('templates.update', ['template' => $template->id]),
                 'model' => $template
             ]);
 
@@ -121,10 +121,10 @@ class TemplatesController extends Controller
 
         public function setContent(Request $request) {
             $all = $request->all();
-            if(!isset($all['id'])) {
+            if(!isset($all['items'])) {
                 abort(403);
             }
-            $template = Templates::find($all['id']);
+            $template = Templates::find($all['items']);
 
             return response()->json([
                 'html' => $template->content,

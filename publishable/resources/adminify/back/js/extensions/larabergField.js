@@ -11,14 +11,14 @@ export default function LarabergInititalization(fields) {
                 'namespace' : 'App\\Adminify\\Forms\\SelectTemplate',
                 'form-attributes' : {
                     'method' : 'POST',
-                    'url' : Route('templates.store')
+                    'url' : Route('templates.setcontent')
                 }
             },
             'save-tpl' : {
                 'namespace' : 'App\\Adminify\\Forms\\SaveTemplate',
                 'form-attributes' : {
                     'method' : 'POST',
-                    'url' : Route('templates.setcontent')
+                    'url' : Route('templates.store')
                 }
             },
         }
@@ -34,21 +34,30 @@ export default function LarabergInititalization(fields) {
             console.log('logged')
 
             let obj = Interfaces[type];
-            let form = $(this).get(0).form;
+            let form = $(this).get(0);
+
+            if(type == 'save-tpl') {
+                let content = Laraberg.getContent();
+                $(form).find('[name="content"]').val(content);
+            }
 
             let formValues = $(form).serializeFormJSON();
             obj.values = formValues;
+            console.log('obj', obj)
             makeProcess(Interfaces[type], function(err, data) {
+                console.log('data', data)
                 if(err != null) {
                     console.log(err)
                     $(form).find('[name]').not('[name="_token"]').setResponseFromAjax(err.responseJSON);
                 }
 
                 $(form).clearValues();
-                $(modal).modal('hide');
+                if(data != null) {
+                    $(modal).modal('hide');
+                }
 
                 if(type == 'select-tpl') {
-                    Laraberg.setContent(data.content)
+                    Laraberg.setContent(data.html)
                 }
             });
         })
