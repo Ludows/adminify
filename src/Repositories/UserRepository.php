@@ -80,16 +80,4 @@ class UserRepository extends BaseRepository
         }
 
     }
-    public function beforeRun($model, $formValues, $type) {
-        if($type === 'destroy') {
-           // user is destroyed. Let's destroy cache for the user.
-           forget_cache('user-'.$model->id);
-        }
-    }
-    public function afterRun($model, $formValues, $type) {
-        if($type != 'destroy') {
-            // update the user in cache
-            cache(['user-'.$model->id => $model]);
-        }
-    }
 }
