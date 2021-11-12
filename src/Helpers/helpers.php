@@ -548,8 +548,7 @@ if(! function_exists('lang')) {
         $request = request();
         // we check to get lang from request. if not provided like commands. We take current locale as fallback.
         $lang = $request->lang;
-        return !empty($lang) ? $lang : app()->locale();
-    }
+        return !empty($lang) ? $lang : app()->getLocale();
 }
 
 if (! function_exists('menu')) {
