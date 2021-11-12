@@ -15,6 +15,10 @@ return [
         ]
     ],
 
+    'editor' => [
+        'provider' => 'laraberg' // or native, tinymce 
+    ],
+
     'dynamic_forms' => [
         'default_form_template' => 'adminify::layouts.commons.forms.default',
         'show_form_when_validated' => true,
@@ -36,41 +40,6 @@ return [
         'Mailables',
         'Templates',
         'User'
-    ],
-
-    'hooks' => [
-        'model:creating' => [
-            \App\Adminify\Hooks\OnCreatingHook::class
-        ],
-        'model:created' => [
-            \App\Adminify\Hooks\OnCreatedHook::class,
-            \App\Adminify\Hooks\ContentTypesHook::class
-        ],
-        'model:updating' => [
-            \App\Adminify\Hooks\OnUpdatingHook::class,
-        ],
-        'model:updated' => [
-            \App\Adminify\Hooks\OnUpdatedHook::class,
-            \App\Adminify\Hooks\ContentTypesHook::class
-        ],
-        'model:deleting' => [
-            \App\Adminify\Hooks\OnDeletingHook::class,
-            \App\Adminify\Hooks\ContentTypesHook::class
-        ],
-        'model:deleted' => [
-            \App\Adminify\Hooks\OnDeletedHook::class,
-        ],
-        'setting:created' => [
-            \App\Adminify\Hooks\HandleSettings::class,
-        ],
-        'setting:updated' => [
-            \App\Adminify\Hooks\HandleSettings::class,
-        ]
-    ],
-
-    'sitemap' => [
-        'pages' => 'Page',
-        'posts' => 'Post',
     ],
 
     'feeds' => [
@@ -109,6 +78,41 @@ return [
                 ['icon' => '', 'key_title' => 'admin.logout', 'url' => '/logout'],
             ] ],
         ),
+    ],
+
+    'hooks' => [
+        'model:creating' => [
+            \App\Adminify\Hooks\OnCreatingHook::class
+        ],
+        'model:created' => [
+            \App\Adminify\Hooks\OnCreatedHook::class,
+            \App\Adminify\Hooks\ContentTypesHook::class
+        ],
+        'model:updating' => [
+            \App\Adminify\Hooks\OnUpdatingHook::class,
+        ],
+        'model:updated' => [
+            \App\Adminify\Hooks\OnUpdatedHook::class,
+            \App\Adminify\Hooks\ContentTypesHook::class
+        ],
+        'model:deleting' => [
+            \App\Adminify\Hooks\OnDeletingHook::class,
+            \App\Adminify\Hooks\ContentTypesHook::class
+        ],
+        'model:deleted' => [
+            \App\Adminify\Hooks\OnDeletedHook::class,
+        ],
+        'setting:created' => [
+            \App\Adminify\Hooks\HandleSettings::class,
+        ],
+        'setting:updated' => [
+            \App\Adminify\Hooks\HandleSettings::class,
+        ]
+    ],
+
+    'sitemap' => [
+        'pages' => 'Page',
+        'posts' => 'Post',
     ],
 
     'shortcodes' => [

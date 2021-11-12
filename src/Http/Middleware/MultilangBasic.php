@@ -55,6 +55,7 @@ class MultilangBasic
         }
 
         $base_parameters = [
+            "siteConfig" => $config,
             "name" => $named,
             "isCrudPattern"=> false,
             "singleParam"=> count($routeNameSpl) > 2 ? Str::singular($routeNameSpl[ count($routeNameSpl) - 2 ])  : Str::singular($routeNameSpl[0]),
@@ -66,6 +67,7 @@ class MultilangBasic
             "langs" => $supported_locales,
             "currentRouteName" => $routeName,
             "isCreate" => strpos($routeName, '.create') != false ? true : false,
+            "isEdit" => strpos($routeName, '.edit') != false ? true : false,
             "model" => $model,
             "user" => user(),
             "posts" => $posts
