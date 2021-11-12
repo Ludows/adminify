@@ -35,7 +35,6 @@ class Comment extends ClassicModel
      * @var  array an array with attribute as key and default as value
      */
     protected $attributes = [
-        'media_id' => NULL,
         'user_id' => NULL,
         'is_moderated' => 0,
     ];

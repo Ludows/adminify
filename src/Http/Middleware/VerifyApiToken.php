@@ -23,11 +23,6 @@ class VerifyApiToken
         $token = $request->get('token');
         $user = user();
 
-        if($user == null) {
-            //fallback to guest user
-            $user = User::find(Role::GUEST);
-        }
-
         if($token == null) {
             abort(403);
         }

@@ -212,7 +212,7 @@ if(! function_exists('is_homepage') ) {
         // the relationship model
         $ret = false;
         $s = setting('homepage');
-        if($s != null && $class->id == $s && $class instanceof \App\Models\Page) {
+        if($s != null && $class->id == $s && $class instanceof \App\Adminify\Models\Page) {
             $ret = true;
         }
         return $ret;
