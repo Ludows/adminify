@@ -61,8 +61,6 @@ class Post extends ContentTypeModel
         return \App\Adminify\Tables\PostTable::class;
     }
 
-    public function toFeedItem(): FeedItem {}
-
     public function media()
     {
         return $this->belongsTo(Media::class,'media_id', 'id');
