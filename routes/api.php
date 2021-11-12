@@ -14,7 +14,7 @@ if(isset($c) && $c['enable']) {
 
     Route::prefix($c['prefix'])->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic'])->group( function () use ($c, $features) {
         if(isset($features['post']) && $features['post']) {	
-            Route::resource('posts', 'App\Adminify\Http\Controllers\Api\PostController', ['except' => ['show']] )->middleware();
+            Route::resource('posts', 'App\Adminify\Http\Controllers\Api\PostController', ['except' => ['show']] );
         }
         
         if(isset($features['media']) && $features['media']) {
