@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 $c = config('site-settings.restApi');
+$features = config('site-settings.enables_features');
 
 if(isset($c) && $c['enable']) {
     
@@ -11,48 +12,48 @@ if(isset($c) && $c['enable']) {
     Route::post('/token/verify', '\Ludows\Adminify\Http\Controllers\Api\TokenController@verifyToken')->name('api.token.verify');
     Route::post('/token/refresh', '\Ludows\Adminify\Http\Controllers\Api\TokenController@refreshToken')->name('api.token.refresh');
 
-    if(isset($c['post']) && $c['post']) {	
+    if(isset($features['post']) && $features['post']) {	
 	    Route::resource('posts', 'App\Adminify\Http\Controllers\Api\PostController', ['except' => ['show']] )->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic'])->name('api.posts');
     }
     
-    if(isset($c['media']) && $c['media']) {
+    if(isset($features['media']) && $features['media']) {
         Route::resource('medias', 'App\Adminify\Http\Controllers\Api\MediaController', ['except' => ['show']])->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic'])->name('api.medias');
     }
 	
-    if(isset($c['category']) && $c['category']) {
+    if(isset($features['category']) && $features['category']) {
         Route::resource('categories', 'App\Adminify\Http\Controllers\Api\CategoryController', ['except' => ['show']])->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic'])->name('api.categories');
     }
 
-    if(isset($c['page']) &&  $c['page']) {	
+    if(isset($features['page']) &&  $features['page']) {	
         Route::resource('pages', 'Api\Adminify\Http\Controllers\Api\PageController', ['except' => ['show']])->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic'])->name('api.pages');
     }
     
-    if(isset($c['menu']) && $c['menu']) {
+    if(isset($features['menu']) && $features['menu']) {
         // Route::resource('menus', 'Ludows\Adminify\Http\Controllers\Back\MenuController', ['except' => ['show']]);
         // Route::post('menus/set-items-to-menu/{id}/{type}', 'Ludows\Adminify\Http\Controllers\Back\MenuController@setItemsToMenu')->name('menus.setItemsToMenu');
         // Route::post('menus/remove-items-to-menu/{id}', 'Ludows\Adminify\Http\Controllers\Back\MenuController@removeItemsToMenu')->name('menus.removeItemsToMenu');
         // Route::post('menus/check-entity/{id}/{type}', 'Ludows\Adminify\Http\Controllers\Back\MenuController@checkEntity')->name('menus.checkEntity');
     }
 
-    if(isset($c['comment']) && $c['comment']) {
+    if(isset($features['comment']) && $features['comment']) {
         Route::resource('comments', 'App\Adminify\Http\Controllers\Api\CommentController', ['except' => ['show' ]])->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic'])->name('api.comments');
     }
 
-    if(isset($c['setting']) && $c['setting']) {
+    if(isset($features['setting']) && $features['setting']) {
         // Route::resource('settings', 'Ludows\Adminify\Http\Controllers\Back\SettingsController', ['except' => ['show', 'update', 'delete', 'edit']]);
     }
 
-    if(isset($c['key_translation']) && $c['key_translation']) {
+    if(isset($features['key_translation']) && $features['key_translation']) {
         Route::resource('traductions', 'App\Adminify\Http\Controllers\Api\TranslationsController', ['except' => ['show']])->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic'])->name('api.translations');
     }
 
-    if(isset($c['email']) && $c['email']) {
+    if(isset($features['email']) && $features['email']) {
         // Route::resource('mails', 'Ludows\Adminify\Http\Controllers\Back\MailsController', ['except' => ['show']]);
 
         // Route::post('mails/send/{mail}', 'Ludows\Adminify\Http\Controllers\Back\MailsController@send')->name('mails.send');
     }
 
-    if(isset($c['form']) && $c['form']) {
+    if(isset($features['form']) && $features['form']) {
         // Route::resource('forms', 'Ludows\Adminify\Http\Controllers\Back\FormsController', ['except' => ['show']]);
     }
     //$config crud
