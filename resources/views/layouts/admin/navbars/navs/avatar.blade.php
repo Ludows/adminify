@@ -3,7 +3,7 @@
 $withName = isset($withName) ? $withName : false;
 $user = user();
 $avatar = $user->avatar;
-dd($avatar);
+//dd($avatar);
 @endphp
 <div class="media align-items-center">
 @if(isset($avatar))

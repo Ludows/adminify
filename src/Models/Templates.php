@@ -17,7 +17,7 @@ class Templates extends ClassicModel
     public function getSearchResult() : SearchResult {}
 
     protected $fillable = [
-        'type',
+        'title',
         'content'
     ];
 
