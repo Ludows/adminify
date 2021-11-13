@@ -9,14 +9,17 @@
 @endif
 
 @section('content')
-    @php
-        $name = request()->route()->getName();
-        $name = str_replace('.create', '', $name);
-    @endphp
-    @if(view()->exists('adminify::layouts.admin.create.pages.'.$name))
-        @include('adminify::layouts.admin.create.pages.'.$name)
+    {{-- // check auto enable editor. --}}
+    {{-- // all values in mutilang middleware are appended in views and request for more flexibility. --}}
+
+    @if($loadEditor)
+        TATA
     @else
-        @include('adminify::layouts.admin.create.pages.default')
+        @if(view()->exists('adminify::layouts.admin.create.pages.'.$name))
+            @include('adminify::layouts.admin.create.pages.'.$name)
+        @else
+            @include('adminify::layouts.admin.create.pages.default')
+        @endif
     @endif
 @endsection
 

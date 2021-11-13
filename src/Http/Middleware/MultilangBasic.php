@@ -72,14 +72,17 @@ class MultilangBasic
             "isDestroy" => strpos($routeName, '.destroy') != false ? true : false,
             "model" => $model,
             "user" => user(),
-            "posts" => $posts
+            "posts" => $posts,
+            "adminify_autoload" => adminify_autoload(),
+            "loadEditor" => false
         ];
 
-        // $v->share('name', $named);
-        // $v->share('langs', $supported_locales);
-        // $v->share('currentLang', $currentLocale);
-        // $v->share('currentRouteName', $routeName);
-        // $v->share('useMultilang',  (bool) $config['multilang']);
+
+        $bindedEditorKeys = array_keys($config['editor']['bind']);
+        if(in_array(titled($base_parameters['singleParam']), $bindedEditorKeys)) {
+            $base_parameters['loadEditor'] = true;
+            merge_to_request('loadEditor', true);
+        }
 
         foreach ($base_parameters as $key => $value) {
             # code...
@@ -94,6 +97,8 @@ class MultilangBasic
                 break;
             }
         }
+
+        $v->share('request', $request);
 
         if($config['multilang']) {
 

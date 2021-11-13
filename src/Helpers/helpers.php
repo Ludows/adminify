@@ -187,6 +187,12 @@ if (! function_exists('slug')) {
     }
 }
 
+if (! function_exists('titled')) {
+    function titled($name = '') {
+        return Str::title($name);
+    }
+}
+
 if (! function_exists('interfaces')) {
     function interfaces($name = '') {
         $interface = config('site-settings.interfaces.'.$name);

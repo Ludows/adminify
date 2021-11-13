@@ -15,8 +15,19 @@ return [
         ]
     ],
 
+    //If you want to switch with the classic template for Posts and Page . Just comment inside bind
     'editor' => [
-        'provider' => 'laraberg' // or native
+        'blocks' => [], // you can add here new blocks for editor
+        'bind' => [
+            'Page' => [
+                'create' => 'CreatePage',
+                'edit' => 'UpdatePage'
+            ],  // Give the formName create / edit to bind with editor.
+            'Post' => [
+                'create' => 'CreatePost',
+                'edit' => 'UpdatePost'
+            ],  // Give the formName create / edit to bind with editor.
+        ]
     ],
 
     'dynamic_forms' => [
@@ -40,44 +51,6 @@ return [
         'Mailables',
         'Templates',
         'User'
-    ],
-
-    'feeds' => [
-        'trad' => [
-            'all' => 'All ##DATA##',
-            'title' => "##DATA## Index",
-            'description' => "##DATA## description"
-        ],
-        'hydrate' => [
-            'Page',
-            'Post'
-        ]
-    ],
-
-    // key_title is available for trads otherwise it's title
-    // key_url is available for trads otherwise it's url
-    // when you have to render dynamix urls , please to refers to dynamic_url
-    // todo showIf as function closure
-    // show 
-    'toolbar' => [
-        'menu' => array(
-            ['icon' => '', 'key_title' => 'admin.toolbar.dashboard', 'key_url' => 'home.dashboard' ],
-            ['icon' => '', 'key_title' => 'admin.toolbar.new_comment', 'key_url' => 'comments.index', 'dynamic_show' => '\Ludows\Adminify\Libs\AdminableToolbar@newComment'],
-            ['icon' => '', 'key_title' => 'admin.toolbar.create', 'paths' => [
-                ['icon' => '', 'key_title' => 'admin.posts.index', 'key_url' => 'posts.create' ],
-                ['icon' => '', 'key_title' => 'admin.pages.index', 'key_url' => 'pages.create'],
-                ['icon' => '', 'key_title' => 'admin.menus.index', 'key_url' => 'menus.create' ],
-                ['icon' => '', 'key_title' => 'admin.medias.index', 'key_url' => 'medias.create' ],
-                ['icon' => '', 'key_title' => 'admin.traductions.index', 'key_url' => 'traductions.create' ],
-                ['icon' => '', 'key_title' => 'admin.categories.index', 'key_url' => 'categories.create' ]
-            ] ],
-            ['icon' => '', 'key_title' => 'admin.toolbar.modify', 'dynamic_url' => '\Ludows\Adminify\Libs\AdminableToolbar@modify'],
-            ['icon' => '', 'key_title' => 'admin.toolbar.user', 'paths' => [
-                ['icon' => '', 'key_title' => 'admin.user.edit', 'dynamic_url' => '\Ludows\Adminify\Libs\AdminableToolbar@userEdit' ],
-                ['icon' => '', 'key_title' => 'admin.user.profile', 'dynamic_url' => '\Ludows\Adminify\Libs\AdminableToolbar@userProfile'],
-                ['icon' => '', 'key_title' => 'admin.logout', 'url' => '/logout'],
-            ] ],
-        ),
     ],
 
     'hooks' => [
@@ -113,6 +86,44 @@ return [
     'sitemap' => [
         'pages' => 'Page',
         'posts' => 'Post',
+    ],
+
+    'feeds' => [
+        'trad' => [
+            'all' => 'All ##DATA##',
+            'title' => "##DATA## Index",
+            'description' => "##DATA## description"
+        ],
+        'hydrate' => [
+            'Page',
+            'Post'
+        ]
+    ],
+
+    // key_title is available for trads otherwise it's title
+    // key_url is available for trads otherwise it's url
+    // when you have to render dynamix urls , please to refers to dynamic_url
+    // todo showIf as function closure
+    // show
+    'toolbar' => [
+        'menu' => array(
+            ['icon' => '', 'key_title' => 'admin.toolbar.dashboard', 'key_url' => 'home.dashboard' ],
+            ['icon' => '', 'key_title' => 'admin.toolbar.new_comment', 'key_url' => 'comments.index', 'dynamic_show' => '\Ludows\Adminify\Libs\AdminableToolbar@newComment'],
+            ['icon' => '', 'key_title' => 'admin.toolbar.create', 'paths' => [
+                ['icon' => '', 'key_title' => 'admin.posts.index', 'key_url' => 'posts.create' ],
+                ['icon' => '', 'key_title' => 'admin.pages.index', 'key_url' => 'pages.create'],
+                ['icon' => '', 'key_title' => 'admin.menus.index', 'key_url' => 'menus.create' ],
+                ['icon' => '', 'key_title' => 'admin.medias.index', 'key_url' => 'medias.create' ],
+                ['icon' => '', 'key_title' => 'admin.traductions.index', 'key_url' => 'traductions.create' ],
+                ['icon' => '', 'key_title' => 'admin.categories.index', 'key_url' => 'categories.create' ]
+            ] ],
+            ['icon' => '', 'key_title' => 'admin.toolbar.modify', 'dynamic_url' => '\Ludows\Adminify\Libs\AdminableToolbar@modify'],
+            ['icon' => '', 'key_title' => 'admin.toolbar.user', 'paths' => [
+                ['icon' => '', 'key_title' => 'admin.user.edit', 'dynamic_url' => '\Ludows\Adminify\Libs\AdminableToolbar@userEdit' ],
+                ['icon' => '', 'key_title' => 'admin.user.profile', 'dynamic_url' => '\Ludows\Adminify\Libs\AdminableToolbar@userProfile'],
+                ['icon' => '', 'key_title' => 'admin.logout', 'url' => '/logout'],
+            ] ],
+        ),
     ],
 
     'shortcodes' => [
