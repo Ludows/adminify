@@ -92,6 +92,12 @@ return [
             'postfix'             => '',
             'directory_namespace' => true,
         ],
+        'adminify:install:interfacable:blocks:editor' => [
+            'namespace'           => '\Adminify\Interfacable\Blocks\Editor',
+            'path'                => './app/Adminify/Interfacable/Blocks/Editor/',
+            'postfix'             => '',
+            'directory_namespace' => true,
+        ],
         'adminify:install:listeners' => [
             'namespace'           => '\Adminify\Listeners',
             'path'                => './app/Adminify/Listeners/',
@@ -151,6 +157,7 @@ return [
         'adminify:install:interfacable' => base_path() . '/resources/stubs/interfacable_install.stub',
         'adminify:install:interfacable:blocks' => base_path() . '/resources/stubs/interfacable_block_install.stub',
         'adminify:install:interfacable:blocks:formbuilder' => base_path() . '/resources/stubs/fb_interfacable_block_install.stub',
+        'adminify:install:interfacable:blocks:editor' => base_path() . '/resources/stubs/editor_interfacable_block_install.stub',
         'adminify:install:listeners' => base_path() . '/resources/stubs/listeners_install.stub',
         'adminify:install:mails' => base_path() . '/resources/stubs/mails_install.stub',
         'adminify:install:models' => base_path() . '/resources/stubs/models_install.stub',
