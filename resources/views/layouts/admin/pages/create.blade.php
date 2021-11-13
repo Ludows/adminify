@@ -13,7 +13,10 @@
     {{-- // all values in mutilang middleware are appended in views and request for more flexibility. --}}
 
     @if($loadEditor)
-        TATA
+
+        {{-- get the editor interface. --}}
+        {!! interfaces('editor')->render() !!}
+
     @else
         @if(view()->exists('adminify::layouts.admin.create.pages.'.$name))
             @include('adminify::layouts.admin.create.pages.'.$name)

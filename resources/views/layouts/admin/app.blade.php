@@ -21,25 +21,22 @@
         <link type="text/css" href="{{ asset('adminify/back') }}/css/argon.css?v=1.0.0" rel="stylesheet">
         <link type="text/css" href="{{ asset('adminify/back') }}/css/extensions.css" rel="stylesheet">
         @stack('css')
-        @php
-            $fullmode = isset($fullmode) ? $fullmode : false;
-        @endphp
     </head>
     <body class="{{ $class ?? '' }}">
         @auth()
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
-            @if(!$fullmode)
+            @if(!$loadEditor)
                 @include('adminify::layouts.admin.navbars.sidebar')
             @endif
         @endauth
 
         <div class="main-content">
-            {{-- @if(!$fullmode) --}}
+            @if(!$loadEditor)
                 @include('adminify::layouts.admin.navbars.navbar')
-            {{-- @endif --}}
-           
+            @endif
+
             @yield('content')
         </div>
 

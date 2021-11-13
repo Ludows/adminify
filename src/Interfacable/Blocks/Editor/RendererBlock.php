@@ -14,7 +14,7 @@ class RendererBlock extends InterfacableBlock {
         return $query;
     }
     public function addToRender() {
-        
+        return [];
     }
     public function getView() {
         return 'adminify::layouts.admin.interfacable.editor.renderer';
