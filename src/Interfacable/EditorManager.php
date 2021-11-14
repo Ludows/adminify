@@ -13,6 +13,7 @@ class EditorManager extends InterfacableManager {
         return [
             \App\Adminify\Interfacable\Blocks\Editor\TopBarEditor::class,
             \App\Adminify\Interfacable\Blocks\Editor\SidebarBlock::class,
+            \App\Adminify\Interfacable\Blocks\Editor\SidebarControlsBlock::class,
             \App\Adminify\Interfacable\Blocks\Editor\RendererBlock::class
         ];
     }
