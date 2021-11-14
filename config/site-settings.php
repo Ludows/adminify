@@ -27,6 +27,10 @@ return [
                 'create' => 'CreatePost',
                 'edit' => 'UpdatePost'
             ],  // Give the formName create / edit to bind with editor.
+            'Template' => [
+                'create' => 'CreateTemplate',
+                'edit' => 'UpdateTemplate'
+            ]
         ]
     ],
 
