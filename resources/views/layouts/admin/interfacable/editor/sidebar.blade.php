@@ -7,7 +7,16 @@
 
     <div id="widgetZone" class="row widget_zone">
 
-        <p class="small">@todo widgets...</p>
+        @foreach ($widgets as $widget)
+            <div class="col-6">
+                <div class="card shadow js-handle">
+                    <div class="card-body">
+                      Widget {!! $loop->index !!}
+                    </div>
+                </div>
+            </div>
+        @endforeach
+       
     </div>
 
 </div>
