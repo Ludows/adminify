@@ -11,6 +11,7 @@ class EditorManager extends InterfacableManager {
 
     public function blocks() {
         return [
+            \App\Adminify\Interfacable\Blocks\Editor\TopBarEditor::class,
             \App\Adminify\Interfacable\Blocks\Editor\SidebarBlock::class,
             \App\Adminify\Interfacable\Blocks\Editor\RendererBlock::class
         ];
