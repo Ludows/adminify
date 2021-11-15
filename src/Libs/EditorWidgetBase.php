@@ -11,7 +11,7 @@ class EditorWidgetBase
         $this->formbuilder = app('Kris\LaravelFormBuilder\FormBuilder');
         $this->uuid = 'widget_'.uuid(20);
         $this->showInGroups = [];
-        $this->namedBlock = $this->getNamedBlock();
+        $this->name = $this->getName();
         $this->icon = $this->getIcon();
    }
    public function handle() {
@@ -24,7 +24,7 @@ class EditorWidgetBase
    public function getIcon() {
       return 'fa fa-clock'; // it's the sample
    }
-   public function getNamedBlock() {
+   public function getName() {
       return 'Sample Block Name';
    }
 

@@ -8,7 +8,7 @@ class TitleWidget extends EditorWidgetBase {
     public function getIcon() {
         return 'ni ni-caps-small';
     }
-    public function getNamedBlock() {
+    public function getName() {
         return __('admin.editor.widgets.title');
     }
 

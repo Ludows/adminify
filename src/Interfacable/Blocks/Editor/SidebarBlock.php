@@ -13,11 +13,9 @@ class SidebarBlock extends InterfacableBlock {
             'app:widgets' , 'app:adminify:widgets'
         ]);
 
-        $base_i_renderer = 0;
-        foreach ($widgets as $widget) {
+        foreach ($widgets as $widgetKey => $widget) {
             # code...
-            $widgets[$base_i_renderer] = new $widget;
-            $base_i_renderer++;
+            $widgets[$widgetKey] = new $widget;
         }
 
         return [
