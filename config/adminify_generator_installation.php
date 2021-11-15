@@ -140,6 +140,12 @@ return [
             'postfix'             => '',
             'directory_namespace' => true,
         ],
+        'adminify:install:widgets' => [
+            'namespace'           => '\Adminify\Widgets',
+            'path'                => './app/Adminify/Widgets/',
+            'postfix'             => '',
+            'directory_namespace' => true,
+        ],
     ],
     'stubs' => [
         'adminify:install:commands'         => base_path() . '/resources/stubs/commands_install.stub',
@@ -164,6 +170,7 @@ return [
         'adminify:install:repositories' => base_path() . '/resources/stubs/repositories_install.stub',
         'adminify:install:tables' => base_path() . '/resources/stubs/tables_install.stub',
         'adminify:install:forms:fields' => base_path() . '/resources/stubs/form_fields_install.stub',
-        'adminify:install:shortcodes' => base_path() . '/resources/stubs/shortcodes_install.stub'
+        'adminify:install:shortcodes' => base_path() . '/resources/stubs/shortcodes_install.stub',
+        'adminify:install:widgets' => base_path() . '/resources/stubs/widgets_install.stub'
     ]
 ];

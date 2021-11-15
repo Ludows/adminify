@@ -1,7 +1,7 @@
-<div class="editor-topbar shadow-lg p-2 bg-white sticky-top container-fluid">
+<div class="editor-topbar shadow-lg bg-white sticky-top container-fluid">
     <div class="row justify-content-between align-items-center">
         <div class="col">
-            <a href="#" class="btn btn-return btn-default btn-lg rounded-0">
+            <a href="{{ route($name.'.index') }}" class="btn btn-return btn-default btn-lg rounded-0">
                 {{ __('admin.editor.sidebar.goback') }}
             </a>
             <a href="#" class="btn btn-primary btn-sm js-sidebar">
