@@ -9,9 +9,12 @@
 
         @foreach ($widgets as $widget)
             <div class="col-6">
-                <div class="card shadow js-handle">
-                    <div class="card-body">
-                      Widget {!! $loop->index !!}
+                <div  class="card shadow js-handle">
+                    <div class="card-body text-center">
+                      <i class="{{ $widget->icon }}"></i>
+                      <p class="card-text small text-muted">
+                         {{ $widget->name }}
+                      </p>
                     </div>
                 </div>
             </div>
