@@ -9,3 +9,7 @@
 </div>
 
 </div>
+
+@push('js')
+    <script type="text/javascript" src="{{ asset('adminify') }}/back/js/editor.js"></script>
+@endpush
