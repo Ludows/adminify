@@ -116,5 +116,11 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
         include($path_admin_file);
     }
 
+    if(isset($c['editor']) && $c['editor']) {
+        Route::post('editor/add/{widget}', 'App\Adminify\Http\Controllers\Back\EditorController@addWidget')->name('editor.addWidget');
+        Route::post('editor/remove/{widget}', 'App\Adminify\Http\Controllers\Back\EditorController@removeWidget')->name('editor.removeWidget');
+        Route::post('editor/autosave', 'App\Adminify\Http\Controllers\Back\EditorController@autosave')->name('editor.autosave');
+    }
+
 
 });
