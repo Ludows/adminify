@@ -7,9 +7,9 @@
 
     <div id="widgetZone" class="row widget_zone">
 
-        @foreach ($widgets as $widget)
+        @foreach ($widgets as $widgetKeyName  => $widget)
             <div class="col-6">
-                <div  class="card shadow js-handle">
+                <div data-widtget="{{ $widgetKeyName }}" class="card shadow js-handle">
                     <div class="card-body text-center">
                       <i class="{{ $widget->icon }}"></i>
                       <p class="card-text small text-muted">
