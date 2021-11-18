@@ -13,6 +13,12 @@ class EditorWidgetBase
         $this->name = $this->getName();
         $this->icon = $this->getIcon();
    }
+   public function addEditorAsset() {
+       return [];
+   }
+   public function addFrontAsset() {
+       return [];
+   }
    public function handle($config) {
 
         $renderJson = [

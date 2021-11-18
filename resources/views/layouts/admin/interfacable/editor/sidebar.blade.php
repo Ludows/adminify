@@ -8,6 +8,22 @@
     <div id="widgetZone" class="row widget_zone">
 
         @foreach ($widgets as $widgetKeyName  => $widget)
+
+            @php
+                $getAssets = $widget->addEditorAsset();
+            @endphp
+
+            @if(!empty($getAssets['css']))
+                @foreach ($getAssets['css'] as $cssPath)
+                    <link type="rel/stylesheet" href="{{ $cssPath }}">
+                @endforeach
+            @endif
+
+            @if(!empty($getAssets['js']))
+                @foreach ($getAssets['js'] as $jsPath)
+                    <script type="text/javascript" src="{{ $jsPath }}"></script>
+                @endforeach
+            @endif
             <div class="col-6">
                 <div data-widget="{{ $widgetKeyName }}" class="card shadow js-handle">
                     <div class="card-body text-center">
