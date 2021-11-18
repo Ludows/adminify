@@ -70,7 +70,7 @@ class EditorWidgetBase
 
         return $renderJson;
    }
-   public function addSettingControl($name = null, $fieldType, $fieldsOptions = []) {
+   public function addSettingControl($name = null, $fieldType = null, $fieldsOptions = []) {
 
         if(!empty($name)) {
             $a = [
