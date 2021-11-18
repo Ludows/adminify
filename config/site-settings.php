@@ -169,7 +169,8 @@ return [
         'seo' => true,
         'templates_content' => true,
         'user' => true,
-        'form' => true
+        'form' => true,
+        'editor' => true
     ],
 
     // all routes search are binded to singular route name.
