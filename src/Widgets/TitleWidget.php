@@ -14,5 +14,10 @@ class TitleWidget extends EditorWidgetBase {
 
     public function getInlineToolbarRender() {}
     public function renderBlock() {}
-    public function renderSettings() {}
+    public function renderSettings() {
+
+        // $this->addSettingControl('')
+
+
+    }
 }

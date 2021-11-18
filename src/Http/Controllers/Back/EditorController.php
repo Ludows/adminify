@@ -36,8 +36,15 @@ class EditorController extends Controller
         $this->middleware(['permission:read|edit_pages'], ['only' => ['edit', 'update']]);
         $this->middleware(['permission:read|delete_pages'], ['only' => ['destroy']]);
     }
-    public function addWidget() {}
+    public function addWidget($widget, Request $request) {
+
+        $classStr = adminify_get_class($widget, ['app:widgets', 'app:adminify:widgets'], false);
+        $config = $request->get('config');
+        $widgetObject = new $classStr;
+
+        return $this->sendResponse($widgetObject->handle($config), url()->previous(), 'admin.typed_data.success', 'data');
+    }
     public function removeWidget() {}
     public function autosave() {}
-    
+
 }

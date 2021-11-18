@@ -9,7 +9,7 @@
 
         @foreach ($widgets as $widgetKeyName  => $widget)
             <div class="col-6">
-                <div data-widtget="{{ $widgetKeyName }}" class="card shadow js-handle">
+                <div data-widget="{{ $widgetKeyName }}" class="card shadow js-handle">
                     <div class="card-body text-center">
                       <i class="{{ $widget->icon }}"></i>
                       <p class="card-text small text-muted">
@@ -19,7 +19,7 @@
                 </div>
             </div>
         @endforeach
-       
+
     </div>
 
 </div>

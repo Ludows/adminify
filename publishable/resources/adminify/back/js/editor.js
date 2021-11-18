@@ -39,15 +39,22 @@ $(document).ready(function($) {
     function onAddToRenderer(evt) {
         console.log(evt)
 
+        let widgetType = $(evt.item).find('.js-handle').attr('data-widget');
+
         $.ajax({
             'method' : 'POST',
             'url' : Route('editor.addWidget', {
-                'widget' : 'titleWidget'
+                'widget' : widgetType
             }),
             'headers': {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            'data' : {}
+            'data' : {
+                'config' : {
+                    'newWidget' : true,
+                    'settings' : true
+                }
+            }
         })
         .done((data) => {
             console.log(data)
