@@ -23,16 +23,32 @@ class EditorWidgetBase
 
         if(!empty($config['newWidget'])) {
             $renderJson['uuid'] = 'widget_'.uuid(20);
-            $renderJson['render'] = $this->renderBlock();
+            $renderJson['render'] = $this->renderBlock() ?? '';
         }
         if(!empty($config['settings'])) {
-            $renderJson['settings'] = $this->renderSettings();
+            $this->renderSettings();
+
+            if(count($this->form) > 0) {
+                $renderJson['settings'] = $this->formbuilder->createByArray($this->form, [
+                    'method' => 'POST',
+                    'url' => '#'
+                ]);
+            }
         }
 
         return $renderJson;
    }
-   public function addSettingControl($name, $fieldType, $fieldsOptions) {
+   public function addSettingControl($name = null, $fieldType, $fieldsOptions = []) {       
+        
+        if(!empty($name)) {
+            $a = [
+                'name' => $name,
+                'type' => $fieldType
+            ];
 
+            $this->form[] = array_merge_recursive($a, $fieldsOptions);
+        }
+        else {}
    }
    public function renderBlock() {}
    public function renderSettings() {}

@@ -122,6 +122,7 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
         Route::post('editor/autosave', 'App\Adminify\Http\Controllers\Back\EditorController@autosave')->name('editor.autosave');
         Route::post('editor/generate/styles', 'App\Adminify\Http\Controllers\Back\EditorController@generateStyles')->name('editor.generate.styles');
         Route::post('editor/generate/js', 'App\Adminify\Http\Controllers\Back\EditorController@generateJs')->name('editor.generate.js');
+        // Route::post('editor/settings', 'App\Adminify\Http\Controllers\Back\EditorController@storeSettings')->name('editor.store');
     }
 
 
