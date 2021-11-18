@@ -15,13 +15,17 @@
 
             @if(!empty($getAssets['css']))
                 @foreach ($getAssets['css'] as $cssPath)
-                    <link type="rel/stylesheet" href="{{ $cssPath }}">
+                    @push('css')
+                        <link type="rel/stylesheet" href="{{ $cssPath }}">
+                    @endpush
                 @endforeach
             @endif
 
             @if(!empty($getAssets['js']))
                 @foreach ($getAssets['js'] as $jsPath)
-                    <script type="text/javascript" src="{{ $jsPath }}"></script>
+                    @push('js')
+                        <script type="text/javascript" src="{{ $jsPath }}"></script>
+                    @endpush
                 @endforeach
             @endif
             <div class="col-6">
