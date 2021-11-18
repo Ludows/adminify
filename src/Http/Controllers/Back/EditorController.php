@@ -46,5 +46,7 @@ class EditorController extends Controller
     }
     public function removeWidget() {}
     public function autosave() {}
+    public function generateStyles() {}
+    public function generateJs() {}
 
 }
