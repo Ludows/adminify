@@ -12,9 +12,11 @@ class TitleWidget extends EditorWidgetBase {
         return __('admin.editor.widgets.title');
     }
     public function getInlineToolbarRender() {}
+
     public function renderBlock() {
         return '<h1 contenteditable="true">'. __('admin.editor.add_your_text') .'</h1>';
     }
+
     public function addEditorAsset() {
         return [
             'css' => [],
@@ -23,9 +25,28 @@ class TitleWidget extends EditorWidgetBase {
             ]
         ];
     }
-    public function renderSettings() {
+    public function buildSettings() {
 
-        // $this->addSettingControl('')
+        $this->addSettingControl('tag', 'select2', [
+            'choices' => [
+                'h1' => 'h1',
+                'h2' => 'h2',
+                'h3' => 'h3',
+                'h4' => 'h4',
+                'h5' => 'h5',
+                'h6' => 'h6'
+            ],
+            'selected' => 'h1'
+        ]);
+
+        $this->addSettingControl('font_family', 'select2', [
+            'choices' => [],
+            'selected' => ''
+        ]);
+
+        $this->addSettingControl('color', 'color', [
+
+        ]);
 
 
     }
