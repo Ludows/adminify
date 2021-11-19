@@ -22,12 +22,16 @@ class EditorWidgetBase
    public function getView() {
        return null;
    }
+   public function isNestable() {
+       return true;
+   }
    public function handle($config) {
 
         $renderJson = [
             'uuid' => null,
             'render' => null,
-            'settings' => null
+            'settings' => null,
+            'nestable' => $this->isNestable()
         ];
 
         $viewPath = $this->getView();
