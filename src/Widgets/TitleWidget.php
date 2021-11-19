@@ -40,12 +40,18 @@ class TitleWidget extends EditorWidgetBase {
                 'h5' => 'h5',
                 'h6' => 'h6'
             ],
-            'selected' => 'h1'
+            'selected' => 'h1',
+            'select2options' => [
+                'multiple' => false
+            ]
         ]);
 
         $this->addSettingControl('font_family', 'select2', [
             'choices' => [],
-            'selected' => ''
+            'selected' => '',
+            'select2options' => [
+                'multiple' => false
+            ]
         ]);
 
         $this->addSettingControl('color', 'color', []);
