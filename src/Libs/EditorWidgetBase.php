@@ -25,6 +25,9 @@ class EditorWidgetBase
    public function isNestable() {
        return true;
    }
+   public function categories() {
+       return [];
+   }
    public function handle($config) {
 
         $renderJson = [
