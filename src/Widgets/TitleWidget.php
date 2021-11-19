@@ -17,6 +17,10 @@ class TitleWidget extends EditorWidgetBase {
         return '<h1 contenteditable="true">'. __('admin.editor.add_your_text') .'</h1>';
     }
 
+    public function getView() {
+        return 'adminify::layouts.admin.interfacable.editor.renderers.form_title';
+    }
+
     public function addEditorAsset() {
         return [
             'css' => [],
@@ -44,10 +48,18 @@ class TitleWidget extends EditorWidgetBase {
             'selected' => ''
         ]);
 
-        $this->addSettingControl('color', 'color', [
+        $this->addSettingControl('color', 'color', []);
 
+        $this->addSettingControl('fontsize', 'text', []);
+
+        $this->addSettingControl('fontsize_unit', 'select', [
+            'choices' => [
+                'px' => 'px',
+                'rem' => 'rem',
+                'em' => 'em',
+                '%' => '%',
+            ],
+            'selected' => 'px'
         ]);
-
-
     }
 }
