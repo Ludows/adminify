@@ -50,7 +50,12 @@ class TitleWidget extends EditorWidgetBase {
 
         $this->addSettingControl('color', 'color', []);
 
-        $this->addSettingControl('fontsize', 'text', []);
+        $this->addSettingControl('fontsize', 'number', [
+            'attr' => [
+                'min' => 1,
+                'max' => 500
+            ]
+        ]);
 
         $this->addSettingControl('fontsize_unit', 'select', [
             'choices' => [
