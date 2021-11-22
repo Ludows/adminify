@@ -12,6 +12,7 @@ class EditorWidgetBase
         $this->showInGroups = [];
         $this->name = $this->getName();
         $this->icon = $this->getIcon();
+        $this->editor = get_site_key('editor');
    }
    public function addEditorAsset() {
        return [];
@@ -22,11 +23,14 @@ class EditorWidgetBase
    public function getView() {
        return null;
    }
-   public function isNestable() {
+   public function allowChildsNesting() {
        return true;
    }
    public function categories() {
        return [];
+   }
+   public function injectBlocks() {
+        return [];
    }
    public function handle($config) {
 
@@ -34,14 +38,14 @@ class EditorWidgetBase
             'uuid' => null,
             'render' => null,
             'settings' => null,
-            'nestable' => $this->isNestable()
+            'allowChildsNesting' => $this->allowChildsNesting()
         ];
 
         $viewPath = $this->getView();
 
         if(!empty($config['newWidget'])) {
             $renderJson['uuid'] = 'widget_'.uuid(20);
-            $renderJson['render'] = $this->renderBlock() ?? '';
+            $renderJson['render'] = $this->renderBlock($renderJson['uuid']) ?? '';
         }
         if(!empty($config['settings'])) {
             $this->addSettingControl('widget_type', 'hidden', [
@@ -69,7 +73,9 @@ class EditorWidgetBase
                 }
                 else {
                     $renderJson['settings'] = $this->view->make($viewPath, [
-                        'form' => $renderJson['settings']
+                        'form' => $renderJson['settings'],
+                        'editor' => $this->editor,
+                        'uuid' => $renderJson['uuid']
                     ])->render();
                 }
             }
@@ -89,7 +95,31 @@ class EditorWidgetBase
         }
         else {}
    }
-   public function renderBlock() {}
+   public function addSettingControlWithBreakpoints($name = null, $fieldType = null, $fieldsOptions = []) {
+
+        $breakpoints = $this->editor['breakpoints'];
+        if(!empty($name)) {
+
+            $this->addSettingControl($name, $fieldType, $fieldsOptions);
+
+            foreach ($breakpoints as $breakpointKey => $breakpointValue) {
+                # code...
+                $a = [
+                    'name' => $name.'_'.$breakpointKey,
+                    'type' => $fieldType,
+                    'attr' => [
+                        'data-settings-breakpoint' => $breakpointKey
+                    ]
+                ];
+
+                $this->form[] = array_merge_recursive($a, $fieldsOptions);
+            }
+
+        }
+        else {}
+
+   }
+   public function renderBlock($uuid) {}
    public function buildSettings() {}
    public function getIcon() {
       return 'fa fa-clock'; // it's the sample

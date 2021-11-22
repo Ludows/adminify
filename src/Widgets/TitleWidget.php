@@ -13,12 +13,16 @@ class TitleWidget extends EditorWidgetBase {
     }
     public function getInlineToolbarRender() {}
 
-    public function renderBlock() {
-        return '<h1 contenteditable="true">'. __('admin.editor.add_your_text') .'</h1>';
+    public function renderBlock($uuid) {
+        return '<h1 class="'. $uuid .'" contenteditable="true">'. __('admin.editor.add_your_text') .'</h1>';
     }
 
     public function getView() {
         return 'adminify::layouts.admin.interfacable.editor.renderers.form_title';
+    }
+
+    public function allowChildsNesting() {
+        return false;
     }
 
     public function addEditorAsset() {
@@ -46,6 +50,19 @@ class TitleWidget extends EditorWidgetBase {
             ]
         ]);
 
+        $this->addSettingControl('cssClasses', 'text', [
+
+        ]);
+
+        $this->addSettingControl('textTransform', 'select', [
+            'choices' => [
+                'none' => 'normal',
+                'uppercase' => 'uppercase',
+                'capitalize' => 'capitalize',
+            ],
+            'selected' => 'none'
+        ]);
+
         $this->addSettingControl('font_family', 'select2', [
             'choices' => [],
             'selected' => '',
@@ -56,14 +73,40 @@ class TitleWidget extends EditorWidgetBase {
 
         $this->addSettingControl('color', 'color', []);
 
-        $this->addSettingControl('fontsize', 'number', [
+        $this->addSettingControlWithBreakpoints('fontsize', 'number', [
             'attr' => [
                 'min' => 1,
                 'max' => 500
             ]
         ]);
 
-        $this->addSettingControl('fontsize_unit', 'select', [
+        $this->addSettingControlWithBreakpoints('alignment', 'select', [
+            'choices' => [
+                'left' => 'left',
+                'center' => 'center',
+                'right' => 'right',
+            ],
+            'selected' => 'left'
+        ]);
+
+        $this->addSettingControlWithBreakpoints('line_height', 'number', [
+            'attr' => [
+                'min' => 1,
+                'max' => 500
+            ]
+        ]);
+
+        $this->addSettingControlWithBreakpoints('line_height_unit', 'select', [
+            'choices' => [
+                'px' => 'px',
+                'rem' => 'rem',
+                'em' => 'em',
+                '%' => '%',
+            ],
+            'selected' => 'px'
+        ]);
+
+        $this->addSettingControlWithBreakpoints('fontsize_unit', 'select', [
             'choices' => [
                 'px' => 'px',
                 'rem' => 'rem',

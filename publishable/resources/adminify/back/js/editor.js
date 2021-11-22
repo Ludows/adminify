@@ -12,7 +12,6 @@ $(document).ready(function($) {
 
         let sortable_widgets = sidebar_widgets.find('.widget_zone');
         let sortable_renderer = $(editor).find('.render_zone .col-12').first();
-
         let sortable_widgets_js = new Sortable(sortable_widgets.get(0), {
             handle: '.js-handle',
             group: {
@@ -45,7 +44,11 @@ $(document).ready(function($) {
 
 
         $(editor).trigger('editor:ready', {
-            el : editor
+            el : editor,
+            controls : sidebar_controls,
+            widgets : sidebar_widgets,
+            sortable_widgets_js: sortable_widgets_js,
+            sortable_renderer_js: sortable_renderer_js
         });
 
         $(editor).on('editor:widget:show', function(e, detail) {
@@ -64,7 +67,12 @@ $(document).ready(function($) {
         });
 
         $(editor).on('editor:widget:block:create', function(e, detail) {
-            let wrap = '<div data-visual-element="'+detail.uuid+'" class="visual_element_block" data-uuid="'+detail.uuid+'">'+ detail.render +'</div>';
+            let nesting_html = '';
+            if(detail.allowChildsNesting) {
+                nesting_html = '<div data-uuid="'+detail.uuid+'" class="nesting_sortable"></div>';
+            }
+
+            let wrap = '<div data-visual-element="'+detail.uuid+'" class="visual_element_block" data-uuid="'+detail.uuid+'">'+ detail.render +'</div>'+nesting_html;
             sortable_renderer.append(wrap);
         });
 

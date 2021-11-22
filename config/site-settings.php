@@ -18,6 +18,12 @@ return [
     //If you want to switch with the classic template for Posts and Page . Just comment inside bind
     'editor' => [
         'blocks' => [], // you can add here new blocks for editor
+        'breakpoints' => [
+            'sm' => 576,
+            'md' => 768,
+            'lg' => 960,
+            'xl' => 1140
+        ],
         'bind' => [
             'Page' => [
                 'create' => 'CreatePage',
