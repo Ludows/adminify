@@ -1,0 +1,58 @@
+.is-editor-mode {
+    height: 100%;
+    overflow: hidden;
+    .render_zone {
+        overflow-y: auto;
+       .row:nth-child(2) .col-12 {
+            min-height: 300px;
+        }
+    }
+    [data-visual-element] {
+        // padding:10px;
+    }
+    .title_zone {
+        font-size: 40px;
+    }
+    [contenteditable] {
+        outline: none;
+    }
+}
+[data-editor] {
+    // background-color: red;
+    // overflow-x: hidden;
+    // overflow-y: auto;
+    height: 100vh;
+
+    .sidebar {
+        position: fixed;
+        width: 350px;
+        top: 0;
+        bottom: 0;
+        transition: .2s all ease;
+        opacity: 0;
+        overflow-x: hidden;
+        pointer-events: none;
+        overflow-y: auto;
+        z-index: 3;
+        padding: 20px;
+        box-shadow: $box-shadow;
+        background-color: map-get($theme-colors, 'secondary');
+        &.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        &.sidebar_widgets {
+            left: -99px;
+            &.active {
+                left: 0;
+            }
+        }
+        &.sidebar_controls {
+            right: -99px;
+            &.active {
+                right: 0;
+            }
+        }
+
+    }
+}

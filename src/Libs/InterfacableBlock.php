@@ -17,6 +17,16 @@ class InterfacableBlock
         $this->show = true;
         $this->limit = $this->limit();
         $this->shares = [];
+
+        $injector = $this->inject();
+
+        if(!empty($injector)) {
+            foreach ($injector as $keyInject => $injectValue) {
+                # code...
+                $this->{$keyInject} = $injectValue;
+            }
+        }
+
     }
     public function getModel() {
         return $this->model;
@@ -76,7 +86,7 @@ class InterfacableBlock
     }
 
     public function query() {
-
+        return null;
     }
 
     public function model($model) {
@@ -154,6 +164,13 @@ class InterfacableBlock
 
     public function getBlocks() {
         return $this->blocks;
+    }
+
+    public function inject() {
+        //  you paired like this [
+           // 'form' => 'example'
+        // ]
+        return [];
     }
 
     public function handle() {}

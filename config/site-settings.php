@@ -34,9 +34,21 @@ return [
                 'edit' => 'UpdatePost'
             ],  // Give the formName create / edit to bind with editor.
             'Template' => [
-                'create' => 'CreateTemplate',
-                'edit' => 'UpdateTemplate'
+                'create' => 'CreateTemplates',
+                'edit' => 'UpdateTemplates'
             ]
+        ],
+        'implicit' => [
+            'hidden_fields' => [
+                'content', 'title'
+            ],
+            'remove_fields' => [
+                'submit'
+            ]
+        ],
+        'defaultsCssConfigClass' => [
+            'RowWidget' => 'row',
+            'TitleWidget' => 'title',
         ]
     ],
 

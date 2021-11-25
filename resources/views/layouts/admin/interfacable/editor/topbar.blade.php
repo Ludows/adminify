@@ -4,7 +4,7 @@
             <a href="{{ route($name.'.index') }}" class="btn btn-return btn-default btn-lg rounded-0">
                 {{ __('admin.editor.sidebar.goback') }}
             </a>
-            <a href="#" class="btn btn-primary btn-sm js-sidebar">
+            <a href="#" data-handle=".sidebar_widgets" class="btn btn-primary btn-sm js-sidebar">
                 {{ __('admin.editor.sidebar.open') }}
             </a>
 
@@ -16,7 +16,7 @@
             <a href="#" class="btn btn-outline-primary btn-sm js-preview">
                 {{ __('admin.editor.preview') }}
             </a>
-            <a href="#" class="btn btn-outline-default js-settings">
+            <a href="#" data-handle=".sidebar_controls" class="btn btn-outline-default js-sidebar">
                 {{ __('admin.editor.settings') }}
             </a>
             <a href="#" class="btn btn-default rounded-0  js-publish">

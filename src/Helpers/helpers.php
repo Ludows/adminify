@@ -206,6 +206,12 @@ if (! function_exists('plural')) {
     }
 }
 
+if (! function_exists('lowercase')) {
+    function lowercase($name = '') {
+        return Str::lower($name);
+    }
+}
+
 if(! function_exists('is_linkable_media_model') ) {
     function is_linkable_media_model($class) {
         // the relationship model

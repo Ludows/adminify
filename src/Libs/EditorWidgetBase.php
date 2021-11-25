@@ -32,6 +32,9 @@ class EditorWidgetBase
    public function injectBlocks() {
         return [];
    }
+   public function getDescription() {
+       return '';
+   }
    public function handle($config) {
 
         $renderJson = [

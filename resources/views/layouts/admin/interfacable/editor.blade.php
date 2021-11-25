@@ -7,7 +7,7 @@
     {!! $blocks['sidebar-block']->render() !!}
     {!! $blocks['sidebar-controls-block']->render() !!}
 
-    <div class="render_zone">
+    <div class="render_zone h-100">
         {!! $blocks['renderer-block']->render() !!}
     </div>
 
