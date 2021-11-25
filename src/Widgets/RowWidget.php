@@ -17,10 +17,6 @@ class RowWidget extends EditorWidgetBase {
         return '';
     }
 
-    public function getView() {
-        return 'adminify::layouts.admin.interfacable.editor.renderers.form_title';
-    }
-
     public function buildSettings() {
 
         $this->addSettingControl('tag', 'select', [

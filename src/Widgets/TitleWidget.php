@@ -17,10 +17,6 @@ class TitleWidget extends EditorWidgetBase {
         return '<h1 class="'. $uuid .'" contenteditable="true">'. __('admin.editor.add_your_text') .'</h1>';
     }
 
-    public function getView() {
-        return 'adminify::layouts.admin.interfacable.editor.renderers.form_title';
-    }
-
     public function allowChildsNesting() {
         return false;
     }

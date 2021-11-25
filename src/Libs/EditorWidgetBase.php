@@ -13,6 +13,7 @@ class EditorWidgetBase
         $this->name = $this->getName();
         $this->icon = $this->getIcon();
         $this->editor = get_site_key('editor');
+        $this->breakpoints_names = [];
    }
    public function addEditorAsset() {
        return [];
@@ -21,7 +22,7 @@ class EditorWidgetBase
        return [];
    }
    public function getView() {
-       return null;
+       return 'adminify::layouts.admin.interfacable.editor.renderers.form_settings';
    }
    public function allowChildsNesting() {
        return true;
@@ -34,6 +35,34 @@ class EditorWidgetBase
    }
    public function getDescription() {
        return '';
+   }
+   public function getGlobalsControlFields() {
+        $a = [];
+        $fields = $this->formObject;
+        if(!empty($this->form)) {
+            foreach ($fields as $field) {
+                # code...
+                $name = $field->getName();
+                if( !in_array( $name , $this->breakpoints_names) ) {
+                    $a[ $name ] = $field;
+                }
+            }
+        }
+        return $a;
+   }
+   public function getBreakpointsControlFields() {
+        $a = [];
+        $fields = $this->formObject;
+        if(!empty($this->form)) {
+            foreach ($fields as $field) {
+                # code...
+                $name = $field->getName();
+                if( in_array( $name , $this->breakpoints_names) ) {
+                    $a[ $name ] = $field;
+                }
+            }
+        }
+        return $a;
    }
    public function handle($config) {
 
@@ -71,16 +100,19 @@ class EditorWidgetBase
                     'url' => '#'
                 ]);
 
-                if(empty($viewPath)) {
-                    $renderJson['settings'] = form($renderJson['settings']);
-                }
-                else {
-                    $renderJson['settings'] = $this->view->make($viewPath, [
-                        'form' => $renderJson['settings'],
-                        'editor' => $this->editor,
-                        'uuid' => $renderJson['uuid']
-                    ])->render();
-                }
+                $this->formObject = $renderJson['settings'];
+
+                $globalsFields = $this->getGlobalsControlFields();
+                $breakpointsFields = $this->getBreakpointsControlFields();
+
+                $renderJson['settings'] = $this->view->make($viewPath, [
+                    'form' => $renderJson['settings'],
+                    'global_controls' => $globalsFields,
+                    'breakpoints_controls' => $breakpointsFields, 
+                    'editor' => $this->editor,
+                    'uuid' => $renderJson['uuid'],
+                    'breakpoints_names' => $this->breakpoints_names
+                ])->render();
             }
         }
 
@@ -105,6 +137,7 @@ class EditorWidgetBase
 
             $this->addSettingControl($name, $fieldType, $fieldsOptions);
 
+            $this->breakpoints_names[] = $name;
             foreach ($breakpoints as $breakpointKey => $breakpointValue) {
                 # code...
                 $a = [
@@ -115,6 +148,7 @@ class EditorWidgetBase
                     ]
                 ];
 
+                $this->breakpoints_names[] = $name.'_'.$breakpointKey;
                 $this->form[] = array_merge_recursive($a, $fieldsOptions);
             }
 
