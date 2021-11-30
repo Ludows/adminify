@@ -1,16 +1,20 @@
 $(document).on('editor:ready', function(e, details) {
     console.log('ready title', details)
     let editor = $(details.el);
+    let previousCssClass = '';
 
-    editor.on('change', '[name="tag"]', function(e) {
+    editor.on('change', '[data-editor-track="tag"]', function(e) {
        let val = $(this).val();
        let element = getVisualElement( $(this) )
 
-       element.replaceWith('<'+ val +' class="'+ element.attr('class') +'">'+ element.html() +'</'+ val +'>');
+       let format = formatAttributes( element );
+       let strAttribs = renderAttributes(format);
+
+       element.replaceWith('<'+ val +' '+ strAttribs +'>'+ element.html() +'</'+ val +'>');
 
     });
 
-    editor.on('change', '[name="textTransform"]', function(e) {
+    editor.on('change', '[data-editor-track="textTransform"]', function(e) {
         let val = $(this).val();
 
         generateCss({
@@ -24,16 +28,16 @@ $(document).on('editor:ready', function(e, details) {
         });
      });
 
-     editor.on('change', '[name="line_height_unit"]', function(e) {
+     editor.on('change', '[data-editor-track="line_height_unit"]', function(e) {
 
         let form = $(this).get(0).form;
 
-        let element = $(form).find('[name="line_height"]').first();
+        let element = $(form).find('[data-editor-track="line_height"]').first();
 
         element.trigger('change');
     });
 
-     editor.on('change', '[name="alignment"]', function(e) {
+     editor.on('change', '[data-editor-track="alignment"]', function(e) {
         let val = $(this).val();
 
         generateCss({
@@ -47,16 +51,25 @@ $(document).on('editor:ready', function(e, details) {
         });
      });
 
-    editor.on('keyup', '[name="cssClasses"]', function(e) {
+    editor.on('keyup', '[data-editor-track="cssClasses"]', function(e) {
         let val = $(this).val();
 
         let element = getVisualElement( $(this) )
 
-        element.attr('class', '');
-        element.addClass(val).addClass(getTheWidgetId( $(this) ));
+        let format = formatAttributes( element );
+
+        element.removeClass(previousCssClass.trim());
+
+        if(!element.hasClass(val.trim())) {
+            element.addClass(val);
+        }
+
+        previousCssClass = val;
+        // element.attr('class', '');
+        // element.attr('class', format.class);
      });
 
-     editor.on('change', '[name="color"]', function(e) {
+     editor.on('change', '[data-editor-track="color"]', function(e) {
         let val = $(this).val();
 
         let element = getVisualElement( $(this) )
@@ -81,21 +94,21 @@ $(document).on('editor:ready', function(e, details) {
 
      let breakpointsKeys = Object.keys(window.editorConfig.breakpoints);
 
-     editor.on('change', '[name="fontsize_unit"]', function(e) {
+     editor.on('change', '[data-editor-track="fontsize_unit"]', function(e) {
 
         let form = $(this).get(0).form;
 
-        let element = $(form).find('[name="fontsize"]').first();
+        let element = $(form).find('[data-editor-track="fontsize"]').first();
 
         element.trigger('change');
     });
 
-    editor.on('change keyup', '[name="fontsize"]', function(e) {
+    editor.on('change keyup', '[data-editor-track="fontsize"]', function(e) {
         let val = $(this).val();
 
         let form = $(this).get(0).form;
 
-        let element = $(form).find('[name="fontsize_unit"]').first();
+        let element = $(form).find('[data-editor-track="fontsize_unit"]').first();
 
         generateCss({
             uuid : getTheWidgetId( $(this) ),
@@ -109,12 +122,12 @@ $(document).on('editor:ready', function(e, details) {
 
     });
 
-    editor.on('change keyup', '[name="line_height"]', function(e) {
+    editor.on('change keyup', '[data-editor-track="line_height"]', function(e) {
         let val = $(this).val();
 
         let form = $(this).get(0).form;
 
-        let element = $(form).find('[name="line_height_unit"]').first();
+        let element = $(form).find('[data-editor-track="line_height_unit"]').first();
 
         generateCss({
             uuid : getTheWidgetId( $(this) ),
@@ -130,16 +143,16 @@ $(document).on('editor:ready', function(e, details) {
 
     $.each(breakpointsKeys, function(i, breakpoint) {
 
-        editor.on('change', '[name="fontsize_unit_'+ breakpoint +'"]', function(e) {
+        editor.on('change', '[data-editor-track="fontsize_unit_'+ breakpoint +'"]', function(e) {
 
             let form = $(this).get(0).form;
 
-            let element = $(form).find('[name="fontsize_'+ breakpoint +'"]').first();
+            let element = $(form).find('[data-editor-track="fontsize_'+ breakpoint +'"]').first();
 
             element.trigger('change');
         });
 
-        editor.on('change', '[name="alignment_'+ breakpoint +'"]', function(e) {
+        editor.on('change', '[data-editor-track="alignment_'+ breakpoint +'"]', function(e) {
             let val = $(this).val();
 
             generateCss({
@@ -155,21 +168,21 @@ $(document).on('editor:ready', function(e, details) {
 
          });
 
-         editor.on('change', '[name="line_height_unit_'+ breakpoint +'"]', function(e) {
+         editor.on('change', '[data-editor-track="line_height_unit_'+ breakpoint +'"]', function(e) {
 
             let form = $(this).get(0).form;
 
-            let element = $(form).find('[name="line_height_'+ breakpoint +'"]').first();
+            let element = $(form).find('[data-editor-track="line_height_'+ breakpoint +'"]').first();
 
             element.trigger('change');
         });
 
-         editor.on('change keyup', '[name="line_height_'+ breakpoint +'"]', function(e) {
+         editor.on('change keyup', '[data-editor-track="line_height_'+ breakpoint +'"]', function(e) {
             let val = $(this).val();
 
             let form = $(this).get(0).form;
 
-            let element = $(form).find('[name="line_height_unit_'+ breakpoint +'"]').first();
+            let element = $(form).find('[data-editor-track="line_height_unit_'+ breakpoint +'"]').first();
 
             generateCss({
                 uuid : getTheWidgetId( $(this) ),
@@ -184,12 +197,12 @@ $(document).on('editor:ready', function(e, details) {
 
         });
 
-        editor.on('change keyup', '[name="fontsize_'+ breakpoint +'"]', function(e) {
+        editor.on('change keyup', '[data-editor-track="fontsize_'+ breakpoint +'"]', function(e) {
             let val = $(this).val();
 
             let form = $(this).get(0).form;
 
-            let element = $(form).find('[name="fontsize_unit_'+ breakpoint +'"]').first();
+            let element = $(form).find('[data-editor-track="fontsize_unit_'+ breakpoint +'"]').first();
 
             generateCss({
                 uuid : getTheWidgetId( $(this) ),

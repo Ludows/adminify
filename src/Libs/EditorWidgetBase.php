@@ -14,12 +14,31 @@ class EditorWidgetBase
         $this->icon = $this->getIcon();
         $this->editor = get_site_key('editor');
         $this->breakpoints_names = [];
+        $this->uuid = null;
+        $injector = $this->addChildsBlocks();
+
+        if(!empty($injector)) {
+            $this->childs = [];
+            foreach ($injector as $namedClass) {
+                # code...
+                $this->childs[$namedClass] = adminify_get_class($namedClass, ['app:widgets', 'app:adminify:widgets'], false);
+            }
+        }
    }
    public function addEditorAsset() {
        return [];
    }
    public function addFrontAsset() {
        return [];
+   }
+   public function getNestableHtml() {
+
+        $str = '';
+        if($this->allowChildsNesting()) {
+            $str = '<div data-uuid="'. $this->uuid .'" class="nesting_sortable"></div>';
+        }
+
+       return $str;
    }
    public function getView() {
        return 'adminify::layouts.admin.interfacable.editor.renderers.form_settings';
@@ -30,16 +49,48 @@ class EditorWidgetBase
    public function categories() {
        return [];
    }
-   public function injectBlocks() {
-        return [];
+   public function addChildsBlocks() {
+       return [];
    }
    public function getDescription() {
        return '';
    }
+   public function allowContentEdition() {
+       return true;
+   }
+   public function renderAttributes() {
+        $a = [
+            'class' => []
+        ];
+        if(!empty($this->uuid)) {
+            $a['class'][] = $this->uuid;
+        }
+        if(!empty( $this->editor['defaultsCssConfigClass'][ class_basename($this) ] )) {
+            $a['class'][] = $this->editor['defaultsCssConfigClass'][ class_basename($this) ];
+        }
+        if($this->allowContentEdition()) {
+            $a['contenteditable'] = 'true';
+        }
+
+        // start rendering attributes
+        $str = '';
+        foreach ($a as $attribKey => $attribValue) {
+            # code...
+
+            if(is_array($attribValue)) {
+                $attribValue = join(' ', $attribValue);
+            }
+
+
+            $str .= ''. $attribKey .'="'. $attribValue .'" ';
+        }
+
+        return $str;
+   }
    public function getGlobalsControlFields() {
         $a = [];
-        $fields = $this->formObject;
-        if(!empty($this->form)) {
+        $fields = $this->formObject->getFields();
+        if(count($this->form) > 0) {
             foreach ($fields as $field) {
                 # code...
                 $name = $field->getName();
@@ -52,8 +103,8 @@ class EditorWidgetBase
    }
    public function getBreakpointsControlFields() {
         $a = [];
-        $fields = $this->formObject;
-        if(!empty($this->form)) {
+        $fields = $this->formObject->getFields();
+        if(count($this->form) > 0) {
             foreach ($fields as $field) {
                 # code...
                 $name = $field->getName();
@@ -63,6 +114,32 @@ class EditorWidgetBase
             }
         }
         return $a;
+   }
+   public function getBreakpointsControlFieldsByTypes() {
+        $fields = $this->getBreakpointsControlFields();
+        $breakpoints = array_keys($this->editor['breakpoints']);
+        $returnArray = [];
+
+        // format default array
+        foreach ( $breakpoints as  $breakpoint) {
+            # code...
+            $returnArray[ $breakpoint ] = [];
+        }
+
+        foreach ($fields as $field) {
+            # code...
+
+            $name = $field->getName();
+
+            foreach ( $breakpoints as  $breakpoint) {
+                if(endsWith($name, '_'.$breakpoint)) {
+                    $returnArray[$breakpoint][] = $field;
+                }
+            }
+        }
+
+
+        return $returnArray;
    }
    public function handle($config) {
 
@@ -76,8 +153,9 @@ class EditorWidgetBase
         $viewPath = $this->getView();
 
         if(!empty($config['newWidget'])) {
-            $renderJson['uuid'] = 'widget_'.uuid(20);
-            $renderJson['render'] = $this->renderBlock($renderJson['uuid']) ?? '';
+            $this->uuid = 'widget_'.uuid(20);
+            $renderJson['uuid'] = $this->uuid;
+            $renderJson['render'] = $this->renderBlock() ?? '';
         }
         if(!empty($config['settings'])) {
             $this->addSettingControl('widget_type', 'hidden', [
@@ -86,7 +164,7 @@ class EditorWidgetBase
 
             if(!empty($config['newWidget'])) {
                 $this->addSettingControl('widget_uuid', 'hidden', [
-                    'value' => $renderJson['uuid'],
+                    'value' => $this->uuid,
                 ]);
             }
 
@@ -96,21 +174,21 @@ class EditorWidgetBase
                 $renderJson['settings'] = $this->formbuilder->createByArray($this->form, [
                     'method' => 'POST',
                     'class' => 'form_setting',
-                    'id' => 'form_setting_'.$renderJson['uuid'],
+                    'id' => 'form_setting_'.$this->uuid,
                     'url' => '#'
                 ]);
 
                 $this->formObject = $renderJson['settings'];
 
                 $globalsFields = $this->getGlobalsControlFields();
-                $breakpointsFields = $this->getBreakpointsControlFields();
+                $breakpointsFields = $this->getBreakpointsControlFieldsByTypes();
 
                 $renderJson['settings'] = $this->view->make($viewPath, [
                     'form' => $renderJson['settings'],
                     'global_controls' => $globalsFields,
-                    'breakpoints_controls' => $breakpointsFields, 
+                    'breakpoints_controls' => $breakpointsFields,
                     'editor' => $this->editor,
-                    'uuid' => $renderJson['uuid'],
+                    'uuid' => $this->uuid,
                     'breakpoints_names' => $this->breakpoints_names
                 ])->render();
             }
@@ -123,7 +201,11 @@ class EditorWidgetBase
         if(!empty($name)) {
             $a = [
                 'name' => $name,
-                'type' => $fieldType
+                'type' => $fieldType,
+                'attr' => [
+                    'data-editor-track' => $name,
+                ],
+                'label' => __('admin.editor.'.$name)
             ];
 
             $this->form[] = array_merge_recursive($a, $fieldsOptions);
@@ -137,7 +219,6 @@ class EditorWidgetBase
 
             $this->addSettingControl($name, $fieldType, $fieldsOptions);
 
-            $this->breakpoints_names[] = $name;
             foreach ($breakpoints as $breakpointKey => $breakpointValue) {
                 # code...
                 $a = [
@@ -145,7 +226,8 @@ class EditorWidgetBase
                     'type' => $fieldType,
                     'attr' => [
                         'data-settings-breakpoint' => $breakpointKey
-                    ]
+                    ],
+                    'label' => __('admin.editor.'.$name.'_'.$breakpointKey)
                 ];
 
                 $this->breakpoints_names[] = $name.'_'.$breakpointKey;
@@ -156,7 +238,7 @@ class EditorWidgetBase
         else {}
 
    }
-   public function renderBlock($uuid) {}
+   public function renderBlock() {}
    public function buildSettings() {}
    public function getIcon() {
       return 'fa fa-clock'; // it's the sample

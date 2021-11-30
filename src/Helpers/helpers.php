@@ -193,6 +193,18 @@ if (! function_exists('titled')) {
     }
 }
 
+if (! function_exists('startsWith')) {
+    function startsWith($string = '', $mixed) {
+        return Str::startsWith($string, $mixed);
+    }
+}
+
+if (! function_exists('endsWith')) {
+    function endsWith($string = '', $mixed) {
+        return Str::endsWith($string, $mixed);
+    }
+}
+
 if (! function_exists('interfaces')) {
     function interfaces($name = '') {
         $interface = config('site-settings.interfaces.'.$name);

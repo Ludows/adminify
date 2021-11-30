@@ -13,8 +13,8 @@ class TitleWidget extends EditorWidgetBase {
     }
     public function getInlineToolbarRender() {}
 
-    public function renderBlock($uuid) {
-        return '<h1 class="'. $uuid .'" contenteditable="true">'. __('admin.editor.add_your_text') .'</h1>';
+    public function renderBlock() {
+        return '<h1 '. $this->renderAttributes() .'>'. __('admin.editor.add_your_text') . $this->getNestableHtml() .'</h1>';
     }
 
     public function allowChildsNesting() {

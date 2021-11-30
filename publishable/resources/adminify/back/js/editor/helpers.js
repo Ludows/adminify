@@ -99,6 +99,27 @@ function generateCss(objectOptions) {
     $(document.head).append(styleBlock);
 }
 
+function formatAttributes(element) {
+    var el = $(element);
+    var obj = {};
+    $(el[0].attributes).each(function() {
+        obj[this.nodeName] = this.nodeValue;
+    });
+
+    return obj;
+}
+
+function renderAttributes(object) {
+    let str = '';
+    let keys = Object.keys(object);
+
+    $.each(keys, function(i, key) {
+        str += ''+ key +'="'+ object[key] +'" ';
+    });
+
+    return str;
+}
+
 function formatStyleAsObject(element) {
     var style = element.attr('style');
     var o = {}
@@ -133,3 +154,5 @@ window.getTheWidgetId = getTheWidgetId
 window.getTheWidgetType = getTheWidgetType
 window.generateCss = generateCss
 window.generateMediaQuery = generateMediaQuery
+window.formatAttributes = formatAttributes
+window.renderAttributes = renderAttributes

@@ -122,7 +122,7 @@ $(document).ready(function($) {
             // console.log('active', $(sidebar_widgets).hasClass('active'), detail)
             if($(sidebar_widgets).hasClass('active')) {
                 detail.render_zone.css({
-                    'padding-left' : $(sidebar_widgets).width()+'px'
+                    'padding-left' : $(sidebar_widgets).outerWidth(true)+'px'
                 })
             }
             else {
@@ -175,15 +175,12 @@ $(document).ready(function($) {
         $(editor).on('editor:widget:settings:create', function(e, detail) {
             let wrap = '<div class="block_settings d-block" data-uuid="'+detail.uuid+'">'+ detail.settings +'</div>';
             sidebar_controls.find('#blocs-settings-tab').append(wrap);
+
+            sidebar_controls.find('#blocs-settings-tab form > .form-group').children().removeAttr('name')
         });
 
         $(editor).on('editor:widget:block:create', function(e, detail) {
-            let nesting_html = '';
-            if(detail.allowChildsNesting) {
-                nesting_html = '<div data-uuid="'+detail.uuid+'" class="nesting_sortable"></div>';
-            }
-
-            let wrap = '<div data-visual-element="'+detail.uuid+'" class="visual_element_block" data-uuid="'+detail.uuid+'">'+ detail.render +'</div>'+nesting_html;
+            let wrap = '<div data-visual-element="'+detail.uuid+'" class="visual_element_block" data-uuid="'+detail.uuid+'">'+ detail.render +'</div>';
             sortable_renderer.append(wrap);
         });
 
