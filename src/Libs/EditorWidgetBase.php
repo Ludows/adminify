@@ -4,6 +4,8 @@ namespace Ludows\Adminify\Libs;
 
 class EditorWidgetBase
 {
+   const COLUMN_MINIMAL = 1;
+   const COLUMN_MAXIMAL = 12;
    public function __construct() {
         $this->view = view();
         $this->request = request();

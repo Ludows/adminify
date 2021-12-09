@@ -49,6 +49,7 @@ return [
         'defaultsCssConfigClass' => [
             'RowWidget' => 'row',
             'TitleWidget' => 'title',
+            'ColumnWidget' => 'col-12'
         ]
     ],
 
