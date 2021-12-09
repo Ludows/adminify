@@ -8,6 +8,7 @@ class EditorWidgetBase
         $this->view = view();
         $this->request = request();
         $this->form = [];
+        $this->chooseTemplate = [];
         $this->formbuilder = app('Kris\LaravelFormBuilder\FormBuilder');
         $this->showInGroups = [];
         $this->name = $this->getName();
@@ -40,8 +41,15 @@ class EditorWidgetBase
 
        return $str;
    }
+   // allow to create inetrface to choose an element to render
+   public function chooseTemplate() {
+        return null;
+   }
    public function getView() {
        return 'adminify::layouts.admin.interfacable.editor.renderers.form_settings';
+   }
+   public function getChooseTemplateView() {
+    return 'adminify::layouts.admin.interfacable.editor.renderers.choose_template';
    }
    public function allowChildsNesting() {
        return true;
@@ -147,10 +155,14 @@ class EditorWidgetBase
             'uuid' => null,
             'render' => null,
             'settings' => null,
-            'allowChildsNesting' => $this->allowChildsNesting()
+            'choose' => null,
+            'isChildBlock' => !empty($config['child']) ? $config['child'] : false,
+            'allowChildsNesting' => $this->allowChildsNesting(),
+            'haveChooseTemplate' => false
         ];
 
         $viewPath = $this->getView();
+        $chooseTemplatePath = $this->getChooseTemplateView();
 
         if(!empty($config['newWidget'])) {
             $this->uuid = 'widget_'.uuid(20);
@@ -169,6 +181,35 @@ class EditorWidgetBase
             }
 
             $this->buildSettings();
+            $this->chooseTemplate();
+
+            if(count($this->chooseTemplate) > 0) {
+
+                $renderJson['haveChooseTemplate'] = true;
+
+                $this->addChoose('widget_type', 'hidden', [
+                    'value' => $this->request->route()->parameter('widget'),
+                ]);
+
+                $this->addChoose('widget_uuid', 'hidden', [
+                    'value' => $this->uuid,
+                ]);
+
+                $chooserForm = $this->formbuilder->createByArray($this->chooseTemplate, [
+                    'method' => 'POST',
+                    'class' => 'form_choose row no-gutters',
+                    'id' => 'form_choose_'.$this->uuid,
+                    'url' => '#'
+                ]);
+
+
+                $renderJson['choose'] = $this->view->make($chooseTemplatePath, [
+                    'form' => $chooserForm,
+                    'editor' => $this->editor,
+                    'uuid' => $this->uuid,
+                    'breakpoints_names' => $this->breakpoints_names
+                ])->render();
+            }
 
             if(count($this->form) > 0) {
                 $renderJson['settings'] = $this->formbuilder->createByArray($this->form, [
@@ -194,7 +235,26 @@ class EditorWidgetBase
             }
         }
 
+        if(!empty($chooser)) {
+
+        }
+
         return $renderJson;
+   }
+   public function addChoose($name = null, $fieldType = null, $fieldsOptions = []) {
+        if(!empty($name)) {
+            $a = [
+                'name' => $name,
+                'type' => $fieldType,
+                'attr' => [
+                    'data-editor-choose' => $name,
+                ],
+                'label' => __('admin.editor.choose.'.$name)
+            ];
+
+            $this->chooseTemplate[] = array_merge_recursive($a, $fieldsOptions);
+        }
+        else {}
    }
    public function addSettingControl($name = null, $fieldType = null, $fieldsOptions = []) {
 
@@ -225,7 +285,8 @@ class EditorWidgetBase
                     'name' => $name.'_'.$breakpointKey,
                     'type' => $fieldType,
                     'attr' => [
-                        'data-settings-breakpoint' => $breakpointKey
+                        'data-settings-breakpoint' => $breakpointKey,
+                        'data-editor-track' => $name.'_'.$breakpointKey
                     ],
                     'label' => __('admin.editor.'.$name.'_'.$breakpointKey)
                 ];

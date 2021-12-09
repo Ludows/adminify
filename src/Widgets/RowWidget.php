@@ -20,6 +20,76 @@ class RowWidget extends EditorWidgetBase {
     public function allowContentEdition() {
         return false;
     }
+    public function chooseTemplate() {
+
+        $this->addChoose('1-col', 'button', [
+            'wrapper' => [
+                'class' => 'col-6 text-center mb-4',
+            ],
+            'attr' => [
+                'class' => 'btn btn-lg btn-primary',
+                'data-widget' => 'ColumnWidget',
+                'data-count' => 1
+            ]
+        ]);
+
+        $this->addChoose('2-cols', 'button', [
+            'wrapper' => [
+                'class' => 'col-6 text-center mb-4'
+            ],
+            'attr' => [
+                'class' => 'btn btn-lg btn-primary',
+                'data-widget' => 'ColumnWidget',
+                'data-count' => 2
+            ]
+        ]);
+
+        $this->addChoose('3-cols', 'button', [
+            'wrapper' => [
+                'class' => 'col-6 text-center mb-4'
+            ],
+            'attr' => [
+                'class' => 'btn btn-lg btn-primary',
+                'data-widget' => 'ColumnWidget',
+                'data-count' => 3
+            ]
+        ]);
+
+        $this->addChoose('4-cols', 'button', [
+            'wrapper' => [
+                'class' => 'col-6 text-center mb-4'
+            ],
+            'attr' => [
+                'class' => 'btn btn-lg btn-primary',
+                'data-widget' => 'ColumnWidget',
+                'data-count' => 4
+            ]
+        ]);
+
+        $this->addChoose('5-cols', 'button', [
+            'wrapper' => [
+                'class' => 'col-6 text-center'
+            ],
+            'attr' => [
+                'class' => 'btn btn-lg btn-primary',
+                'data-widget' => 'ColumnWidget',
+                'data-count' => 5
+            ]
+        ]);
+
+        $this->addChoose('6-cols', 'button', [
+            'wrapper' => [
+                'class' => 'col-6 text-center'
+            ],
+            'attr' => [
+                'class' => 'btn btn-lg btn-primary',
+                'data-widget' => 'ColumnWidget',
+                'data-count' => 6
+            ]
+        ]);
+
+        // dd($this->chooseTemplate);
+    }
     public function buildSettings() {
 
         $this->addSettingControl('tag', 'select', [
@@ -43,13 +113,24 @@ class RowWidget extends EditorWidgetBase {
 
         $this->addSettingControlWithBreakpoints('contentPosition', 'select', [
             'choices' => [
-                'center' => 'center',
                 'flex-start' => 'start',
+                'center' => 'center',
                 'flex-end' => 'end',
                 'space-between' => 'between',
                 'space-around' => 'around',
             ],
-            'selected' => 'center',
+            'selected' => 'flex-start',
+        ]);
+
+        $this->addSettingControlWithBreakpoints('contentAlignPosition', 'select', [
+            'choices' => [
+                'flex-start' => 'start',
+                'center' => 'center',
+                'flex-end' => 'end',
+                'space-between' => 'between',
+                'space-around' => 'around',
+            ],
+            'selected' => 'flex-start',
         ]);
 
         $this->addSettingControl('bgType', 'select', [
@@ -77,6 +158,10 @@ class RowWidget extends EditorWidgetBase {
                 'bottom right' => 'bottom right',
                 'top left' => 'top left',
                 'top right' => 'top right',
+                'top' => 'top',
+                'bottom' => 'bottom',
+                'left' => 'left',
+                'right' => 'right',
             ],
             'selected' => 'center center',
         ]);

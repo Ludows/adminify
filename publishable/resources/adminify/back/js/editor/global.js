@@ -28,6 +28,145 @@ $(document).on('editor:ready', function(e, details) {
         });
      });
 
+     editor.on('change', '[data-editor-track="bgColor"]', function(e) {
+        let val = $(this).val();
+
+        generateCss({
+            uuid : getTheWidgetId( $(this) ),
+            widgetType: getTheWidgetType( $(this) ),
+            breakpoint : false, // set as false when no breakpoint css generation is needed,
+            rule : {
+                property : 'background-color',
+                value : val
+            }
+        });
+     });
+
+     editor.on('change', '[data-editor-track="bgPositionImage"]', function(e) {
+        let val = $(this).val();
+
+        generateCss({
+            uuid : getTheWidgetId( $(this) ),
+            widgetType: getTheWidgetType( $(this) ),
+            breakpoint : false, // set as false when no breakpoint css generation is needed,
+            rule : {
+                property : 'background-position',
+                value : val
+            }
+        });
+
+     })
+
+     editor.on('change', '[data-editor-track="contentPosition"]', function(e) {
+        let val = $(this).val();
+
+        generateCss({
+            uuid : getTheWidgetId( $(this) ),
+            widgetType: getTheWidgetType( $(this) ),
+            breakpoint : false, // set as false when no breakpoint css generation is needed,
+            rule : {
+                property : 'justify-content',
+                value : val
+            }
+        });
+
+     })
+
+     editor.on('change', '[data-editor-track="contentAlignPosition"]', function(e) {
+        let val = $(this).val();
+
+        generateCss({
+            uuid : getTheWidgetId( $(this) ),
+            widgetType: getTheWidgetType( $(this) ),
+            breakpoint : false, // set as false when no breakpoint css generation is needed,
+            rule : {
+                property : 'align-items',
+                value : val
+            }
+        });
+
+     })
+
+     editor.on('change', '[data-editor-track="bgSizeImage"]', function(e) {
+        let val = $(this).val();
+
+        generateCss({
+            uuid : getTheWidgetId( $(this) ),
+            widgetType: getTheWidgetType( $(this) ),
+            breakpoint : false, // set as false when no breakpoint css generation is needed,
+            rule : {
+                property : 'background-size',
+                value : val
+            }
+        });
+
+     })
+
+     editor.on('change', '[data-editor-track="bgType"]', function(e) {
+        let val = $(this).val();
+        let form = $(this).get(0).form;
+        let selectors = [];
+        let selectorsToHide = [];
+
+        switch (val) {
+            case 'no-bg':
+                selectorsToHide = ['bgPositionImage', 'bgSizeImage', 'bgOtherSize', 'bgImage', 'bgColor'];
+                break;
+            case 'bg-color':
+                selectors = ['bgColor'];
+                selectorsToHide = ['bgPositionImage', 'bgSizeImage', 'bgOtherSize', 'bgImage'];
+                break;
+            case 'bg-image':
+                selectors = ['bgPositionImage', 'bgSizeImage', 'bgImage'];
+                selectorsToHide = ['bgColor'];
+                break;
+        }
+
+        if(selectors.length > 0) {
+            $.each(selectors, function(i, sel) {
+
+                let _el = $(form).find('[data-editor-track="'+ sel +'"]');
+
+                _el.parent().removeAttr('hidden');
+
+                // _el.trigger('change');
+            })
+        }
+
+        if(selectorsToHide.length > 0) {
+            $.each(selectorsToHide, function(i, sel) {
+
+                let _el = $(form).find('[data-editor-track="'+ sel +'"]');
+
+                _el.parent().attr('hidden', 'hidden');
+            })
+        }
+
+        // generateCss({
+        //     uuid : getTheWidgetId( $(this) ),
+        //     widgetType: getTheWidgetType( $(this) ),
+        //     breakpoint : false, // set as false when no breakpoint css generation is needed,
+        //     rule : {
+        //         property : 'text-transform',
+        //         value : val
+        //     }
+        // });
+     });
+
+     editor.on('change', '[data-editor-track="rowDirection"]', function(e) {
+        let val = $(this).val();
+
+        generateCss({
+            uuid : getTheWidgetId( $(this) ),
+            widgetType: getTheWidgetType( $(this) ),
+            breakpoint : false, // set as false when no breakpoint css generation is needed,
+            rule : {
+                property : 'flex-direction',
+                value : val
+            }
+        });
+     });
+
      editor.on('change', '[data-editor-track="line_height_unit"]', function(e) {
 
         let form = $(this).get(0).form;
@@ -151,6 +290,48 @@ $(document).on('editor:ready', function(e, details) {
 
             element.trigger('change');
         });
+
+        editor.on('change', '[data-editor-track="rowDirection_'+ breakpoint +'"]', function(e) {
+            let val = $(this).val();
+
+            generateCss({
+                uuid : getTheWidgetId( $(this) ),
+                widgetType: getTheWidgetType( $(this) ),
+                breakpoint : breakpoint, // set as false when no breakpoint css generation is needed,
+                rule : {
+                    property : 'flex-direction',
+                    value : val
+                }
+            });
+         });
+
+         editor.on('change', '[data-editor-track="contentPosition_'+ breakpoint +'"]', function(e) {
+            let val = $(this).val();
+
+            generateCss({
+                uuid : getTheWidgetId( $(this) ),
+                widgetType: getTheWidgetType( $(this) ),
+                breakpoint : breakpoint, // set as false when no breakpoint css generation is needed,
+                rule : {
+                    property : 'justify-content',
+                    value : val
+                }
+            });
+         });
+
+         editor.on('change', '[data-editor-track="contentAlignPosition_'+ breakpoint +'"]', function(e) {
+            let val = $(this).val();
+
+            generateCss({
+                uuid : getTheWidgetId( $(this) ),
+                widgetType: getTheWidgetType( $(this) ),
+                breakpoint : breakpoint, // set as false when no breakpoint css generation is needed,
+                rule : {
+                    property : 'align-items',
+                    value : val
+                }
+            });
+         });
 
         editor.on('change', '[data-editor-track="alignment_'+ breakpoint +'"]', function(e) {
             let val = $(this).val();

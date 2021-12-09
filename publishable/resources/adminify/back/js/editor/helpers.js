@@ -6,6 +6,41 @@ function getTheWidgetId(formElement) {
     return widgetId.val();
 }
 
+function getChooserBox(formElement) {}
+
+function addWidget(editor, widgetType, datas = {}) {
+
+    let $d = $.extend(true, {
+        config : {
+            newWidget : true,
+            settings : true
+        }
+    }, datas);
+
+    $.ajax({
+        'method' : 'POST',
+        'url' : Route('editor.addWidget', {
+            'widget' : widgetType
+        }),
+        'headers': {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        'data' : $d
+    })
+    .done((response) => {
+        console.log(response)
+
+        editor.trigger('editor:widget:new', {
+            el : editor,
+            config : response.data
+        })
+
+    })
+    .fail((err) => {
+        console.log(err)
+    })
+}
+
 function getTheWidgetType(formElement) {
     let theForm = formElement.get(0).form;
 
@@ -66,18 +101,23 @@ function generateMediaQuery(breakpointsList, breakpoint, ruleSet, uuid, parentAn
     return ruleMedia;
 }
 
+function removeStyledComponentStyles(selector, objectOptions = {}) {
+    let check = $(document.head).find(selector);
+    if(check.length > 0) {
+        check.remove();
+        // '.styled_components_block[data-rule="'+ objectOptions.rule.property +'"][data-breakpoint="'+objectOptions.breakpoint+'"][data-uuid="'+objectOptions.uuid+'"][data-type="'+objectOptions.widgetType+'"]'
+    }
+}
+
 function generateCss(objectOptions) {
 
     // console.log('objectOptions', objectOptions)
     // console.log('editor', editorConfig.breakpoints);
     let rule = '';
     let parentSelector = '';
-    let check = $(document.head).find('.styled_components_block[data-rule="'+ objectOptions.rule.property +'"][data-breakpoint="'+objectOptions.breakpoint+'"][data-uuid="'+objectOptions.uuid+'"][data-type="'+objectOptions.widgetType+'"]');
     // [data-breakpoint="'+objectOptions.breakpoint+'"][data-uuid="'+objectOptions.uuid+'"]
-    console.log('check', check)
-    if(check.length > 0) {
-        check.remove();
-    }
+    // console.log('check', check)
+    removeStyledComponentStyles('.styled_components_block[data-rule="'+ objectOptions.rule.property +'"][data-breakpoint="'+objectOptions.breakpoint+'"][data-uuid="'+objectOptions.uuid+'"][data-type="'+objectOptions.widgetType+'"]', objectOptions);
 
     if(objectOptions.parentSelector && objectOptions.parentSelector != false) {
         parentSelector = objectOptions.parentSelector;
@@ -148,11 +188,14 @@ function formatStyleAsObject(element) {
     return o;
 }
 
-window.formatStyleAsObject = formatStyleAsObject
-window.getVisualElement = getVisualElement
-window.getTheWidgetId = getTheWidgetId
-window.getTheWidgetType = getTheWidgetType
-window.generateCss = generateCss
-window.generateMediaQuery = generateMediaQuery
-window.formatAttributes = formatAttributes
-window.renderAttributes = renderAttributes
+window.formatStyleAsObject = formatStyleAsObject;
+window.getVisualElement = getVisualElement;
+window.getTheWidgetId = getTheWidgetId;
+window.getTheWidgetType = getTheWidgetType;
+window.generateCss = generateCss;
+window.generateMediaQuery = generateMediaQuery;
+window.formatAttributes = formatAttributes;
+window.renderAttributes = renderAttributes;
+window.removeStyledComponentStyles = removeStyledComponentStyles;
+window.getChooserBox = getChooserBox;
+window.addWidget = addWidget;
