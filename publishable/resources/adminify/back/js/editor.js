@@ -13,7 +13,7 @@ $(document).ready(function ($) {
         let sortable_widgets = sidebar_widgets.find('.widget_zone');
         let sortable_renderer = $(editor).find('.render_zone .col-12').last();
         let sidebars = $(editor).find('.js-sidebar');
-        let sortable_widgets_js = new Sortable(sortable_widgets.get(0), {
+        let sortable_widgets_js = createSortableZone(sortable_widgets.get(0), {
             handle: '.js-handle',
             group: {
                 name: 'shared',
@@ -24,11 +24,13 @@ $(document).ready(function ($) {
             sort: false // To disable sorting: set sort to false
         });
 
-        let sortable_renderer_js = new Sortable(sortable_renderer.get(0), {
+        let sortable_renderer_js = createSortableZone(sortable_renderer.get(0), {
             handle: '.visual_element_block',
             group: 'shared',
             animation: 150,
             onAdd: onAddToRenderer,
+            fallbackOnBody: true,
+		    swapThreshold: 0.65
         });
 
         let titleBlock = $(editor).find('.title_zone');
@@ -67,9 +69,46 @@ $(document).ready(function ($) {
 
         })
 
+        $(editor).on('click', '.js-publish', function(e) {
+            e.preventDefault();
+
+            // localStorage.setItem('page-')
+        });
+
+        $(editor).on('click', '.js-choose-box [data-editor-choose]', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            let $wId = getTheWidgetId( $(this) );
+
+            // console.log('$wId', $wId)
+
+            $(editor).trigger('editor:template:call', {
+                element: $(this),
+                widget: $(this).attr('data-widget'),
+                datas: {
+                    config: {
+                        child: true,
+                        count : $(this).attr('data-count'),
+                        parent_uuid : $wId,
+                        parent_widgetType: getTheWidgetType( $(this) ),
+                    }
+                }
+            })
+
+            $('.js-choose-box[data-ref="'+ $wId +'"]').remove()
+        });
+
         sortable_renderer.on('click', '.visual_element_block', function (e) {
             e.preventDefault();
-            let uuid = $(this).attr('data-uuid');
+
+            if (e.target === e.currentTarget) {
+                // do something
+                e.stopPropagation();
+            }
+
+            // console.log('visual block', e)
+            let uuid = $(this).attr('data-visual-element');
 
             // console.log('data element', uuid)
 
@@ -141,31 +180,9 @@ $(document).ready(function ($) {
 
         });
 
-        $(editor).on('click', '.js-choose-box [data-editor-choose]', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            let $wId = getTheWidgetId( $(this) );
-
-            $(editor).trigger('editor:template:call', {
-                element: $(this),
-                widget: $(this).attr('data-widget'),
-                datas: {
-                    config: {
-                        child: true,
-                        count : $(this).attr('data-count'),
-                        parent_uuid : $wId,
-                        parent_widgetType: getTheWidgetType( $(this) ),
-                    }
-                }
-            })
-
-            $('.js-choose-box[data-ref="'+ $wId +'"]').remove()
-        });
-
         $(editor).on('editor:template:call', function (e, detail) {
-            console.log('detail tpl', detail)
-            addWidget(editor, detail.widget, detail.datas);
+            // console.log('detail tpl', detail)
+            addWidget( $(editor) , detail.widget, detail.datas);
         });
 
         $(editor).on('editor:sidebar:show', function (e, detail) {
@@ -205,22 +222,48 @@ $(document).ready(function ($) {
 
         $(editor).on('editor:widget:block:create', function (e, detail) {
 
+            // console.log('editor:widget:block:create', detail)
             let chooseTpl = '';
+            let element = sortable_renderer;
             if (detail.haveChooseTemplate) {
                 chooseTpl = detail.choose;
             }
 
-            let wrap = '<div data-visual-element="' + detail.uuid + '" class="visual_element_block" data-uuid="' + detail.uuid + '">' + chooseTpl + '' + detail.render + '</div>';
-            sortable_renderer.append(wrap);
+            let wrap = chooseTpl + '' + detail.render;
+
+            if(detail.parent_uuid) {
+                element = element.find('.visual_element_block[data-visual-element="'+ detail.parent_uuid +'"]');
+            }
+            element.append(wrap);
+        });
+
+        $(editor).on('editor:create:sortable', function(e, detail) {
+            console.log('detail from sortable', detail)
+
+            let zone = detail.element ? detail.element : $(this).find('.visual_element_block[data-visual-element="'+ detail.uuid +'');
+
+            console.log(zone);
+            let sortable = createSortableZone( zone.get(0) , {
+                handle: '.visual_element_block',
+                group: 'shared',
+                animation: 150,
+                onAdd: onAddToRenderer,
+                fallbackOnBody: true,
+		        swapThreshold: 0.65
+            });
         });
 
         $(editor).on('editor:widget:new', function (e, detail) {
             // console.log('details', detail, e);
             $(e.target).trigger('editor:widget:settings:create', detail.config);
             $(e.target).trigger('editor:widget:block:create', detail.config);
-            $(e.target).trigger('editor:widget:show', {
-                uuid: detail.config.uuid
-            })
+
+            $(e.target).trigger('editor:widget:show', detail.config)
+
+            if(detail.config.allowChildsNesting) {
+                $(e.target).trigger('editor:create:sortable', detail.config)
+            }
+
 
             $(e.target).trigger('editor:sidebar:show', {
                 sidebar: $(editor).find('.sidebar_controls'),
@@ -237,22 +280,44 @@ $(document).ready(function ($) {
                 uuid: detail.config.uuid
             })
 
-            $('#pills-blocs-settings-tab').trigger('click');
+        })
+
+        $(editor).on('editor:change:tag', function(e, detail) {
+            // console.log('tag')
+            $(editor).trigger('editor:create:sortable', {
+                element : detail.element
+            })
         })
 
 
 
     })
 
+
+
     function onAddToRenderer(evt) {
+
+        // console.log('add', evt);
         let editor = $(evt.to).parents('[data-editor]').first();
 
 
         let widgetType = $(evt.item).find('.js-handle').attr('data-widget');
+        let isVisualElementBlock = isVisualElement( $(evt.to) );
+        let o = {};
+
+        if(isVisualElementBlock) {
+            o.config = {
+                child : true,
+                parent_uuid : getTheWidgetId( $(evt.to) ),
+                parent_widgetType: getTheWidgetType( $(evt.to) ),
+            }
+        }
+
+        // console.log('o', o);
 
         $(evt.item).remove()
 
-        addWidget(editor, widgetType);
+        addWidget(editor, widgetType, o);
     }
 
 });

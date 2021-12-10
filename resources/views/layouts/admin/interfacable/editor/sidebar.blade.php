@@ -28,16 +28,19 @@
                     @endpush
                 @endforeach
             @endif
-            <div class="col-6">
-                <div data-widget="{{ $widgetKeyName }}" class="card shadow js-handle">
-                    <div class="card-body text-center">
-                      <i class="{{ $widget->icon }}"></i>
-                      <p class="card-text small text-muted">
-                         {{ $widget->name }}
-                      </p>
+            @if ($widget->showInSidebar())
+                <div class="col-6">
+                    <div data-widget="{{ $widgetKeyName }}" class="card shadow js-handle">
+                        <div class="card-body text-center">
+                        <i class="{{ $widget->icon }}"></i>
+                        <p class="card-text small text-muted">
+                            {{ $widget->name }}
+                        </p>
+                        </div>
                     </div>
                 </div>
-            </div>
+            @endif
+
         @endforeach
 
     </div>

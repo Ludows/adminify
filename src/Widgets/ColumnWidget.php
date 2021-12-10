@@ -8,6 +8,9 @@ class ColumnWidget extends EditorWidgetBase {
     public function getIcon() {
         return 'ni ni-caps-small';
     }
+    public function showInSidebar() {
+        return false;
+    }
     public function getName() {
         return __('admin.editor.widgets.column');
     }
@@ -15,12 +18,14 @@ class ColumnWidget extends EditorWidgetBase {
 
     public function renderBlock() {
 
-        return '<div '. $this->renderAttributes() .'>'. $this->getNestableHtml() .'</div>';
+        return '<div '. $this->renderAttributes() .'></div>';
     }
     public function allowContentEdition() {
         return false;
     }
     public function buildSettings() {
+        $col_min = get_site_key('editor.patterns.column_minimal');
+        $col_max = get_site_key('editor.patterns.column_maximal');
 
         $this->addSettingControl('tag', 'select', [
             'choices' => [
@@ -31,11 +36,12 @@ class ColumnWidget extends EditorWidgetBase {
             'selected' => 'div',
         ]);
 
-        $this->addSettingControlWithBreakpoints('column_width', 'slider', [
+        $this->addSettingControlWithBreakpoints('column_width', 'range', [
             'attr' => [
-                'min' => EditorWidgetBase::COLUMN_MINIMAL,
-                'max' => EditorWidgetBase::COLUMN_MAXIMAL
-            ]
+                'min' => $col_min,
+                'max' => $col_max
+            ],
+            'value' => ( $col_max / $this->config['count'] )
         ]);
 
         $this->addSettingControl('bgType', 'select', [

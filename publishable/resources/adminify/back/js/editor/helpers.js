@@ -1,12 +1,28 @@
-function getTheWidgetId(formElement) {
-    let theForm = formElement.get(0).form;
+function getTheWidgetId(mixed) {
 
-    let widgetId = $(theForm).find('[name="widget_uuid"]')
+    let widgetId = null;
+    if(mixed.get(0).hasAttribute('data-visual-element')) {
+        widgetId = mixed.attr('data-visual-element');
+    }
+    else {
+        let theForm = mixed.get(0).form;
 
-    return widgetId.val();
+        widgetId = $(theForm).find('[name="widget_uuid"]').val();
+    }
+
+
+    return widgetId;
 }
 
 function getChooserBox(formElement) {}
+
+function createSortableZone(elm, options) {
+   return new Sortable(elm, options);
+}
+
+function isVisualElement(element) {
+    return element.get(0).hasAttribute('data-visual-element');
+}
 
 function addWidget(editor, widgetType, datas = {}) {
 
@@ -29,11 +45,16 @@ function addWidget(editor, widgetType, datas = {}) {
     })
     .done((response) => {
         console.log(response)
-
-        editor.trigger('editor:widget:new', {
-            el : editor,
-            config : response.data
+        $.each(response.data, function(i, data) {
+            editor.trigger('editor:widget:new', {
+                el : editor,
+                config : data
+            })
         })
+        // console.log('last')
+        setTimeout(() => {
+            $('#pills-blocs-settings-tab').trigger('click');
+        }, 200)
 
     })
     .fail((err) => {
@@ -41,12 +62,19 @@ function addWidget(editor, widgetType, datas = {}) {
     })
 }
 
-function getTheWidgetType(formElement) {
-    let theForm = formElement.get(0).form;
+function getTheWidgetType(mixed) {
 
-    let widgetType = $(theForm).find('[name="widget_type"]')
+    let widgetType = null;
+    if(mixed.get(0).hasAttribute('data-type')) {
+        widgetType = mixed.attr('data-type');
+    }
+    else {
+        let theForm = mixed.get(0).form;
 
-    return widgetType.val();
+        widgetType = $(theForm).find('[name="widget_type"]').val();
+    }
+
+    return widgetType;
 }
 
 function getVisualElement(formElement) {
@@ -54,7 +82,7 @@ function getVisualElement(formElement) {
 
     let wId = getTheWidgetId( formElement );
 
-    let element = $('[data-visual-element="'+ wId +'"]').children().first();
+    let element = $('[data-visual-element="'+ wId +'"]');
 
     return element;
 }
@@ -199,3 +227,5 @@ window.renderAttributes = renderAttributes;
 window.removeStyledComponentStyles = removeStyledComponentStyles;
 window.getChooserBox = getChooserBox;
 window.addWidget = addWidget;
+window.createSortableZone = createSortableZone;
+window.isVisualElement = isVisualElement;

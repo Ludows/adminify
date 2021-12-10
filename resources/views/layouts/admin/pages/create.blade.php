@@ -1,4 +1,4 @@
-@extends('adminify::layouts.admin.app')
+@extends('adminify::layouts.admin.app', ['class' => $loadEditor ? 'is-editor-mode' : ''])
 
 @if (!empty($adminCssLinks))
     @push('css')

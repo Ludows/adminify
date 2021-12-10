@@ -46,6 +46,11 @@ return [
                 'submit'
             ]
         ],
+        'patterns' => [
+            'column_minimal' => 1,
+            'column_maximal' => 12,
+            'columns' => 'col-##BREAKPOINT##-##WIDTH##'
+        ],
         'defaultsCssConfigClass' => [
             'RowWidget' => 'row',
             'TitleWidget' => 'title',

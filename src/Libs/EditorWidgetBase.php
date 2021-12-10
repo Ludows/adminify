@@ -4,8 +4,6 @@ namespace Ludows\Adminify\Libs;
 
 class EditorWidgetBase
 {
-   const COLUMN_MINIMAL = 1;
-   const COLUMN_MAXIMAL = 12;
    public function __construct() {
         $this->view = view();
         $this->request = request();
@@ -18,6 +16,8 @@ class EditorWidgetBase
         $this->editor = get_site_key('editor');
         $this->breakpoints_names = [];
         $this->uuid = null;
+        $this->isChild = false;
+        $this->config = null;
         $injector = $this->addChildsBlocks();
 
         if(!empty($injector)) {
@@ -33,15 +33,6 @@ class EditorWidgetBase
    }
    public function addFrontAsset() {
        return [];
-   }
-   public function getNestableHtml() {
-
-        $str = '';
-        if($this->allowChildsNesting()) {
-            $str = '<div data-uuid="'. $this->uuid .'" class="nesting_sortable"></div>';
-        }
-
-       return $str;
    }
    // allow to create inetrface to choose an element to render
    public function chooseTemplate() {
@@ -75,9 +66,39 @@ class EditorWidgetBase
         if(!empty($this->uuid)) {
             $a['class'][] = $this->uuid;
         }
+        $a['data-type'] = class_basename($this);
+        $a['data-visual-element'] = $this->uuid;
+
+        $a['class'][]  = 'visual_element_block';
+
+        if($this->isChild) {
+            $a['class'][]  = 'is-child';
+        }
+
         if(!empty( $this->editor['defaultsCssConfigClass'][ class_basename($this) ] )) {
             $a['class'][] = $this->editor['defaultsCssConfigClass'][ class_basename($this) ];
         }
+
+        if( $a['data-type'] == 'ColumnWidget' && $this->config['count'] > 1 ) {
+            //create dynamic class column
+            $column_pattern = $this->editor['patterns']['columns'];
+            $col_max = $this->editor['patterns']['column_maximal'];
+            $breakpoints = array_keys($this->editor['breakpoints']);
+
+            foreach ($breakpoints as $breakpoint) {
+                # code...
+                $new_class_str = $column_pattern;
+                $new_class_str = str_replace('##BREAKPOINT##', $breakpoint , $new_class_str);
+                $new_class_str = str_replace('##WIDTH##', ( $col_max / $this->config['count'] ) , $new_class_str);
+
+                $a['class'][] = $new_class_str;
+            }
+
+
+
+
+        }
+
         if($this->allowContentEdition()) {
             $a['contenteditable'] = 'true';
         }
@@ -151,17 +172,24 @@ class EditorWidgetBase
 
         return $returnArray;
    }
-   public function handle($config) {
+   public function handle() {
+
+        $config = $this->config;
+        // tell if is child block..
+        $this->isChild = !empty($config['child']);
 
         $renderJson = [
             'uuid' => null,
             'render' => null,
             'settings' => null,
             'choose' => null,
-            'isChildBlock' => !empty($config['child']) ? $config['child'] : false,
+            'widgetType' => class_basename($this),
+            'parent_uuid' => !empty($config['parent_uuid']) ? $config['parent_uuid'] : null,
+            'isChildBlock' => $this->isChild,
             'allowChildsNesting' => $this->allowChildsNesting(),
             'haveChooseTemplate' => false
         ];
+
 
         $viewPath = $this->getView();
         $chooseTemplatePath = $this->getChooseTemplateView();
@@ -300,6 +328,9 @@ class EditorWidgetBase
         }
         else {}
 
+   }
+   public function showInSidebar() {
+       return true;
    }
    public function renderBlock() {}
    public function buildSettings() {}

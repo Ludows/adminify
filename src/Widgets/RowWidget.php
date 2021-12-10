@@ -15,7 +15,7 @@ class RowWidget extends EditorWidgetBase {
 
     public function renderBlock() {
 
-        return '<div '. $this->renderAttributes() .'>'. $this->getNestableHtml() .'</div>';
+        return '<div '. $this->renderAttributes() .'></div>';
     }
     public function allowContentEdition() {
         return false;

@@ -40,9 +40,36 @@ class EditorController extends Controller
 
         $classStr = adminify_get_class($widget, ['app:widgets', 'app:adminify:widgets'], false);
         $config = $request->get('config');
-        $widgetObject = new $classStr;
+        $return_datas = [];
 
-        return $this->sendResponse($widgetObject->handle($config), url()->previous(), 'admin.typed_data.success', 'data');
+
+        switch ($widget) {
+            case 'ColumnWidget':
+                # code...
+                $count = intval( $config['count'] );
+
+                for ($i=0 ; $i < $count; $i++) {
+                    # code...
+                    $widgetObject = new $classStr;
+
+                    $widgetObject->config = $config;
+
+                    $return_datas[] = $widgetObject->handle();
+                }
+                break;
+
+            default:
+                $widgetObject = new $classStr;
+
+                $widgetObject->config = $config;
+                # code...
+                $return_datas[] = $widgetObject->handle();
+                break;
+        }
+
+
+
+        return $this->sendResponse($return_datas, url()->previous(), 'admin.typed_data.success', 'data');
     }
     public function removeWidget() {}
     public function autosave() {}

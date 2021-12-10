@@ -17,6 +17,12 @@
         outline: none;
     }
 }
+
+[data-visual-element] {
+    min-height: 60px;
+    border: 1px solid red;
+}
+
 [data-editor] {
     // background-color: red;
     // overflow-x: hidden;

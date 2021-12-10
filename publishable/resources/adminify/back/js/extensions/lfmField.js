@@ -83,7 +83,7 @@ export default function LFMField(fields) {
                 }
             })
         });
-        console.log(items);
+        // console.log(items);
         return items;
     }
 
@@ -115,7 +115,9 @@ export default function LFMField(fields) {
         let ifr_content = ifr.contents();
 
         $(ifr_content).on('click', '#actions a[data-action="use"]', function() {
+            console.log(datas)
             updateFieldProcess(datas);
+            datas.hidden.trigger('change');
             datas.el.css({
                 'display': 'none'
             });
@@ -144,7 +146,7 @@ export default function LFMField(fields) {
     function updateFieldProcess(ObjectInterface) {
 
         selectedItems = getSelection(ObjectInterface.ifr);
-        console.log('TEST>>')
+        // console.log('TEST>>')
         GenerateSelection(ObjectInterface.el_wrapper, selectedItems);
         if(selectedItems.length > 0 && ObjectInterface.fromMediaEntity == 0) {
             requestMedia(selectedItems, function(err, d) {
@@ -218,6 +220,7 @@ export default function LFMField(fields) {
             e.stopPropagation();
             $($el_wrapper).find('.js-selection').remove();
             $hidden.val(null);
+            $hidden.trigger('change');
 
             $el.css({
                 'display': ''
