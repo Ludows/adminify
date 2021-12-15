@@ -40,6 +40,7 @@ class SidebarControlsBlock extends InterfacableBlock {
 
         $form = $this->formbuilder->create($theClass, [
             'method' => $method,
+            'id' => 'MainFormEditor',
             'url' => route($route)
         ]);
 

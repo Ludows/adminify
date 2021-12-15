@@ -11,10 +11,14 @@
             <a href="#" class="btn btn-outline-default btn-sm js-template">
                 {{ __('admin.editor.sidebar.addTemplate') }}
             </a>
+
+            <a href="#" data-handle=".sidebar_domthree" class="btn btn-outline-default btn-sm js-sidebar">
+                {{ __('admin.editor.sidebar.domThree') }}
+            </a>
         </div>
         <div class="col text-right">
-            <a href="#" class="btn btn-outline-primary btn-sm js-preview">
-                {{ __('admin.editor.preview') }}
+            <a href="#" data-handle=".sidebar_js" class="btn btn-outline-primary btn-sm js-sidebar">
+                {{ __('admin.editor.addCustomJs') }}
             </a>
             <a href="#" data-handle=".sidebar_controls" class="btn btn-outline-default js-sidebar">
                 {{ __('admin.editor.settings') }}

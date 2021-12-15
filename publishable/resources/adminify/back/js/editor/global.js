@@ -5,7 +5,9 @@ $(document).on('editor:ready', function(e, details) {
 
     editor.on('change', '[data-editor-track="tag"]', function(e) {
        let val = $(this).val();
-       let element = getVisualElement( $(this) )
+
+       let wId = getTheWidgetId( $(this) );
+       let element = getVisualElement( wId )
 
        let format = formatAttributes( element );
        let strAttribs = renderAttributes(format);
@@ -13,12 +15,14 @@ $(document).on('editor:ready', function(e, details) {
        let sInstance = Sortable.get( element.get(0) );
 
        // destroy the instance of the sortable
-       sInstance.destroy()
+       if(sInstance != null) {
+         sInstance.destroy()
+       }
 
        element.replaceWith('<'+ val +' '+ strAttribs +'>'+ element.html() +'</'+ val +'>');
 
        // update element due to dom structure update..
-       element = getVisualElement( $(this) )
+       element = getVisualElement( wId )
 
        editor.trigger('editor:change:tag', {
            element : element
@@ -213,16 +217,6 @@ $(document).on('editor:ready', function(e, details) {
                 removeStyledComponentStyles('.styled_components_block[data-rule="'+ rule_set[i] +'"][data-breakpoint="false"][data-uuid="'+wId+'"][data-type="'+wType+'"]');
             })
         }
-
-        // generateCss({
-        //     uuid : getTheWidgetId( $(this) ),
-        //     widgetType: getTheWidgetType( $(this) ),
-        //     breakpoint : false, // set as false when no breakpoint css generation is needed,
-        //     rule : {
-        //         property : 'text-transform',
-        //         value : val
-        //     }
-        // });
      });
 
      editor.on('change', '[data-editor-track="rowDirection"]', function(e) {
@@ -339,6 +333,17 @@ $(document).on('editor:ready', function(e, details) {
             }
         });
     });
+
+
+    $(editor).on('click', '.js-btn-action', function(e) {
+        e.preventDefault();
+
+        let action = $(this).attr('data-action');
+        let wId = $(this).attr('data-visual-element');
+
+        doAction(action, wId);
+
+    })
 
 
      // breakpoints style based components

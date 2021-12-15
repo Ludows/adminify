@@ -1,20 +1,35 @@
 function getTheWidgetId(mixed) {
 
     let widgetId = null;
-    if(mixed.get(0).hasAttribute('data-visual-element')) {
-        widgetId = mixed.attr('data-visual-element');
+    if(typeof mixed == 'string') {
+        widgetId = mixed;
     }
     else {
-        let theForm = mixed.get(0).form;
+        if(mixed.get(0).hasAttribute('data-visual-element')) {
+            widgetId = mixed.attr('data-visual-element');
+        }
+        else {
+            let theForm = mixed.get(0).form;
 
-        widgetId = $(theForm).find('[name="widget_uuid"]').val();
+            widgetId = $(theForm).find('[name="widget_uuid"]').val();
+        }
     }
-
 
     return widgetId;
 }
 
-function getChooserBox(formElement) {}
+function findToolbar(uuid) {
+    let ret = null;
+
+    $.each(window.toolbars, function(i, toolbar) {
+        if(toolbar.name === uuid) {
+            ret = toolbar;
+            return false;
+        }
+    });
+
+    return ret;
+}
 
 function createSortableZone(elm, options) {
    return new Sortable(elm, options);
@@ -77,12 +92,29 @@ function getTheWidgetType(mixed) {
     return widgetType;
 }
 
-function getVisualElement(formElement) {
-    let val = formElement.val();
+function doAction(actionName, widgetId) {
 
-    let wId = getTheWidgetId( formElement );
+    let visual = getVisualElement(widgetId);
 
-    let element = $('[data-visual-element="'+ wId +'"]');
+    switch (actionName) {
+        case 'gotoparent':
+            visual.parent().trigger('click');
+            break;
+
+        default:
+            console.log('action type not recongnized: '+actionName);
+            break;
+    }
+
+
+}
+
+function getVisualElement(mixed) {
+    let val = typeof mixed == 'string' ? mixed : mixed.val();
+
+    let wId = getTheWidgetId( val );
+
+    let element = $('.visual_element_block[data-visual-element="'+ wId +'"]');
 
     return element;
 }
@@ -135,6 +167,61 @@ function removeStyledComponentStyles(selector, objectOptions = {}) {
         check.remove();
         // '.styled_components_block[data-rule="'+ objectOptions.rule.property +'"][data-breakpoint="'+objectOptions.breakpoint+'"][data-uuid="'+objectOptions.uuid+'"][data-type="'+objectOptions.widgetType+'"]'
     }
+}
+
+function agregateForPublish(object = {}) {
+
+
+    return {
+        formData : getFormDatas(),
+        css : getRuleSets(),
+        js : getDynamicJS()
+    }
+}
+
+function getRuleSets() {
+    let a = [];
+
+    let keysBreakpoints = Object.keys(window.editorConfig.breakpoints);
+
+    // false is to bind styles with no breakpoints
+    let rules = [false, ...keysBreakpoints];
+
+    $.each(rules, function(i, ruleName) {
+
+        let styledComponents = $('.styled_components_block[data-breakpoint="'+ ruleName +'"]');
+
+        if(styledComponents.length > 0) {
+            $.each(styledComponents, function(k, styleBlock) {
+
+                let _el = $(styleBlock);
+                a.push({
+                   rule : _el.attr('data-rule'),
+                   breakpoint : _el.attr('data-breakpoint'),
+                   uuid : _el.attr('data-uuid'),
+                   uuid : _el.attr('data-uuid'),
+                   widgetType: _el.attr('data-type'),
+                   styles : _el.html()
+                });
+            });
+        }
+
+    })
+
+    console.log('a', a);
+    return a;
+}
+function getDynamicJS() {}
+function getHtmlRendered() {
+    return $('#renderZoneWidgets').html().trim();
+}
+function getFormDatas() {
+    let the_form = $('#MainFormEditor');
+
+    let o = the_form.serializeFormJSON();
+    o.content = getHtmlRendered();
+
+    return o;
 }
 
 function generateCss(objectOptions) {
@@ -225,7 +312,13 @@ window.generateMediaQuery = generateMediaQuery;
 window.formatAttributes = formatAttributes;
 window.renderAttributes = renderAttributes;
 window.removeStyledComponentStyles = removeStyledComponentStyles;
-window.getChooserBox = getChooserBox;
 window.addWidget = addWidget;
 window.createSortableZone = createSortableZone;
 window.isVisualElement = isVisualElement;
+window.agregateForPublish = agregateForPublish;
+window.getRuleSets = getRuleSets;
+window.getDynamicJS = getDynamicJS;
+window.getHtmlRendered = getHtmlRendered;
+window.getFormDatas = getFormDatas;
+window.findToolbar = findToolbar;
+window.doAction = doAction;

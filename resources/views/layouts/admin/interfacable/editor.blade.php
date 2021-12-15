@@ -1,7 +1,9 @@
 <div class="adminify_editor">
 
     <script>
+        window.toolbars = [];
         window.editorConfig = @json($siteConfig['editor']);
+
     </script>
     {!! $blocks['topbar-editor-block']->render() !!}
     {!! $blocks['sidebar-block']->render() !!}

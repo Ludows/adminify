@@ -69,8 +69,22 @@ $(document).ready(function ($) {
 
         })
 
+        $(window).on('resize', function(e) {
+            let topbar = $(editor).find('.editor-topbar');
+
+            let zoneToApply = $(editor).find('.render_zone');
+
+            zoneToApply.css({
+                'padding-top' : topbar.outerHeight(true)+'px'
+            })
+        })
+
         $(editor).on('click', '.js-publish', function(e) {
             e.preventDefault();
+
+            let jsonAgregate = agregateForPublish();
+
+            console.log('jsonAgregate', jsonAgregate)
 
             // localStorage.setItem('page-')
         });
@@ -80,6 +94,7 @@ $(document).ready(function ($) {
             e.stopPropagation();
 
             let $wId = getTheWidgetId( $(this) );
+            let visual = getVisualElement( $wId );
 
             // console.log('$wId', $wId)
 
@@ -96,21 +111,57 @@ $(document).ready(function ($) {
                 }
             })
 
+            visual.removeClass('d-none');
             $('.js-choose-box[data-ref="'+ $wId +'"]').remove()
         });
+
+        $(editor).on('click', '#renderZoneWidgets', function(e) {
+
+            // console.log('render widgets')
+
+            let toolbar = $(editor).find('.toolbar-element');
+            let uuid = getTheWidgetId( toolbar );
+
+            let node = e.relatedTarget;
+            if (e.relatedTarget == null) {
+                node = sortable_renderer.get(0);
+            }
+
+            if (sortable_renderer.get(0).contains(node) == true) {
+                $(editor).find('.js-no-bloc-selected').removeClass('d-none').addClass('d-block');
+                $('#pills-global-settings-tab').trigger('click');
+                $('.block_settings').addClass('d-none').removeClass('d-block')
+            }
+
+            // console.log('data element', uuid)
+            $(editor).trigger('editor:toolbar:destroy', {
+                uuid: uuid
+            });
+
+            $(editor).attr('data-active-widget', '');
+
+
+        })
 
         sortable_renderer.on('click', '.visual_element_block', function (e) {
             e.preventDefault();
 
+            $('.visual_element_block').not($(this)).removeClass('active-widget');
             if (e.target === e.currentTarget) {
                 // do something
                 e.stopPropagation();
             }
 
+            $(this).addClass('active-widget');
             // console.log('visual block', e)
-            let uuid = $(this).attr('data-visual-element');
+            let uuid = getTheWidgetId( $(this) );
+
+            $(editor).attr('data-active-widget', uuid);
 
             // console.log('data element', uuid)
+            $(editor).trigger('editor:toolbar:create', {
+                uuid: uuid
+            });
 
             $(editor).trigger('editor:widget:show', {
                 uuid: uuid
@@ -130,22 +181,38 @@ $(document).ready(function ($) {
 
         })
 
-        sortable_renderer.on('blur', '.visual_element_block', function (e) {
+        $(editor).on('editor:toolbar:create', function(e, detail) {
 
+            let toolbar_obj = findToolbar( detail.uuid );
+            // console.log(toolbar_obj, $(this));
 
-            let node = e.relatedTarget;
-            if (e.relatedTarget == null) {
-                node = sortable_renderer.get(0);
+            let check = $(this).find('.toolbar[data-visual-element="'+ toolbar_obj.name +'"]');
+
+            $(this).find('.toolbar').not(check).remove();
+
+            if(check.length == 0) {
+                $(this).find('.render_zone .container').append(toolbar_obj.html);
+
+                // update for css
+                check = $(this).find('.toolbar[data-visual-element="'+ toolbar_obj.name +'"]');
+                let visualElement = getVisualElement( toolbar_obj.name );
+
+                check.css({
+                    top: (visualElement.offset().top  ) - ($('.title_zone').outerHeight(true) + check.outerHeight(true) ),
+                    left : visualElement.offset().left
+                })
             }
-
-            if (sortable_renderer.get(0).contains(node) == true) {
-                $(editor).find('.js-no-bloc-selected').removeClass('d-none').addClass('d-block');
-                $('#pills-global-settings-tab').trigger('click');
-                $('.block_settings').addClass('d-none').removeClass('d-block')
-            }
-
         });
 
+        $(editor).on('editor:toolbar:destroy', function(e, detail) {
+            let toolbar_obj = findToolbar( detail.uuid );
+            let check = $(this).find('.toolbar[data-visual-element="'+ toolbar_obj.name +'"]');
+            if(check.length > 0) {
+                $(this).find('.toolbar[data-visual-element="'+ toolbar_obj.name +'"]').remove();
+            }
+        });
+
+        $(editor).trigger('resize');
 
         $(editor).trigger('editor:ready', {
             el: editor,
@@ -238,11 +305,11 @@ $(document).ready(function ($) {
         });
 
         $(editor).on('editor:create:sortable', function(e, detail) {
-            console.log('detail from sortable', detail)
+            // console.log('detail from sortable', detail)
 
             let zone = detail.element ? detail.element : $(this).find('.visual_element_block[data-visual-element="'+ detail.uuid +'');
 
-            console.log(zone);
+            // console.log(zone);
             let sortable = createSortableZone( zone.get(0) , {
                 handle: '.visual_element_block',
                 group: 'shared',
@@ -253,11 +320,21 @@ $(document).ready(function ($) {
             });
         });
 
+        $(editor).on('editor:prepare:toolbar', function(e, detail) {
+
+            window.toolbars.push({
+                'name' : detail.uuid,
+                'html' : detail.toolbar,
+                'type' : detail.widgetType
+            })
+        })
+
         $(editor).on('editor:widget:new', function (e, detail) {
             // console.log('details', detail, e);
             $(e.target).trigger('editor:widget:settings:create', detail.config);
             $(e.target).trigger('editor:widget:block:create', detail.config);
 
+            $(e.target).trigger('editor:prepare:toolbar', detail.config);
             $(e.target).trigger('editor:widget:show', detail.config)
 
             if(detail.config.allowChildsNesting) {

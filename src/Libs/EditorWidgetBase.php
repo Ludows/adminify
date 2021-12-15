@@ -9,6 +9,7 @@ class EditorWidgetBase
         $this->request = request();
         $this->form = [];
         $this->chooseTemplate = [];
+        $this->toolbar = [];
         $this->formbuilder = app('Kris\LaravelFormBuilder\FormBuilder');
         $this->showInGroups = [];
         $this->name = $this->getName();
@@ -18,6 +19,7 @@ class EditorWidgetBase
         $this->uuid = null;
         $this->isChild = false;
         $this->config = null;
+        $this->type = class_basename($this);
         $injector = $this->addChildsBlocks();
 
         if(!empty($injector)) {
@@ -29,20 +31,91 @@ class EditorWidgetBase
         }
    }
    public function addEditorAsset() {
-       return [];
+      return [];
    }
    public function addFrontAsset() {
-       return [];
+      return [];
    }
    // allow to create inetrface to choose an element to render
    public function chooseTemplate() {
-        return null;
+      return null;
    }
+   public function _setDefaultsToolbarActions() {
+
+        if($this->isChild) {
+            $this->addToolbarItem('goToParent', 'button', [
+
+            ]);
+        }
+        $this->addToolbarItem('iconWidgetType', 'button', [
+
+        ]);
+
+        if($this->type == 'ColumnWidget') {
+            $this->addToolbarItem('moreColumn', 'button', [
+
+            ]);
+            $this->addToolbarItem('deleteColumn', 'button', [
+
+            ]);
+        }
+
+        $this->addToolbarItem('moreOptions', 'dropdown', [
+
+        ]);
+
+        // dropdown groups moreOptions
+        $this->addToolbarItem('duplicate', 'dropdown-item', [
+            'child' => 'moreOptions'
+        ]);
+
+        $this->addToolbarItem('delete', 'dropdown-item', [
+            'child' => 'moreOptions'
+        ]);
+
+   }
+  // public allow to add items to the toolbar
+   public function toolbarRender() {
+        $this->_setDefaultsToolbarActions();
+
+   }
+
+   public function addToolbarItem($name = '', $type = null, $options = []) {
+
+    $isChild = isset($options['child']) && strlen($options['child']) > 0;
+
+    $a = array(
+        'type' => $type,
+        'name' => $name,
+        'childs' => [],
+        'datas' => $this->config
+    );
+
+    if(empty($this->toolbar[$name]) && !$isChild) {
+        $this->toolbar[$name] = $a;
+    }
+    if($isChild) {
+        $this->toolbar[$options['child']]['childs'][$name] = $a;
+    }
+
+    return $this;
+   }
+
+   public function removeToolbarItem($name) {
+        if(!empty($this->toolbar[$name])) {
+            unset($this->toolbar[$name]);
+        }
+        return $this;
+   }
+
    public function getView() {
        return 'adminify::layouts.admin.interfacable.editor.renderers.form_settings';
    }
    public function getChooseTemplateView() {
     return 'adminify::layouts.admin.interfacable.editor.renderers.choose_template';
+   }
+   public function getToolbarView() {
+    return 'adminify::layouts.admin.interfacable.editor.renderers.toolbar';
    }
    public function allowChildsNesting() {
        return true;
@@ -70,6 +143,10 @@ class EditorWidgetBase
         $a['data-visual-element'] = $this->uuid;
 
         $a['class'][]  = 'visual_element_block';
+
+        if(count($this->chooseTemplate) > 0) {
+            $a['class'][]  = 'd-none';
+        }
 
         if($this->isChild) {
             $a['class'][]  = 'is-child';
@@ -183,6 +260,7 @@ class EditorWidgetBase
             'render' => null,
             'settings' => null,
             'choose' => null,
+            'toolbar' => null,
             'widgetType' => class_basename($this),
             'parent_uuid' => !empty($config['parent_uuid']) ? $config['parent_uuid'] : null,
             'isChildBlock' => $this->isChild,
@@ -193,6 +271,11 @@ class EditorWidgetBase
 
         $viewPath = $this->getView();
         $chooseTemplatePath = $this->getChooseTemplateView();
+        $toolbarPath = $this->getToolbarView();
+
+        $this->buildSettings();
+        $this->chooseTemplate();
+        $this->toolbarRender();
 
         if(!empty($config['newWidget'])) {
             $this->uuid = 'widget_'.uuid(20);
@@ -209,9 +292,6 @@ class EditorWidgetBase
                     'value' => $this->uuid,
                 ]);
             }
-
-            $this->buildSettings();
-            $this->chooseTemplate();
 
             if(count($this->chooseTemplate) > 0) {
 
@@ -241,6 +321,15 @@ class EditorWidgetBase
                 ])->render();
             }
 
+            if(count($this->toolbar) > 0) {
+                $renderJson['toolbar'] = $this->view->make($toolbarPath, [
+                    'items' => $this->toolbar,
+                    'editor' => $this->editor,
+                    'uuid' => $this->uuid,
+                    'breakpoints_names' => $this->breakpoints_names
+                ])->render();
+            }
+
             if(count($this->form) > 0) {
                 $renderJson['settings'] = $this->formbuilder->createByArray($this->form, [
                     'method' => 'POST',
@@ -263,10 +352,6 @@ class EditorWidgetBase
                     'breakpoints_names' => $this->breakpoints_names
                 ])->render();
             }
-        }
-
-        if(!empty($chooser)) {
-
         }
 
         return $renderJson;

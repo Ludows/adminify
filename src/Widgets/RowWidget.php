@@ -11,8 +11,6 @@ class RowWidget extends EditorWidgetBase {
     public function getName() {
         return __('admin.editor.widgets.row');
     }
-    public function getInlineToolbarRender() {}
-
     public function renderBlock() {
 
         return '<div '. $this->renderAttributes() .'></div>';

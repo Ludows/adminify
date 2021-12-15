@@ -14,8 +14,6 @@ class ColumnWidget extends EditorWidgetBase {
     public function getName() {
         return __('admin.editor.widgets.column');
     }
-    public function getInlineToolbarRender() {}
-
     public function renderBlock() {
 
         return '<div '. $this->renderAttributes() .'></div>';

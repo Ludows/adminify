@@ -11,8 +11,6 @@ class TitleWidget extends EditorWidgetBase {
     public function getName() {
         return __('admin.editor.widgets.title');
     }
-    public function getInlineToolbarRender() {}
-
     public function renderBlock() {
         return '<h1 '. $this->renderAttributes() .'>'. __('admin.editor.add_your_text') . '</h1>';
     }
