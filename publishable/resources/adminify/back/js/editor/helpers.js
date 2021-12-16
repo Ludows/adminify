@@ -92,15 +92,45 @@ function getTheWidgetType(mixed) {
     return widgetType;
 }
 
-function doAction(actionName, widgetId) {
+function doAction(actionName, widgetId, actionEl = null) {
 
     let visual = getVisualElement(widgetId);
+    let editor = visual.parents('[data-editor]').first();
 
     switch (actionName) {
         case 'gotoparent':
             visual.parent().trigger('click');
             break;
+        case 'deletecolumn':
+            break;
+        case 'morecolumn':
+            var childrens = visual.parent().children();
+            if(childrens.length < window.editorConfig.patterns.max_columns) {
+                actionEl.removeAttr('disabled');
 
+                addWidget(editor, 'ColumnWidget', {
+                    config : {
+                        child : true,
+                        parent_uuid : getTheWidgetId(visual.parent()),
+                        parent_widgetType : getTheWidgetType(visual.parent())
+                    }
+                });
+            }
+
+            doAction('check-morecolumn', widgetId, actionEl)
+            //update after creation
+
+            break;
+        case 'check-morecolumn':
+            var childrens = visual.parent().children();
+            // console.log('childrens', childrens, actionEl)
+            if(childrens.length < window.editorConfig.patterns.max_columns) {
+                actionEl.removeAttr('disabled');
+            }
+            if(childrens.length >= window.editorConfig.patterns.max_columns) {
+                actionEl.attr('disabled', 'disabled');
+            }
+        break;
         default:
             console.log('action type not recongnized: '+actionName);
             break;
@@ -109,8 +139,25 @@ function doAction(actionName, widgetId) {
 
 }
 
+function getActionNames(uuid) {
+
+    let actionTypes = []
+    let tollbar = $('.toolbar[data-visual-element="'+ uuid +'"]')
+    let actions = tollbar.find('[data-action]');
+
+    $.each(actions, function(i, action) {
+        actionTypes.push( $(action).attr('data-action') )
+    });
+
+    return actionTypes;
+}
+
 function getVisualElement(mixed) {
     let val = typeof mixed == 'string' ? mixed : mixed.val();
+
+    if(val == null) {
+        val = mixed;
+    }
 
     let wId = getTheWidgetId( val );
 
@@ -322,3 +369,4 @@ window.getHtmlRendered = getHtmlRendered;
 window.getFormDatas = getFormDatas;
 window.findToolbar = findToolbar;
 window.doAction = doAction;
+window.getActionNames = getActionNames;

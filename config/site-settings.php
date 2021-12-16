@@ -49,6 +49,7 @@ return [
         'patterns' => [
             'column_minimal' => 1,
             'column_maximal' => 12,
+            'max_columns' => 6,
             'columns' => 'col-##BREAKPOINT##-##WIDTH##'
         ],
         'defaultsCssConfigClass' => [

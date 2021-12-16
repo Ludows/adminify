@@ -1,4 +1,4 @@
-<div class="editor-topbar shadow-lg bg-white sticky-top container-fluid">
+<div class="editor-topbar shadow-lg bg-white fixed-top container-fluid">
     <div class="row justify-content-between align-items-center">
         <div class="col">
             <a href="{{ route($name.'.index') }}" class="btn btn-return btn-default btn-lg rounded-0">

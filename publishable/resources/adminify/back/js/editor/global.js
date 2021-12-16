@@ -3,6 +3,8 @@ $(document).on('editor:ready', function(e, details) {
     let editor = $(details.el);
     let previousCssClass = '';
 
+    editor.trigger('resize');
+
     editor.on('change', '[data-editor-track="tag"]', function(e) {
        let val = $(this).val();
 
@@ -29,6 +31,7 @@ $(document).on('editor:ready', function(e, details) {
        });
 
     });
+
 
     editor.on('change', '[data-editor-track="textTransform"]', function(e) {
         let val = $(this).val();
@@ -341,7 +344,7 @@ $(document).on('editor:ready', function(e, details) {
         let action = $(this).attr('data-action');
         let wId = $(this).attr('data-visual-element');
 
-        doAction(action, wId);
+        doAction(action, wId, $(this));
 
     })
 

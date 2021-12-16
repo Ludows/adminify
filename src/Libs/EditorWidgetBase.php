@@ -44,34 +44,43 @@ class EditorWidgetBase
 
         if($this->isChild) {
             $this->addToolbarItem('goToParent', 'button', [
-
+                'icon' => 'ni-settings-gear-65',
+                'btn_bg' => 'outline-secondary'
             ]);
         }
         $this->addToolbarItem('iconWidgetType', 'button', [
-
+            'icon' => 'ni-settings-gear-65',
+            'btn_bg' => 'default'
         ]);
 
         if($this->type == 'ColumnWidget') {
             $this->addToolbarItem('moreColumn', 'button', [
-
+                'icon' => 'ni-fat-add',
+                'btn_bg' => 'success'
             ]);
             $this->addToolbarItem('deleteColumn', 'button', [
-
+                'icon' => 'ni-fat-remove',
+                'btn_bg' => 'danger'
             ]);
         }
 
         $this->addToolbarItem('moreOptions', 'dropdown', [
-
+            'icon' => 'ni-settings-gear-65',
+            'btn_bg' => 'secondary'
         ]);
 
         // dropdown groups moreOptions
         $this->addToolbarItem('duplicate', 'dropdown-item', [
+            'icon' => 'ni-single-copy-04',
             'child' => 'moreOptions'
         ]);
 
         $this->addToolbarItem('delete', 'dropdown-item', [
-            'child' => 'moreOptions'
+            'icon' => 'ni-fat-remove',
+            'child' => 'moreOptions',
+
         ]);
+
 
    }
   // public allow to add items to the toolbar
@@ -84,12 +93,14 @@ class EditorWidgetBase
 
     $isChild = isset($options['child']) && strlen($options['child']) > 0;
 
-    $a = array(
+    $a = array_merge( array(
         'type' => $type,
         'name' => $name,
+        'icon' => null,
+        'btn_bg' => 'primary',
         'childs' => [],
         'datas' => $this->config
-    );
+    ), $options);
 
     if(empty($this->toolbar[$name]) && !$isChild) {
         $this->toolbar[$name] = $a;
@@ -156,7 +167,7 @@ class EditorWidgetBase
             $a['class'][] = $this->editor['defaultsCssConfigClass'][ class_basename($this) ];
         }
 
-        if( $a['data-type'] == 'ColumnWidget' && $this->config['count'] > 1 ) {
+        if( $a['data-type'] == 'ColumnWidget' && isset($this->config['count']) && $this->config['count'] > 1 ) {
             //create dynamic class column
             $column_pattern = $this->editor['patterns']['columns'];
             $col_max = $this->editor['patterns']['column_maximal'];

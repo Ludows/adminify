@@ -24,6 +24,7 @@ class ColumnWidget extends EditorWidgetBase {
     public function buildSettings() {
         $col_min = get_site_key('editor.patterns.column_minimal');
         $col_max = get_site_key('editor.patterns.column_maximal');
+        $count = isset($this->config['count']) ? $this->config['count'] : 1;
 
         $this->addSettingControl('tag', 'select', [
             'choices' => [
@@ -39,7 +40,7 @@ class ColumnWidget extends EditorWidgetBase {
                 'min' => $col_min,
                 'max' => $col_max
             ],
-            'value' => ( $col_max / $this->config['count'] )
+            'value' => ( $col_max /  $count )
         ]);
 
         $this->addSettingControl('bgType', 'select', [

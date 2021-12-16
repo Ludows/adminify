@@ -46,7 +46,7 @@ class EditorController extends Controller
         switch ($widget) {
             case 'ColumnWidget':
                 # code...
-                $count = intval( $config['count'] );
+                $count = intval( $config['count'] ?? '1' );
 
                 for ($i=0 ; $i < $count; $i++) {
                     # code...

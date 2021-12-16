@@ -9,6 +9,7 @@ $(document).ready(function ($) {
 
         let sidebar_widgets = $(editor).find('.sidebar_widgets')
         let sidebar_controls = $(editor).find('.sidebar_controls')
+        let render_zone = $(editor).find('.render_zone');
 
         let sortable_widgets = sidebar_widgets.find('.widget_zone');
         let sortable_renderer = $(editor).find('.render_zone .col-12').last();
@@ -42,7 +43,6 @@ $(document).ready(function ($) {
             $('#global-settings-tab form > input[name="title"]').val(text);
         })
 
-
         sidebars.on('click', function (e) {
             e.preventDefault();
             let data = $(this).attr('data-handle');
@@ -72,11 +72,14 @@ $(document).ready(function ($) {
         $(window).on('resize', function(e) {
             let topbar = $(editor).find('.editor-topbar');
 
-            let zoneToApply = $(editor).find('.render_zone');
-
-            zoneToApply.css({
-                'padding-top' : topbar.outerHeight(true)+'px'
+            // let zoneToApply = $(editor).find('.render_zone');
+            // console.log('before redraw', editor, topbar)
+            $(editor).trigger('editor:render:redraw', {
+                render_zone: $(editor).find('.render_zone'),
+                topbar : topbar,
             })
+            // console.log('after redraw', editor, topbar)
+
         })
 
         $(editor).on('click', '.js-publish', function(e) {
@@ -181,6 +184,40 @@ $(document).ready(function ($) {
 
         })
 
+        $(editor).on('editor:render:redraw', function (i, detail) {
+
+
+            // console.log('active', $(sidebar_widgets).hasClass('active'), detail)
+            if ($(sidebar_widgets).hasClass('active')) {
+                detail.render_zone.css({
+                    'padding-left': $(sidebar_widgets).outerWidth(true) + 'px'
+                })
+            } else {
+                detail.render_zone.css({
+                    'padding-left': ''
+                })
+            }
+
+            if(detail.topbar) {
+                let wH = $(window).height();
+                let hT = detail.topbar.outerHeight(true);
+                detail.render_zone.css({
+                    'padding-top' : hT+'px',
+                });
+            }
+
+            if ($(sidebar_controls).hasClass('active')) {
+                detail.render_zone.css({
+                    'padding-right': $(sidebar_controls).outerWidth(true) + 'px'
+                })
+            } else {
+                detail.render_zone.css({
+                    'padding-right': ''
+                })
+            }
+
+        });
+
         $(editor).on('editor:toolbar:create', function(e, detail) {
 
             let toolbar_obj = findToolbar( detail.uuid );
@@ -196,10 +233,15 @@ $(document).ready(function ($) {
                 // update for css
                 check = $(this).find('.toolbar[data-visual-element="'+ toolbar_obj.name +'"]');
                 let visualElement = getVisualElement( toolbar_obj.name );
+                let actions = getActionNames( detail.uuid );
 
                 check.css({
-                    top: (visualElement.offset().top  ) - ($('.title_zone').outerHeight(true) + check.outerHeight(true) ),
+                    top: (visualElement.offset().top  ) - ($('.title_zone').outerHeight(true) ),
                     left : visualElement.offset().left
+                })
+
+                $.each(actions, function(i, actionStr) {
+                    doAction('check-'+actionStr, toolbar_obj.name , check.find('[data-action="'+ actionStr +'"]') )
                 })
             }
         });
@@ -212,8 +254,6 @@ $(document).ready(function ($) {
             }
         });
 
-        $(editor).trigger('resize');
-
         $(editor).trigger('editor:ready', {
             el: editor,
             controls: sidebar_controls,
@@ -222,30 +262,7 @@ $(document).ready(function ($) {
             sortable_renderer_js: sortable_renderer_js
         });
 
-        $(editor).on('editor:render:redraw', function (i, detail) {
 
-            // console.log('active', $(sidebar_widgets).hasClass('active'), detail)
-            if ($(sidebar_widgets).hasClass('active')) {
-                detail.render_zone.css({
-                    'padding-left': $(sidebar_widgets).outerWidth(true) + 'px'
-                })
-            } else {
-                detail.render_zone.css({
-                    'padding-left': ''
-                })
-            }
-
-            if ($(sidebar_controls).hasClass('active')) {
-                detail.render_zone.css({
-                    'padding-right': $(sidebar_controls).outerWidth(true) + 'px'
-                })
-            } else {
-                detail.render_zone.css({
-                    'padding-right': ''
-                })
-            }
-
-        });
 
         $(editor).on('editor:template:call', function (e, detail) {
             // console.log('detail tpl', detail)
@@ -351,6 +368,7 @@ $(document).ready(function ($) {
                 sidebar: $(editor).find('.sidebar_widgets'),
                 btn: $(editor).find('.js-sidebar[data-handle=".sidebar_widgets"]')
             });
+
 
             $(editor).trigger('editor:render:redraw', {
                 render_zone: $(editor).find('.render_zone'),
