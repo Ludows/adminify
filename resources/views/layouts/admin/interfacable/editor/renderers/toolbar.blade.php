@@ -9,7 +9,7 @@
                 </button>
             @endif
 
-            @if($item['type'] == 'dropdown')
+            @if($item['type'] == 'dropdown' && !empty($item['childs']))
                 <div class="btn-group" role="group">
                     <button id="btnGroup_{{ $uuid }}" title="{!! __('admin.editor.'.$item['name']) !!}" type="button" class="btn btn-{{ $item['btn_bg'] }} dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <i class="ni {{ $item['icon'] }}"></i>

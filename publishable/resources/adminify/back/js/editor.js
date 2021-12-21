@@ -118,6 +118,31 @@ $(document).ready(function ($) {
             $('.js-choose-box[data-ref="'+ $wId +'"]').remove()
         });
 
+        $(editor).on('keyup', '.js-search-widget', function(e) {
+            e.preventDefault();
+
+            console.log('editor')
+
+            let blocks = $(this).parent().parent().next().find('.js-handle');
+            let val = $(this).val().toLowerCase();
+
+            console.log(blocks, val)
+
+            $.each(blocks, function(i, block) {
+
+                let blk = $(block);
+                let text = blk.find('.text-muted').text();
+
+                if(text.toLowerCase().indexOf(val) > -1) {
+                    blk.parent().addClass('d-block').removeClass('d-none');
+                }
+                else {
+                    blk.parent().removeClass('d-block').addClass('d-none')
+                }
+            });
+
+        });
+
         $(editor).on('click', '#renderZoneWidgets', function(e) {
 
             // console.log('render widgets')
@@ -242,6 +267,7 @@ $(document).ready(function ($) {
 
                 $.each(actions, function(i, actionStr) {
                     doAction('check-'+actionStr, toolbar_obj.name , check.find('[data-action="'+ actionStr +'"]') )
+                    doAction('make-tooltip', toolbar_obj.name, check.find('[data-action="'+ actionStr +'"]'))
                 })
             }
         });
@@ -344,6 +370,7 @@ $(document).ready(function ($) {
                 'html' : detail.toolbar,
                 'type' : detail.widgetType
             })
+
         })
 
         $(editor).on('editor:widget:new', function (e, detail) {

@@ -1,3 +1,5 @@
+{!! $block_description !!}
+
 {!! form_start($form) !!}
     @foreach($global_controls as $keyControl => $value)
         {!! form_row($form->{$keyControl}) !!}

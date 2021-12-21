@@ -80,6 +80,13 @@ $(document).on('editor:ready', function(e, details) {
         let column_maximal =  window.editorConfig.patterns.column_maximal;
         let element = getVisualElement( $(this) )
 
+        console.log('debug', {
+            pattern,
+            column_minimal,
+            column_maximal,
+            element
+        })
+
         // on nettoie la classe courante globale
 
         for (let index = column_minimal; index <= column_maximal; index++) {
@@ -343,11 +350,11 @@ $(document).on('editor:ready', function(e, details) {
 
         let action = $(this).attr('data-action');
         let wId = $(this).attr('data-visual-element');
-
+        $('.tooltip').remove();
         doAction(action, wId, $(this));
 
-    })
 
+    });
 
      // breakpoints style based components
 

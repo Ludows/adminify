@@ -31,6 +31,22 @@ function findToolbar(uuid) {
     return ret;
 }
 
+function removeWidget(uuid) {
+    let visual = getVisualElement(uuid);
+
+    visual.remove();
+
+    let settingBlock = getSettingBlock(uuid);
+
+    $('#renderZoneWidgets').trigger('click');
+
+    settingBlock.remove();
+}
+
+function getSettingBlock(uuid) {
+    return $('.block_settings[data-uuid="'+ uuid +'"');
+}
+
 function createSortableZone(elm, options) {
    return new Sortable(elm, options);
 }
@@ -97,11 +113,14 @@ function doAction(actionName, widgetId, actionEl = null) {
     let visual = getVisualElement(widgetId);
     let editor = visual.parents('[data-editor]').first();
 
+    console.log('actionName', actionName)
+
     switch (actionName) {
         case 'gotoparent':
             visual.parent().trigger('click');
             break;
         case 'deletecolumn':
+            removeWidget(widgetId);
             break;
         case 'morecolumn':
             var childrens = visual.parent().children();
@@ -120,6 +139,12 @@ function doAction(actionName, widgetId, actionEl = null) {
             doAction('check-morecolumn', widgetId, actionEl)
             //update after creation
 
+            break;
+        case 'make-tooltip':
+            actionEl.tooltip({
+                html : true,
+                trigger: 'hover'
+            });
             break;
         case 'check-morecolumn':
             var childrens = visual.parent().children();
@@ -153,7 +178,13 @@ function getActionNames(uuid) {
 }
 
 function getVisualElement(mixed) {
-    let val = typeof mixed == 'string' ? mixed : mixed.val();
+    let val = undefined;
+    // we say the if as string..
+    if(typeof mixed == 'string') {
+        val = mixed;
+    }
+    //test if element is child element of a form.
+    val = typeof mixed == 'string' ? mixed : mixed;
 
     if(val == null) {
         val = mixed;
@@ -360,6 +391,7 @@ window.formatAttributes = formatAttributes;
 window.renderAttributes = renderAttributes;
 window.removeStyledComponentStyles = removeStyledComponentStyles;
 window.addWidget = addWidget;
+window.removeWidget = removeWidget;
 window.createSortableZone = createSortableZone;
 window.isVisualElement = isVisualElement;
 window.agregateForPublish = agregateForPublish;
@@ -370,3 +402,4 @@ window.getFormDatas = getFormDatas;
 window.findToolbar = findToolbar;
 window.doAction = doAction;
 window.getActionNames = getActionNames;
+window.getSettingBlock = getSettingBlock;

@@ -43,13 +43,21 @@ class EditorWidgetBase
    public function _setDefaultsToolbarActions() {
 
         if($this->isChild) {
+
+            $icon = 'ni-settings-gear-65';
+
+            if(!empty($this->config['parent_widgetType'])) {
+                $cls_parent = adminify_get_class($this->config['parent_widgetType'], ['app:widgets', 'app:adminify:widgets'], false);
+                $cls_parent = new $cls_parent;
+            }
+
             $this->addToolbarItem('goToParent', 'button', [
-                'icon' => 'ni-settings-gear-65',
+                'icon' => $cls_parent->getIcon(),
                 'btn_bg' => 'outline-secondary'
             ]);
         }
         $this->addToolbarItem('iconWidgetType', 'button', [
-            'icon' => 'ni-settings-gear-65',
+            'icon' => $this->getIcon(),
             'btn_bg' => 'default'
         ]);
 
@@ -69,17 +77,20 @@ class EditorWidgetBase
             'btn_bg' => 'secondary'
         ]);
 
-        // dropdown groups moreOptions
-        $this->addToolbarItem('duplicate', 'dropdown-item', [
-            'icon' => 'ni-single-copy-04',
-            'child' => 'moreOptions'
-        ]);
+        if($this->type != 'ColumnWidget') {
 
-        $this->addToolbarItem('delete', 'dropdown-item', [
-            'icon' => 'ni-fat-remove',
-            'child' => 'moreOptions',
+            // dropdown groups moreOptions
+            $this->addToolbarItem('duplicate', 'dropdown-item', [
+                'icon' => 'ni-single-copy-04',
+                'child' => 'moreOptions'
+            ]);
 
-        ]);
+            $this->addToolbarItem('delete', 'dropdown-item', [
+                'icon' => 'ni-fat-remove',
+                'child' => 'moreOptions',
+
+            ]);
+        }
 
 
    }
@@ -284,6 +295,15 @@ class EditorWidgetBase
         $chooseTemplatePath = $this->getChooseTemplateView();
         $toolbarPath = $this->getToolbarView();
 
+        $block_description = "<div class='media'>
+            <i class='". $this->getIcon() ."'></i>
+            <div class='media-body'>
+                <h5 class='mt-0'>". $this->getName() ."</h5>
+                <p>". $this->getDescription() ."</p>
+            </div>
+        </div>";
+
+
         $this->buildSettings();
         $this->chooseTemplate();
         $this->toolbarRender();
@@ -355,6 +375,7 @@ class EditorWidgetBase
                 $breakpointsFields = $this->getBreakpointsControlFieldsByTypes();
 
                 $renderJson['settings'] = $this->view->make($viewPath, [
+                    'block_description' => $block_description,
                     'form' => $renderJson['settings'],
                     'global_controls' => $globalsFields,
                     'breakpoints_controls' => $breakpointsFields,
