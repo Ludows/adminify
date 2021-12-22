@@ -9,6 +9,7 @@ $(document).ready(function ($) {
 
         let sidebar_widgets = $(editor).find('.sidebar_widgets')
         let sidebar_controls = $(editor).find('.sidebar_controls')
+        let sidebar_domthree = $(editor).find('.sidebar_domthree')
         let render_zone = $(editor).find('.render_zone');
 
         let sortable_widgets = sidebar_widgets.find('.widget_zone');
@@ -43,22 +44,35 @@ $(document).ready(function ($) {
             $('#global-settings-tab form > input[name="title"]').val(text);
         })
 
+        sidebar_domthree.on('click', '.media', function(e) {
+            let wId = getTheWidgetId( $(this) );
+            let visual = getVisualElement( wId );
+
+            visual.trigger('click');
+        });
+
         sidebars.on('click', function (e) {
             e.preventDefault();
             let data = $(this).attr('data-handle');
             let sidebar = $(editor).find(data);
+            let actionName = null;
 
             if ($(sidebar).hasClass('active')) {
                 $(editor).trigger('editor:sidebar:hide', {
                     sidebar: sidebar,
                     btn: $(editor).find('.js-sidebar[data-handle="' + data + '"]')
                 })
+                actionName = 'sidebar-close:'+data.substring(1);
             } else {
                 $(editor).trigger('editor:sidebar:show', {
                     sidebar: sidebar,
                     btn: $(editor).find('.js-sidebar[data-handle="' + data + '"]')
                 })
+                actionName = 'sidebar-open:'+data.substring(1);
             }
+
+            // create Action for register some scripts
+            doAction(actionName, null, null);
 
 
             $(editor).trigger('editor:render:redraw', {
@@ -211,17 +225,25 @@ $(document).ready(function ($) {
 
         $(editor).on('editor:render:redraw', function (i, detail) {
 
+            let sdr_lefts = [
+                $(sidebar_domthree),
+                $(sidebar_widgets)
+            ];
 
             // console.log('active', $(sidebar_widgets).hasClass('active'), detail)
-            if ($(sidebar_widgets).hasClass('active')) {
-                detail.render_zone.css({
-                    'padding-left': $(sidebar_widgets).outerWidth(true) + 'px'
-                })
-            } else {
-                detail.render_zone.css({
-                    'padding-left': ''
-                })
-            }
+            $.each(sdr_lefts, function(i, sdr_left) {
+                if ($(sdr_left).hasClass('active')) {
+                    detail.render_zone.css({
+                        'padding-left': $(sdr_left).outerWidth(true) + 'px'
+                    })
+                    return false;
+                } else {
+                    detail.render_zone.css({
+                        'padding-left': ''
+                    })
+                }
+            })
+
 
             if(detail.topbar) {
                 let wH = $(window).height();

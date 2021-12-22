@@ -8,7 +8,7 @@
                 {{ __('admin.editor.sidebar.open') }}
             </a>
 
-            <a href="#" class="btn btn-outline-default btn-sm js-template">
+            <a  data-handle=".sidebar_templates" href="#" class="btn btn-outline-default btn-sm js-sidebar">
                 {{ __('admin.editor.sidebar.addTemplate') }}
             </a>
 
@@ -17,9 +17,6 @@
             </a>
         </div>
         <div class="col text-right">
-            <a href="#" data-handle=".sidebar_js" class="btn btn-outline-primary btn-sm js-sidebar">
-                {{ __('admin.editor.addCustomJs') }}
-            </a>
             <a href="#" data-handle=".sidebar_controls" class="btn btn-outline-default js-sidebar">
                 {{ __('admin.editor.settings') }}
             </a>

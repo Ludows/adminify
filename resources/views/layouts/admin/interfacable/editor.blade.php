@@ -8,6 +8,9 @@
     {!! $blocks['topbar-editor-block']->render() !!}
     {!! $blocks['sidebar-block']->render() !!}
     {!! $blocks['sidebar-controls-block']->render() !!}
+    <div class="sidebar sidebar_domthree">
+        @todo
+    </div>
 
     <div class="render_zone h-100">
         {!! $blocks['renderer-block']->render() !!}

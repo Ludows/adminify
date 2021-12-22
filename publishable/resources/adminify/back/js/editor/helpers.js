@@ -18,6 +18,81 @@ function getTheWidgetId(mixed) {
     return widgetId;
 }
 
+function getDomThreeHtml(domThreeObject) {
+    return renderDomThree(domThreeObject)
+}
+
+function renderDomThree(domThreeObjectItem, isChild = false) {
+
+    let html = isChild ? '<div class="control_stage is-child">' : '<div class="control_stage">';
+
+    let oKeys = Object.keys(domThreeObjectItem);
+
+    $.each(domThreeObjectItem, function(i, domThree) {
+        console.log('domThree', domThree)
+        html += '<div class="control_stage_block">'+ domThree.html.clone(true).prop('outerHTML');
+        if(domThree.childs.length > 0) {
+            let a = renderDomThree(domThree.childs, true);
+            html += a;
+        }
+        html += '</div>';
+    });
+
+    html += '</div>';
+
+    return html;
+}
+
+function getListDomThree() {
+    let o = {};
+
+    let editor = $(document).find('[data-editor]').first();
+
+    let renderer = editor.find('#renderZoneWidgets');
+    let childrens = renderer.children();
+
+    if(childrens.length > 0) {
+        $.each(childrens, function(i, children) {
+           let representation = parseThree($(children));
+           o[i] = representation;
+        })
+    }
+    else {
+
+    }
+
+    return o;
+}
+
+function getPresentationBlock(uuid) {
+    return $('.media[data-visual-element="'+ uuid +'"');
+}
+
+function parseThree(parentElement) {
+
+    let wId = getTheWidgetId(parentElement);
+
+    let o = {
+        type : getTheWidgetType( parentElement ),
+        wId: wId,
+        html : getPresentationBlock( wId ),
+        childs : {}
+    };
+
+    let check = parentElement.children();
+
+    if(check.length > 0) {
+        $.each(check, function(i, c) {
+            let d = parseThree( $(c) );
+            o.childs[i] = d;
+        })
+    }
+
+    o.childs.length = Object.keys(o.childs).length;
+
+    return o;
+}
+
 function findToolbar(uuid) {
     let ret = null;
 
@@ -110,10 +185,10 @@ function getTheWidgetType(mixed) {
 
 function doAction(actionName, widgetId, actionEl = null) {
 
-    let visual = getVisualElement(widgetId);
-    let editor = visual.parents('[data-editor]').first();
+    let visual = widgetId != null ? getVisualElement(widgetId) : null;
+    let editor = visual != null ? visual.parents('[data-editor]').first() : $(document).find('[data-editor]').first();
 
-    console.log('actionName', actionName)
+    // console.log('actionName', actionName)
 
     switch (actionName) {
         case 'gotoparent':
@@ -139,6 +214,17 @@ function doAction(actionName, widgetId, actionEl = null) {
             doAction('check-morecolumn', widgetId, actionEl)
             //update after creation
 
+            break;
+        case 'sidebar-open:sidebar_domthree':
+
+            let List = getListDomThree();
+            let rendererList = getDomThreeHtml(List);
+            console.log('list render', rendererList);
+
+            editor.find('.sidebar_domthree').html('').html(rendererList)
+
+            break;
+        case 'sidebar-close:sidebar_domthree':
             break;
         case 'make-tooltip':
             actionEl.tooltip({
@@ -253,7 +339,6 @@ function agregateForPublish(object = {}) {
     return {
         formData : getFormDatas(),
         css : getRuleSets(),
-        js : getDynamicJS()
     }
 }
 
@@ -289,7 +374,6 @@ function getRuleSets() {
     console.log('a', a);
     return a;
 }
-function getDynamicJS() {}
 function getHtmlRendered() {
     return $('#renderZoneWidgets').html().trim();
 }
@@ -396,10 +480,14 @@ window.createSortableZone = createSortableZone;
 window.isVisualElement = isVisualElement;
 window.agregateForPublish = agregateForPublish;
 window.getRuleSets = getRuleSets;
-window.getDynamicJS = getDynamicJS;
 window.getHtmlRendered = getHtmlRendered;
 window.getFormDatas = getFormDatas;
 window.findToolbar = findToolbar;
 window.doAction = doAction;
 window.getActionNames = getActionNames;
 window.getSettingBlock = getSettingBlock;
+window.getListDomThree = getListDomThree;
+window.getDomThreeHtml = getDomThreeHtml;
+window.parseThree = parseThree;
+window.getPresentationBlock = getPresentationBlock;
+

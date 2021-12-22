@@ -295,7 +295,11 @@ class EditorWidgetBase
         $chooseTemplatePath = $this->getChooseTemplateView();
         $toolbarPath = $this->getToolbarView();
 
-        $block_description = "<div class='media'>
+        if(!empty($config['newWidget'])) {
+            $this->uuid = 'widget_'.uuid(20);
+        }
+
+        $block_description = "<div data-visual-element='". $this->uuid ."' class='media'>
             <i class='". $this->getIcon() ."'></i>
             <div class='media-body'>
                 <h5 class='mt-0'>". $this->getName() ."</h5>
@@ -309,7 +313,6 @@ class EditorWidgetBase
         $this->toolbarRender();
 
         if(!empty($config['newWidget'])) {
-            $this->uuid = 'widget_'.uuid(20);
             $renderJson['uuid'] = $this->uuid;
             $renderJson['render'] = $this->renderBlock() ?? '';
         }
