@@ -17,6 +17,7 @@ class CreateAssets extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('type');
+            $table->string('model');
             $table->json('data');
             $table->bigInteger('entity_id')->unsigned();
         });
