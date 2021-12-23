@@ -8,13 +8,13 @@ class TemplatesBlock extends InterfacableBlock {
     public static function getNamedBlock() {
         return 'Templates Block';
     }
-    public function query() {
-        $r = $this->getRequest();
-        $query = null;
-        return $query;
+    public function inject() {
+        return [
+            'mdlTemplate' => app( adminify_get_class('Templates', ['app:models', 'app:adminify:models'], false) ),
+        ];
     }
-    public function addToRender() {
-        return [];
+    public function query() {
+        return $this->mdlTemplate->all()->toArray();
     }
     public function getView() {
         return 'adminify::layouts.admin.interfacable.editor.templates';

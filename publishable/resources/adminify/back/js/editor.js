@@ -10,6 +10,8 @@ $(document).ready(function ($) {
         let sidebar_widgets = $(editor).find('.sidebar_widgets')
         let sidebar_controls = $(editor).find('.sidebar_controls')
         let sidebar_domthree = $(editor).find('.sidebar_domthree')
+        let sidebars_left = $(editor).find('.sidebar.left')
+        let sidebars_right = $(editor).find('.sidebar.right')
         let render_zone = $(editor).find('.render_zone');
 
         let sortable_widgets = sidebar_widgets.find('.widget_zone');
@@ -45,8 +47,13 @@ $(document).ready(function ($) {
         })
 
         sidebar_domthree.on('click', '.media', function(e) {
+            e.preventDefault();
             let wId = getTheWidgetId( $(this) );
             let visual = getVisualElement( wId );
+
+            let medias = sidebar_domthree.find('.media').not( $(this) );
+            medias.removeClass('active');
+            $(this).addClass('active');
 
             visual.trigger('click');
         });
@@ -135,8 +142,6 @@ $(document).ready(function ($) {
         $(editor).on('keyup', '.js-search-widget', function(e) {
             e.preventDefault();
 
-            console.log('editor')
-
             let blocks = $(this).parent().parent().next().find('.js-handle');
             let val = $(this).val().toLowerCase();
 
@@ -180,8 +185,9 @@ $(document).ready(function ($) {
                 uuid: uuid
             });
 
-            $(editor).attr('data-active-widget', '');
+            $(editor).removeAttr('data-active-widget');
 
+            sidebar_domthree.find('.media').removeClass('active');
 
         })
 
@@ -225,10 +231,13 @@ $(document).ready(function ($) {
 
         $(editor).on('editor:render:redraw', function (i, detail) {
 
-            let sdr_lefts = [
-                $(sidebar_domthree),
-                $(sidebar_widgets)
-            ];
+            let sdr_lefts = sidebars_left;
+            let sdr_rights = sidebars_right;
+
+            // let sdr_lefts_actives = sdr_lefts.filter( ".active" )
+            // let sdr_rights_actives = sdr_rights.filter( ".active" )
+            // console.log(sdr_lefts_actives, sdr_rights_actives);
+
 
             // console.log('active', $(sidebar_widgets).hasClass('active'), detail)
             $.each(sdr_lefts, function(i, sdr_left) {

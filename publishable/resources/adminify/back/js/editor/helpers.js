@@ -19,7 +19,17 @@ function getTheWidgetId(mixed) {
 }
 
 function getDomThreeHtml(domThreeObject) {
-    return renderDomThree(domThreeObject)
+    let checkThree = Object.keys(domThreeObject);
+    let ret = null;
+    if(checkThree.length > 0) {
+        ret = renderDomThree(domThreeObject);
+    }
+    else {
+        ret = `<div class="alert alert-info" role="alert">
+                ${ __('admin.editor.noItemsInDom') }
+               </div>`;
+    }
+    return ret;
 }
 
 function renderDomThree(domThreeObjectItem, isChild = false) {
@@ -29,7 +39,6 @@ function renderDomThree(domThreeObjectItem, isChild = false) {
     let oKeys = Object.keys(domThreeObjectItem);
 
     $.each(domThreeObjectItem, function(i, domThree) {
-        console.log('domThree', domThree)
         html += '<div class="control_stage_block">'+ domThree.html.clone(true).prop('outerHTML');
         if(domThree.childs.length > 0) {
             let a = renderDomThree(domThree.childs, true);

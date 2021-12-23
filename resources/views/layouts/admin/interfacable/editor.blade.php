@@ -2,15 +2,18 @@
 
     <script>
         window.toolbars = [];
+        window.actions = {};
         window.editorConfig = @json($siteConfig['editor']);
 
     </script>
     {!! $blocks['topbar-editor-block']->render() !!}
     {!! $blocks['sidebar-block']->render() !!}
     {!! $blocks['sidebar-controls-block']->render() !!}
-    <div class="sidebar sidebar_domthree">
+    <div class="sidebar left sidebar_domthree">
         @todo
     </div>
+    {!! $blocks['templates-block']->render() !!}
+
 
     <div class="render_zone h-100">
         {!! $blocks['renderer-block']->render() !!}

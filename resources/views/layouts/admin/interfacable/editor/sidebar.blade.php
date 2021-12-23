@@ -1,4 +1,4 @@
-<div class="sidebar sidebar_widgets">
+<div class="sidebar left sidebar_widgets">
     <div class="row">
         <div class="col-12">
             <input type="text" class="form-control js-search-widget" placeholder="{{ __('admin.editor.search_widget') }}">
