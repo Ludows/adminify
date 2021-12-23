@@ -17,6 +17,8 @@ return [
 
     //If you want to switch with the classic template for Posts and Page . Just comment inside bind
     'editor' => [
+        'handleAssetsGeneration' => 'after', // or after,
+        'diskForSave' => 'public',
         'blocks' => [], // you can add here new blocks for editor
         'breakpoints' => [
             'sm' => 576,

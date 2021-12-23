@@ -5,6 +5,7 @@ namespace Ludows\Adminify\Models;
 use Ludows\Adminify\Traits\Urlable;
 use Ludows\Adminify\Traits\Sitemapable;
 use Ludows\Adminify\Traits\HasSeo;
+use Ludows\Adminify\Traits\ProcessableAssets;
 use VanOns\Laraberg\Models\Gutenbergable;
 use Ludows\Adminify\Traits\Authorable;
 
@@ -22,6 +23,8 @@ abstract class ContentTypeModel extends ClassicModel
     use Sitemapable;
     use Gutenbergable;
     use Authorable;
+    use ProcessableAssets;
+
 
     public function status() {
         return $this->HasOne(Statuses::class, 'id', 'status_id');

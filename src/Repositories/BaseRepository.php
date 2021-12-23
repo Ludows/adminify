@@ -8,6 +8,9 @@ use Illuminate\Support\Str;
 use Ludows\Adminify\Facades\HookManagerFacade;
 use App\Adminify\Models\Media;
 
+use Illuminate\Support\Facades\Storage;
+
+
 class BaseRepository
 {
     use Repository;
@@ -107,6 +110,10 @@ class BaseRepository
 
         if(method_exists($this, 'beforeRun')) {
             call_user_func_array(array($this, 'beforeRun'), array($model, $formValues,  $type));
+
+            if($request->loadEditor) {
+                $this->handleAssetsGeneration($model, 'before');
+            }
         }
 
         $this->hookManager->run($hooks[0], $model);
@@ -155,6 +162,10 @@ class BaseRepository
 
         if(method_exists($this, 'afterRun')) {
             call_user_func_array(array($this, 'afterRun'), array($model, $formValues,  $type));
+            
+            if($request->loadEditor) {
+                $this->handleAssetsGeneration($model, 'after');
+            }
         }
 
         return $model;
@@ -207,5 +218,42 @@ class BaseRepository
         $this->hookManager->run('model:deleted', $model);
         $this->hookManager->run('process:finished', $model);
         return $model;
+    }
+    public function handleAssetsGeneration($model = null, $type = 'before') {
+        $request = request();
+        $editorGlobalConfig = get_site_key('editor');
+
+        $disk = Storage::disk($editorGlobalConfig['diskForSave']);
+
+        if($type == $editorGlobalConfig["handleAssetsGeneration"]) {
+            $styles = $request->get('_css');
+            $javascripts = $request->get('_js');
+
+            if(!empty($styles)) {
+                $styles = json_decode($styles);
+
+                $css_strings = '';
+
+                foreach ($styles as $styleObject) {
+                    # code...
+                    $css_strings .= $styleObject['styles'];
+                }
+
+                $namedFile = lowercase( class_basename($model) ).'-'.$model->id.'.css';
+
+                if(!$disk->exists( $namedFile )) {
+                    //create
+                    $disk->put($namedFile, $css_strings);
+
+                }
+                else {
+                    //update
+                    $disk->delete($namedFile);
+                    $disk->put($namedFile, $css_strings);
+                }
+            }
+
+            if(!empty($javascripts)) {}
+        }
     }
 }
