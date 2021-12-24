@@ -46,6 +46,9 @@ class SidebarControlsBlock extends InterfacableBlock {
 
         $fields = $form->getFields();
 
+        $form->add('_js', 'hidden', []);
+        $form->add('_css', 'hidden', []);
+
         foreach ($fields as $fieldKey => $fieldValue) {
             # code...
             if(in_array($fieldKey, $editorConfig['implicit']['hidden_fields'])) {

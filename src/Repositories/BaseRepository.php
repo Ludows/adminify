@@ -228,32 +228,60 @@ class BaseRepository
         if($type == $editorGlobalConfig["handleAssetsGeneration"]) {
             $styles = $request->get('_css');
             $javascripts = $request->get('_js');
+            $a = [];
+            $keywordAttachement = 'attach';
+            $baseClass = class_basename($model);
+            $css_strings = '';
+            $js_strings = '';
 
             if(!empty($styles)) {
+                
                 $styles = json_decode($styles);
-
-                $css_strings = '';
-
+                $a = [
+                    'data' => $styles
+                ];
                 foreach ($styles as $styleObject) {
                     # code...
                     $css_strings .= $styleObject['styles'];
                 }
 
-                $namedFile = lowercase( class_basename($model) ).'-'.$model->id.'.css';
+            }
 
+            if(!empty($javascripts)) {
+                $a = [
+                    'data' => $javascripts
+                ];
+
+                $js_strings = $javascripts;
+            }
+
+            $files = [
+                'css' => lowercase( $baseClass ).'-'.$model->id.'.css',
+                'js' => lowercase( $baseClass ).'-'.$model->id.'.js',
+            ];
+
+            foreach ($files as $namedKeyFile => $namedFile) {
+                # code...
                 if(!$disk->exists( $namedFile )) {
                     //create
-                    $disk->put($namedFile, $css_strings);
-
+                    $disk->put($namedFile, $namedKeyFile == 'css' ? $css_strings : $js_strings);
                 }
                 else {
                     //update
                     $disk->delete($namedFile);
-                    $disk->put($namedFile, $css_strings);
+                    $disk->put($namedFile, $namedKeyFile == 'css' ? $css_strings : $js_strings);
+    
+                    $keywordAttachement = 'sync';
                 }
+    
+                $model->{$keywordAttachement}($model->id, [
+                    'type' => $namedKeyFile,
+                    'model' => adminify_get_class( class_basename($model), ['app:models', 'app:adminify:models'], false ),
+                    'data' => json_encode($a)
+                ]);
             }
 
-            if(!empty($javascripts)) {}
+            
         }
     }
 }
