@@ -34,6 +34,12 @@ class BaseRepository
     // Example : Hash your password
     public $filters_on = [];
 
+    // just add your ignores process data as global..
+    public $ignores = [
+        '_css',
+        '_js'
+    ];
+
     /**
      * Constructor
      */
@@ -75,7 +81,7 @@ class BaseRepository
 
         $fillables = $model->getFillable();
 
-        $untouchables_relations = array_merge($this->internal_relations_columns, $this->external_relations_columns);
+        $untouchables_relations = array_merge($this->internal_relations_columns, $this->external_relations_columns, $this->ignores);
 
         foreach ($fillables as $fillable) {
             # code...
