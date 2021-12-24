@@ -8,7 +8,12 @@
     </div>
     <div class="row">
         <div class="col-12" id="renderZoneWidgets">
-
+            @if($isCreate && !empty(old('content')))
+                Tata
+            @endif
+            @if($isEdit)
+               {!! $page->content !!} 
+            @endif
         </div>
     </div>
 </div>
