@@ -27,7 +27,7 @@ class SidebarControlsBlock extends InterfacableBlock {
 
         if($r->isCreate) {
             $method = 'POST';
-            $route = lowercase($r->name).'.create';
+            $route = lowercase($r->name).'.store';
             $namedClass = $editorConfig['bind'][ titled( singular($r->name) ) ]['create'];
         }
         else {
