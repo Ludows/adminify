@@ -8,11 +8,12 @@
     </div>
     <div class="row">
         <div class="col-12" id="renderZoneWidgets">
+            {{-- {!! dd($request) !!} --}}
             @if($isCreate && !empty(old('content')))
-                Tata
+                {!! json_decode(old('content')) !!}
             @endif
             @if($isEdit)
-               {!! $page->content !!} 
+               {!! $page->content !!}
             @endif
         </div>
     </div>

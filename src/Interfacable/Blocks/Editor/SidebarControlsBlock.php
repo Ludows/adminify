@@ -48,6 +48,7 @@ class SidebarControlsBlock extends InterfacableBlock {
 
         $form->add('_js', 'hidden', []);
         $form->add('_css', 'hidden', []);
+        $form->add('_toolbars', 'hidden', []);
 
         foreach ($fields as $fieldKey => $fieldValue) {
             # code...

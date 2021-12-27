@@ -37,7 +37,8 @@ class BaseRepository
     // just add your ignores process data as global..
     public $ignores = [
         '_css',
-        '_js'
+        '_js',
+        '_toolbars'
     ];
 
     /**
