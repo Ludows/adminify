@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Traits;
 
-use App\Models\Asset;
+use Ludows\Adminify\Models\Asset;
 use Illuminate\Support\Facades\Storage;
   //
   trait ProcessableAssets
@@ -13,9 +13,11 @@ use Illuminate\Support\Facades\Storage;
         $named = lowercase( class_basename($this) ).'-'.$this->id.'.'.$this->type;
         return $disk->exists( $named );
     }
-    public function asset()
+    public function asset() {
+        return new Asset();
+    }
+    public function assets()
     {
        return $this->belongsToMany(Asset::class);
     }
-    public function makeAsset() {}
   }

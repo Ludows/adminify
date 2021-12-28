@@ -118,10 +118,10 @@ class BaseRepository
 
         if(method_exists($this, 'beforeRun')) {
             call_user_func_array(array($this, 'beforeRun'), array($model, $formValues,  $type));
+        }
 
-            if($request->loadEditor) {
-                $this->handleAssetsGeneration($model, 'before');
-            }
+        if($request->loadEditor) {
+            $this->handleAssetsGeneration($model, 'before');
         }
 
         $this->hookManager->run($hooks[0], $model);
@@ -170,10 +170,10 @@ class BaseRepository
 
         if(method_exists($this, 'afterRun')) {
             call_user_func_array(array($this, 'afterRun'), array($model, $formValues,  $type));
+        }
 
-            if($request->loadEditor) {
-                $this->handleAssetsGeneration($model, 'after');
-            }
+        if($request->loadEditor) {
+            $this->handleAssetsGeneration($model, 'after');
         }
 
         return $model;
@@ -237,7 +237,7 @@ class BaseRepository
             $styles = $request->get('_css');
             $javascripts = $request->get('_js');
             $a = [];
-            $keywordAttachement = 'attach';
+            $keywordAttachement = 'create';
             $baseClass = class_basename($model);
             $css_strings = '';
             $js_strings = '';
@@ -282,7 +282,7 @@ class BaseRepository
                     $keywordAttachement = 'sync';
                 }
 
-                $model->{$keywordAttachement}($model->id, [
+                $model->asset()->{$keywordAttachement}($model->id, [
                     'type' => $namedKeyFile,
                     'model' => adminify_get_class( class_basename($model), ['app:models', 'app:adminify:models'], false ),
                     'data' => json_encode($a)
