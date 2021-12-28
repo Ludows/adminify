@@ -3,10 +3,15 @@
 namespace Ludows\Adminify\Models;
 
 use Ludows\Adminify\Models\ClassicModel;
+use Spatie\Searchable\SearchResult;
+use Spatie\Feed\FeedItem;
 
 class Asset extends ClassicModel
 {
     public $enable_searchable = false;
+
+    public function toFeedItem(): FeedItem {}
+    public function getSearchResult() : SearchResult {}
 
     protected $table = 'assets';
 
