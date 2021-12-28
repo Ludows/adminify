@@ -233,7 +233,8 @@ class BaseRepository
         $request = request();
         $editorGlobalConfig = get_site_key('editor');
         $assetRepo = new AssetRepository();
-        $assetModel = adminify_get_class( 'Asset' , ['app:models', 'app:adminify:models'], false );
+        $assetCls = adminify_get_class( 'Asset' , ['app:models', 'app:adminify:models'], false );
+        $assetModel = new $assetCls;
         $isCreate = true;
 
         $disk = Storage::disk($editorGlobalConfig['diskForSave']);
