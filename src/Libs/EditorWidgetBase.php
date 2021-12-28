@@ -61,6 +61,13 @@ class EditorWidgetBase
             'btn_bg' => 'default'
         ]);
 
+        if($this->allowChildsNesting()) {
+            $this->addToolbarItem('moreBlock', 'button', [
+                'icon' => 'ni-ruler-pencil',
+                'btn_bg' => 'secondary'
+            ]);
+        }
+
         if($this->type == 'ColumnWidget') {
             $this->addToolbarItem('moreColumn', 'button', [
                 'icon' => 'ni-fat-add',
@@ -71,6 +78,8 @@ class EditorWidgetBase
                 'btn_bg' => 'danger'
             ]);
         }
+
+
 
         $this->addToolbarItem('moreOptions', 'dropdown', [
             'icon' => 'ni-settings-gear-65',
@@ -88,7 +97,11 @@ class EditorWidgetBase
             $this->addToolbarItem('delete', 'dropdown-item', [
                 'icon' => 'ni-fat-remove',
                 'child' => 'moreOptions',
+            ]);
 
+            $this->addToolbarItem('registerAsBlock', 'dropdown-item', [
+                'icon' => 'ni-fat-remove',
+                'child' => 'moreOptions',
             ]);
         }
 

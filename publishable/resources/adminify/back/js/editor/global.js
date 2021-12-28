@@ -1,7 +1,105 @@
-$(document).on('editor:ready', function(e, details) {
-    console.log('ready title', details)
+$(document).on('editor:register:actions', function(e, details) {
     let editor = $(details.el);
+
+    registerAction('gotoparent', function(editor, visual, widgetId, actionEl) {
+        visual.parent().trigger('click');
+    });
+
+    registerAction('deletecolumn', function(editor, visual, widgetId, actionEl) {
+        removeWidget(widgetId);
+    });
+
+    registerAction('morecolumn', function(editor, visual, widgetId, actionEl) {
+
+        var childrens = visual.parent().children();
+            if(childrens.length < window.editorConfig.patterns.max_columns) {
+                actionEl.removeAttr('disabled');
+
+                addWidget(editor, 'ColumnWidget', {
+                    config : {
+                        child : true,
+                        parent_uuid : getTheWidgetId(visual.parent()),
+                        parent_widgetType : getTheWidgetType(visual.parent())
+                    }
+                });
+            }
+
+            doAction('check-morecolumn', widgetId, actionEl)
+
+    });
+
+    registerAction('sidebar-open:sidebar_domthree', function(editor, visual, widgetId, actionEl) {
+        let List = getListDomThree();
+        let rendererList = getDomThreeHtml(List);
+        console.log('list render', rendererList);
+
+        editor.find('.sidebar_domthree').html('').html(rendererList)
+    })
+
+    registerAction('sidebar-close:sidebar_domthree', function(editor, visual, widgetId, actionEl) {
+        console.log('sidebar-close:sidebar_domthree')
+    })
+
+    registerAction('make-tooltip', function(editor, visual, widgetId, actionEl) {
+        actionEl.tooltip({
+            html : true,
+            trigger: 'hover'
+        });
+    })
+
+    registerAction('check-morecolumn', function(editor, visual, widgetId, actionEl) {
+        var childrens = visual.parent().children();
+            // console.log('childrens', childrens, actionEl)
+            if(childrens.length < window.editorConfig.patterns.max_columns) {
+                actionEl.removeAttr('disabled');
+            }
+            if(childrens.length >= window.editorConfig.patterns.max_columns) {
+                actionEl.attr('disabled', 'disabled');
+            }
+    })
+
+    registerAction('moreblock', function(editor, visual, widgetId, actionEl) {
+        let handle = ".sidebar_widgets";
+
+        let sibling = $(editor).find('.editor-topbar .js-sidebar[data-handle="'+ handle +'"]');
+
+        sibling.trigger('click');
+
+        editor.find('#renderZoneWidgets').trigger('click')
+    });
+
+})
+
+$(document).on('editor:ready', function(e, details) {
+    let editor = $(details.el);
+    let MainForm = $(details.mainForm);
     let previousCssClass = '';
+    let sortable_renderer_js = $(details.sortable_renderer);
+
+    let checkAlreadyRenderedBlocks = sortable_renderer_js.find('.visual_element_block');
+
+        if(checkAlreadyRenderedBlocks.length > 0) {
+            $.each(checkAlreadyRenderedBlocks, function(i, checkAlreadyRenderedBlock) {
+                $(editor).trigger('editor:create:sortable', {
+                    element : $(checkAlreadyRenderedBlock)
+                })
+            })
+        }
+
+    let aReady = editor.find('#blocs-settings-tab').append(alreadyBlocks)
+
+
+    let titleBlock = $(details.titleBlock);
+    let titleForm = $(MainForm).find('[name="title"]');
+
+    if(titleForm.hasClass('is-invalid')) {
+        titleBlock.addClass('d-block').addClass('invalid-feedback').addClass('is-required');
+        titleForm.next('.invalid-feedback').css({
+            'display' : 'none'
+        });
+
+        editor.find('.js-sidebar[data-handle=".sidebar_controls"]').trigger('click');
+    }
 
     editor.trigger('resize');
 
@@ -79,13 +177,6 @@ $(document).on('editor:ready', function(e, details) {
         let column_minimal =  window.editorConfig.patterns.column_minimal;
         let column_maximal =  window.editorConfig.patterns.column_maximal;
         let element = getVisualElement( $(this) )
-
-        console.log('debug', {
-            pattern,
-            column_minimal,
-            column_maximal,
-            element
-        })
 
         // on nettoie la classe courante globale
 

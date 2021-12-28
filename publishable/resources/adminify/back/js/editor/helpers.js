@@ -18,6 +18,12 @@ function getTheWidgetId(mixed) {
     return widgetId;
 }
 
+function registerAction(name, func) {
+    if(actions[name] == null) {
+        actions[name] = func;
+    }
+}
+
 function getDomThreeHtml(domThreeObject) {
     let checkThree = Object.keys(domThreeObject);
     let ret = null;
@@ -197,66 +203,13 @@ function doAction(actionName, widgetId, actionEl = null) {
     let visual = widgetId != null ? getVisualElement(widgetId) : null;
     let editor = visual != null ? visual.parents('[data-editor]').first() : $(document).find('[data-editor]').first();
 
-    // console.log('actionName', actionName)
-
-    switch (actionName) {
-        case 'gotoparent':
-            visual.parent().trigger('click');
-            break;
-        case 'deletecolumn':
-            removeWidget(widgetId);
-            break;
-        case 'morecolumn':
-            var childrens = visual.parent().children();
-            if(childrens.length < window.editorConfig.patterns.max_columns) {
-                actionEl.removeAttr('disabled');
-
-                addWidget(editor, 'ColumnWidget', {
-                    config : {
-                        child : true,
-                        parent_uuid : getTheWidgetId(visual.parent()),
-                        parent_widgetType : getTheWidgetType(visual.parent())
-                    }
-                });
-            }
-
-            doAction('check-morecolumn', widgetId, actionEl)
-            //update after creation
-
-            break;
-        case 'sidebar-open:sidebar_domthree':
-
-            let List = getListDomThree();
-            let rendererList = getDomThreeHtml(List);
-            console.log('list render', rendererList);
-
-            editor.find('.sidebar_domthree').html('').html(rendererList)
-
-            break;
-        case 'sidebar-close:sidebar_domthree':
-            break;
-        case 'make-tooltip':
-            actionEl.tooltip({
-                html : true,
-                trigger: 'hover'
-            });
-            break;
-        case 'check-morecolumn':
-            var childrens = visual.parent().children();
-            // console.log('childrens', childrens, actionEl)
-            if(childrens.length < window.editorConfig.patterns.max_columns) {
-                actionEl.removeAttr('disabled');
-            }
-            if(childrens.length >= window.editorConfig.patterns.max_columns) {
-                actionEl.attr('disabled', 'disabled');
-            }
-        break;
-        default:
-            console.log('action type not recongnized: '+actionName);
-            break;
+    if(actions[actionName]) {
+        // do the registered action
+        actions[actionName](editor, visual, widgetId, actionEl);
     }
-
-
+    else {
+        console.log('action not recognized : '+actionName);
+    }
 }
 
 function getActionNames(uuid) {
@@ -346,8 +299,9 @@ function agregateForPublish(object = {}) {
 
 
     return {
-        formData : getFormDatas(),
+        html : getHtmlRendered(),
         css : getRuleSets(),
+        js : ''
     }
 }
 
@@ -499,4 +453,5 @@ window.getListDomThree = getListDomThree;
 window.getDomThreeHtml = getDomThreeHtml;
 window.parseThree = parseThree;
 window.getPresentationBlock = getPresentationBlock;
+window.registerAction = registerAction;
 

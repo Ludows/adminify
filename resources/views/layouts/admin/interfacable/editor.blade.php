@@ -1,8 +1,12 @@
 <div class="adminify_editor">
+    @php
+        $aready = !empty(old('_settings_blocks')) ? old('_settings_blocks') : '';
+    @endphp
 
     <script>
-        window.toolbars = [];
+        window.toolbars = @json( json_decode( old('_toolbars') ) ?? []);
         window.actions = {};
+        window.alreadyBlocks = @json($aready);
         window.editorConfig = @json($siteConfig['editor']);
 
     </script>
@@ -10,7 +14,6 @@
     {!! $blocks['sidebar-block']->render() !!}
     {!! $blocks['sidebar-controls-block']->render() !!}
     <div class="sidebar left sidebar_domthree">
-        @todo
     </div>
     {!! $blocks['templates-block']->render() !!}
 

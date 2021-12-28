@@ -64,17 +64,6 @@ class RowWidget extends EditorWidgetBase {
             ]
         ]);
 
-        $this->addChoose('5-cols', 'button', [
-            'wrapper' => [
-                'class' => 'col-6 text-center'
-            ],
-            'attr' => [
-                'class' => 'btn btn-lg btn-primary',
-                'data-widget' => 'ColumnWidget',
-                'data-count' => 5
-            ]
-        ]);
-
         $this->addChoose('6-cols', 'button', [
             'wrapper' => [
                 'class' => 'col-6 text-center'

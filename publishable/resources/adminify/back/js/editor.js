@@ -13,9 +13,10 @@ $(document).ready(function ($) {
         let sidebars_left = $(editor).find('.sidebar.left')
         let sidebars_right = $(editor).find('.sidebar.right')
         let render_zone = $(editor).find('.render_zone');
+        let MainForm = $(editor).find('#MainFormEditor');
 
         let sortable_widgets = sidebar_widgets.find('.widget_zone');
-        let sortable_renderer = $(editor).find('.render_zone .col-12').last();
+        let sortable_renderer = $(editor).find('.render_zone .row:last-child #renderZoneWidgets');
         let sidebars = $(editor).find('.js-sidebar');
         let sortable_widgets_js = createSortableZone(sortable_widgets.get(0), {
             handle: '.js-handle',
@@ -108,8 +109,24 @@ $(document).ready(function ($) {
 
             let jsonAgregate = agregateForPublish();
 
-            console.log('jsonAgregate', jsonAgregate)
+            MainForm.find('[name="_css"]').val( JSON.stringify(jsonAgregate.css) );
+            MainForm.find('[name="_js"]').val( JSON.stringify(jsonAgregate.js) );
+            MainForm.find('[name="content"]').val( JSON.stringify(jsonAgregate.html) );
+            MainForm.find('[name="_toolbars"]').val( JSON.stringify( window.toolbars ) );
 
+            let $blocksSettings = $(editor).find('#blocs-settings-tab').children('.block_settings');
+            let _html = '';
+
+            $.each($blocksSettings, function(i, h) {
+                _html += $(h).prop('outerHTML');
+            });
+
+
+            // console.log('debug>>',  _html );
+
+            MainForm.find('[name="_settings_blocks"]').val( _html )
+
+            MainForm.submit();
             // localStorage.setItem('page-')
         });
 
@@ -144,8 +161,6 @@ $(document).ready(function ($) {
 
             let blocks = $(this).parent().parent().next().find('.js-handle');
             let val = $(this).val().toLowerCase();
-
-            console.log(blocks, val)
 
             $.each(blocks, function(i, block) {
 
@@ -193,6 +208,7 @@ $(document).ready(function ($) {
 
         sortable_renderer.on('click', '.visual_element_block', function (e) {
             e.preventDefault();
+            console.log('click visual')
 
             $('.visual_element_block').not($(this)).removeClass('active-widget');
             if (e.target === e.currentTarget) {
@@ -311,16 +327,6 @@ $(document).ready(function ($) {
             }
         });
 
-        $(editor).trigger('editor:ready', {
-            el: editor,
-            controls: sidebar_controls,
-            widgets: sidebar_widgets,
-            sortable_widgets_js: sortable_widgets_js,
-            sortable_renderer_js: sortable_renderer_js
-        });
-
-
-
         $(editor).on('editor:template:call', function (e, detail) {
             // console.log('detail tpl', detail)
             addWidget( $(editor) , detail.widget, detail.datas);
@@ -379,7 +385,7 @@ $(document).ready(function ($) {
         });
 
         $(editor).on('editor:create:sortable', function(e, detail) {
-            // console.log('detail from sortable', detail)
+            console.log('detail from sortable', detail)
 
             let zone = detail.element ? detail.element : $(this).find('.visual_element_block[data-visual-element="'+ detail.uuid +'');
 
@@ -441,6 +447,21 @@ $(document).ready(function ($) {
                 element : detail.element
             })
         })
+
+        $(editor).trigger('editor:register:actions', {
+            el: editor,
+        });
+
+        $(editor).trigger('editor:ready', {
+            el: editor,
+            controls: sidebar_controls,
+            widgets: sidebar_widgets,
+            sortable_widgets_js: sortable_widgets_js,
+            sortable_renderer_js: sortable_renderer_js,
+            sortable_renderer: sortable_renderer,
+            mainForm : MainForm,
+            titleBlock: titleBlock
+        });
 
 
 

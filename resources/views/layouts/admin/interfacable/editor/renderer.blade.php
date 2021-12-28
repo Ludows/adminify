@@ -9,11 +9,12 @@
     <div class="row">
         <div class="col-12" id="renderZoneWidgets">
             {{-- {!! dd($request) !!} --}}
-            @if($isCreate && !empty(old('content')))
+            @if(!empty(old('content')))
                 {!! json_decode(old('content')) !!}
-            @endif
-            @if($isEdit)
-               {!! $page->content !!}
+            @elseif (!empty($page))
+                {!! $page->content !!}
+            @else
+
             @endif
         </div>
     </div>

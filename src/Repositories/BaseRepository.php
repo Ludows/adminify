@@ -38,7 +38,8 @@ class BaseRepository
     public $ignores = [
         '_css',
         '_js',
-        '_toolbars'
+        '_toolbars',
+        '_settings_blocks'
     ];
 
     /**
@@ -169,7 +170,7 @@ class BaseRepository
 
         if(method_exists($this, 'afterRun')) {
             call_user_func_array(array($this, 'afterRun'), array($model, $formValues,  $type));
-            
+
             if($request->loadEditor) {
                 $this->handleAssetsGeneration($model, 'after');
             }
@@ -242,7 +243,7 @@ class BaseRepository
             $js_strings = '';
 
             if(!empty($styles)) {
-                
+
                 $styles = json_decode($styles);
                 $a = [
                     'data' => $styles
@@ -277,10 +278,10 @@ class BaseRepository
                     //update
                     $disk->delete($namedFile);
                     $disk->put($namedFile, $namedKeyFile == 'css' ? $css_strings : $js_strings);
-    
+
                     $keywordAttachement = 'sync';
                 }
-    
+
                 $model->{$keywordAttachement}($model->id, [
                     'type' => $namedKeyFile,
                     'model' => adminify_get_class( class_basename($model), ['app:models', 'app:adminify:models'], false ),
@@ -288,7 +289,7 @@ class BaseRepository
                 ]);
             }
 
-            
+
         }
     }
 }

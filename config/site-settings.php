@@ -52,6 +52,7 @@ return [
             'column_minimal' => 1,
             'column_maximal' => 12,
             'max_columns' => 6,
+            'max_tooltip_items_show' => 4,
             'columns' => 'col-##BREAKPOINT##-##WIDTH##'
         ],
         'defaultsCssConfigClass' => [
