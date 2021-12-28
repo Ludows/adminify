@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Storage;
 
 use App\Adminify\Repositories\AssetRepository;
 
+use File;
+
 
 class BaseRepository
 {
@@ -122,7 +124,7 @@ class BaseRepository
             call_user_func_array(array($this, 'beforeRun'), array($model, $formValues,  $type));
         }
 
-        if($request->loadEditor && get_site_key('editor.handleAssetsGeneration') == 'before' && in_array(class_basename($this), $request->bindedEditorKeys)) {
+        if($request->loadEditor && get_site_key('editor.handleAssetsGeneration') == 'before' && in_array(class_basename($model), $request->bindedEditorKeys)) {
             $this->handleAssetsGeneration($model, 'before');
         }
 
@@ -174,7 +176,7 @@ class BaseRepository
             call_user_func_array(array($this, 'afterRun'), array($model, $formValues,  $type));
         }
 
-        if($request->loadEditor && get_site_key('editor.handleAssetsGeneration') == 'after' && in_array( class_basename($this), $request->bindedEditorKeys)) {
+        if($request->loadEditor && get_site_key('editor.handleAssetsGeneration') == 'after' && in_array( class_basename($model), $request->bindedEditorKeys)) {
             $this->handleAssetsGeneration($model, 'after');
         }
 
@@ -232,10 +234,10 @@ class BaseRepository
     public function handleAssetsGeneration($model = null, $type = 'before') {
         $request = request();
         $editorGlobalConfig = get_site_key('editor');
-        $assetRepo = new AssetRepository();
         $assetCls = adminify_get_class( 'Asset' , ['app:models', 'app:adminify:models'], false );
         $assetModel = new $assetCls;
         $isCreate = true;
+
 
         $disk = Storage::disk($editorGlobalConfig['diskForSave']);
 
@@ -243,6 +245,7 @@ class BaseRepository
             $styles = $request->get('_css');
             $javascripts = $request->get('_js');
             $a = [];
+            $b = [];
             $baseClass = class_basename($model);
             $css_strings = '';
             $js_strings = '';
@@ -255,13 +258,13 @@ class BaseRepository
                 ];
                 foreach ($styles as $styleObject) {
                     # code...
-                    $css_strings .= $styleObject['styles'];
+                    $css_strings .= $styleObject->styles;
                 }
 
             }
 
             if(!empty($javascripts)) {
-                $a = [
+                $b = [
                     'data' => $javascripts
                 ];
 
@@ -274,15 +277,18 @@ class BaseRepository
             ];
 
             foreach ($files as $namedKeyFile => $namedFile) {
+                $assetRepo = new AssetRepository();
                 # code...
+
+
                 if(!$disk->exists( $namedFile )) {
                     //create
-                    $disk->put($namedFile, $namedKeyFile == 'css' ? $css_strings : $js_strings);
+                    File::put(public_path($namedFile), $namedKeyFile == 'css' ? $css_strings : $js_strings);
                 }
                 else {
                     //update
-                    $disk->delete($namedFile);
-                    $disk->put($namedFile, $namedKeyFile == 'css' ? $css_strings : $js_strings);
+                    File::delete(public_path($namedFile));
+                    File::put(public_path($namedFile), $namedKeyFile == 'css' ? $css_strings : $js_strings);
 
                     $isCreate = false;
                     $assetModel = $model->assets()->where('type', $namedKeyFile)->get()->first();
@@ -292,7 +298,7 @@ class BaseRepository
                     'type' => $namedKeyFile,
                     'model' => adminify_get_class( class_basename($model), ['app:models', 'app:adminify:models'], false ),
                     'entity_id' => $model->id,
-                    'data' => json_encode($a)
+                    'data' => json_encode( $namedKeyFile == 'css' ? $a : $b )
                 ];
 
                 if($isCreate) {
