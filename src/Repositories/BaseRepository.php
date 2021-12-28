@@ -122,7 +122,7 @@ class BaseRepository
             call_user_func_array(array($this, 'beforeRun'), array($model, $formValues,  $type));
         }
 
-        if($request->loadEditor && get_site_key('editor.handleAssetsGeneration') == 'before' && in_array(titled($request->singleParam), $request->bindedEditorKeys)) {
+        if($request->loadEditor && get_site_key('editor.handleAssetsGeneration') == 'before' && in_array(class_basename($this), $request->bindedEditorKeys)) {
             $this->handleAssetsGeneration($model, 'before');
         }
 
@@ -174,7 +174,7 @@ class BaseRepository
             call_user_func_array(array($this, 'afterRun'), array($model, $formValues,  $type));
         }
 
-        if($request->loadEditor && get_site_key('editor.handleAssetsGeneration') == 'after' && in_array(titled($request->singleParam), $request->bindedEditorKeys)) {
+        if($request->loadEditor && get_site_key('editor.handleAssetsGeneration') == 'after' && in_array( class_basename($this), $request->bindedEditorKeys)) {
             $this->handleAssetsGeneration($model, 'after');
         }
 
