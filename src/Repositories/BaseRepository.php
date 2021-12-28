@@ -10,6 +10,8 @@ use App\Adminify\Models\Media;
 
 use Illuminate\Support\Facades\Storage;
 
+use App\Adminify\Repositories\AssetRepository;
+
 
 class BaseRepository
 {
@@ -230,6 +232,9 @@ class BaseRepository
     public function handleAssetsGeneration($model = null, $type = 'before') {
         $request = request();
         $editorGlobalConfig = get_site_key('editor');
+        $assetRepo = new AssetRepository();
+        $assetModel = adminify_get_class( 'Asset' , ['app:models', 'app:adminify:models'], false );
+        $isCreate = true;
 
         $disk = Storage::disk($editorGlobalConfig['diskForSave']);
 
@@ -237,7 +242,6 @@ class BaseRepository
             $styles = $request->get('_css');
             $javascripts = $request->get('_js');
             $a = [];
-            $keywordAttachement = 'create';
             $baseClass = class_basename($model);
             $css_strings = '';
             $js_strings = '';
@@ -279,14 +283,23 @@ class BaseRepository
                     $disk->delete($namedFile);
                     $disk->put($namedFile, $namedKeyFile == 'css' ? $css_strings : $js_strings);
 
-                    $keywordAttachement = 'sync';
+                    $isCreate = false;
+                    $assetModel = $model->assets()->where('type', $namedKeyFile)->get()->first();
                 }
 
-                $model->asset()->{$keywordAttachement}($model->id, [
+                $params_model = [
                     'type' => $namedKeyFile,
                     'model' => adminify_get_class( class_basename($model), ['app:models', 'app:adminify:models'], false ),
+                    'entity_id' => $model->id,
                     'data' => json_encode($a)
-                ]);
+                ];
+
+                if($isCreate) {
+                    $assetRepo->addModel($assetModel)->create($params_model);
+                }
+                else {
+                    $assetRepo->addModel($assetModel)->update($params_model, $assetModel);
+                }
             }
 
 
