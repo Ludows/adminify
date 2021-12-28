@@ -48,6 +48,7 @@ class MultilangBasic
         $model = \Route::current()->parameter($singular);
 
         $named = join('.',array_diff($routeNameSpl, ['index', 'edit', 'create']));
+        $bindedEditorKeys = array_keys($config['editor']['bind']);
 
         if(strpos($named, '.') != false) {
             $named = explode('.', $named);
@@ -75,11 +76,12 @@ class MultilangBasic
             "user" => user(),
             "posts" => $posts,
             "adminify_autoload" => adminify_autoload(),
-            "loadEditor" => false
+            "loadEditor" => false,
+            'bindedEditorKeys' => $bindedEditorKeys
         ];
 
 
-        $bindedEditorKeys = array_keys($config['editor']['bind']);
+        
         if(in_array(titled($base_parameters['singleParam']), $bindedEditorKeys) && !$base_parameters['isIndex']) {
             $base_parameters['loadEditor'] = true;
             merge_to_request('loadEditor', true);
