@@ -51,29 +51,29 @@ class EditorWidgetBase
                 $cls_parent = new $cls_parent;
             }
 
-            $this->addToolbarItem('goToParent', 'button', [
+            $this->addToolbarItem('goToParent', [
                 'icon' => $cls_parent->getIcon(),
                 'btn_bg' => 'outline-secondary'
             ]);
         }
-        $this->addToolbarItem('iconWidgetType', 'button', [
+        $this->addToolbarItem('iconWidgetType', [
             'icon' => $this->getIcon(),
             'btn_bg' => 'default'
         ]);
 
         if($this->allowChildsNesting()) {
-            $this->addToolbarItem('moreBlock', 'button', [
+            $this->addToolbarItem('moreBlock', [
                 'icon' => 'ni-ruler-pencil',
                 'btn_bg' => 'secondary'
             ]);
         }
 
         if($this->type == 'ColumnWidget') {
-            $this->addToolbarItem('moreColumn', 'button', [
+            $this->addToolbarItem('moreColumn', [
                 'icon' => 'ni-fat-add',
                 'btn_bg' => 'success'
             ]);
-            $this->addToolbarItem('deleteColumn', 'button', [
+            $this->addToolbarItem('deleteColumn', [
                 'icon' => 'ni-fat-remove',
                 'btn_bg' => 'danger'
             ]);
@@ -81,27 +81,24 @@ class EditorWidgetBase
 
 
 
-        $this->addToolbarItem('moreOptions', 'dropdown', [
-            'icon' => 'ni-settings-gear-65',
-            'btn_bg' => 'secondary'
-        ]);
+        // $this->addToolbarItem('moreOptions', 'dropdown', [
+        //     'icon' => 'ni-settings-gear-65',
+        //     'btn_bg' => 'secondary'
+        // ]);
 
         if($this->type != 'ColumnWidget') {
 
             // dropdown groups moreOptions
-            $this->addToolbarItem('duplicate', 'dropdown-item', [
+            $this->addToolbarItem('duplicate', [
                 'icon' => 'ni-single-copy-04',
-                'child' => 'moreOptions'
             ]);
 
-            $this->addToolbarItem('delete', 'dropdown-item', [
+            $this->addToolbarItem('delete', [
                 'icon' => 'ni-fat-remove',
-                'child' => 'moreOptions',
             ]);
 
-            $this->addToolbarItem('registerAsBlock', 'dropdown-item', [
+            $this->addToolbarItem('registerAsBlock', [
                 'icon' => 'ni-fat-remove',
-                'child' => 'moreOptions',
             ]);
         }
 
@@ -113,24 +110,18 @@ class EditorWidgetBase
 
    }
 
-   public function addToolbarItem($name = '', $type = null, $options = []) {
+   public function addToolbarItem($name = '', $options = []) {
 
-    $isChild = isset($options['child']) && strlen($options['child']) > 0;
 
     $a = array_merge( array(
-        'type' => $type,
         'name' => $name,
         'icon' => null,
         'btn_bg' => 'primary',
-        'childs' => [],
         'datas' => $this->config
     ), $options);
 
-    if(empty($this->toolbar[$name]) && !$isChild) {
+    if(empty($this->toolbar[$name]) ) {
         $this->toolbar[$name] = $a;
-    }
-    if($isChild) {
-        $this->toolbar[$options['child']]['childs'][$name] = $a;
     }
 
     return $this;
