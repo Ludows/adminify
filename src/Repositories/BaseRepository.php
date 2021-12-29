@@ -241,7 +241,7 @@ class BaseRepository
 
         $disk = Storage::disk($editorGlobalConfig['diskForSave']);
 
-        if($type == $editorGlobalConfig["handleAssetsGeneration"]) {
+        // if($type == $editorGlobalConfig["handleAssetsGeneration"]) {
             $styles = $request->get('_css');
             $javascripts = $request->get('_js');
             $a = [];
@@ -310,6 +310,6 @@ class BaseRepository
             }
 
 
-        }
+        // }
     }
 }
