@@ -126,6 +126,7 @@ class BaseRepository
 
         if($request->loadEditor && get_site_key('editor.handleAssetsGeneration') == 'before' && in_array(class_basename($model), $request->bindedEditorKeys)) {
             $this->handleAssetsGeneration($model, 'before');
+            $this->createEditorSaveFile($model);
         }
 
         $this->hookManager->run($hooks[0], $model);
@@ -178,6 +179,7 @@ class BaseRepository
 
         if($request->loadEditor && get_site_key('editor.handleAssetsGeneration') == 'after' && in_array( class_basename($model), $request->bindedEditorKeys)) {
             $this->handleAssetsGeneration($model, 'after');
+            $this->createEditorSaveFile($model);
         }
 
         return $model;
@@ -231,14 +233,53 @@ class BaseRepository
         $this->hookManager->run('process:finished', $model);
         return $model;
     }
+    public function createEditorSaveFile($model = null) {
+        $request = request();
+
+        $toolbars = $request->get('_toolbars');
+        $settingsBlocks = $request->get('_settings_blocks');
+        $baseClass = class_basename($model);
+
+        $rawContent = array(
+            'toolbars' => $toolbars,
+            'settingsBlocks' => $settingsBlocks
+        );
+
+        $namedFile = lowercase( $baseClass ).'-'.$model->id.'.json';
+
+        $fileResponse = $this->EditorFileCreator( $namedFile , json_encode($rawContent));
+
+    }
+    protected function EditorFileCreator($filename = null, $content = null) {
+        $disk = $this->getEditorDisk();
+        $typeOf = 'create';
+
+        if(!$disk->exists( $filename )) {
+            //create
+            File::put(public_path($filename), $content);
+        }
+        else {
+            //update
+            File::delete(public_path($filename));
+            File::put(public_path($filename), $content);
+
+            $typeOf = 'update';
+        }
+
+        return [
+            'status' => 'OK',
+            'type' => $typeOf
+        ];
+    }
+    protected function getEditorDisk() {
+        $editorGlobalConfig = get_site_key('editor');
+        $disk = Storage::disk($editorGlobalConfig['diskForSave']);
+        return $disk;
+    }
     public function handleAssetsGeneration($model = null, $type = 'before') {
         $request = request();
-        $editorGlobalConfig = get_site_key('editor');
         $assetCls = adminify_get_class( 'Asset' , ['app:models', 'app:adminify:models'], false );
         $isCreate = true;
-
-
-        $disk = Storage::disk($editorGlobalConfig['diskForSave']);
 
         // if($type == $editorGlobalConfig["handleAssetsGeneration"]) {
             $styles = $request->get('_css');
@@ -281,15 +322,9 @@ class BaseRepository
                 # code...
 
 
-                if(!$disk->exists( $namedFile )) {
-                    //create
-                    File::put(public_path($namedFile), $namedKeyFile == 'css' ? $css_strings : $js_strings);
-                }
-                else {
-                    //update
-                    File::delete(public_path($namedFile));
-                    File::put(public_path($namedFile), $namedKeyFile == 'css' ? $css_strings : $js_strings);
+                $fileResponse = $this->EditorFileCreator( $namedFile , $namedKeyFile == 'css' ? $css_strings : $js_strings);
 
+                if($fileResponse['type'] == 'update') {
                     $isCreate = false;
                     $assetModel = $model->assets()->where('type', $namedKeyFile)->get()->first();
                 }
