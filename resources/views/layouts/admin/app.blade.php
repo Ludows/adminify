@@ -21,6 +21,7 @@
         <link type="text/css" href="{{ asset('adminify/back') }}/css/argon.css?v=1.0.0" rel="stylesheet">
         <link type="text/css" href="{{ asset('adminify/back') }}/css/extensions.css" rel="stylesheet">
         @stack('css')
+        {!! Assets::group('backend')->css() !!}
     </head>
     <body class="{{ $class ?? '' }}">
         @auth()
@@ -53,6 +54,7 @@
         @include('adminify::layouts.admin.modales.globalSearch')
         @stack('modales')
         @stack('js')
+        {!! Assets::group('backend')->js() !!}
 
         <!-- Argon JS -->
         <script src="{{ asset('adminify/back') }}/js/extensions-call.js"></script>
