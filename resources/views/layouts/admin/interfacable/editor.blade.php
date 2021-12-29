@@ -1,10 +1,24 @@
 <div class="adminify_editor">
     @php
-        $aready = !empty(old('_settings_blocks')) ? old('_settings_blocks') : '';
+
+        // we check if a file settings is provided
+        $f = '';
+        $c = [];
+        if($isEdit) {
+            $f = look_file( public_path() . '/' . $request->singleParam . '-' . $request->routesParameters[ $request->singleParam ]->id .'.json');
+            if(!empty($f)) {
+                $f = json_decode($f['content']);
+                $f = $f['toolbars'];
+
+                $c = $f['settingsBlocks'];
+            }
+        }
+
+        $aready = !empty(old('_settings_blocks')) ? old('_settings_blocks') : $f;
     @endphp
 
     <script>
-        window.toolbars = @json( json_decode( old('_toolbars') ) ?? []);
+        window.toolbars = @json( json_decode( old('_toolbars') ) ?? $c);
         window.actions = {};
         window.alreadyBlocks = @json($aready);
         window.editorConfig = @json($siteConfig['editor']);

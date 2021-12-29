@@ -7,6 +7,8 @@ use App\Adminify\Models\Settings;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 
+use File;
+
 if (! function_exists('do_shortcode')) {
     function do_shortcode($shortcodeName, $parameters = []) {
         $shortcodes = config('site-settings.shortcodes');
@@ -102,6 +104,21 @@ if (! function_exists('adminify_get_classes_by_folders')) {
                 $r = array_merge($r, $res);
             }
         }
+        return $r;
+    }
+}
+
+if (! function_exists('look_file')) {
+    function look_file($fullFilePath) {
+        $r = null;
+
+        if(File::exist($fullFilePath)) {
+            $r = [
+                'status' => 'OK',
+                'content' => File::get($fullFilePath),
+            ];
+        }
+
         return $r;
     }
 }
