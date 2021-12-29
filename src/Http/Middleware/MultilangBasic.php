@@ -103,6 +103,8 @@ class MultilangBasic
 
         $v->share('request', $request);
 
+        $this->handleAssets();
+
         if($config['multilang']) {
 
             $langParameter = $request->get('lang');
@@ -128,5 +130,21 @@ class MultilangBasic
         else {
             return $next($request);
         }
+    }
+    public function handleAssets() {
+
+        $assetsConfig = config('assets');
+        $keysAssets = array_keys($assetsConfig);
+        $isAdmin = is_admin();
+        $keyToBind = 'backend';
+
+        if(!$isAdmin) {
+            $keyToBind = 'frontend';
+        }
+
+        $keyCollections = array_keys($assetsConfig[$keyToBind]['collections']);
+
+        // add asset
+        add_asset($keyToBind, $keyCollections);
     }
 }
