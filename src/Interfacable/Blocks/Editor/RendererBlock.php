@@ -10,9 +10,12 @@ class RendererBlock extends InterfacableBlock {
     }
     public function addToRender() {
         $r = $this->getRequest();
-        return [
-            'page' => $r->routeParameters[ $r->singleParam ]
-        ];
+        $a = [];
+
+        if($r->isEdit) {
+            $a['page'] = $r->routeParameters[ $r->singleParam ];
+        }
+        return $a;
     }
     public function getView() {
         return 'adminify::layouts.admin.interfacable.editor.renderer';
