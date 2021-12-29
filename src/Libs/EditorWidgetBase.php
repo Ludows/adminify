@@ -44,7 +44,6 @@ class EditorWidgetBase
 
         if($this->isChild) {
 
-            $icon = 'ni-settings-gear-65';
 
             if(!empty($this->config['parent_widgetType'])) {
                 $cls_parent = adminify_get_class($this->config['parent_widgetType'], ['app:widgets', 'app:adminify:widgets'], false);
