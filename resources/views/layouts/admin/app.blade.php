@@ -40,21 +40,22 @@
             @include('adminify::layouts.admin.footers.guest')
         @endguest
 
+        {!! Assets::js() !!}
         {{--  <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>  --}}
-        <script src="{{ asset('myuploads') }}/routes.js"></script>
+        {{-- <script src="{{ asset('myuploads') }}/routes.js"></script>
         <script src="{{ asset('adminify/back') }}/js/extensions.js"></script>
-        <script src="{{ asset('myuploads') }}/traductions-{{ str_replace('_', '-', app()->getLocale()) }}.js"></script>
+        <script src="{{ asset('myuploads') }}/traductions-{{ str_replace('_', '-', app()->getLocale()) }}.js"></script> --}}
         {{--  <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>  --}}
 
         @include('adminify::layouts.admin.modales.globalSearch')
         @stack('modales')
         @stack('js')
-        {!! Assets::js() !!}
+        
 
-        <!-- Argon JS -->
+        {{-- <!-- Argon JS -->
         <script src="{{ asset('adminify/back') }}/js/extensions-call.js"></script>
         <script src="{{ asset('adminify/back') }}/js/argon.js?v=1.0.0"></script>
-        <script src="{{ asset('adminify/back') }}/js/searchable.js"></script>
+        <script src="{{ asset('adminify/back') }}/js/searchable.js"></script> --}}
 
     </body>
 </html>
