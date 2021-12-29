@@ -365,4 +365,16 @@ return array(
             'config' => null,
             'afterPublish' => [],
         ),
+        (object) array(
+            'beforePublish' => [],
+            'name' => 'stolz/assets',
+            'publish' => null,
+            'autoload' => (object) [
+                'providers' => [],
+                'middlewares' => [],
+                'aliases' => []
+            ],
+            'config' => null,
+            'afterPublish' => [],
+        ),
     );
