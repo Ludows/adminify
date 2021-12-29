@@ -5,7 +5,11 @@ $(document).on('editor:register:actions', function(e, details) {
         visual.parent().trigger('click');
     });
 
-    registerAction('deletecolumn', function(editor, visual, widgetId, actionEl) {
+    // registerAction('deletecolumn', function(editor, visual, widgetId, actionEl) {
+    //     removeWidget(widgetId);
+    // });
+
+    registerAction('delete', function(editor, visual, widgetId, actionEl) {
         removeWidget(widgetId);
     });
 

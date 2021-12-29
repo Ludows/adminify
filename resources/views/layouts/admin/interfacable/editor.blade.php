@@ -5,12 +5,11 @@
         $f = '';
         $c = [];
         if($isEdit) {
-            $f = look_file( public_path() . '/' . $request->singleParam . '-' . $request->routesParameters[ $request->singleParam ]->id .'.json');
+            $f = look_file( public_path() . '/' . $request->singleParam . '-' . $request->routeParameters[ $request->singleParam ]->id .'.json');
             if(!empty($f)) {
                 $f = json_decode($f['content']);
-                $f = $f['toolbars'];
-
-                $c = $f['settingsBlocks'];
+                $c = json_decode($f->toolbars);
+                $f = $f->settingsBlocks;
             }
         }
 

@@ -111,10 +111,10 @@ if (! function_exists('look_file')) {
         $f = app('File');
         $r = null;
 
-        if($f->exist($fullFilePath)) {
+        if($f::exists($fullFilePath)) {
             $r = [
                 'status' => 'OK',
-                'content' => $f->get($fullFilePath),
+                'content' => $f::get($fullFilePath),
             ];
         }
 
