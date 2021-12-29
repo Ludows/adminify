@@ -17,6 +17,10 @@
     </div>
 </div>
 
-@push('js')
+{{-- @push('js')
     <script src="{{ asset('adminify/back') }}/js/listings.js"></script>
-@endpush
+@endpush --}}
+
+@php
+    add_asset('default',  asset('adminify/back') . '/js/listings.js');
+@endphp
