@@ -277,9 +277,8 @@ class BaseRepository
 
             foreach ($files as $namedKeyFile => $namedFile) {
                 $assetRepo = new AssetRepository();
-                # code...
-                
                 $assetModel = new $assetCls;
+                # code...
 
 
                 if(!$disk->exists( $namedFile )) {
@@ -308,6 +307,7 @@ class BaseRepository
                 else {
                     $assetRepo->addModel($assetModel)->update($params_model, $assetModel);
                 }
+
             }
 
 
