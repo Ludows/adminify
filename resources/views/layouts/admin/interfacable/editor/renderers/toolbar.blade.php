@@ -13,11 +13,11 @@
                 <button id="btnGroup_{{ $uuid }}" title="{!! __('admin.editor.moreOptions') !!}" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                     <i class="ni ni-settings-gear-65"></i>
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="btnGroup_{{ $uuid }}">
+                <ul class="dropdown-menu p-0" aria-labelledby="btnGroup_{{ $uuid }}">
                     @foreach ($items as $item)
                         @if($loop->index >= $editor['patterns']['max_tooltip_items_show'])
                             <li class="dropdown-item p-0 css-{{ lowercase($item['name']) }}">
-                                <a data-visual-element="{{ $uuid }}" data-action="{{ lowercase($item['name']) }}" class="js-btn-action rounded-0 btn-block btn btn-{{ $item['btn_bg'] }}" href="#">
+                                <a data-visual-element="{{ $uuid }}" data-action="{{ lowercase($item['name']) }}" class="js-btn-action text-left rounded-0 btn-block btn btn-{{ $item['btn_bg'] }}" href="#">
                                     <i class="ni {{ $item['icon'] }}"></i><span>{!! __('admin.editor.'.$item['name']) !!}</span>
                                 </a>
                             </li>
