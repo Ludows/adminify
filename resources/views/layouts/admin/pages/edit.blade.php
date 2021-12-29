@@ -9,14 +9,15 @@
 @endif
 
 @section('content')
-    @php
-        $name = request()->route()->getName();
-        $name = str_replace('.edit', '', $name);
-    @endphp
-    @if(view()->exists('adminify::layouts.admin.edit.pages.'.$name))
-        @include('adminify::layouts.admin.edit.pages.'.$name)
+    @if($loadEditor)
+        {{-- get the editor interface. --}}
+        {!! interfaces('editor')->render() !!}
     @else
-        @include('adminify::layouts.admin.edit.pages.default')
+        @if(view()->exists('adminify::layouts.admin.edit.pages.'.$name))
+            @include('adminify::layouts.admin.edit.pages.'.$name)
+        @else
+            @include('adminify::layouts.admin.edit.pages.default')
+        @endif
     @endif
 @endsection
 
