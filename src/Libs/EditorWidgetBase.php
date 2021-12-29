@@ -60,17 +60,17 @@ class EditorWidgetBase
             'btn_bg' => 'default'
         ]);
 
-        if($this->allowChildsNesting()) {
-            $this->addToolbarItem('moreBlock', [
-                'icon' => 'ni-ruler-pencil',
-                'btn_bg' => 'secondary'
-            ]);
-        }
-
         if($this->type == 'ColumnWidget') {
             $this->addToolbarItem('moreColumn', [
                 'icon' => 'ni-fat-add',
                 'btn_bg' => 'success'
+            ]);
+        }
+
+        if($this->allowChildsNesting()) {
+            $this->addToolbarItem('moreBlock', [
+                'icon' => 'ni-ruler-pencil',
+                'btn_bg' => 'secondary'
             ]);
         }
 

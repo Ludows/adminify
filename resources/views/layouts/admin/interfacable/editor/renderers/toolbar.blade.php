@@ -16,8 +16,8 @@
                 <ul class="dropdown-menu" aria-labelledby="btnGroup_{{ $uuid }}">
                     @foreach ($items as $item)
                         @if($loop->index >= $editor['patterns']['max_tooltip_items_show'])
-                            <li class="dropdown-item css-{{ lowercase($item['name']) }}">
-                                <a data-visual-element="{{ $uuid }}" data-action="{{ lowercase($item['name']) }}" class="js-btn-action btn btn-{{ $item['btn_bg'] }}" href="#">
+                            <li class="dropdown-item p-0 css-{{ lowercase($item['name']) }}">
+                                <a data-visual-element="{{ $uuid }}" data-action="{{ lowercase($item['name']) }}" class="js-btn-action rounded-0 btn-block btn btn-{{ $item['btn_bg'] }}" href="#">
                                     <i class="ni {{ $item['icon'] }}"></i><span>{!! __('admin.editor.'.$item['name']) !!}</span>
                                 </a>
                             </li>
