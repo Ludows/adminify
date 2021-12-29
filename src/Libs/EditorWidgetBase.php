@@ -72,35 +72,22 @@ class EditorWidgetBase
                 'icon' => 'ni-fat-add',
                 'btn_bg' => 'success'
             ]);
-            $this->addToolbarItem('deleteColumn', [
-                'icon' => 'ni-fat-remove',
-                'btn_bg' => 'danger'
-            ]);
         }
 
+        $this->addToolbarItem('duplicate', [
+            'icon' => 'ni-single-copy-04',
+            'btn_bg' => 'info'
+        ]);
 
+        $this->addToolbarItem('delete', [
+            'icon' => 'ni-fat-remove',
+            'btn_bg' => 'danger'
+        ]);
 
-        // $this->addToolbarItem('moreOptions', 'dropdown', [
-        //     'icon' => 'ni-settings-gear-65',
-        //     'btn_bg' => 'secondary'
-        // ]);
-
-        if($this->type != 'ColumnWidget') {
-
-            // dropdown groups moreOptions
-            $this->addToolbarItem('duplicate', [
-                'icon' => 'ni-single-copy-04',
-            ]);
-
-            $this->addToolbarItem('delete', [
-                'icon' => 'ni-fat-remove',
-            ]);
-
-            $this->addToolbarItem('registerAsBlock', [
-                'icon' => 'ni-fat-remove',
-            ]);
-        }
-
+        $this->addToolbarItem('registerAsBlock', [
+            'icon' => 'ni-fat-remove',
+            'btn_bg' => 'secondary'
+        ]);
 
    }
   // public allow to add items to the toolbar
