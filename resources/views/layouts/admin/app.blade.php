@@ -11,17 +11,12 @@
         <!-- Favicon -->
         <link href="{{ asset('adminify') }}/img/brand/favicon.png" rel="icon" type="image/png">
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-        <!-- Extra details for Live View on GitHub Pages -->
 
         <!-- Icons -->
-        <link href="{{ asset('adminify') }}/vendor/nucleo/css/nucleo.css" rel="stylesheet">
-        <link href="{{ asset('adminify') }}/vendor/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
         <!-- Argon CSS -->
-        <link type="text/css" href="{{ asset('adminify/back') }}/css/argon.css?v=1.0.0" rel="stylesheet">
-        <link type="text/css" href="{{ asset('adminify/back') }}/css/extensions.css" rel="stylesheet">
+        {!! Assets::css() !!}
         @stack('css')
-        {!! Assets::group('backend')->css() !!}
+        
     </head>
     <body class="{{ $class ?? '' }}">
         @auth()
@@ -54,7 +49,7 @@
         @include('adminify::layouts.admin.modales.globalSearch')
         @stack('modales')
         @stack('js')
-        {!! Assets::group('backend')->js() !!}
+        {!! Assets::js() !!}
 
         <!-- Argon JS -->
         <script src="{{ asset('adminify/back') }}/js/extensions-call.js"></script>
