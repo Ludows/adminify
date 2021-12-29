@@ -8,11 +8,6 @@ class SidebarControlsBlock extends InterfacableBlock {
     public static function getNamedBlock() {
         return 'Sidebar Controls Block';
     }
-    public function query() {
-        $r = $this->getRequest();
-        $query = null;
-        return $query;
-    }
     public function inject() {
         return [
             'formbuilder' => app('Kris\LaravelFormBuilder\FormBuilder')
@@ -24,6 +19,8 @@ class SidebarControlsBlock extends InterfacableBlock {
 
         $method = null;
         $route = null;
+        $routeParams = [];
+        $model = null;
 
         if($r->isCreate) {
             $method = 'POST';
@@ -34,14 +31,19 @@ class SidebarControlsBlock extends InterfacableBlock {
             $method = 'PUT';
             $route = lowercase($r->name).'.edit';
             $namedClass = $editorConfig['bind'][ titled( singular($r->name) ) ]['edit'];
+            $routeParams[$r->singleParam] = $r->routeParameters[ $r->singleParam ]->id;
+
+            $model = $r->routeParameters[ $r->singleParam ];
         }
 
         $theClass = adminify_get_class($namedClass , ['app:forms', 'app:adminify:forms'], false);
 
+
         $form = $this->formbuilder->create($theClass, [
             'method' => $method,
             'id' => 'MainFormEditor',
-            'url' => route($route)
+            'url' => route($route, $routeParams),
+            'model' => $model
         ]);
 
         $fields = $form->getFields();

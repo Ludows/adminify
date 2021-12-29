@@ -12,7 +12,7 @@
             @if(!empty(old('content')))
                 {!! json_decode(old('content')) !!}
             @elseif (!empty($page))
-                {!! $page->content !!}
+                {!! json_decode($page->content) !!}
             @else
 
             @endif
