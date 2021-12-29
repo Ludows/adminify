@@ -235,7 +235,6 @@ class BaseRepository
         $request = request();
         $editorGlobalConfig = get_site_key('editor');
         $assetCls = adminify_get_class( 'Asset' , ['app:models', 'app:adminify:models'], false );
-        $assetModel = new $assetCls;
         $isCreate = true;
 
 
@@ -279,6 +278,8 @@ class BaseRepository
             foreach ($files as $namedKeyFile => $namedFile) {
                 $assetRepo = new AssetRepository();
                 # code...
+                
+                $assetModel = new $assetCls;
 
 
                 if(!$disk->exists( $namedFile )) {
