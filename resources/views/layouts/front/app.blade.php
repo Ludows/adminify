@@ -23,6 +23,7 @@
         <link type="text/css" href="{{ asset('adminify/front') }}/css/front.css?v=1.0.0" rel="stylesheet">
         @laravelPWA
         @stack('css')
+        {!! Assets::group('frontend')->css() !!}
     </head>
     <body class="{{ $class ?? '' }}">
         <main id="app">
@@ -55,6 +56,7 @@
 
         @stack('modales')
         @stack('js')
+        {!! Assets::group('frontend')->js() !!}
 
         <!-- Argon JS -->
     </body>
