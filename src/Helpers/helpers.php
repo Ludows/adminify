@@ -122,6 +122,12 @@ if (! function_exists('look_file')) {
     }
 }
 
+if(! function_exists('add_asset')) {
+    function add_asset($collection = 'backend', $mixed = null) {
+        return Assets::group($collection)->add($mixed);
+    }
+}
+
 if (! function_exists('adminify_get_class')) {
     function adminify_get_class($name, $context, $loadClass) {
 
