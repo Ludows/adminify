@@ -3,11 +3,6 @@
 <div class="container-fluid mt--7">
     <div class="row">
         <div class="col-12">
-            @php
-                $name = request()->route()->getName();
-                $name = str_replace('.index', '', $name);
-            @endphp
-
             <div class="card shadow">
                 <div class="card-header border-0">
                     <div class="row align-items-center">

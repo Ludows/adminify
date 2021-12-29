@@ -14,6 +14,6 @@
     </div>
 </div>
 
-@push('js')
-    <script src="{{ asset('adminify') }}/back/js/formbuilder.js"></script>  
-@endpush
+@php
+    add_asset('default',  asset('adminify/back') . '/js/formbuilder.js');
+@endphp

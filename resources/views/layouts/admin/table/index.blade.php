@@ -8,19 +8,19 @@
 </script>
 
 @if(isset($css) && count($css) > 0)
-    @push('css')
         @foreach ($css as $cssPath)
-            <link type="text/css" href="{{ $cssPath }}" rel="stylesheet">
+            @php
+                add_asset('default',  $cssPath );
+            @endphp
         @endforeach
-    @endpush
 @endif
 
 @if(isset($js) && count($js) > 0)
-    @push('js')
         @foreach ($js as $jsPath)
-            <script src="{{ $jsPath }}"></script>
+            @php
+                add_asset('default',  $jsPath );
+            @endphp
         @endforeach
-    @endpush
 @endif
 
 <div class="card shadow">

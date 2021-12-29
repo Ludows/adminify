@@ -1,11 +1,11 @@
 @extends('adminify::layouts.admin.app')
 
 @if (!empty($adminCssLinks))
-    @push('css')
-        @foreach ($adminCssLinks as $adminCssPath)
-            <link rel="stylesheet" href="{{ $adminCssPath }}">
-        @endforeach
-    @endpush
+    @foreach ($adminCssLinks as $adminCssPath)
+        @php
+            add_asset('default',  $adminCssPath );
+        @endphp
+    @endforeach
 @endif
 
 @section('content')
@@ -25,9 +25,11 @@
 @endpush
 
 @if (!empty($adminJsLinks))
-    @push('js')
-        @foreach ($adminJsLinks as $adminJsPath)
-            <script type="text/javascript" src="{{ $adminJsPath }}"></script>
-        @endforeach
-    @endpush
+        
+    @foreach ($adminJsLinks as $adminJsPath)
+        @php
+            add_asset('default',  $adminJsPath );
+        @endphp
+    @endforeach
+    
 @endif

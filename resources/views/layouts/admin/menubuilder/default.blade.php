@@ -19,6 +19,8 @@
     </div>
 </div>
 
-@push('js')
-    <script src="{{ asset('adminify') }}/back/js/menuBuilder.js"></script>
-@endpush
+@php
+    add_asset('default',  asset('adminify').'/back/js/menuBuilder.js' );
+@endphp
+
+

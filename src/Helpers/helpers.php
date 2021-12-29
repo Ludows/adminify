@@ -123,7 +123,7 @@ if (! function_exists('look_file')) {
 }
 
 if(! function_exists('add_asset')) {
-    function add_asset($collection = 'backend', $mixed = null) {
+    function add_asset($collection = 'default', $mixed = null) {
         return Assets::group($collection)->add($mixed);
     }
 }

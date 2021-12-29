@@ -15,17 +15,17 @@
 
             @if(!empty($getAssets['css']))
                 @foreach ($getAssets['css'] as $cssPath)
-                    @push('css')
-                        <link type="rel/stylesheet" href="{{ $cssPath }}">
-                    @endpush
+                    @php
+                        add_asset('default',  $cssPath);
+                    @endphp
                 @endforeach
             @endif
 
             @if(!empty($getAssets['js']))
                 @foreach ($getAssets['js'] as $jsPath)
-                    @push('js')
-                        <script type="text/javascript" src="{{ $jsPath }}"></script>
-                    @endpush
+                    @php
+                        add_asset('default',  $jsPath);
+                    @endphp
                 @endforeach
             @endif
             @if ($widget->showInSidebar())

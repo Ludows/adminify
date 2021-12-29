@@ -37,8 +37,9 @@
 
     </div>
 
-    @push('js')
-        <script type="text/javascript" src="{{ asset('adminify') }}/back/js/editor.js"></script>
-        <script type="text/javascript" src="{{ asset('adminify') }}/back/js/editor/helpers.js"></script>
-        <script type="text/javascript" src="{{ asset('adminify') }}/back/js/editor/global.js"></script>
-    @endpush
+    @php
+        add_asset('default',  asset('adminify/back') . '/js/editor.js');
+        add_asset('default',  asset('adminify/back') . '/js/editor/helpers.js');
+        add_asset('default',  asset('adminify/back') . '/js/editor/global.js');
+    @endphp
+
