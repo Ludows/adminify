@@ -444,6 +444,11 @@ if(! function_exists('is_admin')) {
     function is_admin() {
         $request = request();
 
+
+        if(empty($request->currentRouteSplitting)) {
+            return $request->segment(1) == 'admin';
+        }
+
         return in_array('admin', $request->currentRouteSplitting);
     }
 }
@@ -451,6 +456,10 @@ if(! function_exists('is_admin')) {
 if(! function_exists('is_front')) {
     function is_front() {
         $request = request();
+
+        if(empty($request->currentRouteSplitting)) {
+            return $request->segment(1) != 'admin';
+        }
 
         return !in_array('admin', $request->currentRouteSplitting);
     }
