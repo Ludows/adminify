@@ -11,6 +11,7 @@ use App\Adminify\Models\Media;
 use Illuminate\Support\Facades\Storage;
 
 use App\Adminify\Repositories\AssetRepository;
+use App\Adminify\Models\Templates;
 
 use File;
 
@@ -124,7 +125,7 @@ class BaseRepository
             call_user_func_array(array($this, 'beforeRun'), array($model, $formValues,  $type));
         }
 
-        if($request->loadEditor && get_site_key('editor.handleAssetsGeneration') == 'before' && in_array(class_basename($model), $request->bindedEditorKeys)) {
+        if($request->loadEditor && get_site_key('editor.handleAssetsGeneration') == 'before' && in_array(singular(class_basename($model)), $request->bindedEditorKeys)) {
             $this->handleAssetsGeneration($model, 'before');
             $this->createEditorSaveFile($model);
         }
@@ -177,7 +178,7 @@ class BaseRepository
             call_user_func_array(array($this, 'afterRun'), array($model, $formValues,  $type));
         }
 
-        if($request->loadEditor && get_site_key('editor.handleAssetsGeneration') == 'after' && in_array( class_basename($model), $request->bindedEditorKeys)) {
+        if($request->loadEditor && get_site_key('editor.handleAssetsGeneration') == 'after' && in_array( singular(class_basename($model)), $request->bindedEditorKeys)) {
             $this->handleAssetsGeneration($model, 'after');
             $this->createEditorSaveFile($model);
         }
@@ -245,7 +246,7 @@ class BaseRepository
             'settingsBlocks' => $settingsBlocks
         );
 
-        $namedFile = lowercase( $baseClass ).'-'.$model->id.'.json';
+        $namedFile = singular(lowercase( $baseClass )).'-'.$model->id.'.json';
 
         $fileResponse = $this->EditorFileCreator( $namedFile , json_encode($rawContent));
 
@@ -312,8 +313,8 @@ class BaseRepository
             }
 
             $files = [
-                'css' => lowercase( $baseClass ).'-'.$model->id.'.css',
-                'js' => lowercase( $baseClass ).'-'.$model->id.'.js',
+                'css' => singular(lowercase( $baseClass )).'-'.$model->id.'.css',
+                'js' => singular(lowercase( $baseClass )).'-'.$model->id.'.js',
             ];
 
             foreach ($files as $namedKeyFile => $namedFile) {
@@ -347,5 +348,36 @@ class BaseRepository
 
 
         // }
+    }
+    public function getGeneratedFilesWithContentByEditor($id) {
+
+        $this->addModel(new Templates());
+        $m = $this->model->find($id);
+        $disk = $this->getEditorDisk();
+        $ret = [
+            'content' => $m->content,
+            'files' => []
+        ];
+
+        if(empty($m)) {
+            abort(404);
+        }
+
+        $baseClass = class_basename($m);
+
+        $files = [
+            'css' => singular(lowercase( $baseClass )).'-'.$m->id.'.css',
+            'js' => singular(lowercase( $baseClass )).'-'.$m->id.'.js',
+            'json' => singular(lowercase( $baseClass )).'-'.$m->id.'.json',
+        ];
+
+        foreach ($files as $fileKey => $file) {
+            # code...
+            if($disk->exists( $file )) {
+                $ret['files'][$fileKey] = look_file( public_path() . $file );
+            }
+        }
+
+        return $ret;
     }
 }

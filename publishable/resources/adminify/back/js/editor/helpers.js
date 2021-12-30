@@ -24,6 +24,7 @@ function registerAction(name, func) {
     }
 }
 
+
 function getDomThreeHtml(domThreeObject) {
     let checkThree = Object.keys(domThreeObject);
     let ret = null;
@@ -143,6 +144,27 @@ function createSortableZone(elm, options) {
 
 function isVisualElement(element) {
     return element.get(0).hasAttribute('data-visual-element');
+}
+
+function addTemplate(editor, tplId) {
+    $.ajax({
+        'method' : 'POST',
+        'url' : Route('editor.getTemplate', {
+            'id' : tplId
+        }),
+        'headers': {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        'data' : {}
+    })
+    .done((response) => {
+        console.log(response)
+
+
+    })
+    .fail((err) => {
+        console.log(err)
+    })
 }
 
 function addWidget(editor, widgetType, datas = {}) {
@@ -454,4 +476,5 @@ window.getDomThreeHtml = getDomThreeHtml;
 window.parseThree = parseThree;
 window.getPresentationBlock = getPresentationBlock;
 window.registerAction = registerAction;
+window.addTemplate = addTemplate;
 

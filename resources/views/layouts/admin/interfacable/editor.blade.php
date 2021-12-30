@@ -28,7 +28,10 @@
     {!! $blocks['sidebar-controls-block']->render() !!}
     <div class="sidebar left sidebar_domthree">
     </div>
-    {!! $blocks['templates-block']->render() !!}
+
+    @if ($request->singleParam != 'template')
+        {!! $blocks['templates-block']->render() !!}
+    @endif
 
 
     <div class="render_zone h-100">

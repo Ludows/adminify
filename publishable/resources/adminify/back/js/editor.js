@@ -10,14 +10,19 @@ $(document).ready(function ($) {
         let sidebar_widgets = $(editor).find('.sidebar_widgets')
         let sidebar_controls = $(editor).find('.sidebar_controls')
         let sidebar_domthree = $(editor).find('.sidebar_domthree')
+        let sidebar_templates = $(editor).find('.sidebar_templates')
         let sidebars_left = $(editor).find('.sidebar.left')
         let sidebars_right = $(editor).find('.sidebar.right')
         let render_zone = $(editor).find('.render_zone');
         let MainForm = $(editor).find('#MainFormEditor');
 
         let sortable_widgets = sidebar_widgets.find('.widget_zone');
+        let sortable_templates = sidebar_templates.find('.template_zone');
         let sortable_renderer = $(editor).find('.render_zone .row:last-child #renderZoneWidgets');
         let sidebars = $(editor).find('.js-sidebar');
+
+        let sortable_templates_js = null;
+
         let sortable_widgets_js = createSortableZone(sortable_widgets.get(0), {
             handle: '.js-handle',
             group: {
@@ -28,6 +33,20 @@ $(document).ready(function ($) {
             animation: 150,
             sort: false // To disable sorting: set sort to false
         });
+
+        if(sortable_templates.length > 0) {
+            sortable_templates_js = createSortableZone(sortable_templates.get(0), {
+                handle: '.js-handle',
+                group: {
+                    name: 'shared',
+                    pull: 'clone',
+                    put: false // Do not allow items to be put into this list
+                },
+                animation: 150,
+                sort: false // To disable sorting: set sort to false
+            });
+        }
+
 
         let sortable_renderer_js = createSortableZone(sortable_renderer.get(0), {
             handle: '.visual_element_block',
@@ -459,6 +478,8 @@ $(document).ready(function ($) {
             sortable_widgets_js: sortable_widgets_js,
             sortable_renderer_js: sortable_renderer_js,
             sortable_renderer: sortable_renderer,
+            sortable_templates_js: sortable_templates_js,
+            sortable_templates : sortable_templates,
             mainForm : MainForm,
             titleBlock: titleBlock
         });
@@ -471,8 +492,10 @@ $(document).ready(function ($) {
 
     function onAddToRenderer(evt) {
 
-        // console.log('add', evt);
+        console.log('add', evt);
         let editor = $(evt.to).parents('[data-editor]').first();
+        let isTemplateBlock = $(evt.item).attr('data-template') != null;
+        let TemplateId = $(evt.item).attr('data-template');
 
 
         let widgetType = $(evt.item).find('.js-handle').attr('data-widget');
@@ -491,7 +514,13 @@ $(document).ready(function ($) {
 
         $(evt.item).remove()
 
-        addWidget(editor, widgetType, o);
+        if(isTemplateBlock) {
+            alert('Grosse tata');
+            addTemplate(editor, TemplateId);
+        }
+        else {
+            addWidget(editor, widgetType, o);
+        }
     }
 
 });

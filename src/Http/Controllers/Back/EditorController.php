@@ -3,35 +3,26 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
-use App\Adminify\Http\Requests\CreateMailRequest;
-use App\Adminify\Http\Requests\UpdateMailRequest;
 
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 use App\Adminify\Http\Controllers\Controller;
 
-use App\Adminify\Repositories\MailsRepository;
+use Ludows\Adminify\Repositories\BaseRepository;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use App\Adminify\Tables\MailsTable;
-
-use App\Adminify\Forms\CreateMail;
-use App\Adminify\Forms\UpdateMail;
-
-use App\Adminify\Models\Mailables;
-use Mail;
 
 
 class EditorController extends Controller
 {
     use FormBuilderTrait;
     use TableManagerable;
-    private $mailRepository;
+    private $Repository;
 
-    public function __construct(MailsRepository $mailRepository) {
+    public function __construct(BaseRepository $Repository) {
 
-        $this->mailRepository = $mailRepository;
+        $this->baseRepo = $Repository;
         $this->middleware(['permission:read|create_pages'], ['only' => ['show','create']]);
         $this->middleware(['permission:read|edit_pages'], ['only' => ['edit', 'update']]);
         $this->middleware(['permission:read|delete_pages'], ['only' => ['destroy']]);
@@ -75,5 +66,19 @@ class EditorController extends Controller
     public function autosave() {}
     public function generateStyles() {}
     public function generateJs() {}
+
+    public function getTemplate($id) {
+
+        if(empty($id)) {
+            abort(404);
+        }
+
+        $theTpl = $this->baseRepo->getGeneratedFilesWithContentByEditor($id);
+
+        return response()->json([
+            'status' => 'OK',
+            'data' => $theTpl
+        ]);
+    }
 
 }
