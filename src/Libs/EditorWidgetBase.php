@@ -43,8 +43,6 @@ class EditorWidgetBase
    public function _setDefaultsToolbarActions() {
 
         if($this->isChild) {
-
-
             if(!empty($this->config['parent_widgetType'])) {
                 $cls_parent = adminify_get_class($this->config['parent_widgetType'], ['app:widgets', 'app:adminify:widgets'], false);
                 $cls_parent = new $cls_parent;
