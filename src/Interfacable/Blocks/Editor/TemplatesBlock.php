@@ -14,7 +14,7 @@ class TemplatesBlock extends InterfacableBlock {
         ];
     }
     public function query() {
-        return $this->mdlTemplate->all()->toArray();
+        return $this->mdlTemplate->all();
     }
     public function getView() {
         return 'adminify::layouts.admin.interfacable.editor.templates';
