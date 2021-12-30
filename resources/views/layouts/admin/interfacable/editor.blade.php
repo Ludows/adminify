@@ -29,11 +29,6 @@
     <div class="sidebar left sidebar_domthree">
     </div>
 
-    @if ($request->singleParam != 'template')
-        {!! $blocks['templates-block']->render() !!}
-    @endif
-
-
     <div class="render_zone h-100">
         {!! $blocks['renderer-block']->render() !!}
     </div>
