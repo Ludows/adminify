@@ -8,11 +8,6 @@
                 {{ __('admin.editor.sidebar.open') }}
             </a>
 
-            @if ($request->singleParam != 'template')
-                <a  data-handle=".sidebar_templates" href="#" class="btn btn-outline-default btn-sm js-sidebar">
-                    {{ __('admin.editor.sidebar.addTemplate') }}
-                </a>
-            @endif
             <a href="#" data-handle=".sidebar_domthree" class="btn btn-outline-default btn-sm js-sidebar">
                 {{ __('admin.editor.sidebar.domThree') }}
             </a>

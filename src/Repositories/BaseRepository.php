@@ -353,10 +353,10 @@ class BaseRepository
 
         $this->addModel(new Templates());
         $m = $this->model->find($id);
-        $disk = $this->getEditorDisk();
         $ret = [
             'content' => $m->content,
-            'files' => []
+            'files' => [],
+            'debug' => []
         ];
 
         if(empty($m)) {
@@ -373,9 +373,8 @@ class BaseRepository
 
         foreach ($files as $fileKey => $file) {
             # code...
-            if($disk->exists( $file )) {
-                $ret['files'][$fileKey] = look_file( public_path() . $file );
-            }
+            // $ret['debug'][] = public_path() .'/'. $file;
+            $ret['files'][$fileKey] = look_file( public_path() .'/'. $file );
         }
 
         return $ret;
