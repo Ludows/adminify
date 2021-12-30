@@ -12,10 +12,14 @@ class ImageWidget extends EditorWidgetBase {
         return __('admin.editor.widgets.image');
     }
     public function renderBlock() {
-        return '<figure '. $this->renderAttributes() .'><img src="" alt=""></figure>';
+        return '<figure '. $this->renderAttributes() .'><img class="img-fluid" src="" alt=""></figure>';
     }
 
     public function allowChildsNesting() {
+        return false;
+    }
+
+    public function allowContentEdition() {
         return false;
     }
 

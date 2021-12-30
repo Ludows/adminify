@@ -59,7 +59,7 @@ return [
             'RowWidget' => 'row',
             'TitleWidget' => 'title',
             'ColumnWidget' => 'col-12',
-            'ImageWidget' => 'img-fluid',
+            'ImageWidget' => 'figure',
             'ParagraphWidget' => 'paragraph'
         ]
     ],

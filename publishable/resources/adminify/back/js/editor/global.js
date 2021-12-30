@@ -170,6 +170,51 @@ $(document).on('editor:ready', function(e, details) {
         });
      });
 
+     editor.on('change', '[data-editor-track="imageSrc"]', function(e) {
+
+        let val = $(this).parent().find('.img-fluid').attr('src') ?? '';
+        let alt = $(this).parent().find('.img-fluid').attr('alt') ?? '';
+
+
+        let visual = getVisualElement( $(this) );
+        let img = visual.find('img');
+
+        img.attr({
+            'src' : val,
+            'alt' : alt
+        });
+
+     })
+
+     editor.on('input', '[data-editor-track="opacity"]', function(e) {
+        let val = $(this).val();
+
+        generateCss({
+            uuid : getTheWidgetId( $(this) ),
+            widgetType: getTheWidgetType( $(this) ),
+            breakpoint : false, // set as false when no breakpoint css generation is needed,
+            rule : {
+                property : 'opacity',
+                value : (parseInt(val) / 100)
+            }
+        });
+     })
+
+     editor.on('input', '[data-editor-track="radius"]', function(e) {
+        let val = $(this).val();
+
+        generateCss({
+            uuid : getTheWidgetId( $(this) ),
+            widgetType: getTheWidgetType( $(this) ),
+            breakpoint : false, // set as false when no breakpoint css generation is needed,
+            rule : {
+                property : 'border-radius',
+                value : val+'px'
+            }
+        });
+    })
+
+
      editor.on('change', '[data-editor-track="bgImage"]', function(e) {
         //alert(true)
         let val = $(this).parent().find('.img-fluid').attr('src');
@@ -513,6 +558,34 @@ $(document).on('editor:ready', function(e, details) {
 
             element.trigger('change');
         });
+
+        editor.on('input', '[data-editor-track="opacity_'+ breakpoint +'"]', function(e) {
+            let val = $(this).val();
+
+            generateCss({
+                uuid : getTheWidgetId( $(this) ),
+                widgetType: getTheWidgetType( $(this) ),
+                breakpoint : breakpoint, // set as false when no breakpoint css generation is needed,
+                rule : {
+                    property : 'opacity',
+                    value : (parseInt(val) / 100)
+                }
+            });
+         })
+
+         editor.on('input', '[data-editor-track="radius_'+ breakpoint +'"]', function(e) {
+            let val = $(this).val();
+
+            generateCss({
+                uuid : getTheWidgetId( $(this) ),
+                widgetType: getTheWidgetType( $(this) ),
+                breakpoint : breakpoint, // set as false when no breakpoint css generation is needed,
+                rule : {
+                    property : 'border-radius',
+                    value : val+'px'
+                }
+            });
+        })
 
         editor.on('change', '[data-editor-track="rowDirection_'+ breakpoint +'"]', function(e) {
             let val = $(this).val();
