@@ -58,7 +58,9 @@ return [
         'defaultsCssConfigClass' => [
             'RowWidget' => 'row',
             'TitleWidget' => 'title',
-            'ColumnWidget' => 'col-12'
+            'ColumnWidget' => 'col-12',
+            'ImageWidget' => 'img-fluid',
+            'ParagraphWidget' => 'paragraph'
         ]
     ],
 

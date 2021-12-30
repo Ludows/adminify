@@ -46,7 +46,7 @@ class ImageWidget extends EditorWidgetBase {
                 'min' => 0,
                 'max' => 100
             ],
-            'value' => 1
+            'value' => 100
         ]);
 
         $this->addSettingControlWithBreakpoints('radius', 'range', [
@@ -54,7 +54,7 @@ class ImageWidget extends EditorWidgetBase {
                 'min' => 0,
                 'max' => 100
             ],
-            'value' => 1
+            'value' => 100
         ]);
 
         
