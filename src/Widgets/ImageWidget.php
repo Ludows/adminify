@@ -21,16 +21,13 @@ class ImageWidget extends EditorWidgetBase {
 
     public function buildSettings() {
 
-        $this->addSettingControl('tag', 'select2', [
+        $this->addSettingControl('tag', 'select', [
             'choices' => [
                 'figure' => 'figure',
                 'div' => 'div',
                 'article' => 'article',
             ],
-            'selected' => 'figure',
-            'select2options' => [
-                'multiple' => false
-            ]
+            'selected' => 'figure'
         ]);
 
         $this->addSettingControl('imageSrc', 'lfm', [
