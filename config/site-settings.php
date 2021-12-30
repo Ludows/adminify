@@ -60,7 +60,8 @@ return [
             'TitleWidget' => 'title',
             'ColumnWidget' => 'col-12',
             'ImageWidget' => 'figure',
-            'ParagraphWidget' => 'paragraph'
+            'ParagraphWidget' => 'paragraph',
+            'GalleryWidget' => 'gallery'
         ]
     ],
 

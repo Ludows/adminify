@@ -98,7 +98,7 @@ function parseThree(parentElement) {
         childs : {}
     };
 
-    let check = parentElement.children();
+    let check = parentElement.children('.visual_element_block');
 
     if(check.length > 0) {
         $.each(check, function(i, c) {
