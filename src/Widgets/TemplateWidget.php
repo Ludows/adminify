@@ -18,14 +18,22 @@ class TemplateWidget extends EditorWidgetBase {
     public function allowContentEdition() {
         return false;
     }
+    public function inject() {
+        return [
+            'tplModel' => adminify_get_class('Templates', ['app:adminify:models', 'app:models'], true),
+            'tplRepo' => adminify_get_class('TemplatesRepository', ['app:adminify:repositories', 'app:repositories'], true),
+        ];
+    }
     public function chooseTemplate() {
 
+        $tpls = $this->tplModel->all()->pluck('id', 'title');
+
         $this->addChoose('chooseTpl', 'select', [
+            'choices' => $tpls,
             'wrapper' => [
-                'class' => 'col-6 text-center mb-4',
+                'class' => 'col-12 mb-4',
             ],
             'attr' => [
-                'class' => 'btn btn-lg btn-primary',
                 'data-widget' => 'ColumnWidget',
                 'data-count' => 1
             ]

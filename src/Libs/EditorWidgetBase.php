@@ -22,6 +22,15 @@ class EditorWidgetBase
         $this->type = class_basename($this);
         $injector = $this->addChildsBlocks();
 
+        $deps = $this->inject();
+
+        if(!empty($deps)) {
+            foreach ($deps as $key => $dep) {
+                # code...
+                $this->{$key} = $dep;
+            }
+        }
+
         if(!empty($injector)) {
             $this->childs = [];
             foreach ($injector as $namedClass) {
@@ -39,6 +48,9 @@ class EditorWidgetBase
    // allow to create inetrface to choose an element to render
    public function chooseTemplate() {
       return null;
+   }
+   public function inject() {
+       return [];
    }
    public function _setDefaultsToolbarActions() {
 
