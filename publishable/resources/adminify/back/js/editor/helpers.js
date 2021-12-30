@@ -73,15 +73,18 @@ function getListDomThree() {
            o[i] = representation;
         })
     }
-    else {
 
-    }
+    console.log('o', o)
 
     return o;
 }
 
 function getPresentationBlock(uuid) {
     return $('.media[data-visual-element="'+ uuid +'"');
+}
+
+function getChooseBox(uuid) {
+    return $('.js-choose-box[data-ref="'+ uuid +'"]');
 }
 
 function parseThree(parentElement) {
@@ -100,7 +103,9 @@ function parseThree(parentElement) {
     if(check.length > 0) {
         $.each(check, function(i, c) {
             let d = parseThree( $(c) );
-            o.childs[i] = d;
+            if(o['type'] != 'TemplateWidget') {
+                o.childs[i] = d;
+            }
         })
     }
 
@@ -146,7 +151,15 @@ function isVisualElement(element) {
     return element.get(0).hasAttribute('data-visual-element');
 }
 
-function addTemplate(editor, tplId) {
+function addTemplate(editor, tplId, datas = {}) {
+
+    let $d = $.extend(true, {
+        config : {
+            newWidget : false,
+            settings : false
+        }
+    }, datas);
+
     $.ajax({
         'method' : 'POST',
         'url' : Route('editor.getTemplate', {
@@ -158,8 +171,12 @@ function addTemplate(editor, tplId) {
         'data' : {}
     })
     .done((response) => {
-        console.log(response)
+        console.log(response, $d.datas.config.parent_uuid)
 
+        let visual = getVisualElement($d.datas.config.parent_uuid);
+        console.log('visual', visual)
+
+        visual.append( response.data.content );
 
     })
     .fail((err) => {
@@ -477,4 +494,5 @@ window.parseThree = parseThree;
 window.getPresentationBlock = getPresentationBlock;
 window.registerAction = registerAction;
 window.addTemplate = addTemplate;
+window.getChooseBox = getChooseBox;
 

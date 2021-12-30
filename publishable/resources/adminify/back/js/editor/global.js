@@ -35,7 +35,7 @@ $(document).on('editor:register:actions', function(e, details) {
     registerAction('sidebar-open:sidebar_domthree', function(editor, visual, widgetId, actionEl) {
         let List = getListDomThree();
         let rendererList = getDomThreeHtml(List);
-        console.log('list render', rendererList);
+        // console.log('list render', rendererList);
 
         editor.find('.sidebar_domthree').html('').html(rendererList)
     })
@@ -71,6 +71,27 @@ $(document).on('editor:register:actions', function(e, details) {
 
         editor.find('#renderZoneWidgets').trigger('click')
     });
+
+    registerAction('modify', function(editor, visual, widgetId, actionEl) {
+
+        let dataTemplate = $(visual).attr('data-template');
+        console.log('dataTemplate', dataTemplate)
+
+        let r = Route('templates.edit', {
+            'template' : dataTemplate
+        })
+
+        window.open(r, '_blank');
+
+    })
+
+    registerAction('duplicate', function(editor, visual, widgetId, actionEl) {
+        console.log('duplicate todo');
+    })
+
+    registerAction('preview', function(editor, visual, widgetId, actionEl) {
+        console.log('preview todo');
+    })
 
 })
 

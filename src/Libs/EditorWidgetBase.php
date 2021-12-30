@@ -52,6 +52,9 @@ class EditorWidgetBase
    public function inject() {
        return [];
    }
+   public function canBePreviewed() {
+       return false;
+   }
    public function _setDefaultsToolbarActions() {
 
         if($this->isChild) {
@@ -94,10 +97,27 @@ class EditorWidgetBase
             'btn_bg' => 'danger'
         ]);
 
-        $this->addToolbarItem('registerAsBlock', [
-            'icon' => 'ni-fat-remove',
-            'btn_bg' => 'secondary'
-        ]);
+
+        if($this->type != 'TemplateWidget') {
+            $this->addToolbarItem('registerAsTemplate', [
+                'icon' => 'ni-fat-remove',
+                'btn_bg' => 'secondary'
+            ]);
+        }
+
+        if($this->type == 'TemplateWidget') {
+            $this->addToolbarItem('modify', [
+                'icon' => 'ni-fat-remove',
+                'btn_bg' => 'warning'
+            ]);
+        }
+
+        if($this->canBePreviewed()) {
+            $this->addToolbarItem('preview', [
+                'icon' => 'ni-fat-remove',
+                'btn_bg' => 'success'
+            ]);
+        }
 
    }
   // public allow to add items to the toolbar

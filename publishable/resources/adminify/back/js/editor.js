@@ -10,18 +10,14 @@ $(document).ready(function ($) {
         let sidebar_widgets = $(editor).find('.sidebar_widgets')
         let sidebar_controls = $(editor).find('.sidebar_controls')
         let sidebar_domthree = $(editor).find('.sidebar_domthree')
-        let sidebar_templates = $(editor).find('.sidebar_templates')
         let sidebars_left = $(editor).find('.sidebar.left')
         let sidebars_right = $(editor).find('.sidebar.right')
         let render_zone = $(editor).find('.render_zone');
         let MainForm = $(editor).find('#MainFormEditor');
 
         let sortable_widgets = sidebar_widgets.find('.widget_zone');
-        let sortable_templates = sidebar_templates.find('.template_zone');
         let sortable_renderer = $(editor).find('.render_zone .row:last-child #renderZoneWidgets');
         let sidebars = $(editor).find('.js-sidebar');
-
-        let sortable_templates_js = null;
 
         let sortable_widgets_js = createSortableZone(sortable_widgets.get(0), {
             handle: '.js-handle',
@@ -33,20 +29,6 @@ $(document).ready(function ($) {
             animation: 150,
             sort: false // To disable sorting: set sort to false
         });
-
-        if(sortable_templates.length > 0) {
-            sortable_templates_js = createSortableZone(sortable_templates.get(0), {
-                handle: '.js-handle',
-                group: {
-                    name: 'shared',
-                    pull: 'clone',
-                    put: false // Do not allow items to be put into this list
-                },
-                animation: 150,
-                sort: false // To disable sorting: set sort to false
-            });
-        }
-
 
         let sortable_renderer_js = createSortableZone(sortable_renderer.get(0), {
             handle: '.visual_element_block',
@@ -143,36 +125,24 @@ $(document).ready(function ($) {
 
             // console.log('debug>>',  _html );
 
+            $(editor).trigger('editor:beforePublish');
+
             MainForm.find('[name="_settings_blocks"]').val( _html )
 
             MainForm.submit();
             // localStorage.setItem('page-')
         });
 
-        $(editor).on('click', '.js-choose-box [data-editor-choose]', function (e) {
+        $(editor).on('input', '.js-choose-box [data-editor-choose]', function(e) {
             e.preventDefault();
             e.stopPropagation();
+            processChoosing(editor, $(this))
+        })
 
-            let $wId = getTheWidgetId( $(this) );
-            let visual = getVisualElement( $wId );
-
-            // console.log('$wId', $wId)
-
-            $(editor).trigger('editor:template:call', {
-                element: $(this),
-                widget: $(this).attr('data-widget'),
-                datas: {
-                    config: {
-                        child: true,
-                        count : $(this).attr('data-count'),
-                        parent_uuid : $wId,
-                        parent_widgetType: getTheWidgetType( $(this) ),
-                    }
-                }
-            })
-
-            visual.removeClass('d-none');
-            $('.js-choose-box[data-ref="'+ $wId +'"]').remove()
+        $(editor).on('click', '.js-choose-box button[data-editor-choose]', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            processChoosing(editor, $(this))
         });
 
         $(editor).on('keyup', '.js-search-widget', function(e) {
@@ -228,6 +198,11 @@ $(document).ready(function ($) {
         sortable_renderer.on('click', '.visual_element_block', function (e) {
             e.preventDefault();
             console.log('click visual')
+
+            if( $(this).parents('.visual_element_block[data-type="TemplateWidget"]').length > 0 ) {
+                $(this).parents('.visual_element_block[data-type="TemplateWidget"]').trigger('click');
+                return false;
+            }
 
             $('.visual_element_block').not($(this)).removeClass('active-widget');
             if (e.target === e.currentTarget) {
@@ -478,8 +453,6 @@ $(document).ready(function ($) {
             sortable_widgets_js: sortable_widgets_js,
             sortable_renderer_js: sortable_renderer_js,
             sortable_renderer: sortable_renderer,
-            sortable_templates_js: sortable_templates_js,
-            sortable_templates : sortable_templates,
             mainForm : MainForm,
             titleBlock: titleBlock
         });
@@ -487,6 +460,50 @@ $(document).ready(function ($) {
 
 
     })
+
+    function processChoosing(editor, elementScope) {
+
+        let $wId = getTheWidgetId( elementScope );
+        let visual = getVisualElement( $wId );
+
+        let $wType = getTheWidgetType( elementScope );
+
+        console.log('$wType', $wType)
+
+        if($wType == 'TemplateWidget') {
+            let ChooseBox = getChooseBox($wId);
+            let inp = ChooseBox.find('[name="chooseTpl"]');
+            // addTemplate(editor, )
+            addTemplate(editor, inp.val() , {
+                datas: {
+                    config: {
+                        child: true,
+                        parent_uuid : $wId,
+                        parent_widgetType: $wType,
+                    }
+                }
+            })
+
+            visual.attr('data-template', inp.val());
+        }
+        else {
+            $(editor).trigger('editor:template:call', {
+                element: elementScope,
+                widget: elementScope.attr('data-widget'),
+                datas: {
+                    config: {
+                        child: true,
+                        count : elementScope.attr('data-count'),
+                        parent_uuid : $wId,
+                        parent_widgetType: $wType,
+                    }
+                }
+            })
+        }
+
+        visual.removeClass('d-none');
+        $('.js-choose-box[data-ref="'+ $wId +'"]').remove()
+    }
 
 
 
@@ -514,13 +531,8 @@ $(document).ready(function ($) {
 
         $(evt.item).remove()
 
-        if(isTemplateBlock) {
-            alert('Grosse tata');
-            addTemplate(editor, TemplateId);
-        }
-        else {
-            addWidget(editor, widgetType, o);
-        }
+
+        addWidget(editor, widgetType, o);
     }
 
 });

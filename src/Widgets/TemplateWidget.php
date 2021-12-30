@@ -18,18 +18,35 @@ class TemplateWidget extends EditorWidgetBase {
     public function allowContentEdition() {
         return false;
     }
+    public function allowChildsNesting() {
+        return false;
+    }
     public function inject() {
         return [
-            'tplModel' => adminify_get_class('Templates', ['app:adminify:models', 'app:models'], true),
+            'tplModel' => adminify_get_class('Templates', ['app:adminify:models', 'app:models'], false),
             'tplRepo' => adminify_get_class('TemplatesRepository', ['app:adminify:repositories', 'app:repositories'], true),
         ];
     }
+    public function canBePreviewed()
+    {
+        return true;
+    }
     public function chooseTemplate() {
 
-        $tpls = $this->tplModel->all()->pluck('id', 'title');
+        $tpls = $this->tplModel::get();
+
+        if($tpls->count() > 0) {
+            $tpls = $tpls->pluck('title','id')->toArray();
+        }
+        else {
+            $tpls = $tpls->all();
+        }
 
         $this->addChoose('chooseTpl', 'select', [
-            'choices' => $tpls,
+            'choices' =>  array_merge(
+                array('-1' => 'admin.editor.chooseTemplate'),
+                $tpls
+            ),
             'wrapper' => [
                 'class' => 'col-12 mb-4',
             ],
@@ -40,5 +57,18 @@ class TemplateWidget extends EditorWidgetBase {
         ]);
 
     }
-    public function buildSettings() {}
+    public function buildSettings() {
+        $this->addSettingControl('tag', 'select', [
+            'choices' => [
+                'div' => 'div',
+                'article' => 'article',
+                'section' => 'section',
+            ],
+            'selected' => 'div',
+        ]);
+
+        $this->addSettingControl('cssClasses', 'text', [
+
+        ]);
+    }
 }

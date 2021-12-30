@@ -354,7 +354,7 @@ class BaseRepository
         $this->addModel(new Templates());
         $m = $this->model->find($id);
         $ret = [
-            'content' => $m->content,
+            'content' => '[template id="'. $id .'"]',
             'files' => [],
             'debug' => []
         ];
