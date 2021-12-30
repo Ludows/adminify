@@ -57,6 +57,9 @@ class TemplateWidget extends EditorWidgetBase {
         ]);
 
     }
+    public function showInSidebar() {
+        return titled($this->request->singleParam) != 'Template';
+    }
     public function buildSettings() {
         $this->addSettingControl('tag', 'select', [
             'choices' => [
