@@ -133,17 +133,17 @@ $(document).ready(function ($) {
             // localStorage.setItem('page-')
         });
 
-        $(editor).on('input', '.js-choose-box [data-editor-choose]', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            processChoosing(editor, $(this))
-        })
+        // $(editor).on('input', '.js-choose-box [data-editor-choose]', function(e) {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     processChoosing(editor, $(this))
+        // })
 
-        $(editor).on('click', '.js-choose-box button[data-editor-choose]', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            processChoosing(editor, $(this))
-        });
+        // $(editor).on('click', '.js-choose-box button[data-editor-choose]', function(e) {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     processChoosing(editor, $(this))
+        // });
 
         $(editor).on('keyup', '.js-search-widget', function(e) {
             e.preventDefault();
@@ -163,6 +163,19 @@ $(document).ready(function ($) {
                     blk.parent().removeClass('d-block').addClass('d-none')
                 }
             });
+
+        });
+
+        $(editor).on('editor:chooserbox:remove', function(e, details) {
+            let chooserBox = getChooseBox( details.uuid );
+            let visual = getVisualElement(details.uuid);
+            if(chooserBox.length > 0) {
+                chooserBox.remove();
+            }
+            visual.removeClass('d-none');
+        });
+
+        $(editor).on('editor:chooserbox:removed', function(e, details) {
 
         });
 
@@ -199,10 +212,20 @@ $(document).ready(function ($) {
             e.preventDefault();
             console.log('click visual')
 
-            if( $(this).parents('.visual_element_block[data-type="TemplateWidget"]').length > 0 ) {
-                $(this).parents('.visual_element_block[data-type="TemplateWidget"]').trigger('click');
+            if(!isVisualElement( $(e.target) )) {
+                $(this).trigger('click');
+                $(editor).trigger('editor:click:childOfVisualElementBlock', {
+                    'element' : $(e.target),
+                    'visual' : $(this),
+                    'widgetType' : getTheWidgetType( $(this) )
+                })
                 return false;
             }
+
+            // if( $(this).parents('.visual_element_block[data-type="TemplateWidget"]').length > 0 ) {
+            //     $(this).parents('.visual_element_block[data-type="TemplateWidget"]').trigger('click');
+            //     return false;
+            // }
 
             $('.visual_element_block').not($(this)).removeClass('active-widget');
             if (e.target === e.currentTarget) {
@@ -376,6 +399,12 @@ $(document).ready(function ($) {
                 element = element.find('.visual_element_block[data-visual-element="'+ detail.parent_uuid +'"]');
             }
             element.append(wrap);
+            if(detail.haveChooseTemplate) {
+                $(editor).trigger('editor:chooserbox:appended', {
+                    'uuid' : detail.uuid,
+                    'widgetType': detail.widgetType
+                });
+            }
         });
 
         $(editor).on('editor:create:sortable', function(e, detail) {

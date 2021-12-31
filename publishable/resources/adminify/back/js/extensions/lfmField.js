@@ -114,6 +114,15 @@ export default function LFMField(fields) {
     function generateListenersIframe(ifr, datas = {}) {
         let ifr_content = ifr.contents();
 
+        let multiple = ifr_content.find('#multi_selection_toggle');
+
+        // console.log('options', datas.option);
+        if(datas.option.multiple == false) {
+            multiple.css({
+                'display': 'none'
+            });
+        }
+
         $(ifr_content).on('click', '#actions a[data-action="use"]', function() {
             console.log(datas)
             updateFieldProcess(datas);
@@ -146,8 +155,11 @@ export default function LFMField(fields) {
     function updateFieldProcess(ObjectInterface) {
 
         selectedItems = getSelection(ObjectInterface.ifr);
-        // console.log('TEST>>')
-        GenerateSelection(ObjectInterface.el_wrapper, selectedItems);
+        // console.log('TEST>>', ObjectInterface)
+
+        if(!ObjectInterface.option.disable_selection_preview) {
+            GenerateSelection(ObjectInterface.el_wrapper, selectedItems);
+        }
         if(selectedItems.length > 0 && ObjectInterface.fromMediaEntity == 0) {
             requestMedia(selectedItems, function(err, d) {
                 if(err != null) {
@@ -155,7 +167,18 @@ export default function LFMField(fields) {
                     return false;
                 }
                 if(d.models.length > 0) {
-                    fields_id.indexOf(ObjectInterface.hidden.attr('name')) > -1 ? ObjectInterface.hidden.val(d.models[0].id) : ObjectInterface.hidden.val(d.models[0].src);
+                    if(ObjectInterface.option.multiple) {
+                        let values = [];
+                        $.each(d.models, function(i, m) {
+                            fields_id.indexOf(ObjectInterface.hidden.attr('name')) > -1 ? values.push(m.id) : values.push(m.src);
+                        });
+
+                        ObjectInterface.hidden.val( values.join(',') );
+
+                    }
+                    else {
+                        fields_id.indexOf(ObjectInterface.hidden.attr('name')) > -1 ? ObjectInterface.hidden.val(d.models[0].id) : ObjectInterface.hidden.val(d.models[0].src);
+                    }
                 }
                 else {
                     // by defaults fallback to current name and mime type
@@ -170,6 +193,13 @@ export default function LFMField(fields) {
                 ObjectInterface.hidden.val(sel.name);
             })
         }
+
+        if(selectedItems.length > 0) {
+            ObjectInterface.el_wrapper.trigger('lfm:shareSelectedItems', {
+                items : selectedItems
+            });
+        }
+
         ObjectInterface.modale.modal('hide');
     }
 
@@ -203,16 +233,19 @@ export default function LFMField(fields) {
 
         if($hidden.val().length > 0) {
 
-            GenerateSelection($el_wrapper, [
-                {
-                    url : $hidden.attr('data-path'),
-                    name: $hidden.val()
-                }
-            ]);
+            if(!el.options.disable_selection_preview) {
+                GenerateSelection($el_wrapper, [
+                    {
+                        url : $hidden.attr('data-path'),
+                        name: $hidden.val()
+                    }
+                ]);
 
-            $el.css({
-                'display': 'none'
-            });
+                $el.css({
+                    'display': 'none'
+                });
+            }
+
         }
 
         $($el_wrapper).on('click', '.js-clear-selection', function(e) {
@@ -272,7 +305,8 @@ export default function LFMField(fields) {
                             fromMediaEntity : getParamFromIframe(ifr.attr('src'), 'fromMediaCreate'),
                             hidden : $hidden,
                             modale : modale,
-                            el : $el
+                            el : $el,
+                            option : el.options
                         });
 
                         loadListenersModale(modale, {

@@ -18,6 +18,8 @@ class FileManagerType extends FormField {
     public function setDefaults() {
         return array(
             'override_media_method' => null,
+            'disable_selection_preview' => false,
+            'multiple' => false,
             'btn' => [
                 'label' => __('admin.form.select_media'),
                 'attr' => ['class' => 'btn btn-default'],

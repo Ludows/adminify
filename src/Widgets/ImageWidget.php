@@ -12,7 +12,18 @@ class ImageWidget extends EditorWidgetBase {
         return __('admin.editor.widgets.image');
     }
     public function renderBlock() {
-        return '<figure '. $this->renderAttributes() .'><img class="img-fluid" src="" alt=""></figure>';
+        return '<figure '. $this->renderAttributes() .'><img class="img-fluid"></figure>';
+    }
+
+    public function chooseTemplate() {
+        $this->addChoose('chooseImg', 'button', [
+            'wrapper' => [
+                'class' => 'col-12 mb-4',
+            ],
+            'attr' => [
+                'class' => 'btn btn-default'
+            ]
+        ]);
     }
 
     public function addEditorAsset() {
@@ -43,6 +54,12 @@ class ImageWidget extends EditorWidgetBase {
         ]);
 
         $this->addSettingControl('imageSrc', 'lfm', [
+            'wrapper' => [
+                'hidden' => 'hidden'
+            ],
+            'lfm_options' => [
+                'disable_selection_preview' => true,
+            ]
 
         ]);
 
@@ -66,7 +83,7 @@ class ImageWidget extends EditorWidgetBase {
             'value' => 100
         ]);
 
-        
+
 
         $this->addSettingControlWithBreakpoints('alignment', 'select', [
             'choices' => [

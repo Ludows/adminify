@@ -8,7 +8,9 @@
     @endif
 
     @if($showField)
-        <div class="row row-selection"></div>
+        @if(!$options['lfm_options']['disable_selection_preview'])
+            <div class="row row-selection"></div>
+        @endif
         {!! Form::button($options['lfm_options']['btn']['label'], $options['lfm_options']['btn']['attr'] ) !!}
 
         {{--  {!! Form::input('hidden', 'mime_type', null, $options['attr']) !!}  --}}
@@ -30,7 +32,7 @@
     <script type="text/javascript">
         lfmInitFunction([{
             selector: "{{ $options['sibling'] }}",
-            options: [],
+            options: @json($options['lfm_options']),
             multilang: {!! var_export(is_multilang(),true) !!},
             currentLang: '{!! $currentLang !!}'
         }])
@@ -40,7 +42,7 @@
         <script type="text/javascript">
             window.admin.lfmFields.push({
                 selector: "{{ $options['sibling'] }}",
-                options: [],
+                options: @json($options['lfm_options']),
                 multilang: {!! var_export(is_multilang(),true) !!},
                 currentLang: '{!! $currentLang !!}'
             })

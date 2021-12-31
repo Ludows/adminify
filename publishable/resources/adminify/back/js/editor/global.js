@@ -170,21 +170,21 @@ $(document).on('editor:ready', function(e, details) {
         });
      });
 
-     editor.on('change', '[data-editor-track="imageSrc"]', function(e) {
+    //  editor.on('change', '[data-editor-track="imageSrc"]', function(e) {
 
-        let val = $(this).parent().find('.img-fluid').attr('src') ?? '';
-        let alt = $(this).parent().find('.img-fluid').attr('alt') ?? '';
+    //     let val = $(this).parent().find('.img-fluid').attr('src') ?? '';
+    //     let alt = $(this).parent().find('.img-fluid').attr('alt') ?? '';
 
 
-        let visual = getVisualElement( $(this) );
-        let img = visual.find('img');
+    //     let visual = getVisualElement( $(this) );
+    //     let img = visual.find('img');
 
-        img.attr({
-            'src' : val,
-            'alt' : alt
-        });
+    //     img.attr({
+    //         'src' : val,
+    //         'alt' : alt
+    //     });
 
-     })
+    //  })
 
      editor.on('input', '[data-editor-track="opacity"]', function(e) {
         let val = $(this).val();
@@ -216,7 +216,6 @@ $(document).on('editor:ready', function(e, details) {
 
 
      editor.on('change', '[data-editor-track="bgImage"]', function(e) {
-        //alert(true)
         let val = $(this).parent().find('.img-fluid').attr('src');
 
         let wType = getTheWidgetType( $(this) );

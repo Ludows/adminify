@@ -16,10 +16,13 @@ class GalleryWidget extends EditorWidgetBase {
     }
 
     public function chooseTemplate() {
-        $this->addChoose('chooseGallery', 'lfm', [
+        $this->addChoose('chooseGallery', 'button', [
             'wrapper' => [
                 'class' => 'col-12 mb-4',
             ],
+            'attr' => [
+                'class' => 'btn btn-default'
+            ]
         ]);
     }
 
@@ -51,11 +54,22 @@ class GalleryWidget extends EditorWidgetBase {
             'selected' => 'div',
         ]);
 
+        $this->addSettingControl('chooseGallery', 'lfm', [
+            'wrapper' => [
+                'class' => 'col-12 mb-4',
+                'hidden' => 'hidden'
+            ],
+            'lfm_options' => [
+                'disable_selection_preview' => true,
+                'multiple' => true
+            ]
+        ]);
+
         $this->addSettingControl('cssClasses', 'text', [
 
         ]);
 
-    
+
         $this->addSettingControlWithBreakpoints('alignment', 'select', [
             'choices' => [
                 'left' => 'left',
