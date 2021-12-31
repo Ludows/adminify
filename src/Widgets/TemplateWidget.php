@@ -18,6 +18,15 @@ class TemplateWidget extends EditorWidgetBase {
     public function allowContentEdition() {
         return false;
     }
+
+    public function addEditorAsset() {
+        return [
+            'js' => [
+                asset('adminify') . '/back/js/editor/TemplateWidget.js'
+            ]
+        ];
+    }
+
     public function allowChildsNesting() {
         return false;
     }
