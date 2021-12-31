@@ -15,6 +15,14 @@ class ImageWidget extends EditorWidgetBase {
         return '<figure '. $this->renderAttributes() .'><img class="img-fluid" src="" alt=""></figure>';
     }
 
+    public function addEditorAsset() {
+        return [
+            'js' => [
+                asset('adminify') . '/back/js/editor/ImageWidget.js'
+            ]
+        ];
+    }
+
     public function allowChildsNesting() {
         return false;
     }

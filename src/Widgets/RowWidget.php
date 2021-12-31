@@ -77,6 +77,13 @@ class RowWidget extends EditorWidgetBase {
 
         // dd($this->chooseTemplate);
     }
+    public function addEditorAsset() {
+        return [
+            'js' => [
+                asset('adminify') . '/back/js/editor/RowWidget.js'
+            ]
+        ];
+    }
     public function buildSettings() {
 
         $this->addSettingControl('tag', 'select', [
