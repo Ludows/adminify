@@ -12,7 +12,17 @@ class ImageWidget extends EditorWidgetBase {
         return __('admin.editor.widgets.image');
     }
     public function renderBlock() {
-        return '<figure '. $this->renderAttributes() .'><img class="img-fluid"></figure>';
+        return '<figure '. $this->renderAttributes() .'><img class="img-fluid" src="'. $this->getUrl() .'"></figure>';
+    }
+
+    public function getUrl() {
+        $u = 'https://picsum.photos/200/300';
+
+        if(!empty($this->config['url'])) {
+            $u = $this->config['url'];
+        }
+
+        return $u;
     }
 
     public function chooseTemplate() {

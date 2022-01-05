@@ -19,11 +19,27 @@ function getTheWidgetId(mixed) {
 }
 
 function registerAction(name, func) {
-    if(actions[name] == null) {
+    if(!actions[name]) {
         actions[name] = func;
     }
 }
 
+function getActiveWidget() {
+    let editor = $(document).find('[data-editor]').first();
+    return editor.attr('data-active-widget');
+}
+
+function theLoop(object, key, callback) {
+    $.each(object, function(i, obj) {
+        if(obj[key] && Object.keys(obj[key]).length > 0) {
+            theLoop(obj[key], key, callback);
+
+            if(typeof callback == 'function') {
+                callback(obj)
+            }
+        }
+    })
+}
 
 function getDomThreeHtml(domThreeObject) {
     let checkThree = Object.keys(domThreeObject);
@@ -87,13 +103,24 @@ function getChooseBox(uuid) {
     return $('.js-choose-box[data-ref="'+ uuid +'"]');
 }
 
+function loopOver(element, key, callback) {
+    if(element[key] && typeof callback == 'function') {
+        callback(element[key]);
+    }
+}
+
 function parseThree(parentElement) {
 
     let wId = getTheWidgetId(parentElement);
+    let SettingBlock = getSettingBlock( wId );
+    let formValues = SettingBlock.find('form').serializeFormJSON()
 
     let o = {
         type : getTheWidgetType( parentElement ),
         wId: wId,
+        imageSrc : getVisualElement( wId ).find('img').attr('src') ?? '',
+        settingsBlock : SettingBlock,
+        settingsBlockFormValues : formValues,
         html : getPresentationBlock( wId ),
         childs : {}
     };
@@ -151,12 +178,13 @@ function isVisualElement(element) {
     return element.get(0).hasAttribute('data-visual-element');
 }
 
-function addTemplate(editor, tplId, datas = {}) {
+function addTemplate(editor, tplId, datas = {}, callback = null) {
 
     let $d = $.extend(true, {
         config : {
             newWidget : false,
-            settings : false
+            settings : false,
+            duplicate : false
         }
     }, datas);
 
@@ -178,18 +206,24 @@ function addTemplate(editor, tplId, datas = {}) {
 
         visual.append( response.data.content );
 
+        editor.attr('data-active-widget', $d.datas.config.parent_uuid)
+
+        if(typeof callback == 'function') {
+            callback(response);
+        }
     })
     .fail((err) => {
         console.log(err)
     })
 }
 
-function addWidget(editor, widgetType, datas = {}) {
+function addWidget(editor, widgetType, datas = {}, callback = null) {
 
     let $d = $.extend(true, {
         config : {
             newWidget : true,
-            settings : true
+            settings : true,
+            duplicate : false,
         }
     }, datas);
 
@@ -201,7 +235,9 @@ function addWidget(editor, widgetType, datas = {}) {
         'headers': {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         },
-        'data' : $d
+        'data' : {
+            'editor' : JSON.stringify($d)
+        }
     })
     .done((response) => {
         console.log(response)
@@ -210,6 +246,12 @@ function addWidget(editor, widgetType, datas = {}) {
                 el : editor,
                 config : data
             })
+
+            editor.attr('data-active-widget', $d.config.child ? data.parent_uuid : data.uuid)
+
+            if(typeof callback == 'function') {
+                callback(data);
+            }
         })
         // console.log('last')
         setTimeout(() => {
@@ -237,14 +279,14 @@ function getTheWidgetType(mixed) {
     return widgetType;
 }
 
-function doAction(actionName, widgetId, actionEl = null) {
+function doAction(actionName = null, widgetId = null, actionEl = null, passDatas = {}) {
 
     let visual = widgetId != null ? getVisualElement(widgetId) : null;
     let editor = visual != null ? visual.parents('[data-editor]').first() : $(document).find('[data-editor]').first();
 
     if(actions[actionName]) {
         // do the registered action
-        actions[actionName](editor, visual, widgetId, actionEl);
+        actions[actionName](editor, visual, widgetId, actionEl, passDatas);
     }
     else {
         console.log('action not recognized : '+actionName);
@@ -495,4 +537,6 @@ window.getPresentationBlock = getPresentationBlock;
 window.registerAction = registerAction;
 window.addTemplate = addTemplate;
 window.getChooseBox = getChooseBox;
+window.theLoop = theLoop;
+window.getActiveWidget = getActiveWidget;
 

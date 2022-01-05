@@ -19,6 +19,7 @@ class EditorWidgetBase
         $this->uuid = null;
         $this->isChild = false;
         $this->config = null;
+        $this->isDuplicate = false;
         $this->type = class_basename($this);
         $injector = $this->addChildsBlocks();
 
@@ -75,6 +76,20 @@ class EditorWidgetBase
 
         if($this->type == 'ColumnWidget') {
             $this->addToolbarItem('moreColumn', [
+                'icon' => 'ni-fat-add',
+                'btn_bg' => 'success'
+            ]);
+        }
+
+        if($this->type == 'GalleryWidget') {
+            $this->addToolbarItem('moreGalleryItem', [
+                'icon' => 'ni-fat-add',
+                'btn_bg' => 'success'
+            ]);
+        }
+
+        if($this->type == 'ImageWidget') {
+            $this->addToolbarItem('changeSrc', [
                 'icon' => 'ni-fat-add',
                 'btn_bg' => 'success'
             ]);
@@ -175,6 +190,10 @@ class EditorWidgetBase
        return true;
    }
    public function renderAttributes() {
+
+        $config = $this->config;
+        $disableChoose = !empty($config['disable_choose']) && $config['disable_choose'] == true;
+
         $a = [
             'class' => []
         ];
@@ -186,7 +205,7 @@ class EditorWidgetBase
 
         $a['class'][]  = 'visual_element_block';
 
-        if(count($this->chooseTemplate) > 0) {
+        if(count($this->chooseTemplate) > 0 && $disableChoose != true) {
             $a['class'][]  = 'd-none';
         }
 
@@ -295,7 +314,10 @@ class EditorWidgetBase
 
         $config = $this->config;
         // tell if is child block..
-        $this->isChild = !empty($config['child']);
+        $this->isChild = !empty($config['child']) && $config['child'] == true;
+        $this->isDuplicate = isset($config['duplicate']) && $config['duplicate'] == true;
+
+        $disableChoose = !empty($config['disable_choose']) && $config['disable_choose'] == true;
 
         $renderJson = [
             'uuid' => null,
@@ -332,11 +354,13 @@ class EditorWidgetBase
         $this->chooseTemplate();
         $this->toolbarRender();
 
-        if(!empty($config['newWidget'])) {
+
+
+        if(!empty($config['newWidget']) && $config['newWidget'] == true) {
             $renderJson['uuid'] = $this->uuid;
             $renderJson['render'] = $this->renderBlock() ?? '';
         }
-        if(!empty($config['settings'])) {
+        if(!empty($config['settings']) && $config['settings'] == true) {
             $this->addSettingControl('widget_type', 'hidden', [
                 'value' => $this->request->route()->parameter('widget'),
             ]);
@@ -347,7 +371,7 @@ class EditorWidgetBase
                 ]);
             }
 
-            if(count($this->chooseTemplate) > 0) {
+            if(count($this->chooseTemplate) > 0 && $disableChoose != true) {
 
                 $renderJson['haveChooseTemplate'] = true;
 
@@ -367,12 +391,14 @@ class EditorWidgetBase
                 ]);
 
 
+
                 $renderJson['choose'] = $this->view->make($chooseTemplatePath, [
                     'form' => $chooserForm,
                     'editor' => $this->editor,
                     'uuid' => $this->uuid,
                     'breakpoints_names' => $this->breakpoints_names
                 ])->render();
+
             }
 
             if(count($this->toolbar) > 0) {
@@ -382,6 +408,7 @@ class EditorWidgetBase
                     'uuid' => $this->uuid,
                     'breakpoints_names' => $this->breakpoints_names
                 ])->render();
+
             }
 
             if(count($this->form) > 0) {
@@ -397,6 +424,9 @@ class EditorWidgetBase
                 $globalsFields = $this->getGlobalsControlFields();
                 $breakpointsFields = $this->getBreakpointsControlFieldsByTypes();
 
+                // dd('ca pète ?', $globalsFields);
+
+
                 $renderJson['settings'] = $this->view->make($viewPath, [
                     'block_description' => $block_description,
                     'form' => $renderJson['settings'],
@@ -406,6 +436,8 @@ class EditorWidgetBase
                     'uuid' => $this->uuid,
                     'breakpoints_names' => $this->breakpoints_names
                 ])->render();
+
+
             }
         }
 
@@ -435,8 +467,13 @@ class EditorWidgetBase
                 'attr' => [
                     'data-editor-track' => $name,
                 ],
-                'label' => __('admin.editor.'.$name)
+                'label' => __('admin.editor.'.$name),
+                // 'value' => $this->isDuplicate ? $this->config['settingsBlockFormValues'][$name] : ( $fieldsOptions['value'] ?? null )
             ];
+
+            if($this->isDuplicate) {
+                $a['value'] = $this->config['settingsBlockFormValues'][$name] ?? ( $fieldsOptions['value'] ?? '' );
+            }
 
             $this->form[] = array_merge_recursive($a, $fieldsOptions);
         }
@@ -458,8 +495,14 @@ class EditorWidgetBase
                         'data-settings-breakpoint' => $breakpointKey,
                         'data-editor-track' => $name.'_'.$breakpointKey
                     ],
-                    'label' => __('admin.editor.'.$name.'_'.$breakpointKey)
+                    'label' => __('admin.editor.'.$name.'_'.$breakpointKey),
+                    // 'value' => $this->isDuplicate ? $this->config['settingsBlockFormValues'][$name.'_'.$breakpointKey] : ( $fieldsOptions['value'] ?? null )
+
                 ];
+
+                if($this->isDuplicate) {
+                    $a['value'] = $this->config['settingsBlockFormValues'][$name.'_'.$breakpointKey] ?? ( $fieldsOptions['value'] ?? '' );
+                }
 
                 $this->breakpoints_names[] = $name.'_'.$breakpointKey;
                 $this->form[] = array_merge_recursive($a, $fieldsOptions);

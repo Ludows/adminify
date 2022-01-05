@@ -6,6 +6,8 @@ $(document).on('editor:ready', function(e, details) {
 
     editor.on('editor:chooserbox:appended', function(e, details) {
 
+        // console.log(details)
+
         if(details.widgetType != 'ImageWidget') {
             return false;
         }
@@ -23,48 +25,45 @@ $(document).on('editor:ready', function(e, details) {
             imgSrc.prev().trigger('click');
         })
 
-
-        editor.on('lfm:shareSelectedItems', function(e, details) {
-
-            if(wType != 'ImageWidget') {
-                return false;
-            }
-
-            let visual = getVisualElement(uuid);
-            console.log('details', details, uuid, visual)
-
-            if(details.items.length > 0) {
-                console.log(visual.children().first(), details.items[0].url)
-                visual.find('img').removeAttr('src');
-                visual.find('img').attr({
-                    'src' : details.items[0].url
-                });
-                debugger;
-            }
-
-            editor.trigger('editor:chooserbox:remove', {
-                'uuid' : uuid
-            })
-        })
-
-
-
-
     })
 
-    editor.on('editor:click:childOfVisualElementBlock', function(e, details) {
-        console.log('details', details);
+    editor.on('lfm:shareSelectedItems', function(e, details) {
 
-        let wId = getTheWidgetId(details.visual);
-        let settingBlock = getSettingBlock(wId);
-        let imgSrc = settingBlock.find('[data-editor-track="imageSrc"]');
+        let wType = getTheWidgetType( $(e.target) )
+        let uuid = getTheWidgetId( $(e.target) )
 
-        if(details.widgetType != 'ImageWidget') {
+        if(wType != 'ImageWidget') {
             return false;
         }
 
-        imgSrc.prev().trigger('click');
+        let visual = getVisualElement(uuid);
 
+        console.log(visual)
+
+        if(details.items.length > 0) {
+            doAction('dochangesrc', getTheWidgetId(visual), visual.find('img'), {
+                'src' : details.items[0].url
+            })
+        }
+
+        editor.trigger('editor:chooserbox:remove', {
+            'uuid' : uuid
+        })
     })
+
+    // editor.on('editor:click:childOfVisualElementBlock', function(e, details) {
+    //     console.log('details', details);
+
+    //     // let wId = getTheWidgetId(details.visual);
+    //     // let settingBlock = getSettingBlock(wId);
+    //     // let imgSrc = settingBlock.find('[data-editor-track="imageSrc"]');
+
+    //     // if(details.widgetType != 'ImageWidget') {
+    //     //     return false;
+    //     // }
+
+    //     // imgSrc.prev().trigger('click');
+
+    // })
 
 });

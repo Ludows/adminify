@@ -30,8 +30,11 @@ class EditorController extends Controller
     public function addWidget($widget, Request $request) {
 
         $classStr = adminify_get_class($widget, ['app:widgets', 'app:adminify:widgets'], false);
-        $config = $request->get('config');
+        $editor = json_decode( $request->get('editor') , true);
+        $config = $editor['config'];
         $return_datas = [];
+
+        // dd($request->all(), $config);
 
 
         switch ($widget) {

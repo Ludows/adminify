@@ -1,19 +1,38 @@
+const { data } = require("jquery");
+
 $(document).on('editor:register:actions', function(e, details) {
     let editor = $(details.el);
 
-    registerAction('gotoparent', function(editor, visual, widgetId, actionEl) {
+    registerAction('gotoparent', function(editor, visual, widgetId, actionEl, datas) {
         visual.parent().trigger('click');
     });
 
-    // registerAction('deletecolumn', function(editor, visual, widgetId, actionEl) {
-    //     removeWidget(widgetId);
-    // });
+    registerAction('moregalleryitem', function(editor, visual, widgetId, actionEl, datas) {
+        addWidget(editor, 'ImageWidget', {
+            config : {
+                child : true,
+                parent_uuid : getTheWidgetId(visual),
+                parent_widgetType : getTheWidgetType(visual)
+            }
+        });
+    });
 
-    registerAction('delete', function(editor, visual, widgetId, actionEl) {
+    registerAction('delete', function(editor, visual, widgetId, actionEl, datas) {
         removeWidget(widgetId);
     });
 
-    registerAction('morecolumn', function(editor, visual, widgetId, actionEl) {
+    registerAction('changesrc', function(editor, visual, widgetId, actionEl, datas) {
+        let settingBlock = getSettingBlock(widgetId);
+        let imgSrc = settingBlock.find('[data-editor-track="imageSrc"]');
+
+        imgSrc.prev().trigger('click');
+    })
+
+    registerAction('dochangesrc', function(editor, visual, widgetId, actionEl, datas) {
+        actionEl.attr('src', datas.src);
+    })
+
+    registerAction('morecolumn', function(editor, visual, widgetId, actionEl, datas) {
 
         var childrens = visual.parent().children();
             if(childrens.length < window.editorConfig.patterns.max_columns) {
@@ -32,7 +51,7 @@ $(document).on('editor:register:actions', function(e, details) {
 
     });
 
-    registerAction('sidebar-open:sidebar_domthree', function(editor, visual, widgetId, actionEl) {
+    registerAction('sidebar-open:sidebar_domthree', function(editor, visual, widgetId, actionEl, datas) {
         let List = getListDomThree();
         let rendererList = getDomThreeHtml(List);
         // console.log('list render', rendererList);
@@ -40,18 +59,18 @@ $(document).on('editor:register:actions', function(e, details) {
         editor.find('.sidebar_domthree').html('').html(rendererList)
     })
 
-    registerAction('sidebar-close:sidebar_domthree', function(editor, visual, widgetId, actionEl) {
+    registerAction('sidebar-close:sidebar_domthree', function(editor, visual, widgetId, actionEl, datas) {
         console.log('sidebar-close:sidebar_domthree')
     })
 
-    registerAction('make-tooltip', function(editor, visual, widgetId, actionEl) {
+    registerAction('make-tooltip', function(editor, visual, widgetId, actionEl, datas) {
         actionEl.tooltip({
             html : true,
             trigger: 'hover'
         });
     })
 
-    registerAction('check-morecolumn', function(editor, visual, widgetId, actionEl) {
+    registerAction('check-morecolumn', function(editor, visual, widgetId, actionEl, datas) {
         var childrens = visual.parent().children();
             // console.log('childrens', childrens, actionEl)
             if(childrens.length < window.editorConfig.patterns.max_columns) {
@@ -62,7 +81,7 @@ $(document).on('editor:register:actions', function(e, details) {
             }
     })
 
-    registerAction('moreblock', function(editor, visual, widgetId, actionEl) {
+    registerAction('moreblock', function(editor, visual, widgetId, actionEl, datas) {
         let handle = ".sidebar_widgets";
 
         let sibling = $(editor).find('.editor-topbar .js-sidebar[data-handle="'+ handle +'"]');
@@ -72,10 +91,9 @@ $(document).on('editor:register:actions', function(e, details) {
         editor.find('#renderZoneWidgets').trigger('click')
     });
 
-    registerAction('modify', function(editor, visual, widgetId, actionEl) {
+    registerAction('modify', function(editor, visual, widgetId, actionEl, datas) {
 
         let dataTemplate = $(visual).attr('data-template');
-        console.log('dataTemplate', dataTemplate)
 
         let r = Route('templates.edit', {
             'template' : dataTemplate
@@ -85,11 +103,83 @@ $(document).on('editor:register:actions', function(e, details) {
 
     })
 
-    registerAction('duplicate', function(editor, visual, widgetId, actionEl) {
-        console.log('duplicate todo');
+    registerAction('duplicate', function(editor, visual, widgetId, actionEl, datas) {
+        console.log('duplicate todo', visual);
+
+        let listInDupplicate = parseThree( visual );
+        let TestParentVisual = visual.parent();
+        let parentIsVisual = isVisualElement( TestParentVisual );
+
+        console.log('listInDupplicate', listInDupplicate)
+
+        console.log('parentIsVisual>>>', parentIsVisual)
+
+        console.log('parentIsVisualEl>>', TestParentVisual)
+
+        let o = {
+            settingsBlockValues : listInDupplicate.settingsBlockFormValues,
+            disable_choose : true,
+            duplicate : false
+        }
+
+        if(parentIsVisual) {
+            o['child'] = true;
+            o['parent_uuid'] = getTheWidgetId( TestParentVisual );
+            o['parent_widgetType'] = getTheWidgetType( TestParentVisual );
+        }
+
+
+        addWidget(editor, listInDupplicate.type, {
+            config: o
+        }, function(response) {
+            console.log('after response', response)
+
+            if(listInDupplicate.childs.length > 0) {
+                // do the loop overs childs
+                let activeParent = getActiveWidget();
+                theLoop(listInDupplicate.childs, 'childs', function(object) {
+
+                    console.log('before childs', activeParent)
+                    // console.log('object>>>', object);
+                    addWidget(editor, object.type, {
+                        config: {
+                            child : true,
+                            url : object.imageSrc,
+                            parent_uuid : response.uuid,
+                            parent_widgetType :response.widgetType,
+                            settingsBlockValues : object.settingsBlockFormValues,
+                            disable_choose : true
+                        }
+                    })
+                    // console.log('after childs', getActiveWidget())
+
+                })
+            }
+        })
+
+        // if(listInDupplicate.childs.length > 0) {
+        //     // do the loop overs childs
+        //     let activeParent = getActiveWidget();
+        //     theLoop(listInDupplicate.childs, 'childs', function(object) {
+
+        //         console.log('before childs', activeParent)
+        //         // console.log('object>>>', object);
+        //         addWidget(editor, object.type, {
+        //             config: {
+        //                 child : true,
+        //                 parent_uuid : getTheWidgetId(activeParent),
+        //                 parent_widgetType : getTheWidgetType(activeParent),
+        //                 settingsBlockValues : object.settingsBlockFormValues,
+        //                 disable_choose : true
+        //             }
+        //         })
+        //         // console.log('after childs', getActiveWidget())
+
+        //     })
+        // }
     })
 
-    registerAction('preview', function(editor, visual, widgetId, actionEl) {
+    registerAction('preview', function(editor, visual, widgetId, actionEl, datas) {
         console.log('preview todo');
     })
 

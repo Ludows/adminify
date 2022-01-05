@@ -126,10 +126,6 @@ export default function LFMField(fields) {
         $(ifr_content).on('click', '#actions a[data-action="use"]', function() {
             console.log(datas)
             updateFieldProcess(datas);
-            datas.hidden.trigger('change');
-            datas.el.css({
-                'display': 'none'
-            });
         })
     }
 
@@ -167,7 +163,9 @@ export default function LFMField(fields) {
                     return false;
                 }
                 if(d.models.length > 0) {
+                    // console.log('a')
                     if(ObjectInterface.option.multiple) {
+                        console.log('a 1')
                         let values = [];
                         $.each(d.models, function(i, m) {
                             fields_id.indexOf(ObjectInterface.hidden.attr('name')) > -1 ? values.push(m.id) : values.push(m.src);
@@ -177,10 +175,12 @@ export default function LFMField(fields) {
 
                     }
                     else {
+                        // console.log('a 2')
                         fields_id.indexOf(ObjectInterface.hidden.attr('name')) > -1 ? ObjectInterface.hidden.val(d.models[0].id) : ObjectInterface.hidden.val(d.models[0].src);
                     }
                 }
                 else {
+                    // console.log('b')
                     // by defaults fallback to current name and mime type
                     selectedItems.forEach((sel) => {
                         ObjectInterface.hidden.val(sel.name);
@@ -189,13 +189,20 @@ export default function LFMField(fields) {
             })
         }
         else {
+            // console.log('c')
+
             selectedItems.forEach((sel) => {
                 ObjectInterface.hidden.val(sel.name);
             })
         }
 
+        ObjectInterface.hidden.trigger('change');
+        ObjectInterface.el.css({
+            'display': 'none'
+        });
+
         if(selectedItems.length > 0) {
-            ObjectInterface.el_wrapper.trigger('lfm:shareSelectedItems', {
+            ObjectInterface.hidden.trigger('lfm:shareSelectedItems', {
                 items : selectedItems
             });
         }
