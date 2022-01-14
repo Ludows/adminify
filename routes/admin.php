@@ -119,10 +119,8 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
     if(isset($c['editor']) && $c['editor']) {
         Route::post('editor/add/{widget}', 'App\Adminify\Http\Controllers\Back\EditorController@addWidget')->name('editor.addWidget');
         Route::post('editor/template/{id}', 'App\Adminify\Http\Controllers\Back\EditorController@getTemplate')->name('editor.getTemplate');
-        Route::post('editor/remove/{widget}', 'App\Adminify\Http\Controllers\Back\EditorController@removeWidget')->name('editor.removeWidget');
         Route::post('editor/autosave', 'App\Adminify\Http\Controllers\Back\EditorController@autosave')->name('editor.autosave');
-        Route::post('editor/generate/styles', 'App\Adminify\Http\Controllers\Back\EditorController@generateStyles')->name('editor.generate.styles');
-        Route::post('editor/generate/js', 'App\Adminify\Http\Controllers\Back\EditorController@generateJs')->name('editor.generate.js');
+        Route::post('editor/duplicate', 'App\Adminify\Http\Controllers\Back\EditorController@duplicateBlock')->name('editor.duplicate');
         // Route::post('editor/settings', 'App\Adminify\Http\Controllers\Back\EditorController@storeSettings')->name('editor.store');
     }
 
