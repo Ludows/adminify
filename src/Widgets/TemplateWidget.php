@@ -11,9 +11,20 @@ class TemplateWidget extends EditorWidgetBase {
     public function getName() {
         return __('admin.editor.widgets.template');
     }
+
+    public function renderTplContent() {
+        $html = '';
+        $config = $this->config;
+
+        if(!empty($config['tplId'])) {
+            $html = $config['tplContent'] ?? '[template id="'. $config['tplId'] .'"]';
+        }
+        return $html;
+    }
+
     public function renderBlock() {
 
-        return '<div '. $this->renderAttributes() .'></div>';
+        return '<div '. $this->renderAttributes() .'>'. $this->renderTplContent() .'</div>';
     }
     public function allowContentEdition() {
         return false;
@@ -38,7 +49,7 @@ class TemplateWidget extends EditorWidgetBase {
     }
     public function canBePreviewed()
     {
-        return true;
+        return false;
     }
     public function chooseTemplate() {
 

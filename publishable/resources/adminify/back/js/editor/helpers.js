@@ -24,6 +24,20 @@ function registerAction(name, func) {
     }
 }
 
+function doAjax(ajaxOptions, callback) {
+    $.ajax(ajaxOptions)
+    .done((data) => {
+        if(typeof callback == 'function') {
+            callback(null, data);
+        }
+    })
+    .fail((err) => {
+        if(typeof callback == 'function') {
+            callback(err, null);
+        }
+    })
+}
+
 function getActiveWidget() {
     let editor = $(document).find('[data-editor]').first();
     return editor.attr('data-active-widget');
@@ -31,12 +45,11 @@ function getActiveWidget() {
 
 function theLoop(object, key, callback) {
     $.each(object, function(i, obj) {
+        if(typeof callback == 'function') {
+            callback(obj)
+        }
         if(obj[key] && Object.keys(obj[key]).length > 0) {
             theLoop(obj[key], key, callback);
-
-            if(typeof callback == 'function') {
-                callback(obj)
-            }
         }
     })
 }
@@ -114,11 +127,18 @@ function parseThree(parentElement) {
     let wId = getTheWidgetId(parentElement);
     let SettingBlock = getSettingBlock( wId );
     let formValues = SettingBlock.find('form').serializeFormJSON()
+    let wType = getTheWidgetType( parentElement );
+    let visual = getVisualElement( wId );
 
     let o = {
-        type : getTheWidgetType( parentElement ),
+        type : wType,
         wId: wId,
-        imageSrc : getVisualElement( wId ).find('img').attr('src') ?? '',
+        toolbar : findToolbar(wId),
+        tplContent : wType == 'TemplateWidget' ? visual.html() : '',
+        tplId : wType == 'TemplateWidget' ? visual.attr('data-template') : '',
+        parentWidgetId : isVisualElement( visual.parent() ) ? getTheWidgetId( visual.parent() ) : '',
+        css : getRuleSets(wId),
+        imageSrc : visual.find('img').attr('src') ?? '',
         settingsBlock : SettingBlock,
         settingsBlockFormValues : formValues,
         html : getPresentationBlock( wId ),
@@ -141,6 +161,19 @@ function parseThree(parentElement) {
     return o;
 }
 
+function findToolbars(visual) {
+    let a = [];
+
+    let representativeDom = parseThree(visual);
+
+    theLoop([representativeDom], 'childs', function(datas) {
+        a.push(datas.toolbar)
+    });
+
+    return a;
+}
+
+
 function findToolbar(uuid) {
     let ret = null;
 
@@ -152,6 +185,19 @@ function findToolbar(uuid) {
     });
 
     return ret;
+}
+
+function getSettingBlocksOf(visual) {
+
+    let html = '';
+    let representativeDom = parseThree( visual );
+
+    theLoop([representativeDom], 'childs', function(datas) {
+        // console.log('datas getSettingBlocksOf', datas)
+        html += datas.settingsBlock.prop('outerHTML');
+    });
+
+    return html;
 }
 
 function removeWidget(uuid) {
@@ -237,7 +283,7 @@ function addWidget(editor, widgetType, datas = {}, callback = null) {
         },
         'data' : {
             'editor' : JSON.stringify($d)
-        }
+        },
     })
     .done((response) => {
         console.log(response)
@@ -386,8 +432,10 @@ function agregateForPublish(object = {}) {
     }
 }
 
-function getRuleSets() {
+function getRuleSets(uuid = null) {
     let a = [];
+
+
 
     let keysBreakpoints = Object.keys(window.editorConfig.breakpoints);
 
@@ -396,7 +444,12 @@ function getRuleSets() {
 
     $.each(rules, function(i, ruleName) {
 
-        let styledComponents = $('.styled_components_block[data-breakpoint="'+ ruleName +'"]');
+        let selector = '.styled_components_block[data-breakpoint="'+ ruleName +'"]';
+        if(uuid != null) {
+            selector = '.styled_components_block[data-uuid="'+ uuid +'"][data-breakpoint="'+ ruleName +'"]';
+        }
+
+        let styledComponents = $(selector);
 
         if(styledComponents.length > 0) {
             $.each(styledComponents, function(k, styleBlock) {
@@ -415,7 +468,7 @@ function getRuleSets() {
 
     })
 
-    console.log('a', a);
+    // console.log('a', a);
     return a;
 }
 function getHtmlRendered() {
@@ -539,4 +592,6 @@ window.addTemplate = addTemplate;
 window.getChooseBox = getChooseBox;
 window.theLoop = theLoop;
 window.getActiveWidget = getActiveWidget;
-
+window.doAjax = doAjax;
+window.findToolbars = findToolbars;
+window.getSettingBlocksOf = getSettingBlocksOf;

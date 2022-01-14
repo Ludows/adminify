@@ -213,6 +213,10 @@ class EditorWidgetBase
             $a['class'][]  = 'is-child';
         }
 
+        if(!empty($config['tplId'])) {
+            $a['data-template'] = $config['tplId'];
+        }
+
         if(!empty( $this->editor['defaultsCssConfigClass'][ class_basename($this) ] )) {
             $a['class'][] = $this->editor['defaultsCssConfigClass'][ class_basename($this) ];
         }

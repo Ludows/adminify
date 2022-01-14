@@ -408,7 +408,7 @@ $(document).ready(function ($) {
         });
 
         $(editor).on('editor:create:sortable', function(e, detail) {
-            console.log('detail from sortable', detail)
+            // console.log('detail from sortable', detail)
 
             let zone = detail.element ? detail.element : $(this).find('.visual_element_block[data-visual-element="'+ detail.uuid +'');
 

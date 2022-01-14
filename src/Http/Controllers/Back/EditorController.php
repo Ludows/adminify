@@ -65,11 +65,14 @@ class EditorController extends Controller
 
         return $this->sendResponse($return_datas, url()->previous(), 'admin.typed_data.success', 'data');
     }
-    public function removeWidget() {}
     public function autosave() {}
-    public function generateStyles() {}
-    public function generateJs() {}
+    public function duplicateBlock(Request $request) {
+        $html = '';
+        $duplicate = json_decode( $request->get('duplicate') , true);
 
+
+        return $this->sendResponse($duplicate, url()->previous(), 'admin.typed_data.success', 'data');
+    }
     public function getTemplate($id) {
 
         if(empty($id)) {

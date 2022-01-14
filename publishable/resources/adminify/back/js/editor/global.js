@@ -2,6 +2,7 @@ const { data } = require("jquery");
 
 $(document).on('editor:register:actions', function(e, details) {
     let editor = $(details.el);
+    window.activeParent = null;
 
     registerAction('gotoparent', function(editor, visual, widgetId, actionEl, datas) {
         visual.parent().trigger('click');
@@ -110,77 +111,163 @@ $(document).on('editor:register:actions', function(e, details) {
         let TestParentVisual = visual.parent();
         let parentIsVisual = isVisualElement( TestParentVisual );
 
-        console.log('listInDupplicate', listInDupplicate)
+        let test = JSON.stringify(listInDupplicate);
 
-        console.log('parentIsVisual>>>', parentIsVisual)
+        console.log('builded three', listInDupplicate, test)
 
-        console.log('parentIsVisualEl>>', TestParentVisual)
-
-        let o = {
-            settingsBlockValues : listInDupplicate.settingsBlockFormValues,
-            disable_choose : true,
-            duplicate : false
-        }
-
-        if(parentIsVisual) {
-            o['child'] = true;
-            o['parent_uuid'] = getTheWidgetId( TestParentVisual );
-            o['parent_widgetType'] = getTheWidgetType( TestParentVisual );
-        }
-
-
-        addWidget(editor, listInDupplicate.type, {
-            config: o
-        }, function(response) {
-            console.log('after response', response)
-
-            if(listInDupplicate.childs.length > 0) {
-                // do the loop overs childs
-                let activeParent = getActiveWidget();
-                theLoop(listInDupplicate.childs, 'childs', function(object) {
-
-                    console.log('before childs', activeParent)
-                    // console.log('object>>>', object);
-                    addWidget(editor, object.type, {
-                        config: {
-                            child : true,
-                            url : object.imageSrc,
-                            parent_uuid : response.uuid,
-                            parent_widgetType :response.widgetType,
-                            settingsBlockValues : object.settingsBlockFormValues,
-                            disable_choose : true
-                        }
-                    })
-                    // console.log('after childs', getActiveWidget())
-
-                })
+        doAjax({
+            method : 'POST',
+            url : Route('editor.duplicate')
+        }, function(err, datas) {
+            if(err) {
+                console.log('whoooops', err);
+                return false;
             }
+
+            console.log('datas')
         })
 
-        // if(listInDupplicate.childs.length > 0) {
-        //     // do the loop overs childs
-        //     let activeParent = getActiveWidget();
-        //     theLoop(listInDupplicate.childs, 'childs', function(object) {
-
-        //         console.log('before childs', activeParent)
-        //         // console.log('object>>>', object);
-        //         addWidget(editor, object.type, {
-        //             config: {
-        //                 child : true,
-        //                 parent_uuid : getTheWidgetId(activeParent),
-        //                 parent_widgetType : getTheWidgetType(activeParent),
-        //                 settingsBlockValues : object.settingsBlockFormValues,
-        //                 disable_choose : true
-        //             }
-        //         })
-        //         // console.log('after childs', getActiveWidget())
-
-        //     })
+        // let o = {
+        //     settingsBlockValues : listInDupplicate.settingsBlockFormValues,
+        //     disable_choose : true,
+        //     duplicate : false,
+        //     url : listInDupplicate.imageSrc,
+        //     tplContent : listInDupplicate.tplContent,
+        //     tplId : listInDupplicate.tplId
         // }
+
+        // if(parentIsVisual) {
+        //     o['child'] = true;
+        //     o['parent_uuid'] = getTheWidgetId( TestParentVisual );
+        //     o['parent_widgetType'] = getTheWidgetType( TestParentVisual );
+        // }
+
+
+        // addWidget(editor, listInDupplicate.type, {
+        //     config: o
+        // }, function(response) {
+        //     console.log('after first dupplicate response', response)
+
+        //     if(listInDupplicate.childs.length > 0) {
+        //         // do the loop overs childs
+        //         theLoop(listInDupplicate.childs, 'childs', function(object) {
+
+        //             window.activeParent = getActiveWidget();
+
+        //             console.log('before childs', activeParent)
+        //             // console.log('object>>>', object);
+        //             addWidget(editor, object.type, {
+        //                 config: {
+        //                     child : true,
+        //                     url : object.imageSrc,
+        //                     tplContent : object.tplContent,
+        //                     tplId : object.tplId,
+        //                     parent_uuid : activeParent,
+        //                     parent_widgetType :response.widgetType,
+        //                     settingsBlockValues : object.settingsBlockFormValues,
+        //                     disable_choose : true
+        //                 }
+        //             }, function(d) {
+        //                 window.activeParent = d.uuid;
+        //                 console.log('activeParent>>', activeParent)
+        //                 // console.log('after child', activeParent, d)
+        //             })
+        //             // console.log('after childs', getActiveWidget())
+
+        //         })
+        //     }
+        // })
     })
 
     registerAction('preview', function(editor, visual, widgetId, actionEl, datas) {
         console.log('preview todo');
+    })
+
+    registerAction('registerastemplate', function(editor, visual, widgetId, actionEl, datas) {
+        console.log('registerastemplate todo');
+
+        let content = visual.prop('outerHTML')
+        // let representativeDom = parseThree(visual);
+
+
+        function createModaleWithContent(content) {
+            let tpl = `<div id="modaleRegisterTemplate" class="modal fade" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">${__('admin.modal_title')}</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  ${content}
+                </div>
+              </div>
+            </div>
+          </div>`;
+            return tpl;
+        }
+
+        function getPrivateFields() {
+            return `<input type="hidden" value="" name="_css" /><input type="hidden" value="" name="_js" /><input type="hidden" value="" name="_toolbars" /><input type="hidden" value="" name="_settings_blocks" />`;
+        }
+
+        doAjax({
+            'method': 'POST',
+            'url': Route('forms.ajax'),
+            'data': {
+                'namespace' : 'App\\Adminify\\Forms\\SaveTemplate',
+                'form-attributes' : {
+                    'method' : 'POST',
+                    'url' : Route('templates.store')
+                }
+            },
+            'headers': {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+        }, function(err, datas) {
+            if (err) {
+                console.log('whooooops', err)
+                return false;
+            }
+
+            let modalHtml = createModaleWithContent(datas.html)
+            let fieldsHtml = getPrivateFields();
+
+            editor.append(modalHtml);
+
+            let form = $('#modaleRegisterTemplate form');
+
+            $('#modaleRegisterTemplate').modal('show');
+
+            form.append(fieldsHtml);
+
+
+            $('#modaleRegisterTemplate').find('[name="content"]').val(content)
+
+            form.find('[name="_css"]').val( JSON.stringify( getRuleSets(widgetId) ) );
+            form.find('[name="_js"]').val( JSON.stringify([]) );
+            form.find('[name="content"]').val( content );
+            form.find('[name="_toolbars"]').val( JSON.stringify( findToolbars(visual) ) );
+            form.find('[name="_settings_blocks"]').val( getSettingBlocksOf(visual) )
+        })
+
+
+
+
+
+        // doAjax({
+        //     'method' : 'POST',
+        //     'url' : Route('templates.store'),
+        //     'headers': {
+        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //     },
+        // }, function(err, datas) {
+        //     if (err) {
+        //         console.log('whooooops', err)
+        //     }
+        // })
     })
 
 })
@@ -190,6 +277,40 @@ $(document).on('editor:ready', function(e, details) {
     let MainForm = $(details.mainForm);
     let previousCssClass = '';
     let sortable_renderer_js = $(details.sortable_renderer);
+
+    $(document).on('hidden.bs.modal', '#modaleRegisterTemplate', function() {
+        $(this).remove()
+    })
+
+    $(document).on('submit', '#modaleRegisterTemplate form', function(e) {
+        e.preventDefault();
+
+        let form = $(this);
+        let o = form.serializeFormJSON();
+
+        doAjax({
+            method : form.attr('method'),
+            url : form.attr('action'),
+            data : o,
+            'headers': {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+        }, function(err, datas) {
+            if (err) {
+                console.log('whooooops', err)
+                form.find('[name]').not('[name="_token"]').setResponseFromAjax(err.responseJSON);
+                return false;
+            }
+
+            console.log(datas);
+
+            $('#modaleRegisterTemplate').modal('hide');
+
+            Swal.fire(datas.message, '', 'success')
+
+
+        })
+    })
 
     let checkAlreadyRenderedBlocks = sortable_renderer_js.find('.visual_element_block');
 
