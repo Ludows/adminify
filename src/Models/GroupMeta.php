@@ -9,19 +9,14 @@ use Ludows\Adminify\Models\ClassicModel;
 use Spatie\Menu\Laravel\Link;
 
 
-class Meta extends ClassicModel
+class GroupMeta extends ClassicModel
 {
-    public $MultilangTranslatableSwitch = ['value'];
+    public $MultilangTranslatableSwitch = ['title'];
 
     protected $fillable = [
-        'value',
-        'key',
-        'model_type',
-        'model_id'
+        'title',
+        'slug',
     ];
-
-    protected $guarded = [];
-    public $timestamps = false;
 
     public $excludes_savables_fields = [];
     public $unmodified_savables_fields = [
@@ -33,12 +28,12 @@ class Meta extends ClassicModel
     }
 
     public function getTableListing() {
-        return \Ludows\Adminify\Tables\MetasTable::class;
+        return null;
     }
 
     public function getLinks($menuBuilder, $arrayDatas) {
         if($arrayDatas['user']->hasPermissionTo('create_metas') && $arrayDatas['features']['metas']) {
-            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/metas?lang='. $arrayDatas['lang'] : '/admin/metas', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.metas'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/groupmetas?lang='. $arrayDatas['lang'] : '/admin/groupmetas', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.groupmetas'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
             // $menuBuilder->add( Link::to( $multilang ? '/admin/tags?lang='.$lang : '/admin/tags', '<i class="ni ni-single-copy-04"></i> '.__('admin.tags.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
         }
     }

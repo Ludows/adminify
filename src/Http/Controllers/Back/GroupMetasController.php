@@ -16,12 +16,9 @@ use App\Adminify\Forms\UpdatePage;
 use App\Adminify\Http\Requests\CreatePageRequest;
 use App\Adminify\Http\Requests\UpdatePageRequest;
 
-use App\Adminify\Repositories\PageRepository;
-use App\Adminify\Repositories\SeoRepository;
-
 use Ludows\Adminify\Traits\TableManagerable;
-use App\Adminify\Tables\MetasTable;
-class MetasController extends Controller
+use App\Adminify\Tables\GroupMetasTable;
+class GroupMetasController extends Controller
 {
      /**
         * Display a listing of the resource.
@@ -43,7 +40,7 @@ class MetasController extends Controller
 
         public function index(FormBuilder $formBuilder, Request $request)
         {
-            $table = $this->table(MetasTable::class);
+            $table = $this->table(GroupMetasTable::class);
             
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }

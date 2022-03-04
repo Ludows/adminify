@@ -100,7 +100,7 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
     }
 
     if(isset($c['metas']) && $c['metas']) {
-        Route::resource('metas', 'App\Adminify\Http\Controllers\Back\MetasController', ['except' => ['show']]);
+        Route::resource('groupmetas', 'App\Adminify\Http\Controllers\Back\GroupMetasController', ['except' => ['show']]);
     }
 
     Route::post('/forms/ajax/', 'App\Adminify\Http\Controllers\Back\HomeController@getForms')->name('forms.ajax');
