@@ -20,7 +20,7 @@ use App\Adminify\Repositories\PageRepository;
 use App\Adminify\Repositories\SeoRepository;
 
 use Ludows\Adminify\Traits\TableManagerable;
-use App\Adminify\Tables\PageTable;
+use App\Adminify\Tables\MetasTable;
 class MetasController extends Controller
 {
      /**
@@ -34,11 +34,8 @@ class MetasController extends Controller
         private $actionable;
         private $seoRepository;
 
-        public function __construct(PageRepository $pageRepository, SeoRepository $seoRepository)
+        public function __construct()
         {
-            $this->pageRepository = $pageRepository;
-            $this->seoRepository = $seoRepository;
-
             $this->middleware(['permission:read|create_metas'], ['only' => ['show','create']]);
             $this->middleware(['permission:read|edit_metas'], ['only' => ['edit', 'update']]);
             $this->middleware(['permission:read|delete_metas'], ['only' => ['destroy']]);
@@ -46,9 +43,9 @@ class MetasController extends Controller
 
         public function index(FormBuilder $formBuilder, Request $request)
         {
-            // $table = $this->table(PageTable::class);
+            $table = $this->table(MetasTable::class);
             
-            return view("adminify::layouts.admin.pages.index", ["table" => []]);
+            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
 
         /**
@@ -75,7 +72,6 @@ class MetasController extends Controller
         {
             //
             $form = $this->form(CreatePage::class);
-            $page = $this->pageRepository->addModel(new Page())->create($form);
 
             return $this->sendResponse($page, 'pages.index', 'admin.typed_data.success');
         }
@@ -137,7 +133,7 @@ class MetasController extends Controller
             //     $seo = $this->seoRepository->addModel($page)->findOrCreate($page, $form);
             // }
             // else {
-                $page = $this->pageRepository->addModel($page)->update($form, $page);
+                // $page = $this->pageRepository->addModel($page)->update($form, $page);
             // }
 
             return $this->sendResponse($page, 'pages.index', 'admin.typed_data.updated');
