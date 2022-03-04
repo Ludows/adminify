@@ -9,7 +9,7 @@ class CreateMetasTable extends Migration
     public function up()
     {
         Schema::create('metas', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id')->unsigned();
             $table->string('key');
             if(config('site-settings.multilang') == true) {
                 $table->json('value');

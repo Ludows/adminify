@@ -28,7 +28,7 @@ class GroupMeta extends ClassicModel
     }
 
     public function getTableListing() {
-        return null;
+        return \App\Adminify\Tables\GroupMetasTable::class;
     }
 
     public function getLinks($menuBuilder, $arrayDatas) {
