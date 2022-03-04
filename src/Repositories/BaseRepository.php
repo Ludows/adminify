@@ -8,10 +8,10 @@ use Illuminate\Support\Str;
 use Ludows\Adminify\Facades\HookManagerFacade;
 use App\Adminify\Models\Media;
 
-use Illuminate\Support\Facades\Storage;
+// use Illuminate\Support\Facades\Storage;
 
-use App\Adminify\Repositories\AssetRepository;
-use App\Adminify\Models\Templates;
+// use App\Adminify\Repositories\AssetRepository;
+// use App\Adminify\Models\Templates;
 
 use File;
 
@@ -125,10 +125,10 @@ class BaseRepository
             call_user_func_array(array($this, 'beforeRun'), array($model, $formValues,  $type));
         }
 
-        if($request->loadEditor && get_site_key('editor.handleAssetsGeneration') == 'before' && in_array(singular(class_basename($model)), $request->bindedEditorKeys)) {
-            $this->handleAssetsGeneration($model, 'before');
-            $this->createEditorSaveFile($model);
-        }
+        // if($request->loadEditor && get_site_key('editor.handleAssetsGeneration') == 'before' && in_array(singular(class_basename($model)), $request->bindedEditorKeys)) {
+        //     $this->handleAssetsGeneration($model, 'before');
+        //     $this->createEditorSaveFile($model);
+        // }
 
         $this->hookManager->run($hooks[0], $model);
 
@@ -234,149 +234,149 @@ class BaseRepository
         $this->hookManager->run('process:finished', $model);
         return $model;
     }
-    public function createEditorSaveFile($model = null) {
-        $request = request();
+    // public function createEditorSaveFile($model = null) {
+    //     $request = request();
 
-        $toolbars = $request->get('_toolbars');
-        $settingsBlocks = $request->get('_settings_blocks');
-        $baseClass = class_basename($model);
+    //     $toolbars = $request->get('_toolbars');
+    //     $settingsBlocks = $request->get('_settings_blocks');
+    //     $baseClass = class_basename($model);
 
-        $rawContent = array(
-            'toolbars' => $toolbars,
-            'settingsBlocks' => $settingsBlocks
-        );
+    //     $rawContent = array(
+    //         'toolbars' => $toolbars,
+    //         'settingsBlocks' => $settingsBlocks
+    //     );
 
-        $namedFile = singular(lowercase( $baseClass )).'-'.$model->id.'.json';
+    //     $namedFile = singular(lowercase( $baseClass )).'-'.$model->id.'.json';
 
-        $fileResponse = $this->EditorFileCreator( $namedFile , json_encode($rawContent));
+    //     $fileResponse = $this->EditorFileCreator( $namedFile , json_encode($rawContent));
 
-    }
-    protected function EditorFileCreator($filename = null, $content = null) {
-        $disk = $this->getEditorDisk();
-        $typeOf = 'create';
+    // }
+    // protected function EditorFileCreator($filename = null, $content = null) {
+    //     $disk = $this->getEditorDisk();
+    //     $typeOf = 'create';
 
-        if(!$disk->exists( $filename )) {
-            //create
-            File::put(public_path($filename), $content);
-        }
-        else {
-            //update
-            File::delete(public_path($filename));
-            File::put(public_path($filename), $content);
+    //     if(!$disk->exists( $filename )) {
+    //         //create
+    //         File::put(public_path($filename), $content);
+    //     }
+    //     else {
+    //         //update
+    //         File::delete(public_path($filename));
+    //         File::put(public_path($filename), $content);
 
-            $typeOf = 'update';
-        }
+    //         $typeOf = 'update';
+    //     }
 
-        return [
-            'status' => 'OK',
-            'type' => $typeOf
-        ];
-    }
-    protected function getEditorDisk() {
-        $editorGlobalConfig = get_site_key('editor');
-        $disk = Storage::disk($editorGlobalConfig['diskForSave']);
-        return $disk;
-    }
-    public function handleAssetsGeneration($model = null, $type = 'before') {
-        $request = request();
-        $assetCls = adminify_get_class( 'Asset' , ['app:models', 'app:adminify:models'], false );
-        $isCreate = true;
+    //     return [
+    //         'status' => 'OK',
+    //         'type' => $typeOf
+    //     ];
+    // }
+    // protected function getEditorDisk() {
+    //     $editorGlobalConfig = get_site_key('editor');
+    //     $disk = Storage::disk($editorGlobalConfig['diskForSave']);
+    //     return $disk;
+    // }
+    // public function handleAssetsGeneration($model = null, $type = 'before') {
+    //     $request = request();
+    //     $assetCls = adminify_get_class( 'Asset' , ['app:models', 'app:adminify:models'], false );
+    //     $isCreate = true;
 
-        // if($type == $editorGlobalConfig["handleAssetsGeneration"]) {
-            $styles = $request->get('_css');
-            $javascripts = $request->get('_js');
-            $a = [];
-            $b = [];
-            $baseClass = class_basename($model);
-            $css_strings = '';
-            $js_strings = '';
+    //     // if($type == $editorGlobalConfig["handleAssetsGeneration"]) {
+    //         $styles = $request->get('_css');
+    //         $javascripts = $request->get('_js');
+    //         $a = [];
+    //         $b = [];
+    //         $baseClass = class_basename($model);
+    //         $css_strings = '';
+    //         $js_strings = '';
 
-            if(!empty($styles)) {
+    //         if(!empty($styles)) {
 
-                $styles = json_decode($styles);
-                $a = [
-                    'data' => $styles
-                ];
-                foreach ($styles as $styleObject) {
-                    # code...
-                    $css_strings .= $styleObject->styles;
-                }
+    //             $styles = json_decode($styles);
+    //             $a = [
+    //                 'data' => $styles
+    //             ];
+    //             foreach ($styles as $styleObject) {
+    //                 # code...
+    //                 $css_strings .= $styleObject->styles;
+    //             }
 
-            }
+    //         }
 
-            if(!empty($javascripts)) {
-                $b = [
-                    'data' => $javascripts
-                ];
+    //         if(!empty($javascripts)) {
+    //             $b = [
+    //                 'data' => $javascripts
+    //             ];
 
-                $js_strings = $javascripts;
-            }
+    //             $js_strings = $javascripts;
+    //         }
 
-            $files = [
-                'css' => singular(lowercase( $baseClass )).'-'.$model->id.'.css',
-                'js' => singular(lowercase( $baseClass )).'-'.$model->id.'.js',
-            ];
+    //         $files = [
+    //             'css' => singular(lowercase( $baseClass )).'-'.$model->id.'.css',
+    //             'js' => singular(lowercase( $baseClass )).'-'.$model->id.'.js',
+    //         ];
 
-            foreach ($files as $namedKeyFile => $namedFile) {
-                $assetRepo = new AssetRepository();
-                $assetModel = new $assetCls;
-                # code...
-
-
-                $fileResponse = $this->EditorFileCreator( $namedFile , $namedKeyFile == 'css' ? $css_strings : $js_strings);
-
-                if($fileResponse['type'] == 'update') {
-                    $isCreate = false;
-                    $assetModel = $model->assets()->where('type', $namedKeyFile)->get()->first();
-                }
-
-                $params_model = [
-                    'type' => $namedKeyFile,
-                    'model' => adminify_get_class( class_basename($model), ['app:models', 'app:adminify:models'], false ),
-                    'entity_id' => $model->id,
-                    'data' => json_encode( $namedKeyFile == 'css' ? $a : $b )
-                ];
-
-                if($isCreate) {
-                    $assetRepo->addModel($assetModel)->create($params_model);
-                }
-                else {
-                    $assetRepo->addModel($assetModel)->update($params_model, $assetModel);
-                }
-
-            }
+    //         foreach ($files as $namedKeyFile => $namedFile) {
+    //             $assetRepo = new AssetRepository();
+    //             $assetModel = new $assetCls;
+    //             # code...
 
 
-        // }
-    }
-    public function getGeneratedFilesWithContentByEditor($id) {
+    //             $fileResponse = $this->EditorFileCreator( $namedFile , $namedKeyFile == 'css' ? $css_strings : $js_strings);
 
-        $this->addModel(new Templates());
-        $m = $this->model->find($id);
-        $ret = [
-            'content' => '[template id="'. $id .'"]',
-            'files' => [],
-            'debug' => []
-        ];
+    //             if($fileResponse['type'] == 'update') {
+    //                 $isCreate = false;
+    //                 $assetModel = $model->assets()->where('type', $namedKeyFile)->get()->first();
+    //             }
 
-        if(empty($m)) {
-            abort(404);
-        }
+    //             $params_model = [
+    //                 'type' => $namedKeyFile,
+    //                 'model' => adminify_get_class( class_basename($model), ['app:models', 'app:adminify:models'], false ),
+    //                 'entity_id' => $model->id,
+    //                 'data' => json_encode( $namedKeyFile == 'css' ? $a : $b )
+    //             ];
 
-        $baseClass = class_basename($m);
+    //             if($isCreate) {
+    //                 $assetRepo->addModel($assetModel)->create($params_model);
+    //             }
+    //             else {
+    //                 $assetRepo->addModel($assetModel)->update($params_model, $assetModel);
+    //             }
 
-        $files = [
-            'css' => singular(lowercase( $baseClass )).'-'.$m->id.'.css',
-            'js' => singular(lowercase( $baseClass )).'-'.$m->id.'.js',
-            'json' => singular(lowercase( $baseClass )).'-'.$m->id.'.json',
-        ];
+    //         }
 
-        foreach ($files as $fileKey => $file) {
-            # code...
-            // $ret['debug'][] = public_path() .'/'. $file;
-            $ret['files'][$fileKey] = look_file( public_path() .'/'. $file );
-        }
 
-        return $ret;
-    }
+    //     // }
+    // }
+    // public function getGeneratedFilesWithContentByEditor($id) {
+
+    //     $this->addModel(new Templates());
+    //     $m = $this->model->find($id);
+    //     $ret = [
+    //         'content' => '[template id="'. $id .'"]',
+    //         'files' => [],
+    //         'debug' => []
+    //     ];
+
+    //     if(empty($m)) {
+    //         abort(404);
+    //     }
+
+    //     $baseClass = class_basename($m);
+
+    //     $files = [
+    //         'css' => singular(lowercase( $baseClass )).'-'.$m->id.'.css',
+    //         'js' => singular(lowercase( $baseClass )).'-'.$m->id.'.js',
+    //         'json' => singular(lowercase( $baseClass )).'-'.$m->id.'.json',
+    //     ];
+
+    //     foreach ($files as $fileKey => $file) {
+    //         # code...
+    //         // $ret['debug'][] = public_path() .'/'. $file;
+    //         $ret['files'][$fileKey] = look_file( public_path() .'/'. $file );
+    //     }
+
+    //     return $ret;
+    // }
 }
