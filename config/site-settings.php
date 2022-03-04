@@ -15,56 +15,6 @@ return [
         ]
     ],
 
-    //If you want to switch with the classic template for Posts and Page . Just comment inside bind
-    'editor' => [
-        'handleAssetsGeneration' => 'after', // or after,
-        'diskForSave' => 'public',
-        'blocks' => [], // you can add here new blocks for editor
-        'breakpoints' => [
-            'sm' => 576,
-            'md' => 768,
-            'lg' => 960,
-            'xl' => 1140
-        ],
-        'bind' => [
-            'Page' => [
-                'create' => 'CreatePage',
-                'edit' => 'UpdatePage'
-            ],  // Give the formName create / edit to bind with editor.
-            'Post' => [
-                'create' => 'CreatePost',
-                'edit' => 'UpdatePost'
-            ],  // Give the formName create / edit to bind with editor.
-            'Template' => [
-                'create' => 'CreateTemplates',
-                'edit' => 'UpdateTemplates'
-            ]
-        ],
-        'implicit' => [
-            'hidden_fields' => [
-                'content', 'title'
-            ],
-            'remove_fields' => [
-                'submit'
-            ]
-        ],
-        'patterns' => [
-            'column_minimal' => 1,
-            'column_maximal' => 12,
-            'max_columns' => 6,
-            'max_tooltip_items_show' => 3,
-            'columns' => 'col-##BREAKPOINT##-##WIDTH##'
-        ],
-        'defaultsCssConfigClass' => [
-            'RowWidget' => 'row',
-            'TitleWidget' => 'title',
-            'ColumnWidget' => 'col-12',
-            'ImageWidget' => 'figure',
-            'ParagraphWidget' => 'paragraph',
-            'GalleryWidget' => 'gallery'
-        ]
-    ],
-
     'dynamic_forms' => [
         'default_form_template' => 'adminify::layouts.commons.forms.default',
         'show_form_when_validated' => true,
@@ -84,7 +34,6 @@ return [
         'Settings',
         'Translations',
         'Mailables',
-        'Templates',
         'User'
     ],
 
@@ -202,7 +151,6 @@ return [
         'templates_content' => true,
         'user' => true,
         'form' => true,
-        'editor' => true
     ],
 
     // all routes search are binded to singular route name.
@@ -246,6 +194,5 @@ return [
     'interfaces' => [
         'home' => \App\Adminify\Interfacable\DashboardManager::class,
         'formbuilder' => \App\Adminify\Interfacable\FormBuilderManager::class,
-        'editor' => \App\Adminify\Interfacable\EditorManager::class,
     ],
 ];

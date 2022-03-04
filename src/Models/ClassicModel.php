@@ -17,6 +17,8 @@ use Ludows\Adminify\Traits\Searchables;
 use Ludows\Adminify\Traits\SavableTranslations;
 use Ludows\Adminify\Traits\PathableMedia;
 use Ludows\Adminify\Traits\ProcessableAssets;
+use Ludows\Adminify\Traits\HasMeta;
+
 
 use Spatie\Feed\Feedable;
 
@@ -27,6 +29,7 @@ use Spatie\Feed\FeedItem;
 abstract class ClassicModel extends Model implements Searchable, Feedable
 {
     use HasFactory;
+    use HasMeta;
     // use OnBootedModel;
     // use Urlable;
     use HasTranslations;
