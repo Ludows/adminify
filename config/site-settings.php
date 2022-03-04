@@ -246,6 +246,5 @@ return [
     'interfaces' => [
         'home' => \App\Adminify\Interfacable\DashboardManager::class,
         'formbuilder' => \App\Adminify\Interfacable\FormBuilderManager::class,
-        'editor' => \App\Adminify\Interfacable\EditorManager::class,
     ],
 ];
