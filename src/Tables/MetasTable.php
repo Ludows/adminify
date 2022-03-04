@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
-use App\Adminify\Models\Metas as PageModel;
+use App\Adminify\Models\Meta as PageModel;
 use App\Adminify\Dropdowns\Metas as PageDropdownsManager;
 
 class MetasTable extends TableManager {
