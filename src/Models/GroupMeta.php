@@ -13,6 +13,8 @@ class GroupMeta extends ClassicModel
 {
     public $MultilangTranslatableSwitch = ['title'];
 
+    protected $table = 'groupmetas';
+
     protected $fillable = [
         'title',
         'slug',
