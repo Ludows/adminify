@@ -150,6 +150,15 @@ class RolesTableSeeder extends Seeder
                     ],
                     39 => [
                         'name' => 'delete_forms'
+                    ],
+                    40 => [
+                        'name' => 'create_metas'
+                    ],
+                    41 => [
+                        'name' => 'edit_metas'
+                    ],
+                    42 => [
+                        'name' => 'delete_metas'
                     ]
                 ]
             ],
@@ -272,6 +281,15 @@ class RolesTableSeeder extends Seeder
                     ],
                     38 => [
                         'name' => 'delete_forms'
+                    ],
+                    39 => [
+                        'name' => 'create_metas'
+                    ],
+                    40 => [
+                        'name' => 'edit_metas'
+                    ],
+                    41 => [
+                        'name' => 'delete_metas'
                     ]
                 ]
             ],

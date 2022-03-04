@@ -1,4 +1,4 @@
-@extends('adminify::layouts.admin.app', ['class' => $loadEditor ? 'is-editor-mode' : ''])
+@extends('adminify::layouts.admin.app', [])
 
 @if (!empty($adminCssLinks))
     @foreach ($adminCssLinks as $adminCssPath)

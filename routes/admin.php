@@ -99,6 +99,10 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
 
     }
 
+    if(isset($c['metas']) && $c['metas']) {
+        Route::resource('metas', 'App\Adminify\Http\Controllers\Back\MetasController', ['except' => ['show']]);
+    }
+
     Route::post('/forms/ajax/', 'App\Adminify\Http\Controllers\Back\HomeController@getForms')->name('forms.ajax');
     Route::post('/content/', 'App\Adminify\Http\Controllers\Back\HomeController@getContents')->name('content.ajax');
     Route::post('{type}/trash/{id}', 'App\Adminify\Http\Controllers\Back\TrashController@index')->name('trash');
