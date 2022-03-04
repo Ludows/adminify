@@ -67,7 +67,7 @@ class MetasTable extends TableManager {
 
         $a = new PageDropdownsManager($pages, []);
         
-        $default_merge_columns = ['categories_id','actions'];
+        $default_merge_columns = ['actions'];
 
         // if($request->useMultilang && is_translatable_model($model)) {
         //     array_unshift($default_merge_columns, 'need_translations');
