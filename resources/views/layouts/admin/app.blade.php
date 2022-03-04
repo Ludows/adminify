@@ -23,15 +23,15 @@
             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
-            @if(!$loadEditor)
+            {{-- @if(!$loadEditor) --}}
                 @include('adminify::layouts.admin.navbars.sidebar')
-            @endif
+            {{-- @endif --}}
         @endauth
 
         <div class="main-content">
-            @if(!$loadEditor)
+            {{-- @if(!$loadEditor) --}}
                 @include('adminify::layouts.admin.navbars.navbar')
-            @endif
+            {{-- @endif --}}
 
             @yield('content')
         </div>
