@@ -56,12 +56,12 @@ class MetasTable extends TableManager {
         }
         else {
             if($request->useMultilang) {
-                $pages = PageModel::limit( $config['limit'] )->status(Statuses::TRASHED_ID, '!=')->lang($request->lang)->get();
+                $pages = PageModel::limit( $config['limit'] )->lang($request->lang)->get();
                 // dd($categories);
                 $pages = $pages->all();
             }
             else {
-                $pages = PageModel::limit( $config['limit'] )->status(Statuses::TRASHED_ID, '!=')->get();
+                $pages = PageModel::limit( $config['limit'] )->get();
             }
         }
 
