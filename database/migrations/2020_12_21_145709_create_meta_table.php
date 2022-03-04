@@ -11,7 +11,12 @@ class CreateMetasTable extends Migration
         Schema::create('metas', function (Blueprint $table) {
             $table->id();
             $table->string('key');
-            $table->text('value');
+            if(config('site-settings.multilang') == true) {
+                $table->json('value');
+            }
+            else {
+                $table->text('value');
+            }
             $table->string('model_type');
             $table->integer('model_id')->unsigned();
         });
