@@ -151,6 +151,7 @@ return [
         'templates_content' => true,
         'user' => true,
         'form' => true,
+        'metas' => true
     ],
 
     // all routes search are binded to singular route name.
