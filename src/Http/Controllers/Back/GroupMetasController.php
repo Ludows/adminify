@@ -10,8 +10,8 @@ use App\Adminify\Http\Controllers\Controller;
 use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
-use App\Adminify\Forms\CreatePage;
-use App\Adminify\Forms\UpdatePage;
+use App\Adminify\Forms\CreateGroupMetas;
+use App\Adminify\Forms\UpdateGroupMetas;
 
 use App\Adminify\Http\Requests\CreatePageRequest;
 use App\Adminify\Http\Requests\UpdatePageRequest;
@@ -52,7 +52,7 @@ class GroupMetasController extends Controller
             */
         public function create(FormBuilder $formBuilder)
         {
-            $form = $formBuilder->create(CreatePage::class, [
+            $form = $formBuilder->create(CreateGroupMetas::class, [
                 'method' => 'POST',
                 'url' => route('pages.store')
             ]);
@@ -68,7 +68,7 @@ class GroupMetasController extends Controller
         public function store(CreatePageRequest $request)
         {
             //
-            $form = $this->form(CreatePage::class);
+            $form = $this->form(CreateGroupMetas::class);
 
             return $this->sendResponse($page, 'pages.index', 'admin.typed_data.success');
         }
@@ -94,9 +94,9 @@ class GroupMetasController extends Controller
         {
             //
             $page->checkForTraduction();
-                $form = $formBuilder->create(UpdatePage::class, [
+                $form = $formBuilder->create(UpdateGroupMetas::class, [
                     'method' => 'PUT',
-                    'url' => route('pages.update', ['page' => $page->id]),
+                    'url' => route('groupmetas.update', ['groupmeta' => $page->id]),
                     'model' => $page
                 ]);
 
@@ -123,7 +123,7 @@ class GroupMetasController extends Controller
             //     ]);
             // }
             // else {
-                $form = $this->form(UpdatePage::class);
+                $form = $this->form(UpdateGroupMetas::class);
             // }
 
             // if($isSeo) {
