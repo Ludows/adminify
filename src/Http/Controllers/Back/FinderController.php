@@ -16,6 +16,10 @@ class FinderController extends Controller
         $resoucable = adminify_get_class( singular($resource), ['app:models', 'app:adminify:models'], false);
         $multi = $request->useMultilang;
         $lang = lang();
+        $excludes = [
+            '_method',
+            '_token',
+        ];
 
         if(!isset($resource) || !isset($resoucable)) {
             abort(403);
@@ -25,20 +29,37 @@ class FinderController extends Controller
         $m = new $resoucable();
 
         $iterator = 0;
+        
         foreach ($all as $key => $value) {
             # code...
-
-            if($m->isTranslatableColumn($key) && $multi) {
-                $m = $m->where($key.'->'.$lang, $value);
+            if(in_array($key, $excludes)) {
+                unset($all[$key]);
             }
-            else {
-                $m = $m->where($key, $value);
-            }
-
-            $iterator++;
         }
 
-        $m = $m->get();
+        if(count($all) > 0) {
+            foreach ($all as $key => $value) {
+                # code...
+    
+                if($m->isTranslatableColumn($key) && $multi) {
+                    $m = $m->where($key.'->'.$lang, $value);
+                }
+                else {
+                    $m = $m->where($key, $value);
+                }
+    
+                $iterator++;
+            }
+
+            $m = $m->get();
+        }
+        else {
+            $m = $m->all();
+        }
+
+        
+
+        
 
         $a = [
             'models' => $m,
