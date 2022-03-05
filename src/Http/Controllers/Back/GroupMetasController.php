@@ -13,8 +13,12 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 use App\Adminify\Forms\CreateGroupMetas;
 use App\Adminify\Forms\UpdateGroupMetas;
 
+use App\Adminify\Models\GroupMeta;
+
 use App\Adminify\Http\Requests\CreateGroupMetas as CreateGroupMetasRequest;
 use App\Adminify\Http\Requests\UpdateGroupMetas as UpdateGroupMetasRequest;
+
+use App\Adminify\Repositories\GroupMetasRepository;
 
 use Ludows\Adminify\Traits\TableManagerable;
 use App\Adminify\Tables\GroupMetasTable;
@@ -28,11 +32,14 @@ class GroupMetasController extends Controller
         use FormBuilderTrait;
         use TableManagerable;
 
-        public function __construct()
+        private $repo;
+
+        public function __construct(GroupMetasRepository $repo)
         {
             $this->middleware(['permission:read|create_metas'], ['only' => ['show','create']]);
             $this->middleware(['permission:read|edit_metas'], ['only' => ['edit', 'update']]);
             $this->middleware(['permission:read|delete_metas'], ['only' => ['destroy']]);
+            $this->repo = $repo;
         }
 
         public function index(FormBuilder $formBuilder, Request $request)
@@ -69,7 +76,9 @@ class GroupMetasController extends Controller
             //
             $form = $this->form(CreateGroupMetas::class);
 
-            return $this->sendResponse($page, 'pages.index', 'admin.typed_data.success');
+            $entity = $this->repo->addModel(new GroupMeta())->create($form);
+
+            return $this->sendResponse($entity, 'groupmetas.index', 'admin.typed_data.success');
         }
 
         /**
@@ -89,14 +98,14 @@ class GroupMetasController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function edit(Page $page, FormBuilder $formBuilder, Request $request)
+        public function edit(GroupMeta $groupMeta, FormBuilder $formBuilder, Request $request)
         {
             //
-            $page->checkForTraduction();
+            $groupMeta->checkForTraduction();
                 $form = $formBuilder->create(UpdateGroupMetas::class, [
                     'method' => 'PUT',
-                    'url' => route('groupmetas.update', ['groupmeta' => $page->id]),
-                    'model' => $page
+                    'url' => route('groupmetas.update', ['groupmeta' => $groupMeta->id]),
+                    'model' => $groupMeta
                 ]);
             
             $this->addJS( asset('/adminify/back/js/metas.js') );
@@ -110,31 +119,15 @@ class GroupMetasController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(UpdateGroupMetasRequest $request, Page $page)
+        public function update(UpdateGroupMetasRequest $request, GroupMeta $groupMeta)
         {
             //
-            // $isSeo = $request->exists('_seo');
             $seo = null;
+            $form = $this->form(UpdateGroupMetas::class);
 
-            // if($isSeo) {
-            //     $form = $this->form(SeoForm::class, [
-            //         'method' => 'PUT',
-            //         'url' => route('pages.update', ['page' => $page->id]),
-            //         'model' => $page
-            //     ]);
-            // }
-            // else {
-                $form = $this->form(UpdateGroupMetas::class);
-            // }
+            $entity = $this->repo->addModel($groupMeta)->update($form, $groupMeta);
 
-            // if($isSeo) {
-            //     $seo = $this->seoRepository->addModel($page)->findOrCreate($page, $form);
-            // }
-            // else {
-                // $page = $this->pageRepository->addModel($page)->update($form, $page);
-            // }
-
-            return $this->sendResponse($page, 'pages.index', 'admin.typed_data.updated');
+            return $this->sendResponse($entity, 'groupmetas.index', 'admin.typed_data.updated');
 
         }
 
@@ -144,12 +137,12 @@ class GroupMetasController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function destroy(Page $page)
+        public function destroy(GroupMeta $groupMeta)
         {
             //
-            $this->pageRepository->addModel($page)->delete($page);
+            $this->repo->addModel($groupMeta)->delete($groupMeta);
 
             // redirect
-            return $this->sendResponse($page, 'pages.index', 'admin.typed_data.deleted');
+            return $this->sendResponse($groupMeta, 'groupmetas.index', 'admin.typed_data.deleted');
         }
 }
