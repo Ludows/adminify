@@ -13,8 +13,8 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 use App\Adminify\Forms\CreateGroupMetas;
 use App\Adminify\Forms\UpdateGroupMetas;
 
-use App\Adminify\Http\Requests\CreatePageRequest;
-use App\Adminify\Http\Requests\UpdatePageRequest;
+use App\Adminify\Http\Requests\CreateGroupMetas as CreateGroupMetasRequest;
+use App\Adminify\Http\Requests\UpdateGroupMetas as UpdateGroupMetasRequest;
 
 use Ludows\Adminify\Traits\TableManagerable;
 use App\Adminify\Tables\GroupMetasTable;
@@ -27,9 +27,6 @@ class GroupMetasController extends Controller
         */
         use FormBuilderTrait;
         use TableManagerable;
-        private $pageRepository;
-        private $actionable;
-        private $seoRepository;
 
         public function __construct()
         {
@@ -56,6 +53,8 @@ class GroupMetasController extends Controller
                 'method' => 'POST',
                 'url' => route('pages.store')
             ]);
+
+            $this->addJS( asset('/adminify/back/js/metas.js') );
             //
             return view("adminify::layouts.admin.pages.create", ['form' => $form]);
         }
@@ -65,7 +64,7 @@ class GroupMetasController extends Controller
             *
             * @return Response
             */
-        public function store(CreatePageRequest $request)
+        public function store(CreateGroupMetasRequest $request)
         {
             //
             $form = $this->form(CreateGroupMetas::class);
@@ -99,6 +98,8 @@ class GroupMetasController extends Controller
                     'url' => route('groupmetas.update', ['groupmeta' => $page->id]),
                     'model' => $page
                 ]);
+            
+            $this->addJS( asset('/adminify/back/js/metas.js') );
 
             return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
         }
@@ -109,7 +110,7 @@ class GroupMetasController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(UpdatePageRequest $request, Page $page)
+        public function update(UpdateGroupMetasRequest $request, Page $page)
         {
             //
             // $isSeo = $request->exists('_seo');
