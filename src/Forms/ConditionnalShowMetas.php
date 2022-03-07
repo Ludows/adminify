@@ -10,12 +10,23 @@ class ConditionnalShowMetas extends Form
 {
     public function buildForm()
     {
+
+        $models = adminify_get_classes_by_folders(['app:models', 'app:adminify:models']);
+        $choices_typed_data = [
+            'content_type_model' => __('admin.form.chooseContentTypeModel')
+        ];
+
+        foreach ($models as $key => $value) {
+            # code...
+            $k = lowercase($key);
+            $choices_typed_data[ 'model:'.$k ] = __('admin.menuback.'.$k);
+        }
+
+        // lowercase();
+
          $this->add('typed_data', 'select2', [
                 'empty_value' => __('admin.form.select_entity'),
-                'choices' => [
-                    'model' => __('admin.form.chooseEntity'),
-                    'content_type_model' => __('admin.form.chooseContentTypeModel')
-                ],
+                'choices' => $choices_typed_data,
                 'selected' => '',
                 'attr' => [
                     'class' => 'form-control js-typed-data'
