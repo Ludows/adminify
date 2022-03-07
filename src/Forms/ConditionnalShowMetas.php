@@ -14,6 +14,7 @@ class ConditionnalShowMetas extends Form
                 'empty_value' => __('admin.form.select_entity'),
                 'choices' => [
                     'model' => __('admin.form.chooseEntity'),
+                    'content_type_model' => __('admin.form.chooseContentTypeModel')
                 ],
                 'selected' => '',
                 'attr' => [
