@@ -25,50 +25,25 @@ class CreateGroupMetas extends Form
                 'label_show' => false,
                 'attr' => ['placeholder' =>  __('admin.form.title') ],
             ]);
-       
-        $this->add('named_metas', 'select2', [
-                'empty_value' => '',
-                'choices' => [],
-                'selected' => '',
-                'attr' => [],
-                'label' => __('admin.form.named_metas'),
-                'select2options' => [
-                    'placeholder' => __('admin.form.select_named_metas'),
-                    'multiple' => false,
-                    'width' => '100%'
-                ]
-            ])
-            ->add('_select_model_type', 'select2', [
-                'empty_value' => '',
-                'choices' => [],
-                'selected' => '',
-                'attr' => [
-                    'class' => 'form-control js-select-model-type'
-                ],
-                'label' => __('admin.form.select_model_type'),
-                'select2options' => [
-                    'placeholder' => __('admin.form.select_model_type'),
-                    'multiple' => false,
-                    'width' => '100%'
-                ]
-            ])
-            ->add('_results_model_datas', 'select2', [
-                'empty_value' => '',
-                'choices' => [],
-                'selected' => '',
-                'attr' => [
-                    'class' => 'form-control js-result-model-type'
-                ],
-                'label' => __('admin.form.select_model_datas'),
-                'select2options' => [
-                    'placeholder' => __('admin.form.select_model_datas'),
-                    'multiple' => false,
-                    'width' => '100%'
-                ]
-            ])
-            ->add('user_id', 'hidden', [
-                'value' => user()->id
-            ])       
-            ->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
+
+        $this->add('_conditions', 'collection', [
+            'type' => 'form',
+            'options' => [    // these are options for a single type
+                'class' => 'App\Adminify\Forms\ConditionnalShowMetas',
+                'prefer_input' => true,
+                'label' => false,
+            ]
+        ]);
+
+        $this->add('_addCondition', 'button', [
+            "attr" => [
+                "class" => "btn btn-default"
+            ],
+            "label" => __('admin.form.addConditionnalShow')
+        ]);
+        $this->add('user_id', 'hidden', [
+            'value' => user()->id
+        ])       
+        ->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
 }
