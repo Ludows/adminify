@@ -31,9 +31,9 @@ class CreateGroupMetas extends Form
                 'empty_value' => '',
                 'choices' => adminify_get_classes_by_folders(['app:metas', 'app:adminify:metas']),
                 'selected' => '',
-                'label' => __('admin.form.select_equals_to'),
+                'label' => __('admin.form.select_named_class'),
                 'select2options' => [
-                    'placeholder' => __('admin.form.select_equals_to'),
+                    'placeholder' => __('admin.form.select_named_class'),
                     'multiple' => false,
                     'width' => '100%'
                 ]

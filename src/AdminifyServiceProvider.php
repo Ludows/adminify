@@ -16,6 +16,7 @@ use Ludows\Adminify\Commands\DoInstallEnv;
 use Ludows\Adminify\Commands\CreateInterfacable;
 use Ludows\Adminify\Commands\CreateInterfacableBlock;
 use Ludows\Adminify\Commands\GenerateAdminifyContainer;
+use Ludows\Adminify\Commands\CreateMetas;
 
 use Ludows\Adminify\Commands\CreateCrud;
 use Ludows\Adminify\Commands\CreateTable;
@@ -255,7 +256,8 @@ class AdminifyServiceProvider extends ServiceProvider {
             RouteList::class,
             CreateTranslations::class,
             CreateInterfacable::class,
-            CreateInterfacableBlock::class
+            CreateInterfacableBlock::class,
+            CreateMetas::class
         ]);
     }
 }
