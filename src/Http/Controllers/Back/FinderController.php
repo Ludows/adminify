@@ -10,6 +10,13 @@ use Ludows\Adminify\Libs\SitemapRender;
 
 class FinderController extends Controller
 {
+    public function contentTypes(Request $request) {
+
+       $classes = adminify_get_classes_by_folders(['app:models', 'app:adminify:models']);
+
+       return $classes;
+
+    }
     public function index(Request $request) {
 
         $resource = Str::title($request->type);

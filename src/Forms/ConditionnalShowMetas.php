@@ -46,7 +46,7 @@ class ConditionnalShowMetas extends Form
                 'choices' => [],
                 'selected' => '',
                 'attr' => [
-                    
+                    'class' => 'form-control js-select-value'
                 ],
                 'label' => __('admin.form.select_result_datas'),
                 'select2options' => [

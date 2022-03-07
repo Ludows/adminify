@@ -39,7 +39,7 @@ class CreateGroupMetas extends Form
 
         $this->add('_addCondition', 'button', [
             "attr" => [
-                "class" => "btn btn-default"
+                "class" => "btn btn-default js-add-prototype"
             ],
             "label" => __('admin.form.addConditionnalShow')
         ]);
