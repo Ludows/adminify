@@ -25,11 +25,25 @@ class CreateGroupMetas extends Form
                 'label_show' => false,
                 'attr' => ['placeholder' =>  __('admin.form.title') ],
             ]);
+        
+        $this
+            ->add('named_class', 'select2', [
+                'empty_value' => '',
+                'choices' => adminify_get_classes_by_folders(['app:metas', 'app:adminify:metas']),
+                'selected' => '',
+                'label' => __('admin.form.select_equals_to'),
+                'select2options' => [
+                    'placeholder' => __('admin.form.select_equals_to'),
+                    'multiple' => false,
+                    'width' => '100%'
+                ]
+            ]);
 
         $this->add('_conditions', 'collection', [
             'type' => 'form',
             'prototype' => true, 
-            'label_show' => false,
+            'label_show' => true,
+            'label' => __('admin.form.conditions'),
             'prefer_input' => true,
             'options' => [    // these are options for a single type
                 'class' => 'App\Adminify\Forms\ConditionnalShowMetas',

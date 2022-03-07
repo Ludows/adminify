@@ -5,11 +5,11 @@ jQuery(document).ready(function ($) {
     $(document).on('change', '.js-typed-data', function(e) {
         let data = $(this).val();
 
-        console.log('data', data)
+        // console.log('data', data)
 
         let o = formatObjectSearch($(this), data)
 
-        console.log('o',o)
+        // console.log('o',o)
 
         if(o.SendToAjax) {
             makeSearch(o, (err, data) => {
@@ -18,11 +18,37 @@ jQuery(document).ready(function ($) {
                     return false;
                 }
 
-                console.log(data)
+                if(typeof data == 'array') {
+                    console.log('todo the formater')
+                }
+
+
+                hydrateSelect2( $(this).parent().parent().parent().find('select').last(), data.models);
+
+                // console.log(data)
             })
         }
 
     })
+
+
+    function hydrateSelect2(JquerySelector, datas, keySelector = 'title') {
+
+        // Prevent unwanted options
+        JquerySelector.children().remove();
+        // console.log('datas hydrateSelect2', datas);
+        $.each(datas, (key, value) => {
+
+            var data = {
+                id:  key,
+                text: value
+            };
+
+            var newOption = new Option(data.text, data.id, false, false);
+            JquerySelector.append(newOption).trigger('change');
+        })
+
+    }
 
     // $(document).on('change', '.js-select-value', function(e) {
     //     let parent = $(this).parent().parent().parent()
