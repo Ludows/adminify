@@ -12,9 +12,24 @@ class FinderController extends Controller
 {
     public function contentTypes(Request $request) {
 
-       $classes = adminify_get_classes_by_folders(['app:models', 'app:adminify:models']);
+       $models = adminify_get_classes_by_folders(['app:models', 'app:adminify:models']);
 
-       return $classes;
+       $excludes = get_site_key('metas.excludes');
+
+        foreach ($models as $key => $value) {
+            # code...
+            if(!in_array($key, $excludes)) {
+                unset($models[$key]);
+            }
+            
+        }
+
+       $a = [
+        'models' => $models,
+        'status' => 'OK',
+       ];
+
+       return response()->json($a);
 
     }
     public function index(Request $request) {

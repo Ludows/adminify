@@ -26,6 +26,7 @@ return [
             'FormEntries',
             'FormField',
             'FormTrace',
+            'Formtrace',
             'Trace',
             'Form_Trace',
             'Form',
