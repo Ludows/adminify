@@ -48,7 +48,9 @@ class CreateMetas extends Command
 
         $model = Str::title($model ?? '');
 
-        $this->call('make:form Metas/'.$model, []);
+        $this->call('make:form', [
+            'name' => 'Metas/'.$model
+        ]);
 
     }
 }
