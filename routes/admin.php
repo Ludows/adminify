@@ -75,8 +75,8 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
     // if(isset($c['post']) && $c['post']) {
     // }
 
-    Route::post('find/{type}', 'App\Adminify\Http\Controllers\Back\FinderController@index')->name('finder');
     Route::post('find/content-types-list', 'App\Adminify\Http\Controllers\Back\FinderController@contentTypes')->name('finder.contentTypes');
+    Route::post('find/{type}', 'App\Adminify\Http\Controllers\Back\FinderController@index')->name('finder');
 
     if(isset($c['seo']) && $c['seo']) {
 

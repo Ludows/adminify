@@ -16,10 +16,15 @@ class ConditionnalShowMetas extends Form
             'content_type_model' => __('admin.form.chooseContentTypeModel')
         ];
 
+        $excludes = get_site_key('metas.excludes');
+
         foreach ($models as $key => $value) {
             # code...
-            $k = lowercase($key);
-            $choices_typed_data[ 'model:'.$k ] = __('admin.menuback.'.$k);
+            if(!in_array($key, $excludes)) {
+                $k = lowercase($key);
+                $choices_typed_data[ 'model:'.$k ] = __('admin.model.'.$k);
+            }
+            
         }
 
         // lowercase();

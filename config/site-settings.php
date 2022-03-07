@@ -15,6 +15,33 @@ return [
         ]
     ],
 
+    'metas' => [
+        // excludes models here
+        'excludes' => [
+            'Settings',
+            'ApiToken',
+            'Asset',
+            'CustomLink',
+            'FormConfirmations',
+            'FormEntries',
+            'FormField',
+            'FormTrace',
+            'Trace',
+            'Form_Trace',
+            'Form',
+            'Formidables',
+            'Formidable',
+            'GroupMeta',
+            'Mailable',
+            'Meta',
+            'Statistics',
+            'Formidable',
+            'Translation',
+            'Traduction',
+            'Url',
+        ]
+    ],
+
     'dynamic_forms' => [
         'default_form_template' => 'adminify::layouts.commons.forms.default',
         'show_form_when_validated' => true,
