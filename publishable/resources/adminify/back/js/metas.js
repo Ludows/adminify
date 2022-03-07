@@ -5,7 +5,11 @@ jQuery(document).ready(function ($) {
     $(document).on('change', '.js-typed-data', function(e) {
         let data = $(this).val();
 
-        let o = formatObjectSearch($(this))
+        console.log('data', data)
+
+        let o = formatObjectSearch($(this), data)
+
+        console.log('o',o)
 
         if(o.SendToAjax) {
             makeSearch(o, (err, data) => {
@@ -13,11 +17,11 @@ jQuery(document).ready(function ($) {
                     console.log('whoops', err)
                     return false;
                 }
-    
+
                 console.log(data)
             })
         }
-        
+
     })
 
     // $(document).on('change', '.js-select-value', function(e) {
@@ -32,29 +36,29 @@ jQuery(document).ready(function ($) {
         o.data = {};
         o.SendToAjax = true;
 
+        // console.log('jQuerySelector', jQuerySelector)
+        // console.log('hasClass js-typed-data', jQuerySelector.hasClass('js-typed-data'))
+
         let parent = jQuerySelector.parent().parent().parent()
         let trigger = null;
 
-        if(jQuerySelector.hasClass('.js-typed-data')) {
+        if(jQuerySelector.hasClass('js-typed-data') == true) {
             trigger = parent.find('select').last()
         }
         else {
             trigger = parent.find('select').first()
         }
 
-        if(data = 'content_type_model') {
+        if(data == 'content_type_model') {
             o.url = Route('finder.contentTypes', {});
         }
         else {
 
-            let theVal = trigger.val();
-
-            if(theVal.length == 0) {
-                o.SendToAjax = false;
-            }
+            let theVal = jQuerySelector.val();
+            theVal = theVal.replace('model:', '').trim()
 
             o.url = Route('finder', {
-                type: trigger.val()
+                type: theVal
             });
         }
 
