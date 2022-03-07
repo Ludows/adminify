@@ -28,9 +28,11 @@ class CreateGroupMetas extends Form
 
         $this->add('_conditions', 'collection', [
             'type' => 'form',
+            'prototype' => true, 
+            'label_show' => false,
+            'prefer_input' => true,
             'options' => [    // these are options for a single type
                 'class' => 'App\Adminify\Forms\ConditionnalShowMetas',
-                'prefer_input' => true,
                 'label' => false,
             ]
         ]);

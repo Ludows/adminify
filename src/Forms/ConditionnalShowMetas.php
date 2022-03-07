@@ -11,8 +11,10 @@ class ConditionnalShowMetas extends Form
     public function buildForm()
     {
          $this->add('typed_data', 'select2', [
-                'empty_value' => '',
-                'choices' => [],
+                'empty_value' => __('admin.form.select_entity'),
+                'choices' => [
+                    'model' => __('admin.form.chooseEntity'),
+                ],
                 'selected' => '',
                 'attr' => [
                     'class' => 'form-control js-typed-data'
@@ -26,11 +28,14 @@ class ConditionnalShowMetas extends Form
             ])
             ->add('equals_to', 'select2', [
                 'empty_value' => '',
-                'choices' => [],
+                'choices' => [
+                    '==' => __('admin.form.equal'),
+                    '!=' => __('admin.form.unlike')
+                ],
                 'selected' => '',
-                'label' => __('admin.form.select_model_type'),
+                'label' => __('admin.form.select_equals_to'),
                 'select2options' => [
-                    'placeholder' => __('admin.form.select_model_type'),
+                    'placeholder' => __('admin.form.select_equals_to'),
                     'multiple' => false,
                     'width' => '100%'
                 ]
@@ -42,9 +47,9 @@ class ConditionnalShowMetas extends Form
                 'attr' => [
                     
                 ],
-                'label' => __('admin.form.select_model_datas'),
+                'label' => __('admin.form.select_result_datas'),
                 'select2options' => [
-                    'placeholder' => __('admin.form.select_model_datas'),
+                    'placeholder' => __('admin.form.select_result_datas'),
                     'multiple' => false,
                     'width' => '100%'
                 ]
