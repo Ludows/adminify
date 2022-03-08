@@ -48,8 +48,10 @@ class CreateMetas extends Command
 
         $model = Str::title($model ?? '');
 
-        $this->call('make:form', [
-            'name' => 'Metas/'.$model
+        $this->call('generate:file', [
+            'name' => Str::singular($model),
+            '--stub' => 'adminify_metas',
+            '--type' => 'adminify_metas'
         ]);
 
     }

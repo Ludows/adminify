@@ -87,6 +87,12 @@ return [
             'postfix'             => 'Block',
             'directory_namespace' => true,
         ],
+        'adminify_metas' => [
+            'namespace'           => '\Metas\\',
+            'path'                => './app/Metas/',
+            'postfix'             => 'Meta',
+            'directory_namespace' => true,
+        ],
         'request' => [
             'namespace'           => '\Http\Requests',
             'path'                => './app/Http/Requests/',
@@ -226,5 +232,6 @@ return [
         'hook'         => base_path() . '/resources/stubs/hook.stub',
         'interfacable'         => base_path() . '/resources/stubs/interfacable.stub',
         'interfacable_blocks'         => base_path() . '/resources/stubs/interfacable_blocks.stub',
+        'adminify_metas'         => base_path() . '/resources/stubs/adminify-metas.stub',
     ]
 ];

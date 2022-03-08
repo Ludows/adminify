@@ -1,0 +1,10 @@
+<?php
+
+namespace {{namespace}};
+
+use Ludows\Adminify\Libs\MetasFormGroup;
+
+class {{model}} extends MetasFormGroup
+{
+    
+}
