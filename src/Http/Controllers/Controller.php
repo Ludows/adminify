@@ -89,12 +89,49 @@ class Controller extends BaseController
     }
     public function makeForm($class = '', $options = [], $datas = []) {
 
+        //mount the form
         $f = $this->form($class, $options, $datas);
+        //mount metas if present for the page
+        $this->appendMetas();
 
+        // merge to the request
         merge_to_request('form', $f);
 
+        // merge to the view the form
         view()->share('form', $f);
+        
 
         return $f;
+    }
+    private function appendMetas() {
+        $request = request();
+        $currentRoute = $request->currentRouteName;
+        $currentForm = $request->form;
+
+        //lets try to fetch all group meta with à specified page.name corresponding to the current view name :)
+
+        $m = new GroupMeta();
+        $m = $m->where('view_name', 'LIKE', '%'. $currentRoute .'%');
+        $m = $m->get();
+
+        if($m->count() > 0) {
+            // we have group to append to the form.
+            foreach($m as $meta) {
+                $currentForm->add('_metas-'.$meta->uuid, 'collection', [
+                    'type' => 'form',
+                    'prototype' => true,
+                    'label_show' => true,
+                    'label' => $meta->title,
+                    'prefer_input' => true,
+                    'wrapper' => [
+                        'class' => 'form-group js-metabox-show'
+                    ],
+                    'options' => [    // these are options for a single type
+                        'class' => $meta->named_class,
+                        'label' => false,
+                    ]
+                ]);
+            }
+        }
     }
 }
