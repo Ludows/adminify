@@ -45,7 +45,7 @@ class GroupMetasController extends Controller
         public function index(FormBuilder $formBuilder, Request $request)
         {
             $table = $this->table(GroupMetasTable::class);
-            
+
             return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
 
@@ -58,7 +58,7 @@ class GroupMetasController extends Controller
         {
             $form = $formBuilder->create(CreateGroupMetas::class, [
                 'method' => 'POST',
-                'url' => route('pages.store')
+                'url' => route('groupmetas.store')
             ]);
 
             $this->addJS( asset('/adminify/back/js/metas.js') );
@@ -107,7 +107,7 @@ class GroupMetasController extends Controller
                     'url' => route('groupmetas.update', ['groupmeta' => $groupMeta->id]),
                     'model' => $groupMeta
                 ]);
-            
+
             $this->addJS( asset('/adminify/back/js/metas.js') );
 
             return view("adminify::layouts.admin.pages.edit", ['form' => $form]);

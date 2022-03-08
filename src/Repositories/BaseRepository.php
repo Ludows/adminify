@@ -90,8 +90,12 @@ class BaseRepository
 
         $untouchables_relations = array_merge($this->internal_relations_columns, $this->external_relations_columns, $this->ignores);
 
-        foreach ($fillables as $fillable) {
+        foreach ($fillables as $fillableKey => $fillable) {
             # code...
+            $check_autoIgnore = startsWith($fillableKey, '_');
+            if($check_autoIgnore) {
+                $untouchables_relations[] = $fillableKey;
+            }
             if(isset($formValues[$fillable])) {
                 if(!in_array($fillable, $untouchables_relations)) {
                     if(method_exists($model, 'isTranslatableColumn')) {
@@ -234,6 +238,7 @@ class BaseRepository
         $this->hookManager->run('process:finished', $model);
         return $model;
     }
+    public function handleMetas() {}
     // public function createEditorSaveFile($model = null) {
     //     $request = request();
 

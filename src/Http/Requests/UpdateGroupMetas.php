@@ -20,13 +20,7 @@ class UpdateGroupMetas extends FormRequest
                 'required',
                 'string'
             ],
-            'named_metas' => [
-                'required'
-            ],
-            '_select_model_type' => [
-                'required'
-            ],
-            '_results_model_datas' => [
+            'named_class' => [
                 'required'
             ],
             'user_id' => [

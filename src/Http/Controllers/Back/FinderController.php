@@ -18,10 +18,7 @@ class FinderController extends Controller
 
         foreach ($models as $key => $value) {
             # code...
-            if(!in_array($key, $excludes)) {
-
-                $m = new $value;
-
+            if(in_array($key, $excludes)) {
                 unset($models[$key]);
             }
 
