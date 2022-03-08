@@ -4,7 +4,7 @@ namespace {{namespace}};
 
 use Ludows\Adminify\Libs\MetasFormGroup;
 
-class {{model}} extends MetasFormGroup
+class {{model}}Meta extends MetasFormGroup
 {
     
 }
