@@ -20,6 +20,7 @@ class CreateGroupMetasTable extends Migration
                 $table->string('slug', 255);
             }
             $table->string('named_class', 255);
+            $table->string('view_name', 255);
             $table->bigInteger('user_id')->unsigned();
         });
     }
