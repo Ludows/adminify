@@ -10,6 +10,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 use Illuminate\Support\Facades\View;
+use App\Adminify\Models\GroupMeta;
 
 class Controller extends BaseController
 {
