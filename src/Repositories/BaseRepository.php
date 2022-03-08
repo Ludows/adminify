@@ -187,6 +187,8 @@ class BaseRepository
             $this->createEditorSaveFile($model);
         }
 
+        $this->handleMetas();
+
         return $model;
     }
     public function getSlugProcess($model, $formValues, $type) {
@@ -238,7 +240,62 @@ class BaseRepository
         $this->hookManager->run('process:finished', $model);
         return $model;
     }
-    public function handleMetas() {}
+    public function formatMetaToSave($array = []) {
+
+        $keys = array_keys($array);
+        $a = [];
+
+        foreach ($keys as $key) {
+            # code...
+            $a[] = [
+                'key' => $key,
+                'value' => $array[$key]
+            ];
+        }
+
+        return $a;
+    }
+    public function handleMetas() {
+        $request = request();
+
+        $metaboxes = $request->get('_metaboxes');
+        $metaboxModel = app('App\Adminify\Models\Meta');
+
+        if(!empty($metaboxes)) {
+            $metaboxes = explode(',', $metaboxes);
+
+            foreach ($metaboxes as $metabox) {
+                # code...
+                $metabox_request = $request->get('_'.$metabox);
+
+                $values = $this->formatMetaToSave($metabox_request);
+
+                foreach ($values as $value) {
+                    # code...
+                    //todo the formater for meta model.
+                    if($request->isCreate) {
+                        $this->addModel(new $metaboxModel)->create($value);
+                    }
+                    else {
+
+                        $m = new $metaboxModel;
+                        $m = $m->where($value);
+                        $m = $m->get();
+
+                        if($m->count() > 0) {
+                            $this->addModel($m)->update($value, $m);
+                        }
+
+                        // $this->addModel(new $metaboxModel)->update($metabox_request);
+                    }
+                }
+
+                
+            }
+
+
+        }
+    }
     // public function createEditorSaveFile($model = null) {
     //     $request = request();
 
