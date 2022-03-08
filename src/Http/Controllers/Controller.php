@@ -112,7 +112,7 @@ class Controller extends BaseController
         //lets try to fetch all group meta with à specified page.name corresponding to the current view name :)
 
         $m = new GroupMeta();
-        $m = $m->where('view_name', 'LIKE', '%'. $currentRoute .'%');
+        $m = $m->where('views_name', 'LIKE', '%'. $currentRoute .'%');
         $m = $m->get();
         $metaboxes = [];
 
