@@ -120,7 +120,9 @@ class CreateGroupMetas extends Form
         //     ],
         //     "label" => __('admin.form.addConditionnalShow')
         // ]);
-
+        $this->add('uuid', 'hidden', [
+            'value' => 'metabox-'.uuid(15)
+        ]);
 
         $this->add('user_id', 'hidden', [
             'value' => user()->id

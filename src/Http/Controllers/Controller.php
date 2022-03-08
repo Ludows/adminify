@@ -113,25 +113,33 @@ class Controller extends BaseController
         $m = new GroupMeta();
         $m = $m->where('view_name', 'LIKE', '%'. $currentRoute .'%');
         $m = $m->get();
+        $metaboxes = [];
 
         if($m->count() > 0) {
             // we have group to append to the form.
             foreach($m as $meta) {
-                $currentForm->add('_metas-'.$meta->uuid, 'collection', [
+                $metaboxes[] = $meta->uuid;
+                $currentForm->add('_'.$meta->uuid, 'collection', [
                     'type' => 'form',
                     'prototype' => true,
                     'label_show' => true,
                     'label' => $meta->title,
                     'prefer_input' => true,
                     'wrapper' => [
+                        'id' => $meta->uuid,
                         'class' => 'form-group js-metabox-show'
                     ],
                     'options' => [    // these are options for a single type
-                        'class' => $meta->named_class,
+                        'class' => adminify_get_class($meta->named_class, ['app:metas', 'app:adminify:metas'], false),
                         'label' => false,
                     ]
                 ]);
             }
+
+            // we retrieve all metaboxes attached to page. now link in the form for register in db
+            $currentForm->add('_metaboxes', 'hidden', [
+                'value' => implode(', ', $metaboxes)
+            ]);
         }
     }
 }
