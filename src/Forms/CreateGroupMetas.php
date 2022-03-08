@@ -4,8 +4,8 @@ namespace Ludows\Adminify\Forms;
 
 use Kris\LaravelFormBuilder\Form;
 use Kris\LaravelFormBuilder\Field;
-use App\Adminify\Models\Category;
-use App\Adminify\Models\Page;
+use Illuminate\Support\Facades\Route;
+
 
 class CreateGroupMetas extends Form
 {
@@ -19,6 +19,20 @@ class CreateGroupMetas extends Form
         // $statuses = $this->getStatuses();
         // $enabled_features = get_site_key('enables_features');
         // $translations = $m->translations;
+
+        $arrayOfRoutesNames = array();
+        $routeCollection = Route::getRoutes()->get();
+        $excludes = get_site_key('metas.excludesOn');
+
+        foreach ($routeCollection as $route) {
+            # code...
+            $routeName = $route->getName();
+            if(startsWith($route->uri, 'admin') && !containsIn($routeName, $excludes) ) {
+                $arrayOfRoutesNames[$routeName] = __('admin.form.routes.'.$routeName);
+            }
+        }
+
+        // dd($this->getRequest());
 
         $this
             ->add('title', Field::TEXT, [
@@ -35,6 +49,22 @@ class CreateGroupMetas extends Form
                 'select2options' => [
                     'placeholder' => __('admin.form.select_named_class'),
                     'multiple' => false,
+                    'width' => '100%'
+                ]
+            ]);
+
+        $this
+            ->add('views_name', 'select2', [
+                'empty_value' => __('admin.form.select_routes'),
+                'choices' => $arrayOfRoutesNames,
+                'selected' => '',
+                'attr' => [
+                    'multiple' => 'multiple'
+                ],
+                'label' => __('admin.form.select_routes'),
+                'select2options' => [
+                    'placeholder' => __('admin.form.select_routes'),
+                    'multiple' => true,
                     'width' => '100%'
                 ]
             ]);

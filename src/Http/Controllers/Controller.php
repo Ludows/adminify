@@ -7,11 +7,13 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
+use Kris\LaravelFormBuilder\FormBuilderTrait;
+
 use Illuminate\Support\Facades\View;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, FormBuilderTrait;
 
     public function __construct() {
         $this->admin_css = [];
@@ -84,5 +86,15 @@ class Controller extends BaseController
             flash(__($traductionKey))->success();
             return redirect($url);
         }
+    }
+    public function makeForm($class = '', $options = [], $datas = []) {
+
+        $f = $this->form($class, $options, $datas);
+
+        merge_to_request('form', $f);
+
+        view()->share('form', $f);
+
+        return $f;
     }
 }

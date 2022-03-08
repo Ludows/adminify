@@ -47,6 +47,17 @@ return [
             'Url',
             'UserPreference',
             'Statuses',
+        ],
+        'excludesOn' => [
+            'destroy',
+            'store',
+            'update',
+            'lfm',
+            'finder',
+            'searchable',
+            'listings',
+            'ajax',
+            'trash'
         ]
     ],
 

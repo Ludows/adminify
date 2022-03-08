@@ -73,6 +73,7 @@ class MultilangBasic
             "isDestroy" => strpos($routeName, '.destroy') != false ? true : false,
             "isIndex" => strpos($routeName, '.index') != false ? true : false,
             "model" => $model,
+            "form" => null,
             "user" => user(),
             "posts" => $posts,
             "adminify_autoload" => adminify_autoload(),
@@ -81,7 +82,7 @@ class MultilangBasic
         ];
 
 
-        
+
         // if(in_array(titled($base_parameters['singleParam']), $bindedEditorKeys) && !$base_parameters['isIndex']) {
         //     $base_parameters['loadEditor'] = true;
         //     merge_to_request('loadEditor', true);

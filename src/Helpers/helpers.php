@@ -203,6 +203,12 @@ if (! function_exists('singular')) {
     }
 }
 
+if(! function_exists('containsIn')) {
+    function containsIn($string = '', $mixed) {
+        return Str::contains($string, $mixed);
+    }
+}
+
 if (! function_exists('slug')) {
     function slug($name = '') {
         return Str::slug($name);

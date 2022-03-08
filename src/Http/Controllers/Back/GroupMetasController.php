@@ -56,14 +56,19 @@ class GroupMetasController extends Controller
             */
         public function create(FormBuilder $formBuilder)
         {
-            $form = $formBuilder->create(CreateGroupMetas::class, [
+            $form = $this->makeForm(CreateGroupMetas::class, [
                 'method' => 'POST',
                 'url' => route('groupmetas.store')
             ]);
 
+            // $form = $formBuilder->create(CreateGroupMetas::class, [
+            //     'method' => 'POST',
+            //     'url' => route('groupmetas.store')
+            // ]);
+
             $this->addJS( asset('/adminify/back/js/metas.js') );
             //
-            return view("adminify::layouts.admin.pages.create", ['form' => $form]);
+            return view("adminify::layouts.admin.pages.create");
         }
 
         /**
@@ -74,7 +79,7 @@ class GroupMetasController extends Controller
         public function store(CreateGroupMetasRequest $request)
         {
             //
-            $form = $this->form(CreateGroupMetas::class);
+            $form = $this->makeForm(CreateGroupMetas::class);
 
             $entity = $this->repo->addModel(new GroupMeta())->create($form);
 
