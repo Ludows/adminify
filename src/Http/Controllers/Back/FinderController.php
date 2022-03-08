@@ -19,9 +19,12 @@ class FinderController extends Controller
         foreach ($models as $key => $value) {
             # code...
             if(!in_array($key, $excludes)) {
+
+                $m = new $value;
+
                 unset($models[$key]);
             }
-            
+
         }
 
        $a = [
@@ -35,7 +38,8 @@ class FinderController extends Controller
     public function index(Request $request) {
 
         $resource = Str::title($request->type);
-        $resoucable = adminify_get_class( singular($resource), ['app:models', 'app:adminify:models'], false);
+        $resoucable = adminify_get_class( singular($resource), ['app:adminify:models', 'app:models'], false);
+
         $multi = $request->useMultilang;
         $lang = lang();
         $excludes = [
@@ -50,8 +54,10 @@ class FinderController extends Controller
         $all = $request->all();
         $m = new $resoucable();
 
+        $labelToShow = $m->searchable_label;
+
         $iterator = 0;
-        
+
         foreach ($all as $key => $value) {
             # code...
             if(in_array($key, $excludes)) {
@@ -62,14 +68,14 @@ class FinderController extends Controller
         if(count($all) > 0) {
             foreach ($all as $key => $value) {
                 # code...
-    
+
                 if($m->isTranslatableColumn($key) && $multi) {
                     $m = $m->where($key.'->'.$lang, $value);
                 }
                 else {
                     $m = $m->where($key, $value);
                 }
-    
+
                 $iterator++;
             }
 
@@ -79,13 +85,14 @@ class FinderController extends Controller
             $m = $m->all();
         }
 
-        
 
-        
+
+
 
         $a = [
             'models' => $m,
             'status' => 'OK',
+            'labelToShow' => $labelToShow
         ];
 
         return response()->json($a);

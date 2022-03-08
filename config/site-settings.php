@@ -35,11 +35,18 @@ return [
             'GroupMeta',
             'Mailable',
             'Meta',
+            'MenuItem',
             'Statistics',
             'Formidable',
             'Translation',
+            'Templates',
+            'Tpls',
             'Traduction',
+            'Traductions',
+            'Media',
             'Url',
+            'UserPreference',
+            'Statuses',
         ]
     ],
 

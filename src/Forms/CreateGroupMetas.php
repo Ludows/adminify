@@ -25,7 +25,7 @@ class CreateGroupMetas extends Form
                 'label_show' => false,
                 'attr' => ['placeholder' =>  __('admin.form.title') ],
             ]);
-        
+
         $this
             ->add('named_class', 'select2', [
                 'empty_value' => '',
@@ -41,18 +41,21 @@ class CreateGroupMetas extends Form
 
         $this->add('_conditions', 'collection', [
             'type' => 'form',
-            'prototype' => true, 
+            'prototype' => true,
             'label_show' => true,
             'label' => __('admin.form.conditions'),
             'prefer_input' => true,
+            'wrapper' => [
+                'class' => 'form-group js-conditions-block'
+            ],
             'options' => [    // these are options for a single type
                 'class' => 'App\Adminify\Forms\ConditionnalShowMetas',
                 'label' => false,
             ]
         ]);
 
-        $conditions = $this->get('_conditions');
-        
+        $conditions = $this->getField('_conditions');
+
 
         $this->add('_addCondition', 'button', [
             "attr" => [
@@ -61,9 +64,37 @@ class CreateGroupMetas extends Form
             ],
             "label" => __('admin.form.addConditionnalShow')
         ]);
+
+        $this->add('_conditionsOr', 'collection', [
+            'type' => 'form',
+            'prototype' => true,
+            'label_show' => true,
+            'label' => __('admin.form.conditionsOr'),
+            'prefer_input' => true,
+            'wrapper' => [
+                'class' => 'form-group js-conditions-block-or'
+            ],
+            'options' => [    // these are options for a single type
+                'class' => 'App\Adminify\Forms\ConditionnalShowMetas',
+                'label' => false,
+            ]
+        ]);
+
+        $conditions = $this->getField('_conditionsOr');
+
+
+        $this->add('_addConditionOr', 'button', [
+            "attr" => [
+                "class" => "btn btn-default js-add-prototype-or",
+                "data-prototype" => form_row($conditions->prototype())
+            ],
+            "label" => __('admin.form.addConditionnalShow')
+        ]);
+
+
         $this->add('user_id', 'hidden', [
             'value' => user()->id
-        ])       
+        ])
         ->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
 }

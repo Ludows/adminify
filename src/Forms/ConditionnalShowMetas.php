@@ -4,7 +4,6 @@ namespace Ludows\Adminify\Forms;
 
 use Kris\LaravelFormBuilder\Form;
 use Kris\LaravelFormBuilder\Field;
-use App\Adminify\Models\Category;
 
 class ConditionnalShowMetas extends Form
 {
@@ -24,27 +23,31 @@ class ConditionnalShowMetas extends Form
                 $k = lowercase($key);
                 $choices_typed_data[ 'model:'.$k ] = __('admin.model.'.$k);
             }
-            
+
         }
 
         // lowercase();
 
-         $this->add('typed_data', 'select2', [
+         $this->add('typed_data', 'select', [
                 'empty_value' => __('admin.form.select_entity'),
                 'choices' => $choices_typed_data,
+                'required' => true,
                 'selected' => '',
                 'attr' => [
                     'class' => 'form-control js-typed-data'
                 ],
                 'label' => __('admin.form.named_metas'),
+                'force_js' => true,
+                'force_sibling' => true,
                 'select2options' => [
                     'placeholder' => __('admin.form.select_named_metas'),
                     'multiple' => false,
                     'width' => '100%'
                 ]
             ])
-            ->add('equals_to', 'select2', [
+            ->add('equals_to', 'select', [
                 'empty_value' => '',
+                'required' => true,
                 'choices' => [
                     '==' => __('admin.form.equal'),
                     '!=' => __('admin.form.unlike')
@@ -57,9 +60,10 @@ class ConditionnalShowMetas extends Form
                     'width' => '100%'
                 ]
             ])
-            ->add('result_datas', 'select2', [
-                'empty_value' => '',
+            ->add('result_datas', 'select', [
+                'empty_value' => __('admin.form.select_entry'),
                 'choices' => [],
+                'required' => true,
                 'selected' => '',
                 'attr' => [
                     'class' => 'form-control js-select-value'
@@ -70,6 +74,13 @@ class ConditionnalShowMetas extends Form
                     'multiple' => false,
                     'width' => '100%'
                 ]
-                ]);
+            ]);
+
+            $this->add('_removeCondition', 'button', [
+                "attr" => [
+                    "class" => "btn btn-danger js-remove-prototype",
+                ],
+                "label" => __('admin.form.removeConditionnalShow')
+            ]);
     }
 }
