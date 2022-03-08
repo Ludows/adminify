@@ -62,7 +62,7 @@ class PostController extends Controller
         public function create(FormBuilder $formBuilder)
         {
             //
-            $form = $formBuilder->create(CreatePost::class, [
+            $form = $this->makeForm(CreatePost::class, [
                 'method' => 'POST',
                 'url' => route('posts.store')
             ]);
@@ -78,7 +78,7 @@ class PostController extends Controller
         public function store(CreatePostRequest $request)
         {
             //
-            $form = $this->form(CreatePost::class);
+            $form = $this->makeForm(CreatePost::class);
             $post = $this->postRepository->addModel(new Post())->create($form);
 
             return $this->sendResponse($post, 'posts.index', 'admin.typed_data.success');
@@ -117,7 +117,7 @@ class PostController extends Controller
             //     ]);
             // }
             // else {
-                $form = $formBuilder->create(UpdatePost::class, [
+                $form = $this->makeForm(UpdatePost::class, [
                     'method' => 'PUT',
                     'url' => route('posts.update', ['post' => $post->id]),
                     'model' => $post
@@ -147,7 +147,7 @@ class PostController extends Controller
             //     ]);
             // }
             // else {
-                $form = $this->form(UpdatePost::class, [
+                $form = $this->makeForm(UpdatePost::class, [
                     'method' => 'PUT',
                     'url' => route('posts.update', ['post' => $post->id]),
                     'model' => $post

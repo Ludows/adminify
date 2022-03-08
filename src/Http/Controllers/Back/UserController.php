@@ -58,7 +58,7 @@ class UserController extends Controller
             public function create(FormBuilder $formBuilder)
             {
                 //
-                $form = $formBuilder->create(CreateUser::class, [
+                $form = $this->makeForm(CreateUser::class, [
                     'method' => 'POST',
                     'url' => route('users.store')
                 ]);
@@ -74,7 +74,7 @@ class UserController extends Controller
         public function store(CreateUserRequest $request)
         {
             //
-            $form = $this->form(CreateUser::class);
+            $form = $this->makeForm(CreateUser::class);
             $user = $this->userRepository->addModel(new User())->create($form);
             return $this->sendResponse($user, 'users.index', 'admin.typed_data.success');
         }
@@ -88,7 +88,7 @@ class UserController extends Controller
             public function edit(User $user, FormBuilder $formBuilder)
             {
                 //
-                $form = $formBuilder->create(UpdateUser::class, [
+                $form = $this->makeForm(UpdateUser::class, [
                     'method' => 'PUT',
                     'url' => route('users.update', ['user' => $user->id]),
                     'model' => $user
@@ -105,7 +105,7 @@ class UserController extends Controller
             public function update(User $user, UserUpdateRequest $request)
             {
                 //
-                $form = $this->form(UpdateUser::class, [
+                $form = $this->makeForm(UpdateUser::class, [
                     'method' => 'PUT',
                     'url' => route('users.update', ['user' => $user->id]),
                     'model' => $user
@@ -132,7 +132,7 @@ class UserController extends Controller
             }
             public function showProfile(User $user, FormBuilder $formBuilder) {
 
-                $form = $formBuilder->create(ShowProfile::class, [
+                $form = $this->makeForm(ShowProfile::class, [
                     'method' => 'POST',
                     'url' => route('users.profile.store', ['user' => $user->id]),
                     'model' => $user
@@ -142,7 +142,7 @@ class UserController extends Controller
             }
             public function saveProfile(User $user, FormBuilder $formBuilder) {
 
-                $form = $this->form(ShowProfile::class, [
+                $form = $this->makeForm(ShowProfile::class, [
                     'model' => $user
                 ]);
                 $formValues = $form->getFieldValues();

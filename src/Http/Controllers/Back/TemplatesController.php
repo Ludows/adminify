@@ -54,7 +54,7 @@ class TemplatesController extends Controller
         public function create(FormBuilder $formBuilder)
         {
             //
-            $form = $formBuilder->create(CreateTemplates::class, [
+            $form = $this->makeForm(CreateTemplates::class, [
                 'method' => 'POST',
                 'url' => route('templates.store')
             ]);
@@ -70,7 +70,7 @@ class TemplatesController extends Controller
         public function store(CreateTemplatesRequest $request)
         {
             // we pass context and request
-            $form = $this->form(CreateTemplates::class);
+            $form = $this->makeForm(CreateTemplates::class);
 
             $content_template = $this->templatesRepository->addModel(new Templates())->create($form);
 
@@ -89,7 +89,7 @@ class TemplatesController extends Controller
             $template->checkForTraduction();
             // $category->flashForMissing();
 
-            $form = $formBuilder->create(UpdateTemplates::class, [
+            $form = $this->makeForm(UpdateTemplates::class, [
                 'method' => 'PUT',
                 'url' => route('templates.update', ['template' => $template->id]),
                 'model' => $template
@@ -109,7 +109,7 @@ class TemplatesController extends Controller
             //
 
 
-            $form = $this->form(UpdateTemplates::class, [
+            $form = $this->makeForm(UpdateTemplates::class, [
                 'method' => 'PUT',
                 'url' => route('templates.update', ['template' => $template->id]),
                 'model' => $template

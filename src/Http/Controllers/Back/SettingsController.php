@@ -27,7 +27,7 @@ class SettingsController extends Controller
     public function index(Settings $settings, FormBuilder $formBuilder, Request $request)
         {
 
-            $form = $formBuilder->create(CreateSettings::class, [
+            $form = $this->makeForm(CreateSettings::class, [
                 'method' => 'POST',
                 'url' => route('settings.store'),
             ]);
@@ -43,7 +43,7 @@ class SettingsController extends Controller
         public function store(SaveSettings $request)
         {
             //
-            $form = $this->form(CreateSettings::class);
+            $form = $this->makeForm(CreateSettings::class);
             $settings = $this->settingsRepository->CreateOrUpdate($form);
 
             return $this->sendResponse($settings, 'settings.index', 'admin.typed_data.success');

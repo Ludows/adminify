@@ -107,7 +107,7 @@ class GroupMetasController extends Controller
         {
             //
             $groupMeta->checkForTraduction();
-                $form = $formBuilder->create(UpdateGroupMetas::class, [
+                $form = $this->makeForm(UpdateGroupMetas::class, [
                     'method' => 'PUT',
                     'url' => route('groupmetas.update', ['groupmeta' => $groupMeta->id]),
                     'model' => $groupMeta
@@ -128,7 +128,7 @@ class GroupMetasController extends Controller
         {
             //
             $seo = null;
-            $form = $this->form(UpdateGroupMetas::class);
+            $form = $this->makeForm(UpdateGroupMetas::class);
 
             $entity = $this->repo->addModel($groupMeta)->update($form, $groupMeta);
 

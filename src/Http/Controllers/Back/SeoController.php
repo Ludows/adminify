@@ -52,7 +52,7 @@ class SeoController extends Controller
             $model = new $model_key;
             $model = $model->find($id);
 
-            $form = $formBuilder->create(SeoForm::class, [
+            $form = $this->makeForm(SeoForm::class, [
                 'method' => 'PUT',
                 'url' => route('seo.update', ['type' => $type, 'id' => $id]),
                 'model' => $model
@@ -87,7 +87,7 @@ class SeoController extends Controller
             $model = new $model_key;
             $model = $model->find($id);
 
-            $form = $this->form(SeoForm::class, [
+            $form = $this->makeForm(SeoForm::class, [
                 'model' => $model
             ]);
 

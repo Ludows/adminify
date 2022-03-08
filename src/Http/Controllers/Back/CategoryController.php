@@ -53,7 +53,7 @@ class CategoryController extends Controller
         public function create(FormBuilder $formBuilder)
         {
             //
-            $form = $formBuilder->create(CreateCategory::class, [
+            $form = $this->makeForm(CreateCategory::class, [
                 'method' => 'POST',
                 'url' => route('categories.store')
             ]);
@@ -69,7 +69,7 @@ class CategoryController extends Controller
         public function store(CreateCategoryRequest $request)
         {
             // we pass context and request
-            $form = $this->form(CreateCategory::class);
+            $form = $this->makeForm(CreateCategory::class);
 
             $category = $this->categoryRepository->addModel(new Category())->create($form);
 
@@ -109,7 +109,7 @@ class CategoryController extends Controller
             $category->checkForTraduction();
             // $category->flashForMissing();
 
-            $form = $formBuilder->create(UpdateCategory::class, [
+            $form = $this->makeForm(UpdateCategory::class, [
                 'method' => 'PUT',
                 'url' => route('categories.update', ['category' => $category->id]),
                 'model' => $category
@@ -129,7 +129,7 @@ class CategoryController extends Controller
             //
 
 
-            $form = $this->form(UpdateCategory::class, [
+            $form = $this->makeForm(UpdateCategory::class, [
                 'method' => 'PUT',
                 'url' => route('categories.update', ['category' => $category->id]),
                 'model' => $category

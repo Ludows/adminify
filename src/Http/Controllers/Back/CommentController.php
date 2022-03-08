@@ -59,7 +59,7 @@ class CommentController extends Controller
             public function create(FormBuilder $formBuilder)
             {
                 //
-                $form = $formBuilder->create(CreateComment::class, [
+                $form = $this->makeForm(CreateComment::class, [
                     'method' => 'POST',
                     'url' => route('comments.store')
                 ]);
@@ -75,7 +75,7 @@ class CommentController extends Controller
         public function store(CreateCommentRequest $request)
         {
             // we pass context and request
-            $form = $this->form(CreateComment::class);
+            $form = $this->makeForm(CreateComment::class);
 
             $comment = $this->commentRepository->addModel(new Comment())->create($form);
 
@@ -91,7 +91,7 @@ class CommentController extends Controller
         public function edit(FormBuilder $formBuilder, Comment $comment, Request $request)
         {
             //
-            $form = $formBuilder->create(UpdateComment::class, [
+            $form = $this->makeForm(UpdateComment::class, [
                 'method' => 'PUT',
                 'url' => route('comments.update', ['comment' => $comment->id]),
                 'model' => $comment
@@ -109,7 +109,7 @@ class CommentController extends Controller
         public function update(UpdateCommentRequest $request, Comment $comment)
         {
             //
-            $form = $this->form(UpdateComment::class);
+            $form = $this->makeForm(UpdateComment::class);
 
             $comment = $this->commentRepository->addModel($comment)->update($form, $comment);
 

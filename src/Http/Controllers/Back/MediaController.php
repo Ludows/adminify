@@ -55,7 +55,7 @@ class MediaController extends Controller
             */
         public function create(FormBuilder $formBuilder)
         {
-            $form = $formBuilder->create(CreateMedia::class, [
+            $form = $this->makeForm(CreateMedia::class, [
                 'method' => 'POST',
                 'url' => route('medias.store')
             ]);
@@ -98,7 +98,7 @@ class MediaController extends Controller
         public function edit(Media $media, FormBuilder $formBuilder)
         {
             //
-            $form = $formBuilder->create(UpdateMedia::class, [
+            $form = $this->makeForm(UpdateMedia::class, [
                 'method' => 'PUT',
                 'url' => route('medias.update', ['media' => $media->id]),
                 'model' => $media
@@ -117,7 +117,7 @@ class MediaController extends Controller
         {
             //
 
-            $form = $this->form(UpdateMedia::class, [
+            $form = $this->makeForm(UpdateMedia::class, [
                 'method' => 'PUT',
                 'url' => route('medias.update', ['media' => $media->id]),
                 'model' => $media

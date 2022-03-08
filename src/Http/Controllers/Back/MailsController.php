@@ -57,7 +57,7 @@ class MailsController extends Controller
         public function create(FormBuilder $formBuilder)
         {
             //
-            $form = $formBuilder->create(CreateMail::class, [
+            $form = $this->makeForm(CreateMail::class, [
                 'method' => 'POST',
                 'url' => route('mails.store')
             ]);
@@ -73,7 +73,7 @@ class MailsController extends Controller
         public function store(CreateMailRequest $request)
         {
             // we pass context and request
-            $form = $this->form(CreateMail::class);
+            $form = $this->makeForm(CreateMail::class);
 
             $mail = $this->mailRepository->addModel(new Mailables())->create($form);
 
@@ -92,7 +92,7 @@ class MailsController extends Controller
             $mail->checkForTraduction();
             // $category->flashForMissing();
 
-            $form = $formBuilder->create(UpdateMail::class, [
+            $form = $this->makeForm(UpdateMail::class, [
                 'method' => 'PUT',
                 'url' => route('mails.update', ['mail' => $mail->id]),
                 'model' => $mail
@@ -110,7 +110,7 @@ class MailsController extends Controller
         public function update(Mailables $mail, UpdateMailRequest $request)
         {
             
-            $form = $this->form(UpdateMail::class, [
+            $form = $this->makeForm(UpdateMail::class, [
                 'method' => 'PUT',
                 'url' => route('mails.update', ['mail' => $mail->id]),
                 'model' => $mail
