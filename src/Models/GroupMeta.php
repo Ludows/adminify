@@ -18,6 +18,10 @@ class GroupMeta extends ClassicModel
     protected $fillable = [
         'title',
         'slug',
+        'named_class',
+        'views_name',
+        'uuid',
+        'user_id'
     ];
 
     public $excludes_savables_fields = [];

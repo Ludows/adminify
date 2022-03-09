@@ -81,6 +81,8 @@ class GroupMetasController extends Controller
             //
             $form = $this->makeForm(CreateGroupMetas::class);
 
+            // dd($form->getFieldValues());
+
             $entity = $this->repo->addModel(new GroupMeta())->create($form);
 
             return $this->sendResponse($entity, 'groupmetas.index', 'admin.typed_data.success');

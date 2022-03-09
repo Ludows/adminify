@@ -79,6 +79,7 @@ return [
         'Comment',
         'Settings',
         'Translations',
+        'Templates',
         'Mailables',
         'User'
     ],

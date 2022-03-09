@@ -92,15 +92,16 @@ class Controller extends BaseController
 
         //mount the form
         $f = $this->form($class, $options, $datas);
-        //mount metas if present for the page
-        $this->appendMetas();
 
         // merge to the request
         merge_to_request('form', $f);
 
+        //mount metas if present for the page
+        $this->appendMetas();
+
         // merge to the view the form
         view()->share('form', $f);
-        
+
 
         return $f;
     }
@@ -115,6 +116,7 @@ class Controller extends BaseController
         $m = $m->where('views_name', 'LIKE', '%'. $currentRoute .'%');
         $m = $m->get();
         $metaboxes = [];
+
 
         if($m->count() > 0) {
             // we have group to append to the form.
