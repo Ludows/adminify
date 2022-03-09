@@ -16,6 +16,10 @@
         <!-- Argon CSS -->
         {!! Assets::css() !!}
         @stack('css')
+
+        <script>
+            window.siteSettings = @json($request->siteConfig)
+        </script>
         
     </head>
     <body class="{{ $class ?? '' }}">
