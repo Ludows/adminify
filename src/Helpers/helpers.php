@@ -310,6 +310,20 @@ if(! function_exists('is_page') ) {
     }
 }
 
+if(! function_exists('is_search')) {
+    function is_search($class) {
+        // the relationship model
+        $ret = false;
+        $s = setting('searchpage');
+
+        if(!empty($s) && $class->id == $s && $class instanceof \App\Adminify\Models\Page) {
+            $ret = true;
+        }
+
+        return $ret;
+    }
+}
+
 if(! function_exists('is_multilang') ) {
     function is_multilang() {
         // the relationship model

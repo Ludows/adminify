@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 $c = config('site-settings.restApi');
 $headless = config('site-settings.headless');
 
+
 if(isset($c) && request()->segment(1) != $c['prefix'] || isset($c) && $headless) {
     Route::middleware('multilang.basic')->group(function ($router) {
         $router->get('/', 'Ludows\Adminify\Http\Controllers\Front\PageController@index')->name('pages.front.index');
@@ -11,6 +12,8 @@ if(isset($c) && request()->segment(1) != $c['prefix'] || isset($c) && $headless)
         $router->bind('slug', 'Ludows\Adminify\Http\Controllers\Front\PageController@handleSlug');
 
         $router->post('/forms/validate/', 'Ludows\Adminify\Http\Controllers\Front\PageController@validateForms')->name('forms.validate');
+
+        $router->post('/search', 'Ludows\Adminify\Http\Controllers\Front\PageController@search')->name('globalsearch');
 
         $path_admin_file = base_path('routes/adminify_front.php');
 

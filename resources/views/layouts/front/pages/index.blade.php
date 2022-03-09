@@ -17,6 +17,10 @@
         @includeFirst(['adminify::layouts.front.pages.page-'.$model->id, 'adminify::layouts.front.pages.page'])
     @endif
 
+    @if ($isSearch)
+        @include('adminify::layouts.front.pages.searchpage')
+    @endif
+
     @if($enabled_features['post'] && $isSingle)
         @php
             $allowForm = true;

@@ -53,13 +53,19 @@ class PageController extends Controller
             $type = $reflection->getShortName();
             $seo = $this->handleSeo($page);
 
+            $enabled_features = get_site_key('enables_features');
+
             $user = user();
             if($user != null) {
-                $user->role = $user->roles->first();
-                unset($user->roles);
+                $user->mainRole = $user->roles->first();
+                // unset($user->roles);
             }
 
-            $export = ['seo' => $seo, 'type' => $type, 'model' => $page, 'user' => $user, 'lang' => lang()];
+            $export = array_merge(['enabled_features' => $enabled_features, 'seo' => $seo, 'type' => $type, 'model' => $page, 'user' => $user, 'lang' => lang()], ($this->addExports() ?? []));
+
+            if(method_exists($this, 'beforePageRenderView')) {
+                call_user_func_array(array($this, 'beforePageRenderView'), $export);
+            }
 
             return view("adminify::layouts.front.pages.index", ['seo' => $seo, 'type' => $type, 'model' => $page, 'user' => $user, 'lang' => lang(), 'export' => json_encode($export)]);
         }
@@ -76,15 +82,30 @@ class PageController extends Controller
 
             $user = user();
             if($user != null) {
-                $user->role = $user->roles->first();
-                unset($user->roles);
+                $user->mainRole = $user->roles->first();
+                // unset($user->roles);
             }
 
-            $export = ['seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => lang()];
+            $export = array_merge(['enabled_features' => $enabled_features, 'seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => lang()], ($this->addExports() ?? []));
 
+            if(method_exists($this, 'beforePageRenderView')) {
+                call_user_func_array(array($this, 'beforePageRenderView'), $export);
+            }
 
             return view("adminify::layouts.front.pages.index", ['enabled_features' => $enabled_features, 'seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => lang(), 'export' => json_encode($export)]);
 
+        }
+
+        public function search(Request $request) {
+
+            $result = app()->call('App\Adminify\Http\Controllers\Back\SearchController', [
+                $request
+            ]);// controller à taper;
+
+            // set in session the rsults
+            session(['results' => $result]);
+
+            return view("adminify::layouts.front.pages.index", ['results' => $result]);
         }
 
         public function validateForms(Request $request) {

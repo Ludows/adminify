@@ -105,6 +105,9 @@ class Controller extends BaseController
 
         return $f;
     }
+    public function addExports() {
+        return [];
+    }
     private function appendMetas() {
         $request = request();
         $currentRoute = $request->currentRouteName;

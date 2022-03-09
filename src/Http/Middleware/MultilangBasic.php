@@ -85,6 +85,7 @@ class MultilangBasic
             $base_parameters['isSingle'] = is_single($model);
             $base_parameters['isBlogPage'] = is_blogpage($model);
             $base_parameters['isPage'] = is_page($model);
+            $base_parameters['isSearch'] = is_search($model);
             $base_parameters['posts'] = $posts;
         }
 
