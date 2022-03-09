@@ -22,7 +22,7 @@
         {{-- <link type="text/css" href="{{ asset('adminify/front') }}/css/argon.css?v=1.0.0" rel="stylesheet"> --}}
         {{-- <link type="text/css" href="{{ asset('adminify/front') }}/css/front.css?v=1.0.0" rel="stylesheet"> --}}
         @laravelPWA
-        {!! Assets::group('frontend')->css() !!}
+        {!! Assets::css() !!}
         @stack('css')
     </head>
     <body class="{{ $class ?? '' }}">
@@ -55,8 +55,8 @@
         {{--  <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>  --}}
 
         @stack('modales')
+        {!! Assets::js() !!}
         @stack('js')
-        {!! Assets::group('frontend')->js() !!}
 
         <!-- Argon JS -->
     </body>
