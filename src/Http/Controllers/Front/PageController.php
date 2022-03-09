@@ -49,7 +49,6 @@ class PageController extends Controller
                 abort("404");
             }
 
-
             $reflection = new ReflectionClass($page);
             $type = $reflection->getShortName();
             $seo = $this->handleSeo($page);
@@ -72,6 +71,8 @@ class PageController extends Controller
             $enabled_features = get_site_key('enables_features');
 
             $seo = $this->handleSeo($slug);
+
+            // dd(request());
 
             $user = user();
             if($user != null) {
@@ -181,8 +182,8 @@ class PageController extends Controller
                 // fallback to previous url
                 $url = url()->previous();
             }
-            
-            
+
+
             return redirect()->to($url)->with(['formSubmitted' => true]);
         }
 

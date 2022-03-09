@@ -26,14 +26,6 @@ class MultilangBasic
         $v = view();
 
         $blogpage = setting('blogpage');
-        $posts = null;
-        // si c'est la page de blog. Autoappend des posts.
-        if($request->slug instanceof \App\Adminify\Models\Page && (int) $blogpage != 0) {
-            if($request->slug->id === (int) $blogpage) {
-               $posts = new \Ludows\Adminify\Models\Post();
-               $posts = $posts->all();
-            }
-        }
 
         $checkedKeys = [
             'update',
@@ -44,7 +36,8 @@ class MultilangBasic
         $currentLocale = App::currentLocale();
         $routeNameSpl = explode('.', $routeName);
 
-        $singular = Str::singular($routeNameSpl['0']);
+        // making autoswitch back / front
+        $singular = Str::singular(is_admin() ? $routeNameSpl['0'] : 'slug');
         $model = \Route::current()->parameter($singular);
 
         $named = join('.',array_diff($routeNameSpl, ['index', 'edit', 'create']));
@@ -75,11 +68,25 @@ class MultilangBasic
             "model" => $model,
             "form" => null,
             "user" => user(),
-            "posts" => $posts,
             "adminify_autoload" => adminify_autoload(),
             // "loadEditor" => false,
             // 'bindedEditorKeys' => $bindedEditorKeys
         ];
+
+        if(!is_admin()) {
+            $posts = null;
+            // si c'est la page de blog. Autoappend des posts.
+            if(is_blogpage($model)) {
+                $posts = new \Ludows\Adminify\Models\Post();
+                $posts = $posts->all();
+            }
+            // add specifics globals vars
+            $base_parameters['isHome'] = is_homepage($model);
+            $base_parameters['isSingle'] = is_single($model);
+            $base_parameters['isBlogPage'] = is_blogpage($model);
+            $base_parameters['isPage'] = is_page($model);
+            $base_parameters['posts'] = $posts;
+        }
 
 
 

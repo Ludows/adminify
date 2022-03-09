@@ -264,7 +264,7 @@ if(! function_exists('is_homepage') ) {
         // the relationship model
         $ret = false;
         $s = setting('homepage');
-        if($s != null && $class->id == $s && $class instanceof \App\Adminify\Models\Page) {
+        if(!empty($s) && $class->id == $s && $class instanceof \App\Adminify\Models\Page) {
             $ret = true;
         }
         return $ret;
@@ -276,9 +276,36 @@ if(! function_exists('is_blogpage') ) {
         // the relationship model
         $ret = false;
         $s = setting('blogpage');
-        if($s != null && $class->id == $s && $class instanceof \App\Adminify\Models\Page) {
+        if(!empty($s) && $class->id == $s && $class instanceof \App\Adminify\Models\Page) {
             $ret = true;
         }
+        return $ret;
+    }
+}
+
+if(! function_exists('is_single') ) {
+    function is_single($class) {
+        $ret = false;
+        if($class instanceof \App\Adminify\Models\Post) {
+            $ret = true;
+        }
+        return $ret;
+    }
+}
+
+if(! function_exists('is_page') ) {
+    function is_page($class) {
+        // the relationship model
+        $ret = false;
+        $s = setting('blogpage');
+
+        if(!empty($s) && $class->id != $s && $class instanceof \App\Adminify\Models\Page) {
+            $ret = true;
+        }
+        else if(empty($s) && $class instanceof \App\Adminify\Models\Page) {
+            $ret = true;
+        }
+
         return $ret;
     }
 }
@@ -289,7 +316,7 @@ if(! function_exists('is_multilang') ) {
         $ret = false;
         $c = get_site_key('multilang');
 
-        if($c != null) {
+        if(!empty($c)) {
             $ret = $c;
         }
         return (bool) $ret;
