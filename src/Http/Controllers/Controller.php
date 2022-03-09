@@ -128,6 +128,7 @@ class Controller extends BaseController
                     'label_show' => true,
                     'label' => $meta->title,
                     'prefer_input' => true,
+                    'model' => !empty($request->model) ? $request->model : [],
                     'wrapper' => [
                         'id' => $meta->uuid,
                         'class' => 'form-group js-metabox-show'

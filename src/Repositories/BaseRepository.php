@@ -188,7 +188,10 @@ class BaseRepository
             $this->createEditorSaveFile($model);
         }
 
-        $this->handleMetas();
+        //prevent inifinite loop
+        if(get_class($model) != "App\Adminify\Models\Meta") {
+            $this->handleMetas();
+        }
 
         return $model;
     }
@@ -248,9 +251,12 @@ class BaseRepository
 
         foreach ($keys as $key) {
             # code...
+
             $a[] = [
                 'key' => $key,
-                'value' => $array[$key]
+                'value' => $array[$key],
+                'model_type' => get_class($this->model),
+                'model_id' => $this->model->id
             ];
         }
 
@@ -267,27 +273,22 @@ class BaseRepository
 
             foreach ($metaboxes as $metabox) {
                 # code...
-                $metabox_request = $request->get('_'.$metabox);
+                $metabox_request = $request->get('_'.$metabox)[0];
 
                 $values = $this->formatMetaToSave($metabox_request);
 
                 foreach ($values as $value) {
                     # code...
                     //todo the formater for meta model.
-                    if($request->isCreate) {
-                        $this->addModel(new $metaboxModel)->create($value);
+                    $m = new $metaboxModel;
+                    $m = $m->where($value);
+                    $m = $m->get();
+
+                    if($m->count() > 0) {
+                        $this->addModel($m)->update($value, $m);
                     }
                     else {
-
-                        $m = new $metaboxModel;
-                        $m = $m->where($value);
-                        $m = $m->get();
-
-                        if($m->count() > 0) {
-                            $this->addModel($m)->update($value, $m);
-                        }
-
-                        // $this->addModel(new $metaboxModel)->update($metabox_request);
+                        $this->addModel(new $metaboxModel)->create($value);
                     }
                 }
 

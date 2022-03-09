@@ -105,14 +105,14 @@ class GroupMetasController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function edit(GroupMeta $groupMeta, FormBuilder $formBuilder, Request $request)
+        public function edit(GroupMeta $Groupmeta, FormBuilder $formBuilder, Request $request)
         {
             //
-            $groupMeta->checkForTraduction();
+            $Groupmeta->checkForTraduction();
                 $form = $this->makeForm(UpdateGroupMetas::class, [
                     'method' => 'PUT',
-                    'url' => route('groupmetas.update', ['groupmeta' => $groupMeta->id]),
-                    'model' => $groupMeta
+                    'url' => route('groupmetas.update', ['groupmeta' => $Groupmeta->id]),
+                    'model' => $Groupmeta
                 ]);
 
             $this->addJS( asset('/adminify/back/js/metas.js') );
@@ -126,13 +126,13 @@ class GroupMetasController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(UpdateGroupMetasRequest $request, GroupMeta $groupMeta)
+        public function update(UpdateGroupMetasRequest $request, GroupMeta $Groupmeta)
         {
             //
             $seo = null;
             $form = $this->makeForm(UpdateGroupMetas::class);
 
-            $entity = $this->repo->addModel($groupMeta)->update($form, $groupMeta);
+            $entity = $this->repo->addModel($Groupmeta)->update($form, $Groupmeta);
 
             return $this->sendResponse($entity, 'groupmetas.index', 'admin.typed_data.updated');
 
@@ -144,12 +144,12 @@ class GroupMetasController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function destroy(GroupMeta $groupMeta)
+        public function destroy(GroupMeta $Groupmeta)
         {
             //
-            $this->repo->addModel($groupMeta)->delete($groupMeta);
+            $this->repo->addModel($Groupmeta)->delete($Groupmeta);
 
             // redirect
-            return $this->sendResponse($groupMeta, 'groupmetas.index', 'admin.typed_data.deleted');
+            return $this->sendResponse($Groupmeta, 'groupmetas.index', 'admin.typed_data.deleted');
         }
 }
