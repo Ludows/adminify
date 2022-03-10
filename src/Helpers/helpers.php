@@ -7,6 +7,8 @@ use App\Adminify\Models\Media;
 use App\Adminify\Models\Settings;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use League\Glide\Urls\UrlBuilderFactory;
+
 
 if (! function_exists('do_shortcode')) {
     function do_shortcode($shortcodeName, $parameters = []) {
@@ -713,6 +715,18 @@ if(! function_exists('media')) {
 if(! function_exists('query')) {
     function query($model, $queryFunction) {
         return is_callable($queryFunction) ? $queryFunction($model) : null;
+    }
+}
+
+if(! function_exists('image')) {
+    function image($path, $parameters) {
+        // Create an instance of the URL builder
+        $urlBuilder = UrlBuilderFactory::create('/images/', env('GLIDE_SECURE_KEY'));
+        
+        // Generate a URL
+        $url = $urlBuilder->getUrl($path, $parameters);
+
+        return $url;
     }
 }
 

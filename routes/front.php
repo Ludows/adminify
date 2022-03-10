@@ -7,6 +7,7 @@ $headless = config('site-settings.headless');
 
 if(isset($c) && request()->segment(1) != $c['prefix'] || isset($c) && $headless) {
     Route::middleware('multilang.basic')->group(function ($router) {
+        $router->get('/images/{path}', 'Ludows\Adminify\Http\Controllers\Front\ImageController@show')->name('image.transform');
         $router->get('/', 'Ludows\Adminify\Http\Controllers\Front\PageController@index')->name('pages.front.index');
         $router->get('{slug}', 'Ludows\Adminify\Http\Controllers\Front\PageController@getPages')->where('slug', '([A-Za-z0-9\-\/]+)')->name('pages.front.show');
         $router->bind('slug', 'Ludows\Adminify\Http\Controllers\Front\PageController@handleSlug');
