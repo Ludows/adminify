@@ -374,7 +374,10 @@ return array(
                 'middlewares' => [],
                 'aliases' => []
             ],
-            'config' => null,
+            'config' => (object) [
+                'file' => '/../../config/assets',
+                'name' => 'assets',
+            ],
             'afterPublish' => [],
         ),
         (object) array(
