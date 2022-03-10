@@ -19,7 +19,7 @@ class HasUploadedImageListener
     {
 
         $request = request();
-        $fromCreate = $request->fromMediaCreate;
+        $fromCreate = $request->input('fromMediaCreate', 0);
 
         if($fromCreate == 0) {
 
