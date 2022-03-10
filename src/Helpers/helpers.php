@@ -3,6 +3,7 @@ use Thunder\Shortcode\ShortcodeFacade;
 use App\Adminify\Models\Translations as Traduction;
 use App\Adminify\Models\Forms;
 use App\Adminify\Models\Menu;
+use App\Adminify\Models\Media;
 use App\Adminify\Models\Settings;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
@@ -437,14 +438,6 @@ if(! function_exists('array_equal')) {
     }
 }
 
-if(! function_exists('get_model_by')) {
-    function get_model_by($modelNamespace, $column, $value = '', $operator = '=') {
-        $m = new $modelNamespace();
-        $m = $m->where($column, $operator, $value)->get()->all();
-        return $m;
-    }
-}
-
 if(! function_exists('get_url')) {
     function get_url($class) {
         if(is_urlable_model($class)) {
@@ -567,6 +560,18 @@ if(! function_exists('forget_cache')) {
     }
 }
 
+if(!function_exists('cache_exist')) {
+    function cache_exist($key) {
+        return Cache::has($key);
+    }
+}
+
+if(!function_exists('cache_flush')) {
+    function cache_flush() {
+        Cache::flush();
+    }
+}
+
 if (! function_exists('is_shortcode')) {
     function is_shortcode($string = '') {
 
@@ -624,8 +629,8 @@ if (! function_exists('is_sitemapable_model')) {
     }
 }
 
-if (! function_exists('get_translation')) {
-    function get_translation($string) {
+if (! function_exists('translate')) {
+    function translate($string) {
         $t = new Traduction();
         $t = $t->key($string)->first();
         return $t != null ? $t->text : null;
@@ -684,6 +689,30 @@ if (! function_exists('menu')) {
 
 
         return $m->first()->makeThree;
+    }
+}
+
+if(! function_exists('media')) {
+    function media($mixed) {
+        $m = new Media();
+
+        if(is_int($mixed)) {
+            $m = $m->where('id', $mixed);
+        }
+
+        if(is_string($mixed)) {
+            $m = $m->where('src', $mixed);
+        }
+
+        $result = $m->first();
+
+        return !empty($result) ? $result->getFullPath() : null;
+    }
+}
+
+if(! function_exists('query')) {
+    function query($model, $queryFunction) {
+        return is_callable($queryFunction) ? $queryFunction($model) : null;
     }
 }
 

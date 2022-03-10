@@ -7,7 +7,7 @@ use App\Adminify\Models\Media;
   {
    public function getFullPath($image = '') {
         $lmf = app("\UniSharp\LaravelFilemanager\LfmPath");
-        return $lmf->url($image);
+        return $lmf->url( !empty($image) ? $image : $this->src );
    }
 
    public function media()
