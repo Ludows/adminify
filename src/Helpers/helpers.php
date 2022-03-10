@@ -706,7 +706,7 @@ if(! function_exists('media')) {
 
         $result = $m->first();
 
-        return !empty($result) ? $result->getFullPath() : null;
+        return !empty($result) ? $result : null;
     }
 }
 
