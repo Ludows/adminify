@@ -5,27 +5,23 @@ namespace Ludows\Adminify\Http\Controllers\Front;
 use Ludows\Adminify\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use Illuminate\Contracts\Filesystem\Filesystem;
-use League\Glide\Responses\LaravelResponseFactory;
-use League\Glide\ServerFactory;
-use League\Glide\Signatures\SignatureFactory;
-
 
 class ImageController extends Controller
 {
-    public function show(Filesystem $filesystem, $path) {
-        
-        $server = ServerFactory::create([
-            'response' => new LaravelResponseFactory(app('request')),
-            'source' => $filesystem->getDriver(),
-            'cache' => $filesystem->getDriver(),
-            'cache_path_prefix' => '.cache',
-            'base_url' => 'images',
-            'max_image_size' => 2000*2000,
-        ]);
+    public function show(\League\Glide\Server $server, \League\Glide\Signatures\Signature $sign,  $path) {
 
+        // dd($server, $sign);
         // Validate HTTP signature
-        SignatureFactory::create(env('GLIDE_SECURE_KEY'))->validateRequest($path, $_GET);
+        // $sign->validateRequest($path, $_GET);
+
+        // $u = user();
+
+        // dd(storage('public')->url($path), $filesystem->path('url'));
+
+        // dd($filesystem->translateToLfmPath($path), storage('public')->getDriver()->getConfig());
+
+        $request = request();
+        $sign->validateRequest($request->path(), $request->all());
 
         return $server->getImageResponse($path, request()->all());
     }

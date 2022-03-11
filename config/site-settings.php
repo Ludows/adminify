@@ -15,6 +15,10 @@ return [
         ]
     ],
 
+    'medias' => [
+        'prefers_id_on' => ['media_id', 'logo_id', 'menu-three-key', 'avatar_id', 'avatar']
+    ],
+
     'metas' => [
         // excludes models here
         'excludes' => [
@@ -75,6 +79,7 @@ return [
         'Tag',
         'Media',
         'Forms',
+        'GroupMeta',
         'Menu',
         'Comment',
         'Settings',

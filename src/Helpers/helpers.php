@@ -8,6 +8,7 @@ use App\Adminify\Models\Settings;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use League\Glide\Urls\UrlBuilderFactory;
+use Illuminate\Support\Facades\Storage;
 
 
 if (! function_exists('do_shortcode')) {
@@ -718,11 +719,17 @@ if(! function_exists('query')) {
     }
 }
 
+if(! function_exists('storage')) {
+    function storage($storage) {
+        return Storage::disk($storage ?? 'public');
+    }
+}
+
 if(! function_exists('image')) {
     function image($path, $parameters) {
         // Create an instance of the URL builder
         $urlBuilder = UrlBuilderFactory::create('/images/', env('GLIDE_SECURE_KEY'));
-        
+
         // Generate a URL
         $url = $urlBuilder->getUrl($path, $parameters);
 
