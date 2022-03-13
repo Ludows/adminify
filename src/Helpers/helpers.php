@@ -642,7 +642,7 @@ if (! function_exists('translate')) {
     function translate($string) {
         $t = new Traduction();
         $t = $t->key($string)->first();
-        return $t != null ? $t->text : null;
+        return $t != null ? $t->text : __($string);
     }
 }
 
@@ -697,7 +697,7 @@ if (! function_exists('menu')) {
         }
 
 
-        return $m->first()->makeThree;
+        return $m->first();
     }
 }
 
