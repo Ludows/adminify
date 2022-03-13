@@ -58,6 +58,12 @@ if (! function_exists('uuid')) {
     }
 }
 
+if(! function_exists('is_adminify')) {
+    function is_adminify() {
+        return defined('IS_ADMINIFY') == true;
+    }
+}
+
 if (! function_exists('adminify_get_classes')) {
     function adminify_get_classes($array, $context, $loadClass) {
         $r = [];

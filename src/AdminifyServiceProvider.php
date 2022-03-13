@@ -94,6 +94,7 @@ class AdminifyServiceProvider extends ServiceProvider {
     public function register() {
 
         // Register the service the package provides.
+        define('IS_ADMINIFY', true);
 
         $this->app->singleton('adminify', function($app) {
 
