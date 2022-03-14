@@ -18,6 +18,7 @@ use Ludows\Adminify\Traits\SavableTranslations;
 use Ludows\Adminify\Traits\PathableMedia;
 use Ludows\Adminify\Traits\ProcessableAssets;
 use Ludows\Adminify\Traits\HasMeta;
+use Ludows\Adminify\Traits\HasStatus;
 
 
 use Spatie\Feed\Feedable;
@@ -43,6 +44,7 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     use Searchables;
     use SavableTranslations;
     use ProcessableAssets;
+    use HasStatus;
     
     public function getSearchResult() : SearchResult
     {
