@@ -19,39 +19,43 @@ return [
         'prefers_id_on' => ['media_id', 'logo_id', 'menu-three-key', 'avatar_id', 'avatar']
     ],
 
+    'assets' => array(
+        'collections' => array(
+            'core_backend' => array(
+                adminify_asset('/adminify/vendor/nucleo/css/nucleo.css'),
+                adminify_asset('/adminify/vendor/@fortawesome/fontawesome-free/css/all.min.css'),
+                adminify_asset('/adminify/back/css/argon.css'),
+                adminify_asset('/adminify/back/css/extensions.css'),
+                adminify_asset('/myuploads/routes.js'),
+                adminify_asset('/adminify/back/js/extensions.js'),
+                adminify_asset('/myuploads/traductions-'. lang() .'.js'),
+                adminify_asset('/adminify/back/js/extensions-call.js'),
+                adminify_asset('/adminify/back/js/argon.js'),
+                adminify_asset('/adminify/back/js/searchable.js'),
+            ),
+            'core_frontend' => array(
+                adminify_asset('/adminify/vendor/nucleo/css/nucleo.css'),
+                adminify_asset('/adminify/vendor/@fortawesome/fontawesome-free/css/all.min.css'),
+                adminify_asset('/adminify/front/css/argon.css'),
+                adminify_asset('/adminify/css/front.css'),
+                adminify_asset('/myuploads/routes.js'),
+                adminify_asset('adminify/front/js/app.js'),
+                adminify_asset('adminify/front/js/app.js'),
+                adminify_asset('/myuploads/traductions-'. lang() .'.js'),
+            ),
+            'backend' => array(
+                'core_backend',
+            ),
+            'frontend' => array(
+                'core_frontend'
+            )
+
+        ),
+        'autoload' => is_running_console() ? [] : (is_admin() ? array('backend') : array('frontend')),
+    ),
+
     'metas' => [
         // excludes models here
-        'excludes' => [
-            'Settings',
-            'ApiToken',
-            'Asset',
-            'CustomLink',
-            'FormConfirmations',
-            'FormEntries',
-            'FormField',
-            'FormTrace',
-            'Formtrace',
-            'Trace',
-            'Form_Trace',
-            'Form',
-            'Formidables',
-            'Formidable',
-            'GroupMeta',
-            'Mailable',
-            'Meta',
-            'MenuItem',
-            'Statistics',
-            'Formidable',
-            'Translation',
-            'Templates',
-            'Tpls',
-            'Traduction',
-            'Traductions',
-            'Media',
-            'Url',
-            'UserPreference',
-            'Statuses',
-        ],
         'excludesOn' => [
             'destroy',
             'store',

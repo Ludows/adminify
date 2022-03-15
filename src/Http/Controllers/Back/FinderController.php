@@ -10,28 +10,6 @@ use Ludows\Adminify\Libs\SitemapRender;
 
 class FinderController extends Controller
 {
-    public function contentTypes(Request $request) {
-
-       $models = adminify_get_classes_by_folders(['app:models', 'app:adminify:models']);
-
-       $excludes = get_site_key('metas.excludes');
-
-        foreach ($models as $key => $value) {
-            # code...
-            if(in_array($key, $excludes)) {
-                unset($models[$key]);
-            }
-
-        }
-
-       $a = [
-        'models' => $models,
-        'status' => 'OK',
-       ];
-
-       return response()->json($a);
-
-    }
     public function index(Request $request) {
 
         $resource = Str::title($request->type);

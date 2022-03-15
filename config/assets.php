@@ -9,6 +9,7 @@
 |---------------------------------------------------------------------------
 */
 
+
 return [
 
     // Configuration for the default group. Feel free to add more groups.
@@ -128,38 +129,7 @@ return [
 		 *
 		 * @var array
 		 */
-		'collections' => array(
-
-            'core_backend' => array(
-                url('/adminify/vendor/nucleo/css/nucleo.css'),
-                url('/adminify/vendor/@fortawesome/fontawesome-free/css/all.min.css'),
-                url('/adminify/back/css/argon.css'),
-                url('/adminify/back/css/extensions.css'),
-                url('/myuploads/routes.js'),
-                url('/adminify/back/js/extensions.js'),
-                url('/myuploads/traductions-'. lang() .'.js'),
-                url('/adminify/back/js/extensions-call.js'),
-                url('/adminify/back/js/argon.js'),
-                url('/adminify/back/js/searchable.js'),
-            ),
-            'core_frontend' => array(
-                url('/adminify/vendor/nucleo/css/nucleo.css'),
-                url('/adminify/vendor/@fortawesome/fontawesome-free/css/all.min.css'),
-                url('/adminify/front/css/argon.css'),
-                url('/adminify/css/front.css'),
-                url('/myuploads/routes.js'),
-                url('adminify/front/js/app.js'),
-                url('adminify/front/js/app.js'),
-                url('/myuploads/traductions-'. lang() .'.js'),
-            ),
-            'backend' => array(
-                'core_backend',
-            ),
-            'frontend' => array(
-                'core_frontend'
-            )
-
-		),
+		'collections' => get_site_key('assets.collections'),
 
 		/**
 		 * Preload assets.
@@ -168,7 +138,7 @@ return [
 		 *
 		 * @var array
 		 */
-		'autoload' => is_admin() ? array('backend') : array('frontend'),
+		'autoload' => get_site_key('assets.autoload'),
 
 	], // End of default group
 ];

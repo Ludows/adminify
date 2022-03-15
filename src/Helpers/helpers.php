@@ -70,6 +70,20 @@ if(! function_exists('is_running_console')) {
     }
 }
 
+if(! function_exists('adminify_asset')) {
+    function adminify_asset($path) {
+        $isRunning = is_running_console();
+        $basePathFromEnv = env('APP_URL');
+
+        if($isRunning) {
+            return $basePathFromEnv.$path;
+        }
+        else {
+            return asset($path);
+        }
+    }
+}
+
 if (! function_exists('adminify_get_classes')) {
     function adminify_get_classes($array, $context, $loadClass) {
         $r = [];
