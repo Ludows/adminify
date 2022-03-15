@@ -38,6 +38,10 @@ class PageController extends Controller
 
             $settings = cache('homepage');
 
+            if(method_exists($this, 'bootingView')) {
+                call_user_func_array(array($this, 'bootingView'), $request);
+            }
+
             if($settings == null) {
                 $settings = setting('homepage');
             }
@@ -61,13 +65,15 @@ class PageController extends Controller
                 // unset($user->roles);
             }
 
-            $export = array_merge(['enabled_features' => $enabled_features, 'seo' => $seo, 'type' => $type, 'model' => $page, 'user' => $user, 'lang' => lang()], ($this->addExports() ?? []));
+            $this->addViewsVars(['enabled_features' => $enabled_features, 'seo' => $seo, 'type' => $type, 'model' => $page, 'user' => $user, 'lang' => lang()]);
+            $defaults_view_vars = $this->getViewsVars();
 
             if(method_exists($this, 'beforePageRenderView')) {
-                call_user_func_array(array($this, 'beforePageRenderView'), $export);
+                call_user_func_array(array($this, 'beforePageRenderView'), $defaults_view_vars);
             }
 
-            return view("adminify::layouts.front.pages.index", ['seo' => $seo, 'type' => $type, 'model' => $page, 'user' => $user, 'lang' => lang(), 'export' => json_encode($export)]);
+
+            return view("adminify::layouts.front.pages.index",  $this->getViewsVars());
         }
 
         public function getPages($slug) {
@@ -86,13 +92,14 @@ class PageController extends Controller
                 // unset($user->roles);
             }
 
-            $export = array_merge(['enabled_features' => $enabled_features, 'seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => lang()], ($this->addExports() ?? []));
+            $this->addViewsVars(['enabled_features' => $enabled_features, 'seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => lang()]);
+            $defaults_view_vars = $this->getViewsVars();
 
             if(method_exists($this, 'beforePageRenderView')) {
-                call_user_func_array(array($this, 'beforePageRenderView'), $export);
+                call_user_func_array(array($this, 'beforePageRenderView'), $defaults_view_vars);
             }
 
-            return view("adminify::layouts.front.pages.index", ['enabled_features' => $enabled_features, 'seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => lang(), 'export' => json_encode($export)]);
+            return view("adminify::layouts.front.pages.index", $this->getViewsVars());
 
         }
 
@@ -105,7 +112,9 @@ class PageController extends Controller
             // set in session the rsults
             session(['results' => $result]);
 
-            return view("adminify::layouts.front.pages.index", ['results' => $result]);
+            $this->addViewsVar('results', $result);
+
+            return view("adminify::layouts.front.pages.index", $this->getViewsVars());
         }
 
         public function validateForms(Request $request) {

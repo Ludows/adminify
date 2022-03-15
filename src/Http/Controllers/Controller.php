@@ -19,6 +19,8 @@ class Controller extends BaseController
     public function __construct() {
         $this->admin_css = [];
         $this->admin_js = [];
+        $this->export = [];
+        $this->viewVars = [];
     }
 
     public function addJS($mixed) {
@@ -105,8 +107,24 @@ class Controller extends BaseController
 
         return $f;
     }
-    public function addExports() {
-        return [];
+    public function getViewsVars() {
+        return $this->viewVars;
+    }
+    public function addViewsVars($array) {
+        foreach ($array as $arrayKey => $arrayValue) {
+            # code...
+            $this->addViewsVar($arrayKey, $arrayValue);
+        }
+        return $this;
+    }
+    public function addViewsVar($name = '', $value = '', $isExportable = true) {
+        if(empty($this->viewVars[$name])) {
+            $this->viewVars[$name] = $value;
+            if($isExportable) {
+                $this->export[$name] = $value; 
+            }
+        }
+        return $this;
     }
     private function appendMetas() {
         $request = request();
@@ -148,5 +166,6 @@ class Controller extends BaseController
                 'value' => implode(', ', $metaboxes)
             ]);
         }
+        return $this;
     }
 }
