@@ -24,6 +24,10 @@
         @laravelPWA
         {!! Assets::css() !!}
         @stack('css')
+
+        <script>
+            window.adminify_exports = @json($export);
+        </script>
     </head>
     <body class="{{ $class ?? '' }}">
         <main id="app">

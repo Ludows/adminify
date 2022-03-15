@@ -76,11 +76,15 @@ class PageController extends Controller
             return view("adminify::layouts.front.pages.index",  $this->getViewsVars());
         }
 
-        public function getPages($slug) {
+        public function getPages($slug, Request $request) {
 
             $reflection = new ReflectionClass($slug);
             $type = $reflection->getShortName();
             $enabled_features = get_site_key('enables_features');
+
+            if(method_exists($this, 'bootingView')) {
+                call_user_func_array(array($this, 'bootingView'), $request);
+            }
 
             $seo = $this->handleSeo($slug);
 
