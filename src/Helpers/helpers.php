@@ -64,6 +64,12 @@ if(! function_exists('is_adminify')) {
     }
 }
 
+if(! function_exists('is_running_console')) {
+    function is_running_console() {
+        return app()->runningInConsole();
+    }
+}
+
 if (! function_exists('adminify_get_classes')) {
     function adminify_get_classes($array, $context, $loadClass) {
         $r = [];
