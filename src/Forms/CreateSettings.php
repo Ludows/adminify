@@ -18,6 +18,7 @@ class CreateSettings extends Form
         $search = $this->getStatePage('searchpage');
         $comments = $this->getSetting('no_comments');
         $searchpage_models_tags = $this->getSetting('searchpage_models_tags');
+        $theme = $this->getSetting('theme');
         $seo = $this->getSetting('no_seo');
         $enabled_features = get_site_key('enables_features');
 
@@ -85,6 +86,16 @@ class CreateSettings extends Form
             'empty_value' => __('admin.form.select_entity', ['entity' => 'searchpage_models_tags']),
             'choices' => array_keys( get_site_key('searchable') ),
             'selected' => !empty($searchpage_models_tags) ? $searchpage_models_tags['selected'] : '',
+            'label' => __('admin.form.searchpage_models_tags'),
+            'select2options' => [
+                'multiple' => false,
+                'width' => '100%'
+            ]
+        ])
+        ->add('theme', 'select2', [
+            'empty_value' => __('admin.form.select_theme', ['entity' => 'theme']),
+            'choices' => adminify_get_classes_by_folder('app:resources:themes'),
+            'selected' => $theme,
             'label' => __('admin.form.searchpage_models_tags'),
             'select2options' => [
                 'multiple' => false,
