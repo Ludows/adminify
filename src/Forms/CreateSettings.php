@@ -96,7 +96,7 @@ class CreateSettings extends Form
             'empty_value' => __('admin.form.select_theme', ['entity' => 'theme']),
             'choices' => adminify_get_classes_by_folder('app:resources:themes'),
             'selected' => $theme,
-            'label' => __('admin.form.searchpage_models_tags'),
+            'label' => __('admin.form.select_theme'),
             'select2options' => [
                 'multiple' => false,
                 'width' => '100%'
