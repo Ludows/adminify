@@ -11,6 +11,7 @@ use Ludows\Adminify\Commands\GenerateFeeds;
 use Ludows\Adminify\Commands\CreateUser;
 use Ludows\Adminify\Commands\CreateModel;
 use Ludows\Adminify\Commands\CreateController;
+use Ludows\Adminify\Commands\CreateApiController;
 use Ludows\Adminify\Commands\CreateRepository;
 use Ludows\Adminify\Commands\DoInstallEnv;
 use Ludows\Adminify\Commands\CreateInterfacable;
@@ -308,6 +309,7 @@ class AdminifyServiceProvider extends ServiceProvider {
             CreateTable::class,
             CreateRepository::class,
             CreateController::class,
+            CreateApiController::class,
             CreateCrud::class,
             DoInstallEnv::class,
             CreateModel::class,
