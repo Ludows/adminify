@@ -503,6 +503,18 @@ if(! function_exists('user')) {
     }
 }
 
+if(! function_exists('theme')) {
+    function theme() {
+        return setting('theme');
+    }
+}
+
+if(! function_exists('theme_path')) {
+    function theme_path() {
+        return app_path('theme');
+    }
+}
+
 if(! function_exists('get_site_key')) {
     function get_site_key($key = '') {
         return config('site-settings.'.$key);
