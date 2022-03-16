@@ -166,7 +166,7 @@ class CreateSettings extends Form
             foreach ($dirs as $dir) {
                 # code...
                 $dirName = basename($dir);
-                $results[$dir] = $dir;
+                $results[$dirName] = $dirName;
             }
        }
        return $results;

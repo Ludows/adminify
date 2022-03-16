@@ -73,7 +73,7 @@ class PageController extends Controller
             }
 
 
-            return view("adminify::layouts.front.pages.index",  $this->getViewsVars());
+            return view("theme::". $request->theme .".index",  $this->getViewsVars());
         }
 
         public function getPages($slug, Request $request) {
@@ -103,7 +103,8 @@ class PageController extends Controller
                 call_user_func_array(array($this, 'beforePageRenderView'), $defaults_view_vars);
             }
 
-            return view("adminify::layouts.front.pages.index", $this->getViewsVars());
+
+            return view("theme::". $request->theme .".index", $this->getViewsVars());
 
         }
 

@@ -8,6 +8,7 @@
 | https://github.com/Stolz/Assets/blob/master/API.md#assets
 |---------------------------------------------------------------------------
 */
+$siteSettings = include(config_path('site-settings.php'));
 
 
 return [
@@ -129,7 +130,7 @@ return [
 		 *
 		 * @var array
 		 */
-		'collections' => get_site_key('assets.collections'),
+		'collections' => $siteSettings['assets']['collections'],
 
 		/**
 		 * Preload assets.
@@ -138,7 +139,8 @@ return [
 		 *
 		 * @var array
 		 */
-		'autoload' => get_site_key('assets.autoload'),
+		'autoload' => $siteSettings['assets']['autoload'],
+
 
 	], // End of default group
 ];

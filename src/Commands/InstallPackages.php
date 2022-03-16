@@ -44,7 +44,8 @@ class InstallPackages extends Command
             'adminify:install:helpers', 
             'adminify:install:libs', 
             'adminify:install:traits', 
-            'adminify:install:view'
+            'adminify:install:view',
+            'adminify:install:theme_structure'
         ];
         $this->excludesFiles = [
             'ClassicMail.php',

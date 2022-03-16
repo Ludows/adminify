@@ -108,6 +108,7 @@ class Controller extends BaseController
         return $f;
     }
     public function getViewsVars() {
+        $this->viewVars['export'] = json_encode($this->export);
         return $this->viewVars;
     }
     public function addViewsVars($array) {
@@ -121,7 +122,7 @@ class Controller extends BaseController
         if(empty($this->viewVars[$name])) {
             $this->viewVars[$name] = $value;
             if($isExportable) {
-                $this->export[$name] = $value; 
+                $this->export[$name] = $value;
             }
         }
         return $this;

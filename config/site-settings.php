@@ -7,11 +7,11 @@ return [
     'default_role_on_registration' => 'subscriber',
 
     'custom_views_paths' => [
-        'theme' => theme_path()
+        'theme' => resource_path('theme')
     ],
 
     'themes' => [
-        'root_path' => app_path('theme')
+        'root_path' => resource_path('theme')
     ],
 
     // you can your named config searchable.

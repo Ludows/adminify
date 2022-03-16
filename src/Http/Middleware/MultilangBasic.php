@@ -25,8 +25,6 @@ class MultilangBasic
         $routeName = $request->route()->getName();
         $v = view();
 
-        $blogpage = setting('blogpage');
-
         $checkedKeys = [
             'update',
             'edit',
@@ -85,6 +83,10 @@ class MultilangBasic
 
             // get the current theme
             $theme = theme();
+
+            if(empty($theme)) {
+                throw new \Exception("Theme mus be set in administration", $theme);
+            }
 
             //dd($topbarPref);
             if(!empty($topbarPref)) {

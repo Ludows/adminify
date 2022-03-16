@@ -43,30 +43,37 @@ class CreateTheme extends Command
     public function handle()
     {
         $theme_root_path = theme_path();
-        $package_vendor_path = vendor_path('/ludows/src/Theme_Structure');
+        $package_vendor_path = vendor_path('/ludows/adminify/src/Theme_Structure');
 
         $theme =  $this->formatArgument( $this->argument('theme'), 'theme=', '');
 
-        if(!file_exists($theme_root_path)) {
-            File::makeDirectory($theme_root_path);
+        $a = $this->makeDirectory($theme_root_path);
 
+        // if(!$a) {
             $this->info('Checking folder theme for '.$theme);
 
             $theme_folder = $theme_root_path.DIRECTORY_SEPARATOR.$theme;
 
-            if(!file_exists($theme_folder)) {
-               
-                File::copyDirectory($package_vendor_path, $theme_folder);
-                // File::copy( $task , $copyTask);
-            }
-            else {
-                $this->info('theme named '. $theme .' folder exist!');
-            }
+            $b = $this->makeDirectory($theme_folder);
 
+            // if(!$b) {
+                $this->info('Copy basic structure theme for '.$theme);
+                File::copyDirectory($package_vendor_path, $theme_folder);
+            // }
+        // }
+
+
+
+    }
+    public function makeDirectory($path) {
+        $alreadyExist = false;
+        if(!file_exists($path)) {
+            File::makeDirectory($path);
         }
         else {
-            $this->info('theme folder exist!');
+            $this->info($path.' exist!');
+            $alreadyExist = true;
         }
-
+        return $alreadyExist;
     }
 }

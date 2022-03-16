@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Favicon -->
-        <link href="{{ asset() }}/favicon.png" rel="icon" type="image/png">
+        <link href="{{ asset('') }}/favicon.png" rel="icon" type="image/png">
         {!! SEO::generate() !!}
 
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -14,7 +14,7 @@
         @stack('css')
 
         <script>
-            window.adminify_exports = @json($export);
+            window.adminify_exports = {!! $export !!};
         </script>
     </head>
     <body class="{{ $class ?? '' }}">
@@ -24,9 +24,9 @@
                 @if($topbarShow)
                     {!! toolbar() !!}
                 @endif
-                @include('theme::'. $theme .'.header')
+                @include('theme::'. $theme .'.layouts.partials.header')
                 @yield('content')
-                @include('theme::'. $theme .'.footer')
+                @include('theme::'. $theme .'.layouts.partials.footer')
             </div>
         </main>
 
