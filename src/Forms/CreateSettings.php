@@ -8,6 +8,8 @@ use Kris\LaravelFormBuilder\Field;
 use App\Adminify\Models\Page;
 use App\Adminify\Models\Settings;
 
+use File;
+
 class CreateSettings extends Form
 {
     public function buildForm()
@@ -94,7 +96,7 @@ class CreateSettings extends Form
         ])
         ->add('theme', 'select2', [
             'empty_value' => __('admin.form.select_theme', ['entity' => 'theme']),
-            'choices' => adminify_get_classes_by_folder('app:resources:themes'),
+            'choices' => $this->formatThemesChoices(),
             'selected' => $theme,
             'label' => __('admin.form.select_theme'),
             'select2options' => [
@@ -156,5 +158,17 @@ class CreateSettings extends Form
         $mediaModel = app('App\Adminify\Models\Media');
 
         return $mediaModel->find($id);
+    }
+    public function formatThemesChoices() {
+       $dirs = File::directories(theme_path());
+       $results = [];
+
+       foreach ($dirs as $dir) {
+           # code...
+           $dirName = basename($dir);
+           $results[$dir] = $dir;
+       }
+
+       return $results;
     }
 }
