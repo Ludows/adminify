@@ -160,15 +160,15 @@ class CreateSettings extends Form
         return $mediaModel->find($id);
     }
     public function formatThemesChoices() {
-       $dirs = File::directories(theme_path());
        $results = [];
-
-       foreach ($dirs as $dir) {
-           # code...
-           $dirName = basename($dir);
-           $results[$dir] = $dir;
+       if(file_exists(theme_path())) {
+            $dirs = File::directories(theme_path());
+            foreach ($dirs as $dir) {
+                # code...
+                $dirName = basename($dir);
+                $results[$dir] = $dir;
+            }
        }
-
        return $results;
     }
 }
