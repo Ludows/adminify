@@ -43,6 +43,7 @@ class CreateTheme extends Command
     public function handle()
     {
         $theme_root_path = theme_path();
+        $package_vendor_path = vendor_path('/ludows/src/Theme_Structure');
 
         $theme =  $this->formatArgument( $this->argument('theme'), 'theme=', '');
 
@@ -55,7 +56,7 @@ class CreateTheme extends Command
 
             if(!file_exists($theme_folder)) {
                
-                File::makeDirectory( $theme_folder );
+                File::copyDirectory($package_vendor_path, $theme_folder);
                 // File::copy( $task , $copyTask);
             }
             else {
@@ -66,7 +67,6 @@ class CreateTheme extends Command
         else {
             $this->info('theme folder exist!');
         }
-
 
     }
 }

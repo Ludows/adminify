@@ -509,9 +509,15 @@ if(! function_exists('theme')) {
     }
 }
 
+if(! function_exists('vendor_path')) {
+    function vendor_path($path = '') {
+        return base_path('vendor'.$path);
+    }
+}
+
 if(! function_exists('theme_path')) {
-    function theme_path() {
-        return app_path('theme');
+    function theme_path($path = '') {
+        return app_path('theme'.$path);
     }
 }
 
