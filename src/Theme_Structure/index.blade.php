@@ -1,24 +1,24 @@
-@extends('adminify::layouts.front.app')
+@extends('theme::'. $theme .'.layouts.app')
 
 @section('content')
     @if ($isHome)
-        @include('adminify::layouts.front.pages.homepage')
+        @include('theme::'. $theme .'.homepage')
     @endif
 
     @if ($isBlogPage)
-        @include('adminify::layouts.front.pages.blogpage')
+        @include('theme::'. $theme .'.blogpage')
     @endif
 
     @if ($isSingle)
-        @includeFirst(['adminify::layouts.front.pages.single-'.$model->id, 'adminify::layouts.front.pages.single'])
+        @includeFirst(['theme::'. $theme .'.single-'.$model->id, 'theme::'. $theme .'.single'])
     @endif
 
     @if ($isPage)
-        @includeFirst(['adminify::layouts.front.pages.page-'.$model->id, 'adminify::layouts.front.pages.page'])
+        @includeFirst(['theme::'. $theme .'.page-'.$model->id, 'theme::'. $theme .'.page'])
     @endif
 
     @if ($isSearch)
-        @include('adminify::layouts.front.pages.searchpage')
+        @include('theme::'. $theme .'.searchpage')
     @endif
 
     @if($enabled_features['post'] && $isSingle)

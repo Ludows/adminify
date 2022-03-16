@@ -80,6 +80,16 @@ class MultilangBasic
                 $posts = new \Ludows\Adminify\Models\Post();
                 $posts = $posts->all();
             }
+            $topbarPref = get_user_preference('topbar');
+            $topbarShow = false;
+
+            // get the current theme
+            $theme = theme();
+
+            //dd($topbarPref);
+            if(!empty($topbarPref)) {
+                $topbarShow = (bool)$topbarPref;
+            }
             // add specifics globals vars
             $base_parameters['isHome'] = is_homepage($model);
             $base_parameters['isSingle'] = is_single($model);
@@ -87,6 +97,8 @@ class MultilangBasic
             $base_parameters['isPage'] = is_page($model);
             $base_parameters['isSearch'] = is_search($model);
             $base_parameters['posts'] = $posts;
+            $base_parameters['topbarShow'] = $topbarShow;
+            $base_parameters['theme'] = $theme;
         }
 
 

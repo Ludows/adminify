@@ -48,8 +48,7 @@ return [
             ),
             'frontend' => array(
                 'core_frontend'
-            )
-
+            ),
         ),
         'autoload' => is_running_console() ? [] : (is_admin() ? array('backend') : array('frontend')),
     ),
