@@ -95,10 +95,15 @@ class AdminifyServiceProvider extends ServiceProvider {
     public function loadCustomViewsPaths() {
         $paths = get_site_key('custom_views_paths');
 
-        foreach ($paths as $key => $value) {
-            # code...
-            $this->loadViewsFrom($value, $key);
+        $isEmpty = empty($paths);
+
+        if(!$isEmpty) {
+            foreach ($paths as $key => $value) {
+                # code...
+                $this->loadViewsFrom($value, $key);
+            }
         }
+        
     }
 
     /**
