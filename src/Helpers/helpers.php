@@ -517,7 +517,7 @@ if(! function_exists('vendor_path')) {
 
 if(! function_exists('theme_path')) {
     function theme_path($path = '') {
-        return app_path('theme'.$path);
+        return get_site_key('themes.root_path').$path;
     }
 }
 

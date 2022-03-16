@@ -6,6 +6,14 @@ return [
 
     'default_role_on_registration' => 'subscriber',
 
+    'custom_views_paths' => [
+        'theme' => theme_path()
+    ],
+
+    'themes' => [
+        'root_path' => app_path('theme')
+    ],
+
     // you can your named config searchable.
     // You must extend the classic Model Adminify to have this feature.
     'searchable' => [

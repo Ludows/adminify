@@ -18,6 +18,7 @@ use Ludows\Adminify\Commands\CreateInterfacable;
 use Ludows\Adminify\Commands\CreateInterfacableBlock;
 use Ludows\Adminify\Commands\GenerateAdminifyContainer;
 use Ludows\Adminify\Commands\CreateMetas;
+use Ludows\Adminify\Commands\CreateTheme;
 
 use Ludows\Adminify\Commands\CreateCrud;
 use Ludows\Adminify\Commands\CreateTable;
@@ -69,6 +70,7 @@ class AdminifyServiceProvider extends ServiceProvider {
             $packages = require_once(__DIR__.'/../config/packagelist.php');
             $this->bootableDependencies($packages, $kernel);
         }
+        
 
 
 
@@ -82,9 +84,21 @@ class AdminifyServiceProvider extends ServiceProvider {
             __DIR__.'/../config/site-settings.php', 'adminify'
         );
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'adminify');
+
+        $this->loadCustomViewsPaths();
+
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'adminify');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
+    }
+
+    public function loadCustomViewsPaths() {
+        $paths = get_site_key('custom_views_paths');
+
+        foreach ($paths as $key => $value) {
+            # code...
+            $this->loadViewsFrom($value, $key);
+        }
     }
 
     /**
@@ -307,6 +321,7 @@ class AdminifyServiceProvider extends ServiceProvider {
             GenerateAdminifyContainer::class,
             CreateForms::class,
             CreateTable::class,
+            CreateTheme::class,
             CreateRepository::class,
             CreateController::class,
             CreateApiController::class,
