@@ -40,12 +40,7 @@ class BaseRepository
     public $filters_on = [];
 
     // just add your ignores process data as global..
-    public $ignores = [
-        '_css',
-        '_js',
-        '_toolbars',
-        '_settings_blocks'
-    ];
+    public $ignores = [];
 
     /**
      * Constructor
@@ -183,15 +178,12 @@ class BaseRepository
             call_user_func_array(array($this, 'afterRun'), array($model, $formValues,  $type));
         }
 
-        if($request->loadEditor && get_site_key('editor.handleAssetsGeneration') == 'after' && in_array( singular(class_basename($model)), $request->bindedEditorKeys)) {
-            $this->handleAssetsGeneration($model, 'after');
-            $this->createEditorSaveFile($model);
-        }
-
         //prevent inifinite loop
         if(get_class($model) != "App\Adminify\Models\Meta") {
             $this->handleMetas();
         }
+
+        $model->remember();
 
         return $model;
     }
