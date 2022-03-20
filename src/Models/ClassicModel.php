@@ -88,7 +88,7 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     {
         $tableName = $this->getTable();
 
-        return $tableName.'_';
+        return  plural($tableName).'_';
     }
 
     protected function cacheForValue()
