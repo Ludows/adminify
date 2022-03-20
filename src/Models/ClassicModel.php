@@ -50,7 +50,7 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
 
     public $cacheFor = 3600;
 
-    public $cacheDriver = 'files';
+    public $cacheDriver = 'file';
     
     public function getSearchResult() : SearchResult
     {
@@ -63,5 +63,40 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
            $this->{$this->searchable_label},
            $url
         );
+    }
+
+    /**
+     * The tags for the query cache. Can be useful
+     * if flushing cache for specific tags only.
+     *
+     * @return null|array
+     */
+    protected function cacheTagsValue()
+    {
+        $tableName = $this->getTable();
+
+        return [ plural($tableName) ];
+    }
+
+    /**
+     * A cache prefix string that will be prefixed
+     * on each cache key generation.
+     *
+     * @return string
+     */
+    protected function cachePrefixValue()
+    {
+        $tableName = $this->getTable();
+
+        return $tableName.'_';
+    }
+
+    protected function cacheForValue()
+    {
+        if (is_admin()) {
+            return null;
+        }
+        
+        return $this->cacheFor;
     }
 }
