@@ -183,8 +183,6 @@ class BaseRepository
             $this->handleMetas();
         }
 
-        $model->remember();
-
         return $model;
     }
     public function getSlugProcess($model, $formValues, $type) {

@@ -19,8 +19,8 @@ use Ludows\Adminify\Traits\PathableMedia;
 use Ludows\Adminify\Traits\ProcessableAssets;
 use Ludows\Adminify\Traits\HasMeta;
 use Ludows\Adminify\Traits\HasStatus;
-use Ludows\Adminify\Traits\SimpleCacheModel;
 
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 use Spatie\Feed\Feedable;
 
@@ -46,7 +46,11 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     use SavableTranslations;
     use ProcessableAssets;
     use HasStatus;
-    use SimpleCacheModel;
+    use QueryCacheable;
+
+    public $cacheFor = 3600;
+
+    public $cacheDriver = 'files';
     
     public function getSearchResult() : SearchResult
     {

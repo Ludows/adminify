@@ -85,7 +85,7 @@ class MultilangBasic
             $theme = theme();
 
             if(empty($theme)) {
-                throw new \Exception("Theme mus be set in administration", $theme);
+                throw new \Exception("Theme must be set in administration", $theme);
             }
 
             //dd($topbarPref);

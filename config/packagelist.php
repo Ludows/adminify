@@ -392,4 +392,16 @@ return array(
             'config' => null,
             'afterPublish' => [],
         ),
+        (object) array(
+            'beforePublish' => [],
+            'name' => 'rennokki/laravel-eloquent-query-cache',
+            'publish' => null,
+            'autoload' => (object) [
+                'providers' => [],
+                'middlewares' => [],
+                'aliases' => []
+            ],
+            'config' => null,
+            'afterPublish' => [],
+        ),
     );
