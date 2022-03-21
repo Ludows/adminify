@@ -17,7 +17,7 @@ class AdminableToolbar
     }
 
     public function getView() {
-        return 'adminify::layouts.front.toolbar.index';
+        return 'adminify::modules.toolbar';
     }
 
     private function callMethodOrClass($class, $arrayMap, $param) {

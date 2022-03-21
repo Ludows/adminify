@@ -47,4 +47,9 @@ class GroupMeta extends ClassicModel
 
     public function toFeedItem(): FeedItem {}
 
+    protected function cacheForValue()
+    {
+        return null;
+    }
+
 }

@@ -44,7 +44,7 @@ class MultilangBasic
 
 
         // making autoswitch back / front
-        $singular = Str::singular(is_admin() ? $routeNameSpl['0'] : 'slug');
+        $singular = singular(is_admin() ? $routeNameSpl['1'] : 'slug');
         $model = \Route::current()->parameter($singular);
 
         $named = join('.',array_diff($routeNameSpl, ['index', 'edit', 'create']));

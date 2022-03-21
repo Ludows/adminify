@@ -137,6 +137,7 @@ class Controller extends BaseController
         $m = new GroupMeta();
         $m = $m->where('views_name', 'LIKE', '%'. $currentRoute .'%');
         $m = $m->get();
+        // dd($m);
         $metaboxes = [];
 
 
@@ -145,11 +146,13 @@ class Controller extends BaseController
             foreach($m as $meta) {
                 $showGroup = true;
                 $theClass = adminify_get_class($meta->named_class, ['app:metas', 'app:adminify:metas'], false);
-                $m = app()->make($theClass);
+                $metaClass = app()->make($theClass);
 
-                if((bool) $m->allow_filtering) {
-                    $showGroup = $m->showGroup( !empty($request->model) ? $request->model : [] );
+                if((bool) $meta->allow_filtering) {
+                    $showGroup = $metaClass->showGroup( !empty($request->model) ? $request->model : [] );
                 }
+
+                // dd($showGroup, (bool) $meta->allow_filtering);
 
                 if($showGroup) {
                     $metaboxes[] = $meta->uuid;
@@ -170,13 +173,18 @@ class Controller extends BaseController
                         ]
                     ]);
                 }
-                
+
             }
 
-            // we retrieve all metaboxes attached to page. now link in the form for register in db
-            $currentForm->add('_metaboxes', 'hidden', [
-                'value' => implode(', ', $metaboxes)
-            ]);
+            //dd($metaboxes);
+
+            if(!empty($metaboxes)) {
+                // we retrieve all metaboxes attached to page. now link in the form for register in db
+                $currentForm->add('_metaboxes', 'hidden', [
+                    'value' => implode(', ', $metaboxes)
+                ]);
+            }
+
         }
         return $this;
     }
