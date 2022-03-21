@@ -147,7 +147,7 @@ class Controller extends BaseController
                 $theClass = adminify_get_class($meta->named_class, ['app:metas', 'app:adminify:metas'], false);
                 $m = app()->make($theClass);
 
-                if($m->allow_filtering) {
+                if((bool) $m->allow_filtering) {
                     $showGroup = $m->showGroup( !empty($request->model) ? $request->model : [] );
                 }
 

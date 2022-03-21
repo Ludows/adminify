@@ -20,6 +20,7 @@ class GroupMeta extends ClassicModel
         'slug',
         'named_class',
         'views_name',
+        'allow_filtering',
         'uuid',
         'user_id'
     ];
