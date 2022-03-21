@@ -143,23 +143,34 @@ class Controller extends BaseController
         if($m->count() > 0) {
             // we have group to append to the form.
             foreach($m as $meta) {
-                $metaboxes[] = $meta->uuid;
-                $currentForm->add('_'.$meta->uuid, 'collection', [
-                    'type' => 'form',
-                    'prototype' => true,
-                    'label_show' => true,
-                    'label' => $meta->title,
-                    'prefer_input' => true,
-                    'model' => !empty($request->model) ? $request->model : [],
-                    'wrapper' => [
-                        'id' => $meta->uuid,
-                        'class' => 'form-group js-metabox-show'
-                    ],
-                    'options' => [    // these are options for a single type
-                        'class' => adminify_get_class($meta->named_class, ['app:metas', 'app:adminify:metas'], false),
-                        'label' => false,
-                    ]
-                ]);
+                $showGroup = true;
+                $theClass = adminify_get_class($meta->named_class, ['app:metas', 'app:adminify:metas'], false);
+                $m = app()->make($theClass);
+
+                if($m->allow_filtering) {
+                    $showGroup = $m->showGroup( !empty($request->model) ? $request->model : [] );
+                }
+
+                if($showGroup) {
+                    $metaboxes[] = $meta->uuid;
+                    $currentForm->add('_'.$meta->uuid, 'collection', [
+                        'type' => 'form',
+                        'prototype' => true,
+                        'label_show' => true,
+                        'label' => $meta->title,
+                        'prefer_input' => true,
+                        'model' => !empty($request->model) ? $request->model : [],
+                        'wrapper' => [
+                            'id' => $meta->uuid,
+                            'class' => 'form-group js-metabox-show'
+                        ],
+                        'options' => [    // these are options for a single type
+                            'class' => $theClass,
+                            'label' => false,
+                        ]
+                    ]);
+                }
+                
             }
 
             // we retrieve all metaboxes attached to page. now link in the form for register in db
