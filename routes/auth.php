@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 $c = config('site-settings');
 
-Route::middleware(['web', 'multilang.basic'])->group(['as' => 'auth.'], function () use ($c) {
+Route::middleware(['web', 'multilang.basic'])->group(function () use ($c) {
     // Authentication Routes...
     Route::get('login', 'Ludows\Adminify\Http\Controllers\Auth\LoginController@showLoginForm')->name('auth.login');
     Route::post('login', 'Ludows\Adminify\Http\Controllers\Auth\LoginController@login');
