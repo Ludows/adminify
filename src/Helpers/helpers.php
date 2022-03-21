@@ -739,8 +739,11 @@ if(! function_exists('lang')) {
 
         if(!$isRunningConsole) {
             $request = request();
+            // dd( $request, $lang);
             // we check to get lang from request. if not provided like commands. We take current locale as fallback.
-            $lang = $request->lang;
+            if(!empty($request->lang)) {
+                $lang = $request->lang;
+            }
         }
 
         return $lang;
