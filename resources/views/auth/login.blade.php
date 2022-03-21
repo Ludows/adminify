@@ -58,13 +58,13 @@
                 <div class="row mt-3">
                     <div class="col-6">
                         @if (Route::has('password.request'))
-                            <a href="{{ route('password.request') }}" class="text-light">
+                            <a href="{{ route('auth.password.request') }}" class="text-light">
                                 <small>{{ __('admin.forgot_password') }}</small>
                             </a>
                         @endif
                     </div>
                     <div class="col-6 text-right">
-                        <a href="{{ route('register') }}" class="text-light">
+                        <a href="{{ route('auth.register') }}" class="text-light">
                             <small>{{ __('admin.create_account') }}</small>
                         </a>
                     </div>
