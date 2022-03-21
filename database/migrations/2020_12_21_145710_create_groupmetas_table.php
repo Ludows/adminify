@@ -22,6 +22,7 @@ class CreateGroupMetasTable extends Migration
             $table->string('named_class', 255);
             $table->string('views_name', 255);
             $table->string('uuid', 255);
+            $table->boolean('allow_filtering')->default(false);
             $table->bigInteger('user_id')->unsigned();
         });
     }

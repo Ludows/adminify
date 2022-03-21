@@ -11,15 +11,6 @@ class CreateGroupMetas extends Form
 {
     public function buildForm()
     {
-        // // Add fields here...
-        // $hydratorCat = $this->hydrateSelect();
-        // $hydratorPages = $this->hydrateSelectPage();
-        // $m = $this->getModel();
-        // $r = $this->getRequest();
-        // $statuses = $this->getStatuses();
-        // $enabled_features = get_site_key('enables_features');
-        // $translations = $m->translations;
-
         $arrayOfRoutesNames = array();
         $selectedsRoutes = array();
         $routeCollection = Route::getRoutes()->get();
@@ -80,6 +71,14 @@ class CreateGroupMetas extends Form
                     'width' => '100%'
                 ]
             ]);
+        
+        $this->add('allow_filtering', 'checkbox', [
+            'label_show' => true,
+            'label' => __('admin.form.allow_filtering'),
+            'wrapper' => ['class' => 'custom-control custom-control-alternative custom-checkbox'],
+            'attr' => ['class' => 'custom-control-input'],
+            'label_attr' => ['class' => 'custom-control-label'],
+        ]);
 
         // $this->add('_conditions', 'collection', [
         //     'type' => 'form',
