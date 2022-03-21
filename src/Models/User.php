@@ -60,7 +60,7 @@ class User extends ClassicUser
 
     public function getPreference($type) {
         $pref = new UserPreference();
-        $model = $pref->type($type)->userId($this->id)->get()->first();
+        $model = $pref->dontCache()->type($type)->userId($this->id)->get()->first();
         return $model->data ?? null;
     }
 

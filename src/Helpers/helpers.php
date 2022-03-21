@@ -551,8 +551,6 @@ if(! function_exists('get_site_key')) {
 if(! function_exists('is_admin')) {
     function is_admin() {
         $request = request();
-
-
         if(empty($request->currentRouteSplitting)) {
             return $request->segment(1) == 'admin';
         }
@@ -657,7 +655,7 @@ if (! function_exists('is_shortcode')) {
 if (! function_exists('setting')) {
     function setting($string) {
         $m = new Settings();
-        $q = $m->where('type', $string)->first();
+        $q = $m->dontCache()->where('type', $string)->first();
         return $q != null ? $q->data : null;
     }
 }

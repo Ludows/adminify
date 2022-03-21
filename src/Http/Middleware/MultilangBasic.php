@@ -22,7 +22,9 @@ class MultilangBasic
 
         $config = config('site-settings');
         $supported_locales = $config['supported_locales'];
+        $route = $request->route();
         $routeName = $request->route()->getName();
+        $prefix = $route->getPrefix();
         $v = view();
 
         $checkedKeys = [
@@ -33,6 +35,13 @@ class MultilangBasic
 
         $currentLocale = App::currentLocale();
         $routeNameSpl = explode('.', $routeName);
+
+        if(is_admin() && !empty($prefix)) {
+            // dd('$prefix', $prefix);
+            array_unshift($routeNameSpl , 'admin');
+        }
+
+
 
         // making autoswitch back / front
         $singular = Str::singular(is_admin() ? $routeNameSpl['0'] : 'slug');
@@ -50,6 +59,7 @@ class MultilangBasic
             "siteConfig" => $config,
             "name" => $named,
             "isCrudPattern"=> false,
+            "prefixUrl" => $prefix,
             "singleParam"=> count($routeNameSpl) > 2 ? Str::singular($routeNameSpl[ count($routeNameSpl) - 2 ])  : Str::singular($routeNameSpl[0]),
             "currentRouteSplitting" => $routeNameSpl,
             "routeParameters" => $request->route()->parameters(),
@@ -76,7 +86,7 @@ class MultilangBasic
             // si c'est la page de blog. Autoappend des posts.
             if(is_blogpage($model)) {
                 $posts = new \Ludows\Adminify\Models\Post();
-                $posts = $posts->all();
+                $posts = $posts->dontCache()->all();
             }
             $topbarPref = get_user_preference('topbar');
             $topbarShow = false;
