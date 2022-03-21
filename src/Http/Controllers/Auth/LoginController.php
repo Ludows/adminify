@@ -49,7 +49,7 @@ class LoginController extends Controller
     {
         $form = $this->form(ShowLoginForm::class, [
             'method' => 'POST',
-            'url' => route('login')
+            'url' => route('auth.login')
         ]);
 
         return view('adminify::auth.login', ['form' => $form]);

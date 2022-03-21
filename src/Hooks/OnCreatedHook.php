@@ -13,5 +13,7 @@ class OnCreatedHook extends HookInterface {
 
             ]);
         }
+
+        Artisan::call('adminify:container', []);
     }
 }

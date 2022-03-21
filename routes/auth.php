@@ -8,14 +8,14 @@ $c = config('site-settings');
 Route::middleware(['web', 'multilang.basic'])->group(function () use ($c) {
     // Authentication Routes...
     Route::get('login', 'Ludows\Adminify\Http\Controllers\Auth\LoginController@showLoginForm')->name('auth.login');
-    Route::post('login', 'Ludows\Adminify\Http\Controllers\Auth\LoginController@login');
+    Route::post('login', 'Ludows\Adminify\Http\Controllers\Auth\LoginController@login')->name('auth.login.post');
     Route::post('logout', 'Ludows\Adminify\Http\Controllers\Auth\LoginController@logout')->name('auth.logout');
 
 
     if($c['enable_registration']) {
         // Registration Routes...
         Route::get('register', 'Ludows\Adminify\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('auth.register');
-        Route::post('register', 'Ludows\Adminify\Http\Controllers\Auth\RegisterController@register');
+        Route::post('register', 'Ludows\Adminify\Http\Controllers\Auth\RegisterController@register')->name('auth.register.post');
     }
 
     // Password Reset Routes...

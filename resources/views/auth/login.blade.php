@@ -64,9 +64,11 @@
                         @endif
                     </div>
                     <div class="col-6 text-right">
-                        <a href="{{ route('auth.register') }}" class="text-light">
-                            <small>{{ __('admin.create_account') }}</small>
-                        </a>
+                        @if (Route::has('auth.register'))
+                            <a href="{{ route('auth.register') }}" class="text-light">
+                                <small>{{ __('admin.create_account') }}</small>
+                            </a>
+                        @endif
                     </div>
                 </div>
             </div>

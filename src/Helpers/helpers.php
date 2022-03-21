@@ -71,6 +71,13 @@ if(! function_exists('is_auth_routes')) {
         if(!$isRunning) {
             $r = request();
             $split_route = $r->currentRouteSplitting;
+
+            if(empty($split_route)) {
+                // fallback when currentRouteSplitting is not defined
+                $routeName = $r->route()->getName();
+                $split_route = explode('.', $routeName);
+            }
+
             // currentRouteSplitting
             $ret = $split_route[0] === 'auth';
         }
@@ -737,7 +744,7 @@ if(! function_exists('lang')) {
             // we check to get lang from request. if not provided like commands. We take current locale as fallback.
             $lang = $request->lang;
         }
-        
+
         return $lang;
     }
 }
