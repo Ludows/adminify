@@ -3,15 +3,20 @@
 // Auth::routes();
 use Illuminate\Support\Facades\Route;
 
-Route::middleware(['web', 'multilang.basic'])->group( function () {
+$c = config('site-settings');
+
+Route::middleware(['web', 'multilang.basic'])->group(['as' => 'auth.'], function () use ($c) {
     // Authentication Routes...
     Route::get('login', 'Ludows\Adminify\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
     Route::post('login', 'Ludows\Adminify\Http\Controllers\Auth\LoginController@login');
     Route::post('logout', 'Ludows\Adminify\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
-    // Registration Routes...
-    Route::get('register', 'Ludows\Adminify\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
-    Route::post('register', 'Ludows\Adminify\Http\Controllers\Auth\RegisterController@register');
+
+    if($c['enable_registration']) {
+        // Registration Routes...
+        Route::get('register', 'Ludows\Adminify\Http\Controllers\Auth\RegisterController@showRegistrationForm')->name('register');
+        Route::post('register', 'Ludows\Adminify\Http\Controllers\Auth\RegisterController@register');
+    }
 
     // Password Reset Routes...
     Route::get('password/reset', 'Ludows\Adminify\Http\Controllers\Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');

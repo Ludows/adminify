@@ -71,7 +71,7 @@ class MultilangBasic
             // 'bindedEditorKeys' => $bindedEditorKeys
         ];
 
-        if(!is_admin()) {
+        if(!is_admin() && !is_auth_routes()) {
             $posts = null;
             // si c'est la page de blog. Autoappend des posts.
             if(is_blogpage($model)) {

@@ -64,6 +64,20 @@ if(! function_exists('is_adminify')) {
     }
 }
 
+if(! function_exists('is_auth_routes')) {
+    function is_auth_routes() {
+        $ret = false;
+        $isRunning = is_running_console();
+        if(!$isRunning) {
+            $r = request();
+            $split_route = $r->currentRouteSplitting;
+            // currentRouteSplitting
+            $ret = $split_route[0] === 'auth';
+        }
+        return $ret;
+    }
+}
+
 if(! function_exists('is_running_console')) {
     function is_running_console() {
         return app()->runningInConsole();

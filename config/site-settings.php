@@ -4,6 +4,7 @@ return [
     'multilang' => env('ENABLE_MULTILANG', 1), // this use Translatable. Please to verify your migration for correct working..
     'headless' => false, // turn off front routing if you want to separate your front or your back
 
+    'enable_registration' => false,
     'default_role_on_registration' => 'subscriber',
 
     'custom_views_paths' => [
@@ -79,7 +80,7 @@ return [
     'dynamic_forms' => [
         'default_form_template' => 'adminify::layouts.commons.forms.default',
         'show_form_when_validated' => true,
-        'skip_autosend' => true,
+        'skip_autosend' => false, // for tests
         'default_email_user' => 'theartist768@gmail.com', // if your want to overwrite the default user. Specify form with his slug
     ],
 
