@@ -81,7 +81,7 @@ class CreatePost extends Form
                     'btnClear' => null
                 ],
                 'form' => [
-                    'namespace' => 'App\Forms\CreateTag',
+                    'namespace' => 'Appp\Adminify\Forms\CreateTag',
                     'attributes' => [
                         'url' => route('tags.store'),
                         'method' => 'POST'
