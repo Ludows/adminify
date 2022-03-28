@@ -62,10 +62,6 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         $app = app();
 
-        if($app->runningInConsole()) {
-            $this->preventAssetsConfig();
-        }
-
         if(!$app->runningInConsole()) {
             $packages = require_once(__DIR__.'/../config/packagelist.php');
             $this->bootableDependencies($packages, $kernel);
@@ -180,19 +176,6 @@ class AdminifyServiceProvider extends ServiceProvider {
     public function provides() {
 
         return ['adminify'];
-    }
-
-
-
-    private function preventAssetsConfig() {
-        $configs = config('assets');
-        $keys = array_keys($configs);
-
-        foreach ($keys as $keyConfig) {
-            # code...
-            config('assets.'.$keyConfig.'.collections', []);
-            config('assets.'.$keyConfig.'.autoload', []);
-        }
     }
 
     private function registerPublishables() {
