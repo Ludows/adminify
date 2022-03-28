@@ -37,27 +37,19 @@ class DoInstallEnv extends Command
         $envFile = app()->environmentFilePath();
         $str = file_get_contents($envFile);
 
-        if (count($values) > 0) {
+        if (!empty($values) > 0) {
             foreach ($values as $envKey => $envValue) {
 
-                $str .= "\n"; // In case the searched variable is in the last line without \n
-                $keyPosition = strpos($str, "{$envKey}=");
-                $endOfLinePosition = strpos($str, "\n", $keyPosition);
-                $oldLine = substr($str, $keyPosition, $endOfLinePosition - $keyPosition);
+                $oldValue = strtok($str, "{$envKey}=");
 
-                // If key does not exist, add it
-                if (!$keyPosition || !$endOfLinePosition || !$oldLine) {
-                    $str .= "{$envKey}={$envValue}\n";
-                } else {
-                    $str = str_replace($oldLine, "{$envKey}={$envValue}", $str);
-                }
+                $str = str_replace("{$envKey}={$oldValue}", "{$envKey}={$envValue}\n", $str);
 
             }
+            
+            $fp = fopen($envFile, 'w');
+            fwrite($fp, $str);
+            fclose($fp);
         }
-
-        $str = substr($str, 0, -1);
-        if (!file_put_contents($envFile, $str)) return false;
-        return true;
 
     }
 
