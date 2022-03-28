@@ -14,6 +14,9 @@ class OnCreatedHook extends HookInterface {
             ]);
         }
 
-        Artisan::call('adminify:container', []);
+        $isEmptyContainer = empty( adminify_autoload() );
+        if( $isEmptyContainer ) {
+            Artisan::call('adminify:container', []);
+        }
     }
 }
