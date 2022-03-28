@@ -16,7 +16,7 @@ class CreateForms extends Form
                 'placeholder' => __('adminify.formbuilder.form')
             ]
         ]);
-        $this->add('form_fields', 'collection', [
+        $this->add('fields', 'collection', [
             'type' => 'form',
             'prefer_input' => true,
             'label_show' => false,

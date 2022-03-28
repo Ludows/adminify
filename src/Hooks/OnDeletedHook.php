@@ -9,6 +9,9 @@ class OnDeletedHook extends HookInterface {
     public function handle($hookName,$datas = null) {
         //data is the model passed
 
-        Artisan::call('adminify:container', []);
+        $isEmptyContainer = empty( adminify_autoload() );
+        if( $isEmptyContainer ) {
+            Artisan::call('adminify:container', []);
+        }
     }
 }
