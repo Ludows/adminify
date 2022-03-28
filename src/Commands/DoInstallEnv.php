@@ -75,6 +75,8 @@ class DoInstallEnv extends Command
 
         $keys['DB_DATABASE'] = $db_name;
 
+        $keys['MIX_ADMINIFY_THEME_ROOT_FOLDER'] = "resources/theme";
+
         $this->setEnvironmentValue($keys);
 
         return 0;
