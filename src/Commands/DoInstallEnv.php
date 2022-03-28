@@ -34,21 +34,14 @@ class DoInstallEnv extends Command
     public function setEnvironmentValue(array $values)
     {
 
-        $envFile = app()->environmentFilePath();
-        $str = file_get_contents($envFile);
-
         if (!empty($values) > 0) {
             foreach ($values as $envKey => $envValue) {
 
-                $oldValue = strtok($str, "{$envKey}=");
-
-                $str = str_replace("{$envKey}={$oldValue}", "{$envKey}={$envValue}\n", $str);
-
+                $this->call('env:set', [
+                    $envKey => $envValue
+                ]);
             }
             
-            $fp = fopen($envFile, 'w');
-            fwrite($fp, $str);
-            fclose($fp);
         }
 
     }
