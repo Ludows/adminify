@@ -38,6 +38,10 @@ function loopOverThemes(Mix) {
         console.log('run')
         let dirPath = path.join(process.cwd(), required_env);
 
+        if(!fs.existsSync(dirPath)) {
+            return false;
+        }
+
         let dirs = fs.readdirSync(dirPath);
 
         dirs.forEach((dir) => {

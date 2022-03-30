@@ -40,10 +40,10 @@ class InstallPackages extends Command
         $this->packages = require_once(__DIR__.'/../../config/packagelist.php');
         $this->tasks = require_once(__DIR__.'/../../config/coretasks.php');
         $this->excludesTasks = [
-            'adminify:install:facades', 
-            'adminify:install:helpers', 
-            'adminify:install:libs', 
-            'adminify:install:traits', 
+            'adminify:install:facades',
+            'adminify:install:helpers',
+            'adminify:install:libs',
+            'adminify:install:traits',
             'adminify:install:view',
             'adminify:install:theme_structure'
         ];
@@ -139,7 +139,7 @@ class InstallPackages extends Command
 
         //run seeds
         //exec("php artisan db:seed --class='Ludows\Adminify\Database\Seeders\DatabaseSeeder'");
-        if(in_array('*', $cleanedTasks)  || in_array('seed', $cleanedTasks)) {
+        if(in_array('*', $cleanedTasks) && !$firstInstall  || in_array('seed', $cleanedTasks) && !$firstInstall) {
             $this->info('Handle seeding database...');
             $this->call('db:seed', [
                 '--class' => 'Ludows\Adminify\Database\Seeders\DatabaseSeeder'
@@ -337,7 +337,7 @@ class InstallPackages extends Command
 
             $this->info('Files detected in '.$path);
 
-            
+
             foreach ($hasFiles as $fileObject) {
                 $typologie = $fileObject->getFilename();
 
@@ -350,7 +350,7 @@ class InstallPackages extends Command
                     ]);
                 }
             }
-           
+
         }
 
         if(!empty($hasDirs)) {

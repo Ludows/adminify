@@ -37,11 +37,13 @@ class DoInstallEnv extends Command
         if (!empty($values) > 0) {
             foreach ($values as $envKey => $envValue) {
 
+
                 $this->call('env:set', [
-                    $envKey => $envValue
+                    'key' => $envKey,
+                    'value' => $envValue
                 ]);
             }
-            
+
         }
 
     }
@@ -56,26 +58,28 @@ class DoInstallEnv extends Command
         $keys = [];
 
         $app_url = $this->ask(__('adminify.questions.app_url'));
-        
-        $keys['APP_URL'] = $app_url;
+
+        $keys['APP_URL'] = !empty($app_url) ? $app_url : '';
 
         $app_name = $this->ask(__('adminify.questions.app_name'));
-        
-        $keys['APP_NAME'] = $app_name;
+
+        $keys['APP_NAME'] = !empty($app_name) ? $app_name : '';
 
         $user_db = $this->ask(__('adminify.questions.user_db'));
-        
-        $keys['DB_USERNAME'] = $user_db;
+
+        $keys['DB_USERNAME'] = !empty($user_db) ? $user_db : '';
 
         $password_db = $this->ask(__('adminify.questions.password_db'));
 
-        $keys['DB_PASSWORD'] = $password_db;
+        $keys['DB_PASSWORD'] = !empty($password_db) ? $password_db : '';
 
         $db_name = $this->ask(__('adminify.questions.db_name'));
 
-        $keys['DB_DATABASE'] = $db_name;
+        $keys['DB_DATABASE'] = !empty($db_name) ? $db_name : '';
 
         $keys['MIX_ADMINIFY_THEME_ROOT_FOLDER'] = "resources/theme";
+
+        // dd($keys);
 
         $this->setEnvironmentValue($keys);
 
