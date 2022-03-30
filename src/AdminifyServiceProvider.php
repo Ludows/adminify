@@ -183,16 +183,12 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         if($app->runningInConsole()) {
             $this->publishes(array(
-                __DIR__.'/../resources/views/' => resource_path('views/vendor/adminify/'),
-            ), 'adminify-views');
-
-            // $this->publishes(array(
-            //     __DIR__.'/../resources/views/layouts/front' => resource_path('views/vendor/adminify/layouts/front'),
-            // ), 'adminify-views-front');
+                __DIR__.'/../config/site-settings.php' => config_path('site-settings.php'),
+            ), 'adminify-config');
 
             $this->publishes(array(
-                __DIR__.'/../resources/views/layouts/admin' => resource_path('views/vendor/adminify/layouts/admin'),
-            ), 'adminify-views-admin');
+                __DIR__.'/../resources/views/' => resource_path('views/vendor/adminify/'),
+            ), 'adminify-views');
 
             $this->publishes(array(
                 __DIR__.'/../database/views/' => database_path('migrations'),
