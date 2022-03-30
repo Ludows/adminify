@@ -96,7 +96,7 @@ class PageController extends Controller
                 // unset($user->roles);
             }
 
-            $this->addViewsVars(['enabled_features' => $enabled_features, 'seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => lang()]);
+            $this->addViewsVars(['enabled_features' => $enabled_features, 'seo' => $seo, 'type' => lowercase($type), 'model' => $slug, 'user' => $user, 'lang' => lang()]);
             $defaults_view_vars = $this->getViewsVars();
 
             if(method_exists($this, 'beforePageRenderView')) {

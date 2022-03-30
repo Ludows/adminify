@@ -14,7 +14,7 @@
     @endif
 
     @if ($isPage)
-        @includeFirst(['theme::'. $theme .'.page-'.$model->id, 'theme::'. $theme .'.page'])
+        @includeFirst(['theme::'. $theme .'.page-'.$model->id, 'theme::'. $theme .'.page-'.$type, 'theme::'. $theme .'.page'])
     @endif
 
     @if ($isSearch)
