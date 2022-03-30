@@ -3,7 +3,7 @@ use Illuminate\Support\Facades\Route;
 
 $c = config('site-settings.enables_features');
 
-Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrator|editor', 'admin.breadcrumb', 'admin.menu', 'check.permissions', 'admin.deletemedia', 'admin.fullmode', 'admin.seo'])->group( function () use ($c) {
+Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrator|editor|subscriber', 'admin.breadcrumb', 'admin.menu', 'check.permissions', 'admin.deletemedia', 'admin.fullmode', 'admin.seo'])->group( function () use ($c) {
 
     Route::get('/dashboard', 'App\Adminify\Http\Controllers\Back\HomeController@index')->name('home.dashboard');
 

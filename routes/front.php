@@ -5,7 +5,7 @@ $c = config('site-settings.restApi');
 $headless = config('site-settings.headless');
 
 
-if(isset($c) && request()->segment(1) != $c['prefix'] || isset($c) && $headless) {
+if(!empty($c) && request()->segment(1) != $c['prefix'] || !empty($c) && $headless) {
     Route::middleware('multilang.basic')->group(function ($router) {
         $router->get('/images/{path}', 'Ludows\Adminify\Http\Controllers\Front\ImageController@show')->name('image.transform');
         $router->get('/', 'Ludows\Adminify\Http\Controllers\Front\PageController@index')->name('pages.front.index');
