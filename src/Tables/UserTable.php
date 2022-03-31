@@ -24,9 +24,9 @@ class UserTable extends TableManager {
         return $this;
     }
     public function getDropdownManagerClass() {
-        return App\Adminify\Dropdowns\Users::class;
+        return \App\Adminify\Dropdowns\Users::class;
     }
     public function getModelClass() {
-        return App\Adminify\Models\User::class;
+        return \App\Adminify\Models\User::class;
     }
 }

@@ -10,9 +10,9 @@ class FormTracesTable extends TableManager {
         $this->showBtnCreate = false;
     }
     public function getDropdownManagerClass() {
-        return App\Adminify\Dropdowns\FormTraces::class;
+        return \App\Adminify\Dropdowns\FormTraces::class;
     }
     public function getModelClass() {
-        return App\Adminify\Models\FormTrace::class;
+        return \App\Adminify\Models\FormTrace::class;
     }
 }
