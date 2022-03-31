@@ -33,6 +33,19 @@ abstract class ContentTypeModel extends ClassicModel
     public function getParent($id) {
         return Page::find($id);
     }
+
+    public function getSitemapUrl() {
+
+        $url = '/';
+        $isHomepage = is_homepage($this);
+
+        if(!empty($isHomepage) && !$isHomepage) {
+            $url = $this->urlpath;
+        }
+
+        return $url;
+    }
+
     public function toFeedItem(): FeedItem
     {
         return FeedItem::create([

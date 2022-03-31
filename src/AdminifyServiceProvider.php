@@ -43,6 +43,8 @@ use League\Glide\ServerFactory;
 
 use League\Glide\Signatures\SignatureFactory;
 
+use Ludows\Adminify\Libs\SitemapRender;
+
 use Illuminate\Support\Facades\Storage;
 
 use File;
@@ -154,6 +156,10 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         $this->app->singleton('League\Glide\Signatures\Signature', function($app) {
             return SignatureFactory::create(env('GLIDE_SECURE_KEY'));
+        });
+
+        $this->app->singleton('Ludows\Adminify\Libs\SitemapRender', function($app) {
+            return new SitemapRender();
         });
 
         $this->app->bind('HookManager', function () {

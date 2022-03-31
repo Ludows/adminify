@@ -58,9 +58,22 @@ if (! function_exists('uuid')) {
     }
 }
 
+if(! function_exists('is_content_type_model')) {
+    function is_content_type_model($model) {
+        $r = new \ReflectionClass( $model );
+        return $r->isSubclassOf( new \ReflectionClass( 'Ludows\Adminify\Models\ContentTypeModel' ) );
+    }
+}
+
 if(! function_exists('is_adminify')) {
     function is_adminify() {
         return defined('IS_ADMINIFY') == true;
+    }
+}
+
+if(!function_exists('locales')) {
+    function locales() {
+        return config('site-settings.supported_locales');
     }
 }
 
@@ -300,13 +313,6 @@ if (! function_exists('plural')) {
 if (! function_exists('lowercase')) {
     function lowercase($name = '') {
         return Str::lower($name);
-    }
-}
-
-if(! function_exists('is_linkable_media_model') ) {
-    function is_linkable_media_model($class) {
-        // the relationship model
-        return method_exists($class, 'media');
     }
 }
 

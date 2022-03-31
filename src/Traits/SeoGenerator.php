@@ -38,7 +38,7 @@ namespace Ludows\Adminify\Traits;
         $description = $isSeo ? $mixed->seoWith('description', false) : null;
         $keywords = $isSeo ? $mixed->seoWith('keywords', false) : null;
         $robots = $isSeo ? $mixed->seoWith('robots', false) : null;
-        $langs = config('site-settings.supported_locales');
+        $langs = locales();
 
 
         if($multilang) {

@@ -57,6 +57,16 @@ class DoInstallEnv extends Command
     {
         $keys = [];
 
+        $app_multilang = $this->choice(
+            __('adminify.questions.multilang'),
+            [__('adminify.questions.yes'), __('adminify.questions.no')],
+            1,
+            null,
+            false
+        );
+
+        $keys['ENABLE_MULTILANG'] = !empty($app_multilang) ? $app_multilang : 0;
+
         $app_url = $this->ask(__('adminify.questions.app_url'));
 
         $keys['APP_URL'] = !empty($app_url) ? $app_url : '';

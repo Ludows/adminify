@@ -6,10 +6,9 @@ use Illuminate\Http\Request;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 use Ludows\Adminify\Libs\SitemapRender;
-
 class SitemapController extends Controller
 {
-    public function index($sitemapPart = null) {
+    public function index($sitemapPart = null, SitemapRender $sitemap) {
 
         $configSitemap = get_site_key('sitemap');
 
@@ -35,11 +34,10 @@ class SitemapController extends Controller
             'writeFile' => false,
             'modelName' => $sitemapPart ?? null,
             'models' => is_array($classCheck) ? $classCheck : [$sitemapPart => $classCheck],
-            'currentLang' => config('app.locale'),
-            'locales' => config('site-settings.supported_locales')
+            'currentLang' => lang(),
+            'locales' => locales()
         ];
 
-        $sitemap = new SitemapRender();
         $sitemap->setOptions($params);
 
         return $sitemap->render();
