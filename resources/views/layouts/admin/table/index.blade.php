@@ -1,7 +1,8 @@
 <script>
     window.listingConfig = {
         limit : {{ config('site-settings.tables.limit') }},
-        singular : '{{ Str::singular($name) }}',
+        singular : '{{ $name }}',
+        table : {{ $table }},
         maxItems : {{ $total }},
         isEnd : {{ $total <=  config('site-settings.tables.limit') ? var_export(true, true) : var_export(false, true) }}
     }

@@ -29,7 +29,7 @@ class ListingController extends Controller
 
         $columns = $m->getFillable();
         $schemaBuilder = $m->getConnection()->getSchemaBuilder();
-        $TableManager = $m->getTableListing();
+        $TableManager = adminify_get_class($datas['table'], ['app:tables', 'app:adminify:tables'], false);
         $translatableFields = [];
         if($is_multilang_model) {
             $translatableFields = $m->translatable;

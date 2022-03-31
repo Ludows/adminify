@@ -3,8 +3,7 @@
 namespace Ludows\Adminify\Libs;
 
 use Exception;
-use Ludows\Adminify\Libs\Dropdown;
-use Illuminate\Support\Str;
+
 class TableManager
 {
     public function __construct()
@@ -110,16 +109,14 @@ class TableManager
             $extraVars = [];
         }
 
-        if(!empty($this->areas[$position])) {
-            $this->setToArea($name, $position, view($viewName, $extraVars));
-        }
+        $this->setToArea($name, $position, view($viewName, $extraVars));
 
         return $this;
     }
 
     public function getTemplateByName($name) {
         $default_view = $this->getDefaultCellView();
-        
+
         $viewExist = $this->view->exists('adminify::layouts.admin.table.custom-cells.'.$name);
 
         if($viewExist) {
@@ -140,6 +137,12 @@ class TableManager
     }
 
     public function setToArea($name, $position, $view) {
+
+        $positions_availables = array_keys($this->areas);
+
+        if(!in_array($position, $positions_availables)) {
+            throw new Exception('Positions avalaibles in Table API renderer are : '.join(', ', $positions_availables));
+        }
 
         $this->areas[$position][$name] = $view;
 
@@ -288,12 +291,12 @@ class TableManager
         }
 
         $this->setResults($results);
-    
+
         return $this;
     }
 
     public function render() {
-        
+
         $modelClass = $this->getModelClass();
         $m = new $modelClass;
         $this->setModel($m);
@@ -303,7 +306,7 @@ class TableManager
 
         // create your columns
         $columns = $this->manageColumns();
-        
+
         $this->columns( $columns );
 
         if($this->showTitle) {
@@ -323,7 +326,7 @@ class TableManager
             ]);
         }
 
-        
+
 
         $this->handle();
 
@@ -331,6 +334,9 @@ class TableManager
         $cols = $this->getColumns();
         $areas = $this->getAreas();
         $count = null;
+
+        // dd('$cols', $cols,  $this->_columns);
+
 
         if(!empty($modelClass)) {
             $classModel = new $modelClass;
@@ -346,6 +352,7 @@ class TableManager
             'css' => $this->getCss(),
             'js' => $this->getJs(),
             'name' => titled( lowercase( class_basename($classModel) ) ),
+            'table' => titled( lowercase( class_basename($this) ) ),
             'areas' => $areas
         ];
 
@@ -353,12 +360,16 @@ class TableManager
 
         $addtoVars = $this->addVarsToRender();
 
+        // dd(array_merge($defaults, empty($addtoVars) ? [] : $addtoVars));
+
         $compiled = $this->view->make($tpl, array_merge($defaults, empty($addtoVars) ? [] : $addtoVars));
         return $compiled;
     }
     public function list() {
 
         $modelClass = $this->getModelClass();
+        $m = new $modelClass;
+        $this->setModel($m);
         // perform the query
         $this->query();
 
