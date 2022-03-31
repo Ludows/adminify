@@ -394,11 +394,18 @@ if(! function_exists('is_multilang') ) {
     }
 }
 
+if(! function_exists('model')) {
+    function model($model_base_name) {
+        $cls = adminify_get_class($model_base_name, ['app:adminify:models', 'app:models'], true);
+        return $cls;
+    }
+}
+
 if(! function_exists('is_trashable_model')  ) {
     function is_trashable_model($class) {
         // the relationship model
         $f = $class->getFillable();
-        return in_array('status_id', $f);
+        return in_array($class->status_key, $f);
     }
 }
 

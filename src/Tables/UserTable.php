@@ -3,66 +3,30 @@
 namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
-use App\Adminify\Models\User as UserModel;
-use App\Adminify\Dropdowns\Users as UserDropdownsManager;
 
 class UserTable extends TableManager {
-    public function getTemplateByName($name) {
-        $ret = null;
-        switch ($name) {
-            case 'avatar':
-                # code...
-                $ret = 'adminify::layouts.admin.table.custom-cells.users-avatar';
-                break;
-            case 'email':
-            case 'name':
-                # code...
-                $ret = 'adminify::layouts.admin.table.cell';
-                break;
-            case 'password':
-                # code...
-                $ret = 'adminify::layouts.admin.table.custom-cells.users-password';
-                break;
-        }
-
-        return $ret;
-    }
-    public function handle() {
-
-        $u = new UserModel();
-
-        $config = config('site-settings.tables');
-        $fillables = $u->getFillable();
-
+    public function query() {
         $datas = $this->getDatas();
+        $modelClass = $this->getModelClass();
+        $config = $this->getConfig();
+
+        $results = null;
 
         if(isset($datas['results'])) {
-            $users = $datas['results'];
+            $results = $datas['results'];
         }
         else {
-            $users = UserModel::whereRaw('LENGTH(email) > 0')->limit( $config['limit'] )->get();
+            $results = $modelClass::whereRaw('LENGTH(email) > 0')->limit( $config['limit'] )->get();
         }
 
-        // set columns
-        $this->columns( array_merge($fillables, ['actions']) );
-
-        //call the dropdown manager
-        $a = new UserDropdownsManager($users, []);
-
-        foreach ($users as $user) {
-            # code...
-            // pass current model
-            $table = $this->model($user);
-            foreach ($fillables as $fillable) {
-                # code...
-                $table->column($fillable, $this->getTemplateByName($fillable));
-            }
-            $table->column('actions', 'adminify::layouts.admin.table.custom-cells.dropdown', [
-                'dropdown' => $a,
-                'index' => $user->id
-            ]);
-        }
-
-
+        $this->setResults($results);
+    
+        return $this;
+    }
+    public function getDropdownManagerClass() {
+        return App\Adminify\Dropdowns\Users::class;
+    }
+    public function getModelClass() {
+        return App\Adminify\Models\User::class;
     }
 }
