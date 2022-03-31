@@ -11,4 +11,9 @@ class PageTable extends TableManager {
     public function getModelClass() {
         return App\Adminify\Models\Page::class;
     }
+    public function getDefaultsColumns() {
+        $a = parent::getDefaultsColumns();
+        $a = array_unshift($a, 'categories_id');
+        return $a;
+    }
 }

@@ -10,4 +10,10 @@ class PostTable extends TableManager {
     public function getModelClass() {
         return App\Adminify\Models\Post::class;
     }
+    public function getDefaultsColumns() {
+        $a = parent::getDefaultsColumns();
+        array_unshift($a, 'categories_id');
+        array_unshift($a, 'has_tags');
+        return $a;
+    }
 }
