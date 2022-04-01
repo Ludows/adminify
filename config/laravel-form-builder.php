@@ -77,7 +77,8 @@ return [
         'select2' => 'App\Adminify\Forms\Fields\Select2Type',
         'laraberg' => 'App\Adminify\Forms\Fields\LarabergType',
         'generatorPassword' => 'App\Adminify\Forms\Fields\GeneratorPasswordType',
-        'lfm' => 'App\Adminify\Forms\Fields\FileManagerType'
+        'lfm' => 'App\Adminify\Forms\Fields\FileManagerType',
+        "visual_editor" => 'App\Adminify\Forms\Fields\VisualEditorType'
     ],
 
 ];

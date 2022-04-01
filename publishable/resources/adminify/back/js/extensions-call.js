@@ -7,6 +7,7 @@ window.LarabergInitFunction = require('./extensions/larabergField').default;
 window.PasswordGeneratorInitFunction = require('./extensions/generatorPasswordField').default;
 window.lfmInitFunction = require('./extensions/lfmField').default;
 window.summernoteInitFunction = require('./extensions/summernoteField').default;
+window.VisualEditorInitFunction = require('./extensions/VisualEditorField').default;
 
 
 jQuery(document).ready(function($) {
@@ -25,5 +26,8 @@ jQuery(document).ready(function($) {
     }
     if(window.admin.summernoteFields.length > 0) {
         summernoteInitFunction(window.admin.summernoteFields);
+    }
+    if(window.admin.VisualEditorFields.length > 0) {
+        VisualEditorInitFunction(window.admin.VisualEditorFields);
     }
 })

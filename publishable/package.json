@@ -54,7 +54,8 @@
         "sweetalert2": "^10.15.5",
         "vue": "^2.5.17",
         "vue-template-compiler": "^2.6.10",
-        "jquery-validation": "^1.19.3"
+        "jquery-validation": "^1.19.3",
+        "@boxraiser/visual-editor" : "^0.0.19"
     },
     "dependencies": {
         "@swup/head-plugin": "^1.2.0",

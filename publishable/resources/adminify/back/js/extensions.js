@@ -1,7 +1,7 @@
 // Show packages.json
 window.jQuery = window.$ = require('jquery');
 
-require('jquery-validation');
+import { VisualEditor } from '@boxraiser/visual-editor'
 
 import {
     createLaravelLocalization
@@ -29,11 +29,14 @@ window.Swal = require('sweetalert2');
 
 window.Route = require('../../commons/js/Route').default;
 
+window.Editor = new VisualEditor();
+
 window.admin = {
     select2Fields : [],
     larabergFields : [],
     generatorPasswordFields: [],
     lfmFields : [],
     summernoteFields : [],
+    VisualEditorFields : []
 }
 
