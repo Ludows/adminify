@@ -352,7 +352,7 @@ class TableManager
             'css' => $this->getCss(),
             'js' => $this->getJs(),
             'name' => titled( lowercase( class_basename($classModel) ) ),
-            'table' => titled( lowercase( class_basename($this) ) ),
+            'table' => class_basename($this),
             'areas' => $areas
         ];
 

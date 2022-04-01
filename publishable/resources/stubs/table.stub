@@ -3,67 +3,12 @@
 namespace {{namespace}};
 
 use Ludows\Adminify\Libs\TableManager;
-use {{rootNamespace}}Models\{{model}} as {{model}}Model;
-use App\Dropdowns\{{model}}Dropdown as {{model}}DropdownManager;
 
 class {{class}} extends TableManager {
-    public function handle() {
-
-        $config = config('site-settings.tables');
-        $request = $this->getRequest();
-
-        $model = new {{model}}Model();
-        $fillables = $model->getFillable();
-
-        $datas = $this->getDatas();
-
-        if(isset($datas['results'])) {
-            ${{model}} = $datas['results'];
-        }
-        else {
-            if($request->useMultilang) {
-                ${{model}} = {{model}}Model::limit( $config['limit'] )->lang($request->lang)->get();
-            }
-            else {
-                ${{model}} = {{model}}Model::limit( $config['limit'] )->get();
-            }
-        }
-           
-        //call the dropdown manager
-        $a = new {{model}}DropdownManager(${{model}} ,[]);
-
-        // set columns
-        $default_merge_columns = ['actions'];
-
-        if($request->useMultilang && is_translatable_model($model)) {
-            array_unshift($default_merge_columns, 'need_translations');
-        }
-
-        $this->columns( array_merge($fillables, $default_merge_columns) );
-
-        foreach (${{model}} as $entity) {
-            # code...
-            // pass current model
-            $table = $this->model($entity);
-            foreach ($fillables as $fillable) {
-                # code...
-                // second parameter is a custom view if you want :)
-                $table->column($fillable, null);
-            }
-            
-            if($request->useMultilang && is_translatable_model($model)) {
-                $table->column('need_translations', 'adminify::layouts.admin.table.custom-cells.translated', [
-                    'routes' => get_missing_translations_routes('savetraductions.edit', 'savetraduction', $this->getModel()),
-                    'missing' => get_missing_langs($this->getModel()),
-                ]);
-            }
-
-            $table->column('actions', 'adminify::layouts.admin.table.custom-cells.dropdown', [
-                'dropdown' => $a,
-                'index' => $entity->id
-            ]);
-        }
-
-
+    public function getDropdownManagerClass() {
+        return \App\Dropdowns\{{model}}Dropdown::class;
+    }
+    public function getModelClass() {
+        return {{rootNamespace}}Models\{{model}}::class;
     }
 }

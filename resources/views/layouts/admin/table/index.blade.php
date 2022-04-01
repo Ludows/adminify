@@ -2,7 +2,7 @@
     window.listingConfig = {
         limit : {{ config('site-settings.tables.limit') }},
         singular : '{{ $name }}',
-        table : {{ $table }},
+        table : '{{ $table }}',
         maxItems : {{ $total }},
         isEnd : {{ $total <=  config('site-settings.tables.limit') ? var_export(true, true) : var_export(false, true) }}
     }
