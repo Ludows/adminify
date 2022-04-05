@@ -90,7 +90,7 @@ class CreatePage extends Form
                 ]
                 ]);
         }
-            $this->add('content', 'laraberg', [
+            $this->add('content', 'visual_editor', [
                 'label_show' => false,
                 'withBtnForTemplates' => true
             ])   

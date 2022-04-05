@@ -25,7 +25,7 @@ class VisualEditorType extends FormField {
 
     public function setDefaultsEditorAttributes() {
         return array(
-            'preview' => route('editor.preview'),
+            'preview' => '/preview',
         );
     }
 
@@ -34,6 +34,8 @@ class VisualEditorType extends FormField {
         $public_ = public_path();
 
         $folders = $this->registerComponentsFolder();
+
+        add_asset('default', config('app.url').DIRECTORY_SEPARATOR.'adminify'.DIRECTORY_SEPARATOR.'back'.DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.'editor.js');
 
         foreach ($folders as $folder) {
             # code...
@@ -75,7 +77,7 @@ class VisualEditorType extends FormField {
         $options = array_merge($options, $b);
 
         $this->setOptions($options);
-        
+
         $this->findComponents();
 
         return parent::render($options, $showLabel, $showField, $showError);

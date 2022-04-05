@@ -107,7 +107,7 @@ class CreatePost extends Form
             ]);
         }
 
-            $this->add('content', 'laraberg', [
+            $this->add('content', 'visual_editor', [
                 'label_show' => false,
                 'label' => __('admin.form.content'),
                 'withBtnForTemplates' => true
