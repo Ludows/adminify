@@ -7,7 +7,7 @@ use App\Adminify\Http\Controllers\Controller;
 
 class EditorController extends Controller
 {
-    public function preview() {
-        
+    public function preview(Request $request) {
+        return view("theme::". $request->theme .".index",  []);
     }
 }

@@ -8,7 +8,8 @@ return [
     'default_role_on_registration' => 'subscriber',
 
     'custom_views_paths' => [
-        'theme' => resource_path('theme')
+        'theme' => resource_path('theme'),
+        'blocs' => resource_path('blocs')
     ],
 
     'themes' => [
