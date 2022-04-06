@@ -111,6 +111,7 @@ class MultilangBasic
             $base_parameters['posts'] = $posts;
             $base_parameters['topbarShow'] = $topbarShow;
             $base_parameters['theme'] = $theme;
+            $base_parameters['isPreview'] = is_content_type_model($model);
         }
 
 

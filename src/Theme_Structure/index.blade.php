@@ -1,6 +1,9 @@
 @extends('theme::'. $theme .'.layouts.app')
 
 @section('content')
+    @if($isPreview)
+        <div id="ve-components">
+    @endif
     @if ($isHome)
         @include('theme::'. $theme .'.homepage')
     @endif
@@ -18,7 +21,11 @@
     @endif
 
     @if ($isSearch)
-        @include('theme::'. $theme .'.searchpage')
+        @includeFirst(['theme::'. $theme .'.searchpage-'.$model->id, 'theme::'. $theme .'.searchpage-'.$type, 'theme::'. $theme .'.searchpage'])
+    @endif
+
+    @if($isPreview)
+        </div>
     @endif
 
     @if($enabled_features['post'] && $isSingle)
