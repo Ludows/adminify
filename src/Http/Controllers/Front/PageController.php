@@ -119,7 +119,7 @@ class PageController extends Controller
 
             $this->addViewsVar('results', $result);
 
-            return view("adminify::layouts.front.pages.index", $this->getViewsVars());
+            return view("theme::". $request->theme .".index", $this->getViewsVars());
         }
 
         public function validateForms(Request $request) {

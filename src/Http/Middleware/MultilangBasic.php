@@ -114,6 +114,11 @@ class MultilangBasic
             $base_parameters['isPreview'] = is_content_type_model($model);
         }
 
+        // if your want to had your required vars for your templates.
+        if(method_exists($this, 'bootingInject')) {
+            call_user_func_array(array($this, 'bootingInject'), [$request, $base_parameters]);
+        }
+
 
 
         // if(in_array(titled($base_parameters['singleParam']), $bindedEditorKeys) && !$base_parameters['isIndex']) {

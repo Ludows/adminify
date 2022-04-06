@@ -12,9 +12,6 @@
         {!! Form::input('hidden', $name, $options['value'], $options['attr']) !!}
 
         <visual-editor name="{!! $name !!}" preview="{!! $options['visual_editor_options']['preview'] !!}" value="{!! $options['value'] !!}"></visual-editor>
-        <div id="ve-components">
-            
-        </div>
 
         @include('vendor/laravel-form-builder/errors')
         @include('vendor/laravel-form-builder/help_block')
