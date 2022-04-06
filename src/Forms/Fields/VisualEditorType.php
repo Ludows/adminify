@@ -25,7 +25,7 @@ class VisualEditorType extends FormField {
 
     public function setDefaultsEditorAttributes() {
         return array(
-            'preview' => '/preview',
+            'preview' => route('editor.preview'),
         );
     }
 
