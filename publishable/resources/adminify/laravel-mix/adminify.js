@@ -21,6 +21,7 @@ function loadDefaults(Mix) {
     .js('resources/adminify/back/js/formbuilder.js', 'public/adminify/back/js')
     Mix.js('resources/adminify/front/js/app.js', 'public/adminify/front/js').vue({ version: 3 })
     Mix.js('resources/adminify/back/js/editor.js', 'public/adminify/back/js').react()
+    Mix.js('resources/editor-components/*', 'public/editor-components').react()
     .sass('resources/adminify/front/sass/argon.scss', 'public/adminify/front/css')
     .sass('resources/adminify/back/sass/argon.scss', 'public/adminify/back/css')
     .sass('resources/adminify/front/sass/front.scss', 'public/adminify/front/css')

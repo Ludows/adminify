@@ -13,7 +13,7 @@ class PageTable extends TableManager {
     }
     public function getDefaultsColumns() {
         $a = parent::getDefaultsColumns();
-        $a = array_unshift($a, 'categories_id');
+        array_unshift($a, 'categories_id');
         return $a;
     }
 }
