@@ -11,7 +11,9 @@
         {{--  {!! Form::input('hidden', 'mime_type', null, $options['attr']) !!}  --}}
         {!! Form::input('hidden', $name, $options['value'], $options['attr']) !!}
 
-        <visual-editor name="{!! $name !!}" preview="{!! $options['visual_editor_options']['preview'] !!}" value="{!! $options['value'] !!}"></visual-editor>
+        <button class="btn btn-primary js-toggle-visual">Toggle Visual Editor</button>
+
+        <visual-editor hidden name="{!! $name !!}" preview="{!! $options['visual_editor_options']['preview'] !!}" value="{!! $options['value'] !!}"></visual-editor>
 
         @include('vendor/laravel-form-builder/errors')
         @include('vendor/laravel-form-builder/help_block')

@@ -75,7 +75,7 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
     // if(isset($c['post']) && $c['post']) {
     // }
 
-    Route::post('editor/preview', 'App\Adminify\Http\Controllers\Back\EditorController@preview')->name('editor.preview');
+    Route::post('editor/preview/{type}/{id?}', 'App\Adminify\Http\Controllers\Back\EditorController@preview')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class])->name('editor.preview');
 
     Route::post('find/{type}', 'App\Adminify\Http\Controllers\Back\FinderController@index')->name('finder');
 

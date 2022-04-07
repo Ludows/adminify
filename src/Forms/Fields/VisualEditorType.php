@@ -24,8 +24,17 @@ class VisualEditorType extends FormField {
     }
 
     public function setDefaultsEditorAttributes() {
+
+        $r = request();
+        $isEdit = $r->isEdit;
+        $array = ['type' => $r->name];
+
+        if($isEdit) {
+            $array['id'] = $r->model->id;
+        }
+
         return array(
-            'preview' => route('editor.preview'),
+            'preview' => route('editor.preview', $array),
         );
     }
 

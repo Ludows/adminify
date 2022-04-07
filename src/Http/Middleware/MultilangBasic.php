@@ -39,6 +39,7 @@ class MultilangBasic
         if(is_admin() && !empty($prefix)) {
             // dd('$prefix', $prefix);
             array_unshift($routeNameSpl , 'admin');
+
         }
 
 
@@ -46,6 +47,9 @@ class MultilangBasic
         // making autoswitch back / front
         $singular = singular(is_admin() ? $routeNameSpl['1'] : 'slug');
         $model = \Route::current()->parameter($singular);
+
+        $isContentModel = !empty($model) ? is_content_type_model($model) : false;
+        $theme = theme();
 
         $named = join('.',array_diff($routeNameSpl, ['index', 'edit', 'create']));
         // $bindedEditorKeys = array_keys($config['editor']['bind']);
@@ -74,14 +78,20 @@ class MultilangBasic
             "isDestroy" => strpos($routeName, '.destroy') != false ? true : false,
             "isIndex" => strpos($routeName, '.index') != false ? true : false,
             "model" => $model,
+            "enabled_features" => config('site-settings.enables_features'),
             "form" => null,
             "user" => user(),
             "adminify_autoload" => adminify_autoload(),
+            'isPreview' => strpos($routeName, '.preview') != false ? true : false
             // "loadEditor" => false,
             // 'bindedEditorKeys' => $bindedEditorKeys
         ];
 
-        if(!is_admin() && !is_auth_routes()) {
+        if(is_admin() && $isContentModel && empty($theme)) {
+            throw new \Exception("Theme must be set in administration", $theme);
+        }
+
+        if( $isContentModel || $base_parameters['isPreview']) {
             $posts = null;
             // si c'est la page de blog. Autoappend des posts.
             if(is_blogpage($model)) {
@@ -92,8 +102,6 @@ class MultilangBasic
             $topbarShow = false;
 
             // get the current theme
-            $theme = theme();
-
             if(empty($theme)) {
                 throw new \Exception("Theme must be set in administration", $theme);
             }
@@ -111,7 +119,6 @@ class MultilangBasic
             $base_parameters['posts'] = $posts;
             $base_parameters['topbarShow'] = $topbarShow;
             $base_parameters['theme'] = $theme;
-            $base_parameters['isPreview'] = is_content_type_model($model);
         }
 
         // if your want to had your required vars for your templates.
