@@ -25,7 +25,7 @@ class CreateContentTypeTemplate extends Migration
         Schema::create('content_type_template', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title', 255);
-            $table->text('content')->nullable();
+            $table->json('content')->nullable();
             $table->timestamps();
         });
 

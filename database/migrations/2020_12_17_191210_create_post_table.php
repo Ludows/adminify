@@ -33,7 +33,7 @@ class CreatePostTable extends Migration
                 $table->timestamps();
                 $table->string('title', 255);
                 $table->string('slug', 255);
-                $table->text('content')->nullable();
+                $table->json('content')->nullable();
                 $table->boolean('no_comments')->default(false);
                 $table->bigInteger('media_id')->nullable()->unsigned();
                 $table->bigInteger('user_id')->default(0)->unsigned();
