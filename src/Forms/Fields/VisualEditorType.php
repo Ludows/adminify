@@ -40,7 +40,9 @@ class VisualEditorType extends FormField {
 
     public function findComponents() {
 
+        $r = request();
         $public_ = public_path();
+        $type = $r->name;
 
         $folders = $this->registerComponentsFolder();
 
@@ -53,9 +55,26 @@ class VisualEditorType extends FormField {
                 $files = File::files($new_path);
                     foreach($files as $f){
 
-                        $name = $f->getFileName();
+                        $disallow_append_file = false;
 
-                        add_asset('default', config('app.url') .DIRECTORY_SEPARATOR.$folder.DIRECTORY_SEPARATOR.$f->getRelativePathname());
+                        $name = $f->getFileName();
+                        $name = pathinfo($name, PATHINFO_FILENAME);
+                        $check_name = explode('-', $name);
+
+
+
+                        if(count($check_name) > 1){
+                            // dd($name, $check_name, $type);
+
+                            if($check_name[ count( $check_name ) - 1 ] != $type) {
+                                $disallow_append_file = true;
+                            }
+                        }
+
+                        if(!$disallow_append_file) {
+                            add_asset('default', config('app.url') .DIRECTORY_SEPARATOR.$folder.DIRECTORY_SEPARATOR.$f->getRelativePathname());
+                        }
+
                     }
             }
 
