@@ -1,10 +1,3 @@
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            SINGLE DEFAULT TEMPLATE
+@include('theme::'. $theme .'.layouts.partials.blocks', ['blocks' => json_decode($model->content)])
 
-            {!! $model->rendercontent !!}
-        </div>
-    </div>
-</div>
 

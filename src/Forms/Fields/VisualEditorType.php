@@ -55,7 +55,7 @@ class VisualEditorType extends FormField {
 
                         $name = $f->getFileName();
 
-                        add_asset('default', config('app.url') .DIRECTORY_SEPARATOR. $f->getRelativePathname());
+                        add_asset('default', config('app.url') .DIRECTORY_SEPARATOR.$folder.DIRECTORY_SEPARATOR.$f->getRelativePathname());
                     }
             }
 

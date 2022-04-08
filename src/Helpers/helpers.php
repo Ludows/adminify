@@ -65,6 +65,13 @@ if(! function_exists('is_content_type_model')) {
     }
 }
 
+if(! function_exists('is_template')) {
+    function is_template($model) {
+        $r = new \ReflectionClass( $model );
+        return $r->isSubclassOf( new \ReflectionClass( 'Ludows\Adminify\Models\Templates' ) );
+    }
+}
+
 if(! function_exists('is_adminify')) {
     function is_adminify() {
         return defined('IS_ADMINIFY') == true;

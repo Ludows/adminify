@@ -55,7 +55,7 @@ class PageController extends Controller
 
             $reflection = new ReflectionClass($page);
             $type = $reflection->getShortName();
-            $seo = $this->handleSeo($page);
+            $seo = is_content_type_model($page) ? $this->handleSeo($page) : null;
 
             $enabled_features = get_site_key('enables_features');
 
@@ -86,7 +86,7 @@ class PageController extends Controller
                 call_user_func_array(array($this, 'bootingView'), $request);
             }
 
-            $seo = $this->handleSeo($slug);
+            $seo = is_content_type_model($slug) ? $this->handleSeo($slug) : null;
 
             // dd(request());
 

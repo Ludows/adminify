@@ -13,7 +13,7 @@
 
         <button class="btn btn-primary js-toggle-visual">Toggle Visual Editor</button>
 
-        <visual-editor hidden name="{!! $name !!}" preview="{!! $options['visual_editor_options']['preview'] !!}" value="{!! !empty($options['value']) ? $options['value'] : [] !!}"></visual-editor>
+        <visual-editor hidden name="{!! $name !!}" preview="{!! $options['visual_editor_options']['preview'] !!}" value="{!! !empty($options['value']) ? $options['value'] : '[]' !!}"></visual-editor>
 
         @include('vendor/laravel-form-builder/errors')
         @include('vendor/laravel-form-builder/help_block')

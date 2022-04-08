@@ -12,37 +12,17 @@ class EditorController extends Controller
 
         // cas du create
         // cas du edit  on a le model en question.
-        $isCreate = !empty($type) && empty($id);
-        $isEdit = !empty($type) && !empty($id);
-        $isHome = false;
+        $content = json_decode($request->getContent(), true);
 
-        // try to load the first one model
-        $model = adminify_get_class(titled($type), ['app:adminify:models', 'app:models'], true);
-
-        if(empty($model)) {
-            // however we try to load model in singular
-            $model = adminify_get_class(titled(singular($type)), ['app:adminify:models', 'app:models'], true);
+        if(array_is_list($content)) {
+            if($request->isHome) {
+                return app('Ludows\Adminify\Http\Controllers\Front\PageController')->index($request);
+            }
+            return app('Ludows\Adminify\Http\Controllers\Front\PageController')->getPages($request->model, $request);
         }
 
-        // if you reedit a current model. We make sure that you bind the correct content.
-
-        if($isEdit) {
-            $model = $model->find($id);
-
-            // now we can check if is homepage for correct handle controller response :)
-            $isHome = is_homepage($model);
-        }
-
-        // if model is really empty. preview does not work properly. Throw Error.
-        if(empty($model)) {
-            throw new Error('Model with '.$type. 'cannot be found.');
-        }
+        return view('blocs::'.$content['_name'], $content);
 
 
-
-        if($isHome) {
-            return app('Ludows\Adminify\Http\Controllers\Front\PageController')->index($request);
-        }
-        return app('Ludows\Adminify\Http\Controllers\Front\PageController')->getPages($model, $request);
     }
 }

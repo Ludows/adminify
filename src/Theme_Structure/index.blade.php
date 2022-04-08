@@ -4,23 +4,28 @@
     @if($isPreview)
         <div id="ve-components">
     @endif
-    @if ($isHome)
+
+    @if ($isTemplate)
+        @include('theme::'. $theme .'.blank_template')
+    @endif
+
+    @if ($isHome && !$isTemplate)
         @include('theme::'. $theme .'.homepage')
     @endif
 
-    @if ($isBlogPage)
+    @if ($isBlogPage && !$isTemplate)
         @include('theme::'. $theme .'.blogpage')
     @endif
 
-    @if ($isSingle)
+    @if ($isSingle && !$isTemplate)
         @includeFirst(['theme::'. $theme .'.single-'.$model->id, 'theme::'. $theme .'.single'])
     @endif
 
-    @if ($isPage)
+    @if ($isPage && !$isTemplate)
         @includeFirst(['theme::'. $theme .'.page-'.$model->id, 'theme::'. $theme .'.page-'.$type, 'theme::'. $theme .'.page'])
     @endif
 
-    @if ($isSearch)
+    @if ($isSearch && !$isTemplate)
         @includeFirst(['theme::'. $theme .'.searchpage-'.$model->id, 'theme::'. $theme .'.searchpage-'.$type, 'theme::'. $theme .'.searchpage'])
     @endif
 

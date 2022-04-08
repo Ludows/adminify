@@ -48,6 +48,36 @@ class MultilangBasic
         $singular = singular(is_admin() ? $routeNameSpl['1'] : 'slug');
         $model = \Route::current()->parameter($singular);
 
+        // let's do the magic editor preview handling here model.
+        if($routeName == 'editor.preview') {
+
+            $isCreate = !empty($request->type) && empty($request->id);
+            $isEdit = !empty($request->type) && !empty($request->id);
+
+            // try to load the first one model
+            $model = adminify_get_class(titled($request->type), ['app:adminify:models', 'app:models'], true);
+
+            if(empty($model)) {
+                // however we try to load model in singular
+                $model = adminify_get_class(titled(singular($request->type)), ['app:adminify:models', 'app:models'], true);
+            }
+
+            // if you reedit a current model. We make sure that you bind the correct content.
+
+            if($isEdit) {
+                $model = $model->find($request->id);
+
+                // now we can check if is homepage for correct handle controller response :)
+                $isHome = is_homepage($model);
+            }
+
+            // if model is really empty. preview does not work properly. Throw Error.
+            if(empty($model)) {
+                throw new Error('Model with '.$request->type. 'cannot be found.');
+            }
+
+        }
+
         $isContentModel = !empty($model) ? is_content_type_model($model) : false;
         $theme = theme();
 
@@ -82,7 +112,8 @@ class MultilangBasic
             "form" => null,
             "user" => user(),
             "adminify_autoload" => adminify_autoload(),
-            'isPreview' => strpos($routeName, '.preview') != false ? true : false
+            'isPreview' => $routeName == 'editor.preview',
+            'isTemplate' => !empty($model) ? is_template($model) : false
             // "loadEditor" => false,
             // 'bindedEditorKeys' => $bindedEditorKeys
         ];

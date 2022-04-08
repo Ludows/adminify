@@ -4,8 +4,41 @@ const fs = require('fs');
 module.exports = function(Mix) {
 
     loadDefaults(Mix);
+    autoRegisterEditorComponents(Mix);
     loopOverThemes(Mix);
     return Mix;
+}
+
+function autoRegisterEditorComponents(Mix) {
+    let paths_component = process.env.MIX_ADMINIFY_EDITOR_PATHS.split(',');
+    let processPath = process.cwd();
+    paths_component.forEach((pathable) => {
+        let folder_path = path.join(processPath, pathable.trim());
+
+        if(!fs.existsSync(folder_path)) {
+            return false;
+        }
+
+        let resourcesScan = fs.readdirSync(folder_path);
+
+        resourcesScan.forEach((resourceScan) => {
+
+            let resolved_path = path.join(folder_path, resourceScan);
+            let stat = fs.statSync(resolved_path);
+            let compiledFile = path.join(processPath, 'public', 'editor-components', resourceScan);
+            // console.log('compiledPath', compiledFile);
+            if(fs.existsSync( compiledFile )) {
+                fs.unlinkSync(compiledFile);
+            }
+
+            if(stat.isFile()) {
+                Mix.js(`${ path.join(pathable, path.basename(resolved_path))}`, 'public/editor-components').react()
+            }
+        })
+
+
+    })
+
 }
 
 function loadDefaults(Mix) {
@@ -20,8 +53,7 @@ function loadDefaults(Mix) {
     .js('resources/adminify/back/js/metas.js', 'public/adminify/back/js')
     .js('resources/adminify/back/js/formbuilder.js', 'public/adminify/back/js')
     Mix.js('resources/adminify/front/js/app.js', 'public/adminify/front/js').vue({ version: 3 })
-    Mix.js('resources/adminify/back/js/editor.js', 'public/adminify/back/js').react()
-    Mix.js('resources/editor-components/*', 'public/editor-components').react()
+    Mix.js('resources/adminify/back/js/editor.js', 'public/adminify/back/js')
     .sass('resources/adminify/front/sass/argon.scss', 'public/adminify/front/css')
     .sass('resources/adminify/back/sass/argon.scss', 'public/adminify/back/css')
     .sass('resources/adminify/front/sass/front.scss', 'public/adminify/front/css')

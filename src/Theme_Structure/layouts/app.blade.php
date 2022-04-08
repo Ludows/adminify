@@ -24,9 +24,13 @@
                 @if($topbarShow)
                     {!! toolbar() !!}
                 @endif
-                @include('theme::'. $theme .'.layouts.partials.header')
+                @if(!$isTemplate)
+                    @include('theme::'. $theme .'.layouts.partials.header')
+                @endif
                 @yield('content')
-                @include('theme::'. $theme .'.layouts.partials.footer')
+                @if(!$isTemplate)
+                    @include('theme::'. $theme .'.layouts.partials.footer')
+                @endif
             </div>
         </main>
 

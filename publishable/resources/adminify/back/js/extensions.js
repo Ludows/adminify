@@ -1,8 +1,6 @@
 // Show packages.json
 window.jQuery = window.$ = require('jquery');
 
-import { VisualEditor } from '@boxraiser/visual-editor'
-
 import {
     createLaravelLocalization
 } from '@wesleyhf/laravel-localization-js';
@@ -28,8 +26,6 @@ require('./menuThree')
 window.Swal = require('sweetalert2');
 
 window.Route = require('../../commons/js/Route').default;
-
-window.Editor = new VisualEditor();
 
 window.admin = {
     select2Fields : [],
