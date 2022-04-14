@@ -23,7 +23,7 @@ abstract class ContentTypeModel extends ClassicModel
     use Authorable;
 
 
-    
+
     public function parent() {
         return $this->HasOne(Page::class, 'id', 'parent_id');
     }
@@ -37,9 +37,11 @@ abstract class ContentTypeModel extends ClassicModel
     public function getSitemapUrl() {
 
         $url = '/';
+
         $isHomepage = is_homepage($this);
 
-        if(!empty($isHomepage) && !$isHomepage) {
+
+        if(!$isHomepage) {
             $url = $this->urlpath;
         }
 
@@ -58,7 +60,7 @@ abstract class ContentTypeModel extends ClassicModel
         ]);
     }
     public function getRenderContentAttribute() {
-        
+
         $content = $this->content;
 
         $shortcodes = parse_shortcode($content);

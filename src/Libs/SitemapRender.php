@@ -62,7 +62,7 @@ class SitemapRender
                 if(!in_array('Ludows\Adminify\Traits\Sitemapable', $traits)) {
                     throw new Exception($modelName.' must have the Ludows\Adminify\Traits\Sitemapable trait to work');
                 }
-            
+
                 $m = new $modelClass();
 
 
@@ -93,19 +93,30 @@ class SitemapRender
                         if($isMultilang && $isTranslatableModel) {
                             foreach ($othersLangs as $l) {
                                 # code...
-                                $t = $m->getTranslations();
-                                if(array_key_exists($l, $t)) {
-                                    $translations[] = [
-                                        'language' => $l,
-                                        'url' => $modelObject->urlpath
-                                    ];
-                                }
+                                $transations = $m->getTranslations();
 
+                                foreach ($translations as $t) {
+                                    # code...
+                                    if(array_key_exists($l, $t)) {
+
+                                        //get url according the locale setted for the loop.
+                                        app()->setLocale($l);
+
+                                        $translations[] = [
+                                            'language' => $l,
+                                            'url' => $modelObject->urlpath
+                                        ];
+
+                                        break;
+                                    }
+                                }
                             }
+                            //restore the current locale
+                            app()->setLocale($options['currentLang']);
                         }
 
                         if (Schema::hasColumn($modelObject->getTable(), $modelObject->media_key)) {
-                            
+
                             // column exist
                             $imageSources = $modelObject->getSitemapImages();
 
@@ -164,7 +175,7 @@ class SitemapRender
                         // }
 
                         $url = $modelObject->getSitemapUrl();
-                        $sitemap->add($url, $modelObject->updated_at, $modelObject->priority_sitemap, $modelObject->freq_sitemap, $images, $modelObject->sitemapTitle, $translations, [], [], $othersLangs);
+                        $sitemap->add($url, $modelObject->updated_at, $modelObject->priority_sitemap, $modelObject->freq_sitemap, $images, $modelObject->sitemapTitle, $translations, [], [], $translations);
 
                     }
 
