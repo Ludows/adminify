@@ -264,7 +264,8 @@ class TableManager
             $this->model($result);
             foreach ($cols as $col) {
                 # code...
-                $table->column($col, $this->getTemplateByName($col),  $this->getVarsTemplateByName($col));
+                $slugify_col = slug($col);
+                $table->column($slugify_col, $this->getTemplateByName($slugify_col),  $this->getVarsTemplateByName($slugify_col));
             }
         }
 
