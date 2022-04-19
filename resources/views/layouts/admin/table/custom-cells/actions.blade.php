@@ -1,1 +1,1 @@
-{!! render_dropdown($dropdownManager, $index) !!}
+<td>{!! render_dropdown($dropdownManager, $index) !!}</td>

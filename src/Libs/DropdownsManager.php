@@ -92,7 +92,7 @@ class DropdownsManager
 
                 $singular = singular( $m->getTable() );
                 $plurial = plural($singular);
-    
+
                 $this->add('dropdown_'.$m->id, [
                     'template' => 'adminify::layouts.admin.dropdowns.extends.edit',
                     'vars' => [
@@ -120,6 +120,8 @@ class DropdownsManager
         else {
             $dropdowns = $this->getDropdowns();
         }
+
+        // dd($dropdowns);
 
         $tpl = $this->getView();
         $compiled = $this->view->make($tpl, ['dropdowns' => $dropdowns]);

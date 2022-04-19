@@ -48,6 +48,15 @@ class MultilangBasic
         $singular = singular(is_admin() ? $routeNameSpl['1'] : 'slug');
         $model = \Route::current()->parameter($singular);
 
+        if(startsWith($routeName, 'savetraductions') && $config['multilang']) {
+
+            $model = adminify_get_class($request->get('model'), ['app:models', 'app:adminify:models'], false);
+            $model = new $model;
+            $model = $model->find($request->get('id'));
+
+        }
+
+        // dd(adminify_autoload());
         // let's do the magic editor preview handling here model.
         if($routeName == 'editor.preview') {
 

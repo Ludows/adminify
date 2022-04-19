@@ -69,7 +69,9 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
     }
 
     if(is_multilang()) {
-        Route::resource('savetraductions', 'App\Adminify\Http\Controllers\Back\SaveTranslationsController', ['except' => ['show', 'create', 'store', 'index', 'destroy']]);
+        Route::get('savetraductions', 'App\Adminify\Http\Controllers\Back\SaveTranslationsController@edit')->name('savetraductions.edit');
+        Route::get('savetraductions/update', 'App\Adminify\Http\Controllers\Back\SaveTranslationsController@update')->name('savetraductions.update');
+        // Route::resource('savetraductions', 'App\Adminify\Http\Controllers\Back\SaveTranslationsController', ['except' => ['show', 'create', 'store', 'index', 'destroy']]);
     }
 
     // if(isset($c['post']) && $c['post']) {

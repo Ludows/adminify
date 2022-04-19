@@ -28,6 +28,7 @@ class TableManager
         $this->showTitle = true;
         $this->showSearch = true;
         $this->showBtnCreate = true;
+        $this->dropdownManager = null;
     }
     public function setColumns($value = []) {
         $this->columns = $value;
@@ -50,10 +51,20 @@ class TableManager
         $model = $this->getModel();
         $fillables = $model->getFillable();
 
+        foreach ($fillables as $key => $fillableValue) {
+            # code...
+            $fillables[$key] = slug($fillableValue);
+        }
+
         $default_merge_columns = $this->getDefaultsColumns();
 
         if($request->useMultilang && is_translatable_model($model)) {
-            array_unshift($default_merge_columns, 'need_translations');
+            array_unshift($default_merge_columns, 'need-translations');
+        }
+
+        foreach ($default_merge_columns as $key => $default_merge_column) {
+            # code...
+            $default_merge_columns[$key] = slug($default_merge_column);
         }
 
         return array_merge($fillables, $default_merge_columns);
@@ -126,7 +137,21 @@ class TableManager
     }
 
     public function templateVarsList() {
-        return [];
+        // dd($this->getRequest());
+        $r = $this->getRequest();
+        $m = $this->getModel();
+
+        // dd($this->dropdownManager);
+        return [
+            'actions' => [
+                'dropdownManager' => $this->dropdownManager,
+                'index' => $m->id,
+            ],
+            'need-translations' => [
+                'routes' => get_missing_translations_routes($m),
+                'missing' => get_missing_langs($m),
+            ]
+        ];
     }
 
     public function getVarsTemplateByName($name) {
@@ -202,9 +227,9 @@ class TableManager
 
         $formatedColName = slug($name);
 
-        if(array_key_exists($formatedColName, $this->_columns)) {
-            throw new Exception($formatedColName.' already exist..');
-        }
+        // if(array_key_exists($formatedColName, $this->_columns)) {
+        //     throw new Exception($formatedColName.' already exist..');
+        // }
 
         $this->_columns[ $formatedColName ][] = (object) [
             'view' => $v,
@@ -252,11 +277,9 @@ class TableManager
     public function handle() {
         $results = $this->getResults();
         $request = $this->getRequest();
-        $dropdownManagerClass = $this->getDropdownManagerClass();
+
         $table = $this;
         $cols = $this->getColumns();
-
-        $a = new $dropdownManagerClass($results, []);
 
         foreach ($results as $result) {
             # code...
@@ -296,8 +319,11 @@ class TableManager
         return $this;
     }
 
+
+
     public function render() {
 
+        $dropdownManagerClass = $this->getDropdownManagerClass();
         $modelClass = $this->getModelClass();
         $m = new $modelClass;
         $this->setModel($m);
@@ -305,8 +331,18 @@ class TableManager
         // perform the query
         $this->query();
 
+        //bind the dropdown manager
+        $models = $this->getResults();
+        if(!empty($models)) {
+            $this->dropdownManager = new $dropdownManagerClass($models , []);
+        }
+        // else {
+        //     thow new Exception('dropdownManager require all models to work')
+        // }
+
         // create your columns
         $columns = $this->manageColumns();
+
 
         $this->columns( $columns );
 
@@ -326,7 +362,6 @@ class TableManager
                 'showCreate' => $this->showBtnCreate
             ]);
         }
-
 
 
         $this->handle();
@@ -357,6 +392,8 @@ class TableManager
             'areas' => $areas
         ];
 
+
+        // dd($defaults);
 
 
         $addtoVars = $this->addVarsToRender();

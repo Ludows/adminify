@@ -592,18 +592,14 @@ if(! function_exists('is_front')) {
 }
 
 if(! function_exists('get_missing_translations_routes') ) {
-    function get_missing_translations_routes($routeName, $singular, $model, $extraVarsRoute = []) {
+    function get_missing_translations_routes($model, $extraVarsRoute = []) {
 
         $request = request();
 
-        $reflect = new \ReflectionClass($model);
-
-        $namepace = explode('\\', strtolower( $reflect->name ) );
-
         $default_route_params = array_merge([
-            $singular => $model->id,
             'from' => $request->lang,
-            'type' => Str::singular($namepace[count($namepace) - 1])
+            'id' => $model->id,
+            'model' => class_basename($model)
         ], $extraVarsRoute);
 
         $routeList = [];
@@ -612,9 +608,9 @@ if(! function_exists('get_missing_translations_routes') ) {
             if(count($miss) > 0) {
                 foreach ($miss as $missing) {
                     # code...
-                    $default_route_params['lang'] = $missing;
+                    $default_route_params['to'] = $missing;
 
-                    $routeList[] = route($routeName, $default_route_params);
+                    $routeList[] = route('savetraductions.edit', $default_route_params);
 
                 }
             }

@@ -29,7 +29,7 @@ class SaveMissingTraductions extends Form
                 'value' => $datas['actualLang']
             ]);
 
-            $this->add('type', 'hidden', [
+            $this->add('model', 'hidden', [
                 'value' => $datas['type']
             ]);
 
