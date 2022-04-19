@@ -13,7 +13,7 @@ window.createLaravelLocalization = createLaravelLocalization;
 
 require('select2');
 
-require('bootstrap');
+require('adminify_bootstrap_admin');
 
 require('summernote');
 require('summernote/dist/summernote-bs4.js');

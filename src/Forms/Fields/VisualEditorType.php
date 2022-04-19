@@ -27,7 +27,7 @@ class VisualEditorType extends FormField {
 
         $r = request();
         $isEdit = $r->isEdit;
-        $array = ['type' => $r->name];
+        $array = ['type' => !empty($r->model) ? class_basename($r->model) : $r->name];
 
         if($isEdit) {
             $array['id'] = $r->model->id;
