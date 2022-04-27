@@ -405,11 +405,17 @@ class TableManager
     }
     public function list() {
 
+        $dropdownManagerClass = $this->getDropdownManagerClass();
         $modelClass = $this->getModelClass();
         $m = new $modelClass;
         $this->setModel($m);
         // perform the query
         $this->query();
+
+        $models = $this->getResults();
+        if(!empty($models)) {
+            $this->dropdownManager = new $dropdownManagerClass($models , []);
+        }
 
         // create your columns
         $columns = $this->manageColumns();
@@ -420,9 +426,6 @@ class TableManager
 
         $cols = $this->getColumns();
         $addtoVars = $this->addVarsToRender();
-
-        $name = $this->getRequest()->route()->getName();
-        $name = str_replace('.index', '', $name);
 
         $defaults = [
             'datas' => $this->_columns,

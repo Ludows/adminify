@@ -73,6 +73,7 @@ class PageController extends Controller
             }
 
 
+
             return view("theme::". $request->theme .".index",  $this->getViewsVars());
         }
 

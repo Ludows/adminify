@@ -23,6 +23,9 @@ class Meta extends ClassicModel
     protected $guarded = [];
     public $timestamps = false;
 
+    public $enable_searchable = true;
+    public $searchable_label = 'value';
+
     public $excludes_savables_fields = [];
     public $unmodified_savables_fields = [
         'submit'

@@ -27,13 +27,13 @@ class MenuRepository extends BaseRepository
             # code...
             $menuItem = new MenuItem();
             // dump($menuitem['type']);
-            if($menuitem == null) {
+            if(empty($menuitem)) {
                 // quick fix en attendant de regarder la generation du menu three
                 return false;
             }
 
             $class_model_str = $config['menu-builder']['models'][$menuitem['type']];
-            $class_model_str = get_site_key($class_model_str);
+            $class_model_str = adminify_get_class($class_model_str, ['app:models', 'app:adminify:models'], false);
 
                 $check_model_item = null;
 
@@ -46,7 +46,7 @@ class MenuRepository extends BaseRepository
                 $menuItem->model = $class_model_str;
                 $check_model = new $class_model_str;
 
-                if(isset($menuitem['id'])) {
+                if(!empty($menuitem['id'])) {
                     // on sait que c'est une data qui provient de la base.
                     // seul le bloc custom n'a pas d'Id a sa création.
                     $menuItem->model_id = $menuitem['id'];
@@ -61,11 +61,11 @@ class MenuRepository extends BaseRepository
                     $check_model = $entity;
                 }
 
-                if(isset($menuitem['type']) && strlen($menuitem['type']) > 0) {
+                if(!empty($menuitem['type']) && strlen($menuitem['type']) > 0) {
                     $menuItem->type = $menuitem['type'];
                 }
 
-                if(isset($menuitem['overwrite_title']) && strlen($menuitem['overwrite_title']) > 0) {
+                if(!empty($menuitem['overwrite_title']) && strlen($menuitem['overwrite_title']) > 0) {
                     if($multilang) {
                         $menuItem->overwrite_title = null;
                         $menuItem->setTranslation('overwrite_title', $request->lang , $menuitem['overwrite_title']);
@@ -78,7 +78,7 @@ class MenuRepository extends BaseRepository
                     $menuItem->overwrite_title = null;
                 }
 
-                if(isset($menuitem['media_id']) && strlen($menuitem['media_id']) > 0) {
+                if(!empty($menuitem['media_id']) && strlen($menuitem['media_id']) > 0) {
                     $json = json_decode($menuitem['media_id']);
 
                     $m = Media::where('src', $json[0]->name)->first();
@@ -86,14 +86,14 @@ class MenuRepository extends BaseRepository
                     if($m != null) {
                         $menuItem->media_id = $m->id;
                     }
-                    
+
                 }
 
-                if(isset($menuitem['class']) && strlen($menuitem['class']) > 0) {
+                if(!empty($menuitem['class']) && strlen($menuitem['class']) > 0) {
                     $menuItem->class = $menuitem['class'];
                 }
 
-                if(isset($menuitem['open_new_tab']) && (int) $menuitem['open_new_tab'] == 1) {
+                if(!empty($menuitem['open_new_tab']) && (int) $menuitem['open_new_tab'] == 1) {
                     $menuItem->open_new_tab = true;
                 }
                 else {
@@ -135,7 +135,7 @@ class MenuRepository extends BaseRepository
                     $menuItem->id != null ? $menuItem->parent_id = $parent_id : $check_model_item->parent_id = $parent_id;
                 }
 
-                if(isset($menuitem['childs']) && count($menuitem['childs']) > 0) {
+                if(!empty($menuitem['childs']) && count($menuitem['childs']) > 0) {
                     $this->Walker($menuitem['childs'], $exist, $model, $menuItem->id != null ? $menuItem->id : $check_model_item->id, true);
                 }
 
@@ -143,7 +143,7 @@ class MenuRepository extends BaseRepository
 
 
 
-                if($check_model_item != null) {
+                if(!empty($check_model_item)) {
                     $check_model_item->menu()->attach($check_model_item->id, ['menu_id' => $model->id]);
                 }
                 else {
@@ -158,7 +158,7 @@ class MenuRepository extends BaseRepository
         return $m;
     }
     public function update($menuthree, $model) {
-        
+
         $this->hookManager->run('updating:menu', $this->model ?? $model);
         $existingItems = count($model->items->all()) > 0 ? true : false;
 
@@ -167,7 +167,7 @@ class MenuRepository extends BaseRepository
         }
 
         $this->Walker($menuthree, $existingItems , $model, 0, false);
-        
+
         $this->hookManager->run('updated:menu', $this->model ?? $model);
         $this->hookManager->run('process:finished', $model);
         return $model;

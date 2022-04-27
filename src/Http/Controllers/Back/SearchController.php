@@ -42,7 +42,9 @@ class SearchController extends Controller
 
         }
 
-        $searchResults = $searchResults->search($request->input( $config['name'] ));
+        $query = $request->input( $config['name'] );
+
+        $searchResults = $searchResults->search( empty($query) ? '' : $query);
 
         $a = [
             'response' => $searchResults->groupByType(),

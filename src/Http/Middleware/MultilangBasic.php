@@ -4,9 +4,11 @@ namespace Ludows\Adminify\Http\Middleware;
 
 use Illuminate\Support\Facades\App;
 use Closure;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Arr;
+use ReflectionClass;
 
 class MultilangBasic
 {
@@ -17,6 +19,34 @@ class MultilangBasic
      * @param  \Closure  $next
      * @return mixed
      */
+    public function __construct() {
+        $this->base_params = [];
+    }
+    public function getParam($key) {
+        return $this->base_params[$key];
+    }
+    public function param($key, $value = null) {
+        $this->base_params[$key] = $value;
+
+        return $this;
+    }
+    public function getParams() {
+        return $this->base_params;
+    }
+    public function removeParam($key) {
+        unset($this->base_params[$key]);
+        return $this;
+    }
+    public function params($array) {
+        if(!is_array($array)) {
+            throw new Exception('You must provide an array of params for merging to the current request', $this->base_params);
+        }
+
+        foreach ($array as $key => $value) {
+            # code...
+            $this->param($key, $value);
+        }
+    }
     public function handle(Request $request, Closure $next)
     {
 
@@ -53,6 +83,26 @@ class MultilangBasic
             $model = adminify_get_class($request->get('model'), ['app:models', 'app:adminify:models'], false);
             $model = new $model;
             $model = $model->find($request->get('id'));
+
+        }
+
+        if(!is_admin() && empty($request->segments())) {
+            $settings = cache('homepage');
+
+            if($settings == null) {
+                $settings = setting('homepage');
+            }
+
+            $model = adminify_get_class('Page', ['app:models', 'app:adminify:models'], false);
+
+            $model = $model::find( is_array($settings) ? $settings['model_id'] : $settings );
+        }
+
+        if($routeName == 'globalsearch') {
+            $searchpage = setting('searchpage');
+            $model = adminify_get_class('Page', ['app:adminify:models', 'app:models'], true);
+
+            $model = $model->find($searchpage);
 
         }
 
@@ -98,6 +148,11 @@ class MultilangBasic
             $named = $named[ count($named) - 1 ];
         }
 
+        if(!empty($model)) {
+            $reflection = new ReflectionClass($model);
+            $type = $reflection->getShortName();
+        }
+
         $base_parameters = [
             "siteConfig" => $config,
             "name" => $named,
@@ -117,6 +172,7 @@ class MultilangBasic
             "isDestroy" => strpos($routeName, '.destroy') != false ? true : false,
             "isIndex" => strpos($routeName, '.index') != false ? true : false,
             "model" => $model,
+            "type" => $type ?? null,
             "enabled_features" => config('site-settings.enables_features'),
             "form" => null,
             "user" => user(),
@@ -136,7 +192,7 @@ class MultilangBasic
             // si c'est la page de blog. Autoappend des posts.
             if(is_blogpage($model)) {
                 $posts = new \Ludows\Adminify\Models\Post();
-                $posts = $posts->dontCache()->all();
+                $posts = $posts->all();
             }
             $topbarPref = get_user_preference('topbar');
             $topbarShow = false;
@@ -154,8 +210,8 @@ class MultilangBasic
             $base_parameters['isHome'] = is_homepage($model);
             $base_parameters['isSingle'] = is_single($model);
             $base_parameters['isBlogPage'] = is_blogpage($model);
-            $base_parameters['isPage'] = is_page($model);
             $base_parameters['isSearch'] = is_search($model);
+            $base_parameters['isPage'] = $base_parameters['isSearch'] ? false : is_page($model);
             $base_parameters['posts'] = $posts;
             $base_parameters['topbarShow'] = $topbarShow;
             $base_parameters['theme'] = $theme;
@@ -163,9 +219,11 @@ class MultilangBasic
 
         // if your want to had your required vars for your templates.
         if(method_exists($this, 'bootingInject')) {
-            call_user_func_array(array($this, 'bootingInject'), [$request, $base_parameters]);
+             call_user_func_array(array($this, 'bootingInject'), [$request, $base_parameters]);
         }
 
+
+        $this->params($base_parameters);
 
 
         // if(in_array(titled($base_parameters['singleParam']), $bindedEditorKeys) && !$base_parameters['isIndex']) {
@@ -173,7 +231,7 @@ class MultilangBasic
         //     merge_to_request('loadEditor', true);
         // }
 
-        foreach ($base_parameters as $key => $value) {
+        foreach ($this->getParams() as $key => $value) {
             # code...
             $v->share($key, $value);
             add_to_request($key, $value);

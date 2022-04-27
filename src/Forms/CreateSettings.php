@@ -24,6 +24,7 @@ class CreateSettings extends Form
         $seo = $this->getSetting('no_seo');
         $enabled_features = get_site_key('enables_features');
 
+
         if(is_null($comments)) {
             $comments = 0;
         }
@@ -84,10 +85,11 @@ class CreateSettings extends Form
             ]
         ])
 
+
         ->add('searchpage_models_tags', 'select2', [
             'empty_value' => __('admin.form.select_entity', ['entity' => 'searchpage_models_tags']),
             'choices' => array_keys( get_site_key('searchable') ),
-            'selected' => !empty($searchpage_models_tags) ? $searchpage_models_tags['selected'] : '',
+            'selected' => !is_null($searchpage_models_tags) ? $searchpage_models_tags : '',
             'label' => __('admin.form.searchpage_models_tags'),
             'select2options' => [
                 'multiple' => false,

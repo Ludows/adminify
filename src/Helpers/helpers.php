@@ -10,6 +10,19 @@ use Illuminate\Support\Str;
 use League\Glide\Urls\UrlBuilderFactory;
 use Illuminate\Support\Facades\Storage;
 
+use Illuminate\Support\Collection;
+
+
+Collection::macro('getSetting', function ($name) {
+    return $this->map(function ($value) use ($name) {
+        $ret = null;
+        if($value->type == $name) {
+            return $value;
+        }
+        return $ret;
+    });
+});
+
 
 if (! function_exists('do_shortcode')) {
     function do_shortcode($shortcodeName, $parameters = []) {
@@ -671,8 +684,15 @@ if (! function_exists('is_shortcode')) {
 if (! function_exists('setting')) {
     function setting($string) {
         $m = new Settings();
-        $q = $m->dontCache()->where('type', $string)->first();
+        $q = $m->where('type', $string)->first();
         return $q != null ? $q->data : null;
+    }
+}
+
+if(!function_exists('settings')) {
+    function settings() {
+        $m = new Settings();
+        return $m->all();
     }
 }
 
