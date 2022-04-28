@@ -31,7 +31,7 @@ class CreateMail extends Form
             ]
         ]);
 
-        $this->add('html_template', 'summernote', [
+        $this->add('html_template', 'tiptap', [
             'label_show' => false,
             'attr' => ['placeholder' => __('admin.form.html_template')],
         ]);

@@ -59,10 +59,10 @@ function loadDefaults(Mix) {
     .sass('resources/adminify/front/sass/front.scss', 'public/adminify/front/css')
     .sass('resources/adminify/back/sass/extensions.scss', 'public/adminify/back/css');
 
-    Mix.copy('resources/adminify/back/font/summernote.ttf', 'public/adminify/back/css/font/summernote.ttf');
-    Mix.copy('resources/adminify/back/font/summernote.eot', 'public/adminify/back/css/font/summernote.eot');
-    Mix.copy('resources/adminify/back/font/summernote.woff', 'public/adminify/back/css/font/summernote.woff');
-    Mix.copy('resources/adminify/back/font/summernote.woff2', 'public/adminify/back/css/font/summernote.woff2');
+    // Mix.copy('resources/adminify/back/font/summernote.ttf', 'public/adminify/back/css/font/summernote.ttf');
+    // Mix.copy('resources/adminify/back/font/summernote.eot', 'public/adminify/back/css/font/summernote.eot');
+    // Mix.copy('resources/adminify/back/font/summernote.woff', 'public/adminify/back/css/font/summernote.woff');
+    // Mix.copy('resources/adminify/back/font/summernote.woff2', 'public/adminify/back/css/font/summernote.woff2');
 }
 
 function loopOverThemes(Mix) {

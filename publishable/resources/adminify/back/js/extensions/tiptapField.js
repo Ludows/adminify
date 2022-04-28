@@ -15,6 +15,9 @@ export default function tiptapInititalization(fields) {
                   StarterKit,
                 ],
                 content: hiddenField.val() ?? '',
+                autofocus: true,
+                editable: true,
+                injectCSS: true,
               })
 
             // console.log('hiddenField', hiddenField, $('#'+el.selector))

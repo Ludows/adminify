@@ -58,7 +58,7 @@ class FormConfirmation extends Form
             ]
         ]);
 
-        $this->add('content', 'summernote', [
+        $this->add('content', 'tiptap', [
             'wrapper' => [
                 'class' => 'form-group d-none',
                 'data-show-type' => 'samepage'

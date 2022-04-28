@@ -63,7 +63,7 @@ class CreateFields extends Form
             ]
         ]);
 
-        $this->add('content', 'summernote', [
+        $this->add('content', 'tiptap', [
             'label' => __('adminify.formbuilder.content'),
             'force_js' => true,
             'force_sibling' => true,
