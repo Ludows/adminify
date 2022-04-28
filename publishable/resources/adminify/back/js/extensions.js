@@ -15,8 +15,6 @@ require('select2');
 
 require('adminify_bootstrap_admin');
 
-require('summernote');
-require('summernote/dist/summernote-bs4.js');
 // require('bootstra');
 require('./serializeAsObject')
 require('./clearValues')
@@ -33,6 +31,7 @@ window.admin = {
     generatorPasswordFields: [],
     lfmFields : [],
     summernoteFields : [],
-    VisualEditorFields : []
+    VisualEditorFields : [],
+    tiptapFields : []
 }
 

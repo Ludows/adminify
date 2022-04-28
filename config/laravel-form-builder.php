@@ -73,12 +73,14 @@ return [
 
     'custom_fields' => [
         //
-        'summernote' => 'App\Adminify\Forms\Fields\SummernoteType',
+        // 'summernote' => 'App\Adminify\Forms\Fields\SummernoteType',
         'select2' => 'App\Adminify\Forms\Fields\Select2Type',
         'laraberg' => 'App\Adminify\Forms\Fields\LarabergType',
         'generatorPassword' => 'App\Adminify\Forms\Fields\GeneratorPasswordType',
         'lfm' => 'App\Adminify\Forms\Fields\FileManagerType',
-        "visual_editor" => 'App\Adminify\Forms\Fields\VisualEditorType'
+        "visual_editor" => 'App\Adminify\Forms\Fields\VisualEditorType',
+        "tiptap" => 'App\Adminify\Forms\Fields\TipTapType'
+
     ],
 
 ];

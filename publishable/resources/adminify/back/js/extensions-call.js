@@ -8,6 +8,7 @@ window.PasswordGeneratorInitFunction = require('./extensions/generatorPasswordFi
 window.lfmInitFunction = require('./extensions/lfmField').default;
 window.summernoteInitFunction = require('./extensions/summernoteField').default;
 window.VisualEditorInitFunction = require('./extensions/VisualEditorField').default;
+window.tiptapInitFunction = require('./extensions/tiptapField').default;
 
 
 jQuery(document).ready(function($) {
@@ -29,5 +30,8 @@ jQuery(document).ready(function($) {
     }
     if(window.admin.VisualEditorFields.length > 0) {
         VisualEditorInitFunction(window.admin.VisualEditorFields);
+    }
+    if(window.admin.tiptapFields.length > 0) {
+        tiptapInitFunction((window.admin.tiptapFields);
     }
 })
