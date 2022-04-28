@@ -4,7 +4,7 @@ namespace Ludows\Adminify\Forms\Fields;
 use Kris\LaravelFormBuilder\Fields\FormField;
 use Illuminate\Support\Str;
 
-class SummernoteType extends FormField {
+class TipTapType extends FormField {
 
     protected function getTemplate()
     {
