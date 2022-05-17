@@ -108,14 +108,16 @@ return [
         ],
         'created' => [
             \App\Adminify\Hooks\OnCreatedHook::class,
-            \App\Adminify\Hooks\ContentTypesHook::class
+            \App\Adminify\Hooks\ContentTypesHook::class,
+            \App\Adminify\Hooks\HandleSettings::class,
         ],
         'updating' => [
             \App\Adminify\Hooks\OnUpdatingHook::class,
         ],
         'updated' => [
             \App\Adminify\Hooks\OnUpdatedHook::class,
-            \App\Adminify\Hooks\ContentTypesHook::class
+            \App\Adminify\Hooks\ContentTypesHook::class,
+            \App\Adminify\Hooks\HandleSettings::class,
         ],
         'deleting' => [
             \App\Adminify\Hooks\OnDeletingHook::class,
@@ -124,12 +126,6 @@ return [
         'deleted' => [
             \App\Adminify\Hooks\OnDeletedHook::class,
         ],
-        'setting:created' => [
-            \App\Adminify\Hooks\HandleSettings::class,
-        ],
-        'setting:updated' => [
-            \App\Adminify\Hooks\HandleSettings::class,
-        ]
     ],
 
     'sitemap' => [

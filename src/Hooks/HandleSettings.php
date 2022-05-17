@@ -43,7 +43,7 @@ class HandleSettings extends HookInterface {
                 $m->save();
 
                 // if(is_urlable_model($m)) {
-                $this->hookManager->run('model:updated', $m);
+                $this->hookManager->run('updated', $m);
                 // }
             }
         }
