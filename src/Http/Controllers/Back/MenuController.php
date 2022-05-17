@@ -120,10 +120,10 @@ class MenuController extends Controller
         }
 
 
-        public function setItemsToMenu(MenuBuilder $menuBuilder, Request $request) {
+        public function setItemsToMenu(Request $request, $id, $type) {
 
             $config = get_site_key('menu-builder');
-            $type = $request->type;
+            // $type = $request->type;
             $v = view();
 
             $model = $config['models'][$type];
