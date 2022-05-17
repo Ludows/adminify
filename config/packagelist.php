@@ -258,25 +258,6 @@ return array(
         ),
         (object) array(
             'beforePublish' => [],
-            'name' => 'van-ons/laraberg',
-            'publish' => (object) [
-                'tag' => false,
-                'force' => false,
-                'sibling' => 'VanOns\Laraberg\LarabergServiceProvider'
-            ],
-            'autoload' => (object) [
-                'providers' => [],
-                'middlewares' => [],
-                'aliases' => []
-            ],
-            'config' => (object) [
-                'file' => '/../../config/laraberg',
-                'name' => 'laraberg',
-            ],
-            'afterPublish' => [],
-        ),
-        (object) array(
-            'beforePublish' => [],
             'name' => 'ycs77/laravel-form-builder-bs4',
             'publish' => (object) [
                 'tag' => true,
@@ -383,18 +364,6 @@ return array(
         (object) array(
             'beforePublish' => [],
             'name' => 'league/glide-laravel',
-            'publish' => null,
-            'autoload' => (object) [
-                'providers' => [],
-                'middlewares' => [],
-                'aliases' => []
-            ],
-            'config' => null,
-            'afterPublish' => [],
-        ),
-        (object) array(
-            'beforePublish' => [],
-            'name' => 'rennokki/laravel-eloquent-query-cache',
             'publish' => null,
             'autoload' => (object) [
                 'providers' => [],
