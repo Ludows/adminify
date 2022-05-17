@@ -5,7 +5,6 @@ namespace Ludows\Adminify\Models;
 use Ludows\Adminify\Traits\Urlable;
 use Ludows\Adminify\Traits\Sitemapable;
 use Ludows\Adminify\Traits\HasSeo;
-use VanOns\Laraberg\Models\Gutenbergable;
 use Ludows\Adminify\Traits\Authorable;
 
 use App\Adminify\Models\User;
@@ -19,7 +18,6 @@ abstract class ContentTypeModel extends ClassicModel
     use Urlable;
     use HasSeo;
     use Sitemapable;
-    use Gutenbergable;
     use Authorable;
 
 
