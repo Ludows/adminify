@@ -93,7 +93,7 @@ class ListingController extends Controller
         // }
 
 
-        $results = $m->dontCache()->get();
+        $results = $m->get();
 
         // dd($keys, $m->toSql(), $m->getBindings(), $results, $search);
 

@@ -30,22 +30,22 @@ class SeoController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function edit(Seo $seo, FormBuilder $formBuilder, Request $request)
+        public function edit(Seo $seo, FormBuilder $formBuilder, Request $request, $type, $id)
         {
             // Etonnant laravel ne comprends pas l'object Traduction.
 
             $seo->checkForTraduction();
             // $traduction->flashForMissing();
-            $type = $request->type;
-            $id = (int) $request->id;
+            // $type = $request->type;
+            // $id = (int) $request->id;
 
-            if($id == null && $type == null) {
+            if(empty($id) && empty($type)) {
                 abort(403);
             }
 
             $model_key = adminify_get_class($type, ['app:models', 'app:adminify:models'], false);
 
-            if($model_key == null) {
+            if(empty($model_key)) {
                 abort(403);
             }
 
@@ -67,20 +67,20 @@ class SeoController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(Seo $seo, FormBuilder $formBuilder, Request $request)
+        public function update(Seo $seo, FormBuilder $formBuilder, Request $request, $type, $id)
         {
             //
 
-            $type = $request->type;
-            $id = (int) $request->id;
+            // $type = $request->type;
+            // $id = (int) $request->id;
 
-            if($id == null && $type == null) {
+            if(empty($id) && empty($type)) {
                 abort(403);
             }
 
             $model_key = adminify_get_class($type, ['app:models', 'app:adminify:models'], false);
 
-            if($model_key == null) {
+            if(empty($model_key)) {
                 abort(403);
             }
 
