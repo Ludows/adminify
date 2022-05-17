@@ -50,14 +50,6 @@ class Translations extends ClassicModel
         return \App\Adminify\Forms\UpdateTranslation::class;
     }
 
-    protected static function makeTranslations($context) {
-
-        Artisan::call('generate:translations', [
-            '--front' => true
-        ]);
-
-    }
-
     public function getSearchResult() : SearchResult
     {
        $url = route('traductions.edit', ['traduction' => $this->id]);
@@ -70,20 +62,4 @@ class Translations extends ClassicModel
     }
 
     public function toFeedItem(): FeedItem {}
-
-    protected static function booted()
-    {
-        static::created(function ($model) {
-            //
-            static::makeTranslations($model);
-        });
-        static::updated(function ($model) {
-            //
-            static::makeTranslations($model);
-        });
-        static::deleted(function ($model) {
-            //
-            static::makeTranslations($model);
-        });
-    }
 }
