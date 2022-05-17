@@ -11,11 +11,11 @@ class TrashController extends Controller
     public function __construct() {
         $this->middleware(['permission:read|set_to_trash'], ['only' => ['index']]);
     }
-    public function index(Request $request) {
+    public function index(Request $request, $type, $id) {
 
 
-        $type = $request->type;
-        $id = $request->id;
+        // $type = $request->type;
+        // $id = $request->id;
 
         $cl = adminify_get_class($type, ['app:models', 'app:adminify:models'], false);
         $enable_features = get_site_key('enables_features');
@@ -29,7 +29,7 @@ class TrashController extends Controller
         $m = $m->find($id);
 
         if(is_trashable_model($m)) {
-            
+
             $m = $m->fill([
                 'status_id' => Statuses::TRASHED_ID
             ]);

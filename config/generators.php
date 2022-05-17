@@ -51,6 +51,14 @@ return [
             'dump_autoload'       => false,
             'repository_contract' => false,
         ],
+        'adminify_api_controller'   => [
+            'namespace'           => '\Http\Controllers\Api',
+            'path'                => './app/Http/Controllers/Api/',
+            'postfix'             => 'Controller',
+            'directory_namespace' => true,
+            'dump_autoload'       => false,
+            'repository_contract' => false,
+        ],
         'table' => [
             'namespace'           => '\Tables',
             'path'                => './app/Tables/',
@@ -85,6 +93,12 @@ return [
             'namespace'           => '\Interfacable\Blocks',
             'path'                => './app/Interfacable/Blocks/',
             'postfix'             => 'Block',
+            'directory_namespace' => true,
+        ],
+        'adminify_metas' => [
+            'namespace'           => '\Metas\\',
+            'path'                => './app/Metas/',
+            'postfix'             => 'Meta',
             'directory_namespace' => true,
         ],
         'request' => [
@@ -217,6 +231,7 @@ return [
         'factory'                => base_path() . '/resources/stubs/factory.stub',
         'test'                   => base_path() . '/resources/stubs/test.stub',
         'adminify_controller'    => base_path() . '/resources/stubs/adminify-controller.stub',
+        'adminify_api_controller'    => base_path() . '/resources/stubs/adminify-controller-api.stub',
         'adminify_model_classic' => base_path() . '/resources/stubs/model-classic.stub',
         'adminify_model_content_type'     => base_path() . '/resources/stubs/model-content-type.stub',
         'adminify_table'         => base_path() . '/resources/stubs/table.stub',
@@ -226,5 +241,6 @@ return [
         'hook'         => base_path() . '/resources/stubs/hook.stub',
         'interfacable'         => base_path() . '/resources/stubs/interfacable.stub',
         'interfacable_blocks'         => base_path() . '/resources/stubs/interfacable_blocks.stub',
+        'adminify_metas'         => base_path() . '/resources/stubs/adminify-metas.stub',
     ]
 ];

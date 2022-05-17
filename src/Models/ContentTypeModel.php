@@ -5,12 +5,10 @@ namespace Ludows\Adminify\Models;
 use Ludows\Adminify\Traits\Urlable;
 use Ludows\Adminify\Traits\Sitemapable;
 use Ludows\Adminify\Traits\HasSeo;
-use VanOns\Laraberg\Models\Gutenbergable;
 use Ludows\Adminify\Traits\Authorable;
 
 use App\Adminify\Models\User;
 use App\Adminify\Models\Page;
-use App\Adminify\Models\Statuses;
 
 use Ludows\Adminify\Models\ClassicModel;
 use Spatie\Feed\FeedItem;
@@ -20,16 +18,10 @@ abstract class ContentTypeModel extends ClassicModel
     use Urlable;
     use HasSeo;
     use Sitemapable;
-    use Gutenbergable;
     use Authorable;
 
 
-    public function status() {
-        return $this->HasOne(Statuses::class, 'id', 'status_id');
-    }
-    public function scopeStatus($query, $key, $operator = '=') {
-        return $query->where('status_id', $operator, $key);
-    }
+
     public function parent() {
         return $this->HasOne(Page::class, 'id', 'parent_id');
     }
@@ -39,15 +31,21 @@ abstract class ContentTypeModel extends ClassicModel
     public function getParent($id) {
         return Page::find($id);
     }
-    public function isPublished() {
-        return $this->status_id == Statuses::PUBLISHED_ID;
+
+    public function getSitemapUrl() {
+
+        $url = '/';
+
+        $isHomepage = is_homepage($this);
+
+
+        if(!$isHomepage) {
+            $url = $this->urlpath;
+        }
+
+        return $url;
     }
-    public function isDrafted() {
-        return $this->status_id == Statuses::DRAFTED_ID;
-    }
-    public function isTrashed() {
-        return $this->status_id == Statuses::TRASHED_ID;
-    }
+
     public function toFeedItem(): FeedItem
     {
         return FeedItem::create([
@@ -60,7 +58,7 @@ abstract class ContentTypeModel extends ClassicModel
         ]);
     }
     public function getRenderContentAttribute() {
-        
+
         $content = $this->content;
 
         $shortcodes = parse_shortcode($content);

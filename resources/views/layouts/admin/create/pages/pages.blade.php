@@ -22,6 +22,17 @@
             {!! form_row($form->user_id) !!}
             @yield('after_editor')
             {{-- {!! dd($form) !!} --}}
+
+            @if(!empty($form->_metaboxes))
+                @php
+                    $spl_metaboxes = explode(',', $form->_metaboxes->getValue());
+                @endphp
+
+                @foreach ($spl_metaboxes as $metabox_formitem)
+                    {!! form_row($form->{'_'.$metabox_formitem}) !!}
+                @endforeach
+
+            @endif
         </div>
         <div class="col-12 col-lg-3 sticky-top">
             @yield('start_sidebar')

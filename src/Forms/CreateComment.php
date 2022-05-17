@@ -44,7 +44,7 @@ class CreateComment extends Form
                 'width' => '100%'
             ]
         ]);
-        $this->add('comment', 'summernote', [
+        $this->add('comment', 'tiptap', [
             'label' => __('admin.form.comment'),
         ]);
         

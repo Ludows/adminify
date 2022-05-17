@@ -12,8 +12,14 @@ class SearchController extends Controller
 {
     public function index(Request $request) {
 
+        if(!empty($request->focus_search)) {
+            $key = $request->focus_search;
+        }
+        else {
+            $key = 'admin';
+        }
 
-        $config = get_site_key('searchable.admin');
+        $config = get_site_key('searchable.'.$key);
 
         $searchResults = (new Search());
 
@@ -36,7 +42,9 @@ class SearchController extends Controller
 
         }
 
-        $searchResults = $searchResults->search($request->input( $config['name'] ));
+        $query = $request->input( $config['name'] );
+
+        $searchResults = $searchResults->search( empty($query) ? '' : $query);
 
         $a = [
             'response' => $searchResults->groupByType(),

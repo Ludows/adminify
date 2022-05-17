@@ -29,7 +29,7 @@ class ListingController extends Controller
 
         $columns = $m->getFillable();
         $schemaBuilder = $m->getConnection()->getSchemaBuilder();
-        $TableManager = $m->getTableListing();
+        $TableManager = adminify_get_class($datas['table'], ['app:tables', 'app:adminify:tables'], false);
         $translatableFields = [];
         if($is_multilang_model) {
             $translatableFields = $m->translatable;
@@ -43,15 +43,25 @@ class ListingController extends Controller
         }
 
         $search = null;
-        if(isset($datas['search'])) {
+        if(!empty($datas['search'])) {
             $search = $datas['search'];
+        }
+        $keys = [];
+        $restrictedBindings = ['title', 'slug'];
+
+        if(isset($datas['status']) && is_trashable_model($modelBase) && $datas['status'] != -1) {
+            $m = $m->where($modelBase->status_key, $datas['status']);
+        }
+
+        else if (is_trashable_model($modelBase) && $datas['status'] == -1) {
+            $m = $m->where($modelBase->status_key, '!=', Statuses::TRASHED_ID);
         }
 
         if($search != null) {
             $i = 0;
             foreach ($searchColumns as $column) {
                 # code...
-                if( $schemaBuilder->hasColumn($modelBase->getTable(), $column)  ) {
+                if( $schemaBuilder->hasColumn($modelBase->getTable(), $column) && $column != $modelBase->status_key  ) {
                     $binding = null;
                     if($is_multilang_model && $useMultilang && in_array($column , $translatableFields)) {
                         $binding = $column.'->'.$lang;
@@ -60,24 +70,21 @@ class ListingController extends Controller
                         $binding = $column;
                     }
 
-                    if($i == 0) {
-                       $m = $m->where($binding, 'like',  "%" . strtolower($search) . "%");
+                    if(in_array($binding, $restrictedBindings)) {
+                       $m = $m->where($binding, 'like',  "%" . $search . "%");
                     }
                     else {
-                        $m = $m->orWhere($binding, 'like',  "%" . strtolower($search) . "%");
+                        $m = $m->orWhere($binding, 'like',  "%" . $search . "%");
                     }
+
+                    $keys[] = $binding;
 
                     $i++;
                 }
             }
         }
 
-        if(isset($datas['status']) && is_trashable_model($modelBase) && $datas['status'] != -1) {
-            $m = $m->where('status_id', $datas['status']);
-        }
-        else if (is_trashable_model($modelBase) && $datas['status'] == -1) {
-            $m = $m->status(Statuses::TRASHED_ID, '!=');
-        }
+
 
         $m = $m->take( $config['limit'] );
 
@@ -85,7 +92,10 @@ class ListingController extends Controller
         $m = $m->skip($datas['offset']);
         // }
 
+
         $results = $m->get();
+
+        // dd($keys, $m->toSql(), $m->getBindings(), $results, $search);
 
 
         // $TableManager = $m->getTableListing();
@@ -96,10 +106,19 @@ class ListingController extends Controller
         //render only listing not entierely table
         $v = $table->list();
 
+        $defaultEnd =  ($datas['offset'] + $results->count()) >= $datas['maxItems'];
+
+        // if(!empty($search)) {
+            if($results->count() < $datas['limit']) {
+                $defaultEnd = $results->count() < $datas['limit'];
+            }
+        // }
+
 
         $a = [
             'html' => $v->render(),
-            'isEnd' => isset($datas['offset']) && ($datas['offset'] + $results->count()) >= $datas['maxItems'] ? true : false,
+            // 'isEnd' => isset($datas['offset']) && ($datas['offset'] + $results->count()) >= $datas['maxItems'] ? true : false,
+            'isEnd' => $defaultEnd,
             'response' => $results,
             'count' => $results->count(),
             'status' => 'OK',

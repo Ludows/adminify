@@ -12,23 +12,25 @@ class ContentTypesHook extends HookInterface {
         $only_for_deleting = ['model:deleting'];
 
 
-        if($model != null && in_array($hookName, $allowed_hooks)) {
-            if(is_urlable_model($model) && $model->allowSitemap) {
+        if(!empty($model) && in_array($hookName, $allowed_hooks)) {
+            $isContentType = is_content_type_model($model);
+            if($isContentType && $model->allowSitemap) {
                 $this->syncronizeUrl($model);
                 $this->syncToCache($model);
             }
     
-            if(is_sitemapable_model($model) && $model->allowSitemap) {
+            if($isContentType && $model->allowSitemap) {
                 $this->loadGenerateSitemap($model);
             }
         }
 
-        if(in_array($hookName, $only_for_deleting)) {
+        if(!empty($model) && in_array($hookName, $only_for_deleting)) {
+            $isContentType = is_content_type_model($model);
             $this->syncToCache($model, true);
-            if(is_urlable_model($model) && $model->allowSitemap) {
+            if($isContentType && $model->allowSitemap) {
                 $this->syncronizeUrl($model, true);
             }
-            if(is_sitemapable_model($model) && $model->allowSitemap) {
+            if($isContentType && $model->allowSitemap) {
                 $this->loadGenerateSitemap($model);
             }
         }
@@ -41,13 +43,11 @@ class ContentTypesHook extends HookInterface {
         $parentable = $context->parent_id;
         //dump($parentable);
         $reflect = new \ReflectionClass($context);
-        $checkHomePage = setting('homepage');
-        $checkBlogPage = setting('blogpage');
 
-        $isHomePage = $checkHomePage != null && $context->id == (int) $checkHomePage;
-        $isBlogPage = $checkBlogPage != null && $context->id == (int) $checkBlogPage;
+        $isHomePage = is_homepage($context);
+        $isBlogPage = is_blogpage($context);
 
-        if(isset($parentable) && $parentable != 0) {
+        if(!empty($parentable) && $parentable != 0) {
             $context->syncUrl([
                 'from_model_id' => $from,
                 'model_id' => $context->id,

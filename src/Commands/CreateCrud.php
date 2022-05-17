@@ -73,6 +73,11 @@ class CreateCrud extends Command
             'model' => Str::singular($model),
         ]);
 
+        $this->info('Create Api Controller for your entity...');
+        $this->call('adminify:api_controller', [
+            'model' => Str::singular($model),
+        ]);
+        
         $this->info('Create Model for your entity...');
         $this->call('adminify:model', [
             'model' => Str::singular($model) ,

@@ -21,6 +21,7 @@ class CreateForms extends Form
             'prefer_input' => true,
             'label_show' => false,
             'wrapper' => false,
+            'data' => [],
             'options' => [    // these are options for a single type
                 'class' => 'App\Adminify\Forms\CreateFields',
                 'label' => false,

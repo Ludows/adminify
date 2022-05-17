@@ -11,7 +11,7 @@ class CategoryRepository extends BaseRepository
     ];
 
     public function delete($model) {
-        $this->hookManager->run('model:deleting', $model);
+        // $this->hookManager->run('model:deleting', $model);
 
         $check_for_parent_id = Category::where('parent_id', '=', $model->id)->get();
         $childCatArr = $check_for_parent_id->all();
@@ -21,12 +21,12 @@ class CategoryRepository extends BaseRepository
             // restore to default
             $childCat->fill(['parent_id' => 0]);
             $childCat->save();
-            $this->hookManager->run('model:updated', $childCat);
+            // $this->hookManager->run('model:updated', $childCat);
         }
 
         $model->delete();
-        $this->hookManager->run('model:deleted', $model);
-        $this->hookManager->run('process:finished', $model);
+        // $this->hookManager->run('model:deleted', $model);
+        // $this->hookManager->run('process:finished', $model);
 
     }
 }

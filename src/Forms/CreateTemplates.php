@@ -14,7 +14,7 @@ class CreateTemplates extends Form
             'label_show' => false,
             'attr' => ['placeholder' =>  __('admin.form.title') ],
         ]);
-        $this->add('content', 'laraberg', [
+        $this->add('content', 'visual_editor', [
             'label' => __('admin.form.content'),
             'label_show' => false
         ]);

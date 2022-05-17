@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ lang() }}">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -16,29 +16,29 @@
         <!-- Argon CSS -->
         {!! Assets::css() !!}
         @stack('css')
-        
+
+        <script>
+            window.siteSettings = @json($request->siteConfig)
+        </script>
+
     </head>
     <body class="{{ $class ?? '' }}">
         @auth()
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+            <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
-            @if(!$loadEditor)
+            {{-- @if(!$loadEditor) --}}
                 @include('adminify::layouts.admin.navbars.sidebar')
-            @endif
+            {{-- @endif --}}
         @endauth
 
         <div class="main-content">
-            @if(!$loadEditor)
+            @if(!is_auth_routes())
                 @include('adminify::layouts.admin.navbars.navbar')
             @endif
 
             @yield('content')
         </div>
-
-        @guest()
-            @include('adminify::layouts.admin.footers.guest')
-        @endguest
 
         {!! Assets::js() !!}
         {{--  <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>  --}}
@@ -50,7 +50,7 @@
         @include('adminify::layouts.admin.modales.globalSearch')
         @stack('modales')
         @stack('js')
-        
+
 
         {{-- <!-- Argon JS -->
         <script src="{{ asset('adminify/back') }}/js/extensions-call.js"></script>

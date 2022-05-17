@@ -81,7 +81,7 @@ class CreatePost extends Form
                     'btnClear' => null
                 ],
                 'form' => [
-                    'namespace' => 'App\Forms\CreateTag',
+                    'namespace' => 'App\Adminify\Forms\CreateTag',
                     'attributes' => [
                         'url' => route('tags.store'),
                         'method' => 'POST'
@@ -107,7 +107,7 @@ class CreatePost extends Form
             ]);
         }
 
-            $this->add('content', 'laraberg', [
+            $this->add('content', 'visual_editor', [
                 'label_show' => false,
                 'label' => __('admin.form.content'),
                 'withBtnForTemplates' => true

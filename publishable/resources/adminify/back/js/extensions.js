@@ -1,8 +1,6 @@
 // Show packages.json
 window.jQuery = window.$ = require('jquery');
 
-require('jquery-validation');
-
 import {
     createLaravelLocalization
 } from '@wesleyhf/laravel-localization-js';
@@ -15,10 +13,8 @@ window.createLaravelLocalization = createLaravelLocalization;
 
 require('select2');
 
-require('bootstrap');
+require('adminify_bootstrap_admin');
 
-require('summernote');
-require('summernote/dist/summernote-bs4.js');
 // require('bootstra');
 require('./serializeAsObject')
 require('./clearValues')
@@ -34,6 +30,8 @@ window.admin = {
     larabergFields : [],
     generatorPasswordFields: [],
     lfmFields : [],
-    summernoteFields : [],
+    // summernoteFields : [],
+    VisualEditorFields : [],
+    tiptapFields : []
 }
 

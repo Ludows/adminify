@@ -6,39 +6,61 @@ jQuery(document).ready(function ($) {
 
     let tBodyStart = listingBlock.find('.js-datatable tbody').html();
 
-    let searchEntity = listingBlock.find('.js-search-entity');
+    let searchEntity = listingBlock.find('.js-search-entity').first();
+    let StatusEntity = listingBlock.find('.js-select-status').first();
     let btnsListing = listingBlock.find('.js-listing-btn');
     let searchhasbeenTriggered = false;
 
-    listingBlock.on('change', '.js-select-status', _.debounce(function (e) {
-        loadSearch($(this).val(), true)
-    }, 300))
+    StatusEntity.on('change', function (e) {
+        console.log(searchEntity.val())
+        let Search = searchEntity.val()
+        triggerSearch( Search.trim() , false, null, $(this).val().trim());
+    })
 
-    listingBlock.on('keyup', '.js-search-entity', _.debounce(function (e) {
+    searchEntity.on('keyup', function (e) {
         e.preventDefault();
+        console.log('log')
 
-        loadSearch($(this).val(), false)
-
-    }, 300))
-
-    listingBlock.on('click', '.js-listing-btn', function (e) {
-        triggerSearch(searchEntity ? searchEntity.val() : null, true, $(this));
-    });
-
-    function loadSearch(value, isStatusable) {
-        let val = value
-
-        if (val.length > 2 && !isStatusable) {
-            console.log('val>>>', val)
-            triggerSearch(val, false);
-        } else if(isStatusable) {
-            triggerSearch( listingBlock.find('.js-search-entity').val() , false, null, val);
-        } else {
+        let Status = StatusEntity.val()
+        let searchValue = searchEntity.val();
+        let ConditionToTrigger = searchValue.trim().length >= 1;
+        console.log(searchValue, ConditionToTrigger)
+        if(ConditionToTrigger) {
+            triggerSearch( searchValue , false, null, Status.trim());
+        }
+        else {
             listingBlock.find('.js-datatable tbody').html('');
             listingBlock.find('.js-datatable tbody').append(tBodyStart);
             listingBlock.attr('data-page', '1')
         }
-    }
+
+    })
+
+    listingBlock.on('click', '.js-listing-btn', function (e) {
+        triggerSearch(searchEntity ? searchEntity.val().trim() : null, true, $(this));
+    });
+
+    // function loadSearch(searchValue, statusValue) {
+    //     // let val = value
+    //     console.log(searchValue, statusValue)
+
+    //         triggerSearch( searchValue , false, null, statusValue);
+    //     }
+    //     else {
+
+    //     }
+
+    //     // if (val.length > 2 && !isStatusable) {
+    //     //     console.log('val>>>', val)
+    //     //     triggerSearch(val, false);
+    //     // } else if(isStatusable) {
+    //     //     triggerSearch( listingBlock.find('.js-search-entity').val() , false, null, val);
+    //     // } else {
+    //     //     listingBlock.find('.js-datatable tbody').html('');
+    //     //     listingBlock.find('.js-datatable tbody').append(tBodyStart);
+    //     //     listingBlock.attr('data-page', '1')
+    //     // }
+    // }
 
     function syncBtns(currentPage = 1) {
 
@@ -79,7 +101,7 @@ jQuery(document).ready(function ($) {
     function triggerSearch(valInput, fromBtns, btnElement = null, statusId = -1) {
         // window.listingConfig
 
-        console.log('debounced')
+        // console.log('debounced')
 
         let o = window.listingConfig;
 
@@ -96,7 +118,6 @@ jQuery(document).ready(function ($) {
         // }
         if(_direction) {
             o['offset'] = _direction == 'next' ? parseInt( listingBlock.attr('data-page') ) * window.listingConfig.limit : ( parseInt( listingBlock.attr('data-page') ) * window.listingConfig.limit ) - (window.listingConfig.limit * 2);
-            console.log('offset', o['offset']);
         }
         else {
             o['offset'] = 0;

@@ -1,4 +1,4 @@
-@extends('adminify::layouts.admin.app', ['class' => $loadEditor ? 'is-editor-mode' : ''])
+@extends('adminify::layouts.admin.app', [])
 
 @if (!empty($adminCssLinks))
     @foreach ($adminCssLinks as $adminCssPath)
@@ -11,18 +11,10 @@
 @section('content')
     {{-- // check auto enable editor. --}}
     {{-- // all values in mutilang middleware are appended in views and request for more flexibility. --}}
-
-    @if($loadEditor)
-
-        {{-- get the editor interface. --}}
-        {!! interfaces('editor')->render() !!}
-
+    @if(view()->exists('adminify::layouts.admin.create.pages.'.$name))
+        @include('adminify::layouts.admin.create.pages.'.$name)
     @else
-        @if(view()->exists('adminify::layouts.admin.create.pages.'.$name))
-            @include('adminify::layouts.admin.create.pages.'.$name)
-        @else
-            @include('adminify::layouts.admin.create.pages.default')
-        @endif
+        @include('adminify::layouts.admin.create.pages.default')
     @endif
 @endsection
 

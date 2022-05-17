@@ -54,7 +54,7 @@ class TranslationsController extends Controller
             */
         public function create(FormBuilder $formBuilder)
         {
-            $form = $formBuilder->create(FormsCreateTranslation::class, [
+            $form = $this->makeForm(FormsCreateTranslation::class, [
                 'method' => 'POST',
                 'url' => route('traductions.store')
             ]);
@@ -70,7 +70,7 @@ class TranslationsController extends Controller
         public function store(CreateTranslationRequest $request)
         {
             //
-            $form = $this->form(FormsCreateTranslation::class);
+            $form = $this->makeForm(FormsCreateTranslation::class);
             $traduction = $this->translationRepository->addModel(new Traductions())->create($form);
 
             return $this->sendResponse($traduction, 'traductions.index', 'admin.typed_data.success');
@@ -100,7 +100,7 @@ class TranslationsController extends Controller
             $traduction->checkForTraduction();
             // $traduction->flashForMissing();
 
-            $form = $formBuilder->create(UpdateTranslation::class, [
+            $form = $this->makeForm(UpdateTranslation::class, [
                 'method' => 'PUT',
                 'url' => route('traductions.update', ['traduction' => $traduction->id]),
                 'model' => $traduction
@@ -118,7 +118,7 @@ class TranslationsController extends Controller
         public function update(Traductions $traduction, FormBuilder $formBuilder, UpdateTranslationRequest $request)
         {
             //
-            $form = $this->form(UpdateTranslation::class, [
+            $form = $this->makeForm(UpdateTranslation::class, [
                 'method' => 'PUT',
                 'url' => route('traductions.update', ['traduction' => $traduction->id]),
                 'model' => $traduction

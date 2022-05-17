@@ -11,11 +11,14 @@ use Ludows\Adminify\Commands\GenerateFeeds;
 use Ludows\Adminify\Commands\CreateUser;
 use Ludows\Adminify\Commands\CreateModel;
 use Ludows\Adminify\Commands\CreateController;
+use Ludows\Adminify\Commands\CreateApiController;
 use Ludows\Adminify\Commands\CreateRepository;
 use Ludows\Adminify\Commands\DoInstallEnv;
 use Ludows\Adminify\Commands\CreateInterfacable;
 use Ludows\Adminify\Commands\CreateInterfacableBlock;
 use Ludows\Adminify\Commands\GenerateAdminifyContainer;
+use Ludows\Adminify\Commands\CreateMetas;
+use Ludows\Adminify\Commands\CreateTheme;
 
 use Ludows\Adminify\Commands\CreateCrud;
 use Ludows\Adminify\Commands\CreateTable;
@@ -34,6 +37,15 @@ use Ludows\Adminify\View\Components\Modal;
 use Ludows\Adminify\Libs\HookManager;
 use Ludows\Adminify\Facades\HookManagerFacade;
 
+use Illuminate\Contracts\Filesystem\Filesystem;
+use League\Glide\Responses\LaravelResponseFactory;
+use League\Glide\ServerFactory;
+
+use League\Glide\Signatures\SignatureFactory;
+
+use Ludows\Adminify\Libs\SitemapRender;
+
+use Illuminate\Support\Facades\Storage;
 
 use File;
 use Config;
@@ -54,10 +66,9 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         if(!$app->runningInConsole()) {
             $packages = require_once(__DIR__.'/../config/packagelist.php');
-
             $this->bootableDependencies($packages, $kernel);
-            
         }
+        
 
 
 
@@ -71,9 +82,26 @@ class AdminifyServiceProvider extends ServiceProvider {
             __DIR__.'/../config/site-settings.php', 'adminify'
         );
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'adminify');
+
+        $this->loadCustomViewsPaths();
+
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'adminify');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
+    }
+
+    public function loadCustomViewsPaths() {
+        $paths = get_site_key('custom_views_paths');
+
+        $isEmpty = empty($paths);
+
+        if(!$isEmpty) {
+            foreach ($paths as $key => $value) {
+                # code...
+                $this->loadViewsFrom($value, $key);
+            }
+        }
+        
     }
 
     /**
@@ -84,12 +112,55 @@ class AdminifyServiceProvider extends ServiceProvider {
     public function register() {
 
         // Register the service the package provides.
+        define('IS_ADMINIFY', true);
 
         $this->app->singleton('adminify', function($app) {
 
             return new Adminify;
         });
 
+        $this->app->singleton('League\Glide\Server', function($app) {
+
+            $filesystem = Storage::disk(config('lfm.disk'));
+
+
+            // dd(request('path'));
+
+            // dd($filesystem->getDriver(), $filesystem->exists('files/1/IMG_20220302_112930-removebg-preview.png'), config('lfm.disk') );
+            $lfm = app()->make('UniSharp\LaravelFilemanager\LfmPath');
+            $source_path_prefix = '';
+            $path_image = request('path');
+
+            // dd($lfm->files());
+
+            foreach ($lfm->files() as $fileObject) {
+                # code...
+                // dd($fileObject->path('url'));
+                $url = $fileObject->path('url');
+                if($fileObject->name() == $path_image) {
+                    $source_path_prefix = trim(str_replace($path_image, '', $url));
+                    break;
+                }
+            }
+
+            return ServerFactory::create([
+                'response' => new LaravelResponseFactory(app('request')),
+                'source' => $filesystem->getDriver(),
+                'cache' => $filesystem->getDriver(),
+                'cache_path_prefix' => '.cache',
+                'source_path_prefix' =>  $source_path_prefix,
+                'base_url' => 'images',
+                'max_image_size' => 2000*2000,
+            ]);
+        });
+
+        $this->app->singleton('League\Glide\Signatures\Signature', function($app) {
+            return SignatureFactory::create(env('GLIDE_SECURE_KEY'));
+        });
+
+        $this->app->singleton('Ludows\Adminify\Libs\SitemapRender', function($app) {
+            return new SitemapRender();
+        });
 
         $this->app->bind('HookManager', function () {
             return new HookManager();
@@ -107,6 +178,7 @@ class AdminifyServiceProvider extends ServiceProvider {
      *
      * @return array
      */
+
     public function provides() {
 
         return ['adminify'];
@@ -117,16 +189,12 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         if($app->runningInConsole()) {
             $this->publishes(array(
+                __DIR__.'/../config/site-settings.php' => config_path('site-settings.php'),
+            ), 'adminify-config');
+
+            $this->publishes(array(
                 __DIR__.'/../resources/views/' => resource_path('views/vendor/adminify/'),
             ), 'adminify-views');
-
-            $this->publishes(array(
-                __DIR__.'/../resources/views/layouts/front' => resource_path('views/vendor/adminify/layouts/front'),
-            ), 'adminify-views-front');
-
-            $this->publishes(array(
-                __DIR__.'/../resources/views/layouts/admin' => resource_path('views/vendor/adminify/layouts/admin'),
-            ), 'adminify-views-admin');
 
             $this->publishes(array(
                 __DIR__.'/../database/views/' => database_path('migrations'),
@@ -158,7 +226,7 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         // });
     }
-    
+
 
     private function bootableDependencies($packages, $kernel) {
 
@@ -243,8 +311,10 @@ class AdminifyServiceProvider extends ServiceProvider {
             GenerateAdminifyContainer::class,
             CreateForms::class,
             CreateTable::class,
+            CreateTheme::class,
             CreateRepository::class,
             CreateController::class,
+            CreateApiController::class,
             CreateCrud::class,
             DoInstallEnv::class,
             CreateModel::class,
@@ -255,7 +325,8 @@ class AdminifyServiceProvider extends ServiceProvider {
             RouteList::class,
             CreateTranslations::class,
             CreateInterfacable::class,
-            CreateInterfacableBlock::class
+            CreateInterfacableBlock::class,
+            CreateMetas::class
         ]);
     }
 }

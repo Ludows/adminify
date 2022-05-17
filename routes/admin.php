@@ -3,7 +3,7 @@ use Illuminate\Support\Facades\Route;
 
 $c = config('site-settings.enables_features');
 
-Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrator|editor', 'admin.breadcrumb', 'admin.menu', 'check.permissions', 'admin.deletemedia', 'admin.fullmode', 'admin.seo'])->group( function () use ($c) {
+Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrator|editor|subscriber', 'admin.breadcrumb', 'admin.menu', 'check.permissions', 'admin.deletemedia', 'admin.fullmode', 'admin.seo'])->group( function () use ($c) {
 
     Route::get('/dashboard', 'App\Adminify\Http\Controllers\Back\HomeController@index')->name('home.dashboard');
 
@@ -69,11 +69,15 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
     }
 
     if(is_multilang()) {
-        Route::resource('savetraductions', 'App\Adminify\Http\Controllers\Back\SaveTranslationsController', ['except' => ['show', 'create', 'store', 'index', 'destroy']]);
+        Route::get('savetraductions', 'App\Adminify\Http\Controllers\Back\SaveTranslationsController@edit')->name('savetraductions.edit');
+        Route::get('savetraductions/update', 'App\Adminify\Http\Controllers\Back\SaveTranslationsController@update')->name('savetraductions.update');
+        // Route::resource('savetraductions', 'App\Adminify\Http\Controllers\Back\SaveTranslationsController', ['except' => ['show', 'create', 'store', 'index', 'destroy']]);
     }
 
     // if(isset($c['post']) && $c['post']) {
     // }
+
+    Route::post('editor/preview/{type}/{id?}', 'App\Adminify\Http\Controllers\Back\EditorController@preview')->withoutMiddleware([\App\Http\Middleware\VerifyCsrfToken::class])->name('editor.preview');
 
     Route::post('find/{type}', 'App\Adminify\Http\Controllers\Back\FinderController@index')->name('finder');
 
@@ -99,6 +103,10 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
 
     }
 
+    if(isset($c['metas']) && $c['metas']) {
+        Route::resource('groupmetas', 'App\Adminify\Http\Controllers\Back\GroupMetasController', ['except' => ['show']]);
+    }
+
     Route::post('/forms/ajax/', 'App\Adminify\Http\Controllers\Back\HomeController@getForms')->name('forms.ajax');
     Route::post('/content/', 'App\Adminify\Http\Controllers\Back\HomeController@getContents')->name('content.ajax');
     Route::post('{type}/trash/{id}', 'App\Adminify\Http\Controllers\Back\TrashController@index')->name('trash');
@@ -114,14 +122,6 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
 
     if(file_exists($path_admin_file)){
         include($path_admin_file);
-    }
-
-    if(isset($c['editor']) && $c['editor']) {
-        Route::post('editor/add/{widget}', 'App\Adminify\Http\Controllers\Back\EditorController@addWidget')->name('editor.addWidget');
-        Route::post('editor/template/{id}', 'App\Adminify\Http\Controllers\Back\EditorController@getTemplate')->name('editor.getTemplate');
-        Route::post('editor/autosave', 'App\Adminify\Http\Controllers\Back\EditorController@autosave')->name('editor.autosave');
-        Route::post('editor/duplicate', 'App\Adminify\Http\Controllers\Back\EditorController@duplicateBlock')->name('editor.duplicate');
-        // Route::post('editor/settings', 'App\Adminify\Http\Controllers\Back\EditorController@storeSettings')->name('editor.store');
     }
 
 

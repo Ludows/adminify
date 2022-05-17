@@ -17,7 +17,7 @@ class AdminableToolbar
     }
 
     public function getView() {
-        return 'adminify::layouts.front.toolbar.index';
+        return 'adminify::layouts.modules.toolbar';
     }
 
     private function callMethodOrClass($class, $arrayMap, $param) {
@@ -44,14 +44,14 @@ class AdminableToolbar
 
 
         foreach ($arrayOfItems as $menuKey => $menuItem) {
-            
+
             $menuItem['show'] = true;
 
             if(isset($menuItem['key_title'])) {
                 $menuItem['title'] = __($menuItem['key_title']);
                 unset($menuItem['key_title']);
             }
-            
+
             if(isset($menuItem['key_url'])) {
                 $menuItem['url'] = route($menuItem['key_url']);
                 unset($menuItem['key_url']);
@@ -96,7 +96,11 @@ class AdminableToolbar
         return route('users.profile.edit', ['user' => $u->id]);
     }
     public function modify() {
-        return route('home.dashboard');
+        $r = $this->getRequest();
+        $plural = plural( lowercase( class_basename( $r->model ) ) );
+        $singular = singular( lowercase( class_basename( $r->model ) ) );
+
+        return route($plural.'.edit', [$singular => $r->model->id]);
     }
     public function newComment() {
         return true;

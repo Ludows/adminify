@@ -3,9 +3,26 @@ use Thunder\Shortcode\ShortcodeFacade;
 use App\Adminify\Models\Translations as Traduction;
 use App\Adminify\Models\Forms;
 use App\Adminify\Models\Menu;
+use App\Adminify\Models\Media;
 use App\Adminify\Models\Settings;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
+use League\Glide\Urls\UrlBuilderFactory;
+use Illuminate\Support\Facades\Storage;
+
+use Illuminate\Support\Collection;
+
+
+Collection::macro('getSetting', function ($name) {
+    return $this->map(function ($value) use ($name) {
+        $ret = null;
+        if($value->type == $name) {
+            return $value;
+        }
+        return $ret;
+    });
+});
+
 
 if (! function_exists('do_shortcode')) {
     function do_shortcode($shortcodeName, $parameters = []) {
@@ -51,6 +68,73 @@ if (! function_exists('adminify_autoload')) {
 if (! function_exists('uuid')) {
     function uuid($length = 10) {
         return Str::random($length);
+    }
+}
+
+if(! function_exists('is_content_type_model')) {
+    function is_content_type_model($model) {
+        $r = new \ReflectionClass( $model );
+        return $r->isSubclassOf( new \ReflectionClass( 'Ludows\Adminify\Models\ContentTypeModel' ) );
+    }
+}
+
+if(! function_exists('is_template')) {
+    function is_template($model) {
+        $r = new \ReflectionClass( $model );
+        return $r->isSubclassOf( new \ReflectionClass( 'Ludows\Adminify\Models\Templates' ) );
+    }
+}
+
+if(! function_exists('is_adminify')) {
+    function is_adminify() {
+        return defined('IS_ADMINIFY') == true;
+    }
+}
+
+if(!function_exists('locales')) {
+    function locales() {
+        return config('site-settings.supported_locales');
+    }
+}
+
+if(! function_exists('is_auth_routes')) {
+    function is_auth_routes() {
+        $ret = false;
+        $isRunning = is_running_console();
+        if(!$isRunning) {
+            $r = request();
+            $split_route = $r->currentRouteSplitting;
+
+            if(empty($split_route)) {
+                // fallback when currentRouteSplitting is not defined
+                $routeName = $r->route()->getName();
+                $split_route = explode('.', $routeName);
+            }
+
+            // currentRouteSplitting
+            $ret = $split_route[0] === 'auth';
+        }
+        return $ret;
+    }
+}
+
+if(! function_exists('is_running_console')) {
+    function is_running_console() {
+        return app()->runningInConsole();
+    }
+}
+
+if(! function_exists('adminify_asset')) {
+    function adminify_asset($path) {
+        $isRunning = is_running_console();
+        $basePathFromEnv = env('APP_URL');
+
+        if($isRunning) {
+            return $basePathFromEnv.$path;
+        }
+        else {
+            return asset($path);
+        }
     }
 }
 
@@ -203,6 +287,12 @@ if (! function_exists('singular')) {
     }
 }
 
+if(! function_exists('containsIn')) {
+    function containsIn($string = '', $mixed) {
+        return Str::contains($string, $mixed);
+    }
+}
+
 if (! function_exists('slug')) {
     function slug($name = '') {
         return Str::slug($name);
@@ -246,19 +336,12 @@ if (! function_exists('lowercase')) {
     }
 }
 
-if(! function_exists('is_linkable_media_model') ) {
-    function is_linkable_media_model($class) {
-        // the relationship model
-        return method_exists($class, 'media');
-    }
-}
-
 if(! function_exists('is_homepage') ) {
     function is_homepage($class) {
         // the relationship model
         $ret = false;
         $s = setting('homepage');
-        if($s != null && $class->id == $s && $class instanceof \App\Adminify\Models\Page) {
+        if(!empty($s) && $class->id == $s && $class instanceof \App\Adminify\Models\Page) {
             $ret = true;
         }
         return $ret;
@@ -270,9 +353,50 @@ if(! function_exists('is_blogpage') ) {
         // the relationship model
         $ret = false;
         $s = setting('blogpage');
-        if($s != null && $class->id == $s && $class instanceof \App\Adminify\Models\Page) {
+        if(!empty($s) && $class->id == $s && $class instanceof \App\Adminify\Models\Page) {
             $ret = true;
         }
+        return $ret;
+    }
+}
+
+if(! function_exists('is_single') ) {
+    function is_single($class) {
+        $ret = false;
+        if($class instanceof \App\Adminify\Models\Post) {
+            $ret = true;
+        }
+        return $ret;
+    }
+}
+
+if(! function_exists('is_page') ) {
+    function is_page($class) {
+        // the relationship model
+        $ret = false;
+        $s = setting('blogpage');
+
+        if(!empty($s) && $class->id != $s && $class instanceof \App\Adminify\Models\Page) {
+            $ret = true;
+        }
+        else if(empty($s) && $class instanceof \App\Adminify\Models\Page) {
+            $ret = true;
+        }
+
+        return $ret;
+    }
+}
+
+if(! function_exists('is_search')) {
+    function is_search($class) {
+        // the relationship model
+        $ret = false;
+        $s = setting('searchpage');
+
+        if(!empty($s) && $class->id == $s && $class instanceof \App\Adminify\Models\Page) {
+            $ret = true;
+        }
+
         return $ret;
     }
 }
@@ -283,10 +407,17 @@ if(! function_exists('is_multilang') ) {
         $ret = false;
         $c = get_site_key('multilang');
 
-        if($c != null) {
+        if(!empty($c)) {
             $ret = $c;
         }
         return (bool) $ret;
+    }
+}
+
+if(! function_exists('model')) {
+    function model($model_base_name) {
+        $cls = adminify_get_class($model_base_name, ['app:adminify:models', 'app:models'], true);
+        return $cls;
     }
 }
 
@@ -294,7 +425,7 @@ if(! function_exists('is_trashable_model')  ) {
     function is_trashable_model($class) {
         // the relationship model
         $f = $class->getFillable();
-        return in_array('status_id', $f);
+        return in_array($class->status_key, $f);
     }
 }
 
@@ -390,14 +521,6 @@ if(! function_exists('array_equal')) {
     }
 }
 
-if(! function_exists('get_model_by')) {
-    function get_model_by($modelNamespace, $column, $value = '', $operator = '=') {
-        $m = new $modelNamespace();
-        $m = $m->where($column, $operator, $value)->get()->all();
-        return $m;
-    }
-}
-
 if(! function_exists('get_url')) {
     function get_url($class) {
         if(is_urlable_model($class)) {
@@ -434,6 +557,24 @@ if(! function_exists('user')) {
     }
 }
 
+if(! function_exists('theme')) {
+    function theme() {
+        return setting('theme');
+    }
+}
+
+if(! function_exists('vendor_path')) {
+    function vendor_path($path = '') {
+        return base_path('vendor'.$path);
+    }
+}
+
+if(! function_exists('theme_path')) {
+    function theme_path($path = '') {
+        return get_site_key('themes.root_path').$path;
+    }
+}
+
 if(! function_exists('get_site_key')) {
     function get_site_key($key = '') {
         return config('site-settings.'.$key);
@@ -443,8 +584,6 @@ if(! function_exists('get_site_key')) {
 if(! function_exists('is_admin')) {
     function is_admin() {
         $request = request();
-
-
         if(empty($request->currentRouteSplitting)) {
             return $request->segment(1) == 'admin';
         }
@@ -466,18 +605,14 @@ if(! function_exists('is_front')) {
 }
 
 if(! function_exists('get_missing_translations_routes') ) {
-    function get_missing_translations_routes($routeName, $singular, $model, $extraVarsRoute = []) {
+    function get_missing_translations_routes($model, $extraVarsRoute = []) {
 
         $request = request();
 
-        $reflect = new \ReflectionClass($model);
-
-        $namepace = explode('\\', strtolower( $reflect->name ) );
-
         $default_route_params = array_merge([
-            $singular => $model->id,
             'from' => $request->lang,
-            'type' => Str::singular($namepace[count($namepace) - 1])
+            'id' => $model->id,
+            'model' => class_basename($model)
         ], $extraVarsRoute);
 
         $routeList = [];
@@ -486,9 +621,9 @@ if(! function_exists('get_missing_translations_routes') ) {
             if(count($miss) > 0) {
                 foreach ($miss as $missing) {
                     # code...
-                    $default_route_params['lang'] = $missing;
+                    $default_route_params['to'] = $missing;
 
-                    $routeList[] = route($routeName, $default_route_params);
+                    $routeList[] = route('savetraductions.edit', $default_route_params);
 
                 }
             }
@@ -520,6 +655,18 @@ if(! function_exists('forget_cache')) {
     }
 }
 
+if(!function_exists('cache_exist')) {
+    function cache_exist($key) {
+        return Cache::has($key);
+    }
+}
+
+if(!function_exists('cache_flush')) {
+    function cache_flush() {
+        Cache::flush();
+    }
+}
+
 if (! function_exists('is_shortcode')) {
     function is_shortcode($string = '') {
 
@@ -539,6 +686,13 @@ if (! function_exists('setting')) {
         $m = new Settings();
         $q = $m->where('type', $string)->first();
         return $q != null ? $q->data : null;
+    }
+}
+
+if(!function_exists('settings')) {
+    function settings() {
+        $m = new Settings();
+        return $m->all();
     }
 }
 
@@ -577,11 +731,11 @@ if (! function_exists('is_sitemapable_model')) {
     }
 }
 
-if (! function_exists('get_translation')) {
-    function get_translation($string) {
+if (! function_exists('translate')) {
+    function translate($string) {
         $t = new Traduction();
         $t = $t->key($string)->first();
-        return $t != null ? $t->text : null;
+        return $t != null ? $t->text : __($string);
     }
 }
 
@@ -616,10 +770,19 @@ if(! function_exists('is_translatable_model')) {
 
 if(! function_exists('lang')) {
     function lang() {
-        $request = request();
-        // we check to get lang from request. if not provided like commands. We take current locale as fallback.
-        $lang = $request->lang;
-        return !empty($lang) ? $lang : app()->getLocale();
+        $isRunningConsole = is_running_console();
+        $lang = app()->getLocale();
+
+        if(!$isRunningConsole) {
+            $request = request();
+            // dd( $request, $lang);
+            // we check to get lang from request. if not provided like commands. We take current locale as fallback.
+            if(!empty($request->lang)) {
+                $lang = $request->lang;
+            }
+        }
+
+        return $lang;
     }
 }
 
@@ -636,7 +799,49 @@ if (! function_exists('menu')) {
         }
 
 
-        return $m->first()->makeThree;
+        return $m->first();
+    }
+}
+
+if(! function_exists('media')) {
+    function media($mixed) {
+        $m = new Media();
+
+        if(is_int($mixed)) {
+            $m = $m->where('id', $mixed);
+        }
+
+        if(is_string($mixed)) {
+            $m = $m->where('src', $mixed);
+        }
+
+        $result = $m->first();
+
+        return !empty($result) ? $result : null;
+    }
+}
+
+if(! function_exists('query')) {
+    function query($model, $queryFunction) {
+        return is_callable($queryFunction) ? $queryFunction($model) : null;
+    }
+}
+
+if(! function_exists('storage')) {
+    function storage($storage) {
+        return Storage::disk($storage ?? 'public');
+    }
+}
+
+if(! function_exists('image')) {
+    function image($path, $parameters) {
+        // Create an instance of the URL builder
+        $urlBuilder = UrlBuilderFactory::create('/images/', env('GLIDE_SECURE_KEY'));
+
+        // Generate a URL
+        $url = $urlBuilder->getUrl($path, $parameters);
+
+        return $url;
     }
 }
 

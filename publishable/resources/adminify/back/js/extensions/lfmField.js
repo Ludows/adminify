@@ -1,7 +1,7 @@
 export default function LFMField(fields) {
 
     let selectedItems = [];
-    let fields_id = ['media_id', 'logo_id', 'menu-three-key', 'avatar_id', 'avatar'];
+    let fields_id = window.siteSettings.medias.prefers_id_on;
 
     function getParamFromIframe(ifrUrl, name) {
         return (ifrUrl.split(name + '=')[1] || '').split('&')[0];
@@ -163,15 +163,22 @@ export default function LFMField(fields) {
                     return false;
                 }
                 if(d.models.length > 0) {
-                    // console.log('a')
                     if(ObjectInterface.option.multiple) {
                         console.log('a 1')
-                        let values = [];
-                        $.each(d.models, function(i, m) {
-                            fields_id.indexOf(ObjectInterface.hidden.attr('name')) > -1 ? values.push(m.id) : values.push(m.src);
-                        });
 
-                        ObjectInterface.hidden.val( values.join(',') );
+                        let ValueInput = ObjectInterface.hidden.val().split(', ').filter(n => n);
+                        let m = d.models[0];
+
+                        console.log(ValueInput);
+
+                        fields_id.indexOf(ObjectInterface.hidden.attr('name')) > -1 ? ValueInput.push(m.id) : ValueInput.push(m.src);
+                        // $.each(d.models, function(i, m) {
+                        //     fields_id.indexOf(ObjectInterface.hidden.attr('name')) > -1 ? values.push(m.id) : values.push(m.src);
+                        // });
+
+                        console.log(ValueInput);
+
+                        ObjectInterface.hidden.val( ValueInput.join(', ') );
 
                     }
                     else {

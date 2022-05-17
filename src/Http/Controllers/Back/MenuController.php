@@ -65,7 +65,7 @@ class MenuController extends Controller
         public function store(CreateMenuRequest $request, FormBuilder $formBuilder)
         {
             // dd($request);
-            $form = $this->form(CreateMenu::class);
+            $form = $this->makeForm(CreateMenu::class);
             $menu = $this->menuRepository->addModel(new Menu())->create($form);
             return $this->sendResponse($menu, 'menus.index', 'admin.typed_data.success');  
         }
@@ -120,10 +120,10 @@ class MenuController extends Controller
         }
 
 
-        public function setItemsToMenu(MenuBuilder $menuBuilder, Request $request) {
+        public function setItemsToMenu(Request $request, $id, $type) {
 
             $config = get_site_key('menu-builder');
-            $type = $request->type;
+            // $type = $request->type;
             $v = view();
 
             $model = $config['models'][$type];

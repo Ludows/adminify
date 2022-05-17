@@ -116,7 +116,7 @@ class FormsRepository extends BaseRepository
     }
 
     public function delete($model) {
-        $this->hookManager->run('model:deleting', $model);
+        // $this->hookManager->run('model:deleting', $model);
 
         $traces = $model->traces;
         $fields = $model->fields;
@@ -132,8 +132,8 @@ class FormsRepository extends BaseRepository
         }
         
         $model->delete();
-        $this->hookManager->run('model:deleted', $model);
-        $this->hookManager->run('process:finished', $model);
+        // $this->hookManager->run('model:deleted', $model);
+        // $this->hookManager->run('process:finished', $model);
         return $model;
     }
 }

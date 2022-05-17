@@ -9,7 +9,7 @@ use  Ludows\Adminify\Repositories\BaseRepository;
 class CommentRepository extends BaseRepository
 {
     public function delete($m) {
-        $this->hookManager->run('model:deleting', $m);
+        // $this->hookManager->run('model:deleting', $m);
         $hasSub = $m->HasSublevel;
         if($hasSub) {
             $ms = new Comment();
@@ -24,8 +24,8 @@ class CommentRepository extends BaseRepository
             }
         }
         $m->delete();
-        $this->hookManager->run('model:deleted', $m);
-        $this->hookManager->run('process:finished', $m);
+        // $this->hookManager->run('model:deleted', $m);
+        // $this->hookManager->run('process:finished', $m);
         return $m;
     }
 }

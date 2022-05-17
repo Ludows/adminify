@@ -20,8 +20,8 @@
 
                             {{ __('Before proceeding, please check your email for a verification link.') }}
 
-                            @if (Route::has('verification.resend'))
-                                {{ __('If you did not receive the email') }}, <a href="{{ route('verification.resend') }}">{{ __('click here to request another') }}</a>
+                            @if (Route::has('auth.verification.resend'))
+                                {{ __('If you did not receive the email') }}, <a href="{{ route('auth.verification.resend') }}">{{ __('click here to request another') }}</a>
                             @endif
                         </div>
                     </div>

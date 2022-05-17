@@ -6,7 +6,9 @@ window.Select2InitFunction = require('./extensions/select2Field').default;
 window.LarabergInitFunction = require('./extensions/larabergField').default;
 window.PasswordGeneratorInitFunction = require('./extensions/generatorPasswordField').default;
 window.lfmInitFunction = require('./extensions/lfmField').default;
-window.summernoteInitFunction = require('./extensions/summernoteField').default;
+// window.summernoteInitFunction = require('./extensions/summernoteField').default;
+window.VisualEditorInitFunction = require('./extensions/VisualEditorField').default;
+window.tiptapInitFunction = require('./extensions/tiptapField').default;
 
 
 jQuery(document).ready(function($) {
@@ -23,7 +25,13 @@ jQuery(document).ready(function($) {
     if(window.admin.lfmFields.length > 0) {
         lfmInitFunction(window.admin.lfmFields);
     }
-    if(window.admin.summernoteFields.length > 0) {
-        summernoteInitFunction(window.admin.summernoteFields);
+    // if(window.admin.summernoteFields.length > 0) {
+    //     summernoteInitFunction(window.admin.summernoteFields);
+    // }
+    if(window.admin.VisualEditorFields.length > 0) {
+        VisualEditorInitFunction(window.admin.VisualEditorFields);
+    }
+    if(window.admin.tiptapFields.length > 0) {
+        tiptapInitFunction(window.admin.tiptapFields);
     }
 })

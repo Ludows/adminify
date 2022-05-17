@@ -51,7 +51,7 @@ class TagsController extends Controller
             */
         public function create(FormBuilder $formBuilder)
         {
-            $form = $formBuilder->create(CreateTagForm::class, [
+            $form = $this->makeForm(CreateTagForm::class, [
                 'method' => 'POST',
                 'url' => route('tags.store')
             ]);
@@ -67,7 +67,7 @@ class TagsController extends Controller
         public function store(CreateTagRequest $request)
         {
             //
-            $form = $this->form(CreateTagForm::class);
+            $form = $this->makeForm(CreateTagForm::class);
             $tag = $this->tagRepository->addModel(new TagModel())->create($form);
 
             return $this->sendResponse($tag, 'tags.index', 'admin.typed_data.success');
@@ -86,7 +86,7 @@ class TagsController extends Controller
             $tag->checkForTraduction();
             // $traduction->flashForMissing();
 
-            $form = $formBuilder->create(CreateTagForm::class, [
+            $form = $this->makeForm(CreateTagForm::class, [
                 'method' => 'PUT',
                 'url' => route('tags.update', ['tag' => $tag->id]),
                 'model' => $tag
@@ -104,7 +104,7 @@ class TagsController extends Controller
         public function update(TagModel $tag, FormBuilder $formBuilder, UpdateTagRequest $request)
         {
             //
-            $form = $this->form(CreateTagForm::class, [
+            $form = $this->makeForm(CreateTagForm::class, [
                 'method' => 'PUT',
                 'url' => route('tags.update', ['traduction' => $tag->id]),
                 'model' => $tag

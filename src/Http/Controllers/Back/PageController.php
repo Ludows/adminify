@@ -58,7 +58,7 @@ class PageController extends Controller
             */
         public function create(FormBuilder $formBuilder)
         {
-            $form = $formBuilder->create(CreatePage::class, [
+            $form = $this->makeForm(CreatePage::class, [
                 'method' => 'POST',
                 'url' => route('pages.store')
             ]);
@@ -74,7 +74,7 @@ class PageController extends Controller
         public function store(CreatePageRequest $request)
         {
             //
-            $form = $this->form(CreatePage::class);
+            $form = $this->makeForm(CreatePage::class);
             $page = $this->pageRepository->addModel(new Page())->create($form);
 
             return $this->sendResponse($page, 'pages.index', 'admin.typed_data.success');
@@ -101,7 +101,7 @@ class PageController extends Controller
         {
             //
             $page->checkForTraduction();
-                $form = $formBuilder->create(UpdatePage::class, [
+                $form = $this->makeForm(UpdatePage::class, [
                     'method' => 'PUT',
                     'url' => route('pages.update', ['page' => $page->id]),
                     'model' => $page
@@ -130,7 +130,7 @@ class PageController extends Controller
             //     ]);
             // }
             // else {
-                $form = $this->form(UpdatePage::class);
+                $form = $this->makeForm(UpdatePage::class);
             // }
 
             // if($isSeo) {

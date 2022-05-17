@@ -4,7 +4,17 @@ return [
     'multilang' => env('ENABLE_MULTILANG', 1), // this use Translatable. Please to verify your migration for correct working..
     'headless' => false, // turn off front routing if you want to separate your front or your back
 
+    'enable_registration' => false,
     'default_role_on_registration' => 'subscriber',
+
+    'custom_views_paths' => [
+        'theme' => resource_path('theme'),
+        'blocs' => resource_path('blocs')
+    ],
+
+    'themes' => [
+        'root_path' => resource_path('theme')
+    ],
 
     // you can your named config searchable.
     // You must extend the classic Model Adminify to have this feature.
@@ -15,60 +25,63 @@ return [
         ]
     ],
 
-    //If you want to switch with the classic template for Posts and Page . Just comment inside bind
-    'editor' => [
-        'handleAssetsGeneration' => 'after', // or after,
-        'diskForSave' => 'public',
-        'blocks' => [], // you can add here new blocks for editor
-        'breakpoints' => [
-            'sm' => 576,
-            'md' => 768,
-            'lg' => 960,
-            'xl' => 1140
-        ],
-        'bind' => [
-            'Page' => [
-                'create' => 'CreatePage',
-                'edit' => 'UpdatePage'
-            ],  // Give the formName create / edit to bind with editor.
-            'Post' => [
-                'create' => 'CreatePost',
-                'edit' => 'UpdatePost'
-            ],  // Give the formName create / edit to bind with editor.
-            'Template' => [
-                'create' => 'CreateTemplates',
-                'edit' => 'UpdateTemplates'
-            ]
-        ],
-        'implicit' => [
-            'hidden_fields' => [
-                'content', 'title'
-            ],
-            'remove_fields' => [
-                'submit'
-            ]
-        ],
-        'patterns' => [
-            'column_minimal' => 1,
-            'column_maximal' => 12,
-            'max_columns' => 6,
-            'max_tooltip_items_show' => 3,
-            'columns' => 'col-##BREAKPOINT##-##WIDTH##'
-        ],
-        'defaultsCssConfigClass' => [
-            'RowWidget' => 'row',
-            'TitleWidget' => 'title',
-            'ColumnWidget' => 'col-12',
-            'ImageWidget' => 'figure',
-            'ParagraphWidget' => 'paragraph',
-            'GalleryWidget' => 'gallery'
+    'medias' => [
+        'prefers_id_on' => ['media_id', 'logo_id', 'menu-three-key', 'avatar_id', 'avatar']
+    ],
+
+    'assets' => array(
+        'collections' => array(
+            'core_backend' => array(
+                adminify_asset('/adminify/vendor/nucleo/css/nucleo.css'),
+                adminify_asset('/adminify/vendor/@fortawesome/fontawesome-free/css/all.min.css'),
+                adminify_asset('/adminify/back/css/argon.css'),
+                adminify_asset('/adminify/back/css/extensions.css'),
+                adminify_asset('/myuploads/routes.js'),
+                adminify_asset('/adminify/back/js/extensions.js'),
+                adminify_asset('/myuploads/traductions-'. lang() .'.js'),
+                adminify_asset('/adminify/back/js/extensions-call.js'),
+                adminify_asset('/adminify/back/js/argon.js'),
+                adminify_asset('/adminify/back/js/searchable.js'),
+            ),
+            'core_frontend' => array(
+                adminify_asset('/adminify/vendor/nucleo/css/nucleo.css'),
+                adminify_asset('/adminify/vendor/@fortawesome/fontawesome-free/css/all.min.css'),
+                adminify_asset('/adminify/front/css/argon.css'),
+                adminify_asset('/adminify/css/front.css'),
+                adminify_asset('/myuploads/routes.js'),
+                adminify_asset('adminify/front/js/app.js'),
+                adminify_asset('adminify/front/js/app.js'),
+                adminify_asset('/myuploads/traductions-'. lang() .'.js'),
+            ),
+            'backend' => array(
+                'core_backend',
+            ),
+            'frontend' => array(
+                'core_frontend'
+            ),
+        ),
+        'autoload' => is_running_console() ? [] : (is_admin() ? array('backend') : array('frontend')),
+    ),
+
+    'metas' => [
+        // excludes models here
+        'excludesOn' => [
+            'destroy',
+            'store',
+            'update',
+            'lfm',
+            'finder',
+            'searchable',
+            'listings',
+            'ajax',
+            'trash'
         ]
     ],
 
     'dynamic_forms' => [
         'default_form_template' => 'adminify::layouts.commons.forms.default',
         'show_form_when_validated' => true,
-        'skip_autosend' => true,
+        'skip_autosend' => false, // for tests
         'default_email_user' => 'theartist768@gmail.com', // if your want to overwrite the default user. Specify form with his slug
     ],
 
@@ -79,43 +92,43 @@ return [
         'Tag',
         'Media',
         'Forms',
+        'GroupMeta',
         'Menu',
         'Comment',
         'Settings',
         'Translations',
-        'Mailables',
         'Templates',
+        'Mailables',
         'User'
     ],
 
     'hooks' => [
-        'model:creating' => [
+        'creating' => [
             \App\Adminify\Hooks\OnCreatingHook::class
         ],
-        'model:created' => [
+        'created' => [
             \App\Adminify\Hooks\OnCreatedHook::class,
-            \App\Adminify\Hooks\ContentTypesHook::class
+            \App\Adminify\Hooks\ContentTypesHook::class,
+            \App\Adminify\Hooks\HandleSettings::class,
+            \App\Adminify\Hooks\CreateCacheHook::class,
         ],
-        'model:updating' => [
+        'updating' => [
             \App\Adminify\Hooks\OnUpdatingHook::class,
         ],
-        'model:updated' => [
+        'updated' => [
             \App\Adminify\Hooks\OnUpdatedHook::class,
-            \App\Adminify\Hooks\ContentTypesHook::class
+            \App\Adminify\Hooks\ContentTypesHook::class,
+            \App\Adminify\Hooks\HandleSettings::class,
+            \App\Adminify\Hooks\CreateCacheHook::class,
         ],
-        'model:deleting' => [
+        'deleting' => [
             \App\Adminify\Hooks\OnDeletingHook::class,
             \App\Adminify\Hooks\ContentTypesHook::class
         ],
-        'model:deleted' => [
+        'deleted' => [
             \App\Adminify\Hooks\OnDeletedHook::class,
+            \App\Adminify\Hooks\ClearCacheHook::class,
         ],
-        'setting:created' => [
-            \App\Adminify\Hooks\HandleSettings::class,
-        ],
-        'setting:updated' => [
-            \App\Adminify\Hooks\HandleSettings::class,
-        ]
     ],
 
     'sitemap' => [
@@ -202,7 +215,7 @@ return [
         'templates_content' => true,
         'user' => true,
         'form' => true,
-        'editor' => true
+        'metas' => true,
     ],
 
     // all routes search are binded to singular route name.
@@ -246,6 +259,5 @@ return [
     'interfaces' => [
         'home' => \App\Adminify\Interfacable\DashboardManager::class,
         'formbuilder' => \App\Adminify\Interfacable\FormBuilderManager::class,
-        'editor' => \App\Adminify\Interfacable\EditorManager::class,
     ],
 ];

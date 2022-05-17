@@ -64,10 +64,10 @@ class RegisterController extends Controller
     }
 
     public function showRegistrationForm() {
-        
+
         $form = $this->form(ShowRegisterForm::class, [
             'method' => 'POST',
-            'url' => route('register')
+            'url' => route('auth.register')
         ]);
 
         return view('adminify::auth.register', ['form' => $form]);

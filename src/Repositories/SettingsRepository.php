@@ -27,15 +27,15 @@ class SettingsRepository extends BaseRepository
             $check = Settings::where('type', $mapping_data['type'])->first();
 
             if($check == null) {
-               $m = $this->getProcessDb($mapping_data, $this->model ?? new Settings(), ['setting:creating', 'setting:created'], 'create');
+               $m = $this->getProcessDb($mapping_data, $this->model ?? new Settings(), 'create');
             }
             else {
-                $m = $this->getProcessDb($mapping_data, $this->model ?? $check, ['setting:updating', 'setting:updated'], 'update');
+                $m = $this->getProcessDb($mapping_data, $this->model ?? $check, 'update');
             }
             $a[] = $m;
         }
         
-        $this->hookManager->run('process:finished', null);
+        // $this->hookManager->run('process:finished', null);
         return $a;
     }
 }

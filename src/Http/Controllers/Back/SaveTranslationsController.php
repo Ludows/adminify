@@ -29,26 +29,22 @@ class SaveTranslationsController extends Controller
             public function edit(FormBuilder $formBuilder , Request $request)
             {
 
-                $type = $request->get('type');
+                $modelStr = $request->get('model');
                 $originLang = $request->get('from');
                 $actualLang = $request->get('lang');
                 $return_view = [];
 
-                if($type == null && $originLang == null) {
+                if($modelStr == null && $originLang == null) {
                     abort(403);
                 }
 
-                $config = get_site_key('register');
-                $id = \Route::current()->parameter($request->singleParam);
+                $id = $request->get('id');
 
-                $m = $config[$type] ?? null;
-                if(empty($m)) {
-                    abort(403);
-                }
-                $model = new $m();
+                $model = adminify_get_class($modelStr, ['app:models', 'app:adminify:models'], false);
+                $model = new $model;
 
                 $theSavableForm = $model->getSavableForm();
-                
+
                 $clsForm = isset($theSavableForm) ? $this->form($theSavableForm) : null;
 
                 if($clsForm) {
@@ -57,7 +53,7 @@ class SaveTranslationsController extends Controller
                         'url' => route('savetraductions.update', ['savetraduction' => $id, 'lang' => $actualLang]),
                     ], [
                         'id' => $id,
-                        'type' => $type,
+                        'type' => $modelStr,
                         'clsForm' => $clsForm,
                         'fromLang' => $originLang,
                         'actualLang' => $actualLang,
@@ -66,7 +62,7 @@ class SaveTranslationsController extends Controller
                     $return_view['form'] = $form;
                 }
 
-                
+
 
                 return view("adminify::layouts.admin.pages.edit", $return_view);
             }
@@ -77,13 +73,8 @@ class SaveTranslationsController extends Controller
             $all = $request->all();
             //dd($all);
 
-            $config = get_site_key('register');
-            $type = $all['type'];
-            $m = $config[$type] ?? null;
-
-            if(empty($m)) {
-                abort(403);
-            }
+            $type = $all['model'];
+            $m = adminify_get_class($type, ['app:models', 'app:adminify:models'], false);
 
             $model = new $m();
             $model = $model->find($all['id']);

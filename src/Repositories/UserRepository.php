@@ -62,21 +62,7 @@ class UserRepository extends BaseRepository
             $pref->data = $value;
             $pref->user_id = $userId;
 
-            if($check != null) {
-                $this->hookManager->run('updating:profile', $pref);
-            }
-            else {
-                $this->hookManager->run('saving:profile', $pref);
-            }
-
             $pref->save();
-
-            if($check != null) {
-                $this->hookManager->run('update:profile', $pref);
-            }
-            else {
-                $this->hookManager->run('save:profile', $pref);
-            }
         }
 
     }

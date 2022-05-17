@@ -1,4 +1,4 @@
-@extends('adminify::layouts.admin.app', ['class' => $loadEditor ? 'is-editor-mode' : ''])
+@extends('adminify::layouts.admin.app', [])
 
 @if (!empty($adminCssLinks))
     @foreach ($adminCssLinks as $adminCssPath)
@@ -9,15 +9,11 @@
 @endif
 
 @section('content')
-    @if($loadEditor)
-        {{-- get the editor interface. --}}
-        {!! interfaces('editor')->render() !!}
+    
+    @if(view()->exists('adminify::layouts.admin.edit.pages.'.$name))
+        @include('adminify::layouts.admin.edit.pages.'.$name)
     @else
-        @if(view()->exists('adminify::layouts.admin.edit.pages.'.$name))
-            @include('adminify::layouts.admin.edit.pages.'.$name)
-        @else
-            @include('adminify::layouts.admin.edit.pages.default')
-        @endif
+        @include('adminify::layouts.admin.edit.pages.default')
     @endif
 @endsection
 

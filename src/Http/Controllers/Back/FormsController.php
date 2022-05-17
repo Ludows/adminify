@@ -87,7 +87,7 @@ class FormsController extends Controller
         public function store(CreateFormsRequest $request)
         {
                 // we pass context and request
-                $form = $this->form(CreateForms::class);
+                $form = $this->makeForm(CreateForms::class);
 
                 // the create method return the media created
                 $Form = $this->Repository->addModel(new Forms())->create($form);
@@ -142,7 +142,7 @@ class FormsController extends Controller
         {
             //
 
-            $form = $this->form(UpdateForms::class, [
+            $form = $this->makeForm(UpdateForms::class, [
                 'method' => 'PUT',
                 'url' => route('forms.update', ['form' => $Form->id]),
                 'model' => $Form
@@ -312,7 +312,7 @@ class FormsController extends Controller
             //retrieve the confirmation type
             $confirmation = $Form->confirmation->first();
 
-            $form = $FormBuilder->create(FormConfirmation::class, [
+            $form = $this->makeForm(FormConfirmation::class, [
                 'method' => 'POST',
                 'url' => route('forms.confirmation.store', ['form' => $Form->id]),
                 'model' => $confirmation
@@ -367,7 +367,7 @@ class FormsController extends Controller
         }
         public function storeConfirmation(FormConfirmationRequest $request, Forms $Form, FormBuilder $FormBuilder) {
 
-            $form = $FormBuilder->create(FormConfirmation::class);
+            $form = $this->makeForm(FormConfirmation::class);
 
             //retrieve the confirmation type
             $confirmation = $Form->confirmation->first();

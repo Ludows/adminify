@@ -17,6 +17,11 @@ use Ludows\Adminify\Traits\Searchables;
 use Ludows\Adminify\Traits\SavableTranslations;
 use Ludows\Adminify\Traits\PathableMedia;
 use Ludows\Adminify\Traits\ProcessableAssets;
+use Ludows\Adminify\Traits\HasMeta;
+use Ludows\Adminify\Traits\HasStatus;
+use Ludows\Adminify\Traits\Hookable;
+
+use Rennokki\QueryCache\Traits\QueryCacheable;
 
 use Spatie\Feed\Feedable;
 
@@ -27,6 +32,8 @@ use Spatie\Feed\FeedItem;
 abstract class ClassicModel extends Model implements Searchable, Feedable
 {
     use HasFactory;
+    use HasMeta;
+    use Hookable;
     // use OnBootedModel;
     // use Urlable;
     use HasTranslations;
@@ -40,6 +47,14 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     use Searchables;
     use SavableTranslations;
     use ProcessableAssets;
+    use HasStatus;
+    // use QueryCacheable;
+
+    // public $cacheFor = 3600;
+
+    // public $cacheDriver = 'file';
+
+    // protected static $flushCacheOnUpdate = true;
     
     public function getSearchResult() : SearchResult
     {
@@ -53,4 +68,39 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
            $url
         );
     }
+
+    // /**
+    //  * The tags for the query cache. Can be useful
+    //  * if flushing cache for specific tags only.
+    //  *
+    //  * @return null|array
+    //  */
+    // protected function cacheTagsValue()
+    // {
+    //     $tableName = $this->getTable();
+
+    //     return [ plural($tableName) ];
+    // }
+
+    // /**
+    //  * A cache prefix string that will be prefixed
+    //  * on each cache key generation.
+    //  *
+    //  * @return string
+    //  */
+    // protected function cachePrefixValue()
+    // {
+    //     $tableName = $this->getTable();
+
+    //     return  plural($tableName).'_';
+    // }
+
+    // protected function cacheForValue()
+    // {
+    //     if (is_admin()) {
+    //         return null;
+    //     }
+        
+    //     return $this->cacheFor;
+    // }
 }

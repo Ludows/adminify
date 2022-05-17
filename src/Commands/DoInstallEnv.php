@@ -34,30 +34,17 @@ class DoInstallEnv extends Command
     public function setEnvironmentValue(array $values)
     {
 
-        $envFile = app()->environmentFilePath();
-        $str = file_get_contents($envFile);
-
-        if (count($values) > 0) {
+        if (!empty($values) > 0) {
             foreach ($values as $envKey => $envValue) {
 
-                $str .= "\n"; // In case the searched variable is in the last line without \n
-                $keyPosition = strpos($str, "{$envKey}=");
-                $endOfLinePosition = strpos($str, "\n", $keyPosition);
-                $oldLine = substr($str, $keyPosition, $endOfLinePosition - $keyPosition);
 
-                // If key does not exist, add it
-                if (!$keyPosition || !$endOfLinePosition || !$oldLine) {
-                    $str .= "{$envKey}={$envValue}\n";
-                } else {
-                    $str = str_replace($oldLine, "{$envKey}={$envValue}", $str);
-                }
-
+                $this->call('env:set', [
+                    'key' => $envKey,
+                    'value' => $envValue
+                ]);
             }
-        }
 
-        $str = substr($str, 0, -1);
-        if (!file_put_contents($envFile, $str)) return false;
-        return true;
+        }
 
     }
 
@@ -70,25 +57,39 @@ class DoInstallEnv extends Command
     {
         $keys = [];
 
+        $app_multilang = $this->choice(
+            __('adminify.questions.multilang'),
+            [__('adminify.questions.yes'), __('adminify.questions.no')],
+            1,
+            null,
+            false
+        );
+
+        $keys['ENABLE_MULTILANG'] = !empty($app_multilang) ? $app_multilang : 0;
+
         $app_url = $this->ask(__('adminify.questions.app_url'));
-        
-        $keys['APP_URL'] = $app_url;
+
+        $keys['APP_URL'] = !empty($app_url) ? $app_url : '';
 
         $app_name = $this->ask(__('adminify.questions.app_name'));
-        
-        $keys['APP_NAME'] = $app_name;
+
+        $keys['APP_NAME'] = !empty($app_name) ? $app_name : '';
 
         $user_db = $this->ask(__('adminify.questions.user_db'));
-        
-        $keys['DB_USERNAME'] = $user_db;
+
+        $keys['DB_USERNAME'] = !empty($user_db) ? $user_db : '';
 
         $password_db = $this->ask(__('adminify.questions.password_db'));
 
-        $keys['DB_PASSWORD'] = $password_db;
+        $keys['DB_PASSWORD'] = !empty($password_db) ? $password_db : '';
 
         $db_name = $this->ask(__('adminify.questions.db_name'));
 
-        $keys['DB_DATABASE'] = $db_name;
+        $keys['DB_DATABASE'] = !empty($db_name) ? $db_name : '';
+
+        $keys['MIX_ADMINIFY_THEME_ROOT_FOLDER'] = "resources/theme";
+
+        // dd($keys);
 
         $this->setEnvironmentValue($keys);
 

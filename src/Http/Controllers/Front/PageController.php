@@ -38,6 +38,10 @@ class PageController extends Controller
 
             $settings = cache('homepage');
 
+            if(method_exists($this, 'bootingView')) {
+                call_user_func_array(array($this, 'bootingView'), $request);
+            }
+
             if($settings == null) {
                 $settings = setting('homepage');
             }
@@ -49,41 +53,74 @@ class PageController extends Controller
                 abort("404");
             }
 
-
             $reflection = new ReflectionClass($page);
             $type = $reflection->getShortName();
-            $seo = $this->handleSeo($page);
+            $seo = is_content_type_model($page) ? $this->handleSeo($page) : null;
+
+            $enabled_features = get_site_key('enables_features');
 
             $user = user();
             if($user != null) {
-                $user->role = $user->roles->first();
-                unset($user->roles);
+                $user->mainRole = $user->roles->first();
+                // unset($user->roles);
             }
 
-            $export = ['seo' => $seo, 'type' => $type, 'model' => $page, 'user' => $user, 'lang' => lang()];
+            $this->addViewsVars(['enabled_features' => $enabled_features, 'seo' => $seo, 'type' => $type, 'model' => $page, 'user' => $user, 'lang' => lang()]);
+            $defaults_view_vars = $this->getViewsVars();
 
-            return view("adminify::layouts.front.pages.index", ['seo' => $seo, 'type' => $type, 'model' => $page, 'user' => $user, 'lang' => lang(), 'export' => json_encode($export)]);
+            if(method_exists($this, 'beforePageRenderView')) {
+                call_user_func_array(array($this, 'beforePageRenderView'), $defaults_view_vars);
+            }
+
+
+
+            return view("theme::". $request->theme .".index",  $this->getViewsVars());
         }
 
-        public function getPages($slug) {
+        public function getPages($slug, Request $request) {
 
             $reflection = new ReflectionClass($slug);
             $type = $reflection->getShortName();
             $enabled_features = get_site_key('enables_features');
 
-            $seo = $this->handleSeo($slug);
+            if(method_exists($this, 'bootingView')) {
+                call_user_func_array(array($this, 'bootingView'), $request);
+            }
+
+            $seo = is_content_type_model($slug) ? $this->handleSeo($slug) : null;
+
+            // dd(request());
 
             $user = user();
             if($user != null) {
-                $user->role = $user->roles->first();
-                unset($user->roles);
+                $user->mainRole = $user->roles->first();
+                // unset($user->roles);
             }
 
-            $export = ['seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => lang()];
+            $this->addViewsVars(['enabled_features' => $enabled_features, 'seo' => $seo, 'type' => lowercase($type), 'model' => $slug, 'user' => $user, 'lang' => lang()]);
+            $defaults_view_vars = $this->getViewsVars();
+
+            if(method_exists($this, 'beforePageRenderView')) {
+                call_user_func_array(array($this, 'beforePageRenderView'), $defaults_view_vars);
+            }
 
 
-            return view("adminify::layouts.front.pages.index", ['enabled_features' => $enabled_features, 'seo' => $seo, 'type' => $type, 'model' => $slug, 'user' => $user, 'lang' => lang(), 'export' => json_encode($export)]);
+            return view("theme::". $request->theme .".index", $this->getViewsVars());
 
+        }
+
+        public function search(Request $request) {
+
+            $result = app()->call('App\Adminify\Http\Controllers\Back\SearchController', [
+                $request
+            ]);// controller à taper;
+
+            // set in session the rsults
+            session(['results' => $result]);
+
+            $this->addViewsVar('results', $result);
+
+            return view("theme::". $request->theme .".index", $this->getViewsVars());
         }
 
         public function validateForms(Request $request) {
@@ -181,8 +218,8 @@ class PageController extends Controller
                 // fallback to previous url
                 $url = url()->previous();
             }
-            
-            
+
+
             return redirect()->to($url)->with(['formSubmitted' => true]);
         }
 

@@ -23,7 +23,7 @@ class SeoRepository extends BaseRepository
 
 
         $this->process($formValues, $lang, $multilang, $model);
-        $this->hookManager->run('process:finished', $model);
+        // $this->hookManager->run('process:finished', $model);
     }
     public function process($formValues, $lang, $multilang, $model) {
 
@@ -55,9 +55,9 @@ class SeoRepository extends BaseRepository
                 $json = json_decode($formValues['image']);
                 $seo->setTranslation('data', $lang, $json[0]->name);
             }
-            $this->hookManager->run($hooks[0], $seo);
+            // $this->hookManager->run($hooks[0], $seo);
             $seo->save();
-            $this->hookManager->run($hooks[1], $seo);
+            // $this->hookManager->run($hooks[1], $seo);
         }
 
     }

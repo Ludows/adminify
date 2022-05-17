@@ -3,108 +3,17 @@
 namespace Ludows\Adminify\Tables;
 
 use Ludows\Adminify\Libs\TableManager;
-use App\Adminify\Models\Page as PageModel;
-use App\Adminify\Dropdowns\Page as PageDropdownsManager;
-
-use App\Adminify\Models\Statuses;
 
 class PageTable extends TableManager {
-    public function getTemplateByName($name) {
-        $ret = null;
-        switch ($name) {
-            case 'categories_id':
-                # code...
-                $ret = 'adminify::layouts.admin.table.custom-cells.pages-categories-id';
-                break;
-            case 'media_id':
-                # code...
-                $ret = 'adminify::layouts.admin.table.custom-cells.pages-media-id';
-            case 'user_id':
-                # code...
-                $ret = 'adminify::layouts.admin.table.custom-cells.user-id';
-                break;
-            case 'no_comments':
-                # code...
-                $ret = 'adminify::layouts.admin.table.custom-cells.no-comments';
-                break;
-            case 'status_id':
-                # code...
-                $ret = 'adminify::layouts.admin.table.custom-cells.status-id';
-                break;
-            case 'content':
-                # code...
-                $ret = 'adminify::layouts.admin.table.custom-cells.pages-content';
-                break;
-            case 'parent_id':
-                # code...
-                $ret = 'adminify::layouts.admin.table.custom-cells.pages-parent-id';
-                break;
-        }
-
-        return $ret;
+    public function getDropdownManagerClass() {
+        return \App\Adminify\Dropdowns\Page::class;
     }
-    public function handle() {
-
-        $config = config('site-settings.tables');
-        $request = $this->getRequest();
-
-        $model = new PageModel();
-        $fillables = $model->getFillable();
-
-        $datas = $this->getDatas();
-
-        if(isset($datas['results'])) {
-            $pages = $datas['results'];
-        }
-        else {
-            if($request->useMultilang) {
-                $pages = PageModel::limit( $config['limit'] )->status(Statuses::TRASHED_ID, '!=')->lang($request->lang)->get();
-                // dd($categories);
-                $pages = $pages->all();
-            }
-            else {
-                $pages = PageModel::limit( $config['limit'] )->status(Statuses::TRASHED_ID, '!=')->get();
-            }
-        }
-
-        $a = new PageDropdownsManager($pages, []);
-        
-        $default_merge_columns = ['categories_id','actions'];
-
-        if($request->useMultilang && is_translatable_model($model)) {
-            array_unshift($default_merge_columns, 'need_translations');
-        }
-
-        $this->columns( array_merge($fillables, $default_merge_columns) );
-
-        $this->module('statuses', 'top-left', 'adminify::layouts.admin.table.core.statuses', [
-            'statuses' => Statuses::all()->all()
-        ]);
-
-        foreach ($pages as $page) {
-            # code...
-            // pass current model
-            $table = $this->model($page);
-            foreach ($fillables as $fillable) {
-                # code...
-                $table->column($fillable, $this->getTemplateByName($fillable));
-            }
-
-            if($request->useMultilang && is_translatable_model($model)) {
-                $table->column('need_translations', 'adminify::layouts.admin.table.custom-cells.translated', [
-                    'routes' => get_missing_translations_routes('savetraductions.edit', 'savetraduction', $this->getModel()),
-                    'missing' => get_missing_langs($this->getModel()),
-                ]);
-            }
-            
-            
-            
-            $table->column('categories_id', 'adminify::layouts.admin.table.custom-cells.pages-categories-id', []);
-
-            $table->column('actions', 'adminify::layouts.admin.table.custom-cells.dropdown', [
-                'dropdown' => $a,
-                'index' => $page->id
-            ]);
-        }
+    public function getModelClass() {
+        return \App\Adminify\Models\Page::class;
+    }
+    public function getDefaultsColumns() {
+        $a = parent::getDefaultsColumns();
+        array_unshift($a, 'categories_id');
+        return $a;
     }
 }

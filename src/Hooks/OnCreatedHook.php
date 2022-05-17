@@ -8,10 +8,15 @@ class OnCreatedHook extends HookInterface {
     public function handle($hookName,$datas = null) {
         //data is the model passed
         $m = $datas;
-        if(!empty($m) && $m instanceof \App\Models\Translations) {
+        if(!empty($m) && $m instanceof \App\Adminify\Models\Translations) {
             Artisan::call('adminify:translations', [
 
             ]);
+        }
+
+        $isEmptyContainer = empty( adminify_autoload() );
+        if( $isEmptyContainer ) {
+            Artisan::call('adminify:container', []);
         }
     }
 }

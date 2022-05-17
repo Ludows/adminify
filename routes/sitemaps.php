@@ -1,4 +1,8 @@
 <?php
 use Illuminate\Support\Facades\Route;
 
-Route::get('/sitemap/{sitemapPart?}', 'Ludows\Adminify\Http\Controllers\Back\SitemapController@index')->name('sitemap.index');
+$c = config('site-settings');
+
+if(!empty($c)) {
+    Route::get('/sitemap/{sitemapPart?}', 'Ludows\Adminify\Http\Controllers\Back\SitemapController@index')->name('sitemap.index');
+}
