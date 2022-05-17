@@ -110,6 +110,7 @@ return [
             \App\Adminify\Hooks\OnCreatedHook::class,
             \App\Adminify\Hooks\ContentTypesHook::class,
             \App\Adminify\Hooks\HandleSettings::class,
+            \App\Adminify\Hooks\CreateCacheHook::class,
         ],
         'updating' => [
             \App\Adminify\Hooks\OnUpdatingHook::class,
@@ -118,6 +119,7 @@ return [
             \App\Adminify\Hooks\OnUpdatedHook::class,
             \App\Adminify\Hooks\ContentTypesHook::class,
             \App\Adminify\Hooks\HandleSettings::class,
+            \App\Adminify\Hooks\CreateCacheHook::class,
         ],
         'deleting' => [
             \App\Adminify\Hooks\OnDeletingHook::class,
@@ -125,6 +127,7 @@ return [
         ],
         'deleted' => [
             \App\Adminify\Hooks\OnDeletedHook::class,
+            \App\Adminify\Hooks\ClearCacheHook::class,
         ],
     ],
 
