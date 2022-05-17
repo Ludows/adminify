@@ -203,16 +203,16 @@ class BaseRepository
 
     public function create($mixed) {
         $m = $this->getProcessDb($mixed, $this->model ?? null, 'create');
-        $this->hookManager->run('process:finished', $m);
+        // $this->hookManager->run('process:finished', $m);
         return $m;
     }
     public function update($mixed, $model) {
         $m = $this->getProcessDb($mixed, $this->model ?? $model, 'update');
-        $this->hookManager->run('process:finished', $model);
+        // $this->hookManager->run('process:finished', $model);
         return $m;
     }
     public function delete($model) {
-        $this->hookManager->run('model:deleting', $model);
+        // $this->hookManager->run('model:deleting', $model);
         if(method_exists($this, 'beforeRun')) {
             call_user_func_array(array($this, 'beforeRun'), array($model, [],  'destroy'));
         }
