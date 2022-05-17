@@ -12,7 +12,7 @@ use  Ludows\Adminify\Repositories\BaseRepository;
 class MenuRepository extends BaseRepository
 {
     protected function createEntity($entity, $formValues) {
-        return $this->getProcessDb($formValues, $this->model ?? $entity, ['model:creating', 'model:created'], 'create');
+        return $this->getProcessDb($formValues, $this->model ?? $entity, 'create');
     }
     protected function Walker($scope, $exist, $model, $parent_id, $isChild) {
         $request = request();
@@ -154,12 +154,12 @@ class MenuRepository extends BaseRepository
     }
     public function create($mixed) {
         $m = $this->getProcessDb($mixed, $this->model ?? null, ['menu:creating', 'menu:created'], 'create');
-        $this->hookManager->run('process:finished', $m);
+        // $this->hookManager->run('process:finished', $m);
         return $m;
     }
     public function update($menuthree, $model) {
 
-        $this->hookManager->run('updating:menu', $this->model ?? $model);
+        // $this->hookManager->run('updating:menu', $this->model ?? $model);
         $existingItems = count($model->items->all()) > 0 ? true : false;
 
         if($existingItems) {
@@ -168,13 +168,13 @@ class MenuRepository extends BaseRepository
 
         $this->Walker($menuthree, $existingItems , $model, 0, false);
 
-        $this->hookManager->run('updated:menu', $this->model ?? $model);
-        $this->hookManager->run('process:finished', $model);
+        // $this->hookManager->run('updated:menu', $this->model ?? $model);
+        // $this->hookManager->run('process:finished', $model);
         return $model;
 
     }
     public function delete($model) {
-        $this->hookManager->run('deleting:menu', $this->model ?? $model);
+        // $this->hookManager->run('deleting:menu', $this->model ?? $model);
         $items = $model->items->all();
         if(count($items) > 0) {
 
@@ -189,8 +189,8 @@ class MenuRepository extends BaseRepository
 
         }
         $model->delete();
-        $this->hookManager->run('deleted:menu', $this->model ?? $model);
-        $this->hookManager->run('process:finished', $model);
+        // $this->hookManager->run('deleted:menu', $this->model ?? $model);
+        // $this->hookManager->run('process:finished', $model);
         return $model;
     }
 }

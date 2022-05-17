@@ -30,13 +30,13 @@ class PageRepository extends BaseRepository
     }
     
     public function delete($model) {
-        $this->hookManager->run('model:deleting', $model);
+        // $this->hookManager->run('model:deleting', $model);
         $model->categories()->detach();
         $model->deleteUrl([
             'from_model_id' => $model->id
         ]);
         $model->delete();
-        $this->hookManager->run('model:deleted', $model);
-        $this->hookManager->run('process:finished', $model);
+        // $this->hookManager->run('model:deleted', $model);
+        // $this->hookManager->run('process:finished', $model);
     }
 }

@@ -103,25 +103,25 @@ return [
     ],
 
     'hooks' => [
-        'model:creating' => [
+        'creating' => [
             \App\Adminify\Hooks\OnCreatingHook::class
         ],
-        'model:created' => [
+        'created' => [
             \App\Adminify\Hooks\OnCreatedHook::class,
             \App\Adminify\Hooks\ContentTypesHook::class
         ],
-        'model:updating' => [
+        'updating' => [
             \App\Adminify\Hooks\OnUpdatingHook::class,
         ],
-        'model:updated' => [
+        'updated' => [
             \App\Adminify\Hooks\OnUpdatedHook::class,
             \App\Adminify\Hooks\ContentTypesHook::class
         ],
-        'model:deleting' => [
+        'deleting' => [
             \App\Adminify\Hooks\OnDeletingHook::class,
             \App\Adminify\Hooks\ContentTypesHook::class
         ],
-        'model:deleted' => [
+        'deleted' => [
             \App\Adminify\Hooks\OnDeletedHook::class,
         ],
         'setting:created' => [
