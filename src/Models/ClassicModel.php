@@ -29,6 +29,8 @@ use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 use Spatie\Feed\FeedItem;
 
+use Ludows\Adminify\Libs\QueryCachableModule;
+
 abstract class ClassicModel extends Model implements Searchable, Feedable
 {
     use HasFactory;
@@ -55,6 +57,11 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     // public $cacheDriver = 'file';
 
     // protected static $flushCacheOnUpdate = true;
+
+    public function newEloquentBuilder($query)
+    {
+        return new QueryCachableModule($query);
+    }
     
     public function getSearchResult() : SearchResult
     {
