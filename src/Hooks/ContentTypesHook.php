@@ -8,8 +8,8 @@ class ContentTypesHook extends HookInterface {
     public function handle($hookName,$datas = null) {
         //data is the model passed
         $model = $datas;
-        $allowed_hooks = ['model:creating', 'model:created', 'model:updating', 'model:updated'];
-        $only_for_deleting = ['model:deleting'];
+        $allowed_hooks = ['creating', 'created', 'updating', 'updated'];
+        $only_for_deleting = ['deleting'];
 
 
         if(!empty($model) && in_array($hookName, $allowed_hooks)) {
@@ -18,7 +18,7 @@ class ContentTypesHook extends HookInterface {
                 $this->syncronizeUrl($model);
                 $this->syncToCache($model);
             }
-    
+
             if($isContentType && $model->allowSitemap) {
                 $this->loadGenerateSitemap($model);
             }
@@ -81,7 +81,7 @@ class ContentTypesHook extends HookInterface {
             $delete == false ? $context->encryptToCache( $isHomePage ? 'homepage' : join('.', $url) ) : $context->forgetToCache( $isHomePage ? 'homepage' : join('.', $url ));
         }
     }
-    
+
     public function loadGenerateSitemap($context) {
         $s = app()->make('Ludows\Adminify\Libs\SitemapRender');
 

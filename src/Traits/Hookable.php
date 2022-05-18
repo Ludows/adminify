@@ -20,7 +20,7 @@
    }
    public static function autoRegisterModelHooks($arrayOfHooks = [], $hookName) {
         $hookManager = HookManagerFacade::getInstance();
-        if(!$hookManager->exist($arrayOfHooks[$hookName])) {
+        if(!empty($arrayOfHooks[$hookName]) && !$hookManager->exist($hookName)) {
 
             if(is_array($arrayOfHooks[$hookName])) {
                 foreach ($arrayOfHooks[$hookName] as $key => $value) {
@@ -31,65 +31,65 @@
             else {
                 $hookManager->registerHook($hookName, $arrayOfHooks[$hookName]);
             }
-            
+
         }
    }
    public static function boot()
     {
+        parent::boot();
         static::creating(function ($model) {
             // blah blah
-            static::autoRegisterModelHooks(self::$loadHooks, 'creating');
+            static::autoRegisterModelHooks(static::$loadHooks, 'creating');
             static::runHook('creating', $model);
         });
 
         static::created(function ($model) {
             // blah blah
-            static::autoRegisterModelHooks(self::$loadHooks, 'created');
+            static::autoRegisterModelHooks(static::$loadHooks, 'created');
             static::runHook('created', $model);
         });
 
         static::updating(function ($model) {
             // bleh bleh
-            static::autoRegisterModelHooks(self::$loadHooks, 'updating');
+            static::autoRegisterModelHooks(static::$loadHooks, 'updating');
             static::runHook('updating', $model);
         });
 
         static::updated(function ($model) {
             // blah blah
-            static::autoRegisterModelHooks(self::$loadHooks, 'updated');
+            static::autoRegisterModelHooks(static::$loadHooks, 'updated');
             static::runHook('updated', $model);
         });
 
         static::saving(function ($model) {
             // blah blah
-            static::autoRegisterModelHooks(self::$loadHooks, 'saving');
+            static::autoRegisterModelHooks(static::$loadHooks, 'saving');
             static::runHook('saving', $model);
         });
 
         static::saved(function ($model) {
             // blah blah
-            static::autoRegisterModelHooks(self::$loadHooks, 'saved');
+            static::autoRegisterModelHooks(static::$loadHooks, 'saved');
             static::runHook('saved', $model);
         });
-        
+
         static::deleting(function ($model) {
             // bluh bluh
-            static::autoRegisterModelHooks(self::$loadHooks, 'deleting');
+            static::autoRegisterModelHooks(static::$loadHooks, 'deleting');
             static::runHook('deleting', $model);
         });
 
         static::deleted(function ($model) {
             // bluh bluh
-            static::autoRegisterModelHooks(self::$loadHooks, 'deleted');
+            static::autoRegisterModelHooks(static::$loadHooks, 'deleted');
             static::runHook('deleted', $model);
         });
 
         static::retrieved(function ($model) {
             // bluh bluh
-            static::autoRegisterModelHooks(self::$loadHooks, 'retrieved');
+            static::autoRegisterModelHooks(static::$loadHooks, 'retrieved');
             static::runHook('retrieved', $model);
         });
-        
-        parent::boot();
+
     }
   }
