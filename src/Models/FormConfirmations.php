@@ -19,6 +19,7 @@ class FormConfirmations extends ClassicModel
     public $enable_searchable = false;
     public $searchable_label = '';
 
+
     protected $fillable = [
         'type',
         'page_id',

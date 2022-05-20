@@ -20,8 +20,6 @@ abstract class ContentTypeModel extends ClassicModel
     use Sitemapable;
     use Authorable;
 
-
-
     public function parent() {
         return $this->HasOne(Page::class, 'id', 'parent_id');
     }
