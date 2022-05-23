@@ -19,17 +19,17 @@ class BaseRepository
      */
     protected $model;
 
-    // Define your internals relationship columns. The repository does'nt make treatments for this columns
-    // Example You've got form_id in form trace
-    public $internal_relations_columns = [];
+    // // Define your internals relationship columns. The repository does'nt make treatments for this columns
+    // // Example You've got form_id in form trace
+    // public $internal_relations_columns = [];
 
-    // Define your externals relationship columns. The repository does'nt make treatments for this columns
-    // ex : tables pivot
-    public $external_relations_columns = [];
+    // // Define your externals relationship columns. The repository does'nt make treatments for this columns
+    // // ex : tables pivot
+    // public $external_relations_columns = [];
 
-    // Your can Define your Manipulation datas here
-    // Example : Hash your password
-    public $filters_on = [];
+    // // Your can Define your Manipulation datas here
+    // // Example : Hash your password
+    // public $filters_on = [];
 
     // just add your ignores process data as global..
     public $ignores = [];
@@ -40,26 +40,32 @@ class BaseRepository
     public function __construct()
     {
         // Don't forget to update the model's name
+        $this->booting();
         $this->model = null;
+        $this->booted();
+        $this->request = request();
         // $this->hookManager = HookManagerFacade::getInstance();
     }
+
+    public function booting() {}
+    public function booted() {}
     public function addModel($class) {
         $this->model = $class;
         return $this;
     }
-    protected function getNamedFunctionPattern($string_to_replace, $new_string, $string_base) {
+    // protected function getNamedFunctionPattern($string_to_replace, $new_string, $string_base) {
 
 
-        $strFormat = Str::remove('-', $new_string);
-        $strFormat = Str::replace(' ', '', $strFormat);
-        $converted = Str::camel($strFormat);
+    //     $strFormat = Str::remove('-', $new_string);
+    //     $strFormat = Str::replace(' ', '', $strFormat);
+    //     $converted = Str::camel($strFormat);
 
-        $strFormat = Str::replace($string_to_replace, $converted, $string_base);
+    //     $strFormat = Str::replace($string_to_replace, $converted, $string_base);
 
-        return $strFormat;
-    }
+    //     return $strFormat;
+    // }
     protected function getProcessDb($mixed, $modelPassed = null, $type = null) {
-        $request = request();
+        $request = $this->request;
 
         $multilang = $request->useMultilang;
         $lang = $request->lang;
@@ -76,7 +82,7 @@ class BaseRepository
 
         $fillables = $model->getFillable();
 
-        $untouchables_relations = array_merge($this->internal_relations_columns, $this->external_relations_columns, $this->ignores);
+        $untouchables_relations = $this->ignores;
 
         foreach ($fillables as $fillableKey => $fillable) {
             # code...
@@ -102,14 +108,14 @@ class BaseRepository
                     // unset($formValues[$fillable]);
                 }
             }
-            else {
+            // else {
 
-                $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $fillable, 'get##PLACEHOLDER##Process');
+            //     $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $fillable, 'get##PLACEHOLDER##Process');
 
-                if(method_exists($this, $namedMethod)) {
-                    call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
-                }
-            }
+            //     if(method_exists($this, $namedMethod)) {
+            //         call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
+            //     }
+            // }
 
         }
 
@@ -124,45 +130,45 @@ class BaseRepository
 
         // $this->hookManager->run($hooks[0], $model);
 
-        if(count($this->internal_relations_columns) > 0) {
-            foreach ($this->internal_relations_columns as $relationable) {
-                # code...
+        // if(count($this->internal_relations_columns) > 0) {
+        //     foreach ($this->internal_relations_columns as $relationable) {
+        //         # code...
 
-                $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $relationable, 'get##PLACEHOLDER##Relationship');
+        //         $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $relationable, 'get##PLACEHOLDER##Relationship');
 
-                if(method_exists($this, $namedMethod)) {
-                    call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
-                }
+        //         if(method_exists($this, $namedMethod)) {
+        //             call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
+        //         }
 
-            }
-        }
+        //     }
+        // }
 
-        if(count($this->filters_on) > 0) {
-            foreach ($this->filters_on as $filterable) {
-                $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $filterable, 'get##PLACEHOLDER##Filter');
+        // if(count($this->filters_on) > 0) {
+        //     foreach ($this->filters_on as $filterable) {
+        //         $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $filterable, 'get##PLACEHOLDER##Filter');
 
-                if(method_exists($this, $namedMethod)) {
-                    call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
-                }
-            }
-        }
+        //         if(method_exists($this, $namedMethod)) {
+        //             call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
+        //         }
+        //     }
+        // }
 
         $model->save();
 
         // now the model has been created or updated. We can chain all external relationships
 
-        if(count($this->external_relations_columns) > 0) {
-            foreach ($this->external_relations_columns as $relationable) {
-                # code...
+        // if(count($this->external_relations_columns) > 0) {
+        //     foreach ($this->external_relations_columns as $relationable) {
+        //         # code...
 
-                $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $relationable, 'getExternal##PLACEHOLDER##Relationship');
+        //         $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $relationable, 'getExternal##PLACEHOLDER##Relationship');
 
-                if(method_exists($this, $namedMethod)) {
-                    call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
-                }
+        //         if(method_exists($this, $namedMethod)) {
+        //             call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
+        //         }
 
-            }
-        }
+        //     }
+        // }
 
         // $this->hookManager->run($hooks[1], $model);
 

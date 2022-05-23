@@ -11,7 +11,7 @@ use  Ludows\Adminify\Repositories\BaseRepository;
 class SeoRepository extends BaseRepository
 {
     public function findOrCreate($model, $form) {
-        $request = request();
+        $request = $this->request;
         $formValues = $form->getFieldValues(false);
         $multilang = $request->useMultilang;
         $lang = $request->lang;

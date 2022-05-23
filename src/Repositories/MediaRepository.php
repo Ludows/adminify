@@ -6,7 +6,7 @@ use  Ludows\Adminify\Repositories\BaseRepository;
 
 class MediaRepository extends BaseRepository
 {   
-    public function getMimeTypeProcess($model, $formValues, $type) {
+    public function beforeRun($model, $formValues, $type) {
         
         $map = new \League\MimeTypeDetection\GeneratedExtensionToMimeTypeMap();
 
