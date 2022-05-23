@@ -32,7 +32,7 @@ class BaseRepository
     // public $filters_on = [];
 
     // just add your ignores process data as global..
-    public $ignores = [];
+    protected $ignores = ['slug'];
 
     /**
      * Constructor
@@ -51,6 +51,17 @@ class BaseRepository
     public function booted() {}
     public function addModel($class) {
         $this->model = $class;
+        return $this;
+    }
+    public function getIgnores() {
+        return $this->ignores;
+    }
+    public function addIgnore($key) {
+        $this->ignores[] = $key;
+        return $this;
+    }
+    public function deleteIgnore($key) {
+        unset($this->ignores[$key]);
         return $this;
     }
     // protected function getNamedFunctionPattern($string_to_replace, $new_string, $string_base) {
@@ -108,16 +119,16 @@ class BaseRepository
                     // unset($formValues[$fillable]);
                 }
             }
-            // else {
-
-            //     $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $fillable, 'get##PLACEHOLDER##Process');
-
-            //     if(method_exists($this, $namedMethod)) {
-            //         call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
-            //     }
-            // }
+            else {
+                if(method_exists($this, 'UntriggeredModelValue')) {
+                    call_user_func_array(array($this, 'UntriggeredModelValue'), array($model, $formValues,  $type));
+                }
+            }
 
         }
+
+
+        $model->shouldGenerateSlug();
 
         if(method_exists($this, 'beforeRun')) {
             call_user_func_array(array($this, 'beforeRun'), array($model, $formValues,  $type));
@@ -183,29 +194,29 @@ class BaseRepository
 
         return $model;
     }
-    public function getSlugProcess($model, $formValues, $type) {
+    // public function getSlugProcess($model, $formValues, $type) {
 
-        $fillable = $model->getFillable();
-        if(in_array('title', $fillable)) {
-            $model->slug = Str::slug($formValues['title']);
-        }
-        return $model;
-    }
+    //     $fillable = $model->getFillable();
+    //     if(in_array('title', $fillable)) {
+    //         $model->slug = Str::slug($formValues['title']);
+    //     }
+    //     return $model;
+    // }
 
-    public function getMediaIdRelationship($model, $formValues, $type) {
-        if(isset($formValues['media_id']) && $formValues['media_id'] != 0) {
-            $id = (int) $formValues['media_id'];
+    // public function getMediaIdRelationship($model, $formValues, $type) {
+    //     if(isset($formValues['media_id']) && $formValues['media_id'] != 0) {
+    //         $id = (int) $formValues['media_id'];
 
-            $m = Media::where('id', $id)->first();
-            if($m != null) {
-                $model->media_id = $m->id;
-            }
-            else {
-                $model->media_id = 0;
-            }
-        }
-        // return $model;
-    }
+    //         $m = Media::where('id', $id)->first();
+    //         if($m != null) {
+    //             $model->media_id = $m->id;
+    //         }
+    //         else {
+    //             $model->media_id = 0;
+    //         }
+    //     }
+    //     // return $model;
+    // }
 
     public function create($mixed) {
         $m = $this->getProcessDb($mixed, $this->model ?? null, 'create');

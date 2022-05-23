@@ -22,6 +22,7 @@ use Ludows\Adminify\Traits\HasMeta;
 use Ludows\Adminify\Traits\HasStatus;
 use Ludows\Adminify\Traits\Hookable;
 use Ludows\Adminify\Traits\QueryCachable;
+use Ludows\Adminify\Traits\GenerateSlug;
 
 use Spatie\Feed\Feedable;
 
@@ -51,6 +52,7 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     use ProcessableAssets;
     use HasStatus;
     use QueryCachable;
+    use GenerateSlug;
     // use QueryCacheable;
 
     // public $cacheFor = 3600;
