@@ -43,10 +43,6 @@ class Media extends ClassicModel
         'user_id' => 0,
      ];
 
-    public function getTableListing() {
-        return \App\Adminify\Tables\MediaTable::class;
-    }
-
     public function toFeedItem(): FeedItem {}
 
     public function getPathAttribute() {

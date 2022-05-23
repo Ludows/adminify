@@ -33,10 +33,6 @@ class FormConfirmations extends ClassicModel
      */
     protected $attributes = [];
 
-    public function getTableListing() {
-        return null;
-    }
-
     public function form()
     {
         return $this->belongsTo(Forms::class);

@@ -32,10 +32,6 @@ class Translations extends ClassicModel
         return $query->where('key', $key);
     }
 
-    public function getTableListing() {
-        return \App\Adminify\Tables\TranslationTable::class;
-    }
-
     public $enable_searchable = true;
 
     public function getLinks($menuBuilder, $arrayDatas) {

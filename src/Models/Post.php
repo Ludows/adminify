@@ -57,10 +57,6 @@ class Post extends ContentTypeModel
         return \App\Adminify\Forms\UpdatePost::class;
     }
 
-    public function getTableListing() {
-        return \App\Adminify\Tables\PostTable::class;
-    }
-
     public function media()
     {
         return $this->belongsTo(Media::class,'media_id', 'id');

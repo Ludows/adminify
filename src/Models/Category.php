@@ -40,14 +40,10 @@ class Category extends ContentTypeModel
     public $unmodified_savables_fields = [
       'submit'
    ];
-    public function getSavableForm() {
-       return \App\Adminify\Forms\UpdateCategory::class;
-    }
-
-    public function getTableListing() {
-      return \App\Adminify\Tables\CategoryTable::class;
+   public function getSavableForm() {
+      return \App\Adminify\Forms\UpdateCategory::class;
    }
-
+   
     public function getSearchResult() : SearchResult
      {
         $url = route('categories.edit', ['category' => $this->id]);

@@ -37,8 +37,6 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     use HasFactory;
     use HasMeta;
     use Hookable;
-    // use OnBootedModel;
-    // use Urlable;
     use HasTranslations;
     use AdminableMenu;
     use MultilangTranslatableSwitch;
@@ -53,18 +51,6 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     use HasStatus;
     use QueryCachable;
     use GenerateSlug;
-    // use QueryCacheable;
-
-    // public $cacheFor = 3600;
-
-    // public $cacheDriver = 'file';
-
-    // protected static $flushCacheOnUpdate = true;
-
-    // public function __construct() {
-    //     parent::__construct();
-    //     $this->useSaveRelations = false;
-    // }
 
     public function newEloquentBuilder($query)
     {
@@ -91,39 +77,4 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
         return !is_admin();
 
     }
-
-    // /**
-    //  * The tags for the query cache. Can be useful
-    //  * if flushing cache for specific tags only.
-    //  *
-    //  * @return null|array
-    //  */
-    // protected function cacheTagsValue()
-    // {
-    //     $tableName = $this->getTable();
-
-    //     return [ plural($tableName) ];
-    // }
-
-    // /**
-    //  * A cache prefix string that will be prefixed
-    //  * on each cache key generation.
-    //  *
-    //  * @return string
-    //  */
-    // protected function cachePrefixValue()
-    // {
-    //     $tableName = $this->getTable();
-
-    //     return  plural($tableName).'_';
-    // }
-
-    // protected function cacheForValue()
-    // {
-    //     if (is_admin()) {
-    //         return null;
-    //     }
-
-    //     return $this->cacheFor;
-    // }
 }

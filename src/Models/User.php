@@ -37,10 +37,6 @@ class User extends ClassicUser
         'avatar' => NULL,
     ];
 
-    public function getTableListing() {
-        return \App\Adminify\Tables\UserTable::class;
-    }
-
     public function getSearchResult() : SearchResult
     {
        $url = route('users.edit', ['user' => $this->id]);

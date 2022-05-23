@@ -14,10 +14,6 @@ class Comment extends ClassicModel
     public function toFeedItem(): FeedItem {}
     public function getSearchResult() : SearchResult {}
 
-    public function getTableListing() {
-        return \App\Adminify\Tables\CommentTable::class;
-    }
-
     public $enable_searchable = false;
 
     public $MultilangTranslatableSwitch = ['comment'];

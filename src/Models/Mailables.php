@@ -7,10 +7,6 @@ use Spatie\Menu\Laravel\Link;
 class Mailables extends ClassicMail
 {
 
-    public function getTableListing() {
-        return \App\Adminify\Tables\MailsTable::class;
-    }
-
     public $enable_searchable = true;
     public $searchable_label = 'subject';
 
