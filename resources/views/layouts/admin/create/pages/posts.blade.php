@@ -45,7 +45,6 @@
                     {!! isset($form->media_id) ? form_row($form->media_id, ['wrapper' => [
                         'class' => 'form-group mb-0'
                     ]]) : '' !!}
-                    {!! form_row($form->no_comments) !!}
                     @yield('after_settings_page')
                 </div>
                 <div class="card-footer">

@@ -39,7 +39,6 @@
                     {!! isset($form->media_id) ? form_row($form->media_id, ['wrapper' => [
                         'class' => 'form-group mb-0'
                     ]]) : '' !!}
-                    {!! form_row($form->no_comments) !!}
                 </div>
                 <div class="card-footer">
                     {!! form_row($form->submit, ['wrapper' => [
