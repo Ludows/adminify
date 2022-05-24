@@ -23,7 +23,6 @@ class Post extends ContentTypeModel
         'slug',
         'content',
         'media_id',
-        'no_comments',
         'user_id',
         'status_id'
     ];
@@ -34,7 +33,6 @@ class Post extends ContentTypeModel
      */
     protected $attributes = [
         'content' => NULL,
-        'no_comments' => 0,
         'media_id' => NULL,
     ];
     
@@ -48,7 +46,6 @@ class Post extends ContentTypeModel
         'content',
         'categories_id',
         'user_id',
-        'no_comments',
         'tags_id',
         'submit'
     ];

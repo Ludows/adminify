@@ -16,6 +16,11 @@ return [
         'root_path' => resource_path('theme')
     ],
 
+    //enable comments for registered Models
+    'comments' => [
+        'Post',
+    ],
+
     // you can your named config searchable.
     // You must extend the classic Model Adminify to have this feature.
     'searchable' => [

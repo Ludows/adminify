@@ -32,6 +32,12 @@ abstract class ContentTypeModel extends ClassicModel
         return Page::find($id);
     }
 
+    public function defineCommentStrategy() {
+        $siteKey = get_site_key('comments');
+        $baseNameClass = class_basename( get_class($this) );
+        return in_array($baseNameClass, $siteKey);
+    }
+
     public function getSitemapUrl() {
 
         $url = '/';

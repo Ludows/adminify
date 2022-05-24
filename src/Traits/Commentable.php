@@ -5,6 +5,7 @@ use App\Adminify\Models\Comment;
 
 trait Commentable
   {
+    protected $no_comments = false;
     public function scopeRoot($query) {
         return $query->where('parent_id', 0);
     }
@@ -36,6 +37,15 @@ trait Commentable
 
     public function scopeApproved($query) {
         return $query->where('is_moderated', 1);
+    }
+    
+    public function shouldUseComment() {
+
+        if(method_exists($this, 'defineCommentStrategy')) {
+            return $this->defineCommentStrategy();
+        }
+
+        return $this->no_comments;
     }
 
     public function getcommentsThreeAttribute() {
