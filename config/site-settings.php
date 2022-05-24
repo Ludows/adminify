@@ -31,7 +31,7 @@ return [
     ],
 
     'medias' => [
-        'prefers_id_on' => ['media_id', 'logo_id', 'menu-three-key', 'avatar_id', 'avatar']
+        'prefers_id_on' => ['media_id', 'logo_id', 'menu-three-key', 'avatar_id', 'avatar'],
     ],
 
     'assets' => array(

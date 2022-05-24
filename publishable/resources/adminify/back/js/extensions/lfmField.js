@@ -1,3 +1,5 @@
+import Route from "../../../commons/js/Route";
+
 export default function LFMField(fields) {
 
     let selectedItems = [];
@@ -142,10 +144,19 @@ export default function LFMField(fields) {
                 ];
             }
             if(datas.hidden.val().length > 0) {
-                selectedItems[0].id = findIndexFromName(ifr, fields_id.indexOf(datas.hidden.attr('name')) ? datas.hidden.attr('data-src') :  datas.hidden.val())
+                let keyToFind = datas.hidden.attr('data-src');
+
+                if(isMediaUrl() || fields_id.indexOf(datas.hidden.attr('name')) == -1) {
+                    keyToFind = datas.hidden.val();
+                }
+                selectedItems[0].id = findIndexFromName(ifr, keyToFind)
                 updateStyle(ifr);
             }
         })
+    }
+
+    function isMediaUrl() {
+        return window.location.href == Route('medias.create') || window.location.href == Route('medias.edit');
     }
 
     function updateFieldProcess(ObjectInterface) {
@@ -168,22 +179,33 @@ export default function LFMField(fields) {
 
                         let ValueInput = ObjectInterface.hidden.val().split(', ').filter(n => n);
                         let m = d.models[0];
+                        let keyToFind = 'id';
 
-                        console.log(ValueInput);
+                        if(isMediaUrl() || fields_id.indexOf(ObjectInterface.hidden.attr('name')) == -1) {
+                            keyToFind = 'name';
+                        }
+                        
+                        ValueInput.push(m[keyToFind]);
 
-                        fields_id.indexOf(ObjectInterface.hidden.attr('name')) > -1 ? ValueInput.push(m.id) : ValueInput.push(m.src);
+                        // fields_id.indexOf(ObjectInterface.hidden.attr('name')) > -1 ? ValueInput.push(m.id) : ValueInput.push(m.src);
                         // $.each(d.models, function(i, m) {
                         //     fields_id.indexOf(ObjectInterface.hidden.attr('name')) > -1 ? values.push(m.id) : values.push(m.src);
                         // });
 
-                        console.log(ValueInput);
+                        // console.log(ValueInput);
 
                         ObjectInterface.hidden.val( ValueInput.join(', ') );
 
                     }
                     else {
+                        let keyToFind = 'id';
+
+                        if(isMediaUrl() || fields_id.indexOf(ObjectInterface.hidden.attr('name')) == -1) {
+                            keyToFind = 'name';
+                        }
+
+                        ObjectInterface.hidden.val(d.models[0][keyToFind]);
                         // console.log('a 2')
-                        fields_id.indexOf(ObjectInterface.hidden.attr('name')) > -1 ? ObjectInterface.hidden.val(d.models[0].id) : ObjectInterface.hidden.val(d.models[0].src);
                     }
                 }
                 else {
