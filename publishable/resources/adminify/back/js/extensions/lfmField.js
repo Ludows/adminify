@@ -144,7 +144,12 @@ export default function LFMField(fields) {
                 ];
             }
             if(datas.hidden.val().length > 0) {
-                selectedItems[0].id = findIndexFromName(ifr, fields_id.indexOf(datas.hidden.attr('name')) ? datas.hidden.attr('data-src') :  datas.hidden.val())
+                let keyToFind = datas.hidden.attr('data-src');
+
+                if(isMediaUrl() || fields_id.indexOf(datas.hidden.attr('name')) == -1) {
+                    keyToFind = datas.hidden.val();
+                }
+                selectedItems[0].id = findIndexFromName(ifr, keyToFind)
                 updateStyle(ifr);
             }
         })
