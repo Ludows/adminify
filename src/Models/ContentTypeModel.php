@@ -6,6 +6,7 @@ use Ludows\Adminify\Traits\Urlable;
 use Ludows\Adminify\Traits\Sitemapable;
 use Ludows\Adminify\Traits\HasSeo;
 use Ludows\Adminify\Traits\Authorable;
+use Ludows\Adminify\Traits\Commentable;
 
 use App\Adminify\Models\User;
 use App\Adminify\Models\Page;
@@ -19,6 +20,7 @@ abstract class ContentTypeModel extends ClassicModel
     use HasSeo;
     use Sitemapable;
     use Authorable;
+    use Commentable;
 
     public function parent() {
         return $this->HasOne(Page::class, 'id', 'parent_id');
@@ -28,6 +30,12 @@ abstract class ContentTypeModel extends ClassicModel
     }
     public function getParent($id) {
         return Page::find($id);
+    }
+
+    public function defineCommentStrategy() {
+        $siteKey = get_site_key('comments');
+        $baseNameClass = class_basename( get_class($this) );
+        return in_array($baseNameClass, $siteKey);
     }
 
     public function getSitemapUrl() {

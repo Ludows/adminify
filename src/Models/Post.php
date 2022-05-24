@@ -23,7 +23,6 @@ class Post extends ContentTypeModel
         'slug',
         'content',
         'media_id',
-        'no_comments',
         'user_id',
         'status_id'
     ];
@@ -34,7 +33,6 @@ class Post extends ContentTypeModel
      */
     protected $attributes = [
         'content' => NULL,
-        'no_comments' => 0,
         'media_id' => NULL,
     ];
     
@@ -48,17 +46,12 @@ class Post extends ContentTypeModel
         'content',
         'categories_id',
         'user_id',
-        'no_comments',
         'tags_id',
         'submit'
     ];
 
     public function getSavableForm() {
         return \App\Adminify\Forms\UpdatePost::class;
-    }
-
-    public function getTableListing() {
-        return \App\Adminify\Tables\PostTable::class;
     }
 
     public function media()
@@ -79,33 +72,5 @@ class Post extends ContentTypeModel
             $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/posts?lang='. $arrayDatas['lang'] : '/admin/posts', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.posts'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
             // $menuBuilder->add( Link::to( $multilang ? '/admin/tags?lang='.$lang : '/admin/tags', '<i class="ni ni-single-copy-04"></i> '.__('admin.tags.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
         }
-    }
-
-    public function getcommentsThreeAttribute() {
-        $a = [];
-        $m = new Comment();
-        $items = $m->withPostId($this->id)->root()->approved()->get();
-        $allSubs = $m->SublevelAll(0)->approved()->get();
-        $grouped = $allSubs->groupBy('parent_id');
-        $i = 0;
-
-        function checkCommentChilds($item, $subItems, $grouped) {
-            if($grouped->has($item->id)) {
-                $cibled = $grouped->get($item->id);
-                $item->childs = $cibled;
-                foreach ($cibled as $c) {
-                    # code...
-                    checkCommentChilds($c, $subItems, $grouped);
-                }
-            }
-            return $item;
-        }
-        foreach ($items as $item) {
-            # code...
-            checkCommentChilds($item, $allSubs, $grouped);
-            $a[$i] = $item;
-            $i++;
-        }
-        return collect($a);
     }
 }

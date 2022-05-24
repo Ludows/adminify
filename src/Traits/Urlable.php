@@ -151,6 +151,25 @@
 
           return $u->get()->all();
      }
+     public function getOriginalUrlAttribute() {
+          $a = [];
+
+          $collection =  $this->url();
+          //dump($collection);
+          if(count($collection) > 0) {
+               foreach ($collection as $col) {
+                    # code...
+                    $m = new $col->model_name;
+                    $m = $m->where([
+                        ['id', '=', $col->model_id]
+                    ])->get()->first();
+
+                    $a[] = $m->getOriginal($this->urlableColumn);
+               }
+          }
+
+          return $a;
+     }
      public function getUrlAttribute() {
           $a = [];
 
@@ -169,6 +188,9 @@
           }
 
           return $a;
+     }
+     public function getPreviousPathAttribute() {
+
      }
      public function getUrlPathAttribute() {
         $parts = $this->url;

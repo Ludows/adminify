@@ -73,10 +73,6 @@ class FormField extends ClassicModel
         'pivot'
     ];
 
-    public function getTableListing() {
-        return null;
-    }
-
     public function form()
     {
         return $this->belongsTo(Forms::class);

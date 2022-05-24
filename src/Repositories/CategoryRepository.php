@@ -4,29 +4,37 @@ namespace Ludows\Adminify\Repositories;
 
 use App\Adminify\Models\Category; // Don't forget to update the model's namespace
 use  Ludows\Adminify\Repositories\BaseRepository;
+use App\Adminify\Models\Media;
 class CategoryRepository extends BaseRepository
 {
-    public $internal_relations_columns = [
-        'media_id',
-    ];
+    // public $internal_relations_columns = [
+    //     'media_id',
+    // ];
 
-    public function delete($model) {
-        // $this->hookManager->run('model:deleting', $model);
+    public function beforeRun($model, $formValues, $type) {
+        if(isset($formValues['media_id']) && $formValues['media_id'] != 0 && $type != "destroy") {
+            $id = (int) $formValues['media_id'];
 
-        $check_for_parent_id = Category::where('parent_id', '=', $model->id)->get();
-        $childCatArr = $check_for_parent_id->all();
-
-        foreach ($childCatArr as $childCat) {
-            # code...
-            // restore to default
-            $childCat->fill(['parent_id' => 0]);
-            $childCat->save();
-            // $this->hookManager->run('model:updated', $childCat);
+            $m = Media::where('id', $id)->first();
+            if($m != null) {
+                $model->media_id = $m->id;
+            }
+            else {
+                $model->media_id = 0;
+            }
         }
 
-        $model->delete();
-        // $this->hookManager->run('model:deleted', $model);
-        // $this->hookManager->run('process:finished', $model);
-
+        if($type == "destroy") {
+            $check_for_parent_id = Category::where('parent_id', '=', $model->id)->get();
+            $childCatArr = $check_for_parent_id->all();
+    
+            foreach ($childCatArr as $childCat) {
+                # code...
+                // restore to default
+                $childCat->fill(['parent_id' => 0]);
+                $childCat->save();
+                // $this->hookManager->run('model:updated', $childCat);
+            }
+        }
     }
 }

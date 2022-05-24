@@ -9,7 +9,7 @@ class FormConfirmationRepository extends BaseRepository
    public function afterRun($model, $formValues,  $type) {
 
          //retrieve the form model from request
-         $f = request()->model;
+         $f = $this->request->model;
 
          // prevent dupplicated ids in db 
          if($type == "update") {

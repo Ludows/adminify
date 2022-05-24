@@ -14,10 +14,6 @@ class UserPreference extends ClassicModel
     public function toFeedItem(): FeedItem {}
     public function getSearchResult() : SearchResult {}
 
-    public function getTableListing() {
-        return null;
-    }
-
     public $enable_searchable = false;
 
     public $MultilangTranslatableSwitch = [];

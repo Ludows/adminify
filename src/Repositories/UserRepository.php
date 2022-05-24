@@ -10,25 +10,26 @@ use Ludows\Adminify\Repositories\BaseRepository;
 
 class UserRepository extends BaseRepository
 {
-    public $internal_relations_columns = [
-        'avatar',
-    ];
-    public $external_relations_columns = [
-        'roles'
-    ];
-    public $filters_on = [
-        'password'
-    ];
+    // public $internal_relations_columns = [
+    //     'avatar',
+    // ];
+    // public $external_relations_columns = [
+    //     'roles'
+    // ];
+    // public $filters_on = [
+    //     'password'
+    // ];
 
-    public function getAvatarRelationship($model, $formValues, $type) {
+    public function beforeRun($model, $formValues, $type) {
         if(isset($formValues['avatar'])) {
             $model->avatar = $formValues['avatar'];
         }
+        if($type == 'create' || $type == 'update' && Hash::check($formValues['password'], $model->password)) {
+            $model->password = Hash::make($formValues['password']);
+        }
     }
-    public function getPasswordFilter($model, $formValues, $type) {
-        $model->password = Hash::make($formValues['password']);
-    }
-    public function getExternalRolesRelationship($model, $formValues, $type) {
+
+    public function afterRun($model, $formValues, $type) {
         if(isset($formValues['roles']) && $type == "create") {
             $model->assignRole($formValues['roles']);
         }
@@ -37,9 +38,11 @@ class UserRepository extends BaseRepository
             $model->syncRoles($formValues['roles']);
         }
     }
+
     public function saveProfile($values) {
 
         $userId = $values['user_id'] ?? user()->id;
+
         if(isset($values['user_id'])) {
             unset($values['user_id']);
         }
@@ -54,7 +57,7 @@ class UserRepository extends BaseRepository
 
             $check = $pref->type($key)->userId($userId)->get()->first();
 
-            if($check != null) {
+            if(!empty($check)) {
                 $pref = $check;
             }
 

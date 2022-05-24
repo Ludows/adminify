@@ -16,10 +16,10 @@ class FormsRepository extends BaseRepository
         $this->formFieldRepo = $formFieldRepo;
         $this->FormTracesRepository = $FormTracesRepository;
     }
-    // set for only linking to pivot table
-    public $external_relations_columns = [
-        'fields'
-    ];
+    // // set for only linking to pivot table
+    // public $external_relations_columns = [
+    //     'fields'
+    // ];
 
     // //set as interval for register or update fields objects
     // public $internal_relations_columns = [
@@ -32,7 +32,29 @@ class FormsRepository extends BaseRepository
     // }
 
 
-    public function getExternalFieldsRelationship($model, $formValues, $type) {
+    public function afterRun($model, $formValues, $type) {
+        if($type != "destroy") {
+            $this->runFieldsProcess($model, $formValues, $type);
+        }
+        if($type == "destroy") {
+
+            $traces = $model->traces;
+            $fields = $model->fields;
+
+            foreach($fields as $field) {
+                $model->fields()->detach([$field->id]);
+                $this->formFieldRepo->addModel($field)->delete($field);
+            }
+
+            foreach($traces as $trace) {
+                $model->traces()->detach([$trace->id]);
+                $this->FormTracesRepository->addModel($trace)->delete($trace);
+            }
+        }
+    }
+
+
+    public function runFieldsProcess($model, $formValues, $type) {
 
         if($type == "update") {
             $model->fields()->detach();
@@ -113,27 +135,5 @@ class FormsRepository extends BaseRepository
             }
         }
 
-    }
-
-    public function delete($model) {
-        // $this->hookManager->run('model:deleting', $model);
-
-        $traces = $model->traces;
-        $fields = $model->fields;
-
-        foreach($fields as $field) {
-            $model->fields()->detach([$field->id]);
-            $this->formFieldRepo->addModel($field)->delete($field);
-        }
-
-        foreach($traces as $trace) {
-            $model->traces()->detach([$trace->id]);
-            $this->FormTracesRepository->addModel($trace)->delete($trace);
-        }
-        
-        $model->delete();
-        // $this->hookManager->run('model:deleted', $model);
-        // $this->hookManager->run('process:finished', $model);
-        return $model;
     }
 }

@@ -34,10 +34,6 @@ class GroupMeta extends ClassicModel
         return null;
     }
 
-    public function getTableListing() {
-        return \App\Adminify\Tables\GroupMetasTable::class;
-    }
-
     public function getLinks($menuBuilder, $arrayDatas) {
         if($arrayDatas['user']->hasPermissionTo('create_metas') && $arrayDatas['features']['metas']) {
             $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/groupmetas?lang='. $arrayDatas['lang'] : '/admin/groupmetas', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.groupmetas'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
@@ -46,10 +42,5 @@ class GroupMeta extends ClassicModel
     }
 
     public function toFeedItem(): FeedItem {}
-
-    protected function cacheForValue()
-    {
-        return null;
-    }
 
 }

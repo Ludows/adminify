@@ -18,10 +18,6 @@ class Page extends ContentTypeModel
         }
     }
 
-    public function getTableListing() {
-        return \App\Adminify\Tables\PageTable::class;
-    }
-
     public $excludes_savables_fields = [
         'media_id',
         'parent_id',

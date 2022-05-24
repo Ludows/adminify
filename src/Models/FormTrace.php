@@ -36,10 +36,6 @@ class FormTrace extends ClassicModel
      */
     protected $attributes = [];
 
-    public function getTableListing() {
-        return \App\Adminify\Tables\FormTracesTable::class;
-    }
-
     public function entries()
     {
         return $this->belongsToMany(FormEntries::class, 'form_form_entry', 'trace_id');

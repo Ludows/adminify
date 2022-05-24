@@ -153,13 +153,23 @@ class MenuRepository extends BaseRepository
         }
     }
     public function create($mixed) {
-        $m = $this->getProcessDb($mixed, $this->model ?? null, ['menu:creating', 'menu:created'], 'create');
+        if(method_exists($this, 'beforeRun')) {
+            call_user_func_array(array($this, 'beforeRun'), array($this->model, $mixed,  'create'));
+        }
+        $m = $this->getProcessDb($mixed, $this->model ?? null, 'create');
         // $this->hookManager->run('process:finished', $m);
+        if(method_exists($this, 'afterRun')) {
+            call_user_func_array(array($this, 'afterRun'), array($this->model, $mixed,  'create'));
+        }
         return $m;
     }
     public function update($menuthree, $model) {
 
         // $this->hookManager->run('updating:menu', $this->model ?? $model);
+        if(method_exists($this, 'beforeRun')) {
+            call_user_func_array(array($this, 'beforeRun'), array($this->model ?? $model, $menuthree,  'update'));
+        }
+
         $existingItems = count($model->items->all()) > 0 ? true : false;
 
         if($existingItems) {
@@ -168,6 +178,10 @@ class MenuRepository extends BaseRepository
 
         $this->Walker($menuthree, $existingItems , $model, 0, false);
 
+        if(method_exists($this, 'afterRun')) {
+            call_user_func_array(array($this, 'afterRun'), array($this->model ?? $model, $menuthree,  'update'));
+        }
+
         // $this->hookManager->run('updated:menu', $this->model ?? $model);
         // $this->hookManager->run('process:finished', $model);
         return $model;
@@ -175,6 +189,10 @@ class MenuRepository extends BaseRepository
     }
     public function delete($model) {
         // $this->hookManager->run('deleting:menu', $this->model ?? $model);
+        if(method_exists($this, 'beforeRun')) {
+            call_user_func_array(array($this, 'beforeRun'), array($this->model ?? $model, [],  'destroy'));
+        }
+
         $items = $model->items->all();
         if(count($items) > 0) {
 
@@ -189,6 +207,10 @@ class MenuRepository extends BaseRepository
 
         }
         $model->delete();
+
+        if(method_exists($this, 'afterRun')) {
+            call_user_func_array(array($this, 'afterRun'), array($this->model ?? $model, [],  'destroy'));
+        }
         // $this->hookManager->run('deleted:menu', $this->model ?? $model);
         // $this->hookManager->run('process:finished', $model);
         return $model;

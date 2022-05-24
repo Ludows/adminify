@@ -59,11 +59,7 @@ abstract class ClassicMail extends SpatieMailTemplate implements Searchable
     protected $attributes = [
         'subject' => NULL,
         'text_template' => NULL,
-     ];
-
-    public function getTableListing() {
-        return \App\Adminify\Tables\MailsTable::class;
-    }
+    ];
 
     public function getSavableForm() {
         return null;

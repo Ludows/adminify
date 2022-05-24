@@ -33,7 +33,7 @@
         </div>
     @endif
 
-    @if($enabled_features['post'] && $isSingle)
+    @if($model->shouldUseComment())
         @php
             $allowForm = true;
             $showTitle = true;
@@ -44,7 +44,7 @@
                 $allowForm = false;
                 $showTitle = false;
             }
-            if($allowForm && $model->no_comments) {
+            if($allowForm && $model->no_comments == true) {
                 $allowForm = false;
                 $showTitle = false;
             }
