@@ -15,6 +15,7 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
 
     if(isset($c['media']) && $c['media']) {
         Route::resource('medias', 'App\Adminify\Http\Controllers\Back\MediaController', ['except' => ['show']]);
+        Route::resource('mediasv2', 'App\Adminify\Http\Controllers\Back\Mediav2Controller', ['except' => ['show']]);
     }
 
     if(isset($c['category']) && $c['category']) {
