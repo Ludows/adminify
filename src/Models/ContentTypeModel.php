@@ -6,6 +6,7 @@ use Ludows\Adminify\Traits\Urlable;
 use Ludows\Adminify\Traits\Sitemapable;
 use Ludows\Adminify\Traits\HasSeo;
 use Ludows\Adminify\Traits\Authorable;
+use Ludows\Adminify\Traits\Commentable;
 
 use App\Adminify\Models\User;
 use App\Adminify\Models\Page;
@@ -19,6 +20,7 @@ abstract class ContentTypeModel extends ClassicModel
     use HasSeo;
     use Sitemapable;
     use Authorable;
+    use Commentable;
 
     public function parent() {
         return $this->HasOne(Page::class, 'id', 'parent_id');

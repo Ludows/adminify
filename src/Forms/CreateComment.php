@@ -15,9 +15,12 @@ class CreateComment extends Form
         $c = $this->getComments();
         $p = $this->getPosts();
         $u = user();
-        $r = $u->hasRole(['editor', 'administrator']);
+        $r = $u->hasRole(['editor', 'administrator', 'subscriber']);
         
         $this->add('user_id', 'hidden', [
+            'label_show' => false
+        ]);
+        $this->add('model_class', 'hidden', [
             'label_show' => false
         ]);
         $this->add('post_id', 'select2', [

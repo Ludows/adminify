@@ -22,7 +22,8 @@ class Comment extends ClassicModel
         'comment',
         'parent_id',
         'user_id',
-        'post_id',
+        'model_id',
+        'model_class',
         'is_moderated',
     ];
 
@@ -49,34 +50,5 @@ class Comment extends ClassicModel
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function scopeRoot($query) {
-        return $query->where('parent_id', 0);
-    }
-
-    public function scopeWithPostId($query, $post_id) {
-        return $query->where('post_id', $post_id);
-    }
-
-    public function scopeSublevel($query, $sublevel) {
-        return $query->where('parent_id', $sublevel);
-    }
-
-    public function getHasSublevelAttribute() {
-        $has = false;
-        $subs = $this->Sublevel($this->id)->get();
-        if(count($subs->all()) > 0) {
-            $has = true;
-        }
-        return $has;
-    }
-
-    public function scopeSublevelAll($query, $sublevel) {
-        return $query->where('parent_id', '!=', $sublevel);
-    }
-
-    public function scopeApproved($query) {
-        return $query->where('is_moderated', 1);
     }
 }

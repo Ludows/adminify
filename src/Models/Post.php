@@ -76,32 +76,4 @@ class Post extends ContentTypeModel
             // $menuBuilder->add( Link::to( $multilang ? '/admin/tags?lang='.$lang : '/admin/tags', '<i class="ni ni-single-copy-04"></i> '.__('admin.tags.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
         }
     }
-
-    public function getcommentsThreeAttribute() {
-        $a = [];
-        $m = new Comment();
-        $items = $m->withPostId($this->id)->root()->approved()->get();
-        $allSubs = $m->SublevelAll(0)->approved()->get();
-        $grouped = $allSubs->groupBy('parent_id');
-        $i = 0;
-
-        function checkCommentChilds($item, $subItems, $grouped) {
-            if($grouped->has($item->id)) {
-                $cibled = $grouped->get($item->id);
-                $item->childs = $cibled;
-                foreach ($cibled as $c) {
-                    # code...
-                    checkCommentChilds($c, $subItems, $grouped);
-                }
-            }
-            return $item;
-        }
-        foreach ($items as $item) {
-            # code...
-            checkCommentChilds($item, $allSubs, $grouped);
-            $a[$i] = $item;
-            $i++;
-        }
-        return collect($a);
-    }
 }
