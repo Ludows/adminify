@@ -57,6 +57,8 @@ Je suis un ovveride de template :)
 
         </div>
 
+        @include('adminify::layouts.admin.medialibrary.modalDetails')
+
         @include('adminify::layouts.admin.footers.auth')
     </div>
 </div>

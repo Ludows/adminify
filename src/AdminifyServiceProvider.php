@@ -26,30 +26,23 @@ use Ludows\Adminify\Commands\CreateDropdown;
 use Ludows\Adminify\Commands\CreateFormRequests;
 use Ludows\Adminify\Commands\CreateForms;
 
-use Illuminate\Support\Str;
-
-
 use Illuminate\Support\Facades\Route;
 
 use Illuminate\Contracts\Http\Kernel; // add kernel
 use Ludows\Adminify\View\Components\Modal;
 
 use Ludows\Adminify\Libs\HookManager;
-use Ludows\Adminify\Facades\HookManagerFacade;
 
-use Illuminate\Contracts\Filesystem\Filesystem;
 use League\Glide\Responses\LaravelResponseFactory;
 use League\Glide\ServerFactory;
 
 use League\Glide\Signatures\SignatureFactory;
 
 use Ludows\Adminify\Libs\SitemapRender;
+use Ludows\Adminify\Libs\MediaService;
 
-use Illuminate\Support\Facades\Storage;
+// use Illuminate\Support\Facades\Storage;
 
-use File;
-use Config;
-use Directory;
 
 class AdminifyServiceProvider extends ServiceProvider {
 
@@ -68,7 +61,7 @@ class AdminifyServiceProvider extends ServiceProvider {
             $packages = require_once(__DIR__.'/../config/packagelist.php');
             $this->bootableDependencies($packages, $kernel);
         }
-        
+
 
 
 
@@ -101,7 +94,7 @@ class AdminifyServiceProvider extends ServiceProvider {
                 $this->loadViewsFrom($value, $key);
             }
         }
-        
+
     }
 
     /**
@@ -121,34 +114,34 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         $this->app->singleton('League\Glide\Server', function($app) {
 
-            $filesystem = Storage::disk(config('lfm.disk'));
+            // $filesystem = Storage::disk(config('lfm.disk'));
+
+            $mediaService = app(MediaService::class);
+            // // dd($filesystem->getDriver(), $filesystem->exists('files/1/IMG_20220302_112930-removebg-preview.png'), config('lfm.disk') );
+            // $lfm = app()->make('UniSharp\LaravelFilemanager\LfmPath');
+            // $source_path_prefix = '';
+            // $path_image = request('path');
 
 
-            // dd(request('path'));
 
-            // dd($filesystem->getDriver(), $filesystem->exists('files/1/IMG_20220302_112930-removebg-preview.png'), config('lfm.disk') );
-            $lfm = app()->make('UniSharp\LaravelFilemanager\LfmPath');
-            $source_path_prefix = '';
-            $path_image = request('path');
+            // // dd($lfm->files());
 
-            // dd($lfm->files());
-
-            foreach ($lfm->files() as $fileObject) {
-                # code...
-                // dd($fileObject->path('url'));
-                $url = $fileObject->path('url');
-                if($fileObject->name() == $path_image) {
-                    $source_path_prefix = trim(str_replace($path_image, '', $url));
-                    break;
-                }
-            }
+            // foreach ($lfm->files() as $fileObject) {
+            //     # code...
+            //     // dd($fileObject->path('url'));
+            //     $url = $fileObject->path('url');
+            //     if($fileObject->name() == $path_image) {
+            //         $source_path_prefix = trim(str_replace($path_image, '', $url));
+            //         break;
+            //     }
+            // }
 
             return ServerFactory::create([
                 'response' => new LaravelResponseFactory(app('request')),
-                'source' => $filesystem->getDriver(),
-                'cache' => $filesystem->getDriver(),
+                'source' => $mediaService->getFileSystem()->getDriver(),
+                'cache' => $mediaService->getFileSystem()->getDriver(),
                 'cache_path_prefix' => '.cache',
-                'source_path_prefix' =>  $source_path_prefix,
+                'source_path_prefix' =>  '',
                 'base_url' => 'images',
                 'max_image_size' => 2000*2000,
             ]);

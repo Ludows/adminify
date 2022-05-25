@@ -47,7 +47,7 @@ class Mediav2Controller extends Controller
         */
         public function index(FormBuilder $formBuilder)
         {
-            $a = ['files' => $this->mediaUploader->getFiles(), 'typed_files' => $this->mediaUploader->getListingTypedFiles(), 'dates' => $this->mediaUploader->getListingDates()];
+            $a = ['typed_files' => $this->mediaUploader->getListingTypedFiles(), 'dates' => $this->mediaUploader->getListingDates()];
             return view("adminify::layouts.admin.pages.index", $a);
         }
 
@@ -63,6 +63,16 @@ class Mediav2Controller extends Controller
             }
 
             return $this->sendResponse($input[$config['paramName']], 'mediasv2.index', 'admin.file.saved', 'file');
+        }
+
+        public function listing() {
+// 'files' => $this->mediaUploader->getFiles(),
+            $listing =  $this->mediaUploader->getFiles();
+            $config = $this->mediaUploader->getConfig();
+
+            $v = view("adminify::layouts.admin.medialibrary.list", ['files' => $listing->files, 'thumbs' => $config['thumbs']]);
+
+            return $this->sendResponse($v->render(), 'mediasv2.index', 'admin.file.retrieved', 'html');
         }
 
         // /**

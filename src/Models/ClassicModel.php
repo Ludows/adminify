@@ -23,6 +23,7 @@ use Ludows\Adminify\Traits\HasStatus;
 use Ludows\Adminify\Traits\Hookable;
 use Ludows\Adminify\Traits\QueryCachable;
 use Ludows\Adminify\Traits\GenerateSlug;
+use Ludows\Adminify\Traits\HasInteractsWithMediaLibrary;
 
 use Spatie\Feed\Feedable;
 
@@ -51,6 +52,7 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     use HasStatus;
     use QueryCachable;
     use GenerateSlug;
+    use HasInteractsWithMediaLibrary;
 
     public function newEloquentBuilder($query)
     {

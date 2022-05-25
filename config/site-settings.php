@@ -25,11 +25,10 @@ return [
         'driver' => 'public',
         'paramName' => 'file',
         'thumbs' => [
-            'use' => true,
-            'width' => 80,
-            'height' => 80
+            'w' => 200,
+            'h' => 200
         ],
-        'paginate' => 30,
+        'limit' => 30,
         'allow_rename' => false,
         'validator_rule' => 'required|max:204800',
         'allowed_mime_types' => [

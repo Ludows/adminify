@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\File;
 
 class MediaService {
     public function __construct(Request $request) {
@@ -70,13 +72,42 @@ class MediaService {
         $files = [];
         $fileSystem = $this->getFileSystem();
         $directories = $fileSystem->directories('');
-
+        $config = $this->getConfig();
         foreach ($directories as $directoryName) {
+            $i = 0;
             # code...
-            $files_dir = $this->getFilesByDate($directoryName);
-            $files = array_merge($files, $files_dir);
+            if($config['limit'] >= count($files)) {
+                $files_dir = $this->getFilesByDate($directoryName);
+                $currentIndiceFolder = $directoryName;
+
+                foreach ($files_dir as $key => $value) {
+                    # code...
+                    $fileObject = new File( $fileSystem->path($value) );
+                    $url = $fileSystem->url($value);
+                    $file =  str_replace( $fileSystem->url(''), '', $url);
+
+                    $files[] = [
+                        'extension' => $fileObject->getExtension(),
+                        'mimetype' => $fileObject->getMimeType(),
+                        'name' => $fileObject->getBasename('.'. $fileObject->getExtension()),
+                        'size' => $fileObject->getSize(),
+                        'url' => $url,
+                        'file' =>  $file
+                    ];
+                    $i++;
+                }
+            }
+            else {
+                break;
+            }
         }
-        return $files;
+
+        return (object) [
+            'files' => $files,
+            'last_indice' => $i,
+            'last_folder' => $currentIndiceFolder,
+            'isEnd' => false //@todo
+        ];
     }
     public function validate($input, $messages = []) {
 
@@ -109,7 +140,8 @@ class MediaService {
             $namedFile = $name.'.'.$extension;
         }
         else {
-            $name = explode('.',$fileUpload->getClientOriginalName())[0];
+            // ensure file as slug
+            $name = slug( explode('.',$fileUpload->getClientOriginalName())[0] );
             $extension = $fileUpload->getClientOriginalExtension();
             $namedFile = $name.'.'.$extension;
         }
