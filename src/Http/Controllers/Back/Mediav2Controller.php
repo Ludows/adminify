@@ -5,6 +5,8 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 
 use App\Adminify\Models\Media;
 
+use Illuminate\Http\Request;
+
 use App\Adminify\Http\Requests\CreateMediaRequest;
 use App\Adminify\Http\Requests\UpdateMediaRequest;
 use App\Adminify\Repositories\MediaRepository;
@@ -20,19 +22,22 @@ use App\Adminify\Forms\UpdateMedia;
 use Ludows\Adminify\Traits\TableManagerable;
 use App\Adminify\Tables\MediaTable;
 
+use Ludows\Adminify\Libs\MediaService;
+
 class Mediav2Controller extends Controller
 {
     use FormBuilderTrait;
     use TableManagerable;
     private $mediaRepository;
 
-        public function __construct(MediaRepository $mediaRepository) {
+        public function __construct(MediaRepository $mediaRepository, MediaService $MediaService) {
 
             $this->mediaRepository = $mediaRepository;
+            $this->mediaUploader = $MediaService;
 
-            $this->middleware(['permission:read|create_medias'], ['only' => ['show','create']]);
-            $this->middleware(['permission:read|edit_medias'], ['only' => ['edit', 'update']]);
-            $this->middleware(['permission:read|delete_medias'], ['only' => ['destroy']]);
+            $this->middleware(['permission:read|create_medias'], ['only' => ['index','upload']]);
+            // $this->middleware(['permission:read|edit_medias'], ['only' => ['edit', 'update']]);
+            // $this->middleware(['permission:read|delete_medias'], ['only' => ['destroy']]);
         }
 
     /**
@@ -42,8 +47,22 @@ class Mediav2Controller extends Controller
         */
         public function index(FormBuilder $formBuilder)
         {
-            
-            return view("adminify::layouts.admin.pages.index", []);
+            $a = ['files' => $this->mediaUploader->getFiles(), 'typed_files' => $this->mediaUploader->getListingTypedFiles(), 'dates' => $this->mediaUploader->getListingDates()];
+            return view("adminify::layouts.admin.pages.index", $a);
+        }
+
+        public function upload(Request $request) {
+
+            $input = $request->all();
+
+            $isValid = $this->mediaUploader->validate($input);
+            $config = $this->mediaUploader->getConfig();
+
+            if($isValid) {
+                $this->mediaUploader->setFileUpload($input[$config['paramName']])->upload();
+            }
+
+            return $this->sendResponse($input[$config['paramName']], 'mediasv2.index', 'admin.file.saved', 'file');
         }
 
         // /**
@@ -138,6 +157,6 @@ class Mediav2Controller extends Controller
         //     app('UniSharp\LaravelFilemanager\Controllers\DeleteController')->getDelete();
 
         //     $this->mediaRepository->addModel($media)->delete($media);
-        //     return $this->sendResponse($media, 'medias.index', 'admin.typed_data.deleted');            
+        //     return $this->sendResponse($media, 'medias.index', 'admin.typed_data.deleted');
         // }
 }

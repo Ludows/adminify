@@ -21,6 +21,27 @@ return [
         'Post',
     ],
 
+    'media_library' => [
+        'driver' => 'public',
+        'paramName' => 'file',
+        'thumbs' => [
+            'use' => true,
+            'width' => 80,
+            'height' => 80
+        ],
+        'paginate' => 30,
+        'allow_rename' => false,
+        'validator_rule' => 'required|max:204800',
+        'allowed_mime_types' => [
+            'image/jpeg',
+            'image/pjpeg',
+            'image/png',
+            'image/gif',
+            'application/pdf',
+            'text/plain',
+        ]
+    ],
+
     // you can your named config searchable.
     // You must extend the classic Model Adminify to have this feature.
     'searchable' => [
