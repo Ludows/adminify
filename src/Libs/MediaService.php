@@ -8,14 +8,18 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Http\File;
+use App\Adminify\Repositories\MediaRepository;
+use App\Adminify\Models\Media;
 
 class MediaService {
-    public function __construct(Request $request) {
+    public function __construct(Request $request, MediaRepository $mediaRepository, Media $media) {
         $this->request = $request;
+        $this->mediaRepository = $mediaRepository;
         $this->config = get_site_key('media_library');
         $this->filesytem = storage($this->config['driver']);
         $this->order = 'desc';
         $this->file = null;
+        $this->model = $media;
     }
     public function getListingTypedFiles() {
         return [
@@ -42,6 +46,13 @@ class MediaService {
     }
     public function setOrder($value) {
         $this->order = $value;
+        return $this;
+    }
+    public function getModel() {
+        return $this->model;
+    }
+    public function setModel($value) {
+        $this->model = $value;
         return $this;
     }
     public function getOrder() {
@@ -158,5 +169,12 @@ class MediaService {
 
 
         $fileSystem->putFileAs($dt->toDateString(), $fileUpload, $namedFile);
+
+        $this->mediaRepository->addModel($this->model)->create([
+            'src' => $namedFile,
+            'alt' => '',
+            'description' => '',
+            'user_id' => user()->id,
+        ]);
     }
 }

@@ -6,14 +6,14 @@ use  Ludows\Adminify\Repositories\BaseRepository;
 
 class MediaRepository extends BaseRepository
 {   
-    public function beforeRun($model, $formValues, $type) {
+    // public function beforeRun($model, $formValues, $type) {
         
-        $map = new \League\MimeTypeDetection\GeneratedExtensionToMimeTypeMap();
+    //     $map = new \League\MimeTypeDetection\GeneratedExtensionToMimeTypeMap();
 
-        $p = pathinfo($model->path);
+    //     $p = pathinfo($model->path);
 
-        $mimeType = $map->lookupMimeType($p['extension']);
+    //     $mimeType = $map->lookupMimeType($p['extension']);
 
-        $model->mime_type = $mimeType;
-    }
+    //     $model->mime_type = $mimeType;
+    // }
 }

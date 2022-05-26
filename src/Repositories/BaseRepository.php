@@ -42,8 +42,8 @@ class BaseRepository
         // Don't forget to update the model's name
         $this->booting();
         $this->model = null;
-        $this->booted();
         $this->request = request();
+        $this->booted();
         // $this->hookManager = HookManagerFacade::getInstance();
     }
 
