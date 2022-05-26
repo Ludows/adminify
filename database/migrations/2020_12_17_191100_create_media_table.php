@@ -17,6 +17,9 @@ class CreateMediaTable extends Migration
             Schema::create('medias', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
                 $table->string('src');
+                $table->string('mime_type');
+                $table->string('size');
+                $table->string('folder');
                 $table->json('alt');
                 $table->json('description');
                 $table->bigInteger('user_id')->default(0)->unsigned();
@@ -27,6 +30,9 @@ class CreateMediaTable extends Migration
             Schema::create('medias', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
                 $table->string('src');
+                $table->string('mime_type');
+                $table->string('folder');
+                $table->string('size');
                 $table->string('alt')->nullable();
                 $table->text('description')->nullable();
                 $table->bigInteger('user_id')->default(0)->unsigned();

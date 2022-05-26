@@ -16,7 +16,6 @@ use Ludows\Adminify\Traits\Formidable;
 use Ludows\Adminify\Traits\Listable;
 use Ludows\Adminify\Traits\Searchables;
 use Ludows\Adminify\Traits\SavableTranslations;
-use Ludows\Adminify\Traits\PathableMedia;
 use Ludows\Adminify\Traits\ProcessableAssets;
 use Ludows\Adminify\Traits\HasMeta;
 use Ludows\Adminify\Traits\HasStatus;
@@ -41,7 +40,6 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     use HasTranslations;
     use AdminableMenu;
     use MultilangTranslatableSwitch;
-    use PathableMedia;
     // use Sitemapable;
     use Helpers;
     use Formidable;

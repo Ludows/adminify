@@ -35,6 +35,15 @@ class MediaService {
     public function getMicrosoftOfficeMimeTypes() {
 
     }
+    public function url($fileName) {
+        $fileSystem = $this->getFileSystem();
+        return $fileSystem->url($fileName);
+    }
+    public function relativeUrl($fileName) {
+        $url = $this->url($fileName);
+        $fileSystem = $this->getFileSystem();
+        return str_replace($fileSystem->path(''), '', $url);
+    }
     public function getFileSystem() {
         return $this->filesytem;
     }
@@ -81,42 +90,12 @@ class MediaService {
     public function getFiles() {
         // dd()
         $files = [];
-        $fileSystem = $this->getFileSystem();
-        $directories = $fileSystem->directories('');
-        $config = $this->getConfig();
-        foreach ($directories as $directoryName) {
-            $i = 0;
-            # code...
-            if($config['limit'] >= count($files)) {
-                $files_dir = $this->getFilesByDate($directoryName);
-                $currentIndiceFolder = $directoryName;
+        $model = $this->getModel();
 
-                foreach ($files_dir as $key => $value) {
-                    # code...
-                    $fileObject = new File( $fileSystem->path($value) );
-                    $url = $fileSystem->url($value);
-                    $file =  str_replace( $fileSystem->url(''), '', $url);
-
-                    $files[] = [
-                        'extension' => $fileObject->getExtension(),
-                        'mimetype' => $fileObject->getMimeType(),
-                        'name' => $fileObject->getBasename('.'. $fileObject->getExtension()),
-                        'size' => $fileObject->getSize(),
-                        'url' => $url,
-                        'file' =>  $file
-                    ];
-                    $i++;
-                }
-            }
-            else {
-                break;
-            }
-        }
-
+        $files = $model->get();
+    
         return (object) [
             'files' => $files,
-            'last_indice' => $i,
-            'last_folder' => $currentIndiceFolder,
             'isEnd' => false //@todo
         ];
     }
@@ -167,12 +146,15 @@ class MediaService {
             throw new Exception('the Uploaded file already exist', 500);
         }
 
+        $folder = $dt->toDateString();
 
-        $fileSystem->putFileAs($dt->toDateString(), $fileUpload, $namedFile);
+
+        $fileSystem->putFileAs($folder, $fileUpload, $namedFile);
 
         $this->mediaRepository->addModel($this->model)->create([
             'src' => $namedFile,
             'alt' => '',
+            'folder' => $folder,
             'description' => '',
             'user_id' => user()->id,
         ]);
