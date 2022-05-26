@@ -7,22 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Http\Request;
 
-// use Ludows\Adminify\Traits\OnBootedModel;
 use Ludows\Adminify\Traits\AdminableMenu;
 use Spatie\Translatable\HasTranslations;
 use Ludows\Adminify\Traits\MultilangTranslatableSwitch;
 use Ludows\Adminify\Traits\Helpers;
-use Ludows\Adminify\Traits\Formidable;
 use Ludows\Adminify\Traits\Listable;
 use Ludows\Adminify\Traits\Searchables;
 use Ludows\Adminify\Traits\SavableTranslations;
-use Ludows\Adminify\Traits\PathableMedia;
 use Ludows\Adminify\Traits\ProcessableAssets;
 use Ludows\Adminify\Traits\HasMeta;
 use Ludows\Adminify\Traits\HasStatus;
 use Ludows\Adminify\Traits\Hookable;
 use Ludows\Adminify\Traits\QueryCachable;
 use Ludows\Adminify\Traits\GenerateSlug;
+use Ludows\Adminify\Traits\Taggable;
+use Ludows\Adminify\Traits\HasInteractsWithMediaLibrary;
 
 use Spatie\Feed\Feedable;
 
@@ -40,10 +39,8 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     use HasTranslations;
     use AdminableMenu;
     use MultilangTranslatableSwitch;
-    use PathableMedia;
     // use Sitemapable;
     use Helpers;
-    use Formidable;
     use Listable;
     use Searchables;
     use SavableTranslations;
@@ -51,6 +48,8 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     use HasStatus;
     use QueryCachable;
     use GenerateSlug;
+    use Taggable;
+    use HasInteractsWithMediaLibrary;
 
     public function newEloquentBuilder($query)
     {

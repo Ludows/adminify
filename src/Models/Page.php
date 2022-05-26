@@ -56,11 +56,6 @@ class Page extends ContentTypeModel
         'user_id' => 0,
     ];
 
-
-    public function media()
-    {
-        return $this->belongsTo(Media::class,'media_id', 'id');
-    }
     public function categories()
     {
        return $this->belongsToMany(Category::class);

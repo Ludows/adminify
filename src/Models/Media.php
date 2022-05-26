@@ -4,7 +4,6 @@ namespace Ludows\Adminify\Models;
 
 use App\Adminify\Models\Post;
 use App\Adminify\Models\User;
-use Ludows\Adminify\Traits\PathableMedia;
 use Ludows\Adminify\Traits\Authorable;
 
 use Ludows\Adminify\Models\ClassicModel;
@@ -14,14 +13,11 @@ use Spatie\Menu\Laravel\Link;
 
 class Media extends ClassicModel
 {
-    use PathableMedia;
     use Authorable;
 
     protected $table = 'medias';
 
     public $MultilangTranslatableSwitch = ['alt', 'description'];
-
-    public $sitemapCallable = 'path';
 
     public $searchable_label = 'src';
 

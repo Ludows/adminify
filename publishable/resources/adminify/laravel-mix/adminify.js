@@ -51,6 +51,7 @@ function loadDefaults(Mix) {
     .js('resources/adminify/back/js/confirmation.js', 'public/adminify/back/js')
     .js('resources/adminify/back/js/sendMail.js', 'public/adminify/back/js')
     .js('resources/adminify/back/js/metas.js', 'public/adminify/back/js')
+    .js('resources/adminify/back/js/mediatheque.js', 'public/adminify/back/js')
     .js('resources/adminify/back/js/formbuilder.js', 'public/adminify/back/js')
     Mix.js('resources/adminify/front/js/app.js', 'public/adminify/front/js').vue({ version: 3 })
     Mix.js('resources/adminify/back/js/editor.js', 'public/adminify/back/js')

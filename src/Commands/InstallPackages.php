@@ -309,26 +309,6 @@ class InstallPackages extends Command
         ];
         return array_diff($a, $excludes);
     }
-    public function constructPathFromNamespace($namespace) {
-
-       $a = explode('\\', $namespace);
-       $a = array_diff($a, ['', ' ']);
-       $i = 0;
-       $path = [];
-       foreach ($a as $b) {
-           # code...
-           if($i == 0) {
-            $path[] = strtolower($b);
-           }
-           else {
-            $path[] = $b;
-           }
-           $i++;
-       }
-
-       return join(DIRECTORY_SEPARATOR, $path);
-
-    }
     public function handleStubs($path = '', $type = null, $log = true) {
         $hasDirs = File::directories($path);
         $hasFiles = File::files($path);
