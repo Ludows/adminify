@@ -155,6 +155,8 @@ class MediaService {
             'src' => $namedFile,
             'alt' => '',
             'folder' => $folder,
+            'size' => $fileUpload->getSize(),
+            'mime_type' => $fileUpload->getMimeType(),
             'description' => '',
             'user_id' => user()->id,
         ]);

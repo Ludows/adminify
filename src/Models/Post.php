@@ -7,15 +7,12 @@ use App\Adminify\Models\Comment;
 
 use Spatie\Searchable\SearchResult;
 use Spatie\Feed\FeedItem;
-use Ludows\Adminify\Traits\Taggable;
 
 use Ludows\Adminify\Models\ContentTypeModel;
 use Spatie\Menu\Laravel\Link;
 
 class Post extends ContentTypeModel
 {
-    use Taggable;
-
     public $MultilangTranslatableSwitch = ['title', 'slug', 'content'];
 
     protected $fillable = [
@@ -54,10 +51,6 @@ class Post extends ContentTypeModel
         return \App\Adminify\Forms\UpdatePost::class;
     }
 
-    public function media()
-    {
-        return $this->belongsTo(Media::class,'media_id', 'id');
-    }
     public function categories()
     {
        return $this->belongsToMany(Category::class);
