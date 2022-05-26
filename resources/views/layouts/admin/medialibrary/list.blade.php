@@ -1,5 +1,7 @@
-@foreach($files as $key => $value)
-    <a href="#" data-original="{!! $value['url'] !!}" class="col  js-modal-details">
-        <img alt="" class="img-fluid shadow rounded-lg" src="{!! image($value['file'], $thumbs) !!}">
+@foreach($files as $key => $model)
+    <a href="#" data-id="{!! $model->id !!}" data-original="{!! $model->getFullPath() !!}" class="col  js-modal-details">
+        <img alt="" class="img-fluid shadow rounded-lg" src="{!! image($model->getRelativePath(), $thumbs) !!}">
     </a>
 @endforeach
+
+{!! $files->onEachSide(5)->links() !!}

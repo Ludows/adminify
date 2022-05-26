@@ -40,6 +40,7 @@ use League\Glide\Signatures\SignatureFactory;
 
 use Ludows\Adminify\Libs\SitemapRender;
 use Ludows\Adminify\Libs\MediaService;
+use Illuminate\Pagination\Paginator;
 
 // use Illuminate\Support\Facades\Storage;
 
@@ -62,8 +63,7 @@ class AdminifyServiceProvider extends ServiceProvider {
             $this->bootableDependencies($packages, $kernel);
         }
 
-
-
+        Paginator::useBootstrap();
 
         // dd(config('site-settings'));
 

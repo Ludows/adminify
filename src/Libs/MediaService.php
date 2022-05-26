@@ -42,7 +42,7 @@ class MediaService {
     public function relativeUrl($fileName) {
         $url = $this->url($fileName);
         $fileSystem = $this->getFileSystem();
-        return str_replace($fileSystem->path(''), '', $url);
+        return str_replace($fileSystem->url(''), '', $url);
     }
     public function getFileSystem() {
         return $this->filesytem;
@@ -91,9 +91,10 @@ class MediaService {
         // dd()
         $files = [];
         $model = $this->getModel();
+        $config = $this->getConfig();
 
-        $files = $model->get();
-    
+        $files = $model->paginate($config['limit']);
+
         return (object) [
             'files' => $files,
             'isEnd' => false //@todo
@@ -148,17 +149,20 @@ class MediaService {
 
         $folder = $dt->toDateString();
 
-
-        $fileSystem->putFileAs($folder, $fileUpload, $namedFile);
-
-        $this->mediaRepository->addModel($this->model)->create([
+        $sendToBdd = [
             'src' => $namedFile,
             'alt' => '',
             'folder' => $folder,
-            'size' => $fileUpload->getSize(),
+            'size' => (string) $fileUpload->getSize(),
             'mime_type' => $fileUpload->getMimeType(),
             'description' => '',
             'user_id' => user()->id,
-        ]);
+        ];
+
+
+
+        $fileSystem->putFileAs($folder, $fileUpload, $namedFile);
+
+        $this->mediaRepository->addModel($this->model)->create($sendToBdd);
     }
 }
