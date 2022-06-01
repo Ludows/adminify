@@ -83,7 +83,7 @@ class CreatePage extends Form
                 ]
             ]);
         if(isset($enabled_features['media']) && $enabled_features['media']) {
-            $this->add('media_id', 'lfm', [
+            $this->add('media_id', 'media_element', [
                 'label_show' => false,
                 'attr' => [
                     'value' => !is_array($m) && $m->media_id != 0 ? $m->media->id : null

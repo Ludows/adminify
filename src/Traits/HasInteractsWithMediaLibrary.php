@@ -16,6 +16,11 @@ trait HasInteractsWithMediaLibrary
       return $service->relativeUrl( !empty($image) ? $image : $this->folder.DIRECTORY_SEPARATOR.$this->src );
     }
 
+    public function getFolderPath( $folderName = null ) {
+        $service = app(MediaService::class);
+        return $service->url( !empty($folderName) ? $folderName : $this->folder );
+    }
+
     public function media()
      {
          return $this->belongsTo(Media::class, $this->media_key, 'id');

@@ -78,7 +78,8 @@ return [
         'generatorPassword' => 'App\Adminify\Forms\Fields\GeneratorPasswordType',
         'lfm' => 'App\Adminify\Forms\Fields\FileManagerType',
         "visual_editor" => 'App\Adminify\Forms\Fields\VisualEditorType',
-        "tiptap" => 'App\Adminify\Forms\Fields\TipTapType'
+        "tiptap" => 'App\Adminify\Forms\Fields\TipTapType',
+        "media_element" => 'App\Adminify\Forms\Fields\MediaElementType'
 
     ],
 
