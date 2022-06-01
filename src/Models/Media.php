@@ -27,10 +27,12 @@ class Media extends ClassicModel
         'src', //the path you uploaded the image
         'mime_type',
         'description',
+        'folder',
+        'size',
         'alt',
         'user_id'
     ];
-    
+
     /**
      * Default values for attributes
      * @var  array an array with attribute as key and default as value

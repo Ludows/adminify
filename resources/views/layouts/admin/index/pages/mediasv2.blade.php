@@ -1,8 +1,15 @@
-Je suis un ovveride de template :)
+@php
+    $withPageElements = isset($pageElements) ? $pageElements : true;
+    $callableModal = isset($modelPath) ? $modelPath : 'adminify::layouts.admin.medialibrary.modalDetails';
+    $withModal = isset($withModal) ? $withModal : true;
+@endphp
 
-@include('adminify::layouts.admin.headers.topPageListing', [
-    'breadcrumb' => false
-])
+@if($withPageElements)
+    @include('adminify::layouts.admin.headers.topPageListing', [
+        'breadcrumb' => false
+    ])
+@endif
+
 
 <div class="js-mediatheque">
     <div class="container-fluid mt--7">
@@ -22,44 +29,49 @@ Je suis un ovveride de template :)
                 </div>
 
                 <div class="row bg-white rounded-lg justify-content-lg-between shadow align-items-center no-gutters px-3 py-2">
-                    <div class="col-12 d-flex col-lg-7">
-                        <div class="mr-3">
+                    <div id="parentGroupFilters" class="col-12 d-flex col-lg-7">
+                        <div class="mr-3 filter-zone">
                             {{--  // select type documents  --}}
-                            <select class="form-control">
+                            <select class="form-control js-documents">
                                 @foreach ($typed_files as $typed_key_file => $typed_file_name)
                                     <option value="{!!  $typed_key_file !!}">{!! $typed_file_name !!}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mr-3">
+                        <div class="mr-3 filter-zone">
                             {{--  // select date documents  --}}
-                            <select class="form-control">
+                            <select class="form-control js-date">
                                 @foreach ($dates as $date_key => $date_name)
                                     <option value="{!!  $date_key !!}">{!! $date_name !!}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mr-3">
-                            <button class="btn disabled d-none js-remove-image btn-danger">{!! __('admin.media.remove') !!}</button>
-                            <button class="btn btn-outline-primary">{!! __('admin.media.selectInGroup') !!}</button>
+                            <button data-ids="" class="btn disabled d-none js-remove-image-group btn-danger">{!! __('admin.media.remove') !!}</button>
+                            <button class="btn btn-outline-primary js-toggle-selectgroup">{!! __('admin.media.selectInGroup') !!}</button>
                         </div>
                     </div>
                     <div class="col-12 col-lg-5">
                         <div class="">
-                            <input type="text" class="form-control" placeholder="{!! __('admin.media.search') !!}" />
+                            <input type="text" class="form-control js-search-media" placeholder="{!! __('admin.media.search') !!}" />
                         </div>
                     </div>
                 </div>
 
-                <div id="GallerySet" class="row no-gutters"></div>
+                <div id="GallerySet"></div>
 
             </div>
 
         </div>
 
-        @include('adminify::layouts.admin.medialibrary.modalDetails')
+        @if($withModal)
+            @include($callableModal)
+        @endif
 
-        @include('adminify::layouts.admin.footers.auth')
+        @if($withPageElements)
+            @include('adminify::layouts.admin.footers.auth')
+        @endif
+
     </div>
 </div>
 

@@ -7,10 +7,10 @@
                     <h5 class="modal-title">{!! __('admin.media.file') !!}</h5>
                 </div>
                 <div>
-                    <button class="btn-outline-primary btn js-previous-detail">
+                    <button class="btn-outline-primary btn js-modal-detail" data-type="previous">
                         previous
                     </button>
-                    <button class="btn-outline-primary btn js-next-detail">
+                    <button class="btn-outline-primary btn js-modal-detail" data-type="next">
                         next
                     </button>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -20,27 +20,11 @@
             </div>
         </div>
         <div class="modal-body">
-            <div class="row">
-                <div class="col-lg-5">
-                    <img id="imageOriginal" class="img-fluid" alt="" src="">
-                </div>
-                <div class="col-lg-7">
-                    <form method="POST" action="#">
-                        @csrf
-                        <div class="form-group">
-                            <textarea class="form-control js-metadatas" placeholder="{!! __('admin.media.description') !!}"></textarea>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control js-metadatas" placeholder="{!! __('admin.media.alt') !!}"/>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            @include('adminify::layouts.admin.medialibrary.previewZone', [])
         </div>
-        {{--  <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">{!! __('admin.media.close') !!}</button>
-          <button type="button" class="btn btn-primary disabled">{!! __('admin.media.select') !!}</button>
-        </div>  --}}
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger js-single-destroy-media">{!! __('admin.media.delete_image') !!}</button>
+        </div>
       </div>
     </div>
   </div>

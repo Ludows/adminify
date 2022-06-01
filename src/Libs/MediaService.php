@@ -24,11 +24,11 @@ class MediaService {
     public function getListingTypedFiles() {
         return [
             '*' => __('admin.media.all'),
-            'image/*' => __('admin.media.images'),
-            'video/*' => __('admin.media.videos'),
-            'audio/*' => __('admin.media.sounds'),
-            'text/*' => __('admin.media.documents'),
-            'office/*' => __('admin.media.spreadsheets'),
+            'image/' => __('admin.media.images'),
+            'video/' => __('admin.media.videos'),
+            'audio/' => __('admin.media.sounds'),
+            'text/' => __('admin.media.documents'),
+            'office/' => __('admin.media.spreadsheets'),
             'application/zip' => __('admin.media.archives'),
         ];
     }
@@ -42,7 +42,7 @@ class MediaService {
     public function relativeUrl($fileName) {
         $url = $this->url($fileName);
         $fileSystem = $this->getFileSystem();
-        return str_replace($fileSystem->path(''), '', $url);
+        return str_replace($fileSystem->url(''), '', $url);
     }
     public function getFileSystem() {
         return $this->filesytem;
@@ -81,22 +81,53 @@ class MediaService {
         $fileSystem = $this->getFileSystem();
         $directories = $fileSystem->directories('');
 
+        $directories = array_filter($directories, function($value) {
+            return $value != '.cache';
+        });
+
         $dates = [
             '*' => __('admin.media.all'),
         ];
 
-        return array_merge($dates, $directories);
+        foreach ($directories as $key => $value) {
+            # code...
+            $dates[$value] = $value;
+        }
+
+        return $dates;
     }
     public function getFiles() {
         // dd()
         $files = [];
         $model = $this->getModel();
+        $config = $this->getConfig();
+        $request = $this->getRequest();
+        $query = $model;
+        $inputs = $request->all();
+        $pageInt = 1;
 
-        $files = $model->get();
-    
+
+        if(!empty($inputs['search'])) {
+            $query = $query->src("%{$inputs['search']}%", 'like');
+        }
+
+        if(!empty($inputs['documents']) && $inputs['documents'] != "*") {
+            $query = $query->mimetype("%{$inputs['documents']}%", 'like');
+        }
+
+        if(!empty($inputs['date']) && $inputs['date'] != "*") {
+            $query = $query->folder($inputs['date']);
+        }
+
+        if(!empty($inputs['page'])) {
+            $pageInt = (int) $inputs['page'];
+        }
+
+        $paginator = $query->paginate($config['limit'], ['*'], 'page', $pageInt)->withPath( route('mediasv2.index') );
+
+
         return (object) [
-            'files' => $files,
-            'isEnd' => false //@todo
+            'files' => $paginator,
         ];
     }
     public function validate($input, $messages = []) {
@@ -148,17 +179,44 @@ class MediaService {
 
         $folder = $dt->toDateString();
 
-
-        $fileSystem->putFileAs($folder, $fileUpload, $namedFile);
-
-        $this->mediaRepository->addModel($this->model)->create([
+        $sendToBdd = [
             'src' => $namedFile,
             'alt' => '',
             'folder' => $folder,
-            'size' => $fileUpload->getSize(),
+            'size' => (string) $fileUpload->getSize(),
             'mime_type' => $fileUpload->getMimeType(),
             'description' => '',
             'user_id' => user()->id,
-        ]);
+        ];
+
+
+
+        $fileSystem->putFileAs($folder, $fileUpload, $namedFile);
+
+        $this->mediaRepository->addModel($this->model)->create($sendToBdd);
+    }
+    public function destroy() {
+        $fileSystem = $this->getFileSystem();
+        $config = $this->getConfig();
+        $model = $this->getModel();
+
+        if(empty($model)) {
+            throw new Exception('You must define a Media Model :'.get_class($this), 500);
+        }
+
+        $url = $model->getRelativePath();
+        $folderPath = $model->getFolderPath();
+
+        // remove file
+        $fileSystem->delete($url);
+
+        $this->mediaRepository->addModel($model)->delete(null);
+
+        $hasFiles = $fileSystem->files($folderPath);
+
+        if(empty($hasFiles)) {
+            $fileSystem->deleteDirectory($folderPath);
+        }
+
     }
 }
