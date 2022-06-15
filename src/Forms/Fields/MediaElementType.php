@@ -21,7 +21,7 @@ class MediaElementType extends FormField {
             'multiple' => false,
             'btn' => [
                 'label' => __('admin.form.select_media'),
-                'attr' => ['class' => 'btn btn-default'],
+                'attr' => ['class' => 'btn btn-default js-modal-picker'],
             ]
         );
     }
@@ -41,9 +41,12 @@ class MediaElementType extends FormField {
             $sibling = Str::slug('media_element_'.$uniqid);
         }
 
+
         if(!isset($options['media_element_options'])) {
             $options['media_element_options'] = array();
         }
+
+
 
         if(isset($options['force_js']) && $options['force_js'] == true) {
             $isAjax = true;
@@ -54,6 +57,9 @@ class MediaElementType extends FormField {
             'sibling' => $sibling,
             'media_element_options' => array_merge($this->setDefaultsOptions(), isset($options['media_element_options']) ? $options['media_element_options'] : [])
         ];
+
+        $b['media_element_options']['btn']['attr']['data-selector'] = $sibling;
+
 
         $options = array_merge($options, $b);
 

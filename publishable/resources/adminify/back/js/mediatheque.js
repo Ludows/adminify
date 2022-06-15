@@ -49,14 +49,66 @@ jQuery(document).ready(() => {
         return MediaTheque.hasClass('is-delete-group');
     }
 
+    function isSelectionGroupMode() {
+        return window.admin.modalPicker && MediaTheque.hasClass('is-selection');
+    }
+
+    function getConfigPicker(configId) {
+        let ret = null;
+
+        $.each(window.admin.modalPicker, (i, object) => {
+            if(object.selector == configId) {
+                ret = object;
+                return ret;
+            }
+        })
+
+        return ret;
+    }
+
+    function getSelectionMode() {
+        if(MediaTheque.hasClass('is-selection')) {
+            return MediaTheque.hasClass('is-multiple') ? 'multiple' : 'single';
+        }
+        return null;
+    }
+
+
+
+    function getSelecteds() {
+        let sel = MediaTheque.find('#media_selecteds_id')
+        if(sel.length > 0) {
+            return sel.val().split(',');
+        }
+        return null;
+    }
+
+    function getSelection() {
+        let selecteds = getSelecteds();
+        let html = '';
+        let modal = getCurrentModal();
+        let config = getConfigPicker( modal.find('#config_picker_handle').val() );
+
+        selecteds.forEach((selectedId) => {
+            let elm = MediaTheque.find('.js-modal-details[data-id="'+ selectedId +'"]').clone(true);
+            elm.append('<span class="js-remove-selection clear" data-id="'+ selectedId +'">x</span>');
+            html += elm.prop('outerHTML');
+        })
+        return {
+            ids : selecteds,
+            html : html,
+            config
+        };
+    }
+
     function mapAttributestoForm(form, modelAttributes) {
 
         let formElements = form.find('.form-control');
 
         $.each(formElements, function(i, el) {
             let formName = $(el).attr('name');
-            console.log('formName', formName)
-            console.log('modelAttributes', modelAttributes)
+            // console.log('formName', formName)
+            // console.log('modelAttributes', modelAttributes)
             if(modelAttributes[formName]) {
                 $(el).val(modelAttributes[formName]);
             }
@@ -100,6 +152,8 @@ jQuery(document).ready(() => {
             }
 
 
+            ids = ids.filter(n => n);
+
             removerGroup.attr('data-ids', ids.join(','));
 
             if(ids.length > 0) {
@@ -111,27 +165,117 @@ jQuery(document).ready(() => {
         }
     }
 
+    function manageSelectionMode(id = null) {
+        let sel = MediaTheque.find('#media_selecteds_id');
+        let modal = getCurrentModal();
+        let selectMediaBtn = modal.find('.js-select-media');
+        let previewBlock = modal.find('#previewBlock');
+        let selectionMode = getSelectionMode();
+        if(sel.length > 0) {
+            let spl_values = getSelecteds();
+            spl_values = spl_values.filter(n => n);
+
+            if(selectionMode == 'single') {
+                spl_values = [];
+                spl_values.push(id);
+            }
+            else {
+                let indexPos = spl_values.indexOf(id);
+                if(indexPos > -1) {
+                    spl_values.splice(indexPos,1);
+                } else {
+                    spl_values.push(id);
+                }
+            }
+
+            sel.attr('value', spl_values.join(','));
+
+            previewBlock.removeClass('invisible');
+
+            if(spl_values.length > 0) {
+                selectMediaBtn.removeClass('disabled');
+            }
+            else {
+                selectMediaBtn.addClass('disabled');
+                previewBlock.addClass('invisible');
+            }
+
+
+        }
+        return [];
+    }
+
+    function isModal(selector) {
+        let modal = getCurrentModal();
+        return modal.is(selector);
+    }
+
+    function renderPreview(modal, model, originalUrl) {
+
+        let typedData = null;
+        let reverseTypedData = null;
+
+        if(model.mime_type.startsWith('video/')) {
+            typedData = modal.find('#videoOriginal');
+            reverseTypedData = modal.find('#imageOriginal');
+        }
+        else {
+            typedData = modal.find('#imageOriginal');
+            reverseTypedData = modal.find('#videoOriginal');
+        }
+
+
+        typedData.attr('src', originalUrl);
+
+        typedData.removeClass('d-none');
+        reverseTypedData.addClass('d-none');
+
+
+        typedData.on('load', () => {
+            modal.modal('show');
+            modal.find('form').attr('data-id', model.id);
+            modal.find('.js-single-destroy-media').attr('data-id', model.id);
+            modal.find('form').attr('action', Route('mediasv2.update', {
+                'mediasv2' : model.id
+            }) )
+        })
+    }
+
+
 
     function handleModalProcess(e) {
         e.preventDefault();
         let id = $(this).attr('data-id');
+        let typeAction = 'delete';
+        let isSelectionMode = isSelectionGroupMode();
+        let isDeleteMode = isDeleteGroupMode();
+        let model = $(this).attr('data-media');
+        let originalImage = $(this).attr('data-original');
+        let modal = getCurrentModal();
 
-        toggleDeletesId(id);
-        renderIfDeleteMassMode(id);
-        if(isDeleteGroupMode()) {
+        console.log(isDeleteMode, isSelectionMode);
+
+        if(isDeleteMode) {
+            toggleDeletesId(id);
+
+        }
+        if(isSelectionMode) {
+            typeAction = 'selection';
+            manageSelectionMode(id);
+        }
+
+        if(!isDeleteMode) {
+            renderPreview(modal, JSON.parse(model), originalImage);
+        }
+
+        mapAttributestoForm(modal.find('form'), JSON.parse(model));
+
+        renderActiveMedia(id, typeAction);
+
+        if(isDeleteMode || isSelectionMode) {
             return false;
         }
 
-
-
-        let modal = $('#modalDetails');
-        let originalImage = $(this).attr('data-original');
-        let model = $(this).attr('data-media');
-        let image = modal.find('#imageOriginal');
-
-        image.attr('src', originalImage);
-
-        mapAttributestoForm(modal.find('form'), JSON.parse(model));
 
         let nextMediaHandle = $(this).next('.js-modal-details');
         let previousMediaHandle = $(this).prev('.js-modal-details');
@@ -159,14 +303,7 @@ jQuery(document).ready(() => {
 
         // console.log(nextMediaHandle, previousMediaHandle)
 
-        image.on('load', () => {
-            modal.modal('show');
-            modal.find('form').attr('data-id', id);
-            modal.find('.js-single-destroy-media').attr('data-id', id);
-            modal.find('form').attr('action', Route('mediasv2.update', {
-                'mediasv2' : id
-            }) )
-        })
+
     }
 
     function UrlParser(url = null) {
@@ -196,7 +333,19 @@ jQuery(document).ready(() => {
         return o;
     }
 
+    function getCurrentModal() {
+        let selector = '#modalDetails';
+        if(window.modalPicker) {
+            selector = '#modalPicker';
+        }
+        return $(selector);
+    }
+
     function handleMassDelete() {
+        if($(this).hasClass('disabled')) {
+            return false;
+        }
+
         let ids = getDeletes();
 
         let sure = new Swal({
@@ -226,6 +375,7 @@ jQuery(document).ready(() => {
 
     function performUpdate(e) {
         let formNative = $(this).get(0).form;
+        console.log(formNative);
         let objectSerialize = $(formNative).serializeFormJSON()
         console.log(objectSerialize);
         $.ajax({
@@ -258,7 +408,7 @@ jQuery(document).ready(() => {
         })
         .done((result) => {
             console.log(result);
-            $('#modalDetails').modal('hide');
+            getCurrentModal().modal('hide');
             if(withCallSearch) {
                 callTheSearch();
             }
@@ -268,24 +418,24 @@ jQuery(document).ready(() => {
         })
     }
 
-    function renderIfDeleteMassMode(id = null) {
-        let deletes = getDeletes();
+    function renderActiveMedia(id = null, mode = 'delete') {
+        let source = mode == 'delete' ? getDeletes() : getSelecteds();
         let notSelectorStr = [];
-        if(!isDeleteGroupMode()) {
+        if(!isDeleteGroupMode() || !isSelectionGroupMode()) {
             $('.js-modal-details').removeClass('selected');
         }
-        if(isDeleteGroupMode()) {
-            deletes.forEach((deleteId) => {
-                notSelectorStr.push('.js-modal-details[data-id="'+ deleteId +'"]')
+        if(isDeleteGroupMode() || isSelectionGroupMode()) {
+            source.forEach((sourceId) => {
+                notSelectorStr.push('.js-modal-details[data-id="'+ sourceId +'"]')
             })
 
-            console.log('notSelectorStr', notSelectorStr, deletes)
+            // console.log('notSelectorStr', notSelectorStr, source)
 
             $('.js-modal-details').not( notSelectorStr.join(',') ).removeClass('selected');
 
             let elm = $('.js-modal-details[data-id="'+ id +'"]');
 
-            if(deletes.indexOf(id) > -1) {
+            if(source.indexOf(id) > -1) {
                 elm.addClass('selected')
             }
             else {
@@ -319,9 +469,65 @@ jQuery(document).ready(() => {
 
             let deletes = getDeletes();
             deletes.forEach((deleteId) => {
-                renderIfDeleteMassMode(deleteId);
+                renderActiveMedia(deleteId, 'delete');
             })
         });
+    }
+
+    function hydrateToField(config = null, value) {
+        if(config) {
+            $('#'+config.selector+' '+'[name="'+ config.fieldName +'"]').val(value);
+        }
+    }
+
+    function handleDeleteInSelection(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        $(this).parent().remove();
+        let selecteds_media = MediaTheque.find('#media_selecteds_id');
+
+        let dataId = $(this).attr('data-id');
+
+        let selecteds = getSelecteds();
+        let selectionIndex = selecteds.indexOf( dataId );
+        console.log(selectionIndex);
+        if(selectionIndex > -1) {
+            selecteds.splice( selectionIndex, 1)
+            selecteds_media.val( selecteds );
+        }
+        let selection = getSelection();
+
+        let selectionZone = $('#'+selection.config.selector).find('.row-selection');
+        let childLength = selectionZone.children().length;
+
+        if(childLength == 0) {
+            $('#'+selection.config.selector).find('.js-modal-picker').removeClass('d-none');
+        }
+
+        hydrateToField(selection.config, selection.ids.join(','));
+
+
+    }
+
+    function handleSelectionProcess(e) {
+        e.preventDefault();
+        let modal = getCurrentModal();
+        if($(this).hasClass('disabled')) {
+            return false;
+        }
+
+        let selection = getSelection();
+
+        modal.modal('hide');
+
+        $('#'+selection.config.selector).find('.row-selection').html( selection.html );
+
+        $('#'+selection.config.selector).find('.js-modal-picker').addClass('d-none');
+
+        console.log('selection', selection)
+
+        hydrateToField(selection.config, selection.ids.join(','));
     }
 
     if(MediaTheque.length > 0) {
@@ -333,6 +539,8 @@ jQuery(document).ready(() => {
                 'x-csrf-token': CSRF_TOKEN,
             },
         })
+
+        let modal = getCurrentModal();
 
 
 
@@ -348,7 +556,7 @@ jQuery(document).ready(() => {
 
         MediaTheque.on('keyup', '.js-search-media', debounce(callTheSearch, 300));
 
-        MediaTheque.on('keyup', '.js-metadatas', debounce(performUpdate, 300));
+        $(document).on('keyup', '.js-metadatas-media', debounce(performUpdate, 300));
 
         MediaTheque.on('click', '.js-modal-detail', handleNavigation);
 
@@ -364,7 +572,7 @@ jQuery(document).ready(() => {
 
             let deletes = getDeletes();
             deletes.forEach((deleteId) => {
-                renderIfDeleteMassMode(deleteId);
+                renderActiveMedia(deleteId, 'delete');
             })
 
         })
@@ -375,6 +583,10 @@ jQuery(document).ready(() => {
         })
 
         MediaTheque.on('click', '.js-modal-details', handleModalProcess)
+        $(document).on('click', '.row-selection .js-modal-details', handleModalProcess);
+        $(document).on('click', '.row-selection .js-modal-details .js-remove-selection', handleDeleteInSelection);
+
+        modal.on('click', '.js-select-media', handleSelectionProcess)
 
         // trigger init
         callTheSearch()
@@ -402,7 +614,11 @@ jQuery(document).ready(() => {
 
     $(document).on('click', '.js-modal-picker', function(e) {
         e.preventDefault();
-        let modal = $('#modalPicker');
+        let modal = getCurrentModal();
+        let selector = $(this).attr('data-selector');
+
+        modal.find('#config_picker_handle').val(selector);
+
         modal.modal('toggle');
     })
 

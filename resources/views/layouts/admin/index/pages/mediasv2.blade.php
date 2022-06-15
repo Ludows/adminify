@@ -2,6 +2,8 @@
     $withPageElements = isset($pageElements) ? $pageElements : true;
     $callableModal = isset($modelPath) ? $modelPath : 'adminify::layouts.admin.medialibrary.modalDetails';
     $withModal = isset($withModal) ? $withModal : true;
+    $selectionMode = isset($isSelectionMode) ? $isSelectionMode : false;
+    $multipleMode = isset($multiple) && $selectionMode ? $multiple : false;
 @endphp
 
 @if($withPageElements)
@@ -11,7 +13,7 @@
 @endif
 
 
-<div class="js-mediatheque">
+<div class="js-mediatheque {!! $selectionMode ? 'is-selection' : '' !!} {!! $multipleMode ? 'is-multiple' : 'is-single' !!}">
     <div class="container-fluid mt--7">
         <div class="row">
             <div class="col-12">
@@ -48,7 +50,7 @@
                         </div>
                         <div class="mr-3">
                             <button data-ids="" class="btn disabled d-none js-remove-image-group btn-danger">{!! __('admin.media.remove') !!}</button>
-                            <button class="btn btn-outline-primary js-toggle-selectgroup">{!! __('admin.media.selectInGroup') !!}</button>
+                            <button class="btn {!! $selectionMode ? 'd-none' : '' !!} btn-outline-primary js-toggle-selectgroup">{!! __('admin.media.selectInGroup') !!}</button>
                         </div>
                     </div>
                     <div class="col-12 col-lg-5">
@@ -66,6 +68,11 @@
 
         @if($withModal)
             @include($callableModal)
+        @endif
+
+        @if($selectionMode)
+            <input type="hidden" id="media_selecteds_id" value=""/>
+            <input type="hidden" id="config_picker_handle" value=""/>
         @endif
 
         @if($withPageElements)
