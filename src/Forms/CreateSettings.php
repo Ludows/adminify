@@ -45,13 +45,8 @@ class CreateSettings extends Form
         ]);
         if(isset($enabled_features['media']) && $enabled_features['media']) {
 
-            $this->add('logo_id', 'lfm', [
+            $this->add('logo_id', 'media_element', [
                 'label_show' => false,
-                'value' =>  $media != null ? $media->id : null,
-                'attr' => [
-                    'data-path' => $media->path ?? '',
-                    'data-src' => $media->src ?? ''
-                ]
             ]);
         }
         $this->add('homepage', 'select2', [
