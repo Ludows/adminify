@@ -6,16 +6,17 @@
 
 <div class="row">
     <div class="{!! $getCssClassPreview !!}">
-        <img id="imageOriginal" class="img-fluid" alt="" src="">
+        <img id="imageOriginal" class="img-fluid d-none" alt="" src="">
+        <video src="" class="d-none" id="videoOriginal"></video>
     </div>
     <div class="{!! $getCssClassFormPreview !!}">
         <form method="POST" action="#">
             @csrf
             <div class="form-group">
-                <textarea name="description" class="form-control js-metadatas" placeholder="{!! __('admin.media.description') !!}"></textarea>
+                <textarea name="description" class="form-control js-metadatas-media" placeholder="{!! __('admin.media.description') !!}"></textarea>
             </div>
             <div class="form-group">
-                <input name="alt" type="text" class="form-control js-metadatas" placeholder="{!! __('admin.media.alt') !!}"/>
+                <input name="alt" type="text" class="form-control js-metadatas-media" placeholder="{!! __('admin.media.alt') !!}"/>
             </div>
         </form>
 

@@ -32,6 +32,7 @@ window.admin = {
     lfmFields : [],
     // summernoteFields : [],
     VisualEditorFields : [],
-    tiptapFields : []
+    tiptapFields : [],
+    modalPicker : []
 }
 

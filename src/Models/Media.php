@@ -58,6 +58,18 @@ class Media extends ClassicModel
         return $this->HasOne(User::class, 'id', 'user_id');
     }
 
+    public function scopeMimetype($query, $key, $operator = '=') {
+        return $query->where('mime_type', $operator, $key);
+    }
+
+    public function scopeFolder($query, $key, $operator = '=') {
+        return $query->where('folder', $operator, $key);
+    }
+
+    public function scopeSrc($query, $key, $operator = '=') {
+        return $query->where('src', $operator, $key);
+    }
+
     public function getLinks($menuBuilder, $arrayDatas) {
         if($arrayDatas['user']->hasPermissionTo('create_medias') && $arrayDatas['features']['media']) {
             $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/medias?lang='. $arrayDatas['lang'] : '/admin/medias', '<i class="ni ni-image"></i> '.__('admin.menuback.medias'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
