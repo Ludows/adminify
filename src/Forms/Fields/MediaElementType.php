@@ -30,6 +30,12 @@ class MediaElementType extends FormField {
     {
         $uniqid = Str::random(9);
         $options = array_merge($this->getOptions() , $options);
+        $mediaModel = app('App\Adminify\Models\Media');
+        $value = $this->getValue();
+        $values = null;
+        $medias = null;
+        $hasValue = !empty($value);
+        $hasBootedMedia = false;
 
         $isAjax = request()->ajax();
 
@@ -46,6 +52,12 @@ class MediaElementType extends FormField {
             $options['media_element_options'] = array();
         }
 
+        if($hasValue) {
+            $values = explode(',', $value);
+            $medias = $mediaModel->findMany($values);
+            $hasBootedMedia = true;
+        }
+
 
 
         if(isset($options['force_js']) && $options['force_js'] == true) {
@@ -55,6 +67,8 @@ class MediaElementType extends FormField {
         $b = [
             'isAjax' => $isAjax,
             'sibling' => $sibling,
+            'hasBootedMedia' => $hasBootedMedia,
+            'medias' => $medias,
             'media_element_options' => array_merge($this->setDefaultsOptions(), isset($options['media_element_options']) ? $options['media_element_options'] : [])
         ];
 
