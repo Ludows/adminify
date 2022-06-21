@@ -33,8 +33,6 @@ class CreateSettings extends Form
             $seo = 0;
         }
 
-        $media = $this->getMedia( $this->getSetting('logo_id') );
-
         $this->add('site_name', Field::TEXT, [
             'label' => __('admin.form.site_name'),
             'value' => $this->getSetting('site_name')
@@ -47,6 +45,7 @@ class CreateSettings extends Form
 
             $this->add('logo_id', 'media_element', [
                 'label_show' => false,
+                'value' => $this->getSetting('logo_id')
             ]);
         }
         $this->add('homepage', 'select2', [

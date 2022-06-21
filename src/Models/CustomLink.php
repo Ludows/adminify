@@ -10,7 +10,7 @@ class CustomLink extends ClassicModel
 {
     protected $table = 'custom_links';
 
-    public $MultilangTranslatableSwitch = ['title', 'slug'];
+    public $MultilangTranslatableSwitch = ['title', 'slug', 'url'];
 
     public function toFeedItem(): FeedItem {}
     public function getSearchResult() : SearchResult {}
@@ -20,5 +20,6 @@ class CustomLink extends ClassicModel
     protected $fillable = [
         'title',
         'slug',
+        'url'
     ];
 }

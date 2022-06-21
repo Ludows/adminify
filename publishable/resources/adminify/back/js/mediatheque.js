@@ -53,6 +53,36 @@ jQuery(document).ready(() => {
         return window.admin.modalPicker && MediaTheque.hasClass('is-selection');
     }
 
+    function syncSelectionToModal(elm = null, modal = null, isSelection = false) {
+
+        if(modal) {
+            let hasSelector = elm.attr('data-selector');
+
+            if(hasSelector) {
+                modal.find('#config_picker_handle').val(elm.attr('data-selector'));
+
+                const { config } = getSelection();
+                const field = getField( config );
+
+                // if(field.val().length > 0) {
+                //     hydrateToField( config, field.val().trim());
+                // }
+
+            }
+
+
+            // let deletes = null;
+            // let selection = null;
+
+            if(isSelection) {
+                console.log(getSelection())
+            }
+
+
+        }
+
+    }
+
     function getConfigPicker(configId) {
         let ret = null;
 
@@ -73,7 +103,13 @@ jQuery(document).ready(() => {
         return null;
     }
 
+    function setSelecteds(values) {
+        let sel = MediaTheque.find('#media_selecteds_id')
 
+        sel.val(values);
+
+        return sel;
+    }
 
     function getSelecteds() {
         let sel = MediaTheque.find('#media_selecteds_id')
@@ -85,6 +121,7 @@ jQuery(document).ready(() => {
 
     function getSelection() {
         let selecteds = getSelecteds();
+        console.log('selecteds', selecteds)
         let html = '';
         let modal = getCurrentModal();
         let config = getConfigPicker( modal.find('#config_picker_handle').val() );
@@ -253,6 +290,8 @@ jQuery(document).ready(() => {
         let originalImage = $(this).attr('data-original');
         let modal = getCurrentModal();
 
+        syncSelectionToModal($(this), modal, isSelectionMode);
+
         console.log(isDeleteMode, isSelectionMode);
 
         if(isDeleteMode) {
@@ -335,10 +374,14 @@ jQuery(document).ready(() => {
 
     function getCurrentModal() {
         let selector = '#modalDetails';
-        if(window.modalPicker) {
-            selector = '#modalPicker';
+        let testSelector = $(selector);
+
+        if(testSelector.length == 0) {
+            selector = '#modalPicker'
+            testSelector = $(selector);
         }
-        return $(selector);
+
+        return testSelector;
     }
 
     function handleMassDelete() {
@@ -476,7 +519,13 @@ jQuery(document).ready(() => {
 
     function hydrateToField(config = null, value) {
         if(config) {
-            $('#'+config.selector+' '+'[name="'+ config.fieldName +'"]').val(value);
+            $('#'+config.selector+' '+ config.fieldName).val(value);
+        }
+    }
+
+    function getField(config = null) {
+        if(config) {
+            return $('#'+config.selector+' '+'[name="'+ config.fieldName +'"]');
         }
     }
 
@@ -542,6 +591,7 @@ jQuery(document).ready(() => {
 
         let modal = getCurrentModal();
 
+        console.log('modal', modal)
 
 
         MediaTheque.on('click', '.js-open-dropzone', function(e) {
@@ -615,6 +665,7 @@ jQuery(document).ready(() => {
     $(document).on('click', '.js-modal-picker', function(e) {
         e.preventDefault();
         let modal = getCurrentModal();
+        console.log(modal);
         let selector = $(this).attr('data-selector');
 
         modal.find('#config_picker_handle').val(selector);

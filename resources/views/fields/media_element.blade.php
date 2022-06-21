@@ -12,7 +12,19 @@
     @endif
 
     @if($showField)
-        <div class="row row-selection"></div>
+        <div class="row row-selection">
+            @if($options['hasBootedMedia'] && $options['medias']->count() > 0 )
+
+                @foreach ($options['medias'] as $model)
+                    @include('adminify::layouts.admin.medialibrary.file', [
+                        'model' => $model,
+                        'thumbs' => app('Ludows\Adminify\Libs\MediaService')->getConfig()['thumbs'],
+                        'remove' => true,
+                        'config_selector' => $options['sibling']
+                    ])
+                @endforeach
+            @endif
+        </div>
         {!! Form::button($options['media_element_options']['btn']['label'], $options['media_element_options']['btn']['attr'] ) !!}
 
         {{--  {!! Form::input('hidden', 'mime_type', null, $options['attr']) !!}  --}}
@@ -42,7 +54,7 @@
 @if ($options['isAjax'])
     <script>
         window.admin.modalPicker.push({
-            fieldName: "{!! $name !!}",
+            fieldName: "[name='{!! $name !!}']",
             selector: "{{ $options['sibling'] }}",
             options: {!! $export_config !!},
             multilang: {!! var_export(is_multilang(),true) !!},
@@ -53,7 +65,7 @@
     @push('js')
     <script>
         window.admin.modalPicker.push({
-            fieldName: "{!! $name !!}",
+            fieldName: "[name='{!! $name !!}']",
             selector: "{{ $options['sibling'] }}",
             options: {!! $export_config !!},
             multilang: {!! var_export(is_multilang(),true) !!},

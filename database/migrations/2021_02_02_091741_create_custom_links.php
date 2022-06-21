@@ -18,6 +18,7 @@ class CreateCustomLinks extends Migration
                 $table->bigIncrements('id');
                 $table->json('title');
                 $table->json('slug');
+                $table->json('url');
                 // $table->integer('depth')->default(0);
                 $table->timestamps();
             });
@@ -27,6 +28,7 @@ class CreateCustomLinks extends Migration
                 $table->bigIncrements('id');
                 $table->string('title');
                 $table->string('slug');
+                $table->string('url');
                 // $table->integer('depth')->default(0);
                 $table->timestamps();
             });

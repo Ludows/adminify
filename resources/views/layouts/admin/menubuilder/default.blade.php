@@ -19,6 +19,13 @@
     </div>
 </div>
 
+@include('adminify::layouts.admin.medialibrary.modalPicker', [
+    'typed_files' => app('Ludows\Adminify\Libs\MediaService')->getListingTypedFiles(),
+    'dates' => app('Ludows\Adminify\Libs\MediaService')->getListingDates(),
+    'isSelectionMode' => true,
+    'isMulti' => false
+])
+
 @php
     add_asset('default',  asset('adminify').'/back/js/menuBuilder.js' );
 @endphp

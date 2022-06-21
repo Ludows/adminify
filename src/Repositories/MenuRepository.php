@@ -12,7 +12,9 @@ use  Ludows\Adminify\Repositories\BaseRepository;
 class MenuRepository extends BaseRepository
 {
     protected function createEntity($entity, $formValues) {
-        return $this->getProcessDb($formValues, $this->model ?? $entity, 'create');
+
+        $debug = $this->getProcessDb($formValues, $entity, 'create');
+        return $debug;
     }
     protected function Walker($scope, $exist, $model, $parent_id, $isChild) {
         $request = request();
@@ -31,6 +33,7 @@ class MenuRepository extends BaseRepository
                 // quick fix en attendant de regarder la generation du menu three
                 return false;
             }
+
 
             $class_model_str = $config['menu-builder']['models'][$menuitem['type']];
             $class_model_str = adminify_get_class($class_model_str, ['app:models', 'app:adminify:models'], false);
@@ -79,11 +82,10 @@ class MenuRepository extends BaseRepository
                 }
 
                 if(!empty($menuitem['media_id']) && strlen($menuitem['media_id']) > 0) {
-                    $json = json_decode($menuitem['media_id']);
 
-                    $m = Media::where('src', $json[0]->name)->first();
+                    $m = Media::find((int) $menuitem['media_id']);
 
-                    if($m != null) {
+                    if(!empty($m)) {
                         $menuItem->media_id = $m->id;
                     }
 
@@ -169,6 +171,8 @@ class MenuRepository extends BaseRepository
         if(method_exists($this, 'beforeRun')) {
             call_user_func_array(array($this, 'beforeRun'), array($this->model ?? $model, $menuthree,  'update'));
         }
+
+        // dd($menuthree, $model);
 
         $existingItems = count($model->items->all()) > 0 ? true : false;
 
