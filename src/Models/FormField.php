@@ -19,6 +19,8 @@ class FormField extends ClassicModel
 
     public $enable_searchable = false;
 
+    protected $useSlugGeneration = false;
+
     public function __construct() {
         parent::__construct();
 

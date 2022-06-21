@@ -5,12 +5,12 @@
 
     $unique = uuid(20);
 
-    //dd($options, $options['value']);
     $item = $options['value'] ?? null;
 
     $isNew = isset($new) ? $new : false;
     $identifier = '__NAME__';
     $functionnal_identifier = '__FUNCTIONAL__';
+
     $title = isset($new) && $new == true ? __('admin.formbuilder.newItem') : $item->label;
 
     $cuurentRouteName = explode('.', view()->shared('currentRouteName'));
@@ -19,7 +19,7 @@
     }
 @endphp
 
-    <div style="display:none;" id="card{{ $functionnal_identifier }}" class="card">
+    <div {!! $isNew ? 'style="display:none;"' : 'style=""' !!}  id="card{{ $functionnal_identifier }}" class="card">
       <div class="card-header" id="heading{{ $functionnal_identifier }}">
         <h2 class="mb-0">
             <div class="d-flex align-items-center justify-content-between">

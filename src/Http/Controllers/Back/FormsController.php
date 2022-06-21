@@ -89,6 +89,8 @@ class FormsController extends Controller
                 // we pass context and request
                 $form = $this->makeForm(CreateForms::class);
 
+                // dd($form->getFieldValues());
+
                 // the create method return the media created
                 $Form = $this->Repository->addModel(new Forms())->create($form);
 
@@ -127,7 +129,6 @@ class FormsController extends Controller
             }
 
             $interface = interfaces('formbuilder');
-
 
             return view("adminify::layouts.admin.pages.edit", ['interface' => $interface]);
         }

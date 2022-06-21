@@ -115,6 +115,21 @@ class QueryCachableModule extends BaseBuilder {
         // if present cache, return the query
         $key = $this->handleKeys($method, $columns, $appends);
         $exist = $this->existsInCache($key);
+        $keys_store = $this->getInCache('cachable_keys_storage');
+
+        if(empty($keys_store)) {
+            $this->setInCache('cachable_keys_storage', json_encode([]));
+        }
+
+        if(!empty($keys_store)) {
+            $keys_store = json_decode($keys_store);
+
+            if(!in_array($key, $keys_store)) {
+                $keys_store[] = $key;
+                $this->setInCache('cachable_keys_storage', json_encode($keys_store));
+            }
+
+        }
 
         if($exist) {
             return $this->getInCache($key);

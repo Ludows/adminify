@@ -27,8 +27,9 @@
                             <span id="noFieldsText">{{ __('admin.formbuilder.noFields') }}</span>
                         @endif
                          @if(!empty($query) && !$isCreate)
+                            {{--  {!! dd($query, $form->fields, $form) !!}  --}}
                             {!! form_row($form->fields) !!}
-                        @endif 
+                        @endif
                     </div>
 
                 </div>
