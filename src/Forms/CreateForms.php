@@ -7,6 +7,7 @@ class CreateForms extends Form
 {
     public function buildForm()
     {
+        $m = $this->getModel();
         $this->add('user_id', 'hidden', [
             'value' => user()->id
         ]);
@@ -21,7 +22,7 @@ class CreateForms extends Form
             'prefer_input' => true,
             'label_show' => false,
             'wrapper' => false,
-            'data' => [],
+            'data' => empty($m) ? [] : $m->fields,
             'options' => [    // these are options for a single type
                 'class' => 'App\Adminify\Forms\CreateFields',
                 'label' => false,

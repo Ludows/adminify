@@ -11,10 +11,12 @@ class FormsRepository extends BaseRepository
 {
     private $formFieldRepo;
     private $FormTracesRepository;
+
     public function __construct(FormFieldsRepository $formFieldRepo, FormTraceRepository $FormTracesRepository) {
         parent::__construct();
         $this->formFieldRepo = $formFieldRepo;
         $this->FormTracesRepository = $FormTracesRepository;
+
     }
     // // set for only linking to pivot table
     // public $external_relations_columns = [
@@ -31,6 +33,9 @@ class FormsRepository extends BaseRepository
 
     // }
 
+    public function booted() {
+        $this->addIgnore('fields');
+    }
 
     public function afterRun($model, $formValues, $type) {
         if($type != "destroy") {

@@ -32,7 +32,7 @@ class BaseRepository
     // public $filters_on = [];
 
     // just add your ignores process data as global..
-    protected $ignores = ['slug'];
+    protected $ignores = [];
 
     /**
      * Constructor
@@ -43,10 +43,19 @@ class BaseRepository
         $this->booting();
         $this->model = null;
         $this->request = request();
+        $this->addIgnore('slug');
         $this->booted();
         // $this->hookManager = HookManagerFacade::getInstance();
     }
 
+    public function addIgnores($array = []) {
+        if(is_array($array)) {
+            foreach ($array as $key => $value) {
+                # code...
+                $this->ignores[] = $value;
+            }
+        }
+    }
     public function booting() {}
     public function booted() {}
     public function addModel($class) {
@@ -93,7 +102,7 @@ class BaseRepository
 
         $fillables = $model->getFillable();
 
-        $untouchables_relations = $this->ignores;
+        $untouchables_relations = $this->getIgnores();
 
         foreach ($fillables as $fillableKey => $fillable) {
             # code...

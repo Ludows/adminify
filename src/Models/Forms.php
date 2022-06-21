@@ -32,6 +32,10 @@ class Forms extends ClassicModel
         ];
     }
 
+    public function user() {
+        return $this->HasOne(User::class, 'id', 'user_id');
+    }
+
     /**
      * Default values for attributes
      * @var  array an array with attribute as key and default as value
