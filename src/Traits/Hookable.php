@@ -18,6 +18,20 @@
         }
     }
    }
+   public static function flushCache($model) {
+
+        $builder = $model::builder();
+        $cachable_keys_storage = $builder->getInCache('cachable_keys_storage');
+
+        if(!empty($cachable_keys_storage)) {
+            $cachable_keys_storage = json_decode($cachable_keys_storage);
+            foreach ($cachable_keys_storage as $key => $value) {
+                # code...
+                $builder->forgetInCache($value);
+            }
+        }
+
+   }
    public static function autoRegisterModelHooks($arrayOfHooks = [], $hookName) {
         $hookManager = HookManagerFacade::getInstance();
         if(!empty($arrayOfHooks[$hookName]) && !$hookManager->exist($hookName)) {
@@ -41,6 +55,7 @@
             // blah blah
             static::autoRegisterModelHooks(static::$loadHooks, 'creating');
             static::runHook('creating', $model);
+            static::flushCache($model);
         });
 
         static::created(function ($model) {
@@ -53,6 +68,7 @@
             // bleh bleh
             static::autoRegisterModelHooks(static::$loadHooks, 'updating');
             static::runHook('updating', $model);
+            static::flushCache($model);
         });
 
         static::updated(function ($model) {
@@ -65,6 +81,7 @@
             // blah blah
             static::autoRegisterModelHooks(static::$loadHooks, 'saving');
             static::runHook('saving', $model);
+            static::flushCache($model);
         });
 
         static::saved(function ($model) {
@@ -77,6 +94,7 @@
             // bluh bluh
             static::autoRegisterModelHooks(static::$loadHooks, 'deleting');
             static::runHook('deleting', $model);
+            static::flushCache($model);
         });
 
         static::deleted(function ($model) {
