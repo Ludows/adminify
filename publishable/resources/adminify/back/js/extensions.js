@@ -15,6 +15,8 @@ require('select2');
 
 require('adminify_bootstrap_admin');
 
+require('jquery-validation');
+
 // require('bootstra');
 require('./serializeAsObject')
 require('./clearValues')
