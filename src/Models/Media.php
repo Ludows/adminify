@@ -46,7 +46,7 @@ class Media extends ClassicModel
     public function toFeedItem(): FeedItem {}
 
     public function getPathAttribute() {
-        return $this->getFullPath($this->src) . '/' . $this->src;
+        return $this->getFullPath();
     }
 
     public function posts()

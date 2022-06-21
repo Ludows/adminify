@@ -1,7 +1,7 @@
 @php
     $identifier = Str::random(10);
     $isNew = isset($new) ? $new : false;
-    $title = isset($new) && $new == true ? $item->title : $item->related->title;
+    $title =  !empty($item->title) ? $item->title : $item->related->title;
 
     $id = null;
     if(!$isCustom && $isNew) {
@@ -10,10 +10,10 @@
     elseif(!$isNew) {
         $id = $item->related->id;
     }
-    
-    $type = isset($type) ? $type : $item->type;
+
+    $type = isset($item->type) ? $item->type : $type;
     $slug = isset($new) && $new == true ? $item->slug : $item->related->slug;
-    
+
 @endphp
 {{-- {{ dd($item->related) }} --}}
 <li class="list-group-item p-0" id="list-group-item-{{ $identifier }}" data-target="#collapse-{{ $identifier }}" aria-expanded="false" aria-controls="collapse-{{ $identifier }}">
@@ -39,14 +39,36 @@
             </div>
             @if($mediaMode)
                 <div class="call_media" id="media-{{ $identifier }}">
-                    <div class="row row-selection"></div>
+                    <div class="row row-selection">
+
+                        @if(!empty($item->media_id) && !$isNew)
+                            @php
+                                $config_selector = 'media-'. $identifier;
+                            @endphp
+                            @include('adminify::layouts.admin.medialibrary.file', [
+                                'model' => $item->media,
+                                'thumbs' => app('Ludows\Adminify\Libs\MediaService')->getConfig()['thumbs'],
+                                'remove' => true,
+                                'config_selector' => $config_selector
+                            ])
+
+                        @endif
+
+                    </div>
                     <div class="form-group">
-                        <button type="button" class="btn btn-primary">{{ __('admin.form.select_media') }}</button>
-                        <input type="hidden" data-path="{{ $item->media->path ?? '' }}" menu-three-key="media_id" value="{{ $item->media->id ?? '' }}" />
+                        <button type="button" data-selector="media-{{ $identifier }}" class="btn btn-primary {!! !empty($item->media_id) && !$isNew ? 'd-none' : '' !!} js-modal-picker">{{ __('admin.form.select_media') }}</button>
+
+                        <input type="hidden" menu-three-key="media_id" value="{{ $isNew ? '' : $item->media_id }}" />
                     </div>
                 </div>
             @endif
-            
+
+            @if($isCustom)
+                <div class="form-group">
+                    <label for="url">{{ __('admin.form.url_link') }}</label>
+                    <input type="text" id="url" class="form-control" menu-three-key="url" value="{{ empty($item->url) ? $item->related->url : $item->url }}"/>
+                </div>
+            @endif
 
             <div class="form-group">
                 <div class="custom-control custom-checkbox">
@@ -73,17 +95,29 @@
         @endif
     </ul>
 </li>
-@if($mediaMode)
+
+@if($mediaMode && !$isNew)
     @push('js')
         <script>
-            window.admin.lfmFields.push({
+            window.admin.modalPicker.push({
+                fieldName: "input[menu-three-key='media_id']",
                 selector: "media-{{ $identifier }}",
                 options: [],
                 multilang: {!! var_export(is_multilang(),true) !!},
                 currentLang: '{!! $currentLang !!}'
-            })
+            });
         </script>
     @endpush
+@else
+    <script>
+        window.admin.modalPicker.push({
+            fieldName: "input[menu-three-key='media_id']",
+            selector: "media-{{ $identifier }}",
+            options: [],
+            multilang: {!! var_export(is_multilang(),true) !!},
+            currentLang: '{!! $currentLang !!}'
+        });
+    </script>
 @endif
 
 

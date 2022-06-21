@@ -14,6 +14,8 @@ class Settings extends ClassicModel
 {
     public $MultilangTranslatableSwitch = ['data'];
 
+    public $useSlugGeneration = false;
+
     public function toFeedItem(): FeedItem {}
     public function getSearchResult() : SearchResult {}
 
