@@ -20,7 +20,7 @@
    }
    public static function flushCache($model) {
 
-        $builder = $model::builder();
+        $builder = $model::query();
         $cachable_keys_storage = $builder->getInCache('cachable_keys_storage');
 
         if(!empty($cachable_keys_storage)) {
