@@ -22,6 +22,7 @@ use Ludows\Adminify\Traits\QueryCachable;
 use Ludows\Adminify\Traits\GenerateSlug;
 use Ludows\Adminify\Traits\Taggable;
 use Ludows\Adminify\Traits\HasInteractsWithMediaLibrary;
+use Ludows\Adminify\Traits\Commentable;
 
 use Spatie\Feed\Feedable;
 
@@ -49,6 +50,7 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     use QueryCachable;
     use GenerateSlug;
     use Taggable;
+    use Commentable;
     use HasInteractsWithMediaLibrary;
 
     public function newEloquentBuilder($query)
