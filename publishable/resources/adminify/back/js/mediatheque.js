@@ -12,11 +12,11 @@ jQuery(document).ready(() => {
     const MediaTheque = $('.js-mediatheque');
     var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
 
-    function loadSearchMedias(query = {}, cb = null) {
+    function loadSearchmedias(query = {}, cb = null) {
         let gallerySet = MediaTheque.find('#GallerySet');
 
         $.ajax({
-            url: Route('mediasv2.listing'),
+            url: Route('medias.listing'),
             method: 'POST',
             headers: {
                 'x-csrf-token': CSRF_TOKEN,
@@ -42,7 +42,7 @@ jQuery(document).ready(() => {
     }
 
     function callTheSearch(e) {
-        loadSearchMedias(getQuerySearch());
+        loadSearchmedias(getQuerySearch());
     }
 
     function isDeleteGroupMode() {
@@ -272,8 +272,8 @@ jQuery(document).ready(() => {
             modal.modal('show');
             modal.find('form').attr('data-id', model.id);
             modal.find('.js-single-destroy-media').attr('data-id', model.id);
-            modal.find('form').attr('action', Route('mediasv2.update', {
-                'mediasv2' : model.id
+            modal.find('form').attr('action', Route('medias.update', {
+                'media' : model.id
             }) )
         })
     }
@@ -441,7 +441,7 @@ jQuery(document).ready(() => {
 
     function performDestroy(id, withCallSearch = true) {
         $.ajax({
-            url: Route('mediasv2.destroy', { mediasv2: id }),
+            url: Route('medias.destroy', { media: id }),
             method: 'DELETE',
             headers: {
                 'x-csrf-token': CSRF_TOKEN,
@@ -505,7 +505,7 @@ jQuery(document).ready(() => {
 
         window.history.replaceState({}, '', window.location.href.replace('page='+urlPageValue, 'page='+query.page));
 
-        loadSearchMedias(query, function(err, result) {
+        loadSearchmedias(query, function(err, result) {
             if(err) {
                 throw err;
             }

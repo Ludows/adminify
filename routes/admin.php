@@ -14,10 +14,10 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
     }
 
     if(isset($c['media']) && $c['media']) {
-        Route::resource('medias', 'App\Adminify\Http\Controllers\Back\MediaController', ['except' => ['show']]);
-        Route::resource('mediasv2', 'App\Adminify\Http\Controllers\Back\Mediav2Controller', ['except' => ['show']]);
-        Route::post('mediasv2/upload', 'App\Adminify\Http\Controllers\Back\Mediav2Controller@upload')->name('mediasv2.upload');
-        Route::post('mediasv2/listing', 'App\Adminify\Http\Controllers\Back\Mediav2Controller@listing')->name('mediasv2.listing');
+        // Route::resource('medias', 'App\Adminify\Http\Controllers\Back\MediaController', ['except' => ['show']]);
+        Route::resource('medias', 'App\Adminify\Http\Controllers\Back\Mediav2Controller', ['except' => ['show']]);
+        Route::post('medias/upload', 'App\Adminify\Http\Controllers\Back\Mediav2Controller@upload')->name('medias.upload');
+        Route::post('medias/listing', 'App\Adminify\Http\Controllers\Back\Mediav2Controller@listing')->name('medias.listing');
     }
 
     if(isset($c['category']) && $c['category']) {
