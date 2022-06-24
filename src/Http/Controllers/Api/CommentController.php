@@ -23,7 +23,7 @@ class CommentController extends Controller
         $this->middleware(function ($request, $next) {
             $u = user();
             $this->user = $u != null ? $u : User::find(Role::GUEST);
-    
+
             return $next($request);
         });
         $this->CommentRepository = $CommentRepository;
@@ -54,7 +54,7 @@ class CommentController extends Controller
         };
 
         $model = $this->CommentRepository->addModel(new Comment())->create($request->all());
-        
+
         return response()->json([
             'commentList' => $model->post->commentsThree,
             'message' => __('admin.success_entry_created'),
@@ -90,7 +90,8 @@ class CommentController extends Controller
         };
 
         $model = $this->CommentRepository->addModel($Comment)->update($request->all(), $Comment);
-        
+
+
         return response()->json([
             'commentList' => $model->post->commentsThree,
             'message' => __('admin.success_entry_updated'),
@@ -114,7 +115,7 @@ class CommentController extends Controller
         $m = $Comment;
 
         $this->CommentRepository->addModel($Comment)->delete($Comment);
-        
+
         return response()->json([
             'commentList' => $m->post->commentsThree,
             'message' => __('admin.success_entry_deleted'),

@@ -18,6 +18,8 @@ class Comment extends ClassicModel
 
     public $MultilangTranslatableSwitch = ['comment'];
 
+    protected $useSlugGeneration = false;
+
     protected $fillable = [
         'comment',
         'parent_id',
@@ -38,7 +40,7 @@ class Comment extends ClassicModel
 
     public function post()
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsTo(Post::class, 'model_id');
     }
 
     public function getLinks($menuBuilder, $arrayDatas) {

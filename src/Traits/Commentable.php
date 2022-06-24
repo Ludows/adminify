@@ -14,8 +14,8 @@ trait Commentable
         return $query->where('model_id', $model_id);
     }
 
-    public function scopeWithModelClass($query, $modelClass) {
-        return $query->where('model_class', $modelClass ?? get_class($this));
+    public function scopeWithModelClass($query, $modelClass = null) {
+        return $query->where('model_class', !empty($modelClass) ? $modelClass : get_class($this));
     }
 
     public function scopeSublevel($query, $sublevel) {
@@ -38,7 +38,7 @@ trait Commentable
     public function scopeApproved($query) {
         return $query->where('is_moderated', 1);
     }
-    
+
     public function shouldUseComment() {
 
         if(method_exists($this, 'defineCommentStrategy')) {
@@ -51,7 +51,9 @@ trait Commentable
     public function getcommentsThreeAttribute() {
         $a = [];
         $m = new Comment();
-        $items = $m->withModelId($this->id)->withModelClass()->root()->approved()->get();
+        $r = request();
+        $all = $r->all();
+        $items = $m->withModelId($this->id)->withModelClass( empty($all['model_class']) ? get_class( $r->model ) : $all['model_class'] )->root()->approved()->get();
         $allSubs = $m->SublevelAll(0)->approved()->get();
         $grouped = $allSubs->groupBy('parent_id');
         $i = 0;
@@ -75,5 +77,5 @@ trait Commentable
         }
         return collect($a);
     }
-   
+
   }

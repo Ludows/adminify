@@ -7,8 +7,8 @@
                 <div class="commentlist" v-if="list.length > 0">
                     <div class="comment" v-for="(comment, index) in list" :key="index">
 
-                        <p :id="'comment_'+_uid+'_'+comment.id">{{ multilang ? comment.comment[lang]: comment.comment }}</p>
-                        <update-comment v-if="allow_form" :id="'update_'+_uid+'_'+comment.id" class="d-none" :lang="lang" :comment_id="comment.id" :value="multilang ? comment.comment[lang] : comment.comment"></update-comment>
+                        <p :id="'comment_'+theCompId+'_'+comment.id">{{ multilang ? comment.comment[lang]: comment.comment }}</p>
+                        <update-comment v-if="allow_form" :id="'update_'+theCompId+'_'+comment.id" class="d-none" :lang="lang" :comment_id="comment.id" :value="multilang ? comment.comment[lang] : comment.comment"></update-comment>
 
                         <div  v-if="user.id === comment.user_id" class="">
                             <a href="#" @click.prevent="toggleForm('respond', comment.id)" class="btn btn-default">Répondre</a>
@@ -16,14 +16,14 @@
                             <a href="#"  @click.prevent="deleteComment(comment.id)"  class="btn btn-danger">Supprimer</a>
                         </div>
                         <div v-if="allow_form">
-                            <comment-form :id="'respond_'+_uid+'_'+comment.id" class="d-none"  :user="user" :show_title="false"  :parent_id="comment.id" :post_id="post_id"></comment-form>
+                            <comment-form :model_class="model_class" :id="'respond_'+theCompId+'_'+comment.id" class="d-none"  :user="user" :show_title="false"  :parent_id="comment.id" :model_id="post_id"></comment-form>
                         </div>
-                        <comments v-if="comment.childs != undefined" :lang="lang" :show_title="false" :root_level="false" :parent_id="comment.id" :post_id="post_id" :allow_form="allow_form" :user="user" :comments='comment.childs != undefined ? comment.childs : []'></comments>
+                        <comments v-if="comment.childs != undefined" :model_class="model_class" :lang="lang" :show_title="false" :root_level="false" :parent_id="comment.id" :post_id="post_id" :allow_form="allow_form" :user="user" :comments='comment.childs != undefined ? comment.childs : []'></comments>
                     </div>
                 </div>
 
                 <div v-if="allow_form && root_level">
-                    <comment-form  :user="user" :show_title="false"  :parent_id="parent_id" :post_id="post_id"></comment-form>
+                    <comment-form :model_class="model_class"  :user="user" :show_title="false"  :parent_id="parent_id" :model_id="post_id"></comment-form>
                 </div>
                 <div v-if="!allow_form && root_level" class="alert alert-info">
                     Vous devez être connecté pour pouvoir commenter
@@ -41,12 +41,18 @@
                 list : this.comments,
             }
         },
+        computed: {
+            theCompId : function() {
+                // _uid
+                return this._uid;
+            }
+        },
         methods: {
             toggleForm(string = '', commentId) {
                 if(string == 'update') {
-                    document.querySelector('#comment_'+this._uid+'_'+commentId).classList.toggle('d-none');
+                    document.querySelector('#comment_'+this.theCompId+'_'+commentId).classList.toggle('d-none');
                 }
-                document.querySelector('#'+ string +'_'+this._uid+'_'+commentId).classList.toggle('d-none');
+                document.querySelector('#'+ string +'_'+this.theCompId+'_'+commentId).classList.toggle('d-none');
             },
             deleteComment(commentId, post_id) {
 
@@ -113,11 +119,15 @@
             post_id : {
                 type : Number,
             },
+            model_class : {
+                type: String,
+                required:true
+            },
             parent_id : {
                 type : Number,
                 default: 0
             },
-            mutlilang : {
+            multilang : {
                 type: Boolean,
                 required : true
             }

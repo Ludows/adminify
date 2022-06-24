@@ -1,15 +1,16 @@
 <template>
     <form v-on:submit.prevent="submit">
         <input type="hidden" name="parent_id" :value="parent_id">
-        <input type="hidden" name="post_id" :value="post_id">
+        <input type="hidden" name="model_id" :value="model_id">
+        <input type="hidden" name="model_class" :value="model_class">
         <input type="hidden" name="user_id" :value="user.id">
-        <input type="hidden" name="is_moderated" :value="user.role.id === 1 ? 1 : 0">
+        <input type="hidden" name="is_moderated" :value="user.mainRole.id === 1 ? 1 : 0">
 
         <div class="form-row">
             <div class="col-12">
                 <div class="form-group">
-                    <label :for="'comment_'+_uid">Comment</label>
-                    <textarea ref="textarea" required="required" class="form-control" :id="'comment_'+_uid" name="comment" rows="3"></textarea>
+                    <label :for="'comment_'+theCompId">Comment</label>
+                    <textarea ref="textarea" required="required" class="form-control" :id="'comment_'+theCompId" name="comment" rows="3"></textarea>
                 </div>
             </div>
         </div>
@@ -28,8 +29,18 @@
                 type : Object,
                 default: () => { {} }
             },
-            post_id : {
+            model_id : {
                 type : Number,
+            },
+            model_class : {
+                type: String,
+                required: true
+            }
+        },
+        computed: {
+            theCompId : function() {
+                // _uid
+                return this._uid;
             }
         },
         methods : {

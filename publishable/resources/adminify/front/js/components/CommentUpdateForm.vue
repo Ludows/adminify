@@ -3,8 +3,8 @@
         <div class="form-row">
             <div class="col-12">
                 <div class="form-group">
-                    <label :for="'comment_'+_uid">Comment</label>
-                    <textarea ref="textarea" :value="value" required="required" class="form-control" :id="'comment_'+_uid" name="comment" rows="3"></textarea>
+                    <label :for="'comment_'+theCompId">Comment</label>
+                    <textarea ref="textarea" :value="value" required="required" class="form-control" :id="'comment_'+theCompId" name="comment" rows="3"></textarea>
                 </div>
             </div>
         </div>
@@ -28,6 +28,12 @@
                 required : true
             }
         },
+        computed: {
+            theCompId : function() {
+                // _uid
+                return this._uid;
+            }
+        },
         methods : {
             submit() {
                 //console.log(Route(''))
@@ -35,7 +41,7 @@
                 let formData = new FormData(form);
                 formData.append('_method', 'PATCH');
                 let textarea = this.$refs.textarea;
-                
+
                 let route = this.$route('api.comments.update', {
                     'comment' : this.comment_id,
                     'token' : this.$tokenFromLocalStorage()

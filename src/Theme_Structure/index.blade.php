@@ -33,7 +33,7 @@
         </div>
     @endif
 
-    @if($model->shouldUseComment())
+    @if($enabled_features['post'] && $isSingle)
         @php
             $allowForm = true;
             $showTitle = true;
@@ -44,12 +44,12 @@
                 $allowForm = false;
                 $showTitle = false;
             }
-            if($allowForm && $model->no_comments == true) {
+            if($allowForm && $model->no_comments) {
                 $allowForm = false;
                 $showTitle = false;
             }
         @endphp
-        <comments ref="comments" :multilang="{{ var_export(is_multilang(), true) }}" :show_title="{{ $showTitle ? 'true' : 'false' }}" lang='{{ $lang }}' :post_id="{{ $model->id }}" :allow_form="{{ $allowForm ? 'true' : 'false' }}" :user="{{ $user ?? '{}' }}" :comments='@json($model->commentsThree)'></comments>
+        <comments ref="comments" model_class="{{ get_class($model) }}" :multilang="{{ var_export(is_multilang(), true) }}" :show_title="{{ $showTitle ? 'true' : 'false' }}" lang='{{ $lang }}' :post_id="{{ $model->id }}" :allow_form="{{ $allowForm ? 'true' : 'false' }}" :user="{{ $user ?? '{}' }}" :comments='@json($model->commentsThree)'></comments>
     @endif
 @endsection
 

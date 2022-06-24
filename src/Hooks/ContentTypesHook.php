@@ -17,9 +17,9 @@ class ContentTypesHook extends HookInterface {
             if($isContentType && $model->allowSitemap) {
                 $this->syncronizeUrl($model);
 
-                if($hookName == 'updating') {
-                    $this->syncOnUpdating($model);
-                }
+                // if($hookName == 'updated') {
+                //     $this->syncOnUpdating($model);
+                // }
 
                 $this->syncToCache($model);
             }
@@ -75,13 +75,6 @@ class ContentTypesHook extends HookInterface {
                 'is_homepage' => $isHomePage,
                 'is_blogpage' => $isBlogPage
             ]);
-        }
-    }
-    public function syncOnUpdating($context) {
-        $isHomePage = is_homepage($context);
-        $url = $context->originalurl;
-        if($url != null) {
-            $context->forgetToCache( $isHomePage ? 'homepage' : join('.', $url ));
         }
     }
     public function syncToCache($context, $delete = false) {
