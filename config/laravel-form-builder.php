@@ -76,10 +76,11 @@ return [
         // 'summernote' => 'App\Adminify\Forms\Fields\SummernoteType',
         'select2' => 'App\Adminify\Forms\Fields\Select2Type',
         'generatorPassword' => 'App\Adminify\Forms\Fields\GeneratorPasswordType',
-        'lfm' => 'App\Adminify\Forms\Fields\FileManagerType',
+        // 'lfm' => 'App\Adminify\Forms\Fields\FileManagerType',
         "visual_editor" => 'App\Adminify\Forms\Fields\VisualEditorType',
         "tiptap" => 'App\Adminify\Forms\Fields\TipTapType',
-        "media_element" => 'App\Adminify\Forms\Fields\MediaElementType'
+        "media_element" => 'App\Adminify\Forms\Fields\MediaElementType',
+        "jodit" => 'App\Adminify\Forms\Fields\JoditType'
 
     ],
 
