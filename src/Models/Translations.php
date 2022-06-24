@@ -17,6 +17,8 @@ class Translations extends ClassicModel
 
     public $searchable_label = 'key';
 
+    protected $useSlugGeneration = false;
+
     protected $fillable = [
         'key',
         'text'

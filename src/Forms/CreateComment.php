@@ -16,7 +16,7 @@ class CreateComment extends Form
         $p = $this->getPosts();
         $u = user();
         $r = $u->hasRole(['editor', 'administrator', 'subscriber']);
-        
+
         $this->add('user_id', 'hidden', [
             'label_show' => false
         ]);
@@ -47,10 +47,10 @@ class CreateComment extends Form
                 'width' => '100%'
             ]
         ]);
-        $this->add('comment', 'tiptap', [
+        $this->add('comment', 'jodit', [
             'label' => __('admin.form.comment'),
         ]);
-        
+
         $this->add('is_moderated', Field::CHECKBOX, [
             'value' => $r,
             'checked' => $r,
@@ -59,7 +59,7 @@ class CreateComment extends Form
             'attr' => ['class' => 'custom-control-input'],
             'label_attr' => ['class' => 'custom-control-label text-muted'],
         ]);
-        
+
         $this->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
     }
     public function getComments() {
