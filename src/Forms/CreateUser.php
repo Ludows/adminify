@@ -19,7 +19,7 @@ class CreateUser extends Form
                 'label' => __('admin.form.name'),
             ]);
             if(isset($enabled_features['media']) && $enabled_features['media']) { 
-                $this->add('avatar', 'lfm', [
+                $this->add('avatar', 'media_element', [
                     'label' => __('admin.form.avatar'),
                 ]);
             }

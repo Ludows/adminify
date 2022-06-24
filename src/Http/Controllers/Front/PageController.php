@@ -38,6 +38,8 @@ class PageController extends Controller
 
             $settings = cache('homepage');
 
+
+
             if(method_exists($this, 'bootingView')) {
                 call_user_func_array(array($this, 'bootingView'), $request);
             }
@@ -46,12 +48,14 @@ class PageController extends Controller
                 $settings = setting('homepage');
             }
 
+            if( empty($settings) ) {
+                abort(404);
+            }
+
+
 
             $page = Page::find( is_array($settings) ? $settings['model_id'] : $settings );
 
-            if( $page == null ) {
-                abort("404");
-            }
 
             $reflection = new ReflectionClass($page);
             $type = $reflection->getShortName();

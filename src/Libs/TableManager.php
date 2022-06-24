@@ -307,12 +307,15 @@ class TableManager
         }
         else {
             if($request->useMultilang) {
-                $results = $modelClass::limit( $config['limit'] )->lang($request->lang)->get();
+                $results = $modelClass::lang($request->lang)->paginate($config['limit'], ['*']);
             }
             else {
-                $results = $modelClass::limit( $config['limit'] )->get();
+                $results = $modelClass::paginate($config['limit'], ['*']);
             }
         }
+
+        $results->withPath($request->url());
+
 
         $this->setResults($results);
 
@@ -376,7 +379,7 @@ class TableManager
 
         if(!empty($modelClass)) {
             $classModel = new $modelClass;
-            $count = $classModel->count();
+            $count = $models->total();
         }
 
 
@@ -389,7 +392,8 @@ class TableManager
             'js' => $this->getJs(),
             'name' => titled( lowercase( class_basename($classModel) ) ),
             'table' => class_basename($this),
-            'areas' => $areas
+            'areas' => $areas,
+            'paginator' => $models
         ];
 
 
@@ -431,7 +435,8 @@ class TableManager
             'datas' => $this->_columns,
             'thead' => $cols,
             'count' => count($this->_columns[$cols[0]]),
-            'name' => titled( lowercase( class_basename($modelClass) ) )
+            'name' => titled( lowercase( class_basename($modelClass) ) ),
+            'paginator' => $models
         ];
 
         $compiled = $this->view->make( $this->getViewList() , array_merge($defaults, empty($addtoVars) ? [] : $addtoVars) );
