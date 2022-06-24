@@ -8,6 +8,7 @@ import {
 import Sortable from 'sortablejs';
 
 window.Sortable = Sortable;
+window.Jodit = require('jodit').Jodit;
 
 window.createLaravelLocalization = createLaravelLocalization;
 
@@ -31,10 +32,11 @@ window.admin = {
     select2Fields : [],
     larabergFields : [],
     generatorPasswordFields: [],
-    lfmFields : [],
+    // lfmFields : [],
     // summernoteFields : [],
     VisualEditorFields : [],
     tiptapFields : [],
-    modalPicker : []
+    modalPicker : [],
+    joditFields : []
 }
 

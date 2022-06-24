@@ -31,7 +31,7 @@ class CreateMail extends Form
             ]
         ]);
 
-        $this->add('html_template', 'tiptap', [
+        $this->add('html_template', 'jodit', [
             'label_show' => false,
             'attr' => ['placeholder' => __('admin.form.html_template')],
         ]);
@@ -45,7 +45,7 @@ class CreateMail extends Form
         $r = $this->getRequest();
 
         $mailFetched = $r->mail;
-        
+
         $Mails = adminify_get_classes_by_folders(['app:mails', 'app:adminify:mails']);
 
         foreach($Mails as $MailKey => $Mail){

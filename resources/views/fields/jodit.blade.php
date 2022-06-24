@@ -10,7 +10,7 @@
 
     @if($showField)
         {{-- {{ dd($options['choices']) }} --}}
-        {!! Form::textarea($name, $options['value'], [$options]) !!}
+        {!! Form::textarea($name, $options['value'], $options['attr']) !!}
 
         @include('vendor/laravel-form-builder/errors')
         @include('vendor/laravel-form-builder/help_block')
@@ -26,6 +26,7 @@
 @if ($options['isAjax'])
     <script type="text/javascript">
         JoditInitFunction([{
+            fieldName: "[name='{!! $name !!}']",
             selector: '#{{ $options['sibling'] }}',
             options: @json($options['jodit_options']),
             multilang: {!! var_export(is_multilang(),true) !!},
@@ -36,6 +37,7 @@
     @push('js')
         <script type="text/javascript">
                 window.admin.joditFields.push({
+                    fieldName: "[name='{!! $name !!}']",
                     selector: '#{{ $options['sibling'] }}',
                     options: @json($options['jodit_options']),
                     multilang: {!! var_export(is_multilang(),true) !!},
