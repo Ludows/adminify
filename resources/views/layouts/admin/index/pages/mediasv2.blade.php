@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="w-100 d-none mt-3">
-                        <form action="{!! route('mediasv2.upload') !!}"
+                        <form action="{!! route('medias.upload') !!}"
                             class="dropzone"
                             id="dropzoneUploadFiles"></form>
                     </div>
