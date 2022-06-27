@@ -39,7 +39,7 @@ class MediaCard extends InterfacableBlock {
     }
     public function addToRender() {
         return [
-            'createLink' => route('medias.create')
+            'createLink' => route('medias.index')
         ];
     }
 }
