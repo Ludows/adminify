@@ -15,7 +15,7 @@ $selectionMode = isset($isSelectionMode) ? $isSelectionMode : false;
   <div class="modal-body">
       <div class="row">
           <div class="col-12 col-lg-7">
-              @include('adminify::layouts.admin.index.pages.mediasv2', [
+              @include('adminify::layouts.admin.index.pages.medias', [
                   'pageElements' => false,
                   'withModal' => false,
                   'isSelectionMode' => $selectionMode,

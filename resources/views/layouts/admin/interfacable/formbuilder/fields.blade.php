@@ -7,11 +7,11 @@
             @foreach ($fields as $fieldKey => $fieldName)
                 <div class="col-12 mb-3 col-lg-6">
                     <button data-name="{{ $fieldName }}" class="btn btn-default js-btn-field btn-sm btn-block">
-                        {{ $fieldName }}
+                        {{ __('admin.formbuilder.fieldlist.'.$fieldName) }}
                     </button>
                 </div>
             @endforeach
         </div>
-        
+
     </div>
 </div>
