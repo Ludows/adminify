@@ -62,7 +62,7 @@ class Mediav2Controller extends Controller
                 $this->mediaUploader->setFileUpload($input[$config['paramName']])->upload();
             }
 
-            return $this->sendResponse($input[$config['paramName']], 'mediasv2.index', 'admin.file.saved', 'file');
+            return $this->sendResponse($input[$config['paramName']], 'medias.index', 'admin.file.saved', 'file');
         }
 
         public function listing() {
@@ -72,7 +72,7 @@ class Mediav2Controller extends Controller
 
             $v = view("adminify::layouts.admin.medialibrary.list", ['files' => $listing->files, 'thumbs' => $config['thumbs']]);
 
-            return $this->sendResponse($v->render(), 'mediasv2.index', 'admin.file.retrieved', 'html');
+            return $this->sendResponse($v->render(), 'medias.index', 'admin.file.retrieved', 'html');
         }
 
         public function update(Media $mediasv2, Request $request)
@@ -82,7 +82,7 @@ class Mediav2Controller extends Controller
 
             $this->mediaRepository->addModel($mediasv2)->update($inputs, $mediasv2);
 
-            return $this->sendResponse($mediasv2, 'mediasv2.index', 'admin.typed_data.updated');
+            return $this->sendResponse($mediasv2, 'medias.index', 'admin.typed_data.updated');
         }
 
         public function destroy(Media $mediasv2)
