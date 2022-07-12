@@ -1,0 +1,14 @@
+<?php
+
+namespace {{namespace}};
+
+use Ludows\Adminify\Libs\FrontifyForms;
+
+class {{model}} extends FrontifyForms
+{
+    public function booted() {}
+    public function buildForm() {}
+    protected function getTemplate() {
+        return 'adminify::layouts.commons.forms.default';
+    }
+}
