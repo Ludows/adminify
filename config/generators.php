@@ -59,6 +59,14 @@ return [
             'dump_autoload'       => false,
             'repository_contract' => false,
         ],
+        'front_forms'   => [
+            'namespace'           => '\Forms',
+            'path'                => './app/Forms/Front',
+            'postfix'             => 'FrontForm',
+            'directory_namespace' => true,
+            'dump_autoload'       => false,
+            'repository_contract' => false,
+        ],
         'table' => [
             'namespace'           => '\Tables',
             'path'                => './app/Tables/',
@@ -242,5 +250,6 @@ return [
         'interfacable'         => base_path() . '/resources/stubs/interfacable.stub',
         'interfacable_blocks'         => base_path() . '/resources/stubs/interfacable_blocks.stub',
         'adminify_metas'         => base_path() . '/resources/stubs/adminify-metas.stub',
+        'adminify_front_forms'         => base_path() . '/resources/stubs/adminify-front-forms.stub',
     ]
 ];

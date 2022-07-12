@@ -19,6 +19,7 @@ use Ludows\Adminify\Commands\CreateInterfacableBlock;
 use Ludows\Adminify\Commands\GenerateAdminifyContainer;
 use Ludows\Adminify\Commands\CreateMetas;
 use Ludows\Adminify\Commands\CreateTheme;
+use Ludows\Adminify\Commands\CreateFrontForms;
 
 use Ludows\Adminify\Commands\CreateCrud;
 use Ludows\Adminify\Commands\CreateTable;
@@ -319,7 +320,8 @@ class AdminifyServiceProvider extends ServiceProvider {
             CreateTranslations::class,
             CreateInterfacable::class,
             CreateInterfacableBlock::class,
-            CreateMetas::class
+            CreateMetas::class,
+            CreateFrontForms::class
         ]);
     }
 }
