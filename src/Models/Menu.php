@@ -56,7 +56,7 @@ class Menu extends ClassicModel
     }
     public function getmakeThreeAttribute() {
         $a = [];
-        $items = $this->items()->get();
+        $items = $this->items()->orderByPivot('order', 'asc')->get();
         $grouped =  $items->groupBy('parent_id');
         $rootItems = [];
         $i = 0;

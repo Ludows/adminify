@@ -17,6 +17,11 @@ class FieldsBlock extends InterfacableBlock {
             'submit',
             'image',
             'choice',
+            'media_element',
+            'tiptap',
+            'generatorPassword',
+            'visual_editor',
+            'jodit'
         ];
     }
     public static function getNamedBlock() {

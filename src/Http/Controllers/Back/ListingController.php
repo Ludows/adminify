@@ -18,6 +18,8 @@ class ListingController extends Controller
 
         $m_str = adminify_get_class($datas['singular'], ['app:models', 'app:adminify:models'], false);
 
+        $pageInt = 1;
+
         if(empty($m_str)) {
             abort(403);
         }
@@ -45,6 +47,10 @@ class ListingController extends Controller
         $search = null;
         if(!empty($datas['search'])) {
             $search = $datas['search'];
+        }
+
+        if(!empty($datas['page'])) {
+            $pageInt = (int) $datas['page'];
         }
         $keys = [];
         $restrictedBindings = ['title', 'slug'];
@@ -85,15 +91,7 @@ class ListingController extends Controller
         }
 
 
-
-        $m = $m->take( $config['limit'] );
-
-        // if( !empty($datas['offset']) &&  intval($datas['offset']) != 0) {
-        $m = $m->skip($datas['offset']);
-        // }
-
-
-        $results = $m->get();
+        $results = $m->paginate($config['limit'], $config['searchType'] == 'fillable' ? ['*'] : $m->getColumnsListing(), lowercase( $datas['singular'] ), $pageInt)->withPath( route( lowercase( plural($datas['singular']) ) .'.index') );
 
         // dd($keys, $m->toSql(), $m->getBindings(), $results, $search);
 

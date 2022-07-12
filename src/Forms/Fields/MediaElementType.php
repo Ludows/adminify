@@ -59,7 +59,6 @@ class MediaElementType extends FormField {
         }
 
 
-
         if(isset($options['force_js']) && $options['force_js'] == true) {
             $isAjax = true;
         }
@@ -73,6 +72,10 @@ class MediaElementType extends FormField {
         ];
 
         $b['media_element_options']['btn']['attr']['data-selector'] = $sibling;
+
+        if($b['hasBootedMedia']) {
+            $b['media_element_options']['btn']['attr']['class'] = $b['media_element_options']['btn']['attr']['class'].' d-none';
+        }
 
 
         $options = array_merge($options, $b);

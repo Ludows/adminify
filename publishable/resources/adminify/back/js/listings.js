@@ -36,9 +36,9 @@ jQuery(document).ready(function ($) {
 
     })
 
-    listingBlock.on('click', '.js-listing-btn', function (e) {
-        triggerSearch(searchEntity ? searchEntity.val().trim() : null, true, $(this));
-    });
+    // listingBlock.on('click', '.js-listing-btn', function (e) {
+    //     triggerSearch(searchEntity ? searchEntity.val().trim() : null, true, $(this));
+    // });
 
     // function loadSearch(searchValue, statusValue) {
     //     // let val = value
@@ -62,41 +62,41 @@ jQuery(document).ready(function ($) {
     //     // }
     // }
 
-    function syncBtns(currentPage = 1) {
+    // function syncBtns(currentPage = 1) {
 
-        console.log('SYNC')
+    //     console.log('SYNC')
 
-        let dataPage = currentPage;
+    //     let dataPage = currentPage;
 
-        console.log('dataPage', dataPage)
+    //     console.log('dataPage', dataPage)
 
-        if(dataPage == 1) {
-            btnsListing.eq(0).attr('disabled', 'disabled');
-        }
+    //     if(dataPage == 1) {
+    //         btnsListing.eq(0).attr('disabled', 'disabled');
+    //     }
 
-        if( listingBlock.find('.js-datatable tbody').children().length <  window.listingConfig.limit) {
-            btnsListing.attr('disabled', 'disabled');
-        }
-        else {
-            btnsListing.eq(1).removeAttr('disabled');
-        }
+    //     if( listingBlock.find('.js-datatable tbody').children().length <  window.listingConfig.limit) {
+    //         btnsListing.attr('disabled', 'disabled');
+    //     }
+    //     else {
+    //         btnsListing.eq(1).removeAttr('disabled');
+    //     }
 
-        if(!window.listingConfig.isEnd && dataPage > 1) {
-            console.log('sup')
-            btnsListing.eq(0).removeAttr('disabled');
-        }
+    //     if(!window.listingConfig.isEnd && dataPage > 1) {
+    //         console.log('sup')
+    //         btnsListing.eq(0).removeAttr('disabled');
+    //     }
 
 
 
-        if(window.listingConfig.isEnd) {
-            btnsListing.eq(0).removeAttr('disabled');
-            btnsListing.eq(1).attr('disabled', 'disabled');
-        }
-        else {
-            btnsListing.eq(1).removeAttr('disabled');
-        }
+    //     if(window.listingConfig.isEnd) {
+    //         btnsListing.eq(0).removeAttr('disabled');
+    //         btnsListing.eq(1).attr('disabled', 'disabled');
+    //     }
+    //     else {
+    //         btnsListing.eq(1).removeAttr('disabled');
+    //     }
 
-    }
+    // }
 
     function triggerSearch(valInput, fromBtns, btnElement = null, statusId = -1) {
         // window.listingConfig
@@ -164,7 +164,6 @@ jQuery(document).ready(function ($) {
 
                     }
 
-                    syncBtns( parseInt(listingBlock.attr('data-page')) )
 
                     searchhasbeenTriggered = false;
 
@@ -181,5 +180,4 @@ jQuery(document).ready(function ($) {
         searchEntity.trigger('keyup');
     }
 
-    syncBtns();
 })

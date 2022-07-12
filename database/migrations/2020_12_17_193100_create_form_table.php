@@ -18,6 +18,7 @@ class CreateFormTable extends Migration
                 $table->bigIncrements('id')->unsigned();
                 $table->json('title');
                 $table->json('slug');
+                $table->string('model_class');
                 $table->bigInteger('user_id')->default(0)->unsigned();
                 $table->timestamps();
             });
@@ -27,6 +28,7 @@ class CreateFormTable extends Migration
                 $table->bigIncrements('id')->unsigned();
                 $table->string('title');
                 $table->string('slug');
+                $table->string('model_class');
                 $table->bigInteger('user_id')->default(0)->unsigned();
                 $table->timestamps();
             });

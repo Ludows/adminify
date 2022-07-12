@@ -154,6 +154,8 @@ return [
             \App\Adminify\Hooks\OnDeletedHook::class,
             \App\Adminify\Hooks\ClearCacheHook::class,
         ],
+        'mail:before_send' => [],
+        'mail:after_send' => []
     ],
 
     'sitemap' => [

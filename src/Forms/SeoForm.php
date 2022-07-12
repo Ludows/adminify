@@ -37,13 +37,13 @@ class SeoForm extends Form
             'label' => __('admin.form.robots'),
             'selected' => $m->seoWith('robots', false) ?? ''
         ]);
-        if(isset($enabled_features['media']) && $enabled_features['media']) { 
-            $this->add('image', 'lfm', [
+        if(isset($enabled_features['media']) && $enabled_features['media']) {
+            $this->add('image', 'media_element', [
                 'label' => __('admin.form.image'),
                 'value' => $m->seoWith('image', false) ?? ''
             ]);
         }
-        
+
         $this->add('submit', 'submit', ['label' => __('admin.form.save') , 'attr' => ['class' => 'btn btn-default']]);
 
     }
