@@ -61,7 +61,7 @@ return [
         ],
         'front_forms'   => [
             'namespace'           => '\Forms',
-            'path'                => './app/Forms/Front',
+            'path'                => './app/Forms/Front/',
             'postfix'             => 'FrontForm',
             'directory_namespace' => true,
             'dump_autoload'       => false,
