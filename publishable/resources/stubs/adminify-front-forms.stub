@@ -4,7 +4,7 @@ namespace {{namespace}};
 
 use Ludows\Adminify\Libs\FrontifyForms;
 
-class {{model}} extends FrontifyForms
+class {{class}} extends FrontifyForms
 {
     public function booted() {}
     public function buildForm() {}
