@@ -957,45 +957,19 @@ if (! function_exists('generate_form')) {
             $template = $templatePath;
         }
 
+        $form = $formBuilder->create($theForm->model_class);
 
-        $theFields = $theForm->fields->toArray();
-
-        $dynamics_fields[] = [
-            'name' => 'form_id',
-            'type' => 'hidden',
+        $form->add('form_id', 'hidden', [
             'value' => $theForm->id
-        ];
-
-        if(!empty($theFields)) {
-
-            $casted_fields = format_formbuilder_attributes($theFields);
-            // dd($casted_fields);
-
-            foreach ($casted_fields as $casted_field) {
-                # code...
-                $dynamics_fields[] = $casted_field;
-            }
-        }
-
-        $dynamics_fields[] = [
-            'name' => 'submit',
-            'type' => 'submit',
-        ];
-
-        $form = $formBuilder->createByArray(
-            $dynamics_fields
-            ,[
-                'method' => 'POST',
-                'url' => route('forms.validate')
-            ]);
+        ]);
 
 
         if($html) {
             $isSubmit = session()->get('formSubmitted');
             $showForm = true;
 
-            if(isset($dynamic_form_config['show_form_when_validated']) && $isSubmit) {
-                $showForm = $dynamic_form_config['show_form_when_validated'];
+            if(isset($theForm->show_form_when_validated) && $isSubmit) {
+                $showForm = $theForm->show_form_when_validated;
             }
 
             $renderer = $v->make($template, [

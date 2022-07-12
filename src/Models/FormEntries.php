@@ -23,6 +23,8 @@ class FormEntries extends ClassicModel
         'content',
     ];
 
+    protected $useSlugGeneration = false;
+
     /**
      * Default values for attributes
      * @var  array an array with attribute as key and default as value
