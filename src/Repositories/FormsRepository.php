@@ -38,18 +38,18 @@ class FormsRepository extends BaseRepository
     }
 
     public function afterRun($model, $formValues, $type) {
-        if($type != "destroy") {
-            $this->runFieldsProcess($model, $formValues, $type);
-        }
+        // if($type != "destroy") {
+        //     $this->runFieldsProcess($model, $formValues, $type);
+        // }
         if($type == "destroy") {
 
             $traces = $model->traces;
-            $fields = $model->fields;
+            // $fields = $model->fields;
 
-            foreach($fields as $field) {
-                $model->fields()->detach([$field->id]);
-                $this->formFieldRepo->addModel($field)->delete($field);
-            }
+            // foreach($fields as $field) {
+            //     $model->fields()->detach([$field->id]);
+            //     $this->formFieldRepo->addModel($field)->delete($field);
+            // }
 
             foreach($traces as $trace) {
                 $model->traces()->detach([$trace->id]);
@@ -59,86 +59,86 @@ class FormsRepository extends BaseRepository
     }
 
 
-    public function runFieldsProcess($model, $formValues, $type) {
+    // public function runFieldsProcess($model, $formValues, $type) {
 
-        if($type == "update") {
-            $model->fields()->detach();
-        }
-        $attachements = [];
+    //     if($type == "update") {
+    //         $model->fields()->detach();
+    //     }
+    //     $attachements = [];
 
-        $sampleFormField = new FormField();
-        $defaults_attributes = $sampleFormField->getAttributes();
-        $is_multilang = is_multilang();
+    //     $sampleFormField = new FormField();
+    //     $defaults_attributes = $sampleFormField->getAttributes();
+    //     $is_multilang = is_multilang();
 
-        //dd($formValues);
+    //     //dd($formValues);
 
-        if(isset($formValues['fields']) && count($formValues['fields']) > 0) {
-            foreach ($formValues['fields'] as $fieldKey => $field) {
-                # code...
+    //     if(isset($formValues['fields']) && count($formValues['fields']) > 0) {
+    //         foreach ($formValues['fields'] as $fieldKey => $field) {
+    //             # code...
 
-                //remove label
-                $keys = array_keys($field);
-                $indexKey = array_search('label', $keys);
-                $m = new FormField();
-                $todoCreate = true;
+    //             //remove label
+    //             $keys = array_keys($field);
+    //             $indexKey = array_search('label', $keys);
+    //             $m = new FormField();
+    //             $todoCreate = true;
 
-                if(empty($formValues['fields'][$fieldKey]['label'])) {
-                    $field['label'] = 'Field_'.$fieldKey;
-                    unset($keys[$indexKey]);
-                }
+    //             if(empty($formValues['fields'][$fieldKey]['label'])) {
+    //                 $field['label'] = 'Field_'.$fieldKey;
+    //                 unset($keys[$indexKey]);
+    //             }
 
-                if(!empty($formValues['fields'][$fieldKey]['choices'])) {
-                    $choicesOptions = array();
-                    $selectedsOptions = array();
-                    $multilignes = explode(',', $formValues['fields'][$fieldKey]['choices']);
-                    $multilignes_selecteds = explode(',', $formValues['fields'][$fieldKey]['selected']);
+    //             if(!empty($formValues['fields'][$fieldKey]['choices'])) {
+    //                 $choicesOptions = array();
+    //                 $selectedsOptions = array();
+    //                 $multilignes = explode(',', $formValues['fields'][$fieldKey]['choices']);
+    //                 $multilignes_selecteds = explode(',', $formValues['fields'][$fieldKey]['selected']);
 
-                    $base_iterator = 0;
-                    foreach ($multilignes as $multiligne) {
-                        # code...
-                        $multilignes = explode(':', $multiligne);
+    //                 $base_iterator = 0;
+    //                 foreach ($multilignes as $multiligne) {
+    //                     # code...
+    //                     $multilignes = explode(':', $multiligne);
 
-                        if(count($multilignes) > 1) {
-                            $choicesOptions[trim($multilignes[0])] = trim($multilignes[1]);
-                        }
-                        if(count($multilignes_selecteds) > 0 && count($multilignes) > 1 && $multilignes_selecteds[0] == $multilignes[0]) {
-                            $selectedsOptions[trim($multilignes[0])] = trim($multilignes[1]);
-                        }
-                        $base_iterator++;
-                    }
+    //                     if(count($multilignes) > 1) {
+    //                         $choicesOptions[trim($multilignes[0])] = trim($multilignes[1]);
+    //                     }
+    //                     if(count($multilignes_selecteds) > 0 && count($multilignes) > 1 && $multilignes_selecteds[0] == $multilignes[0]) {
+    //                         $selectedsOptions[trim($multilignes[0])] = trim($multilignes[1]);
+    //                     }
+    //                     $base_iterator++;
+    //                 }
 
-                    $field['choices'] = json_encode($choicesOptions);
-                    $field['selected'] = json_encode($multilignes_selecteds);
-                }
+    //                 $field['choices'] = json_encode($choicesOptions);
+    //                 $field['selected'] = json_encode($multilignes_selecteds);
+    //             }
 
-                if(!empty($formValues['fields'][$fieldKey]['fromdb'])) {
-                    $todoCreate = false;
-                    $m = $m->find((int) $formValues['fields'][$fieldKey]['fromdb']);
-                }
-                unset($formValues['fields'][$fieldKey]['fromdb']);
+    //             if(!empty($formValues['fields'][$fieldKey]['fromdb'])) {
+    //                 $todoCreate = false;
+    //                 $m = $m->find((int) $formValues['fields'][$fieldKey]['fromdb']);
+    //             }
+    //             unset($formValues['fields'][$fieldKey]['fromdb']);
 
-                // enable checking
-                foreach ($keys as $key) {
-                    # code...
-                    if(isset($defaults_attributes[$key]) && empty($formValues['fields'][$fieldKey][$key])) {
-                        $field[$key] = $defaults_attributes[$key];
-                    }
-                }
+    //             // enable checking
+    //             foreach ($keys as $key) {
+    //                 # code...
+    //                 if(isset($defaults_attributes[$key]) && empty($formValues['fields'][$fieldKey][$key])) {
+    //                     $field[$key] = $defaults_attributes[$key];
+    //                 }
+    //             }
 
-                if($todoCreate) {
-                   $field = $this->formFieldRepo->addModel($m)->create($field);
-                }
-                else {
-                    $field = $this->formFieldRepo->addModel($m)->update($field, $m);
-                }
+    //             if($todoCreate) {
+    //                $field = $this->formFieldRepo->addModel($m)->create($field);
+    //             }
+    //             else {
+    //                 $field = $this->formFieldRepo->addModel($m)->update($field, $m);
+    //             }
 
-                $attachements[$field->id] = ['order' => $fieldKey];
-            }
+    //             $attachements[$field->id] = ['order' => $fieldKey];
+    //         }
 
-            if(count($attachements) > 0) {
-                $model->fields()->attach($attachements);
-            }
-        }
+    //         if(count($attachements) > 0) {
+    //             $model->fields()->attach($attachements);
+    //         }
+    //     }
 
-    }
+    // }
 }

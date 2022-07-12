@@ -67,7 +67,7 @@ class MenuController extends Controller
             // dd($request);
             $form = $this->makeForm(CreateMenu::class);
             $menu = $this->menuRepository->addModel(new Menu())->create($form);
-            return $this->sendResponse($menu, 'menus.index', 'admin.typed_data.success');  
+            return $this->sendResponse($menu, 'menus.index', 'admin.typed_data.success');
         }
 
         /**
@@ -162,7 +162,7 @@ class MenuController extends Controller
                 # code...
                 $html[] = $v->make('adminify::layouts.admin.menubuilder.menu-item', ['mediaMode' => isset($enabled_features['media']) && $enabled_features['media'], 'item' => $b, 'type' => $type, 'new' => true, 'isCustom' => $type == 'custom'])->render();
             }
-            
+
 
             return response()->json([
                 'html' => $html,
@@ -177,14 +177,17 @@ class MenuController extends Controller
 
             $config = get_site_key('menu-builder');
             $id = $request->id;
+
             $v = view();
 
             $m = new \App\Adminify\Models\MenuItem();
             $three = [];
             $html = [];
 
-            $m = $m->find($id)->delete();
-            
+            $m = $m->where('model_id', $id)->get()->first();
+
+            $m = $m->delete();
+
 
             return response()->json([
                 'status' => 'ok',
@@ -194,7 +197,7 @@ class MenuController extends Controller
 
         }
 
-        
+
 
         /**
             * Update the specified resource in storage.
@@ -206,9 +209,10 @@ class MenuController extends Controller
         {
             $fields = $request->all();
             $menuThree = json_decode($fields['menuthree'], true);
+
             $menu = $this->menuRepository->addModel($menu)->update($menuThree, $menu);
 
-            return $this->sendResponse($menu, 'menus.index', 'admin.typed_data.updated');  
+            return $this->sendResponse($menu, 'menus.index', 'admin.typed_data.updated');
         }
 
         /**
@@ -223,7 +227,7 @@ class MenuController extends Controller
 
             $this->menuRepository->addModel($menu)->delete($menu);
 
-            return $this->sendResponse($menu, 'menus.index', 'admin.typed_data.deleted');  
+            return $this->sendResponse($menu, 'menus.index', 'admin.typed_data.deleted');
 
         }
 }

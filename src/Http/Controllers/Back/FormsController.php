@@ -69,14 +69,19 @@ class FormsController extends Controller
         public function create(FormBuilder $formBuilder)
         {
 
-            $interface = interfaces('formbuilder');
+            // $interface = interfaces('formbuilder');
 
             // $form = $formBuilder->create(CreateForms::class, [
             //     'method' => 'POST',
             //     'url' => route('forms.store')
             // ]);
+
+            $form = $this->makeForm(CreateForms::class, [
+                'method' => 'POST',
+                'url' => route('forms.store')
+            ]);
             //
-            return view("adminify::layouts.admin.pages.create", ['interface' => $interface]);
+            return view("adminify::layouts.admin.pages.create", ['form' => $form]);
         }
 
         /**
@@ -117,20 +122,20 @@ class FormsController extends Controller
         public function edit(Forms $Form, FormBuilder $formBuilder)
         {
             //
-            // $form = $formBuilder->create(UpdateForms::class, [
-            //     'method' => 'PUT',
-            //     'url' => route('forms.update', ['form' => $Form->id]),
-            //     'model' => $Form
-            // ]);
+            $form = $this->makeForm(UpdateForms::class, [
+                'method' => 'PUT',
+                'url' => route('forms.update', ['form' => $Form->id]),
+                'model' => $Form
+            ]);
 
             $confirmation = $Form->confirmation->first();
             if(empty($confirmation)) {
                 flash('admin.formbuilder.required_confirmation_type')->error()->important();
             }
 
-            $interface = interfaces('formbuilder');
+            // $interface = interfaces('formbuilder');
 
-            return view("adminify::layouts.admin.pages.edit", ['interface' => $interface]);
+            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
         }
 
         /**

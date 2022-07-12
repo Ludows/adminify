@@ -25,6 +25,7 @@ class MenuRepository extends BaseRepository
             return false;
         }
 
+        $orderer = 0;
         foreach ($scope as $menuitem) {
             # code...
             $menuItem = new MenuItem();
@@ -83,10 +84,10 @@ class MenuRepository extends BaseRepository
 
                 if(!empty($menuitem['media_id']) && strlen($menuitem['media_id']) > 0) {
 
-                    $m = Media::find((int) $menuitem['media_id']);
+                    // $m = Media::find((int) $menuitem['media_id']);
 
                     if(!empty($m)) {
-                        $menuItem->media_id = $m->id;
+                        $menuItem->media_id = (int) $menuitem['media_id'];
                     }
 
                 }
@@ -146,12 +147,13 @@ class MenuRepository extends BaseRepository
 
 
                 if(!empty($check_model_item)) {
-                    $check_model_item->menu()->attach($check_model_item->id, ['menu_id' => $model->id]);
+                    $check_model_item->menu()->attach($check_model_item->id, ['menu_id' => $model->id, 'order' => $orderer]);
                 }
                 else {
-                    $menuItem->menu()->attach($menuItem->id, ['menu_id' => $model->id]);
+                    $menuItem->menu()->attach($menuItem->id, ['menu_id' => $model->id, 'order' => $orderer]);
                 }
 
+                $orderer++;
         }
     }
     public function create($mixed) {
@@ -175,6 +177,7 @@ class MenuRepository extends BaseRepository
         // dd($menuthree, $model);
 
         $existingItems = count($model->items->all()) > 0 ? true : false;
+
 
         if($existingItems) {
             $model->items()->detach();
