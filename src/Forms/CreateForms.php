@@ -20,8 +20,14 @@ class CreateForms extends Form
 
         $this->add('model_class', 'select2', [
             'required' => true,
+            'empty_value' => '',
             'attr' => [
                 'placeholder' => __('adminify.formbuilder.model_class')
+            ],
+            'select2options' => [
+                'placeholder' => __('admin.formbuilder.model_class'),
+                'multiple' => false,
+                'width' => '100%'
             ]
         ]);
         // $this->add('fields', 'collection', [
