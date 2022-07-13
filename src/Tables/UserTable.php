@@ -16,7 +16,7 @@ class UserTable extends TableManager {
             $results = $datas['results'];
         }
         else {
-            $results = $modelClass::whereRaw('LENGTH(email) > 0')->limit( $config['limit'] )->get();
+            $results = $modelClass::whereRaw('LENGTH(email) > 0')->paginate($config['limit'], ['*']);
         }
 
         $this->setResults($results);
