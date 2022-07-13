@@ -115,7 +115,7 @@ class PageController extends Controller
 
         public function search(Request $request) {
 
-            $result = app()->call('App\Adminify\Http\Controllers\Back\SearchController', [
+            $result = app()->call('App\Adminify\Http\Controllers\Back\SearchController@index', [
                 $request
             ]);// controller à taper;
 
@@ -131,7 +131,6 @@ class PageController extends Controller
             $all = $request->all();
 
             $dynamic_form_config = get_site_key('dynamic_forms');
-            $mail_sender = $dynamic_form_config['default_email_user'];
 
             if(empty($all['form_id'])) {
                 abort(404);
@@ -185,21 +184,9 @@ class PageController extends Controller
                 ]);
             }
 
-            if(!empty($dynamic_form_config['skip_autosend']) && $dynamic_form_config['skip_autosend'] == false) {
+            if(!empty($theFormClass->didSendMail) && $theFormClass->didSendMail == true) {
                 // now we prepare to send the email.
-
-                if(!empty($dynamic_form_config[$formDb->slug])) {
-                    $mail_sender = $dynamic_form_config[$formDb->slug]['email_user'];
-                }
-
-                //find the App\Adminify\Mails\FormEntriesListingMail
-                $mail = Mailables::where('mailable', 'App\Adminify\Mails\FormEntriesListingMail')->get()->first();
-                if(!empty($mail->mailable)) {
-                    $mail = $mail->mailable;
-                }
-
-                Mail::to($mail_sender)
-                ->send(new $mail( $formDb ) );
+                $theFormClass->sendMail();
             }
 
             // now we prepare the redirection type process..

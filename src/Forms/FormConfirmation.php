@@ -58,7 +58,7 @@ class FormConfirmation extends Form
             ]
         ]);
 
-        $this->add('content', 'tiptap', [
+        $this->add('content', 'jodit', [
             'wrapper' => [
                 'class' => 'form-group d-none',
                 'data-show-type' => 'samepage'

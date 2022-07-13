@@ -65,11 +65,11 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
     if(isset($c['tag']) && $c['tag']) {
         Route::resource('tags', 'App\Adminify\Http\Controllers\Back\TagsController', ['except' => ['show']]);
     }
-    if(isset($c['email']) && $c['email']) {
-        Route::resource('mails', 'App\Adminify\Http\Controllers\Back\MailsController', ['except' => ['show']]);
+    // if(isset($c['email']) && $c['email']) {
+    //     Route::resource('mails', 'App\Adminify\Http\Controllers\Back\MailsController', ['except' => ['show']]);
 
-        Route::post('mails/send/{mail}', 'App\Adminify\Http\Controllers\Back\MailsController@send')->name('mails.send');
-    }
+    //     Route::post('mails/send/{mail}', 'App\Adminify\Http\Controllers\Back\MailsController@send')->name('mails.send');
+    // }
 
     if(is_multilang()) {
         Route::get('savetraductions', 'App\Adminify\Http\Controllers\Back\SaveTranslationsController@edit')->name('savetraductions.edit');
@@ -95,14 +95,14 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
 
     if(isset($c['form']) && $c['form']) {
         Route::resource('forms', 'App\Adminify\Http\Controllers\Back\FormsController', ['except' => ['show']]);
-        Route::post('forms/addfield', 'App\Adminify\Http\Controllers\Back\FormsController@addField')->name('forms.addField');
+        // Route::post('forms/addfield', 'App\Adminify\Http\Controllers\Back\FormsController@addField')->name('forms.addField');
 
         Route::get('forms/{form}/traces', 'App\Adminify\Http\Controllers\Back\FormsController@getTraces')->name('forms.traces.index');
         Route::get('forms/{form}/traces/{trace}', 'App\Adminify\Http\Controllers\Back\FormsController@getTrace')->name('forms.traces.show');
         Route::delete('forms/{form}/traces/destroy/{trace}', 'App\Adminify\Http\Controllers\Back\FormsController@destroyTrace')->name('forms.traces.destroy');
         Route::get('forms/{form}/confirmation', 'App\Adminify\Http\Controllers\Back\FormsController@getConfirmation')->name('forms.confirmation.index');
         Route::post('forms/{form}/confirmation', 'App\Adminify\Http\Controllers\Back\FormsController@storeConfirmation')->name('forms.confirmation.store');
-        Route::post('forms/{id}/removefield/{field_id}', 'App\Adminify\Http\Controllers\Back\FormsController@getDeleteField')->name('forms.fields.delete');
+        // Route::post('forms/{id}/removefield/{field_id}', 'App\Adminify\Http\Controllers\Back\FormsController@getDeleteField')->name('forms.fields.delete');
 
     }
 
