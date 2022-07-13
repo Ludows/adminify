@@ -17,7 +17,6 @@ class DashboardManager extends InterfacableManager {
             \App\Adminify\Interfacable\Blocks\TranslationsCard::class,
             \App\Adminify\Interfacable\Blocks\MediaCard::class,
             \App\Adminify\Interfacable\Blocks\TagCard::class,
-            \App\Adminify\Interfacable\Blocks\MailCard::class,
             \App\Adminify\Interfacable\Blocks\MenuCard::class, 
         ];
     }
