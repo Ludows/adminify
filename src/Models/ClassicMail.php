@@ -43,7 +43,7 @@ abstract class ClassicMail extends SpatieMailTemplate implements Searchable
 
     public function getSearchResult() : SearchResult
     {
-       $url = route('mailables.edit', ['mailable' => $this->id]);
+       $url = route('mails.edit', ['mail' => $this->id]);
 
         return new \Spatie\Searchable\SearchResult(
            $this,
@@ -64,6 +64,6 @@ abstract class ClassicMail extends SpatieMailTemplate implements Searchable
     public function getSavableForm() {
         return null;
     }
-    
+
     public $MultilangTranslatableSwitch = ['subject', 'html_template'];
 }

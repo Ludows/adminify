@@ -130,7 +130,7 @@ class FormsController extends Controller
 
             $confirmation = $Form->confirmation->first();
             if(empty($confirmation)) {
-                flash('admin.formbuilder.required_confirmation_type')->error()->important();
+                flash('admin.formbuilder.required_confirmation_type  <a href="'. route('forms.confirmation.index', ['form' => $Form->id]) .'">Choisir</a>')->warning()->important();
             }
 
             // $interface = interfaces('formbuilder');

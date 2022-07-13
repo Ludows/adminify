@@ -17,6 +17,7 @@ class CreateMenuMenuItemPivotTable extends Migration
             $table->unsignedBigInteger('menu_id')->index();
             $table->foreign('menu_id')->references('id')->on('menus')->onDelete('cascade');
             $table->unsignedBigInteger('menu_item_id')->index();
+            $table->bigInteger('order');            
             $table->foreign('menu_item_id')->references('id')->on('menu_items')->onDelete('cascade');
             $table->primary(['menu_id', 'menu_item_id']);
         });

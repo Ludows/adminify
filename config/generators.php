@@ -60,8 +60,8 @@ return [
             'repository_contract' => false,
         ],
         'front_forms'   => [
-            'namespace'           => '\Forms',
-            'path'                => './app/Forms/Front',
+            'namespace'           => '\Forms\Front',
+            'path'                => './app/Forms/Front/',
             'postfix'             => 'FrontForm',
             'directory_namespace' => true,
             'dump_autoload'       => false,
@@ -177,7 +177,7 @@ return [
             'postfix'             => 'Test',
             'path'                => './tests/',
         ],
-        
+
     ],
 
     /*

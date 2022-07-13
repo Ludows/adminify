@@ -7,6 +7,7 @@ class CreateForms extends Form
 {
     public function buildForm()
     {
+        $classes = adminify_get_classes_by_folder('app:forms:front');
         $m = $this->getModel();
         $this->add('user_id', 'hidden', [
             'value' => user()->id
@@ -21,6 +22,8 @@ class CreateForms extends Form
         $this->add('model_class', 'select2', [
             'required' => true,
             'empty_value' => '',
+            'choices' => !empty($classes) ? array_flip($classes) : [],
+            'selected' => !empty($m) ? $m->model_class : '',
             'attr' => [
                 'placeholder' => __('adminify.formbuilder.model_class')
             ],

@@ -23,7 +23,7 @@ class Forms extends ClassicModel
         'title',
         'slug',
         'user_id',
-        'fields'
+        'model_class'
     ];
 
     public function getAdminifyAliases() {

@@ -24,6 +24,8 @@ class FormTrace extends ClassicModel
         'send_time',
     ];
 
+    protected $useSlugGeneration = false;
+
     public function getAdminifyAliases() {
         return [
             'trace', 'formtrace', 'form_trace'

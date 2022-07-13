@@ -16,11 +16,6 @@ return [
         'root_path' => resource_path('theme')
     ],
 
-    //enable comments for registered Models
-    'comments' => [
-        'Post',
-    ],
-
     'media_library' => [
         'driver' => 'public',
         'paramName' => 'file',
@@ -46,6 +41,10 @@ return [
     'searchable' => [
         'admin' => [
             'limit' => 5,
+            'name' => 'query'
+        ],
+        'front' => [
+            'limit' => -1,
             'name' => 'query'
         ]
     ],
@@ -103,12 +102,12 @@ return [
         ]
     ],
 
-    'dynamic_forms' => [
-        'default_form_template' => 'adminify::layouts.commons.forms.default',
-        'show_form_when_validated' => true,
-        'skip_autosend' => false, // for tests
-        'default_email_user' => 'theartist768@gmail.com', // if your want to overwrite the default user. Specify form with his slug
-    ],
+    // 'dynamic_forms' => [
+    //     'default_form_template' => 'adminify::layouts.commons.forms.default',
+    //     'show_form_when_validated' => true,
+    //     'skip_autosend' => false, // for tests
+    //     'default_email_user' => 'theartist768@gmail.com', // if your want to overwrite the default user. Specify form with his slug
+    // ],
 
     'adminMenu' => [
         'Page',
@@ -123,7 +122,6 @@ return [
         'Settings',
         'Translations',
         'Templates',
-        'Mailables',
         'User'
     ],
 
@@ -237,7 +235,6 @@ return [
         'menu' => true,
         'setting' => true,
         'key_translation' => true,
-        'email' => true,
         'seo' => true,
         'templates_content' => true,
         'user' => true,

@@ -46,6 +46,7 @@ class CreateMail extends Form
 
         $mailFetched = $r->mail;
 
+
         $Mails = adminify_get_classes_by_folders(['app:mails', 'app:adminify:mails']);
 
         foreach($Mails as $MailKey => $Mail){
@@ -62,9 +63,10 @@ class CreateMail extends Form
 
 
 
-        if($mailFetched != null) {
+        if(!empty($mailFetched)) {
             // on a une selection
-            $selecteds = [$mailFetched->mailable];
+            $selecteds = class_basename($mailFetched->mailable);
+            // dd($mailFetched);
         }
 
         return [ 'mailables' => $mails, 'selected' => $selecteds];
