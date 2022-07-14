@@ -25,7 +25,7 @@ class CreateTraductions extends Migration
             Schema::create('traductions', function (Blueprint $table) {
                 $table->bigIncrements('id');
                 $table->string('key');
-                $table->string('text');
+                $table->longText('text');
                 $table->timestamps();
             });
         }
