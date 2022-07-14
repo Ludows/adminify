@@ -89,6 +89,8 @@ class DoInstallEnv extends Command
 
         $keys['MIX_ADMINIFY_THEME_ROOT_FOLDER'] = "resources/theme";
 
+        $keys['GLIDE_SECURE_KEY'] = exec('openssl rand -base64 32');
+
         // dd($keys);
 
         $this->setEnvironmentValue($keys);

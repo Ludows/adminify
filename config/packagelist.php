@@ -237,27 +237,6 @@ return array(
         ),
         (object) array(
             'beforePublish' => [],
-            'name' => 'unisharp/laravel-filemanager',
-            'publish' => null,
-            'autoload' => (object) [
-                'providers' => [
-                    // UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
-                    // Intervention\Image\ImageServiceProvider::class,
-                ],
-                'middlewares' => [],
-                'aliases' => [
-                    'Image' => Intervention\Image\Facades\Image::class,
-                ]
-            ],
-            'config' => null,
-            'afterPublish' => [
-                'php artisan vendor:publish --tag=lfm_config',
-                'php artisan vendor:publish --tag=lfm_public',
-                'php artisan storage:link'
-            ],
-        ),
-        (object) array(
-            'beforePublish' => [],
             'name' => 'ycs77/laravel-form-builder-bs4',
             'publish' => (object) [
                 'tag' => true,
