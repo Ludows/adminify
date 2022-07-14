@@ -7,13 +7,6 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 
-use App\Adminify\Listeners\HasUploadedImageListener;
-use App\Adminify\Listeners\HasDeletedImageListener;
-use App\Adminify\Listeners\HasRenamedImageListener;
-use UniSharp\LaravelFilemanager\Events\ImageWasDeleted;
-use UniSharp\LaravelFilemanager\Events\ImageWasUploaded;
-use UniSharp\LaravelFilemanager\Events\ImageWasRenamed;
-
 class EventServiceProvider extends ServiceProvider
 {
     /**
@@ -25,15 +18,6 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        ImageWasUploaded::class => [
-            HasUploadedImageListener::class,
-        ],
-        ImageWasDeleted::class => [
-            HasDeletedImageListener::class
-        ],
-        ImageWasRenamed::class => [
-            HasRenamedImageListener::class
-        ]
     ];
 
     /**

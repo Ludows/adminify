@@ -943,18 +943,14 @@ if (! function_exists('generate_form')) {
         $theForm = get_form($mixed);
         $dynamics_fields = [];
         $renderer = '';
-        $dynamic_form_config = get_site_key('dynamic_forms');
-        $template = $dynamic_form_config['default_form_template'];
+        // $dynamic_form_config = get_site_key('dynamic_forms');
+        // $template = $dynamic_form_config['default_form_template'];
 
         $formBuilder = app('Kris\LaravelFormBuilder\FormBuilder');
         $v = view();
 
         if(empty($theForm)) {
             return null;
-        }
-
-        if(!empty($templatePath) && is_string($templatePath)) {
-            $template = $templatePath;
         }
 
         $form = $formBuilder->create($theForm->model_class);
@@ -972,7 +968,7 @@ if (! function_exists('generate_form')) {
                 $showForm = $theForm->show_form_when_validated;
             }
 
-            $renderer = $v->make($template, [
+            $renderer = $v->make( $form->getView() , [
                 'form' => $form,
                 'showConfirmation' => $isSubmit ? true : false,
                 'showForm' => $showForm,
