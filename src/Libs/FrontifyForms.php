@@ -97,7 +97,7 @@ class FrontifyForms extends Form {
     // protected function getTemplate() {
     //     return 'adminify::layouts.commons.forms.default';
     // }
-    protected function getView() {
+    public function getView() {
         return 'adminify::layouts.commons.forms.default';
     }
 }
