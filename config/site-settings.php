@@ -180,7 +180,7 @@ return [
                 ['icon' => '', 'key_title' => 'admin.posts.index', 'key_url' => 'posts.create' ],
                 ['icon' => '', 'key_title' => 'admin.pages.index', 'key_url' => 'pages.create'],
                 ['icon' => '', 'key_title' => 'admin.menus.index', 'key_url' => 'menus.create' ],
-                ['icon' => '', 'key_title' => 'admin.medias.index', 'key_url' => 'medias.create' ],
+                ['icon' => '', 'key_title' => 'admin.medias.index', 'key_url' => 'medias.index' ],
                 ['icon' => '', 'key_title' => 'admin.traductions.index', 'key_url' => 'traductions.create' ],
                 ['icon' => '', 'key_title' => 'admin.categories.index', 'key_url' => 'categories.create' ]
             ] ],
