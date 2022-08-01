@@ -73,6 +73,12 @@ return [
             'postfix'             => 'Tables',
             'directory_namespace' => true,
         ],
+        'shortcodes' => [
+            'namespace'           => '\Shortcodes',
+            'path'                => './app/Shortcodes/',
+            'postfix'             => 'Shortcode',
+            'directory_namespace' => true,
+        ],
         'dropdown' => [
             'namespace'           => '\Dropdowns',
             'path'                => './app/Dropdowns/',
@@ -251,5 +257,6 @@ return [
         'interfacable_blocks'         => base_path() . '/resources/stubs/interfacable_blocks.stub',
         'adminify_metas'         => base_path() . '/resources/stubs/adminify-metas.stub',
         'adminify_front_forms'         => base_path() . '/resources/stubs/adminify-front-forms.stub',
+        'adminify_shortcode'         => base_path() . '/resources/stubs/adminify-shortcode.stub',
     ]
 ];

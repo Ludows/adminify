@@ -582,10 +582,16 @@ if(! function_exists('get_site_key')) {
 }
 
 if(! function_exists('is_admin')) {
+    // we include auth services to admin area
     function is_admin() {
         $request = request();
+
+        $pathables_admin = [
+            'admin', 'login', 'register', 'password', 'email'
+        ];
+
         if(empty($request->currentRouteSplitting)) {
-            return $request->segment(1) == 'admin';
+            return in_array( $request->segment(1), $pathables_admin);
         }
 
         return in_array('admin', $request->currentRouteSplitting);
@@ -596,8 +602,12 @@ if(! function_exists('is_front')) {
     function is_front() {
         $request = request();
 
+        $pathables_admin = [
+            'admin', 'login', 'register', 'password', 'email'
+        ];
+
         if(empty($request->currentRouteSplitting)) {
-            return $request->segment(1) != 'admin';
+            return !in_array( $request->segment(1), $pathables_admin);
         }
 
         return !in_array('admin', $request->currentRouteSplitting);
