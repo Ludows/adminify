@@ -49,15 +49,15 @@ function loadDefaults(Mix) {
     .js('resources/adminify/back/js/listings.js', 'public/adminify/back/js')
     .js('resources/adminify/back/js/menuBuilder.js', 'public/adminify/back/js')
     .js('resources/adminify/back/js/confirmation.js', 'public/adminify/back/js')
-    .js('resources/adminify/back/js/sendMail.js', 'public/adminify/back/js')
-    .js('resources/adminify/back/js/metas.js', 'public/adminify/back/js')
+    // .js('resources/adminify/back/js/sendMail.js', 'public/adminify/back/js')
+    // .js('resources/adminify/back/js/metas.js', 'public/adminify/back/js')
     .js('resources/adminify/back/js/mediatheque.js', 'public/adminify/back/js')
-    .js('resources/adminify/back/js/formbuilder.js', 'public/adminify/back/js')
-    Mix.js('resources/adminify/front/js/app.js', 'public/adminify/front/js').vue({ version: 3 })
+    // .js('resources/adminify/back/js/formbuilder.js', 'public/adminify/back/js')
+    // Mix.js('resources/adminify/front/js/app.js', 'public/adminify/front/js').vue({ version: 3 })
     Mix.js('resources/adminify/back/js/editor.js', 'public/adminify/back/js')
-    .sass('resources/adminify/front/sass/argon.scss', 'public/adminify/front/css')
+    // .sass('resources/adminify/front/sass/argon.scss', 'public/adminify/front/css')
     .sass('resources/adminify/back/sass/argon.scss', 'public/adminify/back/css')
-    .sass('resources/adminify/front/sass/front.scss', 'public/adminify/front/css')
+    // .sass('resources/adminify/front/sass/front.scss', 'public/adminify/front/css')
     .sass('resources/adminify/back/sass/extensions.scss', 'public/adminify/back/css');
 
     // Mix.copy('resources/adminify/back/font/summernote.ttf', 'public/adminify/back/css/font/summernote.ttf');

@@ -68,13 +68,7 @@ return [
                 adminify_asset('/adminify/back/js/searchable.js'),
             ),
             'core_frontend' => array(
-                adminify_asset('/adminify/vendor/nucleo/css/nucleo.css'),
-                adminify_asset('/adminify/vendor/@fortawesome/fontawesome-free/css/all.min.css'),
-                adminify_asset('/adminify/front/css/argon.css'),
-                adminify_asset('/adminify/css/front.css'),
                 adminify_asset('/myuploads/routes.js'),
-                adminify_asset('adminify/front/js/app.js'),
-                adminify_asset('adminify/front/js/app.js'),
                 adminify_asset('/myuploads/traductions-'. lang() .'.js'),
             ),
             'backend' => array(
