@@ -87,6 +87,12 @@ class DoInstallEnv extends Command
 
         $keys['DB_DATABASE'] = !empty($db_name) ? $db_name : '';
 
+        $theme_name = $this->ask(__('adminify.questions.theme_name'));
+
+        $this->call('adminify:theme', [
+            'theme' => lowercase($theme_name)
+        ]);
+
         $keys['MIX_ADMINIFY_THEME_ROOT_FOLDER'] = "resources/theme";
 
         $keys['MIX_ADMINIFY_EDITOR_PATHS'] = "resources/editor-components/";
