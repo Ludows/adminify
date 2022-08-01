@@ -2,22 +2,18 @@
 
 namespace Ludows\Adminify\Forms;
 
-use Kris\LaravelFormBuilder\Form;
+use Ludows\Adminify\Libs\BaseForm;
 use Kris\LaravelFormBuilder\Field;
 use App\Adminify\Models\Category;
 use App\Adminify\Models\Page;
 
-class CreatePage extends Form
+class CreatePage extends BaseForm
 {
     public function buildForm()
     {
         // Add fields here...
-        $hydratorCat = $this->hydrateSelect();
         $hydratorPages = $this->hydrateSelectPage();
-        $m = $this->getModel();
-        $r = $this->getRequest();
-        $statuses = $this->getStatuses();
-        $enabled_features = get_site_key('enables_features');
+        $enabled_features = $this->getFeaturesSite();
         // $translations = $m->translations;
 
         $this
@@ -27,7 +23,7 @@ class CreatePage extends Form
             ]);
         if(isset($enabled_features['category']) && $enabled_features['category']) {
 
-            $this->add('categories_id', 'select2', [
+            $this->addCategories('categories_id', [
                 'empty_value' => '',
                 'withCreate' => true,
                 'modal' => 'adminify::layouts.admin.modales.modal-ajax', // simple include,
@@ -46,8 +42,6 @@ class CreatePage extends Form
                         'method' => 'POST'
                     ]
                 ],
-                'choices' => $hydratorCat['categories'],
-                'selected' => $hydratorCat['selected'],
                 'attr' => ['multiple' => 'multiple'],
                 'label' => __('admin.form.categories_id'),
                 'select2options' => [
@@ -57,19 +51,18 @@ class CreatePage extends Form
                 ]
             ]);
         }
-        $this->add('status_id', 'select2', [
-                'empty_value' => '',
-                'choices' => $statuses['statuses'],
-                'selected' => $statuses['selected'],
-                'attr' => [],
-                'label' => __('admin.form.statuses'),
-                'select2options' => [
-                    'placeholder' => __('admin.table.modules.statuses.select_status'),
-                    'multiple' => false,
-                    'width' => '100%'
-                ]
-            ])
-            ->add('parent_id', 'select2', [
+        $this->addStatuses('status_id', [
+            'empty_value' => '',
+            'attr' => [],
+            'label' => __('admin.form.statuses'),
+            'select2options' => [
+                'placeholder' => __('admin.table.modules.statuses.select_status'),
+                'multiple' => false,
+                'width' => '100%'
+            ]
+            ]);
+            
+            $this->addPages('parent_id', [
                 'empty_value' => '',
                 'choices' => $hydratorPages['pages'],
                 'selected' => $hydratorPages['selected'],
@@ -82,38 +75,16 @@ class CreatePage extends Form
                     'width' => '100%'
                 ]
             ]);
-        if(isset($enabled_features['media']) && $enabled_features['media']) {
-            $this->add('media_id', 'media_element', [
+            if(isset($enabled_features['media']) && $enabled_features['media']) {
+                $this->addMediaLibraryPicker('media_id');
+            }
+
+            $this->addVisualEditor('content', [
                 'label_show' => false,
             ]);
-        }
-            $this->add('content', 'visual_editor', [
-                'label_show' => false,
-                'withBtnForTemplates' => true
-            ])   
-            ->add('user_id', 'hidden', [
-                'value' => user()->id
-            ])       
-            ->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
-    }
-    public function getStatuses() {
-        $hasModel = $this->getModel();
-        $statuses = app('App\Adminify\Models\Statuses')->where('id' , '!=', 3)->pluck('name' ,'id');
-        $selecteds = [];
-
-        $statuses = $statuses->all();
-
-        foreach ($statuses as $statusId => $status) {
-            # code...
-            $statuses[$statusId] = __('admin.table.modules.statuses.'.$status);
-        }
-
-        if(isset($hasModel->status)) {
-            // on a une selection
-            $selecteds = $hasModel->status()->get()->pluck('id')->all();
-        }
-
-        return [ 'statuses' => $statuses, 'selected' => $selecteds];
+            
+            $this->addUserId('user_id', []);
+            $this->addSubmit();      
     }
     public function hydrateSelect() {
         $categories = '';

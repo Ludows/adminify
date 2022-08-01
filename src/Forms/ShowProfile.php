@@ -2,9 +2,9 @@
 
 namespace Ludows\Adminify\Forms;
 
-use Kris\LaravelFormBuilder\Form;
+use Ludows\Adminify\Libs\BaseForm;
 
-class ShowProfile extends Form
+class ShowProfile extends BaseForm
 {
     public function buildForm()
     {

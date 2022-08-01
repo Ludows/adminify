@@ -2,10 +2,10 @@
 
 namespace Ludows\Adminify\Forms;
 
-use Kris\LaravelFormBuilder\Form;
+use Ludows\Adminify\Libs\BaseForm;
 use Kris\LaravelFormBuilder\Field;
 
-class SaveMissingTraductions extends Form
+class SaveMissingTraductions extends BaseForm
 {
     public function buildForm()
     {

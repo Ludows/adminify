@@ -2,21 +2,24 @@
 
 namespace Ludows\Adminify\Forms;
 
-use Kris\LaravelFormBuilder\Form;
+use Ludows\Adminify\Libs\BaseForm;
 use Kris\LaravelFormBuilder\Field;
 
-class CreateTranslation extends Form
+class CreateTranslation extends BaseForm
 {
     public function buildForm()
     {
         // Add fields here...
+        
         $this
             ->add('key', Field::TEXT, [
                 'label' => __('admin.form.key'),
-            ])
-            ->add('text', 'jodit', [
-                'label' => __('admin.form.text'),
             ]);
-            $this->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
+        
+        $this->addJodit('text', [
+            'label' => __('admin.form.text'),
+        ]);
+        
+        $this->addSubmit();
     }
 }

@@ -2,12 +2,12 @@
 
 namespace Ludows\Adminify\Forms;
 
-use Kris\LaravelFormBuilder\Form;
+use Ludows\Adminify\Libs\BaseForm;
 use Kris\LaravelFormBuilder\Field;
 
 use Ludows\Adminify\Models\Menu;
 
-class MenuSwitcher extends Form
+class MenuSwitcher extends BaseForm
 {
     public function buildForm()
     {
@@ -19,6 +19,6 @@ class MenuSwitcher extends Form
             'selected' => '',
             'attr' => [],
         ]);
-        $this->add('submit', 'submit', ['label' => __('admin.form.select'), 'attr' => ['class' => 'btn btn-default']]);
+        $this->addSubmit(['label' => __('admin.form.select')]);
     }
 }

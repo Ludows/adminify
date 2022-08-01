@@ -2,10 +2,10 @@
 
 namespace Ludows\Adminify\Forms;
 
-use Kris\LaravelFormBuilder\Form;
+use Ludows\Adminify\Libs\BaseForm;
 use Kris\LaravelFormBuilder\Field;
 
-class SeoForm extends Form
+class SeoForm extends BaseForm
 {
     public function buildForm()
     {

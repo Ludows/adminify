@@ -2,11 +2,11 @@
 
 namespace Ludows\Adminify\Forms;
 
-use Kris\LaravelFormBuilder\Form;
+use Ludows\Adminify\Libs\BaseForm;
 use Kris\LaravelFormBuilder\Field;
 
 
-class CreateTemplates extends Form
+class CreateTemplates extends BaseForm
 {
     public function buildForm()
     {
@@ -14,12 +14,12 @@ class CreateTemplates extends Form
             'label_show' => false,
             'attr' => ['placeholder' =>  __('admin.form.title') ],
         ]);
-        $this->add('content', 'visual_editor', [
-            'label' => __('admin.form.content'),
+
+        $this->addVisualEditor('content', [
             'label_show' => false
         ]);
 
-        $this->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
+        $this->addSubmit();
     }
 
 }

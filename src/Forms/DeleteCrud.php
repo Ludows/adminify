@@ -2,9 +2,9 @@
 
 namespace Ludows\Adminify\Forms;
 
-use Kris\LaravelFormBuilder\Form;
+use Ludows\Adminify\Libs\BaseForm;
 
-class DeleteCrud extends Form
+class DeleteCrud extends BaseForm
 {
     public function buildForm()
     {

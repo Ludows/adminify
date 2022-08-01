@@ -2,9 +2,9 @@
 
 namespace Ludows\Adminify\Forms;
 
-use Kris\LaravelFormBuilder\Form;
+use Ludows\Adminify\Libs\BaseForm;
 
-class UpdatePage extends Form
+class UpdatePage extends BaseForm
 {
     public function buildForm()
     {
