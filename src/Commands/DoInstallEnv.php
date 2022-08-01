@@ -59,7 +59,7 @@ class DoInstallEnv extends Command
 
         $app_multilang = $this->choice(
             __('adminify.questions.multilang'),
-            [__('adminify.questions.yes'), __('adminify.questions.no')],
+            [1, 0],
             1,
             null,
             false
@@ -88,6 +88,8 @@ class DoInstallEnv extends Command
         $keys['DB_DATABASE'] = !empty($db_name) ? $db_name : '';
 
         $keys['MIX_ADMINIFY_THEME_ROOT_FOLDER'] = "resources/theme";
+
+        $keys['MIX_ADMINIFY_EDITOR_PATHS'] = "resources/editor-components/";
 
         $keys['GLIDE_SECURE_KEY'] = exec('openssl rand -base64 32');
 

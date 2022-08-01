@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Forms;
 
-use Kris\LaravelFormBuilder\Form;
+use Ludows\Adminify\Libs\BaseForm;
 use Kris\LaravelFormBuilder\Field;
 
 use App\Adminify\Models\Page;
@@ -10,7 +10,7 @@ use App\Adminify\Models\Settings;
 
 use File;
 
-class CreateSettings extends Form
+class CreateSettings extends BaseForm
 {
     public function buildForm()
     {

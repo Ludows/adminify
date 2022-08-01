@@ -2,12 +2,12 @@
 
 namespace Ludows\Adminify\Forms;
 
-use Kris\LaravelFormBuilder\Form;
+use Ludows\Adminify\Libs\BaseForm;
 use Kris\LaravelFormBuilder\Field;
 use Illuminate\Support\Facades\Route;
 
 
-class CreateGroupMetas extends Form
+class CreateGroupMetas extends BaseForm
 {
     public function buildForm()
     {
@@ -80,64 +80,13 @@ class CreateGroupMetas extends Form
             'label_attr' => ['class' => 'custom-control-label'],
         ]);
 
-        // $this->add('_conditions', 'collection', [
-        //     'type' => 'form',
-        //     'prototype' => true,
-        //     'label_show' => true,
-        //     'label' => __('admin.form.conditions'),
-        //     'prefer_input' => true,
-        //     'wrapper' => [
-        //         'class' => 'form-group js-conditions-block'
-        //     ],
-        //     'options' => [    // these are options for a single type
-        //         'class' => 'App\Adminify\Forms\ConditionnalShowMetas',
-        //         'label' => false,
-        //     ]
-        // ]);
-
-        // $conditions = $this->getField('_conditions');
-
-
-        // $this->add('_addCondition', 'button', [
-        //     "attr" => [
-        //         "class" => "btn btn-default js-add-prototype",
-        //         "data-prototype" => form_row($conditions->prototype())
-        //     ],
-        //     "label" => __('admin.form.addConditionnalShow')
-        // ]);
-
-        // $this->add('_conditionsOr', 'collection', [
-        //     'type' => 'form',
-        //     'prototype' => true,
-        //     'label_show' => true,
-        //     'label' => __('admin.form.conditionsOr'),
-        //     'prefer_input' => true,
-        //     'wrapper' => [
-        //         'class' => 'form-group js-conditions-block-or'
-        //     ],
-        //     'options' => [    // these are options for a single type
-        //         'class' => 'App\Adminify\Forms\ConditionnalShowMetas',
-        //         'label' => false,
-        //     ]
-        // ]);
-
-        // $conditions = $this->getField('_conditionsOr');
-
-
-        // $this->add('_addConditionOr', 'button', [
-        //     "attr" => [
-        //         "class" => "btn btn-default js-add-prototype-or",
-        //         "data-prototype" => form_row($conditions->prototype())
-        //     ],
-        //     "label" => __('admin.form.addConditionnalShow')
-        // ]);
+       
         $this->add('uuid', 'hidden', [
             'value' => 'metabox-'.uuid(15)
         ]);
 
-        $this->add('user_id', 'hidden', [
-            'value' => user()->id
-        ])
-        ->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
+        $this->addUserId('user_id', []);
+
+        $this->addSubmit();
     }
 }

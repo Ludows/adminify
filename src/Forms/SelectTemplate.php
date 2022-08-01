@@ -2,10 +2,10 @@
 
 namespace Ludows\Adminify\Forms;
 
-use Kris\LaravelFormBuilder\Form;
+use Ludows\Adminify\Libs\BaseForm;
 
 use App\Adminify\Models\Templates;
-class SelectTemplate extends Form
+class SelectTemplate extends BaseForm
 {
     public function buildForm()
     {

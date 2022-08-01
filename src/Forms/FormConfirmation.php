@@ -2,15 +2,14 @@
 
 namespace Ludows\Adminify\Forms;
 
-use Kris\LaravelFormBuilder\Form;
+use Ludows\Adminify\Libs\BaseForm;
 use App\Adminify\Models\Page;
 
-class FormConfirmation extends Form
+class FormConfirmation extends BaseForm
 {
     public function buildForm()
     {
 
-        $hydrator_pages = $this->hydrateSelectPage();
 
         $this->add('type', 'select2', [
             'empty_value' => '',
@@ -40,12 +39,10 @@ class FormConfirmation extends Form
             ]
         ]);
 
-        $this->add('page_id', 'select2', [
+        $this->addPages('page_id', [
             'empty_value' => '',
             'withCreate' => false,
             'modal' => '', // simple include
-            'choices' => $hydrator_pages['pages'],
-            'selected' => $hydrator_pages['selected'],
             'label' => __('admin.formbuilder.page_id'),
             'wrapper' => [
                 'class' => 'form-group',
@@ -58,26 +55,12 @@ class FormConfirmation extends Form
             ]
         ]);
 
-        $this->add('content', 'jodit', [
+        $this->addJodit('content', [
             'wrapper' => [
                 'class' => 'form-group d-none',
                 'data-show-type' => 'samepage'
             ]
         ])
-        ->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
-    }
-    public function hydrateSelectPage() {
-        $pages = '';
-        $hasModel = $this->getModel();
-        // dd($hasModel);
-        $pages = Page::get()->pluck('title' ,'id');
-        $selecteds = '';
-
-        if(!empty($hasModel->page_id) && !is_array($hasModel)) {
-            // on a une selection
-            $selecteds = $hasModel->page_id;
-        }
-
-        return [ 'pages' => $pages->all(), 'selected' => $selecteds];
+        ->addSubmit();
     }
 }

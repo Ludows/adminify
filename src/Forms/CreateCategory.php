@@ -2,18 +2,18 @@
 
 namespace Ludows\Adminify\Forms;
 
-use Kris\LaravelFormBuilder\Form;
+use Ludows\Adminify\Libs\BaseForm;
 use Kris\LaravelFormBuilder\Field;
 use App\Adminify\Models\Category;
 
-class CreateCategory extends Form
+class CreateCategory extends BaseForm
 {
     public function buildForm()
     {
         $categories = $this->hydrateSelect();
         $m = $this->getModel();
         $r = $this->getRequest();
-        $enabled_features = get_site_key('enables_features');
+        $enabled_features = $this->getFeaturesSite();
 
         // Add fields here...
         $this->add('title', Field::TEXT, [
@@ -25,31 +25,23 @@ class CreateCategory extends Form
         ]);
         // $options['fromAjax']
         if(isset($enabled_features['media']) && $enabled_features['media']) {
-            $this->add('media_id', 'media_element', [
-                'label_show' => false,
-            ]);
+            $this->addMediaLibraryPicker('media_id', []);
         }
        
-        // if(count($categories) > 0) {
-            $this->add('parent_id', 'select2', [
-                'empty_value' => '',
-                'withCreate' => false,
-                'choices' => $categories,
-                'selected' => '',
-                'label' => __('admin.form.parent_id'),
-                'attr' => [
-                ],
-                'select2options' => [
-                    'multiple' => false,
-                    'width' => '100%',
-                    'placeholder' => __('admin.select_parentcategory')
-                ]
-            ]);
-            $this->add('user_id', 'hidden', [
-                'value' => user()->id
-            ]);
-        // }
-        $this->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
+        $this->addCategories('parent_id', [
+            'empty_value' => '',
+            'withCreate' => false,
+            'label' => __('admin.form.parent_id'),
+            'select2options' => [
+                'multiple' => false,
+                'width' => '100%',
+                'placeholder' => __('admin.select_parentcategory')
+            ]
+        ]);
+
+        $this->addUserId('user_id', []);
+        
+        $this->addSubmit();
     }
     public function hydrateSelect() {
         $categories = '';

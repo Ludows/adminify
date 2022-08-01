@@ -201,7 +201,7 @@ return [
 
     'shortcodes' => [
         'form' => \App\Adminify\Shortcodes\FormShortcode::class,
-        'template' => \App\Adminify\Shortcodes\TemplateShortcode::class
+        'template' => \App\Adminify\Shortcodes\TemplateShortcode::class,
     ],
 
     // menu builder is automatic sync with multilang param.

@@ -2,17 +2,17 @@
 
 namespace Ludows\Adminify\Forms;
 
-use Kris\LaravelFormBuilder\Form;
+use Ludows\Adminify\Libs\BaseForm;
 use Kris\LaravelFormBuilder\Field;
 
-class CreateUser extends Form
+class CreateUser extends BaseForm
 {
     public function buildForm()
     {
         // Add fields here...
 
         $rDatas = $this->getRoles();
-        $enabled_features = get_site_key('enables_features');
+        $enabled_features = $this->getFeaturesSite();
 
         $this
             ->add('name', Field::TEXT, [
@@ -25,11 +25,10 @@ class CreateUser extends Form
             }
             $this->add('email', Field::EMAIL, [
                 'label' => __('admin.form.email'),
-            ])
-            ->add('roles', 'select2', [
+            ]);
+
+            $this->addRoles('roles', [
                 'empty_value' => '',
-                'choices' => $rDatas['roles'],
-                'selected' => $rDatas['selected'],
                 'attr' => [],
                 'label' => __('admin.form.select_entity', ['entity' => 'role']),
                 'label_attr' => ['class' => 'control-label', 'for' => 'roles'],
@@ -43,32 +42,6 @@ class CreateUser extends Form
                 'label' => __('admin.form.password'),
             ]);
 
-        $this->add('submit', 'submit', ['label' => __('admin.form.create'), 'attr' => ['class' => 'btn btn-default']]);
-
-    }
-    public function getRoles() {
-
-        $request = request();
-        $roleModel = app('App\Adminify\Models\Role');
-        $userModel = app('App\Adminify\Models\User');
-
-        $user = $request->user ?? null;
-
-        $roleUser = null;
-        if($user != null) {
-            $roleUser = $user->roles->first();
-        }
-
-        $roles = $roleModel::get()->pluck('name' ,'id');
-        $selected = [];
-
-        if(isset($roleUser) && $roleUser != null) {
-            // on a une selection
-            $selected[] = $roleUser->id;
-
-            // $selecteds = $selecteds->all();
-        }
-
-        return [ 'roles' => $roles->all(), 'selected' => $selected];
+            $this->addSubmit();
     }
 }
