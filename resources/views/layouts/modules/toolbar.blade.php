@@ -13,24 +13,28 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         @foreach ($item['paths'] as $path)
-                            <a class="dropdown-item" href="{{ $path['url'] }}">
-                                @if(!empty($path['icon']))
-                                    <i class="">{!! $path['icon'] !!}</i>
-                                @endif
-                                {{ $path['title'] }}
-                            </a>
+                            @if(!empty($path['url']))
+                                <a class="dropdown-item" href="{{ $path['url'] }}">
+                                    @if(!empty($path['icon']))
+                                        <i class="">{!! $path['icon'] !!}</i>
+                                    @endif
+                                    {{ $path['title'] }}
+                                </a>
+                            @endif
                         @endforeach
                     </div>
                 </li>
             @else
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ $item['url'] }}">
-                        @if(!empty($item['icon']))
-                            <i class="">{!! $item['icon'] !!}</i>
-                        @endif
-                        {{ $item['title'] }}
-                    </a>
-                </li>
+                @if(!empty($item['url']))
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ $item['url'] }}">
+                            @if(!empty($item['icon']))
+                                <i class="">{!! $item['icon'] !!}</i>
+                            @endif
+                            {{ $item['title'] }}
+                        </a>
+                    </li>
+                @endif
             @endif
         @endforeach
       </ul>

@@ -8,6 +8,7 @@ use Spatie\Feed\FeedItem;
 use Ludows\Adminify\Models\ClassicModel;
 use Spatie\Menu\Laravel\Link;
 
+use App\Adminify\Models\User;
 
 class GroupMeta extends ClassicModel
 {
@@ -32,6 +33,10 @@ class GroupMeta extends ClassicModel
 
     public function getSavableForm() {
         return null;
+    }
+
+    public function user() {
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 
     public function getLinks($menuBuilder, $arrayDatas) {
