@@ -28,6 +28,10 @@ if (! function_exists('do_shortcode')) {
     function do_shortcode($shortcodeName, $parameters = []) {
         $shortcodes = config('site-settings.shortcodes');
 
+        if(empty($shortcodes[$shortcodeName])) {
+            return '';
+        }
+
         $shortcode = $shortcodes[$shortcodeName];
         $text = '['. $shortcodeName;
 
