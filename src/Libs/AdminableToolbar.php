@@ -2,6 +2,7 @@
 
 namespace Ludows\Adminify\Libs;
 use Closure;
+use Illuminate\Support\Facades\Route;
 
 class AdminableToolbar
 {
@@ -52,7 +53,7 @@ class AdminableToolbar
                 unset($menuItem['key_title']);
             }
 
-            if(isset($menuItem['key_url'])) {
+            if(isset($menuItem['key_url']) && Route::has($menuItem['key_url'])) {
                 $menuItem['url'] = route($menuItem['key_url']);
                 unset($menuItem['key_url']);
             }
