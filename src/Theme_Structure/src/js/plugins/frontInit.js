@@ -54,7 +54,7 @@ export default {
 
         app.config.globalProperties.$swal = Swal;
 
-        app.config.globalProperties.$route = require('../../../commons/js/Route').default;
+        app.config.globalProperties.$route = require('@resource/adminify/commons/js/Route').default;
 
 
 

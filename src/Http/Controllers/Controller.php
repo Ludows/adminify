@@ -165,7 +165,7 @@ class Controller extends BaseController
                         'model' => !empty($request->model) ? $request->model : [],
                         'wrapper' => [
                             'id' => $meta->uuid,
-                            'class' => 'form-group js-metabox-show'
+                            'class' => 'form-group js-metabox-show p-4 rounded-lg shadow bg-white'
                         ],
                         'options' => [    // these are options for a single type
                             'class' => $theClass,

@@ -29,7 +29,7 @@ class CreateFormConfirmationsTable extends Migration
                 $table->string('type');
                 $table->bigInteger('page_id')->nullable()->unsigned();
                 $table->string('redirect_url')->nullable();
-                $table->string('content');
+                $table->string('content')->nullable();
                 $table->bigInteger('user_id')->default(0)->unsigned();
                 $table->timestamps();
             });

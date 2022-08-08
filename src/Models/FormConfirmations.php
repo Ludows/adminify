@@ -14,6 +14,8 @@ class FormConfirmations extends ClassicModel
 {
     protected $table = 'form_confirmations';
 
+    protected $useSlugGeneration = false;
+
     public $MultilangTranslatableSwitch = [];
 
     public $enable_searchable = false;
