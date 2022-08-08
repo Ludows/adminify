@@ -56,7 +56,10 @@ class BaseRepository
             }
         }
     }
-    public function booting() {}
+    public function booting() {
+        $metaboxRepository = app('App\Adminify\Repositories\MetasRepository');
+        $this->metaboxRepository = $metaboxRepository;
+    }
     public function booted() {}
     public function addModel($class) {
         $this->model = $class;
@@ -286,6 +289,8 @@ class BaseRepository
 
                 $values = $this->formatMetaToSave($metabox_request);
 
+                // dd($values, get_class($this));
+
                 foreach ($values as $value) {
                     # code...
                     //todo the formater for meta model.
@@ -293,11 +298,13 @@ class BaseRepository
                     $m = $m->where($value);
                     $m = $m->get();
 
+                    // dd($value, $m->first());
+
                     if($m->count() > 0) {
-                        $this->addModel($m)->update($value, $m);
+                        $this->metaboxRepository->addModel($m->first())->update($value, $m->first());
                     }
                     else {
-                        $this->addModel(new $metaboxModel)->create($value);
+                        $this->metaboxRepository->addModel(new $metaboxModel)->create($value);
                     }
                 }
 
