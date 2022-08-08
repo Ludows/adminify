@@ -31,6 +31,8 @@ class Meta extends ClassicModel
         'submit'
     ];
 
+    protected $useSlugGeneration = false;
+
     public function getSavableForm() {
         return null;
     }
