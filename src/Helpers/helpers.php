@@ -995,3 +995,14 @@ if (! function_exists('generate_form')) {
     }
 }
 
+if(!function_exists('status')) {
+    function status() {
+        return app('App\Adminify\Models\Statuses');
+    }
+}
+
+if(!function_exists('theme_url')) {
+    function theme_url($string = '') {
+        return url(env('MIX_ADMINIFY_THEME_ROOT_FOLDER').DIRECTORY_SEPARATOR.theme().$string);
+    }
+}
