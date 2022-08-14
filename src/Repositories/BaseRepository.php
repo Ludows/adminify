@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 use App\Adminify\Models\Media;
 use File;
 
+use App\Adminify\Repositories\MetasRepository;
+
 
 class BaseRepository
 {
@@ -57,8 +59,9 @@ class BaseRepository
         }
     }
     public function booting() {
-        $metaboxRepository = app('App\Adminify\Repositories\MetasRepository');
-        $this->metaboxRepository = $metaboxRepository;
+        // $metaboxRepository = app('App\Adminify\Repositories\MetasRepository');
+        // dump(new MetasRepository);
+        // $this->metaboxRepository = $metaboxRepository;
     }
     public function booted() {}
     public function addModel($class) {
@@ -279,6 +282,7 @@ class BaseRepository
 
         $metaboxes = $request->get('_metaboxes');
         $metaboxModel = app('App\Adminify\Models\Meta');
+        $metaboxRepository = new MetasRepository();
 
         if(!empty($metaboxes)) {
             $metaboxes = explode(',', $metaboxes);
@@ -289,22 +293,24 @@ class BaseRepository
 
                 $values = $this->formatMetaToSave($metabox_request);
 
-                // dd($values, get_class($this));
 
                 foreach ($values as $value) {
                     # code...
                     //todo the formater for meta model.
                     $m = new $metaboxModel;
-                    $m = $m->where($value);
+                    $valueExcept = array_filter($value, function($value, $key) {
+                        return $key != 'value';
+                    }, ARRAY_FILTER_USE_BOTH);
+                    $m = $m->where($valueExcept);
                     $m = $m->get();
 
                     // dd($value, $m->first());
 
                     if($m->count() > 0) {
-                        $this->metaboxRepository->addModel($m->first())->update($value, $m->first());
+                        $metaboxRepository->addModel($m->first())->update($value, $m->first());
                     }
                     else {
-                        $this->metaboxRepository->addModel(new $metaboxModel)->create($value);
+                        $metaboxRepository->addModel(new $metaboxModel)->create($value);
                     }
                 }
 

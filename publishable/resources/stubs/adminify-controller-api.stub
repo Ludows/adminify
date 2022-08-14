@@ -15,7 +15,7 @@ class {{class}} extends Controller
 {
     private ${{model}}Repository;
 
-    public function __construct(PageRepository $pageRepository)
+    public function __construct({{model}}Repository ${{model}}Repository)
     {
         $this->middleware(function ($request, $next) {
             $u = user();
