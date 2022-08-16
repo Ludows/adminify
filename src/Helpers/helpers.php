@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use League\Glide\Urls\UrlBuilderFactory;
 use Illuminate\Support\Facades\Storage;
+use Ludows\Adminify\Libs\ThemeManager;
 
 use Illuminate\Support\Collection;
 
@@ -561,12 +562,6 @@ if(! function_exists('user')) {
     }
 }
 
-if(! function_exists('theme')) {
-    function theme() {
-        return setting('theme');
-    }
-}
-
 if(! function_exists('vendor_path')) {
     function vendor_path($path = '') {
         return base_path('vendor'.$path);
@@ -1001,8 +996,20 @@ if(!function_exists('status')) {
     }
 }
 
+if(! function_exists('theme')) {
+    function theme() {
+        return setting('theme');
+    }
+}
+
 if(!function_exists('theme_url')) {
     function theme_url($string = '') {
         return url(env('MIX_ADMINIFY_THEME_ROOT_FOLDER').DIRECTORY_SEPARATOR.theme().$string);
+    }
+}
+
+if(! function_exists('theme_manager')) {
+    function theme_manager() {
+        return new ThemeManager();
     }
 }
