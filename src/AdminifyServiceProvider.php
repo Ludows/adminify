@@ -160,7 +160,9 @@ class AdminifyServiceProvider extends ServiceProvider {
             return new HookManager();
         });
 
-        $this->app->bind('Illuminate\Foundation\Application', 'Ludows\Adminify\Libs\ApplicationCore');
+        $this->app->bind('ThemeManager', function () {
+            return new \Ludows\Adminify\Libs\ThemeManager();
+        });
 
         $this->loadViewComponentsAs('adminify', [
             Modal::class,
