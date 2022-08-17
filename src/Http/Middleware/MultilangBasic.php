@@ -47,6 +47,40 @@ class MultilangBasic
             $this->param($key, $value);
         }
     }
+    public function handleSettings() {
+        $settings = settings();
+
+        foreach ($settings as $key => $value) {
+            # code...
+            if($value->type == 'logo_id' && !empty($value->data)) {
+                $this->param('logo', media((int) $value->data));
+            }
+
+            if($value->type == 'homepage' && !empty($value->data)) {
+                $this->param('home_url', config('app.url') );
+            }
+
+            if(method_exists($this, 'handleCustomSetting')) {
+                $this->handleCustomSetting($key, $value);
+            }
+
+            $this->param($value->type, $value->data);
+        }
+    }
+    public function handleMetas() {
+        $base_parameters = $this->getParams();
+        if(!empty($base_parameters['model'])) {
+            $formated_metas = $base_parameters['model']->metas->pluck('value', 'key');
+            $this->param('metas_keys', $formated_metas->toArray());
+        }
+    }
+    public function handleTheme() {
+        $themeManager = theme_manager();
+        $themeConfig = $themeManager->config();
+    
+        // $this->param('themeManager')
+        return $themeManager;
+    }
     public function handle(Request $request, Closure $next)
     {
 
@@ -56,6 +90,8 @@ class MultilangBasic
         $routeName = $request->route()->getName();
         $prefix = $route->getPrefix();
         $v = view();
+
+        $themeManager = $this->handleTheme();
 
         $checkedKeys = [
             'update',
@@ -138,7 +174,7 @@ class MultilangBasic
         }
 
         $isContentModel = !empty($model) ? is_content_type_model($model) : false;
-        $theme = theme();
+        $theme = $themeManager->getTheme();
 
         $named = join('.',array_diff($routeNameSpl, ['index', 'edit', 'create']));
         // $bindedEditorKeys = array_keys($config['editor']['bind']);
@@ -217,19 +253,16 @@ class MultilangBasic
             $base_parameters['theme'] = $theme;
         }
 
+        $fileToHandle = $themeManager->getHandleFile();
+
         // if your want to had your required vars for your templates.
         if(method_exists($this, 'bootingInject')) {
              call_user_func_array(array($this, 'bootingInject'), [$request, $base_parameters]);
         }
 
-
         $this->params($base_parameters);
 
-
-        // if(in_array(titled($base_parameters['singleParam']), $bindedEditorKeys) && !$base_parameters['isIndex']) {
-        //     $base_parameters['loadEditor'] = true;
-        //     merge_to_request('loadEditor', true);
-        // }
+        $fileToHandle($themeManager, $request, $this->getParams());
 
         foreach ($this->getParams() as $key => $value) {
             # code...
@@ -246,6 +279,11 @@ class MultilangBasic
         }
 
         $v->share('request', $request);
+
+        if(is_front()) {
+            $this->handleSettings();
+            $this->handleMetas();
+        }
 
         if($config['multilang']) {
 
