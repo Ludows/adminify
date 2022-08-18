@@ -9,10 +9,11 @@ class ThemeManager
 {
     public function __construct()
     {
-        $this->locations = [];
         $this->file_config = 'Theme.php';
         $this->request = request();
         $this->view = view();
+        $this->config = null;
+        $this->wasRequired = false;
     }
     public function assets($array = []) {
 
@@ -28,6 +29,40 @@ class ThemeManager
     }
     public function getTheme() {
         return theme();
+    }
+    // public
+    public function getFileRoutes($fileRoutes) {
+        $theme = $this->checkTheme();
+
+        $theme_path = theme_path(DIRECTORY_SEPARATOR.$theme);
+        $file_path = $theme_path.DIRECTORY_SEPARATOR.$fileRoutes.'.php';
+        $exist = File::exists($file_path);
+
+        if(!$exist) {
+            throw new Exception($fileRoutes.'.php must be provided in your theme. Please to create one.', 500);
+        }
+
+        return $file_path;
+    }
+    public function fireConfig() {
+        $config = empty($this->config) ? $this->config() : $this->config;
+
+        if(method_exists($config, 'handle')) {
+            $config->handle();
+        }
+    }
+    public function setToConstructor($class, $array = []) {
+        if(empty($class)) {
+            throw new Exception('a Class must be specified', 500);
+        }
+
+        foreach ($array as $key => $value) {
+            # code...
+            $class->{$key} = $value;
+        }
+
+        $this->config = $class;
+        return $this;
     }
     public function global($key, $value) {
         $this->view->share($key, $value);
@@ -55,7 +90,10 @@ class ThemeManager
             throw new Exception($this->file_config.' must be provided in your theme. Please to create one.', 500);
         }
 
-        $require = require($file_path);
+        if($this->wasRequired == false) {
+            require($file_path);
+            $this->wasRequired = true;
+        }
 
         return new \Theme();
     }

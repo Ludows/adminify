@@ -8,7 +8,7 @@
         @foreach ($items as $item)
             @if(isset($item['paths']))
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle js-dropdowns" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle text-white js-dropdowns" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
                         {{ $item['title'] }}
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -27,7 +27,7 @@
             @else
                 @if(!empty($item['url']))
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ $item['url'] }}">
+                        <a class="nav-link text-white" href="{{ $item['url'] }}">
                             @if(!empty($item['icon']))
                                 <i class="">{!! $item['icon'] !!}</i>
                             @endif

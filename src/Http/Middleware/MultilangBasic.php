@@ -255,9 +255,12 @@ class MultilangBasic
             $this->handleMetas($base_parameters);
         }
 
-        if(method_exists($themeConfigClass, 'handle')) {
-            $themeConfigClass->handle($themeManager, request(), $this->getParams());
-        }
+        $themeManager->setToConstructor($themeConfigClass, [
+            'manager' => $themeManager,
+            'request' => request(),
+            'params' => $this->getParams()
+        ])->fireConfig();
+
 
         // if your want to had your required vars for your templates.
         if(method_exists($this, 'bootingInject')) {

@@ -3,10 +3,11 @@ use Illuminate\Support\Facades\Route;
 
 $c = config('site-settings.restApi');
 $headless = config('site-settings.headless');
+$themeManager = theme_manager();
 
 
 if(!empty($c) && request()->segment(1) != $c['prefix'] || !empty($c) && $headless) {
-    Route::middleware('multilang.basic')->group(function ($router) {
+    Route::middleware('multilang.basic')->group(function ($router) use ($c, $themeManager) {
 
         $theme = theme();
 
@@ -24,11 +25,14 @@ if(!empty($c) && request()->segment(1) != $c['prefix'] || !empty($c) && $headles
 
         $router->post('/search', 'Ludows\Adminify\Http\Controllers\Front\PageController@search')->name('globalsearch');
 
-        $path_admin_file = base_path('routes/adminify_front.php');
+        // $path_admin_file = base_path('routes/adminify_front.php');
 
-        if(file_exists($path_admin_file)){
-            include($path_admin_file);
-        }
+        // if(file_exists($path_admin_file)){
+        //     include($path_admin_file);
+        // }
+
+        $fileRoutes_in_themes = $themeManager->getFileRoutes('front');
+        include($fileRoutes_in_themes);
     });
 }
 
