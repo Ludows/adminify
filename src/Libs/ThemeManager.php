@@ -51,6 +51,17 @@ class ThemeManager
             $config->handle();
         }
     }
+    public function fire($string = '', $mixed) {
+        $config = empty($this->config) ? $this->config() : $this->config;
+
+        if(!empty($string) && method_exists($config, 'fire'.$string)) {
+            $config->{'fire'.$string}($mixed);
+        }
+        else {
+            $this->fireConfig();
+        }
+        return $this;
+    }
     public function setToConstructor($class, $array = []) {
         if(empty($class)) {
             throw new Exception('a Class must be specified', 500);
@@ -88,6 +99,11 @@ class ThemeManager
 
         if(!$exist) {
             throw new Exception($this->file_config.' must be provided in your theme. Please to create one.', 500);
+        }
+
+        // prevent recall the Class Theme
+        if(class_exists('Theme')) {
+            $this->wasRequired = true;
         }
 
         if($this->wasRequired == false) {
