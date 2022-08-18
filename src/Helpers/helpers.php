@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use League\Glide\Urls\UrlBuilderFactory;
 use Illuminate\Support\Facades\Storage;
 use Ludows\Adminify\Libs\ThemeManager;
+use Ludows\Adminify\Libs\HookManager;
 
 use Illuminate\Support\Collection;
 
@@ -1011,5 +1012,12 @@ if(!function_exists('theme_url')) {
 if(! function_exists('theme_manager')) {
     function theme_manager() {
         return new ThemeManager();
+    }
+}
+
+
+if(! function_exists('hook_manager')) {
+    function hook_manager() {
+        return new HookManager();
     }
 }

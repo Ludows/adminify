@@ -31,6 +31,9 @@ class GenerateAdminMenu
             'features' => $enables_features
         );
 
+        $themeManager = theme_manager();
+        $themeConfigClass = theme_manager()->config();
+
         $menuAdmin = Menu::new()
                 ->setActiveClass('active')
                 ->setActiveClassOnLink()
@@ -48,6 +51,12 @@ class GenerateAdminMenu
                 $r = call_user_func_array( array($menu_class, 'getLinks'), array($menuAdmin, $arrayDatas) );
             }
         }
+        $themeManager->setToConstructor($themeConfigClass, [
+            'manager' => $themeManager,
+            'request' => $request,
+            'params' => []
+        ])->fire('Links', $menuAdmin);
+
         if($user->hasRole('subscriber')) {
             $menuAdmin->add( Link::to($multilang ? '/admin/users'.'/'.$user->id. '/edit?lang='.$lang : '/admin/users'.'/'.$user->id. '/edit', '<i class="ni ni-circle-08"></i> '.__('admin.users.edit'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
         }
