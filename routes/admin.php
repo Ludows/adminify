@@ -2,8 +2,9 @@
 use Illuminate\Support\Facades\Route;
 
 $c = config('site-settings.enables_features');
+$themeManager = theme_manager();
 
-Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrator|editor|subscriber', 'admin.breadcrumb', 'admin.menu', 'check.permissions', 'admin.deletemedia', 'admin.fullmode', 'admin.seo'])->group( function () use ($c) {
+Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrator|editor|subscriber', 'admin.breadcrumb', 'admin.menu', 'check.permissions', 'admin.deletemedia', 'admin.fullmode', 'admin.seo'])->group( function () use ($c, $themeManager) {
 
     Route::get('/dashboard', 'App\Adminify\Http\Controllers\Back\HomeController@index')->name('home.dashboard');
 
@@ -121,11 +122,12 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
         });
     }
 
-    $path_admin_file = base_path('routes/adminify_admin.php');
+    // $path_admin_file = base_path('routes/adminify_admin.php');
 
-    if(file_exists($path_admin_file)){
-        include($path_admin_file);
-    }
+    // if(file_exists($path_admin_file)){
+    //     include($path_admin_file);
+    // }
 
-
+    $fileRoutes_in_themes = $themeManager->getFileRoutes('admin');
+    include($fileRoutes_in_themes);
 });

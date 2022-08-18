@@ -9,10 +9,11 @@ class ThemeManager
 {
     public function __construct()
     {
-        $this->locations = [];
-        $this->file_config = 'theme.php';
-        $this->file_handling = 'handle.php';
+        $this->file_config = 'Theme.php';
         $this->request = request();
+        $this->view = view();
+        $this->config = null;
+        $this->wasRequired = false;
     }
     public function assets($array = []) {
 
@@ -23,15 +24,49 @@ class ThemeManager
         return $this;
     }
     public function asset($group = 'default', $src = null) {
-        Assets::group($group)->add($src);
+        \Assets::group($group)->add($src);
         return $this;
-    }
-    public function registerLocations($array = []) {}
-    public function infos() {
-
     }
     public function getTheme() {
         return theme();
+    }
+    // public
+    public function getFileRoutes($fileRoutes) {
+        $theme = $this->checkTheme();
+
+        $theme_path = theme_path(DIRECTORY_SEPARATOR.$theme);
+        $file_path = $theme_path.DIRECTORY_SEPARATOR.$fileRoutes.'.php';
+        $exist = File::exists($file_path);
+
+        if(!$exist) {
+            throw new Exception($fileRoutes.'.php must be provided in your theme. Please to create one.', 500);
+        }
+
+        return $file_path;
+    }
+    public function fireConfig() {
+        $config = empty($this->config) ? $this->config() : $this->config;
+
+        if(method_exists($config, 'handle')) {
+            $config->handle();
+        }
+    }
+    public function setToConstructor($class, $array = []) {
+        if(empty($class)) {
+            throw new Exception('a Class must be specified', 500);
+        }
+
+        foreach ($array as $key => $value) {
+            # code...
+            $class->{$key} = $value;
+        }
+
+        $this->config = $class;
+        return $this;
+    }
+    public function global($key, $value) {
+        $this->view->share($key, $value);
+        $this->request->{$key} = $value;
     }
     private function checkTheme() {
         $theme = $this->getTheme();
@@ -42,21 +77,6 @@ class ThemeManager
         }
 
         return $theme;
-    }
-    public function getHandleFile() {
-
-        $theme = $this->checkTheme();
-
-        $theme_path = theme_path(DIRECTORY_SEPARATOR.$theme);
-        $file_path = $theme_path.DIRECTORY_SEPARATOR.$this->file_handling;
-        $exist = File::exists($file_path);
-
-        if(!$exist) {
-            throw new Exception($this->file_handling.' must be provided in your theme. Please to create one.', 500);
-        }
-
-        $require = require($file_path);
-        return $require;
     }
     public function config() {
 
@@ -70,8 +90,11 @@ class ThemeManager
             throw new Exception($this->file_config.' must be provided in your theme. Please to create one.', 500);
         }
 
-        $require = require($file_path);
+        if($this->wasRequired == false) {
+            require($file_path);
+            $this->wasRequired = true;
+        }
 
-        return $require;
+        return new \Theme();
     }
 }
