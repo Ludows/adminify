@@ -15,8 +15,7 @@ class CopyController extends Controller
 
         // $type = $request->type;
         // $id = $request->id;
-
-        $cl = adminify_get_class($type, ['app:models', 'app:adminify:models'], false);
+        $cl = adminify_get_class(\Str::studly($type), ['app:models', 'app:adminify:models'], false);
 
         if(empty($cl)) {
             abort(403);
@@ -27,8 +26,16 @@ class CopyController extends Controller
 
         $new_m = $m->replicate();
 
+        if(!empty($new_m->title)) {
+            $new_m->title = $new_m->title. ' - Copy';
+        }
+
         $new_m->created_at = now();
         $new_m->updated_at = now();
+
+        if(!empty($new_m->user_id)) {
+            $new_m->user_id = user()->id;
+        }
 
         $new_m->save();
 
