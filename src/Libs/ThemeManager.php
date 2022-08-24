@@ -14,6 +14,10 @@ class ThemeManager
         $this->view = view();
         $this->config = null;
         $this->wasRequired = false;
+        $this->ignores = [
+            'image.transform',
+            'theme.assets'
+        ];
     }
     public function assets($array = []) {
 
@@ -29,6 +33,9 @@ class ThemeManager
     }
     public function getTheme() {
         return theme();
+    }
+    public function getIgnores() {
+        return $this->ignores;
     }
     // public
     public function getFileRoutes($fileRoutes) {
@@ -57,7 +64,7 @@ class ThemeManager
         if(!empty($string) && method_exists($config, 'fire'.$string)) {
             $config->{'fire'.$string}($mixed);
         }
-        else {
+        if(empty($string)) {
             $this->fireConfig();
         }
         return $this;
@@ -107,7 +114,7 @@ class ThemeManager
         }
 
         if($this->wasRequired == false) {
-            require($file_path);
+            require_once($file_path);
             $this->wasRequired = true;
         }
 

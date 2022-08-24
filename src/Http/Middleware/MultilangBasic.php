@@ -199,6 +199,7 @@ class MultilangBasic
             "isEdit" => strpos($routeName, '.edit') != false ? true : false,
             "isUpdate" => strpos($routeName, '.update') != false ? true : false,
             "isDestroy" => strpos($routeName, '.destroy') != false ? true : false,
+            "isContentModel" => $isContentModel,
             "isIndex" => strpos($routeName, '.index') != false ? true : false,
             "model" => $model,
             "type" => $type ?? null,
@@ -221,7 +222,7 @@ class MultilangBasic
             // si c'est la page de blog. Autoappend des posts.
             if(is_blogpage($model)) {
                 $posts = new \Ludows\Adminify\Models\Post();
-                $posts = $posts->all();
+                $posts = $posts->withStatus( status()::PUBLISHED_ID )->paginate( get_site_key('blog.paginate'), get_site_key('blog.columns'), get_site_key('blog.param') );
             }
             $topbarPref = get_user_preference('topbar');
             $topbarShow = false;
@@ -255,11 +256,18 @@ class MultilangBasic
             $this->handleMetas($base_parameters);
         }
 
-        $themeManager->setToConstructor($themeConfigClass, [
-            'manager' => $themeManager,
-            'request' => request(),
-            'params' => $this->getParams()
-        ])->fireConfig();
+
+
+        if(!in_array($routeName, $themeManager->getIgnores())) {
+            $themeManager->setToConstructor($themeConfigClass, [
+                'manager' => $themeManager,
+                'request' => request(),
+                'params' => $this->getParams(),
+                'middleware' => $this,
+            ])->fireConfig();
+        }
+
+
 
 
         // if your want to had your required vars for your templates.

@@ -10,7 +10,6 @@ use App\Adminify\Models\Mailables;
 use App\Adminify\Models\Url;
 use Ludows\Adminify\Http\Controllers\Controller;
 
-use Ludows\Adminify\Traits\SeoGenerator;
 use ReflectionClass;
 use Illuminate\Support\Facades\Crypt;
 
@@ -21,7 +20,6 @@ use Mail;
 
 class PageController extends Controller
 {
-    use SeoGenerator;
     public $formTraceRepo;
     public $formEntryRepo;
     public function __construct(FormTraceRepository $formTraceRepo, FormEntriesRepository $formEntryRepo) {
@@ -35,14 +33,11 @@ class PageController extends Controller
         */
         public function index(Request $request)
         {
-
-            $settings = cache('homepage');
-
-
-
             if(method_exists($this, 'bootingView')) {
                 call_user_func_array(array($this, 'bootingView'), $request);
             }
+
+            $settings = cache('homepage');
 
             if($settings == null) {
                 $settings = setting('homepage');
@@ -78,7 +73,7 @@ class PageController extends Controller
 
 
 
-            return view("theme::". $request->theme .".index",  $this->getViewsVars());
+            return $this->renderView("theme::". $request->theme .".index",  $this->getViewsVars());
         }
 
         public function getPages($slug, Request $request) {
@@ -109,7 +104,7 @@ class PageController extends Controller
             }
 
 
-            return view("theme::". $request->theme .".index", $this->getViewsVars());
+            return $this->renderView("theme::". $request->theme .".index",  $this->getViewsVars());
 
         }
 

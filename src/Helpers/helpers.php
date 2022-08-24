@@ -294,7 +294,7 @@ if (! function_exists('singular')) {
 }
 
 if(! function_exists('containsIn')) {
-    function containsIn($string = '', $mixed) {
+    function containsIn($string = '', $mixed = '') {
         return Str::contains($string, $mixed);
     }
 }
@@ -312,13 +312,13 @@ if (! function_exists('titled')) {
 }
 
 if (! function_exists('startsWith')) {
-    function startsWith($string = '', $mixed) {
+    function startsWith($string = '', $mixed = '') {
         return Str::startsWith($string, $mixed);
     }
 }
 
 if (! function_exists('endsWith')) {
-    function endsWith($string = '', $mixed) {
+    function endsWith($string = '', $mixed = '') {
         return Str::endsWith($string, $mixed);
     }
 }
@@ -1019,5 +1019,11 @@ if(! function_exists('theme_manager')) {
 if(! function_exists('hook_manager')) {
     function hook_manager() {
         return new HookManager();
+    }
+}
+
+if(!function_exists('is_installed')) {
+    function is_installed() {
+        return defined('IS_ADMINIFY');
     }
 }

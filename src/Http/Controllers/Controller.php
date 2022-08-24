@@ -7,14 +7,18 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
+use Ludows\Adminify\Traits\SeoGenerator;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 use Illuminate\Support\Facades\View;
 use App\Adminify\Models\GroupMeta;
+use Error;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, FormBuilderTrait;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, FormBuilderTrait, SeoGenerator;
+
+    public $view_key_cache_prefix = 'front_view';
 
     public function __construct() {
         $this->admin_css = [];
@@ -106,6 +110,56 @@ class Controller extends BaseController
 
 
         return $f;
+    }
+    public function hasKeyInCache($key) {
+        return cache()->has($key);
+    }
+    public function getKeysViews() {
+        $response_cache = cache('_generated_views_keys');
+        return empty($response_cache) ? '' : $response_cache;
+    }
+    public function generateCacheKey($model) {
+
+        $generate = [];
+
+        if(!empty($model)) {
+            $generate[] = lowercase(get_class($model));
+            if(!empty($model->id)) {
+                $generate[] = $model->id;
+            }
+            if(!empty($model->slug)) {
+                $generate[] = $model->slug;
+            }
+        }
+
+        return $this->view_key_cache_prefix.'_'.join('_', $generate);
+    }
+    public function renderView($pathView, $vars) {
+
+        if(empty($vars['model'])) {
+            throw new Error('Model is required for view key generation');
+        }
+
+        $key = $this->generateCacheKey($vars['model']);
+        $all_keys = $this->getKeysViews();
+        $all_keys_spl = explode(',', $this->getKeysViews());
+
+
+        if(!in_array($key, $all_keys_spl)) {
+            $all_keys_spl[] = $key;
+        }
+
+        if($this->hasKeyInCache($key)) {
+            return cache($key);
+        }
+
+        $view = view($pathView,  $vars);
+
+        cache([$key => $view->render()]);
+
+        cache(['_generated_views_keys' => join(',',$all_keys_spl)]);
+
+        return $view;
     }
     public function getViewsVars() {
         $this->viewVars['export'] = json_encode($this->export);

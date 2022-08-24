@@ -22,10 +22,19 @@
 
         $builder = $model::query();
         $cachable_keys_storage = $builder->getInCache('cachable_keys_storage');
+        $_generated_views_keys = empty($builder->getInCache('_generated_views_keys')) ? [] : $builder->getInCache('_generated_views_keys');
 
         if(!empty($cachable_keys_storage)) {
             $cachable_keys_storage = json_decode($cachable_keys_storage);
             foreach ($cachable_keys_storage as $key => $value) {
+                # code...
+                $builder->forgetInCache($value);
+            }
+        }
+
+        if(!empty($_generated_views_keys)) {
+            $arr_caches_views = explode(',',$_generated_views_keys);
+            foreach ($arr_caches_views as $key => $value) {
                 # code...
                 $builder->forgetInCache($value);
             }
