@@ -16,6 +16,12 @@ return [
         'root_path' => resource_path('theme')
     ],
 
+    'blog' => [
+        'paginate' => 10,
+        'columns' => ['*'],
+        'param' => 'page'
+    ],
+
     'media_library' => [
         'driver' => 'public',
         'paramName' => 'file',

@@ -14,6 +14,10 @@ class ThemeManager
         $this->view = view();
         $this->config = null;
         $this->wasRequired = false;
+        $this->ignores = [
+            'image.transform',
+            'theme.assets'
+        ];
     }
     public function assets($array = []) {
 
@@ -29,6 +33,9 @@ class ThemeManager
     }
     public function getTheme() {
         return theme();
+    }
+    public function getIgnores() {
+        return $this->ignores;
     }
     // public
     public function getFileRoutes($fileRoutes) {

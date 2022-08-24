@@ -25,6 +25,10 @@
         @includeFirst(['theme::'. $theme .'.page-'.$model->id, 'theme::'. $theme .'.page-'.$type, 'theme::'. $theme .'.page'])
     @endif
 
+    @if ($isContentModel && !$isTemplate)
+        @includeFirst(['theme::'. $theme .'.content-'.$model->id, 'theme::'. $theme .'.content-'.$type, 'theme::'. $theme .'.content-'.$model->slug, 'theme::'. $theme .'.content'])
+    @endif
+
     @if ($isSearch && !$isTemplate)
         @includeFirst(['theme::'. $theme .'.searchpage-'.$model->id, 'theme::'. $theme .'.searchpage-'.$type, 'theme::'. $theme .'.searchpage'])
     @endif
