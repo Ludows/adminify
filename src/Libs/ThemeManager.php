@@ -57,7 +57,7 @@ class ThemeManager
         if(!empty($string) && method_exists($config, 'fire'.$string)) {
             $config->{'fire'.$string}($mixed);
         }
-        else {
+        if(empty($string)) {
             $this->fireConfig();
         }
         return $this;
@@ -107,7 +107,7 @@ class ThemeManager
         }
 
         if($this->wasRequired == false) {
-            require($file_path);
+            require_once($file_path);
             $this->wasRequired = true;
         }
 

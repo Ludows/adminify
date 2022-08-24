@@ -10,7 +10,7 @@ trait HasStatus
     public function status() {
         return $this->HasOne(Statuses::class, 'id', $this->status_key);
     }
-    public function scopeStatus($query, $key, $operator = '=') {
+    public function scopeWithStatus($query, $key, $operator = '=') {
         return $query->where($this->status_key, $operator, $key);
     }
     public function isPublished() {

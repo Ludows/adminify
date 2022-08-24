@@ -10,7 +10,6 @@ use App\Adminify\Models\Mailables;
 use App\Adminify\Models\Url;
 use Ludows\Adminify\Http\Controllers\Controller;
 
-use Ludows\Adminify\Traits\SeoGenerator;
 use ReflectionClass;
 use Illuminate\Support\Facades\Crypt;
 
@@ -21,7 +20,6 @@ use Mail;
 
 class PageController extends Controller
 {
-    use SeoGenerator;
     public $formTraceRepo;
     public $formEntryRepo;
     public function __construct(FormTraceRepository $formTraceRepo, FormEntriesRepository $formEntryRepo) {

@@ -11,19 +11,19 @@ if(!empty($c) && request()->segment(1) != $c['prefix'] || !empty($c) && $headles
 
         $theme = theme();
 
-        $router->get('/images/{folder?}/{path}', 'Ludows\Adminify\Http\Controllers\Front\ImageController@show')->name('image.transform');
-        $router->get('/images/{path}', 'Ludows\Adminify\Http\Controllers\Front\ImageController@show')->name('image.transform');
-        $router->get('/', 'Ludows\Adminify\Http\Controllers\Front\PageController@index')->name('pages.front.index');
-        $router->get('{slug}', 'Ludows\Adminify\Http\Controllers\Front\PageController@getPages')->where('slug', '([A-Za-z0-9\-\/]+)')->name('pages.front.show');
-        $router->bind('slug', 'Ludows\Adminify\Http\Controllers\Front\PageController@handleSlug');
+        $router->get('/images/{folder?}/{path}', 'App\Adminify\Http\Controllers\Front\ImageController@show')->name('image.transform');
+        $router->get('/images/{path}', 'App\Adminify\Http\Controllers\Front\ImageController@show')->name('image.transform');
+        $router->get('/', 'App\Adminify\Http\Controllers\Front\PageController@index')->name('pages.front.index');
+        $router->get('{slug}', 'App\Adminify\Http\Controllers\Front\PageController@getPages')->where('slug', '([A-Za-z0-9\-\/]+)')->name('pages.front.show');
+        $router->bind('slug', 'App\Adminify\Http\Controllers\Front\PageController@handleSlug');
 
         if(!empty($theme)) {
-            $router->get('/theme/{folder}/{filename}', 'Ludows\Adminify\Http\Controllers\Front\ImageController@themeAssets')->name('theme.assets');
+            $router->get('/theme/{folder}/{filename}', 'App\Adminify\Http\Controllers\Front\ImageController@themeAssets')->name('theme.assets');
         }
 
-        $router->post('/forms/validate/', 'Ludows\Adminify\Http\Controllers\Front\PageController@validateForms')->name('forms.validate');
+        $router->post('/forms/validate/', 'App\Adminify\Http\Controllers\Front\PageController@validateForms')->name('forms.validate');
 
-        $router->post('/search', 'Ludows\Adminify\Http\Controllers\Front\PageController@search')->name('globalsearch');
+        $router->post('/search', 'App\Adminify\Http\Controllers\Front\PageController@search')->name('globalsearch');
 
         // $path_admin_file = base_path('routes/adminify_front.php');
 

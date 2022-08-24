@@ -7,6 +7,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
+use Ludows\Adminify\Traits\SeoGenerator;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 use Illuminate\Support\Facades\View;
@@ -15,7 +16,7 @@ use Error;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, FormBuilderTrait;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, FormBuilderTrait, SeoGenerator;
 
     public $view_key_cache_prefix = 'front_view';
 

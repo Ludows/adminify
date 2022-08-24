@@ -1021,3 +1021,9 @@ if(! function_exists('hook_manager')) {
         return new HookManager();
     }
 }
+
+if(!function_exists('is_installed')) {
+    function is_installed() {
+        return defined('IS_ADMINIFY');
+    }
+}
