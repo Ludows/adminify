@@ -1027,3 +1027,15 @@ if(!function_exists('is_installed')) {
         return defined('IS_ADMINIFY');
     }
 }
+
+if(!function_exists('theme_dir')) {
+    function theme_dir($string = '') {
+        return theme_path( DIRECTORY_SEPARATOR.theme().$string );
+    }
+}
+
+if(!function_exists('breadcrumb')) {
+    function breadcrumb() {
+        return app()->make('Breadcrumbs');
+    }
+}

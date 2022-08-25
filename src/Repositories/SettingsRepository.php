@@ -7,6 +7,11 @@ use Ludows\Adminify\Repositories\BaseRepository;
 
 class SettingsRepository extends BaseRepository
 {
+    public function beforeRun($a,$b, $c) {
+        if(is_array($b['data'])) {
+            $a->data = join(',', $b['data']);
+        }
+    }
     public function CreateOrUpdate($form) {
 
         $fields = $form->getFieldValues();

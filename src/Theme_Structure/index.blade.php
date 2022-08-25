@@ -5,6 +5,20 @@
         <div id="ve-components">
     @endif
 
+    @if(!$isTemplate && !empty($exclude_titlebar) && !in_array($model->slug, explode(',', $exclude_titlebar)))
+        {{--  @include('theme::'. $theme .'.layouts.partials.titlebar', [
+            'title' => translate($model->slug.'.intro'),
+            'showBreadcrumb' => true,
+            'breadcrumb' => breadcrumb()::render($type, $model)
+        ])  --}}
+        @includeFirst(['theme::'. $theme .'.layouts.partials.titlebar'.$model->id, 'theme::'. $theme .'.layouts.partials.titlebar'.$type, 'theme::'. $theme .'.layouts.partials.titlebar'.$model->slug, 'theme::'. $theme .'.layouts.partials.titlebar'], [
+            'title' => translate($model->slug.'.intro'),
+            'showBreadcrumb' => empty($exclude_breadcrumb) ? true : !in_array($model->slug, explode(',', $exclude_breadcrumb)),
+            'breadcrumb' => breadcrumb()::render($type, $model),
+            'model' => $model,
+        ])
+    @endif
+    
     @if ($isTemplate)
         @include('theme::'. $theme .'.blank_template')
     @endif
