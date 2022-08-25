@@ -221,7 +221,7 @@ class MultilangBasic
             $posts = null;
             // si c'est la page de blog. Autoappend des posts.
             if(is_blogpage($model)) {
-                $posts = new \Ludows\Adminify\Models\Post();
+                $posts = new \App\Adminify\Models\Post();
                 $posts = $posts->withStatus( status()::PUBLISHED_ID )->paginate( get_site_key('blog.paginate'), get_site_key('blog.columns'), get_site_key('blog.param') );
             }
             $topbarPref = get_user_preference('topbar');

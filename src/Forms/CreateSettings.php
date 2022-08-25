@@ -23,6 +23,8 @@ class CreateSettings extends BaseForm
         $theme = $this->getSetting('theme');
         $seo = $this->getSetting('no_seo');
         $enabled_features = get_site_key('enables_features');
+        $titleBar = $this->getSetting('exclude_titlebar');
+        $breadcrumb = $this->getSetting('exclude_breadcrumb');
 
 
         if(is_null($comments)) {
@@ -78,8 +80,30 @@ class CreateSettings extends BaseForm
                 'width' => '100%'
             ]
         ])
-
-
+        ->add('exclude_titlebar', 'select2', [
+            'attr' => [
+                'multiple' => true
+            ],
+            'empty_value' => __('admin.form.select_entity', ['entity' => 'titlebar']),
+            'label' => 'Exclure la barre de Titre',
+            'choices' => Page::all()->pluck('title', 'slug')->all(),
+            'selected' => explode(',',$titleBar) ?? '',
+            'select2options' => [
+                'multiple' => true,
+            ]
+        ])
+        ->add('exclude_breadcrumb', 'select2', [
+            'attr' => [
+                'multiple' => true
+            ],
+            'empty_value' => __('admin.form.select_entity', ['entity' => 'titlebar']),
+            'label' => 'Exclure la Breadcrumb',
+            'choices' => Page::all()->pluck('title', 'slug')->all(),
+            'selected' => explode(',',$breadcrumb) ?? '',
+            'select2options' => [
+                'multiple' => true,
+            ]
+        ])
         ->add('searchpage_models_tags', 'select2', [
             'empty_value' => __('admin.form.select_entity', ['entity' => 'searchpage_models_tags']),
             'choices' => array_keys( get_site_key('searchable') ),

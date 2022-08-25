@@ -15,4 +15,5 @@ return array(
     __DIR__.'/../publishable/webpack.mix.js' => base_path('webpack.mix.js'),
     __DIR__.'/../publishable/package.json' => base_path('package.json'),
     __DIR__.'/../publishable/resources/adminify/' => resource_path('adminify'),
+    __DIR__.'/../routes/breadcrumbs.php' => base_path('/routes/breadcrumbs.php'),
 );

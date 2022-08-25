@@ -149,15 +149,18 @@ class Controller extends BaseController
             $all_keys_spl[] = $key;
         }
 
-        if($this->hasKeyInCache($key)) {
+
+        if($this->hasKeyInCache($key) && config('app.env') == 'production') {
             return cache($key);
         }
 
         $view = view($pathView,  $vars);
 
-        cache([$key => $view->render()]);
+        if(config('app.env') == 'production') {
+            cache([$key => $view->render()]);
 
-        cache(['_generated_views_keys' => join(',',$all_keys_spl)]);
+            cache(['_generated_views_keys' => join(',',$all_keys_spl)]);
+        }
 
         return $view;
     }
