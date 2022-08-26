@@ -12,6 +12,11 @@ class SettingsRepository extends BaseRepository
             $a->data = join(',', $b['data']);
         }
     }
+    public function UntriggeredModelValue($a,$b, $c) {
+        if(is_null($b['data'])) {
+            $a->data = $b['data'];
+        }
+    }
     public function CreateOrUpdate($form) {
 
         $fields = $form->getFieldValues();

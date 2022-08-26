@@ -1039,3 +1039,25 @@ if(!function_exists('breadcrumb')) {
         return app()->make('Breadcrumbs');
     }
 }
+
+if(! function_exists('get_content_types')) {
+    function get_content_types() {
+        $ret = [];
+        $allModels = adminify_get_classes_by_folders(['app:adminify:models', 'app:models']);
+        foreach ($allModels as $key => $model) {
+            # code...
+            $current_model = new $model;
+            if(is_content_type_model($current_model)) {
+                $ret[$key] = $model;
+            }
+
+        }
+        return $ret;
+    }
+}
+
+if(! function_exists('front_registrar')) {
+    function front_registrar() {
+        return app()->make('Ludows\Adminify\Libs\FrontRouteRegistrar');
+    }
+}

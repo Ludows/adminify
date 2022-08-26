@@ -104,8 +104,14 @@ class MultilangBasic
 
 
         // making autoswitch back / front
-        $singular = singular(is_admin() ? $routeNameSpl['1'] : 'slug');
+        $singular = singular($routeNameSpl['1']);
         $model = \Route::current()->parameter($singular);
+        if(!is_admin()) {
+            // dd($routeName,adminify_get_class( \Str::studly( $routeNameSpl['1'] ), ['app:models', 'app:adminify:models'], false ));
+            $theClass = adminify_get_class( \Str::studly( $routeNameSpl['1'] ), ['app:models', 'app:adminify:models'], false );
+            $model = new $theClass();
+            $model = $model->where('slug', str_replace('_', '-', $routeNameSpl['2']))->get()->first();
+        }
 
         if(startsWith($routeName, 'savetraductions') && $config['multilang']) {
 

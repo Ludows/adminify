@@ -4,18 +4,23 @@ use Illuminate\Support\Facades\Route;
 $c = config('site-settings.restApi');
 $headless = config('site-settings.headless');
 $themeManager = theme_manager();
-
+$front_registrar = front_registrar();
 
 if(!empty($c) && request()->segment(1) != $c['prefix'] || !empty($c) && $headless) {
-    Route::middleware('multilang.basic')->group(function ($router) use ($c, $themeManager) {
+    Route::middleware('multilang.basic')->group(function ($router) use ($c, $themeManager, $front_registrar) {
 
         $theme = theme();
 
         $router->get('/images/{folder?}/{path}', 'App\Adminify\Http\Controllers\Front\ImageController@show')->name('image.transform');
         $router->get('/images/{path}', 'App\Adminify\Http\Controllers\Front\ImageController@show')->name('image.transform');
-        $router->get('/', 'App\Adminify\Http\Controllers\Front\PageController@index')->name('pages.front.index');
-        $router->get('{slug}', 'App\Adminify\Http\Controllers\Front\PageController@getPages')->where('slug', '([A-Za-z0-9\-\/]+)')->name('pages.front.show');
-        $router->bind('slug', 'App\Adminify\Http\Controllers\Front\PageController@handleSlug');
+        // $router->get('/', 'App\Adminify\Http\Controllers\Front\PageController@index')->name('pages.front.index');
+        // $router->get('{slug}', 'App\Adminify\Http\Controllers\Front\PageController@getPages')->where('slug', '([A-Za-z0-9\-\/]+)')->name('pages.front.show');
+        // $router->bind('slug', 'App\Adminify\Http\Controllers\Front\PageController@handleSlug');
+
+        $fileGenerated = $front_registrar->getRoutes();
+        if(!empty($fileGenerated)) {
+            include($fileGenerated);
+        }
 
         if(!empty($theme)) {
             $router->get('/theme/{folder}/{filename}', 'App\Adminify\Http\Controllers\Front\ImageController@themeAssets')->name('theme.assets');

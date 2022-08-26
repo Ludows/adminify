@@ -22,6 +22,16 @@ return [
         'param' => 'page'
     ],
 
+    'front' => [
+        'handle' => \App\Adminify\Http\Controllers\Front\PageController::class,
+        'file_routes' => 'front_end_routes.php',
+        'appendTo' => base_path('routes/'),
+        'methods' => [
+            'homepage' => 'index',
+            'pages' => 'getPages'
+        ]
+    ],
+
     'media_library' => [
         'driver' => 'public',
         'paramName' => 'file',
