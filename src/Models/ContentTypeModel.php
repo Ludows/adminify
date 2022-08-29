@@ -6,6 +6,7 @@ use Ludows\Adminify\Traits\Urlable;
 use Ludows\Adminify\Traits\Sitemapable;
 use Ludows\Adminify\Traits\HasSeo;
 use Ludows\Adminify\Traits\Authorable;
+use Ludows\Adminify\Traits\HasInteractsWithFront;
 
 use App\Adminify\Models\User;
 use App\Adminify\Models\Page;
@@ -19,6 +20,7 @@ abstract class ContentTypeModel extends ClassicModel
     use HasSeo;
     use Sitemapable;
     use Authorable;
+    use HasInteractsWithFront;
 
     public function parent() {
         return $this->HasOne(Page::class, 'id', 'parent_id');
@@ -48,6 +50,10 @@ abstract class ContentTypeModel extends ClassicModel
         }
 
         return $url;
+    }
+
+    public function getKeyFrontAttribute($key, $lang) {
+        return $this->routeVerbs[$key][$lang];
     }
 
     public function toFeedItem(): FeedItem

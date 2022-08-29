@@ -37,7 +37,16 @@ class BaseForm extends Form {
         $this->add($name, 'select2', array_merge($defaults, $options));
         return $this;
     }
-    public function addTags($anme = '', $options = []) {}
+    public function addTags($name = '', $options = []) {
+        $hydrator = $this->getTags();
+        $m = $this->getModel();
+        $defaults = [
+            'choices' => $hydrator,
+            'selected' => !empty($m->{$name}) ? $m->{$name} : '',
+        ];
+
+        $this->add($name, 'select2', array_merge($defaults, $options));
+    }
     public function addPages($name = '', $options = []) {
         $hydrator = $this->getPages();
         $m = $this->getModel();
