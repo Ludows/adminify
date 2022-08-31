@@ -1,1 +1,1 @@
-<td>{{ $model->{$attr} }}</td>
+<td>{{ $model->{ str_replace('-', '_', $attr)} }}</td>

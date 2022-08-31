@@ -53,6 +53,10 @@ class MediaElementType extends FormField {
         }
 
         if($hasValue) {
+            if($value instanceof \Illuminate\Database\Eloquent\Collection) {
+                $value = join(',',$value->pluck('id')->toArray() );
+                $options['value'] = $value;
+            }
             $values = explode(',', $value);
             $medias = $mediaModel->findMany($values);
             $hasBootedMedia = true;
