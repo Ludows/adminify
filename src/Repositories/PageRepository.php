@@ -41,8 +41,8 @@ class PageRepository extends BaseRepository
             $model->categories()->detach();
         }
 
-        if(isset($formValues['categories_id']) && count($formValues['categories_id']) > 0) {
-            foreach ($formValues['categories_id'] as $cat => $catId) {
+        if(isset($formValues['categories']) && count($formValues['categories']) > 0) {
+            foreach ($formValues['categories'] as $cat => $catId) {
                 # code...
                 $model->categories()->attach((int) $catId);
             }

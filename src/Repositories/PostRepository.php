@@ -21,16 +21,16 @@ class PostRepository extends BaseRepository
             $model->deleteTags(null);
         }
 
-        if(isset($formValues['tags_id'])) {
-            $model->createTags($formValues['tags_id']);
+        if(isset($formValues['tags'])) {
+            $model->createTags($formValues['tags']);
         }   
 
         if($type != "create") {
             $model->categories()->detach();
         }
 
-        if(isset($formValues['categories_id'])) {
-            foreach ($formValues['categories_id'] as $catId) {
+        if(isset($formValues['categories'])) {
+            foreach ($formValues['categories'] as $catId) {
                 $model->categories()->attach((int) $catId);
             }
         
