@@ -12,19 +12,6 @@ use Illuminate\Support\Facades\Storage;
 use Ludows\Adminify\Libs\ThemeManager;
 use Ludows\Adminify\Libs\HookManager;
 
-use Illuminate\Support\Collection;
-
-
-Collection::macro('getSetting', function ($name) {
-    return $this->map(function ($value) use ($name) {
-        $ret = null;
-        if($value->type == $name) {
-            return $value;
-        }
-        return $ret;
-    });
-});
-
 
 if (! function_exists('do_shortcode')) {
     function do_shortcode($shortcodeName, $parameters = []) {
@@ -1059,5 +1046,12 @@ if(! function_exists('get_content_types')) {
 if(! function_exists('front_registrar')) {
     function front_registrar() {
         return app()->make('Ludows\Adminify\Libs\FrontRouteRegistrar');
+    }
+}
+
+if(! function_exists('is_collection')) {
+    function is_collection($param): bool
+    {
+        return (bool) (($param instanceof \Illuminate\Support\Collection) || ($param instanceof \Illuminate\Database\Eloquent\Collection));
     }
 }

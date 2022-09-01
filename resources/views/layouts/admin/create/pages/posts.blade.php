@@ -39,8 +39,8 @@
             <div class="card shadow-lg">
                 <div class="card-body">
                     @yield('before_settings_page')
-                    {!! isset($form->categories_id) ? form_row($form->categories_id) : '' !!}
-                    {!! isset($form->tags_id) ? form_row($form->tags_id) : '' !!}
+                    {!! isset($form->categories) ? form_row($form->categories) : '' !!}
+                    {!! isset($form->tags) ? form_row($form->tags) : '' !!}
                     {!! form_row($form->status_id) !!}
                     {!! isset($form->media_id) ? form_row($form->media_id, ['wrapper' => [
                         'class' => 'form-group mb-0'

@@ -7,6 +7,7 @@ use Ludows\Adminify\Traits\Sitemapable;
 use Ludows\Adminify\Traits\HasSeo;
 use Ludows\Adminify\Traits\Authorable;
 use Ludows\Adminify\Traits\HasInteractsWithFront;
+use Ludows\Adminify\Traits\HasFeaturedMedia;
 
 use App\Adminify\Models\User;
 use App\Adminify\Models\Page;
@@ -21,6 +22,7 @@ abstract class ContentTypeModel extends ClassicModel
     use Sitemapable;
     use Authorable;
     use HasInteractsWithFront;
+    use HasFeaturedMedia;
 
     public function parent() {
         return $this->HasOne(Page::class, 'id', 'parent_id');

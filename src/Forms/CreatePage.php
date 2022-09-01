@@ -23,7 +23,7 @@ class CreatePage extends BaseForm
             ]);
         if(isset($enabled_features['category']) && $enabled_features['category']) {
 
-            $this->addCategories('categories_id', [
+            $this->addCategories('categories', [
                 'empty_value' => '',
                 'withCreate' => true,
                 'modal' => 'adminify::layouts.admin.modales.modal-ajax', // simple include,

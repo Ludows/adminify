@@ -41,9 +41,9 @@ class Post extends ContentTypeModel
     
     public $unmodified_savables_fields = [
         'content',
-        'categories_id',
+        'categories',
         'user_id',
-        'tags_id',
+        'tags',
         'submit'
     ];
 
