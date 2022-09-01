@@ -3,8 +3,12 @@
 namespace Ludows\Adminify\Hooks;
 
 use Ludows\Adminify\Libs\HookInterface;
+use Ludows\Adminify\Libs\FrontRouteRegistrar;
 
 class ContentTypesHook extends HookInterface {
+    public function __construct() {
+        $this->registrar = new FrontRouteRegistrar();
+    }
     public function handle($hookName,$datas = null) {
         //data is the model passed
         $model = $datas;
@@ -21,6 +25,8 @@ class ContentTypesHook extends HookInterface {
                 //     $this->syncOnUpdating($model);
                 // }
 
+                $this->registrar->generate();
+
                 $this->syncToCache($model);
             }
 
@@ -34,6 +40,7 @@ class ContentTypesHook extends HookInterface {
             $this->syncToCache($model, true);
             if($isContentType && $model->allowSitemap) {
                 $this->syncronizeUrl($model, true);
+                $this->registrar->generate();
             }
             if($isContentType && $model->allowSitemap) {
                 $this->loadGenerateSitemap($model);
@@ -85,6 +92,10 @@ class ContentTypesHook extends HookInterface {
 
             $delete == false ? $context->encryptToCache( $isHomePage ? 'homepage' : join('.', $url) ) : $context->forgetToCache( $isHomePage ? 'homepage' : join('.', $url ));
         }
+    }
+
+    public function generateFrontendsRoutes($context) {
+
     }
 
     public function loadGenerateSitemap($context) {

@@ -22,6 +22,21 @@ return [
         'param' => 'page'
     ],
 
+    'front' => [
+        'handle' => \App\Adminify\Http\Controllers\Front\PageController::class,
+        'file_routes' => 'front_end_routes.php',
+        'appendTo' => base_path('routes/'),
+        'methods' => [
+            'homepage' => 'index',
+            'pages' => 'getPages',
+            'category' => 'getCategory',
+            'categories' => 'getCategories',
+            'tag' => 'getTag',
+            'tags' => 'getTags',
+            'archives' => 'getArchives'
+        ]
+    ],
+
     'media_library' => [
         'driver' => 'public',
         'paramName' => 'file',
@@ -111,6 +126,11 @@ return [
 
     'adminMenu' => [
         'Page',
+        'Project',
+        'Skill',
+        'Client',
+        'Service',
+        'Offre',
         'Post',
         'Category',
         'Tag',
@@ -159,6 +179,7 @@ return [
     'sitemap' => [
         'pages' => 'Page',
         'posts' => 'Post',
+        'projects' => 'Project'
     ],
 
     'feeds' => [
@@ -169,9 +190,11 @@ return [
         ],
         'hydrate' => [
             'Page',
-            'Post'
+            'Post',
+            'Project'
         ]
     ],
+
 
     // key_title is available for trads otherwise it's title
     // key_url is available for trads otherwise it's url

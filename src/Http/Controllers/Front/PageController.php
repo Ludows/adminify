@@ -76,8 +76,10 @@ class PageController extends Controller
             return $this->renderView("theme::". $request->theme .".index",  $this->getViewsVars());
         }
 
-        public function getPages($slug, Request $request) {
+        public function getPages(Request $request) {
 
+            // dd($request->route()->getName(), $request->model );
+            $slug = $request->model;
             $reflection = new ReflectionClass($slug);
             $type = $reflection->getShortName();
             $enabled_features = get_site_key('enables_features');

@@ -29,6 +29,7 @@ class TableManager
         $this->showSearch = true;
         $this->showBtnCreate = true;
         $this->dropdownManager = null;
+        $this->custom_cells = [];
     }
     public function setColumns($value = []) {
         $this->columns = $value;
@@ -125,14 +126,27 @@ class TableManager
         return $this;
     }
 
+    public function getDefaultsCells() {
+        return [
+
+        ];
+    }
     public function getTemplateByName($name) {
         $default_view = $this->getDefaultCellView();
+        $custom_defined_cells = $this->getDefaultsCells();
 
-        $viewExist = $this->view->exists('adminify::layouts.admin.table.custom-cells.'.$name);
-
-        if($viewExist) {
-            $default_view = 'adminify::layouts.admin.table.custom-cells.'.$name;
+        if(!empty($custom_defined_cells[$name])) {
+            $default_view = $custom_defined_cells[$name];
         }
+
+        if(empty($custom_defined_cells[$name])) {
+            $viewExist = $this->view->exists('adminify::layouts.admin.table.custom-cells.'.$name);
+
+            if($viewExist) {
+                $default_view = 'adminify::layouts.admin.table.custom-cells.'.$name;
+            }
+        }
+
         return $default_view;
     }
 
