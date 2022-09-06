@@ -126,11 +126,6 @@ return [
 
     'adminMenu' => [
         'Page',
-        'Project',
-        'Skill',
-        'Client',
-        'Service',
-        'Offre',
         'Post',
         'Category',
         'Tag',
@@ -179,7 +174,6 @@ return [
     'sitemap' => [
         'pages' => 'Page',
         'posts' => 'Post',
-        'projects' => 'Project'
     ],
 
     'feeds' => [
@@ -191,7 +185,6 @@ return [
         'hydrate' => [
             'Page',
             'Post',
-            'Project'
         ]
     ],
 
