@@ -35,9 +35,11 @@ if(!empty($c) && request()->segment(1) != $c['prefix'] || !empty($c) && $headles
         // if(file_exists($path_admin_file)){
         //     include($path_admin_file);
         // }
-
-        $fileRoutes_in_themes = $themeManager->getFileRoutes('front');
-        include($fileRoutes_in_themes);
+        if(is_installed()) {
+            $fileRoutes_in_themes = $themeManager->getFileRoutes('front');
+            include($fileRoutes_in_themes);
+        }
+        
     });
 }
 
