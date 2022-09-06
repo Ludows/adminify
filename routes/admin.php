@@ -129,6 +129,8 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
     //     include($path_admin_file);
     // }
 
-    $fileRoutes_in_themes = $themeManager->getFileRoutes('admin');
-    include($fileRoutes_in_themes);
+    if(is_installed()) {
+        $fileRoutes_in_themes = $themeManager->getFileRoutes('admin');
+        include($fileRoutes_in_themes);
+    }
 });

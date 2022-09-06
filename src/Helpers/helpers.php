@@ -1011,7 +1011,8 @@ if(! function_exists('hook_manager')) {
 
 if(!function_exists('is_installed')) {
     function is_installed() {
-        return defined('IS_ADMINIFY');
+        $pathable_extends = app_path('Adminify');
+        return file_exists($pathable_extends) && is_dir($pathable_extends);
     }
 }
 
