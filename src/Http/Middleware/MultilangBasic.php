@@ -257,7 +257,7 @@ class MultilangBasic
 
         $this->params($base_parameters);
 
-        if(is_front()) {
+        if(is_front() && !is_running_console()) {
             $this->handleSettings();
             $this->handleMetas($base_parameters);
         }
