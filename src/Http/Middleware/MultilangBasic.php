@@ -264,7 +264,7 @@ class MultilangBasic
 
 
 
-        if(!in_array($routeName, $themeManager->getIgnores())) {
+        if(!in_array($routeName, $themeManager->getIgnores()) && !is_running_console()) {
             $themeManager->setToConstructor($themeConfigClass, [
                 'manager' => $themeManager,
                 'request' => request(),
