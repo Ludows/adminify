@@ -18,7 +18,7 @@ class EditorController extends Controller
             if($request->isHome) {
                 return app('Ludows\Adminify\Http\Controllers\Front\PageController')->index($request);
             }
-            return app('Ludows\Adminify\Http\Controllers\Front\PageController')->getPages($request->model, $request);
+            return app('Ludows\Adminify\Http\Controllers\Front\PageController')->getPages($request);
         }
 
         return view('blocs::'.$content['_name'], $content);

@@ -80,7 +80,8 @@ return [
         "visual_editor" => 'App\Adminify\Forms\Fields\VisualEditorType',
         "tiptap" => 'App\Adminify\Forms\Fields\TipTapType',
         "media_element" => 'App\Adminify\Forms\Fields\MediaElementType',
-        "jodit" => 'App\Adminify\Forms\Fields\JoditType'
+        "jodit" => 'App\Adminify\Forms\Fields\JoditType',
+        "repeater" => 'App\Adminify\Forms\Fields\RepeaterType'
 
     ],
 
