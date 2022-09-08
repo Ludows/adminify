@@ -10,6 +10,7 @@ window.lfmInitFunction = require('./extensions/lfmField').default;
 window.VisualEditorInitFunction = require('./extensions/VisualEditorField').default;
 window.tiptapInitFunction = require('./extensions/tiptapField').default;
 window.JoditInitFunction = require('./extensions/JoditField').default;
+window.FlapickrInitFunction = require('./extensions/flatpickrField').default;
 
 
 jQuery(document).ready(function($) {
@@ -37,5 +38,8 @@ jQuery(document).ready(function($) {
     }
     if(window.admin.joditFields.length > 0) {
         JoditInitFunction(window.admin.joditFields);
+    }
+    if(window.admin.flatpickrFields.length > 0) {
+        FlapickrInitFunction(window.admin.flatpickrFields);
     }
 })
