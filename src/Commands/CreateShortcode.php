@@ -49,8 +49,9 @@ class CreateShortcode extends Command
 
         $model = Str::title($model ?? '');
 
-        $this->call('generate:shortcodes', [
-            'name' => Str::singular($model),
+        $this->call('generate:file', [
+            'name' => $model,
+            '--type' => 'shortcodes',
             '--stub' => 'adminify_shortcode'
         ]);
 
