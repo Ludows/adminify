@@ -803,6 +803,10 @@ if (! function_exists('menu')) {
 if(! function_exists('media')) {
     function media($mixed) {
         $m = new Media();
+        
+        if(is_null($mixed)) {
+            return $m;
+        }
 
         if(is_int($mixed)) {
             $m = $m->where('id', $mixed);
@@ -861,79 +865,6 @@ if (! function_exists('get_form')) {
 }
 
 if (! function_exists('generate_form')) {
-
-    function format_formbuilder_attributes($array) {
-
-
-        $defaults = [
-            'help_block' => [
-                'text' => null,
-                'tag' => 'p',
-                'attr' => ['class' => 'help-block']
-            ],
-            'default_value' => null, // Fallback value if none provided by value property or model
-            'value_property' => null, // Only use this if you want to take the default value from another property in the model
-            'label_show' => true,
-            'rules' => '',           // Validation rules
-            'error_messages' => []   // Validation error messages
-        ];
-
-        foreach ($array as $arrayKey => $arrayValue) {
-            # code...
-            foreach ($arrayValue as $subArrayKey => $subArrayValue) {
-                # code...
-                if($arrayValue['required'] == true) {
-                    $array[$arrayKey]['rules'] = 'required';
-                }
-                if($arrayValue['field_type'] != 'static') {
-                    unset($array[$arrayKey]['content']);
-                }
-                else {
-                    $array[$arrayKey]['value'] = $array[$arrayKey]['content'];
-                    unset($array[$arrayKey]['content']);
-                }
-
-                if($subArrayKey == 'id') {
-                    $array[$arrayKey]['name'] = 'field_'.$subArrayValue;
-                    unset($array[$arrayKey]['id']);
-                }
-
-                if($subArrayKey == 'field_type') {
-                    $array[$arrayKey]['type'] = $array[$arrayKey]['field_type'];
-                    unset($array[$arrayKey]['field_type']);
-                }
-
-                if(in_array($subArrayKey, ['selected', 'choices'])) {
-                    $array[$arrayKey][$subArrayKey] = json_decode($arrayValue[$subArrayKey], true);
-                }
-                if(in_array($subArrayKey, ['wrapper', 'attr', 'label_attr'])) {
-
-                    $options = array();
-                    $multilignes = explode(',', $array[$arrayKey][$subArrayKey]);
-
-                    foreach ($multilignes as $multiligne) {
-                        # code...
-                        $multilignes = explode(':', $multiligne);
-
-                        if(count($multilignes) > 1) {
-                            $options[trim($multilignes[0])] = trim($multilignes[1]);
-                        }
-                    }
-
-                    $array[$arrayKey][$subArrayKey] = $options;
-                }
-                if(in_array($subArrayKey, ['expanded', 'multiple', 'required', 'checked', 'label_show'])) {
-
-                    $array[$arrayKey][$subArrayKey] = (boolean) $array[$arrayKey][$subArrayKey];
-                }
-            }
-
-            // merge with defaults.
-            $array[$arrayKey] = array_merge_recursive_distinct($defaults, $array[$arrayKey]);
-        }
-
-        return $array;
-    }
 
     function generate_form($mixed, $html = true, $templatePath = null) {
 
