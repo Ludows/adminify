@@ -9,6 +9,6 @@ class {{class}} extends TableManager {
         return \App\Dropdowns\{{model}}Dropdown::class;
     }
     public function getModelClass() {
-        return {{rootNamespace}}Models\{{model}}::class;
+        return \{{rootNamespace}}Models\{{model}}::class;
     }
 }
