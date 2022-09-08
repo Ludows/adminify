@@ -257,7 +257,7 @@ class MultilangBasic
 
         $this->params($base_parameters);
 
-        if(is_front() && !is_running_console()) {
+        if($isContentModel || $base_parameters['isPreview']) {
             $this->handleSettings();
             $this->handleMetas($base_parameters);
         }
