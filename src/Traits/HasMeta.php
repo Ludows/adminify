@@ -10,7 +10,7 @@ trait HasMeta
     {
         return $this->hasMany(Meta::class, 'model_id');
     }
-		
+
     public function getMeta($key)
     {
         $meta = Meta::where(['key' => $key, 'model_id' => $this->id])
@@ -50,12 +50,16 @@ trait HasMeta
             return $meta->first()->update(['value' => $value]);
         }
 
-        return Meta::create([
-            'key' => $key,
-            'value' => $this->maybeEncodeMetaValue($value),
-            'model_type' => get_class($this),
-            'model_id' => $this->id
-        ]);
+        $metaCreate = new Meta();
+
+        $metaCreate->key = $key;
+        $metaCreate->value = $this->maybeEncodeMetaValue($value);
+        $metaCreate->model_type = get_class($this);
+        $metaCreate->model_id = $this->id;
+
+        $metaCreate->save();
+
+        return $metaCreate;
     }
 
     public function deleteMeta($key)

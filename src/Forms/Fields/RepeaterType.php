@@ -1,10 +1,10 @@
 <?php
 namespace Ludows\Adminify\Forms\Fields;
 
-use Kris\LaravelFormBuilder\Fields\FormField;
+use Kris\LaravelFormBuilder\Fields\CollectionType;
 use Illuminate\Support\Str;
 
-class RepeaterType extends FormField {
+class RepeaterType extends CollectionType {
 
     protected function getTemplate()
     {
@@ -16,6 +16,42 @@ class RepeaterType extends FormField {
 
     public function setDefaultsOptions() {
         return array();
+    }
+
+    public function getTemplateItem() {
+        $options = $this->getOptions();
+        $str = '';
+
+        $str .= '<div class="card">';
+        $str .= '<div class="card-header" id="heading'. $options["prototype_name"] .'">';
+        $str .= ' <h2 class="mb-0">';
+        $str .= '<button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse'. $options["prototype_name"] .'" aria-expanded="false" aria-controls="collapse'. $options["prototype_name"] .'">';
+        $str .=     'Item '. $options["prototype_name"];
+        $str .= '</button>';
+        $str .= '</h2>';
+        $str .= '</div>';
+        $str .= '<div id="collapse'. $options["prototype_name"] .'" class="collapse" aria-labelledby="heading'. $options["prototype_name"] .'" data-parent="#accordion-##SIBLING##">';
+        $str .= '<div class="card-body">';
+        $str .= '##FORM##';
+        $str .= '</div>';
+        $str .= '</div>';
+        $str .= '</div>';
+        return $str;
+    //     return "<div class=\"card\">
+    //     <div class=\"card-header\" id=\"heading'. $options["prototype_name"] .'\">
+    //         <h2 class=\"mb-0\">
+    //             <button class=\"btn btn-link btn-block text-left\" type=\"button\" data-toggle="collapse" data-target="#collapse'. $options["prototype_name"] .'" aria-expanded="false" aria-controls="collapse'. $options["prototype_name"] .'">
+    //                 Item '. $options["prototype_name"] .'
+    //             </button>
+    //         </h2>
+    //     </div>
+
+    //     <div id="collapse'. $options["prototype_name"] .'" class="collapse" aria-labelledby="heading'. $options["prototype_name"] .'" data-parent="#accordion-##SIBLING##">
+    //         <div class="card-body">
+    //             ##FORM##
+    //         </div>
+    //     </div>
+    // </div>";
     }
 
     public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
@@ -37,14 +73,30 @@ class RepeaterType extends FormField {
             $isAjax = true;
         }
 
+
+        // $getSubmit = $this->getParent()->getField('submit');
+        // if(!empty($getSubmit)) {
+        //     $options = $getSubmit->getOptions();
+        //     if($options['attr'] && !empty($options['attr']['class'])) {
+        //         $spl = explode(' ', $options['attr']['class']);
+        //         // dd($spl);
+        //         $spl[] = 'js-bind-repeater';
+
+        //         $getSubmit->setOption('attr.class', join(' ', $spl));
+        //     }
+        // }
+
         $b = [
             'isAjax' => $isAjax,
             'sibling' => $sibling,
+            'name' => $this->getName(),
+            'currentForm' => $this->getParent(),
+            'accordion_item' => $this->getTemplateItem()
         ];
 
         $options = array_merge($options, $b);
 
-        $this->setOptions($options);
+        // $this->setOptions($options);
 
         // dd($options);
         // dd($this);
