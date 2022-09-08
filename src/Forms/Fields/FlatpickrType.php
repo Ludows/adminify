@@ -4,18 +4,20 @@ namespace Ludows\Adminify\Forms\Fields;
 use Kris\LaravelFormBuilder\Fields\FormField;
 use Illuminate\Support\Str;
 
-class TipTapType extends FormField {
+class FlatpickrType extends FormField {
 
     protected function getTemplate()
     {
         // At first it tries to load config variable,
         // and if fails falls back to loading view
         // resources/views/fields/datetime.blade.php
-        return 'adminify::fields.tiptap';
+        return 'adminify::fields.flatpickr';
     }
 
     public function setDefaultsOptions() {
-        return array();
+        return array(
+            'locale' => 'flatpickr.l10ns.'.lang()
+        );
     }
 
     public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
@@ -30,29 +32,36 @@ class TipTapType extends FormField {
             $sibling = $options['sibling'];
         }
         else {
-            $sibling = Str::slug('tiptap_'.$uniqid);
-        }
-
-
-
-        if(!isset($options['tiptap_options'])) {
-            $options['tiptap_options'] = array();
+            $sibling = Str::slug('repeater_'.$uniqid);
         }
 
         if(isset($options['force_js']) && $options['force_js'] == true) {
             $isAjax = true;
         }
 
+
+        // $getSubmit = $this->getParent()->getField('submit');
+        // if(!empty($getSubmit)) {
+        //     $options = $getSubmit->getOptions();
+        //     if($options['attr'] && !empty($options['attr']['class'])) {
+        //         $spl = explode(' ', $options['attr']['class']);
+        //         // dd($spl);
+        //         $spl[] = 'js-bind-repeater';
+
+        //         $getSubmit->setOption('attr.class', join(' ', $spl));
+        //     }
+        // }
+
         $b = [
             'isAjax' => $isAjax,
-            'name' => $this->getName(),
             'sibling' => $sibling,
-            'tiptap_options' => array_merge($this->setDefaultsOptions(), isset($options['tiptap_options']) ? $options['tiptap_options'] : [])
+            'name' => $this->getName(),
+            'flatpickr_options' => array_merge($this->setDefaultsOptions(), isset($options['flatpickr_options']) ? $options['flatpickr_options'] : [])
         ];
 
         $options = array_merge($options, $b);
 
-        $this->setOptions($options);
+        // $this->setOptions($options);
 
         // dd($options);
         // dd($this);

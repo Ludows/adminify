@@ -72,6 +72,7 @@ class MediaElementType extends FormField {
             'sibling' => $sibling,
             'hasBootedMedia' => $hasBootedMedia,
             'medias' => $medias,
+            'name' => $this->getName(),
             'media_element_options' => array_merge($this->setDefaultsOptions(), isset($options['media_element_options']) ? $options['media_element_options'] : [])
         ];
 

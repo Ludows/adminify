@@ -82,6 +82,7 @@ class Select2Type extends FormField {
         $b = [
             'isAjax' => $isAjax,
             'sibling' => $sibling,
+            'name' => $this->getName(),
             'withCreate' => isset($options['withCreate']) ? $options['withCreate'] : false,
             'dynamic_modal' => isset($options['dynamic_modal']) ? $options['dynamic_modal'] : true,
             'form' => [

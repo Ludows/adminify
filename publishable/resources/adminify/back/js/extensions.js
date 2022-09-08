@@ -37,6 +37,7 @@ window.admin = {
     VisualEditorFields : [],
     tiptapFields : [],
     modalPicker : [],
-    joditFields : []
+    joditFields : [],
+    flatpickrFields : []
 }
 

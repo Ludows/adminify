@@ -44,6 +44,7 @@ class GeneratorPasswordType extends FormField {
         $b = [
             'isAjax' => $isAjax,
             'sibling' => $sibling,
+            'name' => $this->getName(),
             'modal' => isset($options['modal']) ? $options['modal'] : 'adminify::layouts.admin.modales.modaleMediaLibrary',
             'generate_password_options' => array_merge($this->setDefaults(), isset($options['generate_password_options']) ? $options['generate_password_options'] : [] )
         ];

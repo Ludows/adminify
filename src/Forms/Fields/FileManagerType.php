@@ -71,6 +71,7 @@ class FileManagerType extends FormField {
         $b = [
             'isAjax' => $isAjax,
             'sibling' => $sibling,
+            'name' => $this->getName(),
             'modal' => isset($options['modal']) ? $options['modal'] : 'adminify::layouts.admin.modales.modaleFileManager',
             'lfm_options' => array_merge($this->setDefaults(), isset($options['lfm_options']) ? $options['lfm_options'] : [])
         ];

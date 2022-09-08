@@ -99,6 +99,7 @@ class VisualEditorType extends FormField {
         $b = [
             'isAjax' => $isAjax,
             'sibling' => $sibling,
+            'name' => $this->getName(),
             'visual_editor_options' => array_merge($this->setDefaultsEditorAttributes(), isset($options['visual_editor_options']) ? $options['visual_editor_options'] : [])
         ];
 
