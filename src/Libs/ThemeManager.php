@@ -17,7 +17,7 @@ class ThemeManager
         $this->ignores = [
             'image.transform',
             'theme.assets',
-            'editor.preview'
+            // 'editor.preview'
         ];
     }
     public function assets($array = []) {

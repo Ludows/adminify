@@ -585,6 +585,21 @@ if(! function_exists('is_admin')) {
     }
 }
 
+if(! function_exists('is_editor_preview')) {
+    function is_editor_preview() {
+        $ret = false; 
+        $isRunning = is_running_console();
+
+        if(!$isRunning) {
+            $r = request();
+
+            $ret = $r->route()->getName() == 'editor.preview';
+        }
+
+        return $ret;
+    }   
+}
+
 if(! function_exists('is_front')) {
     function is_front() {
         $request = request();
@@ -671,7 +686,7 @@ if (! function_exists('is_shortcode')) {
         $name = $string;
         $shortcodes = config('site-settings.shortcodes');
 
-        if(isset($shortcodes[$name])) {
+        if(!empty($shortcodes[$name])) {
             $isShortcode = true;
         }
         return $isShortcode;
@@ -786,6 +801,10 @@ if(! function_exists('lang')) {
 if (! function_exists('menu')) {
     function menu($mixed) {
         $m = new Menu();
+
+        if(is_null($mixed)) {
+            return $m;
+        }
 
         if(is_int($mixed)) {
             $m = $m->Id($mixed);
@@ -987,3 +1006,4 @@ if(! function_exists('is_collection')) {
         return (bool) (($param instanceof \Illuminate\Support\Collection) || ($param instanceof \Illuminate\Database\Eloquent\Collection));
     }
 }
+
