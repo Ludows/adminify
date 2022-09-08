@@ -8,7 +8,4 @@ class {{class}} extends FrontifyForms
 {
     public function booted() {}
     public function buildForm() {}
-    protected function getTemplate() {
-        return 'adminify::layouts.commons.forms.default';
-    }
 }

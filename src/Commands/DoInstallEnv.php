@@ -89,10 +89,6 @@ class DoInstallEnv extends Command
 
         $theme_name = $this->ask(__('adminify.questions.theme_name'));
 
-        $this->call('adminify:theme', [
-            'theme' => lowercase($theme_name)
-        ]);
-
         $keys['MIX_ADMINIFY_THEME_ROOT_FOLDER'] = "resources/theme";
 
         $keys['MIX_ADMINIFY_EDITOR_PATHS'] = "resources/editor-components/";
@@ -102,6 +98,10 @@ class DoInstallEnv extends Command
         // dd($keys);
 
         $this->setEnvironmentValue($keys);
+
+        $this->call('adminify:theme', [
+            'theme' => lowercase($theme_name)
+        ]);
 
         return 0;
     }

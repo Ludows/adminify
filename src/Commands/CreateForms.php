@@ -49,9 +49,12 @@ class CreateForms extends Command
 
         foreach ($names as $n) {
             # code...
-            Artisan::call('make:form', [
-                'name' => 'Forms/'.$n
+            $this->call('generate:file', [
+                'name' => $n,
+                '--stub' => 'adminify_forms',
+                '--type' => 'forms'
             ]);
+
             $this->info($n.' Created');
         }
     }

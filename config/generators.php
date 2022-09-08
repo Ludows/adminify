@@ -59,6 +59,14 @@ return [
             'dump_autoload'       => false,
             'repository_contract' => false,
         ],
+        'forms'   => [
+            'namespace'           => '\Forms',
+            'path'                => './app/Forms/',
+            'postfix'             => 'Form',
+            'directory_namespace' => true,
+            'dump_autoload'       => false,
+            'repository_contract' => false,
+        ],
         'front_forms'   => [
             'namespace'           => '\Forms\Front',
             'path'                => './app/Forms/Front/',
@@ -258,5 +266,6 @@ return [
         'adminify_metas'         => base_path() . '/resources/stubs/adminify-metas.stub',
         'adminify_front_forms'         => base_path() . '/resources/stubs/adminify-front-forms.stub',
         'adminify_shortcode'         => base_path() . '/resources/stubs/adminify-shortcode.stub',
+        'adminify_forms' => base_path() . '/resources/stubs/adminify-forms.stub',
     ]
 ];
