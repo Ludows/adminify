@@ -9,6 +9,7 @@
 @endif
 
 @section('content')
+    @hook('before_content')
     @include('adminify::layouts.admin.headers.topPageListing')
 
     <div class="container-fluid mt--7">
@@ -17,6 +18,7 @@
 
         @include('adminify::layouts.admin.footers.auth')
     </div>
+    @hook('after_content')
 @endsection
 
 @push('js')

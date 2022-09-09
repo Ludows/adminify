@@ -9,7 +9,7 @@
 @endif
 
 @section('content')
-    
+    @hook('before_content')
     @include('adminify::layouts.admin.headers.topPageListing')
 
     <div>
@@ -34,7 +34,7 @@
             @include('adminify::layouts.admin.footers.auth')
         </div>
     </div>
-    
+    @hook('after_content')
 @endsection
 
 @if (!empty($adminJsLinks))

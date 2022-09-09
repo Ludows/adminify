@@ -2,6 +2,7 @@
 
 <div class="container-fluid mt--7">
     <div class="row">
+        @hook('before_content_page')
         <div class="col-12">
             <div class="card shadow">
                 <div class="card-header border-0">
@@ -12,11 +13,13 @@
                     </div>
                 </div>
                 <div class="card-body">
+                    @hook('before_form_page')
                     {!! form($form) !!}
+                    @hook('after_form_page')
                 </div>
             </div>
         </div>
-
+        @hook('after_content_page')
     </div>
 
     @include('adminify::layouts.admin.footers.auth')

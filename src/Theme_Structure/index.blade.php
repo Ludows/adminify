@@ -1,6 +1,8 @@
 @extends('theme::'. $theme .'.layouts.app')
 
 @section('content')
+    @hook('before_content')
+
     @if($isPreview)
         <div id="ve-components">
     @endif
@@ -69,6 +71,8 @@
         @endphp
         <comments ref="comments" model_class="{{ get_class($model) }}" :multilang="{{ var_export(is_multilang(), true) }}" :show_title="{{ $showTitle ? 'true' : 'false' }}" lang='{{ $lang }}' :post_id="{{ $model->id }}" :allow_form="{{ $allowForm ? 'true' : 'false' }}" :user="{{ $user ?? '{}' }}" :comments='@json($model->commentsThree)'></comments>
     @endif
+
+    @hook('after_content')
 @endsection
 
 @push('js')

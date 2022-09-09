@@ -9,12 +9,13 @@
 @endif
 
 @section('content')
-    
+    @hook('before_content')
     @if(view()->exists('adminify::layouts.admin.edit.pages.'.$name))
         @include('adminify::layouts.admin.edit.pages.'.$name)
     @else
         @include('adminify::layouts.admin.edit.pages.default')
     @endif
+    @hook('after_content')
 @endsection
 
 @if (!empty($adminJsLinks))

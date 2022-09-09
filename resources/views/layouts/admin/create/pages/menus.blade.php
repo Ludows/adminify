@@ -1,13 +1,13 @@
 
 @include('adminify::layouts.admin.headers.topPageListing')
 <div class="container-fluid mt--7">
-    @yield('before_content')
+    @hook('before_menu_builder')
     <div class="row">
         <div class="col-12">
             {!! menu_builder($menuBuilder) !!}
         </div>
     </div>
-    @yield('after_content')
+    @hook('after_menu_builder')
 </div>
 
 

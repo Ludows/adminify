@@ -13,12 +13,13 @@
         $name = request()->route()->getName();
         $name = str_replace('.index', '', $name);
     @endphp
+    @hook('before_content')
     @if(view()->exists('adminify::layouts.admin.index.pages.'.$name))
         @include('adminify::layouts.admin.index.pages.'.$name)
     @else
         @include('adminify::layouts.admin.index.pages.default')
     @endif
-    
+    @hook('after_content')
 @endsection
 
 @if (!empty($adminJsLinks))

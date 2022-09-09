@@ -9,6 +9,7 @@
 @endif
 
 @section('content')
+    @hook('before_content')
     @php
         $name = request()->route()->getName();
         $name = str_replace('.show', '', $name);
@@ -18,6 +19,7 @@
     @else
         @include('adminify::layouts.admin.show.pages.default')
     @endif
+    @hook('after_content')
 @endsection
 
 @if (!empty($adminJsLinks))

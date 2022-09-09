@@ -14,6 +14,7 @@
 
         <!-- Icons -->
         <!-- Argon CSS -->
+        @hook('assets.css')
         {!! Assets::css() !!}
         @stack('css')
 
@@ -27,9 +28,7 @@
             <form id="logout-form" action="{{ route('auth.logout') }}" method="POST" style="display: none;">
                 @csrf
             </form>
-            {{-- @if(!$loadEditor) --}}
-                @include('adminify::layouts.admin.navbars.sidebar')
-            {{-- @endif --}}
+            @include('adminify::layouts.admin.navbars.sidebar')
         @endauth
 
         <div class="main-content">
@@ -40,22 +39,13 @@
             @yield('content')
         </div>
 
-        {!! Assets::js() !!}
-        {{--  <script src="{{ asset('argon') }}/vendor/jquery/dist/jquery.min.js"></script>  --}}
-        {{-- <script src="{{ asset('myuploads') }}/routes.js"></script>
-        <script src="{{ asset('adminify/back') }}/js/extensions.js"></script>
-        <script src="{{ asset('myuploads') }}/traductions-{{ str_replace('_', '-', app()->getLocale()) }}.js"></script> --}}
-        {{--  <script src="{{ asset('argon') }}/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>  --}}
-
-        @include('adminify::layouts.admin.modales.globalSearch')
+        @if(!is_auth_routes())
+            @include('adminify::layouts.admin.modales.globalSearch')
+        @endif
         @stack('modales')
+        @hook('assets.js')
+        {!! Assets::js() !!}
         @stack('js')
-
-
-        {{-- <!-- Argon JS -->
-        <script src="{{ asset('adminify/back') }}/js/extensions-call.js"></script>
-        <script src="{{ asset('adminify/back') }}/js/argon.js?v=1.0.0"></script>
-        <script src="{{ asset('adminify/back') }}/js/searchable.js"></script> --}}
 
     </body>
 </html>
