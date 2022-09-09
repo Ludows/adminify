@@ -45,6 +45,8 @@ use Ludows\Adminify\Libs\SitemapRender;
 use Ludows\Adminify\Libs\MediaService;
 use Illuminate\Pagination\Paginator;
 
+use Illuminate\Support\Facades\Blade;
+
 // use Illuminate\Support\Facades\Storage;
 
 
@@ -68,6 +70,8 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         Paginator::useBootstrap();
 
+        $this->registerDirectives();
+
         // dd(config('site-settings'));
 
         $this->registerPublishables();
@@ -84,6 +88,30 @@ class AdminifyServiceProvider extends ServiceProvider {
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'adminify');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
+    }
+
+    public function registerDirectives() {
+
+        Blade::directive('routeis', function ($expression) {
+            return "<?php if (fnmatch({$expression}, Route::currentRouteName())) : ?>";
+        });
+
+        Blade::directive('endrouteis', function ($expression) {
+            return '<?php endif; ?>';
+        });
+
+        Blade::directive('routeisnot', function ($expression) {
+            return "<?php if (! fnmatch({$expression}, Route::currentRouteName())) : ?>";
+        });
+
+        Blade::directive('endrouteisnot', function ($expression) {
+            return '<?php endif; ?>';
+        });
+
+        Blade::directive('hook', function ($arguments) {
+            
+            return "ok";
+        });
     }
 
     public function loadCustomViewsPaths() {

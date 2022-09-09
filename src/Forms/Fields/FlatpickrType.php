@@ -16,7 +16,7 @@ class FlatpickrType extends FormField {
 
     public function setDefaultsOptions() {
         return array(
-            'locale' => 'flatpickr.l10ns.'.lang()
+
         );
     }
 
@@ -32,7 +32,7 @@ class FlatpickrType extends FormField {
             $sibling = $options['sibling'];
         }
         else {
-            $sibling = Str::slug('repeater_'.$uniqid);
+            $sibling = Str::slug('flatpickr_'.$uniqid);
         }
 
         if(isset($options['force_js']) && $options['force_js'] == true) {
