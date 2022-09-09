@@ -1,3 +1,4 @@
+
 <div id="{{ $options['sibling'] }}">
 
     @if($options['wrapper'] !== false)
@@ -8,9 +9,10 @@
         {!! Form::customLabel($name, $options['label'], $options['label_attr']) !!}
     @endif
 
+
     @if($showField)
-        {{-- {{ dd($options['choices']) }} --}}
-        {!! Form::input($name, $options['value'], $options['attr']) !!}
+
+        {!! Form::text($name, $options['value'], $options['attr']) !!}
 
         @include('vendor/laravel-form-builder/errors')
         @include('vendor/laravel-form-builder/help_block')
@@ -21,6 +23,7 @@
         </div>
     @endif
 </div>
+
 
 
 @if ($options['isAjax'])
