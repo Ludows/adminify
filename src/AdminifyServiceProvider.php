@@ -109,8 +109,23 @@ class AdminifyServiceProvider extends ServiceProvider {
         });
 
         Blade::directive('hook', function ($arguments) {
-            
-            return "ok";
+            $args = explode(',', $arguments);
+            $trimmed_args = array_map('trim', $args);
+
+            if(count($trimmed_args) < 2) {
+                $trimmed_args[1] = null;
+            }
+
+            $hookManager = app('HookManager');
+
+            $return_statement = $hookManager->exec($trimmed_args);
+
+            if(empty($return_statement)) {
+                $return_statement = '';
+            }
+
+
+            return $return_statement;
         });
     }
 

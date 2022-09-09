@@ -10,6 +10,7 @@
 
         <meta name="csrf-token" content="{{ csrf_token() }}">
         @laravelPWA
+        @hook('assets.css')
         {!! Assets::css() !!}
         @stack('css')
 
@@ -35,6 +36,7 @@
         </main>
 
         @stack('modales')
+        @hook('assets.js')
         {!! Assets::js() !!}
         @stack('js')
     </body>

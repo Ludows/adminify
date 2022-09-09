@@ -1,4 +1,5 @@
 <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white  px-3 pt-4 pb-5" id="sidenav-main">
+    @hook('start_sidebar_admin')
     <div class="container-fluid">
         <!-- Toggler -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
@@ -10,12 +11,14 @@
         </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
+            @hook('before_topbar_admin')
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     @include('adminify::layouts.admin.navbars.navs.avatar', ['withName' => false])
                 </a>
                 @include('adminify::layouts.admin.navbars.navs.dropdown-user')
             </li>
+            @hook('after_topbar_admin')
         </ul>
         <!-- Collapse -->
         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
@@ -47,7 +50,9 @@
                 </div>
             </form>
             <!-- Navigation -->
+            @hook('before_menu_admin')
             {!! isset($menuAdmin) ? $menuAdmin->toHtml() : '' !!}
+            @hook('after_menu_admin')
             <!-- Divider -->
             
             @if($user->hasPermissionTo('create_users'))
@@ -76,4 +81,5 @@
             
         </div>
     </div>
+    @hook('end_sidebar_admin')
 </nav>

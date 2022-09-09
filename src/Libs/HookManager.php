@@ -2,6 +2,8 @@
 
 namespace Ludows\Adminify\Libs;
 
+use Error;
+
 class HookManager
 {
     public function __construct()
@@ -46,6 +48,32 @@ class HookManager
         }
 
         return $this;
+    }
+    public function emit(...$args) {}
+    public function on(...$args) {}
+    public function exec($args) {
+        $ret = null;
+
+        if(!is_array($args)) {
+            throw new Error('exec method on '.get_class($this). 'must have of arguments');
+        }
+        $hooks = $this->getHooksByName($args[0]);
+
+        if(!empty($hooks) && is_string($hooks)) {
+            $object = app($hooks);
+            $ret = call_user_func_array(array($object, 'handle'), array($args[0] ,$args[1]));
+        }
+
+        if(!empty($hooks) && is_array($hooks) && count($hooks) > 0) {
+            $ret = '';
+            foreach ($hooks as $hook) {
+                # code...
+                $object = app($hook);
+                $ret .= call_user_func_array(array($object, 'handle'), array($args[0] ,$args[1]));
+            }
+        }
+
+        return $ret;
     }
     public function registerHooks($name, $arrayClass) {
 

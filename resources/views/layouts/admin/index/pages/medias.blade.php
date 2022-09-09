@@ -16,6 +16,7 @@
 <div class="js-mediatheque {!! $selectionMode ? 'is-selection' : '' !!} {!! $multipleMode ? 'is-multiple' : 'is-single' !!}">
     <div class="container-fluid mt--7">
         <div class="row">
+            @hook('before_content_page')
             <div class="col-12">
                 <div class="d-flex bg-white rounded-lg shadow align-items-center px-3 py-2 mb-3 flex-wrap">
                     <div class="mr-4">Titre</div>
@@ -32,6 +33,7 @@
 
                 <div class="row bg-white rounded-lg justify-content-lg-between shadow align-items-center no-gutters px-3 py-2">
                     <div id="parentGroupFilters" class="col-12 d-flex col-lg-7">
+                        @hook('start_media_filters')
                         <div class="mr-3 filter-zone">
                             {{--  // select type documents  --}}
                             <select class="form-control js-documents">
@@ -52,18 +54,23 @@
                             <button data-ids="" class="btn disabled d-none js-remove-image-group btn-danger">{!! __('admin.media.remove') !!}</button>
                             <button class="btn {!! $selectionMode ? 'd-none' : '' !!} btn-outline-primary js-toggle-selectgroup">{!! __('admin.media.selectInGroup') !!}</button>
                         </div>
+                        @hook('end_media_filters')
                     </div>
                     <div class="col-12 col-lg-5">
+                        @hook('start_media_search')
                         <div class="">
                             <input type="text" class="form-control js-search-media" placeholder="{!! __('admin.media.search') !!}" />
                         </div>
+                        @hook('end_media_search')
                     </div>
                 </div>
 
+                @hook('before_media_galery')
                 <div id="GallerySet"></div>
+                @hook('after_media_galery')
 
             </div>
-
+            @hook('after_content_page')
         </div>
 
         @if($withModal)
