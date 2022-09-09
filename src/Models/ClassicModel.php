@@ -24,6 +24,7 @@ use Ludows\Adminify\Traits\Taggable;
 use Ludows\Adminify\Traits\HasInteractsWithMediaLibrary;
 use Ludows\Adminify\Traits\Commentable;
 use Ludows\Adminify\Traits\HasUser;
+use Ludows\Adminify\Traits\HasRevisions;
 
 use Spatie\Feed\Feedable;
 
@@ -54,6 +55,7 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     use Commentable;
     use HasInteractsWithMediaLibrary;
     use HasUser;
+    use HasRevisions;
 
     public function newEloquentBuilder($query)
     {

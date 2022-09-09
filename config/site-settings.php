@@ -130,7 +130,6 @@ return [
         'Category',
         'Tag',
         'Media',
-        'Forms',
         'GroupMeta',
         'Menu',
         'Comment',

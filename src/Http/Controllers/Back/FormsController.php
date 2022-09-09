@@ -3,7 +3,6 @@
 namespace Ludows\Adminify\Http\Controllers\Back;
 
 
-use App\Adminify\Models\Forms;
 use App\Adminify\Models\FormTrace;
 use App\Adminify\Models\FormConfirmations;
 
@@ -38,7 +37,7 @@ class FormsController extends Controller
         }
 
 
-        public function getTrace(Forms $Form, FormTrace $trace) {
+        public function getTrace(FormTrace $trace) {
 
             $entries = $trace->entries;
 
@@ -71,11 +70,7 @@ class FormsController extends Controller
 
             return view("adminify::layouts.admin.pages.show", ['renderShow' => $html]);
         }
-        public function getTraces(Forms $Form) {
-
-            if(empty($Form->id)) {
-                abort(404);
-            }
+        public function getTraces(FormTrace $trace) {
 
             $table = $this->table(FormTracesTable::class);
             // dd($forms);
