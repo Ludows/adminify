@@ -883,27 +883,31 @@ if (! function_exists('get_form')) {
     }
 }
 
-if (! function_exists('generate_form')) {
+if (! function_exists('frontity_form')) {
 
-    function generate_form($mixed, $html = true, $templatePath = null) {
+    function frontity_form($namedClass, $templatePath = null, $html = true) {
 
-        $theForm = get_form($mixed);
-        $dynamics_fields = [];
+        $c = config('site-settings.enables_features');
+
+        if(isset($c['form']) && !$c['form']) {
+            throw new Error('form feature must be enable to use frontity_form helper', 500);
+        }
+
+        $theClass = adminify_get_class($namedClass, ['app:forms:front'], false); 
+
+        if(empty($theClass)) {
+            throw new Error($theClass.' does not exist.', 500);
+        }
+        // $theForm = get_form($mixed);
         $renderer = '';
-        // $dynamic_form_config = get_site_key('dynamic_forms');
-        // $template = $dynamic_form_config['default_form_template'];
-
+       
         $formBuilder = app('Kris\LaravelFormBuilder\FormBuilder');
         $v = view();
 
-        if(empty($theForm)) {
-            return null;
-        }
+        $form = $formBuilder->create($theClass);
 
-        $form = $formBuilder->create($theForm->model_class);
-
-        $form->add('form_id', 'hidden', [
-            'value' => $theForm->id
+        $form->add('form_class', 'hidden', [
+            'value' => $theClass
         ]);
 
 
@@ -911,15 +915,18 @@ if (! function_exists('generate_form')) {
             $isSubmit = session()->get('formSubmitted');
             $showForm = true;
 
-            if(isset($theForm->show_form_when_validated) && $isSubmit) {
-                $showForm = $theForm->show_form_when_validated;
+            if(isset($form->show_form_when_validated) && $isSubmit) {
+                $showForm = $form->show_form_when_validated;
             }
 
-            $renderer = $v->make( $form->getView() , [
+            if(empty($templatePath)) {
+                $templatePath = $form->getView();
+            }
+
+            $renderer = $v->make( $templatePath , [
                 'form' => $form,
                 'showConfirmation' => $isSubmit ? true : false,
                 'showForm' => $showForm,
-                'confirmation' => $theForm->confirmation->first()
             ])->render();
         }
 

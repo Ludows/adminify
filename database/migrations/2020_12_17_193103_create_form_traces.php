@@ -16,9 +16,9 @@ class CreateFormTraces extends Migration
         Schema::create('form_traces', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('label');
-            $table->bigInteger('form_id')->unsigned();
+            $table->string('form_class');
+            $table->json('entries');
             $table->datetime('send_time');
-            $table->foreign('form_id')->references('id')->on('forms');
             $table->timestamps();
         });
         

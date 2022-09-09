@@ -5,26 +5,18 @@ namespace Ludows\Adminify\Http\Controllers\Front;
 use Illuminate\Http\Request;
 use App\Adminify\Models\Page;
 use App\Adminify\Models\FormTrace;
-use App\Adminify\Models\FormEntries;
 use App\Adminify\Models\Mailables;
-use App\Adminify\Models\Url;
 use Ludows\Adminify\Http\Controllers\Controller;
 
 use ReflectionClass;
-use Illuminate\Support\Facades\Crypt;
 
 use App\Adminify\Repositories\FormTraceRepository;
-use App\Adminify\Repositories\FormEntriesRepository;
-
-use Mail;
 
 class PageController extends Controller
 {
     public $formTraceRepo;
-    public $formEntryRepo;
-    public function __construct(FormTraceRepository $formTraceRepo, FormEntriesRepository $formEntryRepo) {
+    public function __construct(FormTraceRepository $formTraceRepo) {
         $this->formTraceRepo = $formTraceRepo;
-        $this->formEntryRepo = $formEntryRepo;
     }
     /**
         * Display a listing of the resource.
@@ -127,14 +119,12 @@ class PageController extends Controller
         public function validateForms(Request $request) {
             $all = $request->all();
 
-            $dynamic_form_config = get_site_key('dynamic_forms');
-
-            if(empty($all['form_id'])) {
+            if(empty($all['form_class'])) {
                 abort(404);
             }
-            $formId = (int) $all['form_id'];
+            $form_class = (string) $all['form_class'];
 
-            $theFormClass = generate_form($formId, false); // html parameter generation is disabled. the formClass is returned
+            $theFormClass = frontity_form($form_class, null, false); // html parameter generation is disabled. the formClass is returned
 
             if (!$theFormClass->isValid()) {
                 return redirect()->back()->withErrors($theFormClass->getErrors())->withInput();
@@ -142,19 +132,12 @@ class PageController extends Controller
 
 
             // le formulaire est valide
-            $formDb = get_form($formId);
             $FormTrace = new FormTrace();
 
 
             $values = $theFormClass->getFieldValues();
             $a = [];
             $entries = [];
-
-            $trace_model = $this->formTraceRepo->addModel($FormTrace)->create([
-                'label' => __('admin.formbuilder.newTrace'),
-                'form_id' => $formId,
-                'send_time' => now()
-            ]);
 
             // formattage des entrées
             foreach ($values as $key => $val) {
@@ -167,19 +150,12 @@ class PageController extends Controller
                 }
             }
 
-
-
-            // et hop on inscrit en db
-            foreach ($a as $entryKey => $entryVal) {
-                $FormEntries = new FormEntries();
-
-                $entry_model = $this->formEntryRepo->addModel($FormEntries)->create($a[$entryKey]);
-                $entries[] = $entry_model;
-
-                $trace_model->entries()->attach([
-                    $trace_model->id => ['form_entries_id' => $entry_model->id]
-                ]);
-            }
+            $trace_model = $this->formTraceRepo->addModel($FormTrace)->create([
+                'label' => __('admin.formbuilder.newTrace'),
+                'form_class' => $form_class,
+                'entries' => json_encode($a),
+                'send_time' => now()
+            ]);
 
             if(!empty($theFormClass->didSendMail) && $theFormClass->didSendMail == true) {
                 // now we prepare to send the email.
@@ -187,28 +163,7 @@ class PageController extends Controller
             }
 
             // now we prepare the redirection type process..
-            $confirmation = $formDb->confirmation->first();
-
-            if(!empty($confirmation) && $confirmation->type == 'samepage') {
-                $url = url()->previous();
-            }
-
-            if(!empty($confirmation) && $confirmation->type == 'page') {
-                $page = Page::find( (int) $confirmation->page_id );
-                $url = $page->urlPath;
-            }
-
-            if(!empty($confirmation) && $confirmation->type == 'redirect') {
-                $url = $confirmation->redirect_url;
-            }
-
-            if(empty($confirmation)) {
-                // fallback to previous url
-                $url = url()->previous();
-            }
-
-
-            return redirect()->to($url)->with(['formSubmitted' => true]);
+            return $theFormClass->confirm();
         }
 
         public function handleSlug($slug) {
