@@ -20,7 +20,8 @@ class FormTrace extends ClassicModel
 
     protected $fillable = [
         'label',
-        'form_id',
+        'form_class',
+        'entries',
         'send_time',
     ];
 
@@ -38,9 +39,9 @@ class FormTrace extends ClassicModel
      */
     protected $attributes = [];
 
-    public function entries()
+    public function getEntriesAttribute()
     {
-        return $this->belongsToMany(FormEntries::class, 'form_form_entry', 'trace_id');
+        return json_decode($this->entries);
     }
 
     public function toFeedItem(): FeedItem {}

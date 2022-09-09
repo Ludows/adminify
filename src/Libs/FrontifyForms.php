@@ -12,6 +12,8 @@ class FrontifyForms extends Form {
     protected $recipient = '';
     protected $cc = [];
     protected $bcc = '';
+    protected $confirmationType = 'redirect'; //can be redirect / entity 
+    protected $confirmationEntity = null; // put your entity class here
 
     public function buildForm() {}
     public function booting() {
@@ -27,8 +29,23 @@ class FrontifyForms extends Form {
     }
     public function setDefaultsSetting() {
         $this->show_form_when_validated = true;
+        $this->redirects_parameters = ['formSubmitted' => true];
         $this->formOptions = ['method' => 'POST', 'url' => route('forms.validate')];
     }
+
+    public function getRedirectParameters() {
+        return $this->redirects_parameters;
+    }
+
+    public function setRedirectParameters($value = []) {
+        if(!is_array($value)) {
+            throw new Error('setRedirectParameters must have an array');
+        }
+        $this->redirects_parameters = array_merge($this->redirects_parameters, $value);
+        return $this;
+    }
+
+    public function getUrlfromEntity() {}
 
     // function is triggered before send mail :)
     public function prepareMail() {
@@ -68,6 +85,37 @@ class FrontifyForms extends Form {
 
     public function getMailTemplate() {
         return 'App\Adminify\Mails\FormEntriesListingMail';
+    }
+
+    public function getConfirmationType() {
+        return $this->confirmationType;
+    }
+
+    public function getConfirmationContent() {
+        return '@todo';
+    }
+
+    public function setConfirmationType($value) {
+        $this->confirmationType = $value;
+        return $this;
+    }
+
+    public function confirm() {
+
+        if(!empty($this->confirmationType) && $this->confirmationType == 'entity') {
+            $url = $this->getUrlfromEntity();
+        }
+
+        if(!empty($this->confirmationType) && $this->confirmationType == 'redirect') {
+            $url = $this->confirmationType;
+        }
+
+        if(empty($confirmation)) {
+            // fallback to previous url
+            $url = url()->previous();
+        }
+
+        return redirect()->to($url)->with($this->getRedirectParameters());
     }
 
     public function toJson() {

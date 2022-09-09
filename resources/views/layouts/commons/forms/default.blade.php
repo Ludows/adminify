@@ -1,5 +1,5 @@
-    @if ($showConfirmation && !empty($confirmation) && $confirmation->type == 'samepage')
-        {!! $confirmation->content !!}      
+    @if ($showConfirmation)
+        {!! $form->getConfirmationContent() !!}      
     @endif
 
     @if($showForm)
