@@ -2,7 +2,8 @@
 
 namespace Ludows\Adminify\Libs;
 use Ludows\Adminify\Libs\Dropdown;
-use Ludows\Adminify\Forms\DeleteCrud;
+use App\Adminify\Forms\DeleteCrud;
+use App\Adminify\Forms\CopyCrud;
 
 class DropdownsManager
 {
@@ -76,41 +77,57 @@ class DropdownsManager
         $this->removeDropdown($index);
         return $this;
     }
-    public function handle() {
-        $datas = $this->getDatas();
-
+    public function setDefaultsActions() {
         $r = $this->getRequest();
         $models = $this->getModels();
 
         $form = app('Kris\LaravelFormBuilder\FormBuilder');
 
+        foreach ($models as $m) {
+
+            $singular = singular( $m->getTable() );
+            $plurial = plural($singular);
+
+            $this->add('dropdown_'.$m->id, [
+                'template' => 'adminify::layouts.admin.dropdowns.extends.edit',
+                'vars' => [
+                    'url' => route($plurial.'.edit', [$singular => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
+                    'name' => $plurial
+                ]
+            ]);
+
+            $this->add('dropdown_'.$m->id, [
+                'template' => 'adminify::layouts.admin.dropdowns.extends.copy',
+                'vars' => [
+                    'form' => $form->create(CopyCrud::class, [
+                        'method' => 'POST',
+                        'url' => route('copy.entity', [ 'type' => lowercase($singular), 'id' => $m->id])
+                    ])
+                ]
+            ]);
+
+            $this->add('dropdown_'.$m->id, [
+                'template' => 'adminify::layouts.admin.dropdowns.extends.delete',
+                'vars' => [
+                    'form' => $form->create(DeleteCrud::class, [
+                        'method' => 'DELETE',
+                        'url' => route($plurial.'.destroy', [$singular => $m->id])
+                    ])
+                ]
+            ]);
+        }
+
+    }
+    public function handle() {
+        $datas = $this->getDatas();
+
+        $models = $this->getModels();
+
         if(count($models) > 0 && is_translatable_model($models[0])) {
             check_traductions($models);
         }
-
-        foreach ($models as $m) {
-
-                $singular = singular( $m->getTable() );
-                $plurial = plural($singular);
-
-                $this->add('dropdown_'.$m->id, [
-                    'template' => 'adminify::layouts.admin.dropdowns.extends.edit',
-                    'vars' => [
-                        'url' => route($plurial.'.edit', [$singular => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
-                        'name' => $plurial
-                    ]
-                ]);
-
-                $this->add('dropdown_'.$m->id, [
-                    'template' => 'adminify::layouts.admin.dropdowns.extends.delete',
-                    'vars' => [
-                        'form' => $form->create(DeleteCrud::class, [
-                            'method' => 'DELETE',
-                            'url' => route($plurial.'.destroy', [$singular => $m->id])
-                        ])
-                    ]
-                ]);
-        }
+        
+        $this->setDefaultsActions();
     }
     public function render($index) {
 
