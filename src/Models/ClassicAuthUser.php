@@ -33,8 +33,6 @@ abstract class ClassicAuthUser extends Authenticatable implements MustVerifyEmai
     use AdminableMenu;
     use HasRevisions;
 
-    public $enable_revisions = false;
-
     public function tokens() {
         return $this->hasMany(ApiToken::class, 'user_id', 'id');
     }
