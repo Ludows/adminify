@@ -8,4 +8,6 @@ use Spatie\Feed\Feedable;
 
 use Spatie\Searchable\Searchable;
 abstract class ClassicUser extends ClassicAuthUser implements Searchable, Feedable
-{}
+{
+    public $enable_revisions = false;
+}
