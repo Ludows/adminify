@@ -71,9 +71,11 @@
     {
         $revisions = Revision::where(['model_id' => $this->id, 'model_class' => $this->model_class])->get();
 
-        foreach ($revisions as $revisionKey => $revision) {
-          # code...
-          $revision->delete();
+        if ($revisions->isNotEmpty()) {
+          foreach ($revisions as $revisionKey => $revision) {
+            # code...
+            $revision->delete();
+          }
         }
         return $revisions;
     }
