@@ -11,6 +11,7 @@ class ApiToken extends ClassicModel
 {
     protected $table = 'api_tokens';
     public $enable_searchable = false;
+    public $enable_revisions = false;
 
     public function toFeedItem(): FeedItem {}
     public function getSearchResult() : SearchResult {}

@@ -16,6 +16,7 @@ class CustomLink extends ClassicModel
     public function getSearchResult() : SearchResult {}
 
     public $enable_searchable = false;
+    public $enable_revisions = false;
 
     protected $fillable = [
         'title',

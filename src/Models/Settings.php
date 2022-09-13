@@ -25,6 +25,7 @@ class Settings extends ClassicModel
     ];
 
     public $enable_searchable = false;
+    public $enable_revisions = false;
 
     public function getLinks($menuBuilder, $arrayDatas) {
         if($arrayDatas['user']->hasPermissionTo('create_settings') && $arrayDatas['features']['setting']) {

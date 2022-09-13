@@ -13,6 +13,7 @@ class MenuItem extends ClassicModel
     public $MultilangTranslatableSwitch = ['overwrite_title'];
 
     public $enable_searchable = false;
+    public $enable_revisions = false;
 
     protected $fillable = [
         'model',
