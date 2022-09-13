@@ -27,6 +27,9 @@
    public static function deleteRevision($model) {
      $model->deleteRevisions();
    }
+   public static function manageRevisions($model) {
+     $model->manageRevisions();
+   }
    public static function flushCache($model) {
 
         $builder = $model::query();
@@ -80,8 +83,9 @@
             // blah blah
             static::autoRegisterModelHooks(static::$loadHooks, 'created');
             static::runHook('created', $model);
-            if($model->enable_revisions) {
+            if($model->enable_revisions && $model->revisions_limit > 0) {
                 static::createRevision($model);
+                static::manageRevisions($model);
             }
         });
 
@@ -96,8 +100,9 @@
             // blah blah
             static::autoRegisterModelHooks(static::$loadHooks, 'updated');
             static::runHook('updated', $model);
-            if($model->enable_revisions) {
+            if($model->enable_revisions && $model->revisions_limit > 0) {
                 static::updateRevision($model);
+                static::manageRevisions($model);
             }
         });
 
@@ -119,7 +124,7 @@
             static::autoRegisterModelHooks(static::$loadHooks, 'deleting');
             static::runHook('deleting', $model);
             static::flushCache($model);
-            if($model->enable_revisions) {
+            if($model->enable_revisions && $model->revisions_limit > 0) {
                 static::deleteRevision($model);
             }
         });

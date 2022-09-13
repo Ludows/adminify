@@ -3,12 +3,13 @@
   namespace Ludows\Adminify\Traits;
 
   use App\Adminify\Models\Revision;
+use Ludows\Adminify\Models\Revision as ModelsRevision;
 
   trait HasRevisions
   {
    //
    public $enable_revisions = true;
-   public $revisions_limit = -1;
+   public $revisions_limit = 5;
    public function revisions() {
     return $this->hasMany(Revision::class, 'model_id');
    }
@@ -78,5 +79,18 @@
           }
         }
         return $revisions;
+    }
+    public function manageRevisions() {
+      if($this->revisions_limit > 0) {
+        $latestsRevisions = Revision::latest('id')->where(['model_id' => $this->id, 'model_class' => $this->model_class])->limit($this->revisions_limit)->get();
+        $oldestRevisions = Revision::where(['model_id' => $this->id, 'model_class' => $this->model_class])->whereNotIn('id', $latestsRevisions->pluck('id') );
+
+        if ($oldestRevisions->isNotEmpty()) {
+          foreach ($oldestRevisions as $revisionKey => $revision) {
+            # code...
+            $revision->delete();
+          }
+        }
+      }
     }
 }
