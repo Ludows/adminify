@@ -18,6 +18,15 @@
         }
     }
    }
+   public static function createRevision($model) {
+        $model->createRevision($model->getAttributes());
+   }
+   public static function updateRevision($model) {
+        $model->updateRevision($model->getAttributes());
+   }
+   public static function deleteRevision($model) {
+     $model->deleteRevisions();
+   }
    public static function flushCache($model) {
 
         $builder = $model::query();
@@ -71,6 +80,9 @@
             // blah blah
             static::autoRegisterModelHooks(static::$loadHooks, 'created');
             static::runHook('created', $model);
+            if($model->enable_revisions) {
+                static::createRevision($model);
+            }
         });
 
         static::updating(function ($model) {
@@ -84,6 +96,9 @@
             // blah blah
             static::autoRegisterModelHooks(static::$loadHooks, 'updated');
             static::runHook('updated', $model);
+            if($model->enable_revisions) {
+                static::updateRevision($model);
+            }
         });
 
         static::saving(function ($model) {
@@ -104,6 +119,9 @@
             static::autoRegisterModelHooks(static::$loadHooks, 'deleting');
             static::runHook('deleting', $model);
             static::flushCache($model);
+            if($model->enable_revisions) {
+                static::deleteRevision($model);
+            }
         });
 
         static::deleted(function ($model) {
