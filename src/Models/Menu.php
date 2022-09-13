@@ -13,6 +13,8 @@ class Menu extends ClassicModel
 {
     public $MultilangTranslatableSwitch = ['title', 'slug'];
 
+    public $enable_revisions = false;
+
     protected $fillable = [
         'title',
         'slug',

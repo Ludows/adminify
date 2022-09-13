@@ -20,6 +20,7 @@ class Seo extends ClassicModel
         'data',
     ];
 
+    public $enable_revisions = false;
     public $enable_searchable = false;
 
     public function toFeedItem(): FeedItem {}

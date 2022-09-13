@@ -12,6 +12,7 @@ class Url extends ClassicModel
     // use Helpers;
 
     public $enable_searchable = false;
+    public $enable_revisions = false;
 
     public function toFeedItem(): FeedItem {}
     public function getSearchResult() : SearchResult {}

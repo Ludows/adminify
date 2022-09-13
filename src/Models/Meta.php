@@ -25,6 +25,7 @@ class Meta extends ClassicModel
 
     public $enable_searchable = true;
     public $searchable_label = 'value';
+    public $enable_revisions = false;
 
     public $excludes_savables_fields = [];
     public $unmodified_savables_fields = [

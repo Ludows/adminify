@@ -17,6 +17,7 @@ class FormTrace extends ClassicModel
 
     public $searchable_label = 'label';
     public $enable_searchable = false;
+    public $enable_revisions = false;
 
     protected $fillable = [
         'label',

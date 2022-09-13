@@ -14,6 +14,7 @@ use Ludows\Adminify\Traits\Helpers;
 use Ludows\Adminify\Traits\Listable;
 use Ludows\Adminify\Traits\Searchables;
 use Ludows\Adminify\Traits\SavableTranslations;
+use Ludows\Adminify\Traits\HasRevisions;
 
 use App\Adminify\Models\ApiToken;
 use App\Adminify\Models\Role;
@@ -30,6 +31,9 @@ abstract class ClassicAuthUser extends Authenticatable implements MustVerifyEmai
     use Searchables;
     use SavableTranslations;
     use AdminableMenu;
+    use HasRevisions;
+
+    public $enable_revisions = false;
 
     public function tokens() {
         return $this->hasMany(ApiToken::class, 'user_id', 'id');

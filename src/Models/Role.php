@@ -12,5 +12,6 @@ class Role extends RoleBaseModel
     const GUEST = 4;
 
     public $enable_searchable = false;
+    public $enable_revisions = false;
     public $searchable_label = 'name';
 }

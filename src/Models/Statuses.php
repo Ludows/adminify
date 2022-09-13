@@ -18,6 +18,7 @@ class Statuses extends ClassicModel
     const TRASHED_ID = 3;
 
     public $enable_searchable = false;
+    public $enable_revisions = false;
 
     public $statuses = [
         'published',
