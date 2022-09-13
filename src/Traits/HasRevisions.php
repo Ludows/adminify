@@ -3,7 +3,6 @@
   namespace Ludows\Adminify\Traits;
 
   use App\Adminify\Models\Revision;
-use Ludows\Adminify\Models\Revision as ModelsRevision;
 
   trait HasRevisions
   {
