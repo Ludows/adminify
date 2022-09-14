@@ -22,6 +22,7 @@ class Media extends ClassicModel
     public $searchable_label = 'src';
 
     protected $useSlugGeneration = false;
+    public $enable_revisions = false;
 
     protected $fillable = [
         'src', //the path you uploaded the image

@@ -82,7 +82,7 @@
     public function manageRevisions() {
       if($this->revisions_limit > 0) {
         $latestsRevisions = Revision::latest('id')->where(['model_id' => $this->id, 'model_class' => $this->model_class])->limit($this->revisions_limit)->get();
-        $oldestRevisions = Revision::where(['model_id' => $this->id, 'model_class' => $this->model_class])->whereNotIn('id', $latestsRevisions->pluck('id') );
+        $oldestRevisions = Revision::where(['model_id' => $this->id, 'model_class' => $this->model_class])->whereNotIn('id', $latestsRevisions->pluck('id') )->get();
 
         if ($oldestRevisions->isNotEmpty()) {
           foreach ($oldestRevisions as $revisionKey => $revision) {
