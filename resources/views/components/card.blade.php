@@ -16,7 +16,9 @@
                             {{ $item->{$show} }}
                         </div>
                         <div>
-                            <a href="{{ route( $plural.'.edit', [ $type =>  $item->id] ) }}">{{ __('admin.edit_entity', ['entity' => $type]) }}</a>
+                            @if (Route::has($plural.'.edit'))
+                                <a href="{{ route( $plural.'.edit', [ $type =>  $item->id] ) }}">{{ __('admin.edit_entity', ['entity' => $type]) }}</a>
+                            @endif
                         </div>
                     </li>
                 @endforeach
