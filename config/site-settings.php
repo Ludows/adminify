@@ -167,7 +167,8 @@ return [
             \App\Adminify\Hooks\ClearCacheHook::class,
         ],
         'mail:before_send' => [],
-        'mail:after_send' => []
+        'mail:after_send' => [],
+        'after_form_page' => \App\Adminify\Hooks\RevisionShowHook::class
     ],
 
     'sitemap' => [
