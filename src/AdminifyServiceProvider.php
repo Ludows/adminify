@@ -28,6 +28,7 @@ use Ludows\Adminify\Commands\CreateTable;
 use Ludows\Adminify\Commands\CreateDropdown;
 use Ludows\Adminify\Commands\CreateFormRequests;
 use Ludows\Adminify\Commands\CreateForms;
+use Ludows\Adminify\Commands\CreateHook;
 
 use Illuminate\Support\Facades\Route;
 
@@ -372,7 +373,8 @@ class AdminifyServiceProvider extends ServiceProvider {
             CreateMetas::class,
             CreateFrontForms::class,
             CreateShortcode::class,
-            FlushCacheQuery::class
+            FlushCacheQuery::class,
+            CreateHook::class
         ]);
     }
 }
