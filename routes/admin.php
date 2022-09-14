@@ -16,7 +16,7 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
 
     if(isset($c['media']) && $c['media']) {
         // Route::resource('medias', 'App\Adminify\Http\Controllers\Back\MediaController', ['except' => ['show']]);
-        Route::resource('medias', 'App\Adminify\Http\Controllers\Back\Mediav2Controller', ['except' => ['show']]);
+        Route::resource('medias', 'App\Adminify\Http\Controllers\Back\Mediav2Controller', ['except' => ['show', 'edit']]);
         Route::post('medias/upload', 'App\Adminify\Http\Controllers\Back\Mediav2Controller@upload')->name('medias.upload');
         Route::post('medias/listing', 'App\Adminify\Http\Controllers\Back\Mediav2Controller@listing')->name('medias.listing');
     }

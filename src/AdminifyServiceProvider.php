@@ -117,16 +117,7 @@ class AdminifyServiceProvider extends ServiceProvider {
                 $trimmed_args[1] = null;
             }
 
-            $hookManager = app('HookManager');
-
-            $return_statement = $hookManager->exec($trimmed_args);
-
-            if(empty($return_statement)) {
-                $return_statement = '';
-            }
-
-
-            return $return_statement;
+            return "<?php echo app('HookManager')->exec(". join(', ', $trimmed_args) ."); ?>";
         });
     }
 

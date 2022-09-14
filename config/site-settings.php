@@ -167,7 +167,8 @@ return [
             \App\Adminify\Hooks\ClearCacheHook::class,
         ],
         'mail:before_send' => [],
-        'mail:after_send' => []
+        'mail:after_send' => [],
+        'after_form_page' => \App\Adminify\Hooks\RevisionShowHook::class
     ],
 
     'sitemap' => [
@@ -212,6 +213,10 @@ return [
                 ['icon' => '', 'key_title' => 'admin.logout', 'url' => '/logout'],
             ] ],
         ),
+    ],
+
+    'revisions' => [
+        'escaped_keys' => ['id', 'slug']
     ],
 
     'shortcodes' => [
