@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body {{ $modalBodyClass }}">
-                {{ $slot }}
+                {!! $slot !!}
             </div>
             @if(isset($btnSave) && $btnSave != "" || isset($btnClear) && $btnClear != "")
                 <div class="modal-footer">

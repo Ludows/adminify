@@ -51,17 +51,14 @@ class HookManager
     }
     public function emit(...$args) {}
     public function on(...$args) {}
-    public function exec($args) {
+    public function exec($name, $datas = null) {
         $ret = null;
 
-        if(!is_array($args)) {
-            throw new Error('exec method on '.get_class($this). 'must have of arguments');
-        }
-        $hooks = $this->getHooksByName($args[0]);
+        $hooks = $this->getHooksByName($name);
 
         if(!empty($hooks) && is_string($hooks)) {
             $object = app($hooks);
-            $ret = call_user_func_array(array($object, 'handle'), array($args[0] ,$args[1]));
+            $ret = call_user_func_array(array($object, 'handle'), array($name ,$datas));
         }
 
         if(!empty($hooks) && is_array($hooks) && count($hooks) > 0) {
@@ -69,7 +66,7 @@ class HookManager
             foreach ($hooks as $hook) {
                 # code...
                 $object = app($hook);
-                $ret .= call_user_func_array(array($object, 'handle'), array($args[0] ,$args[1]));
+                $ret .= call_user_func_array(array($object, 'handle'), array($name ,$datas));
             }
         }
 

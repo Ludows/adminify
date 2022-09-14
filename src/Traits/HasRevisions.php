@@ -10,7 +10,7 @@
    public $enable_revisions = true;
    public $revisions_limit = 5;
    public function revisions() {
-    return $this->hasMany(Revision::class, 'model_id');
+    return $this->hasMany(Revision::class, 'model_id')->where('model_class', get_class($this))->latest();
    }
    public function maybeEncodeData($value) {
     if (is_object($value) || is_array($value)) {
@@ -59,7 +59,7 @@
       return $revisionCreate;
    }
    public function updateRevision($data) {
-        $revisions = Revision::where(['model_id' => $this->id, 'model_class' => $this->model_class]);
+        $revisions = Revision::where(['model_id' => $this->id, 'model_class' => get_class($this)]);
 
         if ($revisions->exists()) {
             return $revisions->first()->update(['data' => $this->maybeEncodeData($data)]);
@@ -67,9 +67,19 @@
 
         return new Revision();
    }
+   public function deleteRevisionBy($attribute = 'id', $value) {
+     $revisions = Revision::where([$attribute => $value, 'model_class' => get_class($this)])->get();
+     if ($revisions->isNotEmpty()) {
+        foreach ($revisions as $revisionKey => $revision) {
+          # code...
+          $revision->delete();
+        }
+      }
+      return $revisions;
+   }
    public function deleteRevisions()
     {
-        $revisions = Revision::where(['model_id' => $this->id, 'model_class' => $this->model_class])->get();
+        $revisions = Revision::where(['model_id' => $this->id, 'model_class' => get_class($this)])->get();
 
         if ($revisions->isNotEmpty()) {
           foreach ($revisions as $revisionKey => $revision) {
@@ -81,8 +91,8 @@
     }
     public function manageRevisions() {
       if($this->revisions_limit > 0) {
-        $latestsRevisions = Revision::latest('id')->where(['model_id' => $this->id, 'model_class' => $this->model_class])->limit($this->revisions_limit)->get();
-        $oldestRevisions = Revision::where(['model_id' => $this->id, 'model_class' => $this->model_class])->whereNotIn('id', $latestsRevisions->pluck('id') )->get();
+        $latestsRevisions = Revision::latest('id')->where(['model_id' => $this->id, 'model_class' => get_class($this)])->limit($this->revisions_limit)->get();
+        $oldestRevisions = Revision::where(['model_id' => $this->id, 'model_class' => get_class($this)])->whereNotIn('id', $latestsRevisions->pluck('id') )->get();
 
         if ($oldestRevisions->isNotEmpty()) {
           foreach ($oldestRevisions as $revisionKey => $revision) {

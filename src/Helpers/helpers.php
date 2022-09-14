@@ -1014,3 +1014,22 @@ if(! function_exists('is_collection')) {
     }
 }
 
+if(! function_exists('format_revision')) {
+    function format_revision($data) {
+        $json_array = json_decode($data, true);
+        $config = get_site_key('revisions');
+        $str = '';
+
+        foreach ($json_array as $key => $value) {
+            # code...
+            if(!in_array($key, $config['escaped_keys']) && !empty($value)) {
+                $str .= '<b>'. $key .'</b><br>';
+                $str .= '<span>'. $value .'</span><br><br>';
+            }
+        }
+
+        return $str;
+    }
+}
+
+

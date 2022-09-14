@@ -214,6 +214,10 @@ return [
         ),
     ],
 
+    'revisions' => [
+        'escaped_keys' => ['id', 'slug']
+    ],
+
     'shortcodes' => [
         'form' => \App\Adminify\Shortcodes\FormShortcode::class,
         'template' => \App\Adminify\Shortcodes\TemplateShortcode::class,

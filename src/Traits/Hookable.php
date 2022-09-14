@@ -22,7 +22,7 @@
         $model->createRevision($model->getAttributes());
    }
    public static function updateRevisionState($model) {
-        $model->updateRevision($model->getAttributes());
+        $model->createRevision($model->getAttributes());
    }
    public static function deleteRevisionState($model) {
      $model->deleteRevisions();
@@ -94,6 +94,9 @@
             static::autoRegisterModelHooks(static::$loadHooks, 'updating');
             static::runHook('updating', $model);
             static::flushCache($model);
+            if($model->enable_revisions && $model->revisions_limit > 0) {
+                static::updateRevisionState($model);
+            }
         });
 
         static::updated(function ($model) {
@@ -101,7 +104,6 @@
             static::autoRegisterModelHooks(static::$loadHooks, 'updated');
             static::runHook('updated', $model);
             if($model->enable_revisions && $model->revisions_limit > 0) {
-                static::updateRevisionState($model);
                 static::manageRevisionsState($model);
             }
         });
