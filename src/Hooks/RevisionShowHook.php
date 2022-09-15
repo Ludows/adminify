@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Hooks;
+namespace Ludows\Adminify\Hooks;
 
 use Ludows\Adminify\Libs\HookInterface;
 
