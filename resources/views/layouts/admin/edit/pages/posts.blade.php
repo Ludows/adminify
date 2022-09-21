@@ -12,9 +12,19 @@
         <div class="col-12 col-lg-9">
             <div class="card">
                 <div class="card-body">
-                    {!! form_row($form->title, ['wrapper' => [
-                        'class' => 'form-group mb-0'
-                    ]]) !!}
+                    <div class="row ">
+                        <div class="col-12 col-lg-10">
+                            {!! form_row($form->title, ['wrapper' => [
+                                'class' => 'form-group mb-0'
+                            ]]) !!}
+                        </div>
+                        <div class="col-12 col-lg-2">
+                            @php
+                                $routePreview = 'frontend.'. lowercase($request->type) .'.'. $request->model->slug;
+                            @endphp
+                            <a href="{{ route($routePreview) }}" class="btn btn-default" target="_blank"><i class="fas fa-eye"></i></a>
+                        </div>
+                    </div>
                 </div>
             </div>
             {{-- // editeur next --}}

@@ -11,7 +11,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         @laravelPWA
         @hook('assets.css')
-        {!! Assets::css() !!}
+        {!! Assets::css( get_site_key('assets.render.css') ) !!}
         @stack('css')
 
         <script>
@@ -37,7 +37,7 @@
 
         @stack('modales')
         @hook('assets.js')
-        {!! Assets::js() !!}
+        {!! Assets::js( get_site_key('assets.render.js') ) !!}
         @stack('js')
     </body>
 </html>
