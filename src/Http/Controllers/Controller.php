@@ -213,16 +213,11 @@ class Controller extends BaseController
 
                 if($showGroup) {
                     $metaboxes[] = $meta->uuid;
-                    $currentForm->add('_'.$meta->uuid, 'collection', [
-                        'type' => 'form',
-                        'prototype' => true,
-                        'label_show' => true,
-                        'label' => $meta->title,
-                        'prefer_input' => true,
+                    $currentForm->add('_'.$meta->uuid, $metaClass->getTypeField(), array_merge($metaClass->getDefaults(), [
+                        'label' => $metaClass->getMetaboxTitle(),
                         'model' => !empty($request->model) ? $request->model : [],
                         'wrapper' => [
-                            'id' => $meta->uuid,
-                            'class' => 'form-group js-metabox-show p-4 rounded-lg shadow bg-white'
+                            'id' => $metabox_key,
                         ],
                         'options' => [    // these are options for a single type
                             'class' => $theClass,

@@ -472,7 +472,7 @@ jQuery(document).ready(() => {
     function renderActiveMedia(id = null, mode = 'delete') {
         let source = mode == 'delete' ? getDeletes() : getSelecteds();
         let notSelectorStr = [];
-        if(!isDeleteGroupMode() || !isSelectionGroupMode()) {
+        if(getSelectionMode() == "single") {
             $('.js-modal-details').removeClass('selected');
         }
         if(isDeleteGroupMode() || isSelectionGroupMode()) {
@@ -480,11 +480,13 @@ jQuery(document).ready(() => {
                 notSelectorStr.push('.js-modal-details[data-id="'+ sourceId +'"]')
             })
 
-            // console.log('notSelectorStr', notSelectorStr, source)
 
             $('.js-modal-details').not( notSelectorStr.join(',') ).removeClass('selected');
 
             let elm = $('.js-modal-details[data-id="'+ id +'"]');
+
+
+            console.log('notSelectorStr', source, source.indexOf(id), elm)
 
             if(source.indexOf(id) > -1) {
                 elm.addClass('selected')
