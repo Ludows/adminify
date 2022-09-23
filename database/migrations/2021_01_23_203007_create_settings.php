@@ -28,7 +28,7 @@ class CreateSettings extends Migration
             Schema::create('settings', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
                 $table->string('type', 255);
-                $table->string('data', 255)->nullable();
+                $table->longText('data')->nullable();
                 // $table->string('site_name')->default('');
                 // $table->string('site_slogan')->default('');
                 // $table->bigInteger('logo_id')->unsigned()->default(null);
