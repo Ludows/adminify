@@ -217,13 +217,13 @@ class Controller extends BaseController
                         'label' => $metaClass->getMetaboxTitle(),
                         'model' => !empty($request->model) ? $request->model : [],
                         'wrapper' => [
-                            'id' => $metabox_key,
+                            'id' => $meta->uuid,
                         ],
                         'options' => [    // these are options for a single type
                             'class' => $theClass,
                             'label' => false,
                         ]
-                    ]);
+                    ]));
                 }
 
             }
