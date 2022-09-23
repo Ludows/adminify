@@ -39,12 +39,22 @@ class MediaElementType extends FormField {
 
         $isAjax = request()->ajax();
 
+        if(empty($options['is_child_proto'])) {
+            $options['is_child_proto'] = false;
+        }
+
+        $is_formbuilder_proto = $options['is_child_proto'];
+
+
         $sibling = '';
         if(isset($options['force_sibling']) && $options['force_sibling'] == true && isset($options['sibling'])) {
             $sibling = $options['sibling'];
         }
         else {
-            $sibling = Str::slug('media_element_'.$uniqid);
+            $sibling = Str::slug('media_element_'. $uniqid);
+            if($is_formbuilder_proto) {
+                $sibling = Str::slug('media_element_').'-##SLOT##';
+            }
         }
 
 
@@ -63,6 +73,7 @@ class MediaElementType extends FormField {
         }
 
 
+
         if(isset($options['force_js']) && $options['force_js'] == true) {
             $isAjax = true;
         }
@@ -76,7 +87,8 @@ class MediaElementType extends FormField {
             'media_element_options' => array_merge($this->setDefaultsOptions(), isset($options['media_element_options']) ? $options['media_element_options'] : [])
         ];
 
-        $b['media_element_options']['btn']['attr']['data-selector'] = $sibling;
+
+        $b['media_element_options']['btn']['attr']['data-selector'] = view()->shared('is_formbuilder_proto') ? 'media-element-##SLOT##' : $sibling;
 
         if($b['hasBootedMedia']) {
             $b['media_element_options']['btn']['attr']['class'] = $b['media_element_options']['btn']['attr']['class'].' d-none';

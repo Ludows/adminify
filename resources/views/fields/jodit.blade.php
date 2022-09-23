@@ -25,13 +25,19 @@
 
 @if ($options['isAjax'])
     <script type="text/javascript">
-        JoditInitFunction([{
-            fieldName: "[name='{!! $name !!}']",
-            selector: '#{{ $options['sibling'] }}',
-            options: @json($options['jodit_options']),
-            multilang: {!! var_export(is_multilang(),true) !!},
-            currentLang: '{!! $currentLang !!}'
-        }])
+        @if(!$options['is_child_proto'])
+                    document.addEventListener("DOMContentLoaded", function(event) {
+        @endif
+            JoditInitFunction([{
+                fieldName: "[name='{!! $name !!}']",
+                selector: '#{{ $options['sibling'] }}',
+                options: @json($options['jodit_options']),
+                multilang: {!! var_export(is_multilang(),true) !!},
+                currentLang: '{!! $currentLang !!}'
+            }])
+        @if(!$options['is_child_proto'])
+            });
+        @endif
     </script>
 @else
     @push('js')

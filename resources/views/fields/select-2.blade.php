@@ -46,6 +46,9 @@
 
 @if ($options['isAjax'])
     <script type="text/javascript">
+        @if(!$options['is_child_proto'])
+            document.addEventListener("DOMContentLoaded", function(event) {
+        @endif
         Select2InitFunction([{
             selector: '#{{ $options['sibling'] }}',
             modal_attributes: @json($options['modal_attributes']),
@@ -56,6 +59,9 @@
             multilang: {!! var_export(is_multilang(),true) !!},
             currentLang: '{!! $currentLang !!}'
         }])
+        @if(!$options['is_child_proto'])
+            });
+        @endif
     </script>
 @else
     @push('js')

@@ -254,13 +254,20 @@ jQuery(document).ready(() => {
 
         if(model.mime_type.startsWith('video/')) {
             typedData = modal.find('#videoOriginal');
-            reverseTypedData = modal.find('#imageOriginal');
+            reverseTypedData = modal.find('.js-preview').not('#videoOriginal');
+        }
+        else if(model.mime_type.startsWith('audio/')) {
+            typedData = modal.find('#audioOriginal');
+            reverseTypedData = modal.find('.js-preview').not('#audioOriginal');
+        }
+        else if(model.mime_type.startsWith('image/')) {
+            typedData = modal.find('#imageOriginal');
+            reverseTypedData = modal.find('.js-preview').not('#imageOriginal');
         }
         else {
-            typedData = modal.find('#imageOriginal');
-            reverseTypedData = modal.find('#videoOriginal');
+            typedData = modal.find('#iframeOriginal');
+            reverseTypedData = modal.find('.js-preview').not('#iframeOriginal');
         }
-
 
         typedData.attr('src', originalUrl);
 
@@ -268,7 +275,8 @@ jQuery(document).ready(() => {
         reverseTypedData.addClass('d-none');
 
 
-        typedData.on('load', () => {
+
+        typedData.on(typedData.is('#audioOriginal') ? 'canplay' : 'load', () => {
             modal.modal('show');
             modal.find('form').attr('data-id', model.id);
             modal.find('.js-single-destroy-media').attr('data-id', model.id);
@@ -561,6 +569,7 @@ jQuery(document).ready(() => {
 
     function handleSelectionProcess(e) {
         e.preventDefault();
+        console.log($(this));
         let modal = getCurrentModal();
         if($(this).hasClass('disabled')) {
             return false;
@@ -569,6 +578,8 @@ jQuery(document).ready(() => {
         let selection = getSelection();
 
         modal.modal('hide');
+
+        console.log(selection.config.selector , $('#'+selection.config.selector).find('.row-selection'))
 
         $('#'+selection.config.selector).find('.row-selection').html( selection.html );
 

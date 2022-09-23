@@ -1,3 +1,6 @@
+@php
+ $is_prototype = !empty($options['is_prototype']) ? $options['is_prototype'] : false;
+@endphp
 <div id="{{ $options['sibling'] }}">
     @if($options['wrapper'] !== false)
         <div {!! $options['wrapperAttrs'] !!}>
@@ -30,6 +33,9 @@
                                     //dd($childFields);
                                 @endphp
                                 @foreach ($childFields as $key => $field)
+                                    @php
+                                        $childForm->{$key}->setOption('is_proto_repeater', false);
+                                    @endphp
                                     {!! form_row($childForm->{$key}) !!}
                                 @endforeach
                                 {{--  {!! form($child->getForm()) !!}  --}}
@@ -51,32 +57,16 @@
         </div>
     @endif
 
-    @if ($options['isAjax'])
-        <script type="text/javascript">
-            $(function() {
-                let Sibling_text = "{{ $options['sibling'] }}";
-                let Sibling = $('#'+Sibling_text);
-                let Collection_container = Sibling.find('.collection-container');
-                let Accordion = Sibling.find('#accordion-{{ $options["sibling"] }}');
-                let btnAdd = Sibling.find('.js-add-row');
-                let scopedTemplateAccordionItem = '{!! $options["accordion_item"] !!}';
-                let required_fields = Sibling.find('[required="required"]');
-                btnAdd.on('click', function(e) {
-                    e.preventDefault();
-                    var count = Accordion.children().length;
-                    console.log('count', count)
-                    var proto = Collection_container.data('prototype').replace(/{{ $options['prototype_name'] }}/g, count);
-                    var proto_item = scopedTemplateAccordionItem.replace(/{{ $options['prototype_name'] }}/g, count).replace(/##FORM##/g, proto).replace(/##SIBLING##/g, Sibling_text);
-                    Accordion.append(proto_item);
-                    required_fields = Sibling.find('[required="required"]');
-                })
-            })
-        </script>
-    @else
-        @push('js')
+    @if(!$is_prototype)
+        @if ($options['isAjax'])
             <script type="text/javascript">
                 $(function() {
+                    function generatingSlotID() {
+                        return Math.floor(Math.random() * 100000);
+                    }
+
                     let Sibling_text = "{{ $options['sibling'] }}";
+
                     let Sibling = $('#'+Sibling_text);
                     let Collection_container = Sibling.find('.collection-container');
                     let Accordion = Sibling.find('#accordion-{{ $options["sibling"] }}');
@@ -85,15 +75,47 @@
                     let required_fields = Sibling.find('[required="required"]');
                     btnAdd.on('click', function(e) {
                         e.preventDefault();
+                        let Slot_id = generatingSlotID();
                         var count = Accordion.children().length;
                         console.log('count', count)
                         var proto = Collection_container.data('prototype').replace(/{{ $options['prototype_name'] }}/g, count);
-                        var proto_item = scopedTemplateAccordionItem.replace(/{{ $options['prototype_name'] }}/g, count).replace(/##FORM##/g, proto).replace(/##SIBLING##/g, Sibling_text);
+                        var proto_item = scopedTemplateAccordionItem.replace(/{{ $options['prototype_name'] }}/g, count).replace(/##FORM##/g, proto).replace(/##SIBLING##/g, Sibling_text).replace(/##SLOT##/g, Slot_id);
                         Accordion.append(proto_item);
                         required_fields = Sibling.find('[required="required"]');
                     })
                 })
             </script>
-        @endpush
+        @else
+            @push('js')
+                <script type="text/javascript">
+                    $(function() {
+
+                        function generatingSlotID() {
+                            return Math.floor(Math.random() * 100000);
+                        }
+
+                        let Sibling_text = "{{ $options['sibling'] }}";
+
+                        let Sibling = $('#'+Sibling_text);
+                        let Collection_container = Sibling.find('.collection-container');
+                        let Accordion = Sibling.find('#accordion-{{ $options["sibling"] }}');
+                        let btnAdd = Sibling.find('.js-add-row');
+                        let scopedTemplateAccordionItem = '{!! $options["accordion_item"] !!}';
+                        let required_fields = Sibling.find('[required="required"]');
+                        btnAdd.on('click', function(e) {
+                            e.preventDefault();
+                            let Slot_id = generatingSlotID();
+                            var count = Accordion.children().length;
+                            console.log('count', count)
+                            var proto = Collection_container.data('prototype').replace(/{{ $options['prototype_name'] }}/g, count);
+                            var proto_item = scopedTemplateAccordionItem.replace(/{{ $options['prototype_name'] }}/g, count).replace(/##FORM##/g, proto).replace(/##SIBLING##/g, Sibling_text).replace(/##SLOT##/g, Slot_id);
+                            Accordion.append(proto_item);
+                            required_fields = Sibling.find('[required="required"]');
+                        })
+                    })
+                </script>
+            @endpush
+        @endif
     @endif
+
 </div>

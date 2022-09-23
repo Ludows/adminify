@@ -54,6 +54,7 @@ return [
             'image/gif',
             'application/pdf',
             'text/plain',
+            'audio/*'
         ]
     ],
 

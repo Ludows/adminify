@@ -25,12 +25,21 @@ class TipTapType extends FormField {
 
         $isAjax = request()->ajax();
 
+        if(empty($options['is_child_proto'])) {
+            $options['is_child_proto'] = false;
+        }
+
+        $is_formbuilder_proto = $options['is_child_proto'];
+
         $sibling = '';
         if(isset($options['force_sibling']) && $options['force_sibling'] == true && isset($options['sibling'])) {
             $sibling = $options['sibling'];
         }
         else {
-            $sibling = Str::slug('tiptap_'.$uniqid);
+            $sibling = Str::slug('tiptap_'. $uniqid);
+            if($is_formbuilder_proto) {
+                $sibling = Str::slug('tiptap_').'-##SLOT##';
+            }
         }
 
 

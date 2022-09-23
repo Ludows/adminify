@@ -20,19 +20,17 @@
     </head>
     <body class="{{ $class ?? '' }}">
         <main id="app">
-            <div id="swup">
-                <root-sharing :export="{{ $export ?? '{}' }}"></root-sharing>
-                @if($topbarShow)
-                    {!! toolbar() !!}
-                @endif
-                @if(!$isTemplate)
-                    @include('theme::'. $theme .'.layouts.partials.header')
-                @endif
-                @yield('content')
-                @if(!$isTemplate)
-                    @include('theme::'. $theme .'.layouts.partials.footer')
-                @endif
-            </div>
+            <root-sharing :export="{{ $export ?? '{}' }}"></root-sharing>
+            @if($topbarShow)
+                {!! toolbar() !!}
+            @endif
+            @if(!$isTemplate)
+                @include('theme::'. $theme .'.layouts.partials.header')
+            @endif
+            @yield('content')
+            @if(!$isTemplate)
+                @include('theme::'. $theme .'.layouts.partials.footer')
+            @endif
         </main>
 
         @stack('modales')
