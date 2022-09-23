@@ -8,12 +8,12 @@ trait HasMeta
 {
     public function metas()
     {
-        return $this->hasMany(Meta::class, 'model_id');
+        return $this->hasMany(Meta::class, 'model_id')->where('model_type', get_class($this));
     }
 
     public function getMeta($key)
     {
-        $meta = Meta::where(['key' => $key, 'model_id' => $this->id])
+        $meta = Meta::where(['key' => $key, 'model_id' => $this->id, 'model_type' => get_class($this)])
             ->first();
 
         if (empty($meta->value)) {
@@ -44,7 +44,7 @@ trait HasMeta
 
     public function updateMeta($key, $value)
     {
-        $meta = Meta::where(['key' => $key, 'model_id' => $this->id]);
+        $meta = Meta::where(['key' => $key, 'model_id' => $this->id, 'model_type' => get_class($this)]);
 
         if ($meta->exists()) {
             return $meta->first()->update(['value' => $value]);
@@ -64,6 +64,6 @@ trait HasMeta
 
     public function deleteMeta($key)
     {
-        return Meta::where(['key' => $key, 'model_id' => $this->id])->delete();
+        return Meta::where(['key' => $key, 'model_id' => $this->id, 'model_type' => get_class($this)])->delete();
     }
 }

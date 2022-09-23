@@ -21,6 +21,13 @@ $selectionMode = isset($isSelectionMode) ? $isSelectionMode : false;
        #modalPicker .modal-body {
         overflow-y: auto;
       }
+
+      #modalPicker .js-modal-details img {
+        border: 4px solid transparent;
+      }
+      #modalPicker .js-modal-details.selected img {
+        border-color: var(--primary)
+      }
 </style>
 <div class="modal fade" id="modalPicker" tabindex="-1">
 <div class="modal-dialog modal-xl">

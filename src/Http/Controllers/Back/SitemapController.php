@@ -19,9 +19,9 @@ class SitemapController extends Controller
         else if($sitemapPart == null) {
             $classCheck = $configSitemap;
             $i = 0;
-            foreach ($classCheck as $cls) {
+            foreach ($classCheck as $clsKey => $cls) {
                 # code...
-                $classCheck[$i] = adminify_get_class($cls, ['app:adminify:models', 'app:models'], false);
+                $classCheck[$clsKey] = adminify_get_class($cls, ['app:adminify:models', 'app:models'], false);
                 $i++;
             }
         }
