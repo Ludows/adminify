@@ -75,21 +75,21 @@ class Mediav2Controller extends Controller
             return $this->sendResponse($v->render(), 'medias.index', 'admin.file.retrieved', 'html');
         }
 
-        public function update(Media $mediasv2, Request $request)
+        public function update(Media $media, Request $request)
         {
             //
             $inputs = $request->all();
 
-            $this->mediaRepository->addModel($mediasv2)->update($inputs, $mediasv2);
+            $this->mediaRepository->addModel($media)->update($inputs, $media);
 
-            return $this->sendResponse($mediasv2, 'medias.index', 'admin.typed_data.updated');
+            return $this->sendResponse($media, 'medias.index', 'admin.typed_data.updated');
         }
 
-        public function destroy(Media $mediasv2)
+        public function destroy(Media $media)
         {
 
-            $this->mediaUploader->setModel($mediasv2)->destroy();
-            return $this->sendResponse($mediasv2, 'medias.index', 'admin.typed_data.deleted');
+            $this->mediaUploader->setModel($media)->destroy();
+            return $this->sendResponse($media, 'medias.index', 'admin.typed_data.deleted');
         }
 
         // /**
