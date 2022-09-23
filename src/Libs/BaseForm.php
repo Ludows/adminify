@@ -181,7 +181,11 @@ class BaseForm extends Form {
             $this->appendMetas($theClass);
         }
         if(is_array($mixed)) {
-            $theClass = adminify_get_class($mixed, ['app:metas'], false);
+            foreach ($mixed as $key => $mixedItem) {
+                # code...
+                $theClass = adminify_get_class($mixedItem, ['app:metas'], false);
+                $this->appendMetas($theClass);
+            }
         }
         return $this;
     }
