@@ -1032,4 +1032,20 @@ if(! function_exists('format_revision')) {
     }
 }
 
+if(!function_exists('is_route')) {
+    function is_route($routeName = '', $array = []) {
+        $curr_route = request()->route()->getName();
+        if(!empty($array)) {
+            $curr_route = $array;
+        }
+
+        if(is_array($curr_route)) {
+            return in_array($routeName, $curr_route);
+        }
+        else {
+            return $routeName == $curr_route;
+        }
+    }
+}
+
 

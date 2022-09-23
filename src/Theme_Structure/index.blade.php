@@ -21,7 +21,7 @@
         ])
     @endif
     
-    @if ($isTemplate)
+     @if ($isTemplate)
         @include('theme::'. $theme .'.blank_template')
     @endif
 
@@ -34,11 +34,11 @@
     @endif
 
     @if ($isSingle && !$isTemplate)
-        @includeFirst(['theme::'. $theme .'.single-'.$model->id, 'theme::'. $theme .'.single'])
+        @includeFirst(['theme::'. $theme .'.single-'.$model->id, 'theme::'. $theme .'.single-'.$type , 'theme::'. $theme .'.single-'.$model->slug, 'theme::'. $theme .'.single'])
     @endif
 
     @if ($isPage && !$isTemplate)
-        @includeFirst(['theme::'. $theme .'.page-'.$model->id, 'theme::'. $theme .'.page-'.$type, 'theme::'. $theme .'.page'])
+        @includeFirst(['theme::'. $theme .'.page-'.$model->id, 'theme::'. $theme .'.page-'.$type, 'theme::'. $theme .'.page-'.$model->slug, 'theme::'. $theme .'.page'])
     @endif
 
     @if ($isContentModel && !$isTemplate)
@@ -46,7 +46,7 @@
     @endif
 
     @if ($isSearch && !$isTemplate)
-        @includeFirst(['theme::'. $theme .'.searchpage-'.$model->id, 'theme::'. $theme .'.searchpage-'.$type, 'theme::'. $theme .'.searchpage'])
+        @includeFirst(['theme::'. $theme .'.searchpage-'.$model->id, 'theme::'. $theme .'.searchpage-'.$type, 'theme::'. $theme .'.searchpage-'.$model->slug, 'theme::'. $theme .'.searchpage'])
     @endif
 
     @if($isPreview)

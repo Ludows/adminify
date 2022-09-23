@@ -3,6 +3,7 @@ namespace Ludows\Adminify\Forms\Fields;
 
 use Kris\LaravelFormBuilder\Fields\CollectionType;
 use Illuminate\Support\Str;
+use Kris\LaravelFormBuilder\Fields\FormField;
 
 class RepeaterType extends CollectionType {
 
@@ -16,6 +17,35 @@ class RepeaterType extends CollectionType {
 
     public function setDefaultsOptions() {
         return array();
+    }
+
+    /**
+     * Generate prototype for regular form field.
+     *
+     * @param FormField $field
+     * @return void
+     */
+    protected function generatePrototype(FormField $field)
+    {
+
+        $value = $this->makeNewEmptyModel();
+        $field->setOption('is_prototype', true);
+        $field = $this->setupChild($field, $this->getPrototypeName(), $value);
+
+        // dd($field);
+
+        if ($field instanceof \Kris\LaravelFormBuilder\Fields\ChildFormType) {
+            foreach ($field->getChildren() as $child) {
+                $child->setOption('is_child_proto', true);
+                $child->setOption('force_js', true);
+                if ($child instanceof CollectionType) {
+                    $child->preparePrototype($child->prototype());
+                }
+            }
+        }
+
+
+        $this->proto = $field;
     }
 
     public function getTemplateItem() {
@@ -98,8 +128,9 @@ class RepeaterType extends CollectionType {
 
         // $this->setOptions($options);
 
-        // dd($options);
-        // dd($this);
+        // if(!empty($options['prototype']) && $options['prototype'] == true) {
+        //     view()->share('dis')
+        // }
 
         return parent::render($options, $showLabel, $showField, $showError);
     }

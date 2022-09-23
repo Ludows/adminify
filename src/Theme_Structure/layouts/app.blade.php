@@ -11,7 +11,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         @laravelPWA
         @hook('assets.css')
-        {!! Assets::css() !!}
+        {!! Assets::css( get_site_key('assets.render.css') ) !!}
         @stack('css')
 
         <script>
@@ -20,24 +20,22 @@
     </head>
     <body class="{{ $class ?? '' }}">
         <main id="app">
-            <div id="swup">
-                <root-sharing :export="{{ $export ?? '{}' }}"></root-sharing>
-                @if($topbarShow)
-                    {!! toolbar() !!}
-                @endif
-                @if(!$isTemplate)
-                    @include('theme::'. $theme .'.layouts.partials.header')
-                @endif
-                @yield('content')
-                @if(!$isTemplate)
-                    @include('theme::'. $theme .'.layouts.partials.footer')
-                @endif
-            </div>
+            <root-sharing :export="{{ $export ?? '{}' }}"></root-sharing>
+            @if($topbarShow)
+                {!! toolbar() !!}
+            @endif
+            @if(!$isTemplate)
+                @include('theme::'. $theme .'.layouts.partials.header')
+            @endif
+            @yield('content')
+            @if(!$isTemplate)
+                @include('theme::'. $theme .'.layouts.partials.footer')
+            @endif
         </main>
 
         @stack('modales')
         @hook('assets.js')
-        {!! Assets::js() !!}
+        {!! Assets::js( get_site_key('assets.render.js') ) !!}
         @stack('js')
     </body>
 </html>

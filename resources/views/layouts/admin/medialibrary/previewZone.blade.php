@@ -6,8 +6,10 @@
 
 <div class="row">
     <div class="{!! $getCssClassPreview !!}">
-        <img id="imageOriginal" class="img-fluid d-none" alt="" src="">
-        <video src="" class="d-none" id="videoOriginal"></video>
+        <img id="imageOriginal" class="img-fluid js-preview mb-3 d-none" alt="" src="">
+        <video src="" class="d-none js-preview mb-3" id="videoOriginal"></video>
+        <audio controls src="" class="d-none mb-3 js-preview" id="audioOriginal"></audio>
+        <iframe src="" class="d-none mb-3 js-preview" id="iframeOriginal"></iframe>
     </div>
     <div class="{!! $getCssClassFormPreview !!}">
         <form method="POST" action="#">

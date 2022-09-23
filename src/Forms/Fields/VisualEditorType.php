@@ -88,13 +88,32 @@ class VisualEditorType extends FormField {
         $options = array_merge($this->getOptions(), $options);
         $isAjax = request()->ajax();
 
+        if(empty($options['is_child_proto'])) {
+            $options['is_child_proto'] = false;
+        }
+
+        $is_formbuilder_proto = $options['is_child_proto'];
+
         if(!isset($options['visual_editor_options'])) {
             $options['visual_editor_options'] = array();
         }
 
-        $sibling = slug('visual_editor_'.$uniqid);
+        if(isset($options['force_sibling']) && $options['force_sibling'] == true && isset($options['sibling'])) {
+            $sibling = $options['sibling'];
+        }
+        else {
+            $sibling = Str::slug('visual_editor_'. $uniqid);
+            if($is_formbuilder_proto) {
+                $sibling = Str::slug('visual_editor_').'-##SLOT##';
+            }
+        }
 
-        $options['attr']['id'] = 'visual_editor_id_'.$uniqid;
+        if(!$is_formbuilder_proto) {
+            $options['attr']['id'] = 'visual_editor_id_'.$uniqid;
+        }
+        else {
+            $options['attr']['id'] = 'visual_editor_id_##SLOT##';
+        }
 
         $b = [
             'isAjax' => $isAjax,

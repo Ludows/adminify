@@ -30,12 +30,18 @@
         {{--  {!! Form::input('hidden', 'mime_type', null, $options['attr']) !!}  --}}
         {!! Form::input('hidden', $name, $options['value'], $options['attr']) !!}
         @push('modales')
-            @include('adminify::layouts.admin.medialibrary.modalPicker', [
-                'typed_files' => app('Ludows\Adminify\Libs\MediaService')->getListingTypedFiles(),
-                'dates' => app('Ludows\Adminify\Libs\MediaService')->getListingDates(),
-                'isSelectionMode' => true,
-                'multiple' => $options['media_element_options']['multiple']
-            ])
+            @if (!view()->shared('modale_media_element'))
+                @include('adminify::layouts.admin.medialibrary.modalPicker', [
+                    'typed_files' => app('Ludows\Adminify\Libs\MediaService')->getListingTypedFiles(),
+                    'dates' => app('Ludows\Adminify\Libs\MediaService')->getListingDates(),
+                    'isSelectionMode' => true,
+                    'multiple' => $options['media_element_options']['multiple']
+                ])
+                @php
+                    view()->share('modale_media_element', true);
+                @endphp
+            @endif
+
         @endpush
 
 
@@ -51,26 +57,33 @@
 
 </div>
 
-@if ($options['isAjax'])
-    <script>
-        window.admin.modalPicker.push({
-            fieldName: "[name='{!! $name !!}']",
-            selector: "{{ $options['sibling'] }}",
-            options: {!! $export_config !!},
-            multilang: {!! var_export(is_multilang(),true) !!},
-            currentLang: '{!! $currentLang !!}'
-        });
-    </script>
-@else
-    @push('js')
-    <script>
-        window.admin.modalPicker.push({
-            fieldName: "[name='{!! $name !!}']",
-            selector: "{{ $options['sibling'] }}",
-            options: {!! $export_config !!},
-            multilang: {!! var_export(is_multilang(),true) !!},
-            currentLang: '{!! $currentLang !!}'
-        });
-    </script>
-    @endpush
-@endif
+        @if ($options['isAjax'])
+            <script>
+                @if(!$options['is_child_proto'])
+                    document.addEventListener("DOMContentLoaded", function(event) {
+                @endif
+                    window.admin.modalPicker.push({
+                        fieldName: "[name='{!! $name !!}']",
+                        selector: "{{ $options['sibling'] }}",
+                        options: {!! $export_config !!},
+                        multilang: {!! var_export(is_multilang(),true) !!},
+                        currentLang: '{!! $currentLang !!}'
+                    });
+                @if(!$options['is_child_proto'])
+                    });
+                @endif
+            </script>
+        @else
+            @push('js')
+            <script>
+                window.admin.modalPicker.push({
+                    fieldName: "[name='{!! $name !!}']",
+                    selector: "{{ $options['sibling'] }}",
+                    options: {!! $export_config !!},
+                    multilang: {!! var_export(is_multilang(),true) !!},
+                    currentLang: '{!! $currentLang !!}'
+                });
+            </script>
+            @endpush
+        @endif
+

@@ -54,6 +54,7 @@ return [
             'image/gif',
             'application/pdf',
             'text/plain',
+            'audio/*'
         ]
     ],
 
@@ -75,6 +76,28 @@ return [
     ],
 
     'assets' => array(
+        'render' => [
+            'css' => [],
+            'js' => function($assets) {
+                $output = '';
+                foreach ($assets as $key => $asset) {
+                    # code...
+                    $attibutes = [
+                        'src' => $asset,
+                        'type' => 'text/javascript',
+                    ];
+
+                    // if(is_front() && adminify_asset('/theme/tml/js/app.js') == $asset) {
+                    //     $attibutes['data-swup-ignore-script'] = "data-swup-ignore-script";
+                    // }
+
+                    $attibutesHtml = Assets::buildTagAttributes($attibutes);
+
+                    $output .= '<script ' . $attibutesHtml . '></script>';
+                }
+                return $output;
+            }
+        ],
         'collections' => array(
             'core_backend' => array(
                 adminify_asset('/adminify/vendor/nucleo/css/nucleo.css'),

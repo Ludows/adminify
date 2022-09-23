@@ -30,8 +30,8 @@
 
 @if ($options['isAjax'])
     <script>
-        @if (isset($options['force_js']) && $options['force_js'])
-            document.addEventListener("DOMContentLoaded", function(event) { 
+        @if(!$options['is_child_proto'])
+            document.addEventListener("DOMContentLoaded", function(event) {
         @endif
         summernoteInitFunction([{
             selector: '{{ $options['sibling'] }}',
@@ -39,7 +39,7 @@
             multilang: {!! var_export(is_multilang(),true) !!},
             currentLang: '{!! $currentLang !!}'
         }])
-        @if (isset($options['force_js']) && $options['force_js'])
+        @if(!$options['is_child_proto'])
             });
         @endif
     </script>

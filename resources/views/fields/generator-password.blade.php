@@ -31,12 +31,18 @@
 
 @if ($options['isAjax'])
     <script type="text/javascript">
+        @if(!$options['is_child_proto'])
+                    document.addEventListener("DOMContentLoaded", function(event) {
+        @endif
         PasswordGeneratorInitFunction([{
             selector: "{{ $options['sibling'] }}",
             options: [],
             multilang: {!! var_export(is_multilang(),true) !!},
             currentLang: '{!! $currentLang !!}'
         }])
+        @if(!$options['is_child_proto'])
+            });
+        @endif
     </script>
 @else
     @push('js')

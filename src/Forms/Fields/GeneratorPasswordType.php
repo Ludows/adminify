@@ -29,6 +29,12 @@ class GeneratorPasswordType extends FormField {
         $options = array_merge($this->getOptions(), $options);
         $isAjax = request()->ajax();
 
+        if(empty($options['is_child_proto'])) {
+            $options['is_child_proto'] = false;
+        }
+
+        $is_formbuilder_proto = $options['is_child_proto'];
+
         if(isset($options['force_js']) && $options['force_js'] == true) {
             $isAjax = true;
         }
@@ -38,7 +44,10 @@ class GeneratorPasswordType extends FormField {
             $sibling = $options['sibling'];
         }
         else {
-            $sibling = Str::slug('generator_password_'.$uniqid);
+            $sibling = Str::slug('generator_password_'. $uniqid);
+            if($is_formbuilder_proto) {
+                $sibling = Str::slug('generator_password_').'-##SLOT##';
+            }
         }
 
         $b = [
