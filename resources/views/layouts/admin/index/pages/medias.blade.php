@@ -14,8 +14,8 @@
 
 
 <div class="js-mediatheque {!! $selectionMode ? 'is-selection' : '' !!} {!! $multipleMode ? 'is-multiple' : 'is-single' !!}">
-    <div class="container-fluid mt--7">
-        <div class="row">
+    <div class="container-fluid {!! $withPageElements ? 'mt--7' : '' !!}">
+        <div class="row ">
             @hook('before_content_page')
             <div class="col-12">
                 <div class="d-flex bg-white rounded-lg shadow align-items-center px-3 py-2 mb-3 flex-wrap">
