@@ -8,6 +8,7 @@ use Kris\LaravelFormBuilder\Form;
 
 class BaseForm extends Form {
     public $appendMetas = [];
+    public $loadTypeMetas = 'after'; // before
     public function addSubmit($options = []) {
         $r = $this->getRequest();
 
@@ -226,5 +227,34 @@ class BaseForm extends Form {
                 'value' => implode(', ', $metaboxes)
             ]);
         }
+    }
+    /**
+     * Rebuild the form from scratch.
+     *
+     * @return $this
+     */
+    public function rebuildForm()
+    {
+        $typeLoad = $this->loadTypeMetas;
+        $metas = $this->appendMetas;
+
+        if(!is_array($metas)) {
+            throw new Error('appendMetas attribute must be an array');
+        }
+
+        if($typeLoad == 'before') {
+            foreach ($metas as $key => $meta) {
+                # code...
+                $this->loadMetas($meta);
+            }
+        }
+        parent::rebuildForm();
+        if($typeLoad == 'after') {
+            foreach ($metas as $key => $meta) {
+                # code...
+                $this->loadMetas($meta);
+            }
+        }
+        return $this;
     }
 }
