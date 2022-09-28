@@ -21,6 +21,13 @@ class ThemeManager
             // 'editor.preview'
         ];
     }
+    
+    /**
+     * assets
+     *
+     * @param  array $array
+     * @return $this
+     */
     public function assets($array = []) {
 
         foreach ($array as $key => $value) {

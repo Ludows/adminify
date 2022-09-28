@@ -59,7 +59,7 @@ jQuery(document).ready(() => {
             let hasSelector = elm.attr('data-selector');
 
             if(hasSelector) {
-                modal.find('#config_picker_handle').val(elm.attr('data-selector'));
+                getConfigPickerElement().val(elm.attr('data-selector'));
 
                 const { config } = getSelection();
                 const field = getField( config );
@@ -119,16 +119,26 @@ jQuery(document).ready(() => {
         return null;
     }
 
+    function getConfigPickerElement() {
+        let modal = getCurrentModal();
+        return modal.find('#config_picker_handle');
+    }
+
     function getSelection() {
         let selecteds = getSelecteds();
         console.log('selecteds', selecteds)
         let html = '';
-        let modal = getCurrentModal();
-        let config = getConfigPicker( modal.find('#config_picker_handle').val() );
+        console.log( getConfigPickerElement().val() )
+        let config = getConfigPicker( getConfigPickerElement().val() );
 
         selecteds.forEach((selectedId) => {
             let elm = MediaTheque.find('.js-modal-details[data-id="'+ selectedId +'"]').clone(true);
-            elm.append('<span class="js-remove-selection clear" data-id="'+ selectedId +'">x</span>');
+            let tpl_i = '<i class="js-remove-selection ni ni-fat-remove clear" data-id="'+ selectedId +'"></i>';
+            if(config && config.selector) {
+                elm.attr('data-selector', config.selector);
+            }
+
+            elm.append(tpl_i);
             html += elm.prop('outerHTML');
         })
         return {
@@ -202,8 +212,12 @@ jQuery(document).ready(() => {
         }
     }
 
+    function getElSelectedsIds() {
+        return MediaTheque.find('#media_selecteds_id');
+    }
+
     function manageSelectionMode(id = null) {
-        let sel = MediaTheque.find('#media_selecteds_id');
+        let sel = getElSelectedsIds();
         let modal = getCurrentModal();
         let selectMediaBtn = modal.find('.js-select-media');
         let previewBlock = modal.find('#previewBlock');
@@ -286,13 +300,26 @@ jQuery(document).ready(() => {
         })
     }
 
-
+    function mapRenderedSelection(jQueryInterface) {
+        let ret = [];
+        console.log('jQuery Interface', jQueryInterface)
+        jQueryInterface.each(function(i, el) {
+            let id = $(el).attr('data-id');
+            if(id) {
+                ret.push(id);
+            }
+        })
+        return ret;
+    }
 
     function handleModalProcess(e) {
         e.preventDefault();
-        let id = $(this).attr('data-id');
-        let typeAction = 'delete';
         let isSelectionMode = isSelectionGroupMode();
+        let id = $(this).attr('data-id');
+        if(isSelectionMode && getSelectionMode() == 'multiple' && $(this).hasClass('is-selection-blk')) {
+            id = mapRenderedSelection($(this).parent().children());
+        }
+        let typeAction = 'delete';
         let isDeleteMode = isDeleteGroupMode();
         let model = $(this).attr('data-media');
         let originalImage = $(this).attr('data-original');
@@ -308,7 +335,12 @@ jQuery(document).ready(() => {
         }
         if(isSelectionMode) {
             typeAction = 'selection';
-            manageSelectionMode(id);
+            if(typeof id == 'array') {
+
+            }
+            else {
+                manageSelectionMode(id);
+            }
         }
 
         if(!isDeleteMode) {
@@ -317,7 +349,15 @@ jQuery(document).ready(() => {
 
         mapAttributestoForm(modal.find('form'), JSON.parse(model));
 
-        renderActiveMedia(id, typeAction);
+        if(typeof id == 'array') {
+            console.log('selection', id)
+            $.each(id, function(index, idFromSelection) {
+                renderActiveMedia(idFromSelection, typeAction);
+            })
+        }
+        else {
+            renderActiveMedia(id, typeAction);
+        }
 
         if(isDeleteMode || isSelectionMode) {
             return false;
@@ -544,6 +584,7 @@ jQuery(document).ready(() => {
         e.stopPropagation();
 
         $(this).parent().remove();
+        getConfigPickerElement().val( $(this).parent().attr('data-selector') );
         let selecteds_media = MediaTheque.find('#media_selecteds_id');
 
         let dataId = $(this).attr('data-id');
@@ -556,6 +597,8 @@ jQuery(document).ready(() => {
             selecteds_media.val( selecteds );
         }
         let selection = getSelection();
+
+        console.log('selection in delete', selection)
 
         let selectionZone = $('#'+selection.config.selector).find('.row-selection');
         let childLength = selectionZone.children().length;
@@ -651,6 +694,11 @@ jQuery(document).ready(() => {
 
         modal.on('click', '.js-select-media', handleSelectionProcess)
 
+        $('#modalPicker').on('hidden.bs.modal', function(e) {
+            getConfigPickerElement().val('');
+            getElSelectedsIds().val('');
+        })
+
         // trigger init
         callTheSearch()
     }
@@ -681,7 +729,7 @@ jQuery(document).ready(() => {
         console.log(modal);
         let selector = $(this).attr('data-selector');
 
-        modal.find('#config_picker_handle').val(selector);
+        getConfigPickerElement().val(selector);
 
         modal.modal('toggle');
     })
