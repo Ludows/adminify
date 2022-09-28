@@ -3,7 +3,7 @@
         height: auto;
     }
 </style>
-<div id="{{ $options['sibling'] }}">
+<div id="{{ $options['sibling'] }}" {!! $options['sibling_attr'] !!}>
 
     @if($options['wrapper'] !== false)
         <div {!! $options['wrapperAttrs'] !!}>

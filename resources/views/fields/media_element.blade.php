@@ -2,7 +2,7 @@
     $export_config = json_encode($options['media_element_options']);
 @endphp
 
-<div id="{{ $options['sibling'] }}">
+<div id="{{ $options['sibling'] }}" {!! $options['sibling_attr'] !!}>
     @if($options['wrapper'] !== false)
         <div {!! $options['wrapperAttrs'] !!}>
     @endif
