@@ -43,6 +43,16 @@ class MediaElementType extends FormField {
             $options['is_child_proto'] = false;
         }
 
+        if(empty($options['sibling_attr'])) {
+            $options['sibling_attr'] = [];
+        }
+
+        $customAttributes = $this->formHelper->prepareAttributes($options['sibling_attr']);
+
+        if(!empty($customAttributes)) {
+            $options['sibling_attr'] = $customAttributes;
+        }
+
         $is_formbuilder_proto = $options['is_child_proto'];
 
 
