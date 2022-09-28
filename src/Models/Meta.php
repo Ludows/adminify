@@ -23,7 +23,7 @@ class Meta extends ClassicModel
     protected $guarded = [];
     public $timestamps = false;
 
-    public $enable_searchable = true;
+    public $enable_searchable = false;
     public $searchable_label = 'value';
     public $enable_revisions = false;
 
