@@ -91,6 +91,16 @@ class RepeaterType extends CollectionType {
 
         $isAjax = request()->ajax();
 
+        if(empty($options['sibling_attr'])) {
+            $options['sibling_attr'] = [];
+        }
+
+        $customAttributes = $this->formHelper->prepareAttributes($options['sibling_attr']);
+
+        if(!empty($customAttributes)) {
+            $options['sibling_attr'] = $customAttributes;
+        }
+
         $sibling = '';
         if(isset($options['force_sibling']) && $options['force_sibling'] == true && isset($options['sibling'])) {
             $sibling = $options['sibling'];

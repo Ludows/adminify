@@ -865,24 +865,6 @@ if(! function_exists('image')) {
     }
 }
 
-if (! function_exists('get_form')) {
-    function get_form($mixed) {
-        $m = new Forms();
-
-        if(is_int($mixed)) {
-            $m = $m->where('id', $mixed);
-        }
-
-        if(is_string($mixed)) {
-            $m = $m->where('slug', $mixed);
-            $m = $m->orWhere('title', $mixed);
-        }
-
-
-        return $m->get()->first();
-    }
-}
-
 if (! function_exists('frontity_form')) {
 
     function frontity_form($namedClass, $templatePath = null, $html = true) {

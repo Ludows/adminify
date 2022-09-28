@@ -17,9 +17,17 @@ class ThemeManager
         $this->ignores = [
             'image.transform',
             'theme.assets',
+            'forms.validate'
             // 'editor.preview'
         ];
     }
+    
+    /**
+     * assets
+     *
+     * @param  array $array
+     * @return $this
+     */
     public function assets($array = []) {
 
         foreach ($array as $key => $value) {

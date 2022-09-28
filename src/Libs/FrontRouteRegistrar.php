@@ -28,12 +28,20 @@ class FrontRouteRegistrar {
                     $baseMethod = $this->config['methods']['pages'];
                     $url = join('/', $localBoundedModel->url);
                     $isHome = is_homepage($localBoundedModel);
+                    $isSearch = is_search($localBoundedModel);
                     if($isHome) {
                         $baseMethod = $this->config['methods']['homepage'];
                         $url = '/';
                     }
-
+                    
                     $strFile .= "Route::get( '". $url . "','".$this->config['handle'].'@'.$baseMethod."')->name('frontend.". lowercase($keyedNameModel) .".". str_replace('-', '_', $localBoundedModel->slug) ."');";
+                    
+                    if($isSearch) {
+                        $baseMethod = $this->config['methods']['search'];
+                        // $router->post('/search', 'App\Adminify\Http\Controllers\Front\PageController@search')->name('globalsearch');
+                        $strFile .= "Route::post( '". $url . "','".$this->config['handle'].'@'.$baseMethod."')->name('globalsearch');";
+                    }
+                    
                     // "Route::get( $localBoundedModel->ur , 'App\Adminify\Http\Controllers\Front\PageController@index')->name('pages.front.index');"
                 }
 

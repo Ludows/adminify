@@ -20,6 +20,7 @@ class Media extends ClassicModel
     public $MultilangTranslatableSwitch = ['alt', 'description'];
 
     public $searchable_label = 'src';
+    public $enable_searchable = false;
 
     protected $useSlugGeneration = false;
     public $enable_revisions = false;

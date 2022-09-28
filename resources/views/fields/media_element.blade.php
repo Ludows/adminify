@@ -12,6 +12,35 @@
     @endif
 
     @if($showField)
+        <style>
+            .js-modal-details {
+                position:relative;
+            }
+            .js-modal-details .clear {
+                position: absolute;
+                left:25px;
+                top:5%;
+                color: black;
+                opacity: .8;
+                transition: .2s all ease;
+                background-color: white;
+                width: 25px;
+                height: 25px;
+                border-radius: 100%;
+                display:flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .js-modal-details img {
+                opacity: .8;
+            }
+            .js-modal-details:hover img {
+                opacity: 1;
+            }
+            .js-modal-details:hover .clear {
+                opacity: 1;
+            }
+        </style>
         <div class="row row-selection">
             @if($options['hasBootedMedia'] && $options['medias']->count() > 0 )
 

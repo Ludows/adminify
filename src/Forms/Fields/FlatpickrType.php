@@ -27,8 +27,18 @@ class FlatpickrType extends FormField {
 
         $isAjax = request()->ajax();
 
-        if(empty($options['is_child_proto'])) {
+        if(empty($options['sibling_attr'])) {
+            $options['sibling_attr'] = [];
+        }
+
+        if(empty($options[''])) {
             $options['is_child_proto'] = false;
+        }
+
+        $customAttributes = $this->formHelper->prepareAttributes($options['sibling_attr']);
+
+        if(!empty($customAttributes)) {
+            $options['sibling_attr'] = $customAttributes;
         }
 
         $is_formbuilder_proto = $options['is_child_proto'];
