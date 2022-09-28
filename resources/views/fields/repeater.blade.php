@@ -1,7 +1,7 @@
 @php
  $is_prototype = !empty($options['is_prototype']) ? $options['is_prototype'] : false;
 @endphp
-<div id="{{ $options['sibling'] }}">
+<div id="{{ $options['sibling'] }}" {!! $options['sibling_attr'] !!}>
     @if($options['wrapper'] !== false)
         <div {!! $options['wrapperAttrs'] !!}>
     @endif
