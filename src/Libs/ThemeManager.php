@@ -17,6 +17,7 @@ class ThemeManager
         $this->ignores = [
             'image.transform',
             'theme.assets',
+            'forms.validate'
             // 'editor.preview'
         ];
     }
