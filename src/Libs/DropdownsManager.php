@@ -96,6 +96,27 @@ class DropdownsManager
                 ]
             ]);
 
+            if(is_trashable_model($m) && $m->{$m->status_key} != status()::TRASHED_ID) {
+                $this->add('dropdown_'.$m->id, [
+                    'template' => 'adminify::layouts.admin.dropdowns.extends.trash',
+                    'vars' => [
+                        'url' => route('trash', ['type' => titled($singular), 'id' => $m->id]),
+                        'name' => $plurial
+                    ]
+                ]);
+            }
+
+            if(is_content_type_model($m)) {
+                $this->add('dropdown_'.$m->id, [
+                    'template' => 'adminify::layouts.admin.dropdowns.extends.seo',
+                    'vars' => [
+                        'url' => route('seo.edit', ['type' => titled($singular), 'id' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
+                        'name' => 'seo'
+                    ]
+                ]);
+            }
+            
+
             $this->add('dropdown_'.$m->id, [
                 'template' => 'adminify::layouts.admin.dropdowns.extends.copy',
                 'vars' => [

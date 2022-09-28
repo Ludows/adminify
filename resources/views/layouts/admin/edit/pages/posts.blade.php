@@ -20,7 +20,7 @@
                         </div>
                         <div class="col-12 col-lg-2">
                             @php
-                                $routePreview = 'frontend.'. lowercase($request->type) .'.'. $request->model->slug;
+                                $routePreview = 'frontend.'. lowercase($request->type) .'.'. str_replace('-', '_', $request->model->slug);
                             @endphp
                             <a href="{{ route($routePreview) }}" class="btn btn-default" target="_blank"><i class="fas fa-eye"></i></a>
                         </div>
