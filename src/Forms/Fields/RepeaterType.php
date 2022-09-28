@@ -100,6 +100,9 @@ class RepeaterType extends CollectionType {
         if(!empty($customAttributes)) {
             $options['sibling_attr'] = $customAttributes;
         }
+        else {
+            $options['sibling_attr'] = '';
+        }
 
         $sibling = '';
         if(isset($options['force_sibling']) && $options['force_sibling'] == true && isset($options['sibling'])) {

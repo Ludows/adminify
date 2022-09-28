@@ -42,6 +42,9 @@ class GeneratorPasswordType extends FormField {
         if(!empty($customAttributes)) {
             $options['sibling_attr'] = $customAttributes;
         }
+        else {
+            $options['sibling_attr'] = '';
+        }
 
         $is_formbuilder_proto = $options['is_child_proto'];
 
