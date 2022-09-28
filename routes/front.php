@@ -30,9 +30,11 @@ if(is_installed()) {
                 $router->get('/theme/{folder}/{filename}', 'App\Adminify\Http\Controllers\Front\ImageController@themeAssets')->name('theme.assets');
             }
 
-            $router->post('/forms/validate/', 'App\Adminify\Http\Controllers\Front\PageController@validateForms')->name('forms.validate');
+            
+            if(isset($c['form']) && $c['form']) {
+                $router->post('/forms/validate/', 'App\Adminify\Http\Controllers\Front\PageController@validateForms')->name('forms.validate');
+            }
 
-            $router->post('/search', 'App\Adminify\Http\Controllers\Front\PageController@search')->name('globalsearch');
 
             // $path_admin_file = base_path('routes/adminify_front.php');
 

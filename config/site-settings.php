@@ -33,6 +33,7 @@ return [
             'categories' => 'getCategories',
             'tag' => 'getTag',
             'tags' => 'getTags',
+            'search' => 'search',
             'archives' => 'getArchives'
         ]
     ],
