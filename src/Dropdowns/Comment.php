@@ -8,32 +8,6 @@ use Ludows\Adminify\Forms\DeleteCrud;
 class Comment extends DropdownsManager
 {
     public function handle() {
-
-        $datas = $this->getDatas();
-        $r = $this->getRequest();
-        $models = $this->getModels();
-
-        $form = app('Kris\LaravelFormBuilder\FormBuilder');
-
-        foreach ($models as $m) {
-            $this->add('dropdown_'.$m->id, [
-                'template' => 'adminify::layouts.admin.dropdowns.extends.edit',
-                'vars' => [
-                    'url' => route('comments.edit', ['comment' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
-                    'name' => 'comments'
-                ]
-            ]);
-            $this->add('dropdown_'.$m->id, [
-                'template' => 'adminify::layouts.admin.dropdowns.extends.delete',
-                'vars' => [
-                    'form' => $form->create(DeleteCrud::class, [
-                        'method' => 'DELETE',
-                        'url' => route('comments.destroy', ['comment' => $m->id])
-                    ])
-                ]
-            ]);
-        }
-
-        
+        parent::handle();
     }
 }
