@@ -9,18 +9,20 @@
                 $name = str_replace('.create', '', $name);
             @endphp
 
+            @hook('before_form_page')
             <div class="card shadow">
                 <div class="card-header border-0">
                     {{ __($name.'.create') }}
                 </div>
                 <div class="card-body">
-                    @hook('before_form_page')
+                    
                     @if(isset($form))
                         {!! form($form) !!}
                     @endif
-                    @hook('after_form_page')
+                    
                 </div>
             </div>
+            @hook('after_form_page')
         </div>
         @hook('after_content_page')
     </div>
