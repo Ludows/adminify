@@ -43,7 +43,7 @@
   </nav>
 
   @push('js')
-    <script>
+    <script data-swup-ignore-script="data-swup-ignore-script">
         let dropdowns = Array.prototype.slice.call(document.querySelectorAll('.js-dropdowns'));
 
         dropdowns.forEach((dropdown) => {
