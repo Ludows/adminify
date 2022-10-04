@@ -76,17 +76,13 @@ class InstallPackages extends Command
             }
         }
 
+        if($firstInstall) {
+            $this->call('adminify:create_db');
+        }
+
         if(!in_array('*', $cleanedTasks) && count($arguments['task']) == 0) {
             $cleanedTasks[] = '*';
             $cleanedTasks[] = 'cache';
-        }
-
-
-        if($firstInstall) {
-            $this->info('Handle Env installation...');
-            $this->call('adminify:env');
-
-            $this->doClearCaches();
         }
 
         if(in_array('*', $cleanedTasks) && !$firstInstall || in_array('refresh', $cleanedTasks) && !$firstInstall) {
@@ -116,10 +112,7 @@ class InstallPackages extends Command
             $this->call('migrate');
         }
 
-        if(in_array('*', $cleanedTasks)  || in_array('feeds', $cleanedTasks)) {
-            $this->info('Handle feeds config generation...');
-            $this->call('adminify:feeds');
-        }
+        
 
         if(in_array('*', $cleanedTasks)  || in_array('routes', $cleanedTasks)) {
             $this->info('Handle route list js...');
@@ -137,6 +130,11 @@ class InstallPackages extends Command
             $this->call('adminify:container');
         }
 
+        if(in_array('*', $cleanedTasks)  || in_array('feeds', $cleanedTasks)) {
+            $this->info('Handle feeds config generation...');
+            $this->call('adminify:feeds');
+        }
+
         //run seeds
         //exec("php artisan db:seed --class='Ludows\Adminify\Database\Seeders\DatabaseSeeder'");
         if(in_array('*', $cleanedTasks) && !$firstInstall  || in_array('seed', $cleanedTasks) && !$firstInstall) {
@@ -144,6 +142,23 @@ class InstallPackages extends Command
             $this->call('db:seed', [
                 '--class' => 'Ludows\Adminify\Database\Seeders\DatabaseSeeder'
             ]);
+        }
+
+        if($firstInstall) {
+            $isInstalled = is_installed();
+            // load migrations.
+
+            $modelToBound = new \Ludows\Adminify\Models\Settings();
+            if($isInstalled) {
+                $modelToBound = setting();
+            }
+    
+            $modelToBound->withoutEvents(function () {
+                return $modelToBound->create([
+                    'type' => 'theme',
+                    'data' => env('THEME_NAME_ON_INSTALL')
+                ]);
+            });
         }
 
         if(in_array('*', $cleanedTasks)  || in_array('npm', $cleanedTasks)) {

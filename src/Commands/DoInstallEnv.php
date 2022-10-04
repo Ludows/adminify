@@ -12,14 +12,14 @@ class DoInstallEnv extends Command
      *
      * @var string
      */
-    protected $signature = 'adminify:env';
+    protected $signature = 'adminify:setup';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command for install user , password and db name for adminify';
+    protected $description = 'Setup Adminify';
 
     /**
      * Create a new command instance.
@@ -88,6 +88,8 @@ class DoInstallEnv extends Command
         $keys['DB_DATABASE'] = !empty($db_name) ? $db_name : '';
 
         $theme_name = $this->ask(__('adminify.questions.theme_name'));
+
+        $keys['THEME_NAME_ON_INSTALL'] =  lowercase($theme_name);
 
         $keys['MIX_ADMINIFY_THEME_ROOT_FOLDER'] = "resources/theme";
 

@@ -22,6 +22,7 @@ use Ludows\Adminify\Commands\CreateTheme;
 use Ludows\Adminify\Commands\CreateFrontForms;
 use Ludows\Adminify\Commands\CreateShortcode;
 use Ludows\Adminify\Commands\FlushCacheQuery;
+use Ludows\Adminify\Commands\CreateDatabase;
 
 use Ludows\Adminify\Commands\CreateCrud;
 use Ludows\Adminify\Commands\CreateTable;
@@ -342,6 +343,7 @@ class AdminifyServiceProvider extends ServiceProvider {
     private function registerCommands() {
 
         $this->commands([
+            CreateDatabase::class,
             CreateFormRequests::class,
             GenerateAdminifyContainer::class,
             CreateForms::class,
