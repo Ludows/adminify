@@ -56,6 +56,7 @@ class DoInstallEnv extends Command
     public function handle()
     {
         $keys = [];
+        $isInstalled = is_installed();
 
         $app_multilang = $this->choice(
             __('adminify.questions.multilang'),
@@ -89,6 +90,8 @@ class DoInstallEnv extends Command
 
         $theme_name = $this->ask(__('adminify.questions.theme_name'));
 
+        $keys['THEME_NAME_ON_INSTALL'] =  lowercase($theme_name);
+
         $keys['MIX_ADMINIFY_THEME_ROOT_FOLDER'] = "resources/theme";
 
         $keys['MIX_ADMINIFY_EDITOR_PATHS'] = "resources/editor-components/";
@@ -102,6 +105,20 @@ class DoInstallEnv extends Command
         $this->call('adminify:theme', [
             'theme' => lowercase($theme_name)
         ]);
+
+         // load migrations.
+
+         $modelToBound = new \Ludows\Adminify\Models\Settings();
+         if($isInstalled) {
+             $modelToBound = setting();
+         }
+ 
+         $modelToBound->withoutEvents(function () {
+             return $modelToBound->create([
+                 'type' => 'theme',
+                 'data' => env('THEME_NAME_ON_INSTALL')
+             ]);
+         });
 
         return 0;
     }

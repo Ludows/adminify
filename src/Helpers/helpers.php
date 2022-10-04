@@ -703,8 +703,13 @@ if (! function_exists('is_shortcode')) {
 }
 
 if (! function_exists('setting')) {
-    function setting($string) {
+    function setting($string = null) {
         $m = new Settings();
+
+        if(is_null($string)) {
+            return $m;
+        }
+
         $q = $m->where('type', $string)->first();
         return $q != null ? $q->data : null;
     }
@@ -753,8 +758,13 @@ if (! function_exists('is_sitemapable_model')) {
 }
 
 if (! function_exists('translate')) {
-    function translate($string) {
+    function translate($string = null) {
         $t = new Traduction();
+
+        if(is_null($string)) {
+            return $t;
+        }
+
         $t = $t->key($string)->first();
         return $t != null ? $t->text : __($string);
     }
@@ -934,6 +944,10 @@ if(!function_exists('status')) {
 
 if(! function_exists('theme')) {
     function theme() {
+        $isInstalled = is_installed();
+        if(!$isInstalled) {
+            return env('THEME_NAME_ON_INSTALL');
+        }
         return setting('theme');
     }
 }

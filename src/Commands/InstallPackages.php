@@ -81,14 +81,6 @@ class InstallPackages extends Command
             $cleanedTasks[] = 'cache';
         }
 
-
-        if($firstInstall) {
-            $this->info('Handle Env installation...');
-            $this->call('adminify:env');
-
-            $this->doClearCaches();
-        }
-
         if(in_array('*', $cleanedTasks) && !$firstInstall || in_array('refresh', $cleanedTasks) && !$firstInstall) {
             $this->call('migrate:refresh');
             $this->refreshImages();
@@ -116,10 +108,7 @@ class InstallPackages extends Command
             $this->call('migrate');
         }
 
-        if(in_array('*', $cleanedTasks)  || in_array('feeds', $cleanedTasks)) {
-            $this->info('Handle feeds config generation...');
-            $this->call('adminify:feeds');
-        }
+        
 
         if(in_array('*', $cleanedTasks)  || in_array('routes', $cleanedTasks)) {
             $this->info('Handle route list js...');
@@ -135,6 +124,11 @@ class InstallPackages extends Command
             $this->doClearCaches();
             $this->info('Handle Adminify cache...');
             $this->call('adminify:container');
+        }
+
+        if(in_array('*', $cleanedTasks)  || in_array('feeds', $cleanedTasks)) {
+            $this->info('Handle feeds config generation...');
+            $this->call('adminify:feeds');
         }
 
         //run seeds
