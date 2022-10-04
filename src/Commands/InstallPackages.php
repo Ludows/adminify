@@ -146,19 +146,25 @@ class InstallPackages extends Command
 
         if($firstInstall) {
             $isInstalled = is_installed();
+            $requiredTheme = env('THEME_NAME_ON_INSTALL');
             // load migrations.
 
-            $modelToBound = new \Ludows\Adminify\Models\Settings();
-            if($isInstalled) {
-                $modelToBound = setting();
+            if(!empty($requiredTheme)) {
+                $modelToBound = new \Ludows\Adminify\Models\Settings();
+                if($isInstalled) {
+                    $modelToBound = setting();
+                }
+                
+        
+                $modelToBound->withoutEvents(function () use ($modelToBound, $requiredTheme) {
+
+                    $modelToBound->type = 'theme';
+                    $modelToBound->data = $requiredTheme;
+                    $modelToBound->save();
+                    return $modelToBound;
+                });
             }
-    
-            $modelToBound->withoutEvents(function () use ($modelToBound) {
-                return $modelToBound->create([
-                    'type' => 'theme',
-                    'data' => env('THEME_NAME_ON_INSTALL')
-                ]);
-            });
+            
         }
 
         if(in_array('*', $cleanedTasks)  || in_array('npm', $cleanedTasks)) {
