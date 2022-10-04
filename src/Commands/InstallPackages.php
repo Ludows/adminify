@@ -124,7 +124,7 @@ class InstallPackages extends Command
             $this->call('adminify:translations');
         }
 
-        if(in_array('*', $cleanedTasks) && !$firstInstall  || in_array('cache', $cleanedTasks) && !$firstInstall) {
+        if(in_array('*', $cleanedTasks) || in_array('cache', $cleanedTasks)) {
             $this->doClearCaches();
             $this->info('Handle Adminify cache...');
             $this->call('adminify:container');
@@ -137,7 +137,7 @@ class InstallPackages extends Command
 
         //run seeds
         //exec("php artisan db:seed --class='Ludows\Adminify\Database\Seeders\DatabaseSeeder'");
-        if(in_array('*', $cleanedTasks) && !$firstInstall  || in_array('seed', $cleanedTasks) && !$firstInstall) {
+        if(in_array('*', $cleanedTasks)  || in_array('seed', $cleanedTasks)) {
             $this->info('Handle seeding database...');
             $this->call('db:seed', [
                 '--class' => 'Ludows\Adminify\Database\Seeders\DatabaseSeeder'

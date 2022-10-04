@@ -48,7 +48,7 @@ function init() {
     app.use(Store);
     app.use(frontInitPlugin, {});
 
-    app.component('hero', require('./components/Hero.vue').default);
+    // app.component('hero', require('./components/Hero.vue').default);
 
     app.mount(appSelector);
 
