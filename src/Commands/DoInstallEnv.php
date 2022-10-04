@@ -12,14 +12,14 @@ class DoInstallEnv extends Command
      *
      * @var string
      */
-    protected $signature = 'adminify:env';
+    protected $signature = 'adminify:setup';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command for install user , password and db name for adminify';
+    protected $description = 'Setup Adminify';
 
     /**
      * Create a new command instance.
@@ -56,7 +56,6 @@ class DoInstallEnv extends Command
     public function handle()
     {
         $keys = [];
-        $isInstalled = is_installed();
 
         $app_multilang = $this->choice(
             __('adminify.questions.multilang'),
@@ -105,20 +104,6 @@ class DoInstallEnv extends Command
         $this->call('adminify:theme', [
             'theme' => lowercase($theme_name)
         ]);
-
-         // load migrations.
-
-         $modelToBound = new \Ludows\Adminify\Models\Settings();
-         if($isInstalled) {
-             $modelToBound = setting();
-         }
- 
-         $modelToBound->withoutEvents(function () {
-             return $modelToBound->create([
-                 'type' => 'theme',
-                 'data' => env('THEME_NAME_ON_INSTALL')
-             ]);
-         });
 
         return 0;
     }

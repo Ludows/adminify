@@ -76,6 +76,10 @@ class InstallPackages extends Command
             }
         }
 
+        if($firstInstall) {
+            $this->call('adminify:create_db');
+        }
+
         if(!in_array('*', $cleanedTasks) && count($arguments['task']) == 0) {
             $cleanedTasks[] = '*';
             $cleanedTasks[] = 'cache';
@@ -138,6 +142,23 @@ class InstallPackages extends Command
             $this->call('db:seed', [
                 '--class' => 'Ludows\Adminify\Database\Seeders\DatabaseSeeder'
             ]);
+        }
+
+        if($firstInstall) {
+            $isInstalled = is_installed();
+            // load migrations.
+
+            $modelToBound = new \Ludows\Adminify\Models\Settings();
+            if($isInstalled) {
+                $modelToBound = setting();
+            }
+    
+            $modelToBound->withoutEvents(function () {
+                return $modelToBound->create([
+                    'type' => 'theme',
+                    'data' => env('THEME_NAME_ON_INSTALL')
+                ]);
+            });
         }
 
         if(in_array('*', $cleanedTasks)  || in_array('npm', $cleanedTasks)) {
