@@ -558,7 +558,16 @@ if(! function_exists('vendor_path')) {
 
 if(! function_exists('theme_path')) {
     function theme_path($path = '') {
-        return get_site_key('themes.root_path').$path;
+        $ret = null;
+        $isInstalled = is_installed();
+        if($isInstalled) {
+            $ret = get_site_key('themes.root_path').$path;
+        }
+        else {
+            $ret = app_path( env('MIX_ADMINIFY_THEME_ROOT_FOLDER') ).$path;
+        }
+
+        return $ret;
     }
 }
 

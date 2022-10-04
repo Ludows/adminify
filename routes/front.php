@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 
 $c = config('site-settings.restApi');
 $headless = config('site-settings.headless');
+$features = config('site-settings.enables_features');
 $front_registrar = null;
 $themeManager = null;
 
@@ -11,7 +12,7 @@ if(is_installed()) {
     $front_registrar = front_registrar();
 
     if(!empty($c) && request()->segment(1) != $c['prefix'] || !empty($c) && $headless) {
-        Route::middleware('multilang.basic')->group(function ($router) use ($c, $themeManager, $front_registrar) {
+        Route::middleware('multilang.basic')->group(function ($router) use ($c, $themeManager, $features, $front_registrar) {
 
             $theme = theme();
 
@@ -30,8 +31,10 @@ if(is_installed()) {
                 $router->get('/theme/{folder}/{filename}', 'App\Adminify\Http\Controllers\Front\ImageController@themeAssets')->name('theme.assets');
             }
 
-            
-            if(isset($c['form']) && $c['form']) {
+            // dd($features);
+
+
+            if(isset($features['form']) && $features['form']) {
                 $router->post('/forms/validate/', 'App\Adminify\Http\Controllers\Front\PageController@validateForms')->name('forms.validate');
             }
 
@@ -45,7 +48,7 @@ if(is_installed()) {
                 $fileRoutes_in_themes = $themeManager->getFileRoutes('front');
                 include($fileRoutes_in_themes);
             }
-            
+
         });
     }
 
