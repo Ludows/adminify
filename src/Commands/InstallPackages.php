@@ -153,7 +153,7 @@ class InstallPackages extends Command
                 $modelToBound = setting();
             }
     
-            $modelToBound->withoutEvents(function () {
+            $modelToBound->withoutEvents(function () use ($modelToBound) {
                 return $modelToBound->create([
                     'type' => 'theme',
                     'data' => env('THEME_NAME_ON_INSTALL')

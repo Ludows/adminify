@@ -173,7 +173,9 @@ return array(
                 'file' => '/../../config/permission',
                 'name' => 'permission',
             ],
-            'afterPublish' => [],
+            'afterPublish' => [
+                'php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="migrations"'
+            ],
         ),
         (object) array(
             'beforePublish' => [],
