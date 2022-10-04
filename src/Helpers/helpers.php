@@ -564,7 +564,7 @@ if(! function_exists('theme_path')) {
             $ret = get_site_key('themes.root_path').$path;
         }
         else {
-            $ret = app_path( env('MIX_ADMINIFY_THEME_ROOT_FOLDER') ).$path;
+            $ret = base_path( env('MIX_ADMINIFY_THEME_ROOT_FOLDER') ).$path;
         }
 
         return $ret;
