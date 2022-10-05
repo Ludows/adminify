@@ -997,7 +997,7 @@ if(! function_exists('get_content_types')) {
         foreach ($allModels as $key => $model) {
             # code...
             $current_model = new $model;
-            if(is_content_type_model($current_model)) {
+            if(is_content_type_model($current_model) && is_sitemapable_model($current_model) && $current_model->allowSitemap) {
                 $ret[$key] = $model;
             }
 

@@ -22,9 +22,10 @@ class CreateSettings extends BaseForm
         $searchpage_models_tags = $this->getSetting('searchpage_models_tags');
         $theme = $this->getSetting('theme');
         $seo = $this->getSetting('no_seo');
-        $enabled_features = get_site_key('enables_features');
+        $enabled_features = $this->getFeaturesSite();
         $titleBar = $this->getSetting('exclude_titlebar');
         $breadcrumb = $this->getSetting('exclude_breadcrumb');
+        $enable_comments_on = $this->getSetting('enables_comments');
 
 
         if(is_null($comments)) {
@@ -123,11 +124,28 @@ class CreateSettings extends BaseForm
                 'multiple' => false,
                 'width' => '100%'
             ]
-        ])
+        ]);
+
+        if(isset($enabled_features['comment']) && $enabled_features['comment']) {
+
+            $this->add('enables_comments', 'select2', [
+                'attr' => [
+                    'multiple' => true
+                ],
+                'empty_value' => __('admin.form.select_entity', ['entity' => 'entité']),
+                'label' => 'Enable comments on',
+                'choices' => get_content_types(),
+                'selected' => explode(',',$enable_comments_on) ?? '',
+                'select2options' => [
+                    'multiple' => true,
+                ]
+            ]);
+        }
+
         // ->add('no_comments', 'hidden', [
         //     'value' => 0
         // ])
-        ->add('no_comments', 'checkbox', [
+        $this->add('no_comments', 'checkbox', [
             'label_show' => true,
             'label' => __('admin.form.no_comments_globally'),
             'value' => $comments != null && $comments == 0 ? 1 : 0,
