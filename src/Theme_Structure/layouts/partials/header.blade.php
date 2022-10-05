@@ -23,7 +23,9 @@
                 @endforeach
             @endif
         </ul>  --}}
-        <search url="{{ route('globalsearch') }}" crsf="{{ csrf_token() }}" />
+        @if(Route::has('globalsearch'))
+            <search url="{{ route('globalsearch') }}" crsf="{{ csrf_token() }}" />
+        @endif
         {{--  <form method="POST" action="{{ route('globalsearch') }}" class="d-flex">
           @csrf
           <input class="form-control me-2" name="query" type="search" placeholder="Search" aria-label="Search">
