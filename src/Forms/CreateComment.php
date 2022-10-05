@@ -23,7 +23,7 @@ class CreateComment extends BaseForm
             'label_show' => false
         ]);
 
-        $this->addPosts('post_id', [
+        $this->addPosts('model_id', [
             'empty_value' => '',
             'withCreate' => false,
             'label' => __('admin.form.post_id'),
@@ -34,7 +34,7 @@ class CreateComment extends BaseForm
             ]
         ]);
 
-        $this->addPosts('parent_id', 'select2', [
+        $this->addPosts('parent_id', [
             'empty_value' => '',
             'withCreate' => false,
             'label' => __('admin.form.parent_comment_id'),
