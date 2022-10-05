@@ -1,9 +1,9 @@
 
 export function getToken() {
 
-    let route = this.$route('api.token');
+    let route = Route('api.token');
 
-    this.$axios({
+    axios({
         'method' : 'POST',
         'url' : route,
         'data' : {}
@@ -22,9 +22,9 @@ export function tokenFromLocalStorage() {
 }
 
 export function verifyToken() {
-    let route = this.$route('api.token.verify');
+    let route = Route('api.token.verify');
 
-    this.$axios({
+    axios({
         'method' : 'POST',
         'url' : route,
         'data' : {
@@ -34,7 +34,7 @@ export function verifyToken() {
     .then((response) => {
         console.log('response', response)
         if(response.data.isValid == false) {
-            this.$refreshToken();
+            refreshToken();
         }
     })
     .catch((err) => {
@@ -43,7 +43,7 @@ export function verifyToken() {
 }
 
 export function refreshToken() {
-    let route = this.$route('api.token.refresh');
+    let route = Route('api.token.refresh');
 
     this.$axios({
         'method' : 'POST',
