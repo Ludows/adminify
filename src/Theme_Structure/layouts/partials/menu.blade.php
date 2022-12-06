@@ -11,6 +11,7 @@
     $beforeRender = function($item) {
         return $item;
     }
+    $config_childs = isset($config_childs) && is_array($config_childs) ? $config_childs : [];
 @endphp
 
 <{!! $wrapper_tag !!} class="{!! $wrapper_class !!}">
@@ -42,9 +43,9 @@
                     </{!! $link_tag !!}>
                 </{!! $item_tag !!}>
                 @if(!empty($item->childs))
-                    @include('theme::'. $theme .'.layouts.partials.menu', [
+                    @include('theme::'. $theme .'.layouts.partials.menu', array_merge([
                         'items' => $item->childs
-                    ])
+                    ], $config_childs))
                 @endif
 
             @else
@@ -55,9 +56,9 @@
                 </{!! $item_tag !!}>
 
                 @if(!empty($item->childs))
-                    @include('theme::'. $theme .'.layouts.partials.menu', [
+                    @include('theme::'. $theme .'.layouts.partials.menu', array_merge([
                         'items' => $item->childs
-                    ])
+                    ], $config_childs))
                 @endif
             @endif
         @endif
