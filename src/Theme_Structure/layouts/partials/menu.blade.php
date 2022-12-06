@@ -12,6 +12,7 @@
         return $item;
     }
     $config_childs = isset($config_childs) && is_array($config_childs) ? $config_childs : [];
+    $child_render = isset($child_render) ? $child_render : 'theme::'. $theme .'.layouts.partials.menu';
 @endphp
 
 <{!! $wrapper_tag !!} class="{!! $wrapper_class !!}">
@@ -38,12 +39,12 @@
         
             @if($item->type == 'custom')
                 <{!! $item_tag !!} class="{!! $item_class !!}">
-                    <{!! $link_tag !!} class="{!! $link_class !!}" aria-current="page" target="{!! $item->open_new_tab == 0 ? '_self' : '_blank'  !!}" href="{{  $item->related->url }}">
+                    <{!! $link_tag !!} class="{!! $link_class !!} {!! $request->is( join('/', $item->related->url)) ? $active_class : ''  !!}" aria-current="page" target="{!! $item->open_new_tab == 0 ? '_self' : '_blank'  !!}" href="{{  $item->related->url }}">
                         {{ empty($item->overwrite_title) ? $item->related->title : $item->overwrite_title }}
                     </{!! $link_tag !!}>
                 </{!! $item_tag !!}>
                 @if(!empty($item->childs))
-                    @include('theme::'. $theme .'.layouts.partials.menu', array_merge([
+                    @include($child_render, array_merge([
                         'items' => $item->childs
                     ], $config_childs))
                 @endif
@@ -56,7 +57,7 @@
                 </{!! $item_tag !!}>
 
                 @if(!empty($item->childs))
-                    @include('theme::'. $theme .'.layouts.partials.menu', array_merge([
+                    @include($child_render, array_merge([
                         'items' => $item->childs
                     ], $config_childs))
                 @endif
