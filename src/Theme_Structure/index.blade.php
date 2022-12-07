@@ -37,15 +37,15 @@
         @includeFirst(['theme::'. $theme .'.single-'.$model->id, 'theme::'. $theme .'.single-'.$type , 'theme::'. $theme .'.single-'.$model->slug, 'theme::'. $theme .'.single'])
     @endif
 
-    @if ($isPage && !$isTemplate)
+    @if ($isPage && !$isTemplate && !$isHome)
         @includeFirst(['theme::'. $theme .'.page-'.$model->id, 'theme::'. $theme .'.page-'.$type, 'theme::'. $theme .'.page-'.$model->slug, 'theme::'. $theme .'.page'])
     @endif
 
-    @if ($isContentModel && !$isTemplate)
+    @if ($isContentModel && !$isTemplate && !$isHome)
         @includeFirst(['theme::'. $theme .'.content-'.$model->id, 'theme::'. $theme .'.content-'.$type, 'theme::'. $theme .'.content-'.$model->slug, 'theme::'. $theme .'.content'])
     @endif
 
-    @if ($isSearch && !$isTemplate)
+    @if ($isSearch && !$isTemplate && !$isHome)
         @includeFirst(['theme::'. $theme .'.searchpage-'.$model->id, 'theme::'. $theme .'.searchpage-'.$type, 'theme::'. $theme .'.searchpage-'.$model->slug, 'theme::'. $theme .'.searchpage'])
     @endif
 
