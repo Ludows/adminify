@@ -107,17 +107,21 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
         Route::resource('groupmetas', 'App\Adminify\Http\Controllers\Back\GroupMetasController', ['except' => ['show']]);
     }
 
+    if(isset($c['pwa']) && $c['pwa']) {
+        Route::resource('pwa', 'App\Adminify\Http\Controllers\Back\PwaController', ['except' => ['show', 'update', 'delete', 'edit']]);
+    }
+
     Route::post('/forms/ajax/', 'App\Adminify\Http\Controllers\Back\HomeController@getForms')->name('forms.ajax');
     Route::post('/content/', 'App\Adminify\Http\Controllers\Back\HomeController@getContents')->name('content.ajax');
     Route::post('{type}/trash/{id}', 'App\Adminify\Http\Controllers\Back\TrashController@index')->name('trash');
     Route::post('/{type}/duplicate/{id}', 'App\Adminify\Http\Controllers\Back\CopyController@index')->name('copy.entity');
 
 
-    if(isset($c['media']) && $c['media']) {
-        Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
-            \UniSharp\LaravelFilemanager\Lfm::routes();
-        });
-    }
+    // if(isset($c['media']) && $c['media']) {
+    //     Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
+    //         \UniSharp\LaravelFilemanager\Lfm::routes();
+    //     });
+    // }
 
     // $path_admin_file = base_path('routes/adminify_admin.php');
 

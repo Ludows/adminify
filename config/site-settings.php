@@ -160,6 +160,7 @@ return [
         'Settings',
         'Translations',
         'Templates',
+        'Pwa',
         'User'
     ],
 
@@ -285,6 +286,7 @@ return [
         'user' => true,
         'form' => true,
         'metas' => true,
+        'pwa' => true
     ],
 
     // all routes search are binded to singular route name.

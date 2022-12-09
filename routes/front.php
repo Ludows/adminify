@@ -38,6 +38,10 @@ if(is_installed()) {
                 $router->post('/forms/validate/', 'App\Adminify\Http\Controllers\Front\PageController@validateForms')->name('forms.validate');
             }
 
+            if(isset($c['pwa']) && $c['pwa']) {
+                $router->get('manifest.json', 'App\Adminify\Http\Controllers\Front\PageController@getManifest')->name('manifest');
+            }
+
 
             // $path_admin_file = base_path('routes/adminify_front.php');
 

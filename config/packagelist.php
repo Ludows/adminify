@@ -95,22 +95,6 @@ return array(
         ),
         (object) array(
             'beforePublish' => [],
-            'name' => 'silviolleite/laravelpwa',
-            'publish' => (object) [
-                'tag' => false,
-                'force' => false,
-                'sibling' => 'LaravelPWA\Providers\LaravelPWAServiceProvider'
-            ],
-            'autoload' => (object) [
-                'providers' => [],
-                'middlewares' => [],
-                'aliases' => []
-            ],
-            'config' => null,
-            'afterPublish' => [],
-        ),
-        (object) array(
-            'beforePublish' => [],
             'name' => 'spatie/laravel-backup',
             'publish' => (object) [
                 'tag' => false,
