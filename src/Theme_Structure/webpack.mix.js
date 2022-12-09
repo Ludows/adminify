@@ -17,6 +17,4 @@ let lastFolderSplit = dirpath.split( path.sep );
 let lastFolder = lastFolderSplit[ lastFolderSplit.length - 1 ];
 
 mix.sass('resources/theme/'+ lastFolder +'/src/sass/app.scss', 'public/theme/'+ lastFolder +'/css');
-mix.js('resources/theme/'+ lastFolder +'/src/js/app.js', 'public/theme/'+ lastFolder +'/js').vue({
-  version : 3
-})
+mix.js('resources/theme/'+ lastFolder +'/src/js/app.js', 'public/theme/'+ lastFolder +'/js')
