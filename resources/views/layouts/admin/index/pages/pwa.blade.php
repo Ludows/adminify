@@ -13,9 +13,12 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    @hook('before_form_page')
-                    {!! form($form) !!}
-                    @hook('after_form_page')
+                    <div class="w-75">
+                        @hook('before_form_page')
+                        {!! form($form) !!}
+                        @hook('after_form_page')
+                    </div>
+                    
                 </div>
             </div>
         </div>

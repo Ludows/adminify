@@ -93,6 +93,15 @@ class BaseForm extends Form {
 
         return $this;
     }
+    public function addSelect2($name = '', $options = []) {
+        $defaults = [
+            
+        ];
+
+        $this->add($name, 'select2', array_merge($defaults, $options));
+
+        return $this;
+    }
     public function addVisualEditor($name = '', $options = []) {
 
         $defaults = [

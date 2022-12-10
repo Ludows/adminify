@@ -14,6 +14,20 @@
 
       return $this->prefix_settings.'_'. lowercase($baseName).'_'.$key;
    }
+   public function settingExists($key) {
+    $settings = Settings::where(['type' => $this->getKeySetting($key)]);
+    return $settings->exists() == true;
+   }
+   public function getSetting($key) {
+    $setting = Settings::where(['type' => $this->getKeySetting($key)])->first();
+    return $setting;
+   }
+   public function getGlobalSetting($key) {
+    if(empty($key)) {
+      return null;
+    }
+    return Settings::where(['type' => $key])->first();
+   }
    public function createSetting($key, $data) {
       $settingsCreate = new Settings();
       $settingsCreate->type = $this->getKeySetting($key);

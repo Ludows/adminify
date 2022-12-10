@@ -26,8 +26,11 @@ class SavePwa extends FormRequest
     {
         $r = request();
         $a = [
-            // 'site_name' => ['required', 'string'],
-            // 'site_slogan' => ['required', 'string'],
+            'name' => ['required', 'string'],
+            'shortname' => ['required', 'string'],
+            'theme_color' => ['required'],
+            'background_color' => ['required'],
+            'orientation' => ['required'],
         ];
 
         return $a;
