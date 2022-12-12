@@ -884,6 +884,15 @@ if(! function_exists('image')) {
     }
 }
 
+if(! function_exists('glide')) {
+    function glide() {
+        // Get Glide server and return it.
+        $g = app('League\Glide\Server');
+
+        return $g;
+    }
+}
+
 if (! function_exists('frontity_form')) {
 
     function frontity_form($namedClass, $templatePath = null, $html = true) {

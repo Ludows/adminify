@@ -19,7 +19,13 @@ class CreatePwa extends BaseForm
         $theme_colorSetting = $m->getSetting('theme_color');
         $background_colorSetting = $m->getSetting('background_color');
         $orientationSetting = $m->getSetting('orientation');
-        
+        $displaySetting = $m->getSetting('display');
+        $iconSetting = $m->getSetting('icon');
+        $globalLogo_id= $m->getGlobalSetting('logo_id');
+
+        $this->add('uuid', 'hidden', [
+            "value" => 'sw-'.uuid(15)
+        ]);
 
        $this->add('name', 'text', [
             "label" => strip_tags( translate('adminify.pwa.name') ),
@@ -36,7 +42,12 @@ class CreatePwa extends BaseForm
 
         $this->addJodit('description', [
             "label" => strip_tags( translate('adminify.pwa.description') ),
-            "value" => empty($descriptionSetting) ? $m->getGlobalSetting('slogan')->data : $descriptionSetting->data,
+            "value" => empty($descriptionSetting) ? $m->getGlobalSetting('slogan') : $descriptionSetting->data,
+        ]);
+
+        $this->addMediaLibraryPicker('icon', [
+            "label" => strip_tags( translate('adminify.pwa.icon') ),
+            'value' => !empty($iconSetting) ? $iconSetting->data : $globalLogo_id?->data,
         ]);
 
         $this->add('theme_color', 'color', [
@@ -47,6 +58,19 @@ class CreatePwa extends BaseForm
         $this->add('background_color', 'color', [
             "label" => strip_tags( translate('adminify.pwa.background_color') ),
             "value" => empty($background_colorSetting) ? '' : $background_colorSetting->data,
+        ]);
+
+        $this->addSelect2('display', [
+            "label" => strip_tags( translate('adminify.pwa.display') ),
+            "select2options" => [
+                "multiple" => false
+            ],
+            "choices" => [
+                'fullscreen' => strip_tags( translate('adminify.display.fullscreen') ),
+                'standalone' => strip_tags( translate('adminify.display.standalone') ),
+                'minimal-ui' => strip_tags( translate('adminify.display.minimal-ui') ),
+            ],
+            "selected" => empty($displaySetting) ? 'fullscreen' : $displaySetting->data,
         ]);
 
         $this->addSelect2('orientation', [

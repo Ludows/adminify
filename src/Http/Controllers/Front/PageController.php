@@ -8,6 +8,8 @@ use App\Adminify\Models\FormTrace;
 use App\Adminify\Models\Mailables;
 use Ludows\Adminify\Http\Controllers\Controller;
 
+use Ludows\Adminify\Libs\PwaService;
+
 use ReflectionClass;
 
 use App\Adminify\Repositories\FormTraceRepository;
@@ -164,6 +166,12 @@ class PageController extends Controller
 
             // now we prepare the redirection type process..
             return $theFormClass->confirm();
+        }
+
+        public function getManifest() {
+            $pwa = new PwaService();
+
+            return response()->json( $pwa->renderManifest() );
         }
 
         public function handleSlug($slug) {

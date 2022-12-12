@@ -4,6 +4,7 @@ namespace Ludows\Adminify\Repositories;
 
 use App\Adminify\Models\Pwa; // Don't forget to update the model's namespace
 use Ludows\Adminify\Repositories\BaseRepository;
+use Ludows\Adminify\Libs\PwaService;
 
 class PwaRepository extends BaseRepository
 {
@@ -28,6 +29,10 @@ class PwaRepository extends BaseRepository
                 $a[] = $ret;
             }
         }
+
+        // register icons..
+        $p = new PwaService();
+        $p->generateIcons();
 
 
         return $a;

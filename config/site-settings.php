@@ -76,6 +76,23 @@ return [
         'prefers_id_on' => ['media_id', 'logo_id', 'menu-three-key', 'avatar_id', 'avatar'],
     ],
 
+    'pwa' => [
+        'dimensions' => [
+            0 => [
+                "w" => 512,
+                "h" => 512,
+            ],
+            1 => [
+                "w" => 192,
+                "h" => 192,
+            ],
+            2 => [
+                "w" => 144,
+                "h" => 144,
+            ]
+        ]
+    ],
+
     'assets' => array(
         'render' => [
             'css' => [],
