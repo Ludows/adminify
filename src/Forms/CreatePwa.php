@@ -17,6 +17,7 @@ class CreatePwa extends BaseForm
         $shortnameSetting = $m->getSetting('shortname');
         $descriptionSetting = $m->getSetting('description');
         $theme_colorSetting = $m->getSetting('theme_color');
+        $status_barSetting = $m->getSetting('status_bar');
         $background_colorSetting = $m->getSetting('background_color');
         $orientationSetting = $m->getSetting('orientation');
         $displaySetting = $m->getSetting('display');
@@ -48,6 +49,12 @@ class CreatePwa extends BaseForm
         $this->addMediaLibraryPicker('icon', [
             "label" => strip_tags( translate('adminify.pwa.icon') ),
             'value' => !empty($iconSetting) ? $iconSetting->data : $globalLogo_id?->data,
+        ]);
+        
+
+        $this->add('status_bar', 'color', [
+            "label" => strip_tags( translate('adminify.pwa.status_bar') ),
+            "value" => empty($status_barSetting) ? '' : $status_barSetting->data,
         ]);
 
         $this->add('theme_color', 'color', [

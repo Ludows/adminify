@@ -4,10 +4,13 @@ namespace Ludows\Adminify\Hooks;
 
 use Ludows\Adminify\Libs\HookInterface;
 use Ludows\Adminify\Libs\FrontRouteRegistrar;
+use Ludows\Adminify\Libs\PwaService;
+use File;
 
 class ContentTypesHook extends HookInterface {
     public function __construct() {
         $this->registrar = new FrontRouteRegistrar();
+        $this->pwaService = new PwaService();
     }
     public function handle($hookName,$datas = null) {
         //data is the model passed
@@ -29,6 +32,8 @@ class ContentTypesHook extends HookInterface {
 
                 $this->syncToCache($model);
             }
+
+            $this->generatePwa();
 
             if($isContentType && $model->allowSitemap) {
                 $this->loadGenerateSitemap($model);
@@ -94,7 +99,28 @@ class ContentTypesHook extends HookInterface {
         }
     }
 
-    public function generateFrontendsRoutes($context) {
+    public function generatePwa() {
+
+        $features = get_site_key('enables_features');
+
+        if(!$features['pwa']) {
+            return false;
+        }
+
+       // generate icons..
+       $this->pwaService->generateIcons();
+
+       // generate sw..
+       $sw = $this->pwaService->generateSw();
+
+       $pathFile = public_path('serviceworker.js');
+
+       if(File::exists( $pathFile )) {
+           File::replace($pathFile,  $sw);
+       }
+       else {
+           File::put($pathFile, $sw);
+       }
 
     }
 

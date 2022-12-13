@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Favicon -->
         <link href="{{ asset('') }}/favicon.png" rel="icon" type="image/png">
+        @include('theme::'. $theme .'.layouts.partials.pwa')
         {!! SEO::generate() !!}
 
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        @laravelPWA
         @hook('assets.css')
         {!! Assets::css( get_site_key('assets.render.css') ) !!}
         @stack('css')

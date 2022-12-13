@@ -4,9 +4,16 @@ namespace Ludows\Adminify\Libs;
 
 use Exception;
 use App\Adminify\Models\Pwa;
+use App\Adminify\Models\Media;
+// use App\Adminify\Models\Pwa;
+
 
 class PwaService {
     public function __construct() {
+        $this->uuid = $this->getPrefix().uuid(15);
+    }
+    public function getPrefix() {
+        return 'sw-';
     }
     public function generateIcons() {
         $m = new Pwa();
@@ -50,6 +57,120 @@ class PwaService {
     }
     public function generateSw() {
 
+        $m = new Pwa();
+
+        $configSite = config('site-settings');
+        $locales = $configSite['supported_locales'];
+        $isMultilang = $configSite['multilang'];
+        $files = [];
+        if($isMultilang == false) {
+            $locales = [ config('app.locale') ];
+        }
+
+        $content_types = get_content_types();
+
+        $allJs = \Assets::getJs();
+        $allCss = \Assets::getCss();
+        $allMedias = Media::all()->all();
+
+        $offlinePage = $m->getGlobalSetting('offline_page');
+        $offline_urls = [];
+
+        if($content_types['Page']) {
+            if(!empty($offlinePage->data)) {
+                $page = new $content_types['Page'];
+                foreach ($locales as $key => $locale) {
+
+                    if($isMultilang) {
+                        $page = $page->where('id', (int) $offlinePage->data )->withStatus( status()::PUBLISHED_ID )->lang($locale)->get();
+                    }
+                    else {
+                        $page = $page->where('id', (int) $offlinePage->data )->withStatus( status()::PUBLISHED_ID )->get();
+                    }
+
+                    if($page) {
+                        $offline_urls[$locale] = $page->first()->urlpath;
+                    }
+
+                }
+            }
+        }
+
+        $files = array_merge($files, $allJs, $allCss);
+
+        foreach ($allMedias as $keyedNameModel => $media) {
+            $files[] = $media->getRelativePath();
+        }
+
+        
+        foreach ($content_types as $keyedNameModel => $model) {
+            $currentModel = new $model;
+            if($currentModel->allowSitemap) {
+                foreach ($locales as $key => $locale) {
+                    # code...
+                    if($isMultilang) {
+                        $allPublished = $currentModel->withStatus( status()::PUBLISHED_ID )->lang($locale)->get();
+                    }
+                    else {
+                        $allPublished = $currentModel->withStatus( status()::PUBLISHED_ID )->get();
+                    }
+
+                    foreach ($allPublished as $key => $localBoundedModel) {
+                        $files[] = $localBoundedModel->urlpath;
+                    }
+                }
+            }
+        }
+
+        return "
+        // This file is auto generated. Please don't try to modify them.
+        var staticCacheName = '". $this->uuid ."';
+        var filesToCache = ". json_encode($files) .";
+        
+        // Cache on install
+        self.addEventListener('install', event => {
+            this.skipWaiting();
+            event.waitUntil(
+                caches.open(staticCacheName)
+                    .then(cache => {
+                        return cache.addAll(filesToCache);
+                    })
+            )
+        });
+        
+        // Clear cache on activate
+        self.addEventListener('activate', event => {
+            event.waitUntil(
+                caches.keys().then(cacheNames => {
+                    return Promise.all(
+                        cacheNames
+                            .filter(cacheName => (cacheName.startsWith('". $this->getPrefix() ."')))
+                            .filter(cacheName => (cacheName !== staticCacheName))
+                            .map(cacheName => caches.delete(cacheName))
+                    );
+                })
+            );
+        });
+        
+        // Serve from Cache
+        self.addEventListener('fetch', event => {
+            event.respondWith(
+                caches.match(event.request)
+                    .then(response => {
+                        return response || fetch(event.request);
+                    })
+                    .catch(() => {
+
+                        var offline_urls = ". json_encode($offline_urls) .";
+                        // var offline_keys = Object
+                        var lang = document.documentElement.getAttribute('lang');
+
+                        if(offline_urls[lang]) {
+                            return caches.match( offline_urls[lang] );
+                        }
+                    })
+            )
+        });";
     }
     public function renderManifest() {
 

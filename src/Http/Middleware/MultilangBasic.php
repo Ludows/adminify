@@ -253,6 +253,17 @@ class MultilangBasic
             $base_parameters['theme'] = $theme;
         }
 
+        if( !is_admin() && $base_parameters['enabled_features']['pwa']) {
+            $pwa = model('Pwa'); 
+            $settings = model('Settings');
+            
+            $results = $settings->where('type', 'like', '%'.$pwa->getKeySetting('').'%' )->get();
+            $results = $results->pluck('data', 'type')->toArray();
+
+            $results['_settings_pwa_icons'] = json_decode($results['_settings_pwa_icons'], true); 
+            $base_parameters['pwa'] = $results;
+        }
+
         // $fileToHandle($themeManager, $request, $this->getParams());
 
         $this->params($base_parameters);
