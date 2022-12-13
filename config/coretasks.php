@@ -3,6 +3,7 @@
 return array(
     __DIR__.'/../publishable/app/Providers/RouteServiceProvider.php' => app_path('Providers/RouteServiceProvider.php'),
     __DIR__.'/../publishable/app/Providers/EventServiceProvider.php' => app_path('Providers/EventServiceProvider.php'),
+    __DIR__.'/../publishable/app/Http/Middleware/Authenticate.php' => app_path('Http/Middleware/Authenticate.php'),
     __DIR__.'/../publishable/resources/lang/' => resource_path('lang'),
     __DIR__.'/../publishable/resources/stubs/' => resource_path('stubs'),
     __DIR__.'/../config/check-permissions.php' => config_path('check-permissions.php'),

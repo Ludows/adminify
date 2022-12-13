@@ -22,6 +22,7 @@ class CreateSettings extends BaseForm
         $searchpage_models_tags = $this->getSetting('searchpage_models_tags');
         $theme = $this->getSetting('theme');
         $seo = $this->getSetting('no_seo');
+        $offline_page = $this->getStatePage('offline_page');
         $enabled_features = $this->getFeaturesSite();
         $titleBar = $this->getSetting('exclude_titlebar');
         $breadcrumb = $this->getSetting('exclude_breadcrumb');
@@ -80,13 +81,27 @@ class CreateSettings extends BaseForm
                 'multiple' => false,
                 'width' => '100%'
             ]
-        ])
-        ->add('exclude_titlebar', 'select2', [
+            ]);
+        
+        if(isset($enabled_features['pwa']) && $enabled_features['pwa']) {
+            $this->add('offline_page', 'select2', [
+                'label' => __('admin.form.offline_page'),
+                'empty_value' => __('admin.form.select_entity', ['entity' => 'pwa']),
+                'choices' => $offline_page['datas'],
+                'selected' => $offline_page['selected'],
+                'select2options' => [
+                    'multiple' => false,
+                    'width' => '100%'
+                ]
+            ]);
+        }
+
+        $this->add('exclude_titlebar', 'select2', [
             'attr' => [
                 'multiple' => true
             ],
             'empty_value' => __('admin.form.select_entity', ['entity' => 'titlebar']),
-            'label' => 'Exclure la barre de Titre',
+            'label' => __('admin.form.exclude_titlebar'),
             'choices' => Page::all()->pluck('title', 'slug')->all(),
             'selected' => explode(',',$titleBar) ?? '',
             'select2options' => [
@@ -98,7 +113,7 @@ class CreateSettings extends BaseForm
                 'multiple' => true
             ],
             'empty_value' => __('admin.form.select_entity', ['entity' => 'titlebar']),
-            'label' => 'Exclure la Breadcrumb',
+            'label' => __('admin.form.exclude_breadcrumb'),
             'choices' => Page::all()->pluck('title', 'slug')->all(),
             'selected' => explode(',',$breadcrumb) ?? '',
             'select2options' => [
