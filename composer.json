@@ -16,10 +16,8 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "kris/laravel-form-builder": "^1.40",
         "laracasts/flash": "^3.2",
-        "laravel-frontend-presets/argon": "^1.1",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.1",
         "mratiebatie/laravel-repositories": "^1.0",
         "spatie/laravel-backup": "^6.15",
         "spatie/laravel-menu": "^3.7",
@@ -32,11 +30,11 @@
         "barryvdh/laravel-debugbar": "^3.5",
         "laravelium/sitemap": "8.*",
         "spatie/laravel-feed" : "^4.0.4",
-        "spatie/laravel-database-mail-templates" : "^3.4.2",
         "bpocallaghan/generators": "^7.0",
         "league/mime-type-detection" : "^1.7.0",
         "haydenpierce/class-finder" : "^0.4.3",
         "league/glide-laravel": "^1.0.0",
+        "snowfire/beautymail": "^1.1",
         "imliam/laravel-env-set-command" : "^1.0"
     },
     "require-dev": {

@@ -3,10 +3,11 @@
 namespace Ludows\Adminify\Libs;
 
 use Error;
-use Spatie\MailTemplates\TemplateMailable;
-use Spatie\MailTemplates\MailTemplateInterface;
+// use Spatie\MailTemplates\TemplateMailable;
+// use Spatie\MailTemplates\MailTemplateInterface;
+use Snowfire\Beautymail\Beautymail;
 
-class MailableTemplateBase extends TemplateMailable
+class MailableBase extends Beautymail
 {
     public function booting() {}
     public function booted() {}
@@ -15,16 +16,22 @@ class MailableTemplateBase extends TemplateMailable
         if (is_callable('parent::__construct')) {
             parent::__construct();
         }
+        $this->data( $this->vars() );
         $this->booted();
     }
     public function toConstructor($key, $value) {
         $this->{$key} = $value;
         return $this;
     }
-    public static function getHtmlTemplate() {
+    public function data($array = []) {
+        $data = array_merge($this->settings, $array);
+        $this->settings = $data;
+        return $this;
+    }
+    public function template() {
         return '';
     }
-    public static function getSubject() {
-        return '';
+    public function vars() {
+        return [];
     }
 }

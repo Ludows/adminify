@@ -338,4 +338,20 @@ return array(
             'config' => null,
             'afterPublish' => [],
         ),
+        (object) array(
+            'beforePublish' => [],
+            'name' => 'snowfire/beautymail',
+            'publish' => (object) [
+                'tag' => false,
+                'force' => false,
+                'sibling' => 'Snowfire\Beautymail\BeautymailServiceProvider'
+            ],
+            'autoload' => (object) [
+                'providers' => [],
+                'middlewares' => [],
+                'aliases' => []
+            ],
+            'config' => null,
+            'afterPublish' => [],
+        ),
     );
