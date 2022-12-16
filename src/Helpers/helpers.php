@@ -52,6 +52,12 @@ if (! function_exists('parse_shortcode')) {
     }
 }
 
+if(! function_exists('mailer') ) {
+    function mailer() {
+        return app()->make(Snowfire\Beautymail\Beautymail::class);
+    }
+}
+
 if (! function_exists('adminify_autoload')) {
     function adminify_autoload() {
         return cache('adminify.autoload');

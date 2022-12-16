@@ -161,7 +161,9 @@ class PageController extends Controller
 
             if(!empty($theFormClass->didSendMail) && $theFormClass->didSendMail == true) {
                 // now we prepare to send the email.
-                $theFormClass->sendMail();
+                $theFormClass->data([
+                    'entries' => $a,
+                ])->sendMail();
             }
 
             // now we prepare the redirection type process..

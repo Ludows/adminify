@@ -9,10 +9,7 @@ use Mail;
 class FrontifyForms extends Form {
     
     protected $didSendMail = true;
-    protected $recipient = '';
-    protected $cc = [];
-    protected $bcc = '';
-    protected $confirmationType = 'redirect'; //can be redirect / entity 
+    protected $confirmationType = 'redirect'; //can be redirect / entity / ajax
     protected $confirmationEntity = null; // put your entity class here
 
     public function buildForm() {}
@@ -25,6 +22,7 @@ class FrontifyForms extends Form {
         if (is_callable('parent::__construct')) {
             parent::__construct();
         }
+        $this->data = [];
         $this->booted();
     }
     public function setDefaultsSetting() {
@@ -46,42 +44,6 @@ class FrontifyForms extends Form {
     }
 
     public function getUrlfromEntity() {}
-
-    // function is triggered before send mail :)
-    public function prepareMail() {
-
-        if(empty($this->recipient)) {
-            throw new Error('recipient property must be declared in '. get_class($this), 500);
-        }
-
-        $mailer = Mail::to($this->recipient);
-
-        if(!empty($this->cc)) {
-            $mailer = $mailer->cc($this->cc);
-        }
-
-        if(!empty($this->bcc)) {
-            $mailer = $mailer->bcc($this->bcc);
-        }
-
-        if(method_exists($this, 'addAttachment')) {
-            $pathsFile = $this->addAttachment();
-
-            if(empty($pathsFile)) {
-                throw new Error('attachment files are empty', 500);
-            }
-            if(is_array($pathsFile)) {
-                foreach($pathsFile  as $file) {
-                    $mailer = $mailer->attach($file);
-                }
-            }
-            else {
-                $mailer = $mailer->attach($pathsFile);
-            }
-        }
-
-        return $mailer;
-    }
 
     public function getMailTemplate() {
         return 'App\Adminify\Mails\FormEntriesListingMail';
@@ -145,28 +107,32 @@ class FrontifyForms extends Form {
         return json_encode($a, true);
     }
 
+    public function buildMail($message) {
+
+    }
+
+    public function data(array $array = []) {
+        $data = array_merge($this->data, $array);
+        return $this;
+    }
+
     public function sendMail() {
-        $mail = $this->prepareMail();
+        $mailer = mailer();
         $tplMail = $this->getMailTemplate();
 
-        if(empty($mail)) {
-            throw new Error('Prepare function in '. get_class($this) . ' must return a Mail Instance', 500);
-        }
 
         if(empty($tplMail)) {
             throw new Error('getMailTemplate function in '. get_class($this) . ' must return a Class', 500);
         }
 
-        $tplMail = new $tplMail();
-
         if(method_exists($this, 'beforeSending')) {
-            $this->beforeSending($mail, $tplMail);
+            $this->beforeSending();
         }
 
-        $mail->send( new $tplMail() );
+        $mailer->send( $tplMail,  $this->data , $this->buildMail);
 
         if(method_exists($this, 'afterSending')) {
-            $this->afterSending($mail, $tplMail);
+            $this->afterSending();
         }
     }
     // protected function getTemplate() {
