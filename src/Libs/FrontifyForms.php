@@ -9,7 +9,7 @@ use Mail;
 class FrontifyForms extends Form {
     
     protected $didSendMail = true;
-    protected $confirmationType = 'redirect'; //can be redirect / entity / ajax
+    protected $confirmationType = 'redirect'; //can be redirect / entity
     protected $confirmationEntity = null; // put your entity class here
 
     public function buildForm() {}
@@ -23,6 +23,7 @@ class FrontifyForms extends Form {
             parent::__construct();
         }
         $this->data = [];
+        $this->mailer = mailer();
         $this->booted();
     }
     public function setDefaultsSetting() {
@@ -46,7 +47,7 @@ class FrontifyForms extends Form {
     public function getUrlfromEntity() {}
 
     public function getMailTemplate() {
-        return 'App\Adminify\Mails\FormEntriesListingMail';
+        return null;
     }
 
     public function getConfirmationType() {
@@ -62,22 +63,31 @@ class FrontifyForms extends Form {
         return $this;
     }
 
+    public function afterValid($entries) {}
+
     public function confirm() {
+        $url = '';
+        $r = request();
 
         if(!empty($this->confirmationType) && $this->confirmationType == 'entity') {
             $url = $this->getUrlfromEntity();
         }
 
         if(!empty($this->confirmationType) && $this->confirmationType == 'redirect') {
-            $url = $this->confirmationType;
+            $url =  url()->previous();
         }
 
-        if(empty($confirmation)) {
+        if(empty($this->confirmationType)) {
             // fallback to previous url
             $url = url()->previous();
         }
 
-        return redirect()->to($url)->with($this->getRedirectParameters());
+        if($r->ajax()) {
+            return response()->json(['status' => 'ok', 'confirmation' => $this->getConfirmationContent(), 'url' => $url]);
+        }
+        else {
+            return redirect()->to($url)->with($this->getRedirectParameters());
+        }
     }
 
     public function toJson() {
@@ -112,24 +122,50 @@ class FrontifyForms extends Form {
     }
 
     public function data(array $array = []) {
-        $data = array_merge($this->data, $array);
+        $this->data = array_merge($this->data, $array);
         return $this;
     }
 
+    public function handleLogo() {
+        $logo_id = setting('logo_id');
+        if(!empty($logo_id)) {
+            $media = media( (int) $logo_id );
+            if(!empty($media)) {
+                $config_mailer = $this->mailer->getData();
+
+
+                $merge = [
+                    'path' => $media->getFullPath(),
+                ];
+
+                $logo = array_merge($config_mailer['logo'],  $merge);
+
+
+                $this->data($logo);
+            }
+        }
+    }
+
     public function sendMail() {
-        $mailer = mailer();
         $tplMail = $this->getMailTemplate();
 
+        $self = $this;
 
         if(empty($tplMail)) {
             throw new Error('getMailTemplate function in '. get_class($this) . ' must return a Class', 500);
         }
 
+        $this->handleLogo();
+
         if(method_exists($this, 'beforeSending')) {
             $this->beforeSending();
         }
 
-        $mailer->send( $tplMail,  $this->data , $this->buildMail);
+        $mailer = $this->mailer;
+
+        $mailer->send( $tplMail,  $this->data , function($message) use ($self, $mailer) {
+            call_user_func_array(array($self, 'buildMail'), [$message]);
+        });
 
         if(method_exists($this, 'afterSending')) {
             $this->afterSending();

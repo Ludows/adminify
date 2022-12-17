@@ -13,14 +13,9 @@
         @hook('assets.css')
         {!! Assets::css( get_site_key('assets.render.css') ) !!}
         @stack('css')
-
-        <script>
-            window.adminify_exports = {!! $export !!};
-        </script>
     </head>
     <body class="{{ $class ?? '' }}">
         <main id="app">
-            <root-sharing :export="{{ $export ?? '{}' }}"></root-sharing>
             @if($topbarShow)
                 {!! toolbar() !!}
             @endif

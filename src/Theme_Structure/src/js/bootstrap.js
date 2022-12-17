@@ -39,6 +39,9 @@ import {
     createLaravelLocalization
 } from '@wesleyhf/laravel-localization-js';
 
+let langDoc = document.documentElement.getAttribute('lang');
+
+window.__ = createLaravelLocalization(window['messages_'+langDoc]);
 
 // Check the presence of debugBar
 let scriptDebugbar = document.querySelector('script[data-turbolinks-eval="false"][data-turbo-eval="false"]');

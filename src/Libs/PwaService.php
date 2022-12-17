@@ -69,9 +69,14 @@ class PwaService {
 
         $content_types = get_content_types();
 
-        $allJs = \Assets::getJs();
-        $allCss = \Assets::getCss();
+        $jsQuery = $m->getSetting('js');
+        $cssQuery = $m->getSetting('css');
+        $additionnalsImgs = $m->getSetting('images');
+
+        $allJs = empty($jsQuery->data) ? [] : explode(',', $jsQuery->data);
+        $allCss = empty($cssQuery->data) ? [] : explode(',', $cssQuery->data);
         $allMedias = Media::all()->all();
+        $addImgs = empty($additionnalsImgs->data) ? [] : explode(',', $additionnalsImgs->data);
 
         $offlinePage = $m->getGlobalSetting('offline_page');
         $offline_urls = [];
@@ -88,7 +93,7 @@ class PwaService {
                         $page = $page->where('id', (int) $offlinePage->data )->withStatus( status()::PUBLISHED_ID )->get();
                     }
 
-                    if($page) {
+                    if($page->isNotEmpty()) {
                         $offline_urls[$locale] = $page->first()->urlpath;
                     }
 
@@ -96,7 +101,7 @@ class PwaService {
             }
         }
 
-        $files = array_merge($files, $allJs, $allCss);
+        $files = array_merge($files, $allJs, $allCss, $addImgs);
 
         foreach ($allMedias as $keyedNameModel => $media) {
             $files[] = $media->getRelativePath();

@@ -23,6 +23,9 @@ class CreatePwa extends BaseForm
         $displaySetting = $m->getSetting('display');
         $iconSetting = $m->getSetting('icon');
         $globalLogo_id= $m->getGlobalSetting('logo_id');
+        $cssSettings = $m->getSetting('css');
+        $jsSettings = $m->getSetting('js');
+        $imagesSettings = $m->getSetting('images');
 
         $this->add('uuid', 'hidden', [
             "value" => 'sw-'.uuid(15)
@@ -91,6 +94,21 @@ class CreatePwa extends BaseForm
                 'portrait' => strip_tags( translate('adminify.orientation.portrait') ),
             ],
             "selected" => empty($orientationSetting) ? 'portrait' : $orientationSetting->data,
+        ]);
+
+        $this->add('images', 'textarea', [
+            "label" => strip_tags( translate('adminify.pwa.images') ),
+            "value" => empty($imagesSettings->data) ? '' : $imagesSettings->data,
+        ]);
+
+        $this->add('js', 'textarea', [
+            "label" => strip_tags( translate('adminify.pwa.js') ),
+            "value" => empty($jsSettings->data) ? '' : $jsSettings->data,
+        ]);
+
+        $this->add('css', 'textarea', [
+            "label" => strip_tags( translate('adminify.pwa.css') ),
+            "value" => empty($cssSettings->data) ? '' : $cssSettings->data,
         ]);
 
         $this->addSubmit();
