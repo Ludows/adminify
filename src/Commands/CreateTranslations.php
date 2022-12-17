@@ -86,9 +86,7 @@ class CreateTranslations extends Command
                 $exists = Storage::disk('myuploads')->has('traductions-'. $locale .'.js');
 
                 $content = '(function(){
-                    var messages_'. $locale .' = '. json_encode($messages, true) .'
-
-                    window.__ = createLaravelLocalization(messages_'. $locale .');
+                    window.messages_'. $locale .' = '. json_encode($messages, true) .'
                 })()';
 
                 if (Cache::has('website_translations_'.$locale)) {
