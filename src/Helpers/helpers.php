@@ -923,7 +923,7 @@ if (! function_exists('frontity_form')) {
         $form = $formBuilder->create($theClass);
 
         $form->add('form_class', 'hidden', [
-            'value' => $theClass
+            'value' => $namedClass
         ]);
 
 

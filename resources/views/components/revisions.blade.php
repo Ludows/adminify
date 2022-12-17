@@ -7,17 +7,17 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Révisions</h5>
+                        <h5 class="card-title">{{ __('adminify.revsisions.title') }}</h5>
                         <div id="rev_wrapper">
                             @foreach ($revisions as $revision)
                                 <div id="block-rev-{{ $revision->id }}" class="row no-gutters align-items-end border-bottom border-light py-3">
                                     <div class="col-12 col-lg-6">
-                                        Révision {!! $loop->index + 1 !!}
+                                        {{ __('adminify.revsisions.label') }} {!! $loop->index + 1 !!}
                                     </div>
                                     <div class="col-12 col-lg-6 text-right">
                                         <div class="d-flex justify-content-end">
-                                            <button type="button" class="btn btn-default mr-3" data-toggle="modal" data-target="#modal-revisions-{{ $revision->id }}">Show</button>
-                                            <button type="button" data-revision-id="{{ $revision->id }}" data-selector="#block-rev-{{ $revision->id }}" data-model="{{ $revision->data }}" class="btn js-restore-revision btn-default">Restore</button>
+                                            <button type="button" class="btn btn-default mr-3" data-toggle="modal" data-target="#modal-revisions-{{ $revision->id }}">{{ __('adminify.revsisions.show') }}</button>
+                                            <button type="button" data-revision-id="{{ $revision->id }}" data-selector="#block-rev-{{ $revision->id }}" data-model="{{ $revision->data }}" class="btn js-restore-revision btn-default">{{ __('adminify.revsisions.restore') }}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -28,7 +28,7 @@
 
                                 @push('modales')
                                     @include('adminify::components.modal', [
-                                        'title' => 'Révision Courante',
+                                        'title' => __('adminify.revsisions.modal_title'),
                                         'id' => 'modal-revisions-'.$revision->id,
                                         'slot' => $format_current,
                                         'modalBodyClass' => 'pt-0'
@@ -55,7 +55,7 @@
                     console.log(modl)
 
                     let question = new Swal({
-                        title : 'Restore this revision ?',
+                        title : "{{ __('adminify.revsisions.restore_title') }}",
                     }).then((resp) => {
                         console.log('resp', resp);
 

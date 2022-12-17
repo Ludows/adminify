@@ -159,12 +159,16 @@ class PageController extends Controller
                 'send_time' => now()
             ]);
 
-            if(!empty($theFormClass->didSendMail) && $theFormClass->didSendMail == true) {
+            // dd($theFormClass->didSendMail);
+
+            // if($theFormClass->didSendMail == true) {
                 // now we prepare to send the email.
+                // dd('mail');
                 $theFormClass->data([
                     'entries' => $a,
+                    'form' => $theFormClass,
                 ])->sendMail();
-            }
+            // }
 
             // now we prepare the redirection type process..
             return $theFormClass->confirm();
