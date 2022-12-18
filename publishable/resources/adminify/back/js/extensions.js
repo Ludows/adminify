@@ -12,6 +12,10 @@ window.Jodit = require('jodit').Jodit;
 
 window.createLaravelLocalization = createLaravelLocalization;
 
+let langDoc = document.documentElement.getAttribute('lang');
+
+window.__ = createLaravelLocalization(window['messages_'+langDoc]);
+
 require('select2');
 
 require('adminify_bootstrap_admin');

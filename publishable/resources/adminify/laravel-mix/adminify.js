@@ -49,6 +49,7 @@ function loadDefaults(Mix) {
     .js('resources/adminify/back/js/listings.js', 'public/adminify/back/js')
     .js('resources/adminify/back/js/menuBuilder.js', 'public/adminify/back/js')
     .js('resources/adminify/back/js/confirmation.js', 'public/adminify/back/js')
+    .js('resources/adminify/back/js/comments.js', 'public/adminify/back/js')
     // .js('resources/adminify/back/js/sendMail.js', 'public/adminify/back/js')
     // .js('resources/adminify/back/js/metas.js', 'public/adminify/back/js')
     .js('resources/adminify/back/js/mediatheque.js', 'public/adminify/back/js')

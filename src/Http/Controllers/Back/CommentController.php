@@ -63,6 +63,8 @@ class CommentController extends Controller
                     'method' => 'POST',
                     'url' => route('comments.store')
                 ]);
+
+                $this->addJS( asset('/adminify/back/js/comments.js') );
     
                 return view("adminify::layouts.admin.pages.create", ['form' => $form]);
             }

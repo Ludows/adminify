@@ -10,9 +10,9 @@ use Ludows\Adminify\Libs\SitemapRender;
 
 class FinderController extends Controller
 {
-    public function index(Request $request) {
+    public function index(Request $request, $type) {
 
-        $resource = Str::title($request->type);
+        $resource = Str::title($type);
         $resoucable = adminify_get_class( singular($resource), ['app:adminify:models', 'app:models'], false);
 
         $multi = $request->useMultilang;
