@@ -18,6 +18,8 @@ class UserPreference extends ClassicModel
 
     public $MultilangTranslatableSwitch = [];
 
+    public $enable_revisions = false;
+
     protected $fillable = [
         'user_id',
         'type',

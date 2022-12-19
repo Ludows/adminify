@@ -239,7 +239,7 @@ class MultilangBasic
             }
 
             //dd($topbarPref);
-            if(!empty($topbarPref)) {
+            if(!empty($topbarPref) && !$base_parameters['isPreview']) {
                 $topbarShow = (bool)$topbarPref;
             }
             // add specifics globals vars

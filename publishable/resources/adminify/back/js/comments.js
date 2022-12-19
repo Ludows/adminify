@@ -61,32 +61,11 @@ jQuery(document).ready(function() {
         }
     });
 
-    $(document).on('change', 'select[name="parent_id"]', function(e, details) {
-        if(isRedraw) {
-            return false;
-        }
-        isRedraw = true;
-        let val = $(this).val();
-        let _id_select = $(document).find('select[name="model_id"]');
-        if(_id_select.length > 0) {
-
-            _id_select.children().removeAttr('disabled');
-            let cibled_opt = _id_select.find('option[value="'+ val +'"]');
-            cibled_opt.attr("disabled", true);
-            
-            
-            _id_select.trigger("change");
-            isRedraw = false;
-
-        }
-    });
-
     $(document).on('change', 'select[name="model_class"]', function(e) {
 
         let val = $(this).val();
         // console.log('val', val)
         let model_id_select = $(document).find('select[name="model_id"]');
-        let parent_id_select = $(document).find('select[name="parent_id"]');
 
         isRedraw = true;
 
@@ -102,14 +81,11 @@ jQuery(document).ready(function() {
                 console.log(opts);
 
                 model_id_select.children().not( model_id_select.children().first() ).remove();
-                parent_id_select.children().not( parent_id_select.children().first() ).remove();
                 if(data.models.length > 0) {
                     model_id_select.append( opts.join('') )
 
                     opts.unshift('<option value="0">'+ __('adminify.not_parent') +'</option>');
-                    parent_id_select.append( opts.join('') )
                     model_id_select.trigger('change');
-                    parent_id_select.trigger('change')
                 }
 
                 isRedraw = false;

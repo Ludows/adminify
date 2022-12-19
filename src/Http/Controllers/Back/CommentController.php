@@ -81,7 +81,7 @@ class CommentController extends Controller
 
             $comment = $this->commentRepository->addModel(new Comment())->create($form);
 
-            return $this->sendResponse($comment->post->commentsThree, 'comments.index', 'admin.typed_data.success', 'commentList');
+            return $this->sendResponse($comment->commentsThree, 'comments.index', 'admin.typed_data.success', 'commentList');
         }
 
         /**
@@ -99,6 +99,8 @@ class CommentController extends Controller
                 'model' => $comment
             ]);
 
+            $this->addJS( asset('/adminify/back/js/comments.js') );
+
             return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
         }
 
@@ -111,11 +113,13 @@ class CommentController extends Controller
         public function update(UpdateCommentRequest $request, Comment $comment)
         {
             //
-            $form = $this->makeForm(UpdateComment::class);
+            $form = $this->makeForm(UpdateComment::class, [
+                'model' => $comment
+            ]);
 
             $comment = $this->commentRepository->addModel($comment)->update($form, $comment);
 
-            return $this->sendResponse($comment->post->commentsThree, 'comments.index', 'admin.typed_data.updated', 'commentList');
+            return $this->sendResponse($comment->commentsThree, 'comments.index', 'admin.typed_data.updated', 'commentList');
         }
 
         /**
@@ -128,11 +132,11 @@ class CommentController extends Controller
         {
             //
 
-            $all = $request->all();
+            $model = new $comment->model_class;
+            $model = $model->find( (int) $comment->model_id );
 
             $this->commentRepository->addModel($comment)->delete($comment);
-            $m = Post::find($all['post_id']);
 
-            return $this->sendResponse($m->commentsThree, 'comments.index', 'admin.typed_data.deleted', 'commentList');
+            return $this->sendResponse($model->commentsThree, 'comments.index', 'admin.typed_data.deleted', 'commentList');
         }
 }
