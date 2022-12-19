@@ -16,7 +16,7 @@ class InstallPackages extends Command
      * @var string
      */
     protected $signature = 'adminify:install
-        {task?* : Tasks name are npm, coreinstall, migrations, seed, publishes, feeds, routes, caches, refresh}
+        {task?* : Tasks name are npm, coreinstall, stubs, migrations, seed, publishes, feeds, routes, caches, refresh}
         {--force : Force all tasks}
         {--firstInstall : Tell if is the first Install  of adminify}'; //todo
 
@@ -94,6 +94,9 @@ class InstallPackages extends Command
             $this->info('Handle Adminify core instalation...');
             $this->handleCoreTasks();
 
+            
+        }
+        if(in_array('*', $cleanedTasks)  || in_array('stubs', $cleanedTasks)) {
             $this->info('Handle stubs install...');
             $this->registerInstallablesCommands();
 
