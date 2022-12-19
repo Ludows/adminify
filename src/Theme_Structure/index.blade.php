@@ -53,14 +53,20 @@
         </div>
     @endif
 
-    @if($enabled_features['post'] && $isSingle)
+
+    {{-- {!! dd(view()) !!} --}}
+    @php
+        $enables_comments = !empty($enables_comments) ? explode(',', $enables_comments) : null;
+    @endphp
+
+    @if(!empty($enables_comments) && in_array(class_basename($model), $enables_comments))
         @php
             $allowForm = true;
             $showTitle = true;
             if($user == null) {
                 $allowForm = false;
             }
-            if(setting('no_comments') == 1 && $allowForm) {
+            if($no_comments == 1 && $allowForm) {
                 $allowForm = false;
                 $showTitle = false;
             }
@@ -69,7 +75,20 @@
                 $showTitle = false;
             }
         @endphp
-        <comments ref="comments" model_class="{{ get_class($model) }}" :multilang="{{ var_export(is_multilang(), true) }}" :show_title="{{ $showTitle ? 'true' : 'false' }}" lang='{{ $lang }}' :post_id="{{ $model->id }}" :allow_form="{{ $allowForm ? 'true' : 'false' }}" :user="{{ $user ?? '{}' }}" :comments='@json($model->commentsThree)'></comments>
+        
+        @includeFirst(['theme::'. $theme .'.layouts.partials.comments-'.$type, 'theme::'. $theme .'.layouts.partials.comments'], [
+            'model_class' => get_class($model),
+            'multilang' => is_multilang(),
+            'show_title' => $showTitle,
+            'lang' => lang(),
+            'post_id' => $model->id,
+            'allow_form' => $allowForm,
+            'user' => $user,
+            'comments' => $model->commentsThree,
+            'root_level' => true,
+        ])
+
+        {{-- <comments ref="comments" model_class="{{ get_class($model) }}" :multilang="{{ var_export(is_multilang(), true) }}" :show_title="{{ $showTitle ? 'true' : 'false' }}" lang='{{ $lang }}' :post_id="{{ $model->id }}" :allow_form="{{ $allowForm ? 'true' : 'false' }}" :user="{{ $user ?? '{}' }}" :comments='@json($model->commentsThree)'></comments> --}}
     @endif
 
     @hook('after_content')

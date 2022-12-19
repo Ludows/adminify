@@ -10,7 +10,7 @@ export default function VisualEditorInit(fields) {
             btn.next().attr('hidden', function(_, attr){ return !attr})
         })
 
-        $(document).on('click', 'button[aria-label="Close"]', function(e) {
+        $(document).on('click', "#"+el.selector+' button[aria-label="Close"]', function(e) {
             e.preventDefault();
             btn.trigger('click');
         })

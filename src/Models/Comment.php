@@ -20,6 +20,8 @@ class Comment extends ClassicModel
 
     protected $useSlugGeneration = false;
 
+    public $enable_revisions = false;
+
     protected $fillable = [
         'comment',
         'parent_id',
