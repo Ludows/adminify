@@ -82,7 +82,8 @@ return [
         "media_element" => 'App\Adminify\Forms\Fields\MediaElementType',
         "jodit" => 'App\Adminify\Forms\Fields\JoditType',
         "repeater" => 'App\Adminify\Forms\Fields\RepeaterType',
-        "flatpickr" => 'App\Adminify\Forms\Fields\FlatpickrType'
+        "flatpickr" => 'App\Adminify\Forms\Fields\FlatpickrType',
+        "recapcha" => 'App\Adminify\Forms\Fields\CaptchaType'
 
     ],
 
