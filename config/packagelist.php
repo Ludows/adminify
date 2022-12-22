@@ -354,4 +354,20 @@ return array(
             'config' => null,
             'afterPublish' => [],
         ),
+        (object) array(
+            'beforePublish' => [],
+            'name' => 'anhskohbo/no-captcha',
+            'publish' => (object) [
+                'tag' => false,
+                'force' => false,
+                'sibling' => 'Anhskohbo\NoCaptcha\NoCaptchaServiceProvider'
+            ],
+            'autoload' => (object) [
+                'providers' => [],
+                'middlewares' => [],
+                'aliases' => []
+            ],
+            'config' => null,
+            'afterPublish' => [],
+        ),
     );

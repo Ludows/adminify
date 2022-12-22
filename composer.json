@@ -36,7 +36,8 @@
         "haydenpierce/class-finder" : "^0.4.3",
         "league/glide-laravel": "^1.0.0",
         "snowfire/beautymail": "dev-master",
-        "imliam/laravel-env-set-command" : "^1.0"
+        "imliam/laravel-env-set-command" : "^1.0",
+        "anhskohbo/no-captcha": "^3.4"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
