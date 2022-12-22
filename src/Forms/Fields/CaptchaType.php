@@ -16,9 +16,8 @@ class CaptchaType extends FormField {
 
     public function getDefaults() {
         return [
-            'sitekey' => "{!! env('GOOGLE_RECAPTCHA') !!}",
             'theme' => 'light'
-        ]
+        ];
     }
 
     public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
