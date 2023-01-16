@@ -106,7 +106,7 @@ class MultilangBasic
         // making autoswitch back / front
         $singular = singular($routeNameSpl['1']);
         $model = \Route::current()->parameter($singular);
-        if(!is_admin() && !in_array($routeName, ['image.transform', 'theme.assets', 'editor.preview', 'forms.validate'])) {
+        if(!is_admin() && !is_auth_routes() && !in_array($routeName, ['image.transform', 'theme.assets', 'editor.preview', 'forms.validate'])) {
             // dd($routeName,adminify_get_class( \Str::studly( $routeNameSpl['1'] ), ['app:models', 'app:adminify:models'], false ));
             $theClass = adminify_get_class( \Str::studly( $routeNameSpl['1'] ), ['app:models', 'app:adminify:models'], false );
             $model = new $theClass();

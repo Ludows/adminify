@@ -143,7 +143,9 @@ class BaseRepository
         }
 
 
-        $model->shouldGenerateSlug();
+        if( method_exists($model, 'shouldGenerateSlug') ) {
+            $model->shouldGenerateSlug();
+        }
 
         if(method_exists($this, 'beforeRun')) {
             call_user_func_array(array($this, 'beforeRun'), array($model, $formValues,  $type));

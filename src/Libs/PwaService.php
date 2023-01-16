@@ -55,17 +55,13 @@ class PwaService {
             }
         }
     }
-    public function generateSw() {
+    public function generateSw($locale = null) {
 
         $m = new Pwa();
 
         $configSite = config('site-settings');
-        $locales = $configSite['supported_locales'];
         $isMultilang = $configSite['multilang'];
         $files = [];
-        if($isMultilang == false) {
-            $locales = [ config('app.locale') ];
-        }
 
         $content_types = get_content_types();
 
@@ -84,7 +80,6 @@ class PwaService {
         if($content_types['Page']) {
             if(!empty($offlinePage->data)) {
                 $page = new $content_types['Page'];
-                foreach ($locales as $key => $locale) {
 
                     if($isMultilang) {
                         $page = $page->where('id', (int) $offlinePage->data )->withStatus( status()::PUBLISHED_ID )->lang($locale)->get();
@@ -97,7 +92,6 @@ class PwaService {
                         $offline_urls[$locale] = $page->first()->urlpath;
                     }
 
-                }
             }
         }
 
@@ -111,7 +105,6 @@ class PwaService {
         foreach ($content_types as $keyedNameModel => $model) {
             $currentModel = new $model;
             if($currentModel->allowSitemap) {
-                foreach ($locales as $key => $locale) {
                     # code...
                     if($isMultilang) {
                         $allPublished = $currentModel->withStatus( status()::PUBLISHED_ID )->lang($locale)->get();
@@ -121,9 +114,9 @@ class PwaService {
                     }
 
                     foreach ($allPublished as $key => $localBoundedModel) {
-                        $files[] = $localBoundedModel->urlpath;
+                        $isHome = is_homepage($localBoundedModel);
+                        $files[] = $isHome ? '/' : $localBoundedModel->urlpath;
                     }
-                }
             }
         }
 
@@ -131,6 +124,8 @@ class PwaService {
         // This file is auto generated. Please don't try to modify them.
         var staticCacheName = '". $this->uuid ."';
         var filesToCache = ". json_encode($files) .";
+
+        var active_lang = '". $locale ."';
         
         // Cache on install
         self.addEventListener('install', event => {
@@ -160,20 +155,26 @@ class PwaService {
         // Serve from Cache
         self.addEventListener('fetch', event => {
             event.respondWith(
-                caches.match(event.request)
-                    .then(response => {
-                        return response || fetch(event.request);
-                    })
-                    .catch(() => {
+                fetch(event.request).catch(function() {
 
+                    let networkRequest = caches.match(event.request);
+
+                    if(networkRequest) {
+                        console.log('match networkRequest');
+                        return networkRequest;
+                    }
+                    else {
                         var offline_urls = ". json_encode($offline_urls) .";
                         // var offline_keys = Object
-                        var lang = document.documentElement.getAttribute('lang');
 
-                        if(offline_urls[lang]) {
-                            return caches.match( offline_urls[lang] );
+                        if(offline_urls[active_lang]) {
+                            return caches.match( offline_urls[active_lang] );
                         }
-                    })
+
+                        return networkRequest;
+                    }
+
+                })
             )
         });";
     }

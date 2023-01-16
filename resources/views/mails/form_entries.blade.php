@@ -12,7 +12,7 @@
                     $options = $field->getOptions();
                     $type = $field->getType();   
                     $linkable_types = ['tel', 'email'];
-                    $unshowable_fields = ['form_class', 'rgpd'];
+                    $unshowable_fields = ['form_class', 'rgpd', 'recapcha'];
                 @endphp
                 @if (!in_array($entry['field_name'], $unshowable_fields))
                     <tr>

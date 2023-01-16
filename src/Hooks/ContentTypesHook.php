@@ -107,21 +107,33 @@ class ContentTypesHook extends HookInterface {
             return false;
         }
 
+        $configSite = config('site-settings');
+        $locales = $configSite['supported_locales'];
+
+        $isMultilang = $configSite['multilang'];
+        if($isMultilang == false) {
+            $locales = [ config('app.locale') ];
+        }
+
+        
+
        // generate icons..
        $this->pwaService->generateIcons();
 
        // generate sw..
-       $sw = $this->pwaService->generateSw();
+       foreach ($locales as $key => $locale) {
+        # code...
+            $sw = $this->pwaService->generateSw($locale);
 
-       $pathFile = public_path('serviceworker.js');
+            $pathFile = public_path('serviceworker-'. $locale .'.js');
 
-       if(File::exists( $pathFile )) {
-           File::replace($pathFile,  $sw);
-       }
-       else {
-           File::put($pathFile, $sw);
-       }
-
+            if(File::exists( $pathFile )) {
+                File::replace($pathFile,  $sw);
+            }
+            else {
+                File::put($pathFile, $sw);
+            }
+        }
     }
 
     public function loadGenerateSitemap($context) {

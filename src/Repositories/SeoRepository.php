@@ -51,10 +51,9 @@ class SeoRepository extends BaseRepository
                 $seo->data = $value;
             }
 
-            if(isset($formValues['image']) && $key == "image") {
-                $json = json_decode($formValues['image']);
-                $seo->setTranslation('data', $lang, $json[0]->name);
-            }
+            // if(isset($formValues['image']) && $key == "image") {
+            //     $seo->setTranslation('data', $lang, $formValues['image']);
+            // }
 
             if(method_exists($this, 'beforeRun')) {
                 call_user_func_array(array($this, 'beforeRun'), array($this->model ?? $model, $formValues,  $hook));

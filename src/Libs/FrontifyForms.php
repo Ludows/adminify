@@ -9,7 +9,7 @@ use Mail;
 class FrontifyForms extends Form {
     
     protected $didSendMail = true;
-    protected $confirmationType = 'redirect'; //can be redirect / entity
+    protected $confirmationType = 'redirect'; //can be redirect / custom
     protected $confirmationEntity = null; // put your entity class here
 
     public function buildForm() {}
@@ -44,7 +44,7 @@ class FrontifyForms extends Form {
         return $this;
     }
 
-    public function getUrlfromEntity() {}
+    public function getCustomRedirect() {}
 
     public function getMailTemplate() {
         return null;
@@ -69,8 +69,8 @@ class FrontifyForms extends Form {
         $url = '';
         $r = request();
 
-        if(!empty($this->confirmationType) && $this->confirmationType == 'entity') {
-            $url = $this->getUrlfromEntity();
+        if(!empty($this->confirmationType) && $this->confirmationType == 'custom') {
+            $url = $this->getCustomRedirect();
         }
 
         if(!empty($this->confirmationType) && $this->confirmationType == 'redirect') {
