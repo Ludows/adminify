@@ -25,6 +25,7 @@ namespace Ludows\Adminify\Traits;
         else {
             $isSeo = is_seo_model($mixed);
         }
+        
         if($isModel) {
             $reflection = new ReflectionClass($mixed);
             $type = $reflection->getShortName();
@@ -33,12 +34,14 @@ namespace Ludows\Adminify\Traits;
             $type = $mixed['type'];
         }
 
+
         $noSeo = setting('no_seo');
 
         $description = $isSeo ? $mixed->seoWith('description', false) : null;
         $keywords = $isSeo ? $mixed->seoWith('keywords', false) : null;
         $robots = $isSeo ? $mixed->seoWith('robots', false) : null;
         $langs = locales();
+        $media = $isSeo ? $this->handleMedia($mixed) : null;
 
 
         if($multilang) {
@@ -106,16 +109,18 @@ namespace Ludows\Adminify\Traits;
         //SEOMeta::setNext($url);
 
 
-        if(isset($mixed->media_id) && $isModel && $mixed->media_id != 0) {
+        if(!empty($media)) {
             //dd($mixed);
-            $media = $mixed->media->path;
+            // $media = $mixed->media->path;
             OpenGraph::addImage($media);
             TwitterCard::setImage($media);
             JsonLd::setImage($media); // add image url
         }
 
         OpenGraph::setSiteName(env('APP_NAME')); //define site_name
-        OpenGraph::addProperty('type', $this->types[strtolower($type)]);
+        if(!empty($this->types[strtolower($type)])) {
+            OpenGraph::addProperty('type', $this->types[strtolower($type)]);
+        }
 
         // TwitterCard::setType($type); // type of twitter card tag
 
@@ -129,5 +134,21 @@ namespace Ludows\Adminify\Traits;
         //JsonLd::addValue($key, $value);
         // JsonLd::setDescription($type); // description of twitter card tag
         // ; // add image url
+   }
+   public function handleMedia($model) {
+        // test from media key on model 
+        $media_id = $model->{$model->media_key};
+        $media = null;
+        if(empty($media_id)) {
+            $media_id = $model->seoWith('image', false);
+        }
+
+        if(!empty($media_id)) {
+            // media is found
+            $media = media( (int) $media_id );
+            $media = $media->path;
+        }
+
+        return $media;
    }
   }
