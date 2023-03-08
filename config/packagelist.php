@@ -370,4 +370,20 @@ return array(
             'config' => null,
             'afterPublish' => [],
         ),
+        (object) array(
+            'beforePublish' => [],
+            'name' => 'spatie/laravel-sitemap',
+            'publish' => (object) [
+                'tag' => 'sitemap-config',
+                'force' => false,
+                'sibling' => 'Spatie\Sitemap\SitemapServiceProvider'
+            ],
+            'autoload' => (object) [
+                'providers' => [],
+                'middlewares' => [],
+                'aliases' => []
+            ],
+            'config' => null,
+            'afterPublish' => [],
+        ),
     );
