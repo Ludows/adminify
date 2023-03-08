@@ -37,7 +37,8 @@
         "league/glide-laravel": "^1.0.0",
         "snowfire/beautymail": "dev-master",
         "imliam/laravel-env-set-command" : "^1.0",
-        "anhskohbo/no-captcha": "^3.4"
+        "anhskohbo/no-captcha": "^3.4",
+        "spatie/laravel-sitemap" : "^6.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
