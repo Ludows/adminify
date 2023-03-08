@@ -16,31 +16,30 @@ class SitemapController extends Controller
         if($sitemapPart != null && array_key_exists($sitemapPart, $configSitemap)) {
             $classCheck = adminify_get_class($configSitemap[$sitemapPart], ['app:adminify:models', 'app:models'], false);
         }
-        else if($sitemapPart == null) {
-            $classCheck = $configSitemap;
-            $i = 0;
-            foreach ($classCheck as $clsKey => $cls) {
-                # code...
-                $classCheck[$clsKey] = adminify_get_class($cls, ['app:adminify:models', 'app:models'], false);
-                $i++;
-            }
-        }
+        // else if($sitemapPart == null) {
+        //     $classCheck = $configSitemap;
+        //     $i = 0;
+        //     foreach ($classCheck as $clsKey => $cls) {
+        //         # code...
+        //         $classCheck[$clsKey] = adminify_get_class($cls, ['app:adminify:models', 'app:models'], false);
+        //         $i++;
+        //     }
+        // }
 
-        if($classCheck == null) {
-            abort('404');
-        }
+        // if($classCheck == null) {
+        //     abort('404');
+        // }
 
         $params = [
-            'writeFile' => false,
             'modelName' => $sitemapPart ?? null,
-            'models' => is_array($classCheck) ? $classCheck : [$sitemapPart => $classCheck],
+            'models' => empty($sitemapPart) ? [] : [$sitemapPart => $classCheck],
             'currentLang' => lang(),
             'locales' => locales()
         ];
 
         $sitemap->setOptions($params);
 
-        return $sitemap->render();
+        return $sitemap->show();
 
     }
 }

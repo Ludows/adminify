@@ -149,6 +149,7 @@ class ContentTypesHook extends HookInterface {
             'modelName' => $context->getTable(),
             'writeFile' => true,
         ]);
-        $s->render();
+
+        $s->create();
     }
 }
