@@ -122,7 +122,8 @@ class SitemapRender
                 }
             }
 
-            $single_sitemap->writeToDisk('public', 'sitemap_'.$modelName.'.xml');
+
+            $single_sitemap->writeToDisk('public', '/sitemap_'.$modelName.'.xml');
         }
         
     }
@@ -142,7 +143,7 @@ class SitemapRender
         $fileToBind = 'sitemap_index.xml';
         $storage = storage('public');
         if(count($hasKeys) > 0) {
-            $fileToBind = 'sitemap_'. $hasKeys[0] .'.xml';
+            $fileToBind = 'sitemap_'. lowercase( plural( $hasKeys[0] ) ) .'.xml';
         }
 
         $fileExist = $storage->exists($fileToBind);
@@ -151,7 +152,7 @@ class SitemapRender
             return $storage->get($fileToBind);
         }
         else {
-            abort('404');
+            return null;
         }
         
     }
@@ -170,15 +171,15 @@ class SitemapRender
     }
     public function createRootSitemap($options = []) {
        $root = SitemapIndex::create();
-       $m = new $modelClass();
        
        foreach ($options['models'] as $modelName => $modelClass) {
+            $m = new $modelClass();
             if($m->allowSitemap) {
                 $root->add('/sitemap_'.$modelName.'.xml');
             }
        }
        
-       $root->writeToDisk('public', 'sitemap_index.xml');
+       $root->writeToDisk('public', '/sitemap_index.xml');
     }
 
 
