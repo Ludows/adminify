@@ -22,28 +22,22 @@ if(is_installed()) {
             // $router->get('{slug}', 'App\Adminify\Http\Controllers\Front\PageController@getPages')->where('slug', '([A-Za-z0-9\-\/]+)')->name('pages.front.show');
             // $router->bind('slug', 'App\Adminify\Http\Controllers\Front\PageController@handleSlug');
 
-            $fileGenerated = $front_registrar->getRoutes();
-            if(!empty($fileGenerated)) {
-                include($fileGenerated);
+            $fileGenerated_paths = $front_registrar->getRoutes();
+            if(!empty($fileGenerated_paths)) {
+                foreach ($fileGenerated_paths as $key => $path) {
+                    # code...
+                    include($path);
+                }
             }
 
             if(!empty($theme)) {
                 $router->get('/theme/{folder}/{filename}', 'App\Adminify\Http\Controllers\Front\ImageController@themeAssets')->name('theme.assets');
             }
 
-            // dd($features);
-
-
             if(isset($features['form']) && $features['form']) {
                 $router->post('/forms/validate/', 'App\Adminify\Http\Controllers\Front\PageController@validateForms')->name('forms.validate');
             }
 
-
-            // $path_admin_file = base_path('routes/adminify_front.php');
-
-            // if(file_exists($path_admin_file)){
-            //     include($path_admin_file);
-            // }
             if(is_installed()) {
                 $fileRoutes_in_themes = $themeManager->getFileRoutes('front');
                 include($fileRoutes_in_themes);

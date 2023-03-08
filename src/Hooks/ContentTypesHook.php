@@ -28,7 +28,8 @@ class ContentTypesHook extends HookInterface {
                 //     $this->syncOnUpdating($model);
                 // }
 
-                $this->registrar->generate();
+                // $this->registrar->generate();
+                $this->handleFrontRegistrar();
 
                 $this->syncToCache($model);
             }
@@ -45,7 +46,8 @@ class ContentTypesHook extends HookInterface {
             $this->syncToCache($model, true);
             if($isContentType && $model->allowSitemap) {
                 $this->syncronizeUrl($model, true);
-                $this->registrar->generate();
+                // $this->registrar->generate();
+                $this->handleFrontRegistrar();
             }
             if($isContentType && $model->allowSitemap) {
                 $this->loadGenerateSitemap($model);
@@ -97,6 +99,37 @@ class ContentTypesHook extends HookInterface {
 
             $delete == false ? $context->encryptToCache( $isHomePage ? 'homepage' : join('.', $url) ) : $context->forgetToCache( $isHomePage ? 'homepage' : join('.', $url ));
         }
+    }
+
+    public function handleFrontRegistrar() {
+
+        $configSite = config('site-settings');
+        $locales = $configSite['supported_locales'];
+        $app = app();
+
+        $isMultilang = $configSite['multilang'];
+        if($isMultilang == false) {
+            $locales = [ config('app.locale') ];
+        }
+
+        $currentLang = lang();
+
+       // generate routes by locales..
+       foreach ($locales as $key => $locale) {
+        # code...
+            $app->setLocale($locale);
+            $routesStr = $this->registrar->generate();
+
+            $pathFile = $this->registrar->config['appendTo'].$locale.'_'.$this->registrar->config['file_routes'];
+
+            if(File::exists( $pathFile )) {
+                File::replace($pathFile,  $routesStr);
+            }
+            else {
+                File::put($pathFile, $routesStr);
+            }
+        }
+        $app->setLocale($currentLang);
     }
 
     public function generatePwa() {
