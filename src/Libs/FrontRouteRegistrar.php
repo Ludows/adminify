@@ -78,27 +78,42 @@ class FrontRouteRegistrar {
             }
         }
 
-        $pathFile = $this->config['appendTo'].$this->config['file_routes'];
-
-
-        if(File::exists( $pathFile )) {
-            File::replace($pathFile,  $strFile);
-        }
-        else {
-            File::put($pathFile, $strFile);
-        }
-
+        
+        return $strFile;
     }
     private function getStringTemplate() {
         return '<?php
         use Illuminate\Support\Facades\Route;';
     }
+    public function getRoutesPath() {
+        return $this->config['appendTo'];
+    }
+    public function getFileNameRoute() {
+        return $this->config['file_routes'];
+    }
     public function getRoutes() {
-        $ret = null;
-        $pathFile = $this->config['appendTo'].$this->config['file_routes'];
-        if(File::exists( $pathFile )) {
-            $ret = $pathFile;
+        $ret = [];
+        $routesPath = $this->getRoutesPath();
+        $fileNameRoute = $this->getFileNameRoute();
+
+        $configSite = config('site-settings');
+        $locales = $configSite['supported_locales'];
+
+        $isMultilang = $configSite['multilang'];
+        if($isMultilang == false) {
+            $locales = [ config('app.locale') ];
         }
+
+        foreach ($locales as $key => $locale) {
+            
+            $pathFile = $this->config['appendTo'].$locale.'_'.$this->config['file_routes'];
+
+            if(File::exists( $pathFile )) {
+                $ret[] = $pathFile;
+            }
+        }
+
+    
         return $ret;
     }
 }

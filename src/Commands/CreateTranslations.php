@@ -36,6 +36,28 @@ class CreateTranslations extends Command
         parent::__construct();
     }
 
+    public function createTranslationsFromArray($rootFolder = '', $translations = []) {
+        $a = (object) [];
+        $keys = array_keys($translations);
+        
+        foreach ($keys as $key) {
+            # code...
+            $the_type = gettype( $translations[$key] );
+
+            if($the_type == 'string') {
+                $a->{$rootFolder.'.'.$key} = $translations[$key];
+            }
+
+            if($the_type == 'array') {
+                $a = (object) array_merge(
+                    (array) $a,
+                    (array) $this->createTranslationsFromArray($rootFolder.'.'.$key, $translations[$key])
+                );
+            }
+        }
+
+        return $a;
+    }
     /**
      * Execute the console command.
      *
@@ -76,9 +98,15 @@ class CreateTranslations extends Command
                 foreach ($files as $file) {
                     # code...
                     $info = pathinfo($file);
-                    $trads = require_once($file);
+                    $trads = require($file);
 
-                    $messages->{$info['filename']} = $trads;
+                    // dd($trads);
+                    $trads = $this->createTranslationsFromArray($info['filename'], $trads);
+
+                    $messages = (object) array_merge(
+                        (array) $messages,
+                        (array) $trads
+                    );
                 }
 
 

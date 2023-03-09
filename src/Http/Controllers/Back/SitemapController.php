@@ -4,42 +4,47 @@ namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
 use Ludows\Adminify\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Response;
 
 use Ludows\Adminify\Libs\SitemapRender;
 class SitemapController extends Controller
 {
-    public function index($sitemapPart = null, SitemapRender $sitemap) {
+    public function index(Request $request, SitemapRender $sitemap) {
 
-        $configSitemap = get_site_key('sitemap');
+       $part = $request->part ?? '';
+       $content_types = get_content_types();
+       $keys = array_keys($content_types);
 
-        $classCheck = null;
-        if($sitemapPart != null && array_key_exists($sitemapPart, $configSitemap)) {
-            $classCheck = adminify_get_class($configSitemap[$sitemapPart], ['app:adminify:models', 'app:models'], false);
+       if(!in_array($part, $keys)) {
+         $part = titled( singular($part) );
+       }
+        
+       $classCheck = null;
+        if(!empty($part)) {
+            $classCheck = adminify_get_class($part, ['app:adminify:models', 'app:models'], false);
         }
-        // else if($sitemapPart == null) {
-        //     $classCheck = $configSitemap;
-        //     $i = 0;
-        //     foreach ($classCheck as $clsKey => $cls) {
-        //         # code...
-        //         $classCheck[$clsKey] = adminify_get_class($cls, ['app:adminify:models', 'app:models'], false);
-        //         $i++;
-        //     }
-        // }
-
-        // if($classCheck == null) {
-        //     abort('404');
-        // }
-
+        
         $params = [
-            'modelName' => $sitemapPart ?? null,
-            'models' => empty($sitemapPart) ? [] : [$sitemapPart => $classCheck],
+            'modelName' => $part ?? null,
+            'models' => empty($part) ? [] : [$part => $classCheck],
             'currentLang' => lang(),
             'locales' => locales()
         ];
 
         $sitemap->setOptions($params);
 
-        return $sitemap->show();
+        $show = $sitemap->show();
+        
+        if(empty($show)) {
+            abort('404');
+        }
+        else {
+            return Response::make($show, 200, [
+                'Content-Type' => 'text/xml',
+            ]);
+        }
+
+        
 
     }
 }
