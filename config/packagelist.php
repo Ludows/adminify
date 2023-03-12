@@ -158,7 +158,7 @@ return array(
                 'name' => 'permission',
             ],
             'afterPublish' => [
-                'php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="migrations"'
+                // 'php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" --tag="migrations"'
             ],
         ),
         (object) array(
