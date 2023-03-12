@@ -52,6 +52,27 @@ if (! function_exists('parse_shortcode')) {
     }
 }
 
+if(! function_exists('maybeEncodeData') ) {
+    function maybeEncodeData($value) {
+        if (is_object($value) || is_array($value)) {
+            return json_encode($value, true);
+        }
+        return $value;
+    }
+}
+
+if(! function_exists('maybeDecodeData') ) {
+    function maybeDecodeData($value) {
+        $object = json_decode($value, true);
+
+        if (json_last_error() === JSON_ERROR_NONE) {
+            return $object;
+        }
+
+        return $value;
+    }
+}
+
 if(! function_exists('mailer') ) {
     function mailer() {
         return app()->make(Snowfire\Beautymail\Beautymail::class);

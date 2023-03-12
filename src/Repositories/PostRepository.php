@@ -18,21 +18,23 @@ class PostRepository extends BaseRepository
 
     public function afterRun($model, $formValues, $type) {
         if($type == 'update') {
-            $model->deleteTags(null);
+            $model->deleteTags($model->id);
         }
 
         if(isset($formValues['tags'])) {
-            $model->createTags($formValues['tags']);
+            $model->setTags($model->id, $formValues['tags']);
         }   
 
         if($type != "create") {
-            $model->categories()->detach();
+            $model->deleteCategories($model->id);
+            // $model->categories()->detach();
         }
 
         if(isset($formValues['categories'])) {
-            foreach ($formValues['categories'] as $catId) {
-                $model->categories()->attach((int) $catId);
-            }
+            $model->updateCategories($model->id, $formValues['categories']);
+            // foreach ($formValues['categories'] as $catId) {
+            //     $model->categories()->attach((int) $catId);
+            // }
         
         }
     }
@@ -51,12 +53,13 @@ class PostRepository extends BaseRepository
 
         if($type == "destroy") {
             // $this->hookManager->run('model:deleting', $model);
-            $insertedCategories = $model->categories;
-            $insertedTags = $model->tags;
+            $insertedCategories = $model->getCategories($model->id);
+            $insertedTags = $model->getTags($model->id);
 
             if(count($insertedCategories) > 0) {
                 // On detache puis on réattache pour éviter les doublons
-                $model->categories()->detach();
+                $model->deleteCategories($model->id);
+                // $model->categories()->detach();
             }
             if(count($insertedTags) > 0) {
                 $model->deleteTags();

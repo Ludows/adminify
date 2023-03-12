@@ -14,18 +14,18 @@ use Ludows\Adminify\Traits\Helpers;
 use Ludows\Adminify\Traits\Listable;
 use Ludows\Adminify\Traits\Searchables;
 use Ludows\Adminify\Traits\SavableTranslations;
-use Ludows\Adminify\Traits\ProcessableAssets;
 use Ludows\Adminify\Traits\HasMeta;
 use Ludows\Adminify\Traits\HasStatus;
 use Ludows\Adminify\Traits\Hookable;
 use Ludows\Adminify\Traits\QueryCachable;
 use Ludows\Adminify\Traits\GenerateSlug;
-use Ludows\Adminify\Traits\Taggable;
 use Ludows\Adminify\Traits\HasInteractsWithMediaLibrary;
 use Ludows\Adminify\Traits\Commentable;
 use Ludows\Adminify\Traits\HasUser;
 use Ludows\Adminify\Traits\HasRevisions;
 use Ludows\Adminify\Traits\HasSettings;
+use Ludows\Adminify\Traits\HasCategoriesRelations;
+use Ludows\Adminify\Traits\HasTagsRelations;
 
 use Spatie\Feed\Feedable;
 
@@ -48,16 +48,16 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     use Listable;
     use Searchables;
     use SavableTranslations;
-    use ProcessableAssets;
     use HasStatus;
     use QueryCachable;
     use GenerateSlug;
-    use Taggable;
     use Commentable;
     use HasInteractsWithMediaLibrary;
     use HasUser;
     use HasRevisions;
     use HasSettings;
+    use HasCategoriesRelations;
+    use HasTagsRelations;
 
     public function newEloquentBuilder($query)
     {

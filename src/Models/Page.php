@@ -55,9 +55,4 @@ class Page extends ContentTypeModel
         'parent_id' => 0,
         'user_id' => 0,
     ];
-
-    public function categories()
-    {
-       return $this->belongsToMany(Category::class);
-    }
 }
