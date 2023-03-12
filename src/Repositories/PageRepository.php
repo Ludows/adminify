@@ -29,7 +29,7 @@ class PageRepository extends BaseRepository
         }
 
         if($type == 'destroy') {
-            $model->categories()->detach();
+            $model->deleteCategories($model->id);
             $model->deleteUrl([
                 'from_model_id' => $model->id
             ]);
@@ -38,14 +38,16 @@ class PageRepository extends BaseRepository
 
     public function afterRun($model, $formValues, $type) {
         if($type != "create") {
-            $model->categories()->detach();
+            $model->deleteCategories($model->id);
+            // $model->categories()->detach();
         }
 
         if(isset($formValues['categories']) && count($formValues['categories']) > 0) {
-            foreach ($formValues['categories'] as $cat => $catId) {
-                # code...
-                $model->categories()->attach((int) $catId);
-            }
+            $model->updateCategories($model->id, $formValues['categories']);
+            // foreach ($formValues['categories'] as $cat => $catId) {
+            //     # code...
+            //     $model->categories()->attach((int) $catId);
+            // }
         }
     }
 }
