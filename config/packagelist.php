@@ -138,7 +138,7 @@ return array(
             'publish' => (object) [
                 'tag' => false,
                 'force' => false,
-                'sibling' => 'Spatie\Permission\PermissionServiceProvider'
+                'sibling' => false
             ],
             'autoload' => (object) [
                 'providers' => [
