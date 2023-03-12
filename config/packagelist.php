@@ -135,11 +135,7 @@ return array(
         (object) array(
             'beforePublish' => [],
             'name' => 'spatie/laravel-permission',
-            'publish' => (object) [
-                'tag' => false,
-                'force' => false,
-                'sibling' => false
-            ],
+            'publish' => null,
             'autoload' => (object) [
                 'providers' => [
                     Spatie\Permission\PermissionServiceProvider::class,
