@@ -62,7 +62,7 @@ class PostRepository extends BaseRepository
                 // $model->categories()->detach();
             }
             if(count($insertedTags) > 0) {
-                $model->deleteTags();
+                $model->deleteTags($model->id);
             }
 
             $model->deleteUrl([

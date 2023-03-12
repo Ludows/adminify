@@ -106,7 +106,7 @@ class DropdownsManager
                 ]);
             }
 
-            if(is_content_type_model($m)) {
+            if(is_content_type_model($m) && $m->allowSitemap) {
                 $this->add('dropdown_'.$m->id, [
                     'template' => 'adminify::layouts.admin.dropdowns.extends.seo',
                     'vars' => [

@@ -7,12 +7,18 @@
   trait HasTagsRelations
   {
     public $prefix_meta_tag = '_tags';
+    public $meta_column_key_for_tag = 'id';
     public function generateMetaTagKey($key) {
 
         $baseClass = get_class($this);
         $baseName = class_basename($baseClass);
   
         return $this->prefix_meta_tag.'_'. lowercase($baseName).'_'.$key;
+    }
+    public function getTagsAttribute() {
+        $tag_ids = $this->getCategories( $this->{$this->meta_column_key_for_tag} );
+        $tags = model('Tag')->whereIn('id', $tag_ids)->get();
+        return $tags;
     }
     public function hasTags($key) {
         $tags = Meta::where(['key' => $this->generateMetaTagKey($key)]);
