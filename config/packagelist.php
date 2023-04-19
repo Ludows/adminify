@@ -382,4 +382,22 @@ return array(
             'config' => null,
             'afterPublish' => [],
         ),
+        (object) array(
+            'beforePublish' => [],
+            'name' => 'inertiajs/inertia-laravel',
+            'publish' => null,
+            'autoload' => (object) [
+                'providers' => [],
+                'middlewares' => [
+                    'web' => [
+                        \App\Http\Middleware\HandleInertiaRequests::class,
+                    ]
+                ],
+                'aliases' => []
+            ],
+            'config' => null,
+            'afterPublish' => [
+                'php artisan inertia:middleware',
+            ],
+        ),
     );

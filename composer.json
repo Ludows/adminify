@@ -38,7 +38,8 @@
         "snowfire/beautymail": "dev-master",
         "imliam/laravel-env-set-command" : "^1.0",
         "anhskohbo/no-captcha": "^3.4",
-        "spatie/laravel-sitemap" : "^6.2"
+        "spatie/laravel-sitemap" : "^6.2",
+        "inertiajs/inertia-laravel" :"^0.6"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",

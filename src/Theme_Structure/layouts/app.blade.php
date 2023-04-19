@@ -8,29 +8,14 @@
         <link href="{{ asset('') }}/favicon.png" rel="icon" type="image/png">
         @include('theme::'. $theme .'.layouts.partials.pwa')
         {!! SEO::generate() !!}
-
+        @inertiaHead
         <meta name="csrf-token" content="{{ csrf_token() }}">
         @hook('assets.css')
-        {!! Assets::css( get_site_key('assets.render.css') ) !!}
         @stack('css')
     </head>
     <body class="{{ $class ?? '' }}">
-        <main id="app">
-            @if($topbarShow)
-                {!! toolbar() !!}
-            @endif
-            @if(!$isTemplate)
-                @include('theme::'. $theme .'.layouts.partials.header')
-            @endif
-            @yield('content')
-            @if(!$isTemplate)
-                @include('theme::'. $theme .'.layouts.partials.footer')
-            @endif
-        </main>
-
-        @stack('modales')
+        @inertia
         @hook('assets.js')
-        {!! Assets::js( get_site_key('assets.render.js') ) !!}
         @stack('js')
     </body>
 </html>
