@@ -583,6 +583,12 @@ if(! function_exists('vendor_path')) {
     }
 }
 
+if(! function_exists('package_path')) {
+    function package_path($path = '') {
+        return vendor_path('/ludows/adminify/'.$path);
+    }
+}
+
 if(! function_exists('theme_path')) {
     function theme_path($path = '') {
         $ret = null;

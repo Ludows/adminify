@@ -390,7 +390,7 @@ return array(
                 'providers' => [],
                 'middlewares' => [
                     'web' => [
-                        \App\Http\Middleware\HandleInertiaRequests::class,
+                        \App\Adminify\Http\Middleware\HandleInertiaRequests::class,
                     ]
                 ],
                 'aliases' => []

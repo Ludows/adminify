@@ -129,6 +129,10 @@ Route::prefix('admin')->middleware(['auth', 'multilang.basic', 'role:administrat
     //     include($path_admin_file);
     // }
 
+    Route::prefix('v2')->group( function () use ($c, $themeManager) {
+        Route::get('/dashboard', 'Ludows\Adminify\Http\Controllers\Back\V2\HomeController@index')->name('home.dashboard.v2');
+    });
+
     if(is_installed()) {
         $fileRoutes_in_themes = $themeManager->getFileRoutes('admin');
         include($fileRoutes_in_themes);

@@ -13,6 +13,8 @@ use Kris\LaravelFormBuilder\FormBuilderTrait;
 use Illuminate\Support\Facades\View;
 use App\Adminify\Models\GroupMeta;
 use Error;
+use Inertia\Inertia;
+
 
 class Controller extends BaseController
 {
@@ -134,7 +136,7 @@ class Controller extends BaseController
 
         return $this->view_key_cache_prefix.'_'.join('_', $generate);
     }
-    public function renderView($pathView, $vars) {
+    public function renderView($Component, $vars) {
 
         if(empty($vars['model'])) {
             throw new Error('Model is required for view key generation');
@@ -154,7 +156,9 @@ class Controller extends BaseController
             return cache($key);
         }
 
-        $view = view($pathView,  $vars);
+        
+        $view = Inertia::render($Component, $vars);
+        // the old way view($pathView,  $vars);
 
         if(config('app.env') == 'production') {
             cache([$key => $view->render()]);
