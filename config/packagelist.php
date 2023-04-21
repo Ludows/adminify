@@ -266,22 +266,6 @@ return array(
         ),
         (object) array(
             'beforePublish' => [],
-            'name' => 'laravelium/sitemap',
-            'publish' => (object) [
-                'tag' => false,
-                'force' => false,
-                'sibling' => 'Laravelium\Sitemap\SitemapServiceProvider'
-            ],
-            'autoload' => (object) [
-                'providers' => [],
-                'middlewares' => [],
-                'aliases' => []
-            ],
-            'config' => null,
-            'afterPublish' => [],
-        ),
-        (object) array(
-            'beforePublish' => [],
             'name' => 'spatie/laravel-feed',
             'publish' => null,
             'autoload' => (object) [
@@ -305,21 +289,6 @@ return array(
                 'aliases' => []
             ],
             'config' => null,
-            'afterPublish' => [],
-        ),
-        (object) array(
-            'beforePublish' => [],
-            'name' => 'stolz/assets',
-            'publish' => null,
-            'autoload' => (object) [
-                'providers' => [],
-                'middlewares' => [],
-                'aliases' => []
-            ],
-            'config' => (object) [
-                'file' => '/../../config/assets',
-                'name' => 'assets',
-            ],
             'afterPublish' => [],
         ),
         (object) array(

@@ -150,7 +150,6 @@ class HandleInertiaRequests extends Middleware
         $routeName = $request->route()->getName();
         $prefix = $route->getPrefix();
 
-        $themeManager = theme_manager();
 
         $checkedKeys = [
             'update',

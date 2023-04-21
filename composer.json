@@ -8,7 +8,6 @@
     "license": "MIT",
     "require": {
         "php": "^8.0",
-        "stolz/assets" : "^0.2.0",
         "artesaos/seotools": "^0.20.0",
         "diglactic/laravel-breadcrumbs": "^6.1",
         "fideloper/proxy": "^4.4",
@@ -29,7 +28,6 @@
         "thunderer/shortcode": "^0.7",
         "ycs77/laravel-form-builder-bs4": "^1.0",
         "barryvdh/laravel-debugbar": "^3.5",
-        "laravelium/sitemap": "8.*",
         "spatie/laravel-feed" : "^4.0.4",
         "bpocallaghan/generators": "^7.0",
         "league/mime-type-detection" : "^1.7.0",

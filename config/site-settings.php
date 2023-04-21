@@ -72,10 +72,6 @@ return [
         ]
     ],
 
-    'medias' => [
-        'prefers_id_on' => ['media_id', 'logo_id', 'menu-three-key', 'avatar_id', 'avatar'],
-    ],
-
     'pwa' => [
         'dimensions' => [
             0 => [
@@ -93,55 +89,26 @@ return [
         ]
     ],
 
-    'assets' => array(
-        'render' => [
-            'css' => [],
-            'js' => function($assets) {
-                $output = '';
-                foreach ($assets as $key => $asset) {
-                    # code...
-                    $attibutes = [
-                        'src' => $asset,
-                        'type' => 'text/javascript',
-                    ];
-
-                    // if(is_front() && adminify_asset('/theme/tml/js/app.js') == $asset) {
-                    //     $attibutes['data-swup-ignore-script'] = "data-swup-ignore-script";
-                    // }
-
-                    $attibutesHtml = Assets::buildTagAttributes($attibutes);
-
-                    $output .= '<script ' . $attibutesHtml . '></script>';
-                }
-                return $output;
-            }
-        ],
-        'collections' => array(
-            'core_backend' => array(
-                adminify_asset('/adminify/vendor/nucleo/css/nucleo.css'),
-                adminify_asset('/adminify/vendor/@fortawesome/fontawesome-free/css/all.min.css'),
-                adminify_asset('/adminify/back/css/argon.css'),
-                adminify_asset('/adminify/back/css/extensions.css'),
-                adminify_asset('/myuploads/routes.js'),
-                adminify_asset('/myuploads/traductions-'. lang() .'.js'),
-                adminify_asset('/adminify/back/js/extensions.js'),
-                adminify_asset('/adminify/back/js/extensions-call.js'),
-                adminify_asset('/adminify/back/js/argon.js'),
-                adminify_asset('/adminify/back/js/searchable.js'),
-            ),
-            'core_frontend' => array(
-                adminify_asset('/myuploads/routes.js'),
-                adminify_asset('/myuploads/traductions-'. lang() .'.js'),
-            ),
-            'backend' => array(
-                'core_backend',
-            ),
-            'frontend' => array(
-                'core_frontend'
-            ),
+    'assets' => [
+        'backend' => array(
+            adminify_asset('/adminify/vendor/nucleo/css/nucleo.css'),
+            adminify_asset('/adminify/vendor/@fortawesome/fontawesome-free/css/all.min.css'),
+            adminify_asset('/adminify/back/css/argon.css'),
+            adminify_asset('/adminify/back/css/extensions.css'),
+            adminify_asset('/myuploads/routes.js'),
+            adminify_asset('/myuploads/traductions-'. lang() .'.js'),
+            adminify_asset('/adminify/back/js/extensions.js'),
+            adminify_asset('/adminify/back/js/extensions-call.js'),
+            adminify_asset('/adminify/back/js/argon.js'),
+            adminify_asset('/adminify/back/js/searchable.js'),
         ),
-        'autoload' => is_running_console() ? [] : (is_admin() ? array('backend') : array('frontend')),
-    ),
+        'frontend' => array(
+            adminify_asset('/myuploads/routes.js'),
+            adminify_asset('/myuploads/traductions-'. lang() .'.js'),
+        ),
+        'vitejs' => true,
+        'inputs' => is_running_console() ? [] : (is_admin() ? array('backend') : array('frontend'))
+    ],
 
     'metas' => [
         // excludes models here
