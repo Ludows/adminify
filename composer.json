@@ -38,7 +38,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.8.1",
-        "spatie/laravel-ignition": "^^1.0",
+        "spatie/laravel-ignition": "^1.0",
         "laracasts/generators": "^2.0.2",
         "phpunit/phpunit": "^10.0.1"
     },
