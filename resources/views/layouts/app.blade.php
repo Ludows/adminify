@@ -10,6 +10,13 @@
         @inertiaHead
         <meta name="csrf-token" content="{{ csrf_token() }}">
         @hook('assets.css')
+
+        @if ($page['props']['siteConfig']['assets']['vitejs'])
+            @foreach ($page['props']['siteConfig']['assets']['inputs'] as $input)
+                @vite($page['props']['siteConfig']['assets'][$input])
+            @endforeach
+        @endif
+
         @stack('css')
     </head>
     <body class="{{ $class ?? '' }}">
