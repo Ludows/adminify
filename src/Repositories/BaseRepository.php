@@ -2,7 +2,7 @@
 
 namespace Ludows\Adminify\Repositories;
 
-use MrAtiebatie\Repository;
+use Ludows\Adminify\Libs\BaseRepository as BaseRepo;
 use Illuminate\Support\Str;
 use App\Adminify\Models\Media;
 use File;
@@ -10,9 +10,8 @@ use File;
 use App\Adminify\Repositories\MetasRepository;
 
 
-class BaseRepository
+class BaseRepository extends BaseRepo
 {
-    use Repository;
 
     /**
      * The model being queried.
