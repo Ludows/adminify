@@ -29,7 +29,7 @@
         "league/mime-type-detection" : "^1.11.0",
         "haydenpierce/class-finder" : "^0.5.1",
         "league/glide-laravel": "^1.0.0",
-        "snowfire/beautymail": "dev-master",
+        "snowfire/beautymail": "¨1.1.6",
         "cswni/laravel-env-set-command" : "^1.4",
         "anhskohbo/no-captcha": "^3.5",
         "spatie/laravel-sitemap" : "^6.2.5",
