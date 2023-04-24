@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ lang() }}">
+<html lang="{{ $page['props']['currentLang'] }}">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -9,19 +9,16 @@
         {!! SEO::generate() !!}
         @inertiaHead
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        @viteReactRefresh
+        @vite('resources/adminify/back/js/app.jsx')
         @hook('assets.css')
-
-        @if ($page['props']['siteConfig']['assets']['vitejs'])
-            @foreach ($page['props']['siteConfig']['assets']['inputs'] as $input)
-                @vite($page['props']['siteConfig']['assets'][$input])
-            @endforeach
-        @endif
-
         @stack('css')
     </head>
     <body class="{{ $class ?? '' }}">
         @inertia
         @hook('assets.js')
+        <script src="{{asset('/myuploads/routes.js')}}"></script>
+        <script src="{{ asset('/myuploads/traductions-'. $page['props']['currentLang'] .'.js') }}"></script>
         @stack('js')
     </body>
 </html>

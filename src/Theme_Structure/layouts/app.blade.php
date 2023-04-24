@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ lang() }}">
+<html lang="{{ $page['props']['currentLang'] }}">
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -10,12 +10,17 @@
         {!! SEO::generate() !!}
         @inertiaHead
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        @vite(theme_url().'/src/js/app.js')
         @hook('assets.css')
         @stack('css')
     </head>
     <body class="{{ $class ?? '' }}">
         @inertia
+        <script src="{{ asset('/myuploads/routes.js') }}"></script>
+        <script src="{{ asset('/myuploads/traductions-'. $page['props']['currentLang'] .'.js') }}"></script>
         @hook('assets.js')
         @stack('js')
     </body>
 </html>
+
+
