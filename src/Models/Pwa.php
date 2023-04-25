@@ -27,7 +27,12 @@ class Pwa extends ClassicModel
 
     public function getLinks($menuBuilder, $arrayDatas) {
         if($arrayDatas['user']->hasPermissionTo('create_settings') && $arrayDatas['features']['setting']) {
-            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/pwa?lang='. $arrayDatas['lang'] : '/admin/pwa', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.pwa'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+            $menuBuilder->add('pwa_item', [
+                'icon' => 'journal',
+                'iconPrefix' => 'bi',
+                'url' => $arrayDatas['multilang'] ? '/admin/pwa?lang='. $arrayDatas['lang'] : '/admin/pwa',
+                'label' => __('admin.menuback.pwa'),
+            ]);
         }
     }
 }

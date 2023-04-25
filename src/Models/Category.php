@@ -79,7 +79,12 @@ class Category extends ContentTypeModel
 
     public function getLinks($menuBuilder, $arrayDatas) {
       if($arrayDatas['user']->hasPermissionTo('create_categories') && $arrayDatas['features']['category']) {
-          $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/categories?lang='. $arrayDatas['lang'] : '/admin/categories', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.categories'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+          $menuBuilder->add('category_item', [
+            'icon' => 'box',
+            'iconPrefix' => 'bi',
+            'url' => $arrayDatas['multilang'] ? '/admin/categories?lang='. $arrayDatas['lang'] : '/admin/categories',
+            'label' => __('admin.menuback.categories'),
+          ]);
           // $menuBuilder->add( Link::to( $multilang ? '/admin/tags?lang='.$lang : '/admin/tags', '<i class="ni ni-single-copy-04"></i> '.__('admin.tags.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
       }
    }

@@ -47,7 +47,12 @@ class Comment extends ClassicModel
 
     public function getLinks($menuBuilder, $arrayDatas) {
         if($arrayDatas['user']->hasAnyRole('administrator', 'editor') && $arrayDatas['features']['comment']) {
-            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/comments?lang='. $arrayDatas['lang'] : '/admin/comments', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.comments'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+            $menuBuilder->add('comment_item', [
+                'icon' => 'chat-fill',
+                'iconPrefix' => 'bi',
+                'url' => $arrayDatas['multilang'] ? '/admin/comments?lang='. $arrayDatas['lang'] : '/admin/comments',
+                'label' => __('admin.menuback.comments'),
+            ]);
         }
     }
 

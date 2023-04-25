@@ -28,7 +28,12 @@ class Tag extends ClassicModel
 
     public function getLinks($menuBuilder, $arrayDatas) {
         if($arrayDatas['user']->hasPermissionTo('create_tags') && $arrayDatas['features']['tag']) {
-            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/tags?lang='. $arrayDatas['lang'] : '/admin/tags', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.tags'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+            $menuBuilder->add('tags_item', [
+                'icon' => 'journal',
+                'iconPrefix' => 'bi',
+                'url' => $arrayDatas['multilang'] ? '/admin/tags?lang='. $arrayDatas['lang'] : '/admin/tags',
+                'label' => __('admin.menuback.tags'),
+            ]);
         }
     }
     

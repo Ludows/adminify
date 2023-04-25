@@ -31,7 +31,12 @@ class Menu extends ClassicModel
 
     public function getLinks($menuBuilder, $arrayDatas) {
         if($arrayDatas['user']->hasPermissionTo('create_menus') && $arrayDatas['features']['menu']) {
-            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/menus?lang='. $arrayDatas['lang'] : '/admin/menus', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.menus'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+            $menuBuilder->add('menu_item', [
+                'icon' => 'menu-app-fill',
+                'iconPrefix' => 'bi',
+                'url' => $arrayDatas['multilang'] ? '/admin/menus?lang='. $arrayDatas['lang'] : '/admin/menus',
+                'label' => __('admin.menuback.menus'),
+            ]);
             // $menuBuilder->add( Link::to( $multilang ? '/admin/tags?lang='.$lang : '/admin/tags', '<i class="ni ni-single-copy-04"></i> '.__('admin.tags.index'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
         }
     }

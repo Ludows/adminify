@@ -38,6 +38,7 @@
         "bootstrap": "^5.2.3",
         "node-sass": "^7.0.1",
         "react-bootstrap": "^2.7.4",
+        "zustand": "^4.3.7",
         "sortablejs": "^1.15.0"
     }
 }

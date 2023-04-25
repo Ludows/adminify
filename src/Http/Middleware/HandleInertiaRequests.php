@@ -7,6 +7,9 @@ use Inertia\Middleware;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use ReflectionClass;
+use Spatie\Menu\Laravel\Menu;
+use Spatie\Menu\Laravel\Link;
+use Ludows\Adminify\Libs\AdminMenuService;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -142,6 +145,28 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), $this->prepareSharedDatas($request));
     }
 
+    public function manageAdminMenu($request) {
+        $user = user();
+        $multilang = config('site-settings.multilang');
+        $menu_config = get_site_key('adminMenu');
+        $enables_features = get_site_key('enables_features');
+        $lang = lang();
+
+        $adminMenu = new AdminMenuService();
+
+        $arrayDatas = array(
+            'user' => $user,
+            'multilang' => $multilang,
+            'lang' => $lang,
+            'features' => $enables_features
+        );
+
+        $adminMenu->resolve($arrayDatas);
+
+        return $adminMenu->getItems();
+
+    }
+
     public function prepareSharedDatas($request): array {
 
         $config = config('site-settings');
@@ -149,6 +174,8 @@ class HandleInertiaRequests extends Middleware
         $route = $request->route();
         $routeName = $request->route()->getName();
         $prefix = $route->getPrefix();
+        $isAdmin = is_admin();
+        $adminMenu = null;
 
 
         $checkedKeys = [
@@ -160,18 +187,18 @@ class HandleInertiaRequests extends Middleware
         $currentLocale = App::currentLocale();
         $routeNameSpl = explode('.', $routeName);
 
-        if(is_admin() && !empty($prefix)) {
-            // dd('$prefix', $prefix);
+        if($isAdmin && !empty($prefix)) {
             array_unshift($routeNameSpl , 'admin');
-
         }
 
-
+        if($isAdmin) {
+            $adminMenu = $this->manageAdminMenu($request);
+        }
 
         // making autoswitch back / front
         $singular = singular($routeNameSpl['1']);
         $model = \Route::current()->parameter($singular);
-        if(!is_admin() && !is_auth_routes() && !in_array($routeName, ['image.transform', 'theme.assets', 'editor.preview', 'forms.validate'])) {
+        if(!$isAdmin && !is_auth_routes() && !in_array($routeName, ['image.transform', 'theme.assets', 'editor.preview', 'forms.validate'])) {
             // dd($routeName,adminify_get_class( \Str::studly( $routeNameSpl['1'] ), ['app:models', 'app:adminify:models'], false ));
             $theClass = adminify_get_class( \Str::studly( $routeNameSpl['1'] ), ['app:models', 'app:adminify:models'], false );
             $model = new $theClass();
@@ -186,7 +213,7 @@ class HandleInertiaRequests extends Middleware
 
         }
 
-        if(!is_admin() && empty($request->segments())) {
+        if(!$isAdmin && empty($request->segments())) {
             $settings = cache('homepage');
 
             if($settings == null) {
@@ -203,7 +230,6 @@ class HandleInertiaRequests extends Middleware
             $model = adminify_get_class('Page', ['app:adminify:models', 'app:models'], true);
 
             $model = $model->find($searchpage);
-
         }
 
         // dd(adminify_autoload());
@@ -278,10 +304,11 @@ class HandleInertiaRequests extends Middleware
             "user" => user(),
             "adminify_autoload" => adminify_autoload(),
             'isPreview' => $routeName == 'editor.preview',
+            'adminMenu' => $adminMenu,
             'isTemplate' => !empty($model) ? is_template($model) : false
         ];
 
-        if(is_admin() && $isContentModel && empty($theme)) {
+        if($isAdmin && $isContentModel && empty($theme)) {
             throw new \Exception("Theme must be set in administration", $theme);
         }
 
@@ -331,8 +358,6 @@ class HandleInertiaRequests extends Middleware
         }
 
         $this->handleMultilang($request, $config, $base_parameters);
-
-
 
         return $base_parameters;
     }

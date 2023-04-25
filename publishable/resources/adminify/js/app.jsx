@@ -4,13 +4,14 @@ import { createRoot } from 'react-dom/client'
 import AdminLayout from './layouts/AdminLayout';
 
 createInertiaApp({
-    resolve: name => {
+    resolve: (name) => {
       const pages = import.meta.glob('./pages/**/*.jsx', { eager: true })
       let page = pages[`./pages/${name}.jsx`].default;
 
       if(!page.layout){
         page.layout = (page) => { return <AdminLayout children={page} /> };
       }
+      
       return page;
     },
     setup({ el, App, props }) {

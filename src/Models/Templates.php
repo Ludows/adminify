@@ -31,7 +31,12 @@ class Templates extends ClassicModel
 
     public function getLinks($menuBuilder, $arrayDatas) {
         if($arrayDatas['user']->hasPermissionTo('create_templates') && $arrayDatas['features']['templates_content']) {
-            $menuBuilder->add( Link::to( $arrayDatas['multilang'] ? '/admin/templates?lang='. $arrayDatas['lang'] : '/admin/templates', '<i class="ni ni-single-copy-04"></i> '.__('admin.menuback.templates'))->setParentAttribute('class', 'nav-item')->addClass('nav-link') );
+            $menuBuilder->add('template_item', [
+                'icon' => 'journal',
+                'iconPrefix' => 'bi',
+                'url' => $arrayDatas['multilang'] ? '/admin/templates?lang='. $arrayDatas['lang'] : '/admin/templates',
+                'label' => __('admin.menuback.templates'),
+            ]);
         }
     }
 }
