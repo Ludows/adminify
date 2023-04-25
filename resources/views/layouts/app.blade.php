@@ -10,7 +10,7 @@
         @inertiaHead
         <meta name="csrf-token" content="{{ csrf_token() }}">
         @viteReactRefresh
-        @vite('resources/adminify/back/js/app.jsx')
+        @vite(['resources/adminify/back/js/app.jsx', 'resources/adminify/back/sass/app.scss'])
         @hook('assets.css')
         @stack('css')
     </head>
