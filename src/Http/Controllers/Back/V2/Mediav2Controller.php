@@ -1,6 +1,6 @@
 <?php
 
-namespace Ludows\Adminify\Http\Controllers\Back;
+namespace Ludows\Adminify\Http\Controllers\Back\V2;
 
 
 use App\Adminify\Models\Media;
