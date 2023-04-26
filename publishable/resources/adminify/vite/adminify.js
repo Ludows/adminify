@@ -5,7 +5,7 @@ export default function(config = {}) {
     let defaults = {
         theme : '',
         appFileFront : 'app.js', 
-        appFileBack : 'app.jsx', 
+        appFileBack : 'index.jsx', 
     }
 
     config = Object.assign({}, defaults, config);

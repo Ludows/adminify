@@ -13,14 +13,18 @@ export default function AdminLayout(component) {
     const [appData, setAppData] = useGlobalStore(
         (state) => [state.data, state.commit],
     )
+
+    const [translations, setTranslations] = useGlobalStore(
+        (state) => [state.translations, state.setTranslations],
+    )
     const getAppData = useGlobalStore((state) => state.getAppData);
 
     useEffect(() => {
         console.log('AdminLayout.jsx onMounted', component);
         if(component.children) {
                 setAppData({data : component.children.props})
+                setTranslations({translations: window['messages_'+ document.documentElement.getAttribute('lang') ]});
                 setReadyState({ ready :  true})   
-                console.log(getAppData('siteConfig'));         
         }
     }, [])
 
