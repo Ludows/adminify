@@ -2,6 +2,7 @@
 
 namespace Ludows\Adminify\Libs;
 
+use Inertia\Inertia;
 use Exception;
 
 class TableManager
@@ -101,16 +102,12 @@ class TableManager
         return $this;
     }
 
-    public function module($name, $position, $viewName, $extraVars) {
+    public function module($name, $position, $extraVars) {
 
         $positions_availables = array_keys($this->areas);
 
         if(!in_array($position, $positions_availables)) {
             throw new Exception('Positions avalaibles in Table API renderer are : '.join(', ', $positions_availables));
-        }
-
-        if(empty($viewName)) {
-            throw new Exception('You must specify view path for your module :)');
         }
 
         if(empty($position)) {
@@ -121,7 +118,7 @@ class TableManager
             $extraVars = [];
         }
 
-        $this->setToArea($name, $position, view($viewName, $extraVars));
+        $this->setToArea($name, $position, $extraVars);
 
         return $this;
     }
@@ -175,7 +172,7 @@ class TableManager
         return !empty($listing[$name]) ? $listing[$name] : [];
     }
 
-    public function setToArea($name, $position, $view) {
+    public function setToArea($name = '', $position = 'top-left', $vars = []) {
 
         $positions_availables = array_keys($this->areas);
 
@@ -183,7 +180,7 @@ class TableManager
             throw new Exception('Positions avalaibles in Table API renderer are : '.join(', ', $positions_availables));
         }
 
-        $this->areas[$position][$name] = $view;
+        $this->areas[$position][$name] = $vars;
 
         return $this;
 
@@ -336,9 +333,7 @@ class TableManager
         return $this;
     }
 
-
-
-    public function render() {
+    public function process($isRenderable = true) {
 
         $dropdownManagerClass = $this->getDropdownManagerClass();
         $modelClass = $this->getModelClass();
@@ -364,17 +359,17 @@ class TableManager
         $this->columns( $columns );
 
         if($this->showTitle) {
-            $this->module('title', 'top-left', 'adminify::layouts.admin.table.core.title', []);
+            $this->module('title', 'top-left', []);
         }
 
         if(is_trashable_model($m)) {
-            $this->module('statuses', 'top-left', 'adminify::layouts.admin.table.core.statuses', [
+            $this->module('statuses', 'top-left', [
                 'statuses' => model('Statuses')->all(),
             ]);
         }
 
         if($this->showSearch) {
-            $this->module('search', 'top-right', 'adminify::layouts.admin.table.core.search', [
+            $this->module('search', 'top-right', [
                 'showSearchBar' => true,
                 'showCreate' => $this->showBtnCreate
             ]);
@@ -410,50 +405,29 @@ class TableManager
             'paginator' => $models
         ];
 
-
-        // dd($defaults);
-
-
         $addtoVars = $this->addVarsToRender();
 
-        // dd(array_merge($defaults, empty($addtoVars) ? [] : $addtoVars));
+        $vars = array_merge($defaults, empty($addtoVars) ? [] : $addtoVars);
 
-        $compiled = $this->view->make($tpl, array_merge($defaults, empty($addtoVars) ? [] : $addtoVars));
-        return $compiled;
-    }
-    public function list() {
-
-        $dropdownManagerClass = $this->getDropdownManagerClass();
-        $modelClass = $this->getModelClass();
-        $m = new $modelClass;
-        $this->setModel($m);
-        // perform the query
-        $this->query();
-
-        $models = $this->getResults();
-        if(!empty($models)) {
-            $this->dropdownManager = new $dropdownManagerClass($models , []);
+        if($isRenderable) {
+            $returnState = $this->view->make($tpl, $vars);
         }
+        else {
+            $returnState = $vars;
+        }
+        
+        return $returnState;
 
-        // create your columns
-        $columns = $this->manageColumns();
+    }
 
-        $this->columns( $columns );
-
-        $this->handle();
-
-        $cols = $this->getColumns();
-        $addtoVars = $this->addVarsToRender();
-
-        $defaults = [
-            'datas' => $this->_columns,
-            'thead' => $cols,
-            'count' => count($this->_columns[$cols[0]]),
-            'name' => titled( lowercase( class_basename($modelClass) ) ),
-            'paginator' => $models
-        ];
-
-        $compiled = $this->view->make( $this->getViewList() , array_merge($defaults, empty($addtoVars) ? [] : $addtoVars) );
-        return $compiled;
+    public function render() {
+        return $this->process(true);
+    }
+    // public function list() {
+    public function toArray() {
+        return $this->process(false);
+    }
+    public function toJson() {
+        return json_encode($this->process(false));
     }
 }

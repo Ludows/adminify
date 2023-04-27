@@ -3,7 +3,7 @@
 namespace Ludows\Adminify\Libs;
 
 use Error;
-use Kris\LaravelFormBuilder\Form;
+use Ludows\Adminify\Libs\BaseForm as Form;
 use Mail;
 
 class FrontifyForms extends Form {
@@ -88,33 +88,6 @@ class FrontifyForms extends Form {
         else {
             return redirect()->to($url)->with($this->getRedirectParameters());
         }
-    }
-
-    public function toJson() {
-        $a = [];
-
-        $fields = $this->getFields();
-        $a['formOptions'] = $this->getFormOptions();
-        $a['fields'] = [];
-
-        $key_fields = array_keys($fields);
-
-        foreach ($key_fields as $key_field) {
-            # code...
-            $current_field = $fields[$key_field];
-            $a['fields'][$key_field]['name'] = $current_field->getName();
-            $a['fields'][$key_field]['type'] = $current_field->getType();
-
-            $current_field_options = $current_field->getOptions();
-            $current_field_options_keys = array_keys($current_field_options);
-
-            foreach ($current_field_options_keys as $current_field_options_key) {
-                # code...
-                $a['fields'][$key_field][$current_field_options_key] = $current_field_options[$current_field_options_key];
-            }
-        }
-
-        return json_encode($a, true);
     }
 
     public function buildMail($message) {

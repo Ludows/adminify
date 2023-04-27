@@ -1,14 +1,16 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import useGlobalStore from '../store/global';
 import useRoute from '@/commons/js/useRoute';
-import { Portal } from 'react-portal';
+import { createAxios } from '@/helpers/index';
+import { router } from '@inertiajs/react'
 
+import { Portal } from 'react-portal';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
+import ListGroup from 'react-bootstrap/ListGroup';
 
-import { createAxios } from '@/helpers/index';
  
 export default function TopLeftHeader(props) {
 
@@ -18,7 +20,11 @@ export default function TopLeftHeader(props) {
     let { previousRequest, current } = useRef(null);
 
     const [show, setShow] = useState(false);
-    const [list, setList] = useState({});
+    const [list, setList] = useState([]);
+    
+    const listKeys = useMemo(() => {
+        return Object.keys(list);
+    }, [list]);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -28,17 +34,36 @@ export default function TopLeftHeader(props) {
     }, [])
 
     const handleKeyUp = async(event) => {
-        console.log('TopLeftHeader.jsx handleKeyUp()', event)
+        console.log('TopLeftHeader.jsx handleKeyUp()')
+
+        let value = event.target.value;
+
+        if(value.length < 4) {
+            setList([]);
+            return false;
+        }
+
         let http = createAxios(routeSearchable, {
             method: 'POST',
+            data : {
+                query : value.trim().toLowerCase()
+            }
         })
         
         try {
             let result = await http;
-            console.log('TopLeftHeader.jsx handleKeyUp() result', result)
+            console.log('TopLeftHeader.jsx handleKeyUp() result', result.data.response)
+            setList(result.data.response)
         } catch (error) {
             console.log('TopLeftHeader.jsx handleKeyUp() error', error)
         }
+    }
+
+    const HandleGo = (item) => {
+        router.visit(item.url, {
+            method : 'get',
+            data: {}
+        })
     }
 
     // {{ route('home.dashboard') }}
@@ -63,6 +88,20 @@ export default function TopLeftHeader(props) {
                         >
                             <Form.Control type="text" onKeyUp={handleKeyUp} placeholder="name@example.com" />
                         </FloatingLabel>
+
+                        <ListGroup>
+                            {listKeys.map((listKey, index) => (
+                                <>
+                                    <p key={index}>{getTranslation('admin.menuback.'+listKey)}</p>      
+                                    {list[listKey].map((item, indexListItem) => (
+                                        <ListGroup.Item key={indexListItem} action onClick={() => {HandleGo(item)}}>
+                                           {item.title}
+                                        </ListGroup.Item>
+                                    ))}
+                                </>                             
+                            ))}
+                            
+                        </ListGroup>
                     </Modal.Body>
                 </Modal>
             </Portal>

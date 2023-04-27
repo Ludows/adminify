@@ -51,7 +51,11 @@ class PostController extends Controller
             
             $table = $this->table(PostTable::class);
 
-            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
+
+            return $this->renderView('Index', [
+                'model' => (object) [],
+                'table' => $table->toArray()
+            ]);
         }
 
         /**
@@ -67,7 +71,12 @@ class PostController extends Controller
                 'url' => route('posts.store')
             ]);
 
-            return view("adminify::layouts.admin.pages.create", ['form' => $form]);
+            // dd($form->toArray());
+
+            return $this->renderView('Create', [
+                'model' => (object) [],
+                'form' => $form->toArray()
+            ]);
         }
 
         /**
