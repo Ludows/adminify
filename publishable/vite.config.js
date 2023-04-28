@@ -19,6 +19,8 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
+          '@' : path.resolve(__dirname, 'resources/adminify'),
+          '~choices': path.resolve(__dirname, 'node_modules/choices.js'),
           '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
           '~bootstrap-icons': path.resolve(__dirname, 'node_modules/bootstrap-icons'),
         }
