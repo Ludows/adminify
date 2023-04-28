@@ -1,16 +1,27 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
+import { useForm } from "react-hook-form";
 import Form from 'react-bootstrap/Form';
 
 import TextElement from '@/back/js/components/Form/TextElement';
 import MediaElement from '@/back/js/components/Form/MediaElement';
 import SubmitElement from '@/back/js/components/Form/SubmitElement';
 import ChoiceElement from '@/back/js/components/Form/ChoiceElement';
+import SelectElement from '@/back/js/components/Form/SelectElement';
 import VisualEditorElement from '@/back/js/components/Form/VisualEditorElement';
 
 export default function BaseForm(props) {
 
     const fields = useMemo(() => props.form.fields);
     const fieldKeys = useMemo(() => Object.keys(fields));
+    const { register, handleSubmit } = useForm();
+    const [formData, setFormData] = useState({});
+    const onSubmit = (data) => {
+        setFormData(data);
+    };
+
+    useEffect(() => {
+        console.log(formData);
+    }, [formData])
 
     const Fields = useMemo(() => {
         let registered_components = {};
@@ -23,6 +34,7 @@ export default function BaseForm(props) {
             'visual_editor' : VisualEditorElement,
             'submit' : SubmitElement,
             'select2' : ChoiceElement,
+            'select' : SelectElement,
         }
 
         if(props.registerComponents && typeof props.registerComponents === "function") {
@@ -49,7 +61,7 @@ export default function BaseForm(props) {
         let Component = Fields[field.type];
         
         if(Component) {
-            return <Component key={key} field={field} />
+            return <Component register={register} key={key} field={field} />
         }
         else {
             console.warn('Form FieldType '+ field.type + ' is not recognized. Have you registered this one ?');
@@ -63,7 +75,7 @@ export default function BaseForm(props) {
         </>
     }
     return <>
-        <Form {...props.form.formOptions}>
+        <Form onSubmit={handleSubmit(onSubmit)} {...props.form.formOptions}>
             {fieldKeys.map((fieldKey, index) => (
                 getRenderer(index, fields[fieldKey])
             ))}

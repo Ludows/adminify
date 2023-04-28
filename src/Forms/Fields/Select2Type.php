@@ -32,7 +32,7 @@ class Select2Type extends FormField {
         );
     }
 
-    public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
+    public function makeRenderableField($options = [])
     {
         $uniqid = Str::random(9);
 
@@ -100,6 +100,7 @@ class Select2Type extends FormField {
         }
 
         $options['modal_attributes']['id'] = Str::slug('select2_modale_'.$uniqid);
+        $formbuilder = app()->make('laravel-form-builder');
 
         $b = [
             'isAjax' => $isAjax,
@@ -109,16 +110,30 @@ class Select2Type extends FormField {
             'dynamic_modal' => isset($options['dynamic_modal']) ? $options['dynamic_modal'] : true,
             'form' => [
                 'namespace' => isset($options['form']['namespace']) ? $options['form']['namespace'] : null,
-                'attributes' => isset($options['form']['attributes']) ? $options['form']['attributes'] : []
+                'attributes' => isset($options['form']['attributes']) ? $options['form']['attributes'] : [],
             ],
             'modal_attributes' => array_merge($this->setDefaultModalAttributes(), $options['modal_attributes']),
             'modal' => isset($options['modal']) ? $options['modal'] : '',
             'select2options' => array_merge($this->setDefaultsSelect2(), isset($options['select2options']) ? $options['select2options'] : [])
         ];
 
+        if(!empty($b['form']['namespace'])) {
+            $b['modalForm'] = $formbuilder->create($b['form']['namespace'], $b['form']['attributes']);
+            $b['modalForm'] = $b['modalForm']->toArray();
+        }
+
+       
+
         $options = array_merge($options, $b);
 
         $this->setOptions($options);
+
+        return $options;
+    }
+
+    public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
+    {
+        $options = $this->makeRenderableField($options);
         // dump($options);
         // dd($options);
         // dd($this);
