@@ -1,7 +1,7 @@
 <?php
 namespace Ludows\Adminify\Forms\Fields;
 
-use Kris\LaravelFormBuilder\Fields\FormField;
+use Ludows\Adminify\Libs\BaseFormField as FormField;
 use Illuminate\Support\Str;
 
 use File;
@@ -16,73 +16,7 @@ class VisualEditorType extends FormField {
         return 'adminify::fields.editor';
     }
 
-    // look files to append assets.
-    public function registerComponentsFolder() {
-        return [
-            'editor-components'
-        ];
-    }
-
-    public function setDefaultsEditorAttributes() {
-
-        $r = request();
-        $isEdit = $r->isEdit;
-        $array = ['type' => !empty($r->model) ? class_basename($r->model) : $r->name];
-
-        if($isEdit) {
-            $array['id'] = $r->model->id;
-        }
-
-        return array(
-            'preview' => route('editor.preview', $array),
-        );
-    }
-
-    public function findComponents() {
-
-        $r = request();
-        $public_ = public_path();
-        $type = $r->name;
-
-        $folders = $this->registerComponentsFolder();
-
-        add_asset('default', config('app.url').DIRECTORY_SEPARATOR.'adminify'.DIRECTORY_SEPARATOR.'back'.DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.'editor.js');
-
-        foreach ($folders as $folder) {
-            # code...
-            $new_path = $public_.DIRECTORY_SEPARATOR.$folder;
-            if(File::exists($new_path)) {
-                $files = File::files($new_path);
-                    foreach($files as $f){
-
-                        $disallow_append_file = false;
-
-                        $name = $f->getFileName();
-                        $name = pathinfo($name, PATHINFO_FILENAME);
-                        $check_name = explode('-', $name);
-
-
-
-                        if(count($check_name) > 1){
-                            // dd($name, $check_name, $type);
-
-                            if($check_name[ count( $check_name ) - 1 ] != $type) {
-                                $disallow_append_file = true;
-                            }
-                        }
-
-                        if(!$disallow_append_file) {
-                            add_asset('default', config('app.url') .DIRECTORY_SEPARATOR.$folder.DIRECTORY_SEPARATOR.$f->getRelativePathname());
-                        }
-
-                    }
-            }
-
-        }
-    }
-
-    public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
-    {
+    public function makeRenderableField($options = []) {
         $uniqid = Str::random(9);
 
         $options = array_merge($this->getOptions(), $options);
@@ -102,7 +36,7 @@ class VisualEditorType extends FormField {
             $options['sibling_attr'] = $customAttributes;
         }
         else {
-            $options['sibling_attr'] = '';
+            $options['sibling_attr'] = [];
         }
         
         $is_formbuilder_proto = $options['is_child_proto'];
@@ -139,7 +73,28 @@ class VisualEditorType extends FormField {
 
         $this->setOptions($options);
 
-        $this->findComponents();
+        return $options;
+    }
+
+    public function setDefaultsEditorAttributes() {
+
+        $r = request();
+        $shareds = inertia()->getShared();
+        $isEdit = $shareds['isEdit'];
+        $array = ['type' => !empty($shareds['model']) ? class_basename($shareds['model']) : $shareds['name']];
+
+        if($isEdit) {
+            $array['id'] = $shareds['model']->id;
+        }
+
+        return array(
+            'preview' => route('editor.preview', $array),
+        );
+    }
+
+    public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
+    {
+        $options = $this->makeRenderableField($options);
 
         return parent::render($options, $showLabel, $showField, $showError);
     }

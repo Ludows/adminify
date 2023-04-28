@@ -2,7 +2,7 @@
 namespace Ludows\Adminify\Forms\Fields;
 
 use Closure;
-use Kris\LaravelFormBuilder\Fields\FormField;
+use Ludows\Adminify\Libs\BaseFormField as FormField;
 use Illuminate\Support\Str;
 
 class MediaElementType extends FormField {

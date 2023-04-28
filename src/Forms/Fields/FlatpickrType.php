@@ -1,7 +1,7 @@
 <?php
 namespace Ludows\Adminify\Forms\Fields;
 
-use Kris\LaravelFormBuilder\Fields\FormField;
+use Ludows\Adminify\Libs\BaseFormField as FormField;
 use Illuminate\Support\Str;
 
 class FlatpickrType extends FormField {

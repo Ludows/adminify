@@ -282,6 +282,9 @@ class BaseForm extends Form {
             $a['fields'][$key_field]['type'] = $current_field->getType();
 
             $current_field_options = $current_field->getOptions();
+            if(method_exists($current_field, 'makeRenderableField')) {
+                $current_field_options = $current_field->makeRenderableField($current_field_options);
+            }
             $current_field_options_keys = array_keys($current_field_options);
 
             foreach ($current_field_options_keys as $current_field_options_key) {
