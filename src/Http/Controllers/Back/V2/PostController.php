@@ -51,8 +51,10 @@ class PostController extends Controller
             
             $table = $this->table(PostTable::class);
 
+            $views = $this->getPossiblesViews('Index');
 
-            return $this->renderView('Index', [
+
+            return $this->renderView($views, [
                 'model' => (object) [],
                 'table' => $table->toArray()
             ]);
@@ -71,9 +73,11 @@ class PostController extends Controller
                 'url' => route('posts.store')
             ]);
 
+            $views = $this->getPossiblesViews('Create');
+
             // dd($form->toArray());
 
-            return $this->renderView('Create', [
+            return $this->renderView($views, [
                 'model' => (object) [],
                 'form' => $form->toArray()
             ]);
@@ -85,12 +89,17 @@ class PostController extends Controller
             * @return Response
             */
         public function store(CreatePostRequest $request)
+        // public function store(Request $request)
         {
             //
             $form = $this->makeForm(CreatePost::class);
             $post = $this->postRepository->addModel(new Post())->create($form);
 
-            return $this->sendResponse($post, 'posts.index', 'admin.typed_data.success');
+            return $this->toJson([
+                'message' => __('admin.typed_data.success'),
+                'entity' => $post,
+                'route' => 'posts.index'
+            ]);
         }
 
         /**
@@ -115,7 +124,7 @@ class PostController extends Controller
             //
             // dd($request->exists('seo'));
 
-            $post->checkForTraduction();
+            // $post->checkForTraduction();
             // $post->flashForMissing();
 
             // if($request->exists('seo')) {
@@ -131,9 +140,14 @@ class PostController extends Controller
                     'url' => route('posts.update', ['post' => $post->id]),
                     'model' => $post
                 ]);
-            // }
 
-            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
+                $views = $this->getPossiblesViews('Edit');
+
+                return $this->renderView($views, [
+                    'model' => (object) [],
+                    'form' => $form->toArray()
+                ]);
+            // }
         }
 
         /**

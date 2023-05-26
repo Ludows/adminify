@@ -25,6 +25,11 @@ class Media extends ClassicModel
     protected $useSlugGeneration = false;
     public $enable_revisions = false;
 
+    protected $appends = [
+        'path',
+        'relativepath'
+    ];
+
     protected $fillable = [
         'src', //the path you uploaded the image
         'mime_type',
@@ -49,6 +54,10 @@ class Media extends ClassicModel
 
     public function getPathAttribute() {
         return $this->getFullPath();
+    }
+
+    public function getRelativePathAttribute() {
+        return $this->getRelativePath();
     }
 
     public function posts()

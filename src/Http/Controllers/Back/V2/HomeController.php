@@ -55,7 +55,9 @@ class HomeController extends Controller
             }
         }
 
-        return $this->renderView('Dashboard', [
+        $views = $this->getPossiblesViews('Dashboard');
+
+        return $this->renderView( $views, [
             'model' => (object) [],
             'cards' => json_encode($blocks)
         ]);

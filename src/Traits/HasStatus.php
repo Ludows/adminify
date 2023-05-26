@@ -22,4 +22,7 @@ trait HasStatus
     public function isTrashed() {
         return $this->{$this->status_key} == Statuses::TRASHED_ID;
     }
+    public function getStatusAttribute() {
+        return model('Statuses')->where('id', $this->{$this->status_key})->first();
+    }
 }

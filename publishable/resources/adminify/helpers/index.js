@@ -1,5 +1,5 @@
 import axios from 'axios';
-function createAxios(url = '', axiosProps = {}) {
+function createAxios(url = '', axiosProps = {}, axiosConfig = {}) {
 
     let defaults = {
         method: 'get',
@@ -9,7 +9,9 @@ function createAxios(url = '', axiosProps = {}) {
     
     let options = Object.assign({}, defaults ,axiosProps, {url});
 
-    return axios(options);
+    let axiosInstance = axios(options);
+    
+    return axiosInstance;
 }
 
 export {

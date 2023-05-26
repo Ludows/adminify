@@ -26,7 +26,7 @@ class MediaElementType extends FormField {
         );
     }
 
-    public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
+    public function makeRenderableField($options = [])
     {
         $uniqid = Str::random(9);
         $options = array_merge($this->getOptions() , $options);
@@ -102,15 +102,24 @@ class MediaElementType extends FormField {
 
 
         $b['media_element_options']['btn']['attr']['data-selector'] = view()->shared('is_formbuilder_proto') ? 'media-element-##SLOT##' : $sibling;
-
+        $b['media_element_options']['uuid'] = $sibling;
+        
         if($b['hasBootedMedia']) {
             $b['media_element_options']['btn']['attr']['class'] = $b['media_element_options']['btn']['attr']['class'].' d-none';
+            
         }
 
 
         $options = array_merge($options, $b);
 
         $this->setOptions($options);
+
+        return $options;
+    }
+
+    public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
+    {
+        $options = $this->makeRenderableField($options);
 
         // dd($options);
         // dd($this);

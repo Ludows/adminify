@@ -12,4 +12,9 @@
    public function user() {
     return $this->{$this->userRelationNameType}($this->userModel, $this->userForeignKey, $this->userOwnerKey);
    }
+   public function getUserAttribute() {
+    $m = new $this->userModel;
+    $m->where('id', $this->{$this->userForeignKey});
+    return $m->first();
+   }
   }

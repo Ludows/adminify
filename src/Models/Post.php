@@ -15,6 +15,12 @@ class Post extends ContentTypeModel
 {
     public $MultilangTranslatableSwitch = ['title', 'slug', 'content'];
 
+    public function __construct()
+    {
+        parent::__construct();
+        $this->addAppends(['tags', 'categories']);
+    }
+
     protected $fillable = [
         'title',
         'slug',

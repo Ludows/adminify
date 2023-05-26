@@ -29,45 +29,32 @@ class Controller extends BaseController
         $this->viewVars = [];
     }
 
-    public function addJS($mixed) {
-        $links = [];
+    public function getPossiblesViews($named = '') {
 
-        $view = view();
-        if(is_array($mixed)) {
-            $links = $mixed;
+        $shareds = inertia()->getShared();
+        $possibles_names = [];
+
+        if($shareds['isBack']) {
+            $possibles_names[] = ucfirst($shareds['singleParam']).'-'.$named;
+            $possibles_names[] = $named;
         }
 
-        if(is_string($mixed)) {
-            $links[] = $mixed;
+        // @todo 
+        if($shareds['isFront']) {
+
         }
 
-        foreach ($links as $link) {
-            # code...
-            $this->admin_js[] = $link;
-        }
 
-        $view->share('adminJsLinks', $this->admin_js);
+        return json_encode($possibles_names);
     }
 
-    public function addCss($mixed) {
-        $links = [];
-        $view = view();
-        if(is_array($mixed)) {
-            $links = $mixed;
-        }
 
-        if(is_string($mixed)) {
-            $links[] = $mixed;
-        }
-
-        foreach ($links as $link) {
-            # code...
-            $this->admin_css[] = $link;
-        }
-
-        $view->share('adminCssLinks', $this->admin_css);
+    public function toJson($datas = []) {
+        return response()->json($datas);
     }
-
+    public function toRoute($routeName, $datas = []) {
+        return to_route($routeName)->with($datas);
+    }
     public function sendResponse($model, $routeName, $traductionKey, $ajaxKey = 'model') {
         $r = request();
 
@@ -161,7 +148,7 @@ class Controller extends BaseController
         // the old way view($pathView,  $vars);
 
         if(config('app.env') == 'production') {
-            cache([$key => $view->render()]);
+            cache([$key => $view]);
 
             cache(['_generated_views_keys' => join(',',$all_keys_spl)]);
         }

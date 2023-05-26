@@ -54,25 +54,32 @@ class Mediav2Controller extends Controller
         public function upload(Request $request) {
 
             $input = $request->all();
+            $entity = null; 
 
             $isValid = $this->mediaUploader->validate($input);
             $config = $this->mediaUploader->getConfig();
 
             if($isValid) {
-                $this->mediaUploader->setFileUpload($input[$config['paramName']])->upload();
+                $entity = $this->mediaUploader->setFileUpload($input[$config['paramName']])->upload();
             }
 
-            return $this->sendResponse($input[$config['paramName']], 'medias.index', 'admin.file.saved', 'file');
+            return $this->toJson([
+                'message' => __('admin.typed_data.success'),
+                'entity' => $entity,
+                'route' => 'medias.index'
+            ]);
+
         }
 
         public function listing() {
 // 'files' => $this->mediaUploader->getFiles(),
             $listing =  $this->mediaUploader->getFiles();
             $config = $this->mediaUploader->getConfig();
+            $dates = $this->mediaUploader->getListingDates();
+            $types = $this->mediaUploader->getListingTypedFiles();
+            
 
-            $v = view("adminify::layouts.admin.medialibrary.list", ['files' => $listing->files, 'thumbs' => $config['thumbs']]);
-
-            return $this->sendResponse($v->render(), 'medias.index', 'admin.file.retrieved', 'html');
+            return $this->toJson(['files' => $listing->files, 'thumbs' => $config['thumbs'], 'dates' => $dates, 'types' => $types]);
         }
 
         public function update(Media $media, Request $request)
@@ -82,14 +89,22 @@ class Mediav2Controller extends Controller
 
             $this->mediaRepository->addModel($media)->update($inputs, $media);
 
-            return $this->sendResponse($media, 'medias.index', 'admin.typed_data.updated');
+            return $this->toJson([
+                'message' => __('admin.typed_data.updated'),
+                'entity' => $media,
+                'route' => 'medias.index'
+            ]);
         }
 
         public function destroy(Media $media)
         {
 
             $this->mediaUploader->setModel($media)->destroy();
-            return $this->sendResponse($media, 'medias.index', 'admin.typed_data.deleted');
+            return $this->toJson([
+                'message' => __('admin.typed_data.deleted'),
+                'entity' => $media,
+                'route' => 'medias.index'
+            ]);
         }
 
         // /**

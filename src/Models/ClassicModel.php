@@ -77,6 +77,35 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
         );
     }
 
+    public function shouldAppendAs($name = '', $attrName = '') {
+        $filables = $this->getFillable();
+
+        if(in_array($name, $filables)) {
+            $this->appends[] = $attrName;
+        }
+    }
+    public function addAppends($array = []) {
+        if(is_array($array)) {
+            foreach ($array as $key => $value) {
+                # code...
+                $this->addAppend($value);
+            }
+        }
+    }
+    public function addAppend($name = '') {
+        $this->appends[] = $name;
+        return $this;
+    }
+
+    public function __construct() {
+        // dump($this->appends, $this->getFillable());
+        parent::__construct();
+        $this->shouldAppendAs( $this->status_key , 'status');
+        $this->shouldAppendAs( $this->userOwnerKey, 'user' );
+        $this->shouldAppendAs( 'categories_id' , 'categories' );
+        $this->shouldAppendAs( $this->featured_column_media , 'media' );
+    }
+
     public function defineCacheStrategy() {
 
         // dd('is_admin', is_admin());

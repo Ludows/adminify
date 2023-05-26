@@ -1,12 +1,12 @@
 import useGlobalStore from '@/back/js/store/global';
 import React from 'react';
-import Card from '@/back/js/components/Create/Card';
+import FormCard from '@/back/js/components/Cards/FormCard';
 
 export default function Create(props) {
 
     const appData = useGlobalStore((state) => state.getAppData);
 
     return <>
-        <Card />
+        <FormCard />
     </>
 }

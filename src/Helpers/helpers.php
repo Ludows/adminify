@@ -52,6 +52,12 @@ if (! function_exists('parse_shortcode')) {
     }
 }
 
+if(! function_exists('is_closure') ) {
+    function is_closure($t) {
+        return $t instanceof \Closure;
+    }
+}
+
 if(! function_exists('maybeEncodeData') ) {
     function maybeEncodeData($value) {
         if (is_object($value) || is_array($value)) {

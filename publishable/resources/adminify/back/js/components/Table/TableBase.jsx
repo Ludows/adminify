@@ -1,8 +1,8 @@
 import React,{ useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import useGlobalStore from '@/back/js/store/global';
-import TableDataList from '@/back/js/components/TableDataList';
-import TablePaginate from '@/back/js/components/TablePaginate';
+import TableDataList from '@/back/js/components/Table/TableDataList';
+import TablePaginate from '@/back/js/components/Table/TablePaginate';
 export default function TableBase(props) {
     const getTranslation = useGlobalStore(state => state.getTranslation);
 
@@ -18,7 +18,7 @@ export default function TableBase(props) {
                     })}
                 </tr>
             </thead>
-            <TableDataList data={props.datas} />
+            <TableDataList data={props.datas} components={props.components} actions={props.actions} />
          </Table>
          <TablePaginate data={props.datas.paginator} />
     </>

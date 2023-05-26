@@ -1,10 +1,19 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import useGlobalStore from '@/back/js/store/global';
+import { EmitterContext } from "@/back/js/contexts/EmitterContext";
 
 export default function TableStatuses(props) {
     const getTranslation = useGlobalStore(state => state.getTranslation);
+    const [on, off, emit] = useContext(EmitterContext);
+
+    const doSearch = (e) => {
+        let input = e.target;
+        emit('adminify:table:search', {
+            status : parseInt(input.value.trim()),
+        })
+    }
 
     useEffect(() => {
         console.log('TableStatuses.jsx onMounted', props);
@@ -12,7 +21,7 @@ export default function TableStatuses(props) {
 
     return <>
             <FloatingLabel controlId="floatingSelect" label={getTranslation('admin.table.modules.statuses.select_status')}>
-                <Form.Select aria-label="Floating label select example">
+                <Form.Select onChange={doSearch} aria-label="Floating label select example">
                     {props.datas.statuses.map((status, index) => {
                         return <option value={status.id}>{getTranslation('admin.table.modules.statuses.'+status.name)}</option>
                     })}

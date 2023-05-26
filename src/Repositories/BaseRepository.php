@@ -91,9 +91,11 @@ class BaseRepository extends BaseRepo
     // }
     protected function getProcessDb($mixed, $modelPassed = null, $type = null) {
         $request = $this->request;
+        $shareds = inertia()->getShared();
+        
 
-        $multilang = $request->useMultilang;
-        $lang = $request->lang;
+        $multilang = $shareds['useMultilang'];
+        $lang = $shareds['currentLang'];
 
         if(is_array($mixed)) {
             $formValues = $mixed;
@@ -180,7 +182,9 @@ class BaseRepository extends BaseRepo
         //     }
         // }
 
+
         $model->save();
+
 
         // now the model has been created or updated. We can chain all external relationships
 

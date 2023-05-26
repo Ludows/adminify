@@ -1,5 +1,5 @@
-import React, { useMemo, useState, useEffect } from 'react';
-import { useForm } from "react-hook-form";
+import React, { useMemo, useState, useEffect, createRef, useContext } from 'react';
+import { useForm, FormProvider } from "react-hook-form";
 import Form from 'react-bootstrap/Form';
 
 import TextElement from '@/back/js/components/Form/TextElement';
@@ -9,20 +9,26 @@ import ChoiceElement from '@/back/js/components/Form/ChoiceElement';
 import SelectElement from '@/back/js/components/Form/SelectElement';
 import VisualEditorElement from '@/back/js/components/Form/VisualEditorElement';
 
+import { EmitterContext } from "../contexts/EmitterContext";
+import useGlobalStore from '../store/global';
+
+
 export default function BaseForm(props) {
 
     const fields = useMemo(() => props.form.fields);
+    // const errors = useMemo(() => Object.keys(props.errors).length > 0 ? props.errors.form_errors : {});
     const fieldKeys = useMemo(() => Object.keys(fields));
-    const { register, handleSubmit } = useForm();
-    const [formData, setFormData] = useState({});
-    const onSubmit = (data) => {
-        setFormData(data);
+    const methods = useForm();
+    const [on, off, emit] = useContext(EmitterContext);
+
+    const onSubmit = (data, event) => {
+        
+        emit('adminify:submit', {
+            ...props,
+            data,
+        });
     };
-
-    useEffect(() => {
-        console.log(formData);
-    }, [formData])
-
+    
     const Fields = useMemo(() => {
         let registered_components = {};
         let listed_components = {};
@@ -59,9 +65,11 @@ export default function BaseForm(props) {
     const getRenderer = (key, field) => {
 
         let Component = Fields[field.type];
+
+        let componentRef = createRef({});
         
         if(Component) {
-            return <Component register={register} key={key} field={field} />
+            return <Component ref={componentRef} register={methods.register} key={key} field={field} />
         }
         else {
             console.warn('Form FieldType '+ field.type + ' is not recognized. Have you registered this one ?');
@@ -75,10 +83,17 @@ export default function BaseForm(props) {
         </>
     }
     return <>
-        <Form onSubmit={handleSubmit(onSubmit)} {...props.form.formOptions}>
-            {fieldKeys.map((fieldKey, index) => (
-                getRenderer(index, fields[fieldKey])
-            ))}
-        </Form>
+        <FormProvider {...methods}>
+            <Form onSubmit={e =>{
+                e.stopPropagation();
+                e.preventDefault();
+
+                return methods.handleSubmit(onSubmit)(e);
+            }} {...props.form.formOptions}>
+                {fieldKeys.map((fieldKey, index) => (
+                    getRenderer(index, fields[fieldKey])
+                ))}
+            </Form>
+        </FormProvider>
     </>
 }

@@ -13,7 +13,7 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [...urls],
-            refresh: true,
+            refresh: false,
         }),
         react({ jsxRuntime: 'classic' }),
     ],
@@ -21,6 +21,7 @@ export default defineConfig({
         alias: {
           '@' : path.resolve(__dirname, 'resources/adminify'),
           '~choices': path.resolve(__dirname, 'node_modules/choices.js'),
+          '~dropzone': path.resolve(__dirname, 'node_modules/dropzone'),
           '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
           '~bootstrap-icons': path.resolve(__dirname, 'node_modules/bootstrap-icons'),
         }

@@ -2,6 +2,7 @@
 
 namespace Ludows\Adminify\Libs;
 
+use Closure;
 use Inertia\Inertia;
 use Exception;
 
@@ -17,9 +18,7 @@ class TableManager
         $this->results = [];
         $this->columns = [];
         $this->items = [];
-        $this->_columns = [];
-        $this->js = [];
-        $this->css = [];
+        $this->rows = [];
         $this->areas = [
             'top-left' => [],
             'top-right' => [],
@@ -30,7 +29,7 @@ class TableManager
         $this->showSearch = true;
         $this->showBtnCreate = true;
         $this->dropdownManager = null;
-        $this->custom_cells = [];
+        $this->_inc_rows = 0;
     }
     public function setColumns($value = []) {
         $this->columns = $value;
@@ -128,25 +127,6 @@ class TableManager
 
         ];
     }
-    public function getTemplateByName($name) {
-        $default_view = $this->getDefaultCellView();
-        $custom_defined_cells = $this->getDefaultsCells();
-
-        if(!empty($custom_defined_cells[$name])) {
-            $default_view = $custom_defined_cells[$name];
-        }
-
-        if(empty($custom_defined_cells[$name])) {
-            $viewExist = $this->view->exists('adminify::layouts.admin.table.custom-cells.'.$name);
-
-            if($viewExist) {
-                $default_view = 'adminify::layouts.admin.table.custom-cells.'.$name;
-            }
-        }
-
-        return $default_view;
-    }
-
     public function templateVarsList() {
         // dd($this->getRequest());
         $r = $this->getRequest();
@@ -155,8 +135,7 @@ class TableManager
         // dd($this->dropdownManager);
         return [
             'actions' => [
-                'dropdownManager' => $this->dropdownManager,
-                'index' => $m->id,
+                'dropdown' => !empty($this->getDropdownManagerClass()) ? $this->dropdownManager->getDropdown('dropdown_'.$m->id) : null,
             ],
             'need-translations' => [
                 'routes' => get_missing_translations_routes($m),
@@ -192,27 +171,11 @@ class TableManager
 
     public function columns($a = []) {
         $this->columns = $a;
-
-        foreach ($a as $col) {
-            # code...
-            $this->_columns[$col] = [];
-        }
-
         return $this;
     }
 
     public function datas($name, $value) {
         $this->datas[$name] = $value;
-        return $this;
-    }
-
-    public function js($jsPath) {
-        $this->js[] = $jsPath;
-        return $this;
-    }
-
-    public function css($cssPath) {
-        $this->css[] = $cssPath;
         return $this;
     }
 
@@ -228,24 +191,36 @@ class TableManager
         }
         return $this;
     }
+    public function row($cb = null) {
+        $this->rows[$this->_inc_rows] = [];
+        if(is_closure($cb)) {
+            $cb($this->_inc_rows);
+            $this->_inc_rows++;
+        }
+    } 
 
-    public function column($name, $viewName, $extraVars = []) {
+    public function column($name, $extraVars = []) {
 
-        $v = $viewName;
-        if(empty($viewName)) {
-            $v = $this->getDefaultCellView();
+        $realAttributeName = str_replace('-', '_', $name);
+        $m = $this->getModel();
+        $isFillableAttr = in_array($realAttributeName, $m->getFillable());
+        $formatedColName = slug($name);
+        $value = null;
+
+        $default_vars = [
+            'model' => $m, 
+            'is_fillable_attr' => $isFillableAttr,  
+            'real_attr' => $realAttributeName, 
+            'attr' => $name
+        ];
+
+        if(method_exists($this, 'columnValueResolver')) {
+            $value = call_user_func_array(array($this, 'columnValueResolver'), $default_vars);
         }
 
-        $formatedColName = slug($name);
+        $default_vars['value'] = $value;
 
-        // if(array_key_exists($formatedColName, $this->_columns)) {
-        //     throw new Exception($formatedColName.' already exist..');
-        // }
-
-        $this->_columns[ $formatedColName ][] = (object) [
-            'view' => $v,
-            'vars' => array_merge($extraVars, ['model' => $this->getModel(), 'attr' => $name]),
-        ];
+        $this->rows[ $this->_inc_rows ][$formatedColName] = array_merge($extraVars, $default_vars);
         return $this;
     }
     public function getRequest() {
@@ -269,14 +244,6 @@ class TableManager
         return 'adminify::layouts.admin.table.datalist';
     }
 
-    public function getJs() {
-        return $this->js;
-    }
-
-    public function getCss() {
-        return $this->css;
-    }
-
     public function addVarsToRender() {
         return [];
     }
@@ -296,11 +263,13 @@ class TableManager
             # code...
             // pass current model
             $this->model($result);
-            foreach ($cols as $col) {
-                # code...
-                $slugify_col = slug($col);
-                $table->column($slugify_col, $this->getTemplateByName($slugify_col),  $this->getVarsTemplateByName($slugify_col));
-            }
+            $this->row(function($row_index) use ($table, $cols) {
+                foreach ($cols as $col) {
+                    # code...
+                    $slugify_col = slug($col);
+                    $table->column($col, $this->getVarsTemplateByName($slugify_col));
+                }
+            });
         }
 
     }
@@ -381,25 +350,14 @@ class TableManager
         $tpl = $this->getView();
         $cols = $this->getColumns();
         $areas = $this->getAreas();
-        $count = null;
 
         // dd('$cols', $cols,  $this->_columns);
 
 
-        if(!empty($modelClass)) {
-            $classModel = new $modelClass;
-            $count = $models->total();
-        }
-
-
         $defaults = [
-            'datas' => $this->_columns,
+            'rows' => $this->rows,
             'thead' => $cols,
-            'total' => $count,
-            'count' => count($this->_columns[$cols[0]]),
-            'css' => $this->getCss(),
-            'js' => $this->getJs(),
-            'name' => titled( lowercase( class_basename($classModel) ) ),
+            'name' => titled( lowercase( class_basename($modelClass) ) ),
             'table' => class_basename($this),
             'areas' => $areas,
             'paginator' => $models
@@ -425,6 +383,7 @@ class TableManager
     }
     // public function list() {
     public function toArray() {
+        dd($this->process(false));
         return $this->process(false);
     }
     public function toJson() {

@@ -291,6 +291,8 @@ class HandleInertiaRequests extends Middleware
             "currentLang" => $currentLocale,
             "langs" => $supported_locales,
             "currentRouteName" => $routeName,
+            "isFront" => is_front(),
+            "isBack" => !is_front(),
             "isCreate" => strpos($routeName, '.create') != false ? true : false,
             "isEdit" => strpos($routeName, '.edit') != false ? true : false,
             "isUpdate" => strpos($routeName, '.update') != false ? true : false,
@@ -312,7 +314,7 @@ class HandleInertiaRequests extends Middleware
             throw new \Exception("Theme must be set in administration", $theme);
         }
 
-        if( $isContentModel || $base_parameters['isPreview']) {
+        if( $isContentModel && is_front() || $base_parameters['isPreview']) {
             $posts = null;
             // si c'est la page de blog. Autoappend des posts.
             if(is_blogpage($model)) {

@@ -1,15 +1,15 @@
-import React, {useMemo, useEffect} from 'react';
+import React, {useMemo, useEffect, forwardRef} from 'react';
 import Button from 'react-bootstrap/Button';
 
-export default function SubmitElement(props) {
+const SubmitElement = forwardRef((props, ref) => {
   const field = useMemo(() => props.field, []);
 
   useEffect(() => {
-    console.log('SubmitElement.jsx onMounted', props);
+    // console.log('SubmitElement.jsx onMounted', props);
   }, [])
 
   return <>
-      <div {...field.wrapper}>
+      <div ref={ref} {...field.wrapper}>
         <Button {...field.attr} type={field.type}>
           {field.label}
         </Button>
@@ -26,4 +26,6 @@ export default function SubmitElement(props) {
         } */}
       </div>
   </>  
-}
+});
+
+export default SubmitElement;

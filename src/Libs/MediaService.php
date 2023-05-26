@@ -193,7 +193,7 @@ class MediaService {
 
         $fileSystem->putFileAs($folder, $fileUpload, $namedFile);
 
-        $this->mediaRepository->addModel($this->model)->create($sendToBdd);
+        return $this->mediaRepository->addModel($this->model)->create($sendToBdd);
     }
     public function destroy() {
         $fileSystem = $this->getFileSystem();

@@ -5,8 +5,26 @@ import AdminLayout from './layouts/AdminLayout';
 
 createInertiaApp({
     resolve: (name) => {
+      console.log("names ?", JSON.parse(name))
+      let names = JSON.parse(name); // aray of names
       const pages = import.meta.glob('./pages/**/*.jsx', { eager: true })
-      let page = pages[`./pages/${name}.jsx`].default;
+      let page = null;
+      
+      for (let index = 0; index < names.length; index++) {
+        const element = names[index];
+        
+        if( pages[`./pages/${element}.jsx`] ) {
+          page = pages[`./pages/${element}.jsx`].default;
+          break;
+        }
+        
+      }
+
+      if(!page) {
+        throw new Error('page not resolved');
+      }
+      // let page = pages[`./pages/${name}.jsx`].default;
+
 
       if(!page.layout){
         page.layout = (page) => { return <AdminLayout children={page} /> };

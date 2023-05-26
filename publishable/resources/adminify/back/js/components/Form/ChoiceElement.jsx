@@ -1,19 +1,18 @@
-import React, {useMemo, useEffect, useRef, useState} from 'react';
+import React, {useMemo, useEffect, useRef, useState, forwardRef} from 'react';
 import Form from 'react-bootstrap/Form';
 import { Portal } from 'react-portal';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import BaseForm from '@/back/js/components/BaseForm';
+import useErrors from '../../hooks/useErrors';
 
-export default function ChoiceElement(props) {
-
+const ChoiceElement = forwardRef((props, ref) => {
   const field = useMemo(() => props.field, []);
   const register = useMemo(() => props.register, [props]);
   const choices = useMemo(() => field.choices, [props]);
   const choicesKeys = useMemo(() => Object.keys(choices), [choices]);
-  const choiceRootRef = useRef({});
   const choiceRef = useRef({});
-
+  const [isInvalid, error] = useErrors(field.name);
 
   const [show, setShow] = useState(false);
 
@@ -21,10 +20,10 @@ export default function ChoiceElement(props) {
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    choiceRef.current = choiceRootRef.current.querySelector('[type="'+ field.type +'"]');
+    choiceRef.current = ref.current.querySelector('[type="'+ field.type +'"]');
     let instanceChoice = new Choices(choiceRef.current, field.select2options ? field.select2options : {});
     
-    console.log('ChoiceElement.jsx onMounted', props);
+    // console.log('ChoiceElement.jsx onMounted', props);
 
     return () => {
       instanceChoice.destroy();
@@ -36,7 +35,7 @@ export default function ChoiceElement(props) {
   }
 
   return <>
-    <div ref={choiceRootRef} {...field.sibling_attr} id={field.sibling}>
+    <div ref={ref} {...field.sibling_attr} id={field.sibling}>
       <div {...field.wrapper}>
           {field.label_show &&
             <Form.Label {...field.label_attr} htmlFor={field.name}>
@@ -49,6 +48,7 @@ export default function ChoiceElement(props) {
           <Form.Select
             id={field.name}
             type={field.type}
+            isInvalid={isInvalid}
             // ref={choiceRef}
             defaultValue={field.value ? field.value : ''}
             {...field.attr}
@@ -63,6 +63,13 @@ export default function ChoiceElement(props) {
               {field.help_block.text}
             </Form.Text>
           }
+          {error &&
+            <Form.Control.Feedback type="invalid">
+              {error}
+            </Form.Control.Feedback>
+          }
+          
+          
       </div>
     </div>
 
@@ -78,5 +85,6 @@ export default function ChoiceElement(props) {
                 </Modal>
             </Portal>
     }
-  </>  
-}
+  </> 
+})
+export default ChoiceElement;

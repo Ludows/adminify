@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
+import React, { useEffect, useState, useRef, useMemo, useContext } from 'react';
 import useGlobalStore from '../store/global';
 import useRoute from '@/commons/js/useRoute';
 import { createAxios } from '@/helpers/index';
-import { router } from '@inertiajs/react'
 
 import { Portal } from 'react-portal';
 import Button from 'react-bootstrap/Button';
@@ -11,13 +10,15 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
 
- 
+import { EmitterContext } from "../contexts/EmitterContext";
+
 export default function TopLeftHeader(props) {
 
     const getTranslation = useGlobalStore(state => state.getTranslation);
     let [route] = useRoute('home.dashboard', {});
     let [routeSearchable] = useRoute('searchable', {});
     let { previousRequest, current } = useRef(null);
+    const [on, off, emit] = useContext(EmitterContext);
 
     const [show, setShow] = useState(false);
     const [list, setList] = useState([]);
@@ -60,17 +61,24 @@ export default function TopLeftHeader(props) {
     }
 
     const HandleGo = (item) => {
-        router.visit(item.url, {
-            method : 'get',
+        
+        emit('adminify:router:change', {
+            url: item.url,
+            method: 'get',
+            form: {},
             data: {}
-        })
+        });
+        // router.visit(item.url, {
+        //     method : 'get',
+        //     data: {}
+        // })
     }
 
     // {{ route('home.dashboard') }}
     // {{ __('admin.root') }}
     return <>
         <div className="">
-            <a className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href={route}>{getTranslation('admin.root')}</a>
+            <button className="h4 mb-0 text-white bg-transparent border-0 text-uppercase d-none d-lg-inline-block" onClick={() => {HandleGo({url : route})}} href="#">{getTranslation('admin.root')}</button>
             <a href="#" className="btn btn-default btn-sm rounded" onClick={handleShow}>
                 <i className="bi bi-search"></i>
             </a>

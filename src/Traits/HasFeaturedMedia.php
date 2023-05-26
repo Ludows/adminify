@@ -14,4 +14,11 @@ trait HasFeaturedMedia
 
         return $ret;
     }
+    public function getMediaAttribute() {
+      $m = model('Media');
+      return query($m, function($model) {
+        $model->where('id', $this->{$this->featured_column_media});
+        return $model;
+      });
+    }
   }

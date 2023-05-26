@@ -1,4 +1,4 @@
-import TableListing from '@/back/js/components/TableListing';
+import TableListing from '@/back/js/components/Table/TableListing';
 import useGlobalStore from '@/back/js/store/global';
 import React from 'react';
 

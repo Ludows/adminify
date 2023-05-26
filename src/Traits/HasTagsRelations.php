@@ -16,7 +16,7 @@
         return $this->prefix_meta_tag.'_'. lowercase($baseName).'_'.$key;
     }
     public function getTagsAttribute() {
-        $tag_ids = $this->getCategories( $this->{$this->meta_column_key_for_tag} );
+        $tag_ids = $this->getTags( $this->{$this->meta_column_key_for_tag} );
         $tags = model('Tag')->whereIn('id', $tag_ids)->get();
         return $tags;
     }
