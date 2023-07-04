@@ -266,11 +266,65 @@ class BaseForm extends Form {
         }
         return $this;
     }
+    public function getInformationsField($field) {
+        $informations = [];
+
+        $informations['name'] = $field->getName();
+        $informations['prototype'] = null;
+        $informations['type'] = $field->getType();
+        $informations['field_class'] = get_class($field);
+
+        $current_field_childs = null;
+        if(property_exists($field, 'children')) {
+            $current_field_childs = $field->getChildren();
+        }
+        if(!empty($current_field_childs)) {
+            $childs_informations = [];
+            foreach ($current_field_childs as $key => $child) {
+                # code...
+                $childs_informations[$key] = $this->getInformationsField($child);
+            }
+            $informations['childs'] = $childs_informations;
+        }
+
+        $current_field_options = $field->getOptions();
+        if(method_exists($field, 'makeRenderableField')) {
+            $current_field_options = $field->makeRenderableField($current_field_options);
+        }
+        $current_field_options_keys = array_keys($current_field_options);
+
+        foreach ($current_field_options_keys as $current_field_options_key) {
+            # code...
+            $informations[$current_field_options_key] = $current_field_options[$current_field_options_key];
+        }
+
+        if($informations['type'] == 'form') {
+            $informations['prototype'] = $field->prototype()->toArray();
+        }
+
+        return $informations;
+    } 
     public function processForm() {
         $a = [];
+        $http_verbs_for_appending_method = ['patch', 'put', 'delete'];
+
+        $method = lowercase( $this->getMethod() );
+
+        $this->add('_token', 'hidden', [
+            'value' =>  csrf_token(),
+        ]);
+
+        if(in_array($method, $http_verbs_for_appending_method)) {
+            $this->setMethod('POST');
+            $this->add('_method', 'hidden', [
+                'value' =>  uppercase($method),
+            ]);
+        }
+
 
         $fields = $this->getFields();
         $a['formOptions'] = $this->getFormOptions();
+        $a['uuid'] = lowercase( 'form-'.uuid(25) );
         $a['fields'] = [];
 
         $key_fields = array_keys($fields);
@@ -278,19 +332,10 @@ class BaseForm extends Form {
         foreach ($key_fields as $key_field) {
             # code...
             $current_field = $fields[$key_field];
-            $a['fields'][$key_field]['name'] = $current_field->getName();
-            $a['fields'][$key_field]['type'] = $current_field->getType();
+            
+            $allInformationsField = $this->getInformationsField($current_field);
 
-            $current_field_options = $current_field->getOptions();
-            if(method_exists($current_field, 'makeRenderableField')) {
-                $current_field_options = $current_field->makeRenderableField($current_field_options);
-            }
-            $current_field_options_keys = array_keys($current_field_options);
-
-            foreach ($current_field_options_keys as $current_field_options_key) {
-                # code...
-                $a['fields'][$key_field][$current_field_options_key] = $current_field_options[$current_field_options_key];
-            }
+            $a['fields'][$key_field] = $allInformationsField;
         }
 
         return $a;

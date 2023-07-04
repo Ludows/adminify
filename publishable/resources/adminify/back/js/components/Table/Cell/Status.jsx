@@ -10,7 +10,7 @@ const Status = forwardRef((props, ref) => {
 
     return <>
         <td ref={ref}>
-            { props.data.model['status'].name } 
+            { props.model['status'].name } 
         </td>
     </>
 

@@ -44,7 +44,15 @@ class TranslationsController extends Controller
 
             $table = $this->table(TranslationTable::class);
 
-            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
+            $views = $this->getPossiblesViews('Index');
+
+
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'table' => $table->toArray()
+            ]);
+
+            // return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
 
         /**
@@ -58,8 +66,15 @@ class TranslationsController extends Controller
                 'method' => 'POST',
                 'url' => route('traductions.store')
             ]);
+
+            $views = $this->getPossiblesViews('Create');
+
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'form' => $form->toArray()
+            ]);
             //
-            return view("adminify::layouts.admin.pages.create", ['form' => $form]);
+            // return view("adminify::layouts.admin.pages.create", ['form' => $form]);
         }
 
         /**
@@ -73,7 +88,11 @@ class TranslationsController extends Controller
             $form = $this->makeForm(FormsCreateTranslation::class);
             $traduction = $this->translationRepository->addModel(new Traductions())->create($form);
 
-            return $this->sendResponse($traduction, 'traductions.index', 'admin.typed_data.success');
+            return $this->toJson([
+                'message' => __('admin.typed_data.success'),
+                'entity' => $traduction,
+                'route' => 'traductions.index'
+            ]);
         }
 
         /**
@@ -106,7 +125,14 @@ class TranslationsController extends Controller
                 'model' => $traduction
             ]);
 
-            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
+            $views = $this->getPossiblesViews('Edit');
+
+            return $this->renderView($views, [
+                'model' => $traduction,
+                'form' => $form->toArray()
+            ]);
+
+            // return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
         }
 
         /**
@@ -126,7 +152,11 @@ class TranslationsController extends Controller
 
             $this->translationRepository->addModel($traduction)->update($form, $traduction);
 
-            return $this->sendResponse($traduction, 'traductions.index', 'admin.typed_data.updated');
+            return $this->toJson([
+                'message' => __('admin.typed_data.updated'),
+                'entity' => $traduction,
+                'route' => 'traductions.index'
+            ]);
         }
 
         /**
@@ -140,7 +170,10 @@ class TranslationsController extends Controller
             //
             $this->translationRepository->addModel($traduction)->delete($traduction);
 
-            // redirect
-            return $this->sendResponse($traduction, 'traductions.index', 'admin.typed_data.deleted');
+            return $this->toJson([
+                'message' => __('admin.typed_data.deleted'),
+                'entity' => $traduction,
+                'route' => 'traductions.index'
+            ]);
         }
 }

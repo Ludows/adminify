@@ -1,24 +1,21 @@
-import React, { useEffect, useState, useRef, useMemo, useContext } from 'react';
-import useGlobalStore from '../store/global';
+import React, { useEffect, useState, useMemo } from 'react';
 import useRoute from '@/commons/js/useRoute';
 import { createAxios } from '@/helpers/index';
 
 import { Portal } from 'react-portal';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 import ListGroup from 'react-bootstrap/ListGroup';
-
-import { EmitterContext } from "../contexts/EmitterContext";
+import useHelpers from '../hooks/useHelpers';
+import useTranslations from '../hooks/useTranslations';
 
 export default function TopLeftHeader(props) {
 
-    const getTranslation = useGlobalStore(state => state.getTranslation);
+    const { get } = useTranslations();
     let [route] = useRoute('home.dashboard', {});
     let [routeSearchable] = useRoute('searchable', {});
-    let { previousRequest, current } = useRef(null);
-    const [on, off, emit] = useContext(EmitterContext);
+    const { navigate } = useHelpers();
 
     const [show, setShow] = useState(false);
     const [list, setList] = useState([]);
@@ -62,23 +59,20 @@ export default function TopLeftHeader(props) {
 
     const HandleGo = (item) => {
         
-        emit('adminify:router:change', {
+        navigate({
             url: item.url,
             method: 'get',
             form: {},
             data: {}
-        });
-        // router.visit(item.url, {
-        //     method : 'get',
-        //     data: {}
-        // })
+        })
+
+        setList([]);
+        handleClose();
     }
 
-    // {{ route('home.dashboard') }}
-    // {{ __('admin.root') }}
     return <>
         <div className="">
-            <button className="h4 mb-0 text-white bg-transparent border-0 text-uppercase d-none d-lg-inline-block" onClick={() => {HandleGo({url : route})}} href="#">{getTranslation('admin.root')}</button>
+            <button className="h4 mb-0 text-white bg-transparent border-0 text-uppercase d-none d-lg-inline-block" onClick={() => {HandleGo({url : route})}} href="#">{get('admin.root')}</button>
             <a href="#" className="btn btn-default btn-sm rounded" onClick={handleShow}>
                 <i className="bi bi-search"></i>
             </a>
@@ -86,12 +80,12 @@ export default function TopLeftHeader(props) {
             <Portal>
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
-                        <Modal.Title>{getTranslation('admin.global_search')}</Modal.Title>
+                        <Modal.Title>{get('admin.global_search')}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <FloatingLabel
                             controlId="floatingInput"
-                            label={getTranslation('admin.search')}
+                            label={get('admin.search')}
                             className="mb-3"
                         >
                             <Form.Control type="text" onKeyUp={handleKeyUp} placeholder="name@example.com" />
@@ -100,7 +94,7 @@ export default function TopLeftHeader(props) {
                         <ListGroup>
                             {listKeys.map((listKey, index) => (
                                 <>
-                                    <p key={index}>{getTranslation('admin.menuback.'+listKey)}</p>      
+                                    <p key={index}>{get('admin.menuback.'+listKey)}</p>      
                                     {list[listKey].map((item, indexListItem) => (
                                         <ListGroup.Item key={indexListItem} action onClick={() => {HandleGo(item)}}>
                                            {item.title}

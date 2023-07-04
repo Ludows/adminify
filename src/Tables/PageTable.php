@@ -16,4 +16,13 @@ class PageTable extends TableManager {
         array_unshift($a, 'categories_id');
         return $a;
     }
+    public function onAfterQuery() {
+        $items = $this->results->items(); 
+        if(!empty($items)) {
+            foreach ($items as $key => $model) {
+                # code...
+                $model->append('categories');
+            }
+        }
+    }
 }

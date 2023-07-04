@@ -46,7 +46,15 @@ class GroupMetasController extends Controller
         {
             $table = $this->table(GroupMetasTable::class);
 
-            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
+            $views = $this->getPossiblesViews('Index');
+
+            // dd($table->toArray());
+
+
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'table' => $table->toArray()
+            ]);
         }
 
         /**
@@ -61,14 +69,12 @@ class GroupMetasController extends Controller
                 'url' => route('groupmetas.store')
             ]);
 
-            // $form = $formBuilder->create(CreateGroupMetas::class, [
-            //     'method' => 'POST',
-            //     'url' => route('groupmetas.store')
-            // ]);
+            $views = $this->getPossiblesViews('Create');
 
-            $this->addJS( asset('/adminify/back/js/metas.js') );
-            //
-            return view("adminify::layouts.admin.pages.create");
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'form' => $form->toArray()
+            ]);
         }
 
         /**
@@ -85,7 +91,11 @@ class GroupMetasController extends Controller
 
             $entity = $this->repo->addModel(new GroupMeta())->create($form);
 
-            return $this->sendResponse($entity, 'groupmetas.index', 'admin.typed_data.success');
+            return $this->toJson([
+                'message' => __('admin.typed_data.success'),
+                'entity' => $entity,
+                'route' => 'groupmetas.index'
+            ]);
         }
 
         /**
@@ -114,10 +124,17 @@ class GroupMetasController extends Controller
                     'url' => route('groupmetas.update', ['groupmeta' => $Groupmeta->id]),
                     'model' => $Groupmeta
                 ]);
+            
+            $views = $this->getPossiblesViews('Edit');
 
-            $this->addJS( asset('/adminify/back/js/metas.js') );
+            return $this->renderView($views, [
+                'model' => $Groupmeta,
+                'form' => $form->toArray()
+            ]);
 
-            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
+            // $this->addJS( asset('/adminify/back/js/metas.js') );
+
+            // return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
         }
 
         /**
@@ -134,7 +151,13 @@ class GroupMetasController extends Controller
 
             $entity = $this->repo->addModel($Groupmeta)->update($form, $Groupmeta);
 
-            return $this->sendResponse($entity, 'groupmetas.index', 'admin.typed_data.updated');
+            return $this->toJson([
+                'message' => __('admin.typed_data.updated'),
+                'entity' => $entity,
+                'route' => 'groupmetas.index'
+            ]);
+
+            // return $this->sendResponse($entity, 'groupmetas.index', 'admin.typed_data.updated');
 
         }
 
@@ -150,6 +173,12 @@ class GroupMetasController extends Controller
             $this->repo->addModel($Groupmeta)->delete($Groupmeta);
 
             // redirect
-            return $this->sendResponse($Groupmeta, 'groupmetas.index', 'admin.typed_data.deleted');
+            // return $this->sendResponse($Groupmeta, 'groupmetas.index', 'admin.typed_data.deleted');
+
+            return $this->toJson([
+                'message' => __('admin.typed_data.deleted'),
+                'entity' => $Groupmeta,
+                'route' => 'groupmetas.index'
+            ]);
         }
 }

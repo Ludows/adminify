@@ -17,6 +17,9 @@
     }
     public function getTagsAttribute() {
         $tag_ids = $this->getTags( $this->{$this->meta_column_key_for_tag} );
+        if(empty($tag_ids)) {
+            return [];
+        }
         $tags = model('Tag')->whereIn('id', $tag_ids)->get();
         return $tags;
     }

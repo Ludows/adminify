@@ -23,7 +23,7 @@ const Content = forwardRef((props, ref) => {
 
     return <>
         <td ref={ref}>
-            {renderContent(props.data.model[props.data.real_attr], props.data.real_attr)} 
+            {renderContent(props.model[props.data.real_attr], props.data.real_attr)} 
         </td>
     </>
 

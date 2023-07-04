@@ -47,8 +47,14 @@ class UserController extends Controller
 
             $table = $this->table(UserTable::class);
 
+            $views = $this->getPossiblesViews('Index');
 
-            return view("adminify::layouts.admin.pages.index", ['table' => $table]);
+
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'table' => $table->toArray()
+            ]);
+
     }
     /**
             * Show the form for creating a new resource.
@@ -63,7 +69,14 @@ class UserController extends Controller
                     'url' => route('users.store')
                 ]);
 
-                return view("adminify::layouts.admin.pages.create", ['form' => $form]);
+                $views = $this->getPossiblesViews('Create');
+
+                return $this->renderView($views, [
+                    'model' => (object) [],
+                    'form' => $form->toArray()
+                ]);
+
+                // return view("adminify::layouts.admin.pages.create", ['form' => $form]);
             }
 
             /**
@@ -76,7 +89,12 @@ class UserController extends Controller
             //
             $form = $this->makeForm(CreateUser::class);
             $user = $this->userRepository->addModel(new User())->create($form);
-            return $this->sendResponse($user, 'users.index', 'admin.typed_data.success');
+
+            return $this->toJson([
+                'message' => __('admin.typed_data.success'),
+                'entity' => $user,
+                'route' => 'users.index'
+            ]);
         }
 
         /**
@@ -94,7 +112,14 @@ class UserController extends Controller
                     'model' => $user
                 ]);
 
-                return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
+                $views = $this->getPossiblesViews('Edit');
+
+                return $this->renderView($views, [
+                    'model' => $user,
+                    'form' => $form->toArray()
+                ]);
+
+                // return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
             }
         /**
             * Update the specified resource in storage.
@@ -113,7 +138,12 @@ class UserController extends Controller
 
                 $this->userRepository->addModel($user)->update($form, $user);
 
-                return $this->sendResponse($user, 'users.index', 'admin.typed_data.updated');
+                return $this->toJson([
+                    'message' => __('admin.typed_data.updated'),
+                    'entity' => $user,
+                    'route' => 'users.index'
+                ]);
+
             }
             /**
             * Remove the specified resource from storage.
@@ -128,7 +158,12 @@ class UserController extends Controller
                 $this->userRepository->delete($user);
 
                 // redirect
-                return $this->sendResponse($user, 'users.index', 'admin.typed_data.deleted');
+
+                return $this->toJson([
+                    'message' => __('admin.typed_data.deleted'),
+                    'entity' => $user,
+                    'route' => 'users.index'
+                ]);
             }
             public function showProfile(User $user, FormBuilder $formBuilder) {
 
@@ -138,7 +173,14 @@ class UserController extends Controller
                     'model' => $user
                 ]);
 
-                return view("adminify::layouts.admin.pages.profile", ['form' => $form]);
+                $views = $this->getPossiblesViews('Edit');
+
+                return $this->renderView($views, [
+                    'model' => $user,
+                    'form' => $form->toArray()
+                ]);
+
+                // return view("adminify::layouts.admin.pages.profile", ['form' => $form]);
             }
             public function saveProfile(User $user, FormBuilder $formBuilder) {
 
@@ -148,6 +190,13 @@ class UserController extends Controller
                 $formValues = $form->getFieldValues();
 
                 $this->userRepository->saveProfile($formValues);
-                return $this->sendResponse($user, 'users.index', 'admin.typed_data.updated');
+
+                return $this->toJson([
+                    'message' => __('admin.typed_data.updated'),
+                    'entity' => $user,
+                    'route' => 'users.index'
+                ]);
+
+                // return $this->sendResponse($user, 'users.index', 'admin.typed_data.updated');
             }
 }

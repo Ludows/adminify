@@ -6,6 +6,7 @@ import * as VisualEditorPackage from '@boxraiser/visual-editor/VisualEditor.stan
 const VisualEditorElement = forwardRef((props, ref) => {
     const field = useMemo(() => props.field, []);
     const errors = useMemo(() => props.errors ?? {}, []);
+    const TagEditor = `${field.visual_editor_options.visual_element}`;
     const [hidden, setHidden] = useState(true);
     const [data, setData] = useState('[]');
 
@@ -15,7 +16,7 @@ const VisualEditorElement = forwardRef((props, ref) => {
 
     useEffect(() => {
       let editor = new VisualEditorPackage.VisualEditor()
-      editor.defineElement();
+      editor.defineElement( field.visual_editor_options.visual_element );
 
     //   console.log('VisualEditorElement.jsx onMounted', field);
 
@@ -47,7 +48,7 @@ const VisualEditorElement = forwardRef((props, ref) => {
                 Toggle Visual Editor
             </Button>
             
-            <visual-editor onChange={onChangeEditor} ref={EditorRef} {...additionnals_props} preview={field.visual_editor_options.preview} value={field.value ? field.value : []}></visual-editor>
+            <TagEditor onChange={onChangeEditor} ref={EditorRef} {...additionnals_props} preview={field.visual_editor_options.preview} value={field.value ? field.value : []}></TagEditor>
             <input type='hidden' {...register(field.name)} name={field.name} value={data} />
 
             {field.help_block.text &&

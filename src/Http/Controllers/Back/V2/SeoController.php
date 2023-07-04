@@ -58,7 +58,14 @@ class SeoController extends Controller
                 'model' => $model
             ]);
 
-            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
+            $views = $this->getPossiblesViews('Edit');
+
+            return $this->renderView($views, [
+                'model' => $seo,
+                'form' => $form->toArray()
+            ]);
+
+            // return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
         }
 
         /**
@@ -93,6 +100,10 @@ class SeoController extends Controller
 
             $this->seoRepository->addModel($model)->findOrCreate($model , $form);
 
-            return $this->sendResponseWith($model, url()->previous() , 'admin.typed_data.updated');
+            return $this->toJson([
+                'model' => $model,
+                'url' => url()->previous(),
+                'message' => 'admin.typed_data.updated'
+            ]);
         }
 }

@@ -19,7 +19,7 @@ const Media = forwardRef((props, ref) => {
 
     return <>
         <td ref={ref}>
-            {renderIcon(props.data.model[props.data.real_attr])} 
+            {renderIcon(props.model[props.data.real_attr])} 
         </td>
     </>
 

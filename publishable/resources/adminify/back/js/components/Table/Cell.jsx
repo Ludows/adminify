@@ -8,14 +8,14 @@ const Cell = forwardRef((props, ref) => {
         }
     }, [])
 
-    if(!props.data.model[props.data.real_attr]) {
+    if(!props.model[props.data.real_attr]) {
         return <>
             <td ref={ref}>@todo</td>
         </>
     }
 
     return <>
-        <td ref={ref}>{props.data.model[props.data.real_attr]}</td>
+        <td ref={ref}>{props.model[props.data.real_attr]}</td>
     </>
 
 

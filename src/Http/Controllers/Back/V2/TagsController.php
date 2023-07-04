@@ -41,7 +41,13 @@ class TagsController extends Controller
 
             $table = $this->table(TagTable::class);
 
-            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
+            $views = $this->getPossiblesViews('Index');
+
+
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'table' => $table->toArray()
+            ]);
         }
 
         /**
@@ -55,8 +61,15 @@ class TagsController extends Controller
                 'method' => 'POST',
                 'url' => route('tags.store')
             ]);
+
+            $views = $this->getPossiblesViews('Create');
+
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'form' => $form->toArray()
+            ]);
             //
-            return view("adminify::layouts.admin.pages.create", ['form' => $form]);
+            // return view("adminify::layouts.admin.pages.create", ['form' => $form]);
         }
 
         /**
@@ -70,7 +83,12 @@ class TagsController extends Controller
             $form = $this->makeForm(CreateTagForm::class);
             $tag = $this->tagRepository->addModel(new TagModel())->create($form);
 
-            return $this->sendResponse($tag, 'tags.index', 'admin.typed_data.success');
+            return $this->toJson([
+                'message' => __('admin.typed_data.success'),
+                'entity' => $tag,
+                'route' => 'tags.index'
+            ]);
+
         }
 
         /**
@@ -91,8 +109,15 @@ class TagsController extends Controller
                 'url' => route('tags.update', ['tag' => $tag->id]),
                 'model' => $tag
             ]);
+            
+            $views = $this->getPossiblesViews('Edit');
 
-            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
+            return $this->renderView($views, [
+                'model' => $tag,
+                'form' => $form->toArray()
+            ]);
+
+            // return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
         }
 
         /**
@@ -112,7 +137,13 @@ class TagsController extends Controller
 
             $this->tagRepository->addModel($tag)->update($form, $tag);
 
-            return $this->sendResponse($tag, 'tags.index', 'admin.typed_data.updated');
+            return $this->toJson([
+                'message' => __('admin.typed_data.updated'),
+                'entity' => $tag,
+                'route' => 'tags.index'
+            ]);
+
+            // return $this->sendResponse($tag, 'tags.index', 'admin.typed_data.updated');
         }
 
         /**
@@ -126,7 +157,13 @@ class TagsController extends Controller
             //
             $this->tagRepository->addModel($tag)->delete($tag);
 
+            return $this->toJson([
+                'message' => __('admin.typed_data.deleted'),
+                'entity' => $tag,
+                'route' => 'tags.index'
+            ]);
+
             // redirect
-            return $this->sendResponse($tag, 'tags.index', 'admin.typed_data.deleted');
+            // return $this->sendResponse($tag, 'tags.index', 'admin.typed_data.deleted');
         }
 }

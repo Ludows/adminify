@@ -1,9 +1,10 @@
 import React from 'react';
 import Menu from './Menu';
-import useGlobalStore from '../store/global';
+import usePageProps from '../hooks/usePageProps';
 export default function Sidebar({props}) {
-    const getData = useGlobalStore(state => state.getAppData);
+    const { get } = usePageProps();
+    
     return <>
-        <Menu menu={ getData('adminMenu') } />
+        <Menu menu={ get('adminMenu') } />
     </>
 }

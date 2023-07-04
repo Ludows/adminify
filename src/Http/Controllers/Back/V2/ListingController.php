@@ -10,9 +10,10 @@ class ListingController extends Controller
 {
     public function index(Request $request) {
 
-
+        // @todo in table manager method search
 
         $config = get_site_key('tables');
+        $shareds = inertia()->getShared();
 
         $datas = $request->all();
 
@@ -26,7 +27,7 @@ class ListingController extends Controller
         $modelBase = new $m_str();
         $m = $modelBase;
         $is_multilang_model = is_translatable_model($m);
-        $useMultilang = $request->useMultilang;
+        $useMultilang = $shareds['useMultilang'];
         $lang = lang();
 
         $columns = $m->getFillable();
@@ -102,24 +103,12 @@ class ListingController extends Controller
         $table->datas('results', $results);
 
         //render only listing not entierely table
-        $v = $table->list();
-
-        $defaultEnd =  ($datas['offset'] + $results->count()) >= $datas['maxItems'];
-
-        // if(!empty($search)) {
-            if($results->count() < $datas['limit']) {
-                $defaultEnd = $results->count() < $datas['limit'];
-            }
-        // }
+        $rows = $table->toArray();
 
 
         $a = [
-            'html' => $v->render(),
+            'datas' => $rows,
             // 'isEnd' => isset($datas['offset']) && ($datas['offset'] + $results->count()) >= $datas['maxItems'] ? true : false,
-            'isEnd' => $defaultEnd,
-            'response' => $results,
-            'count' => $results->count(),
-            'status' => 'OK',
         ];
 
         return response()->json($a);

@@ -1,41 +1,62 @@
-import React, { useEffect, useMemo, useContext } from 'react';
-import { Link } from '@inertiajs/react'
-import { EmitterContext } from "../contexts/EmitterContext";
+import React, { useEffect, useMemo, useRef, createRef, forwardRef } from 'react';
+import useHelpers from '../hooks/useHelpers';
 
-export default function Menu(props) {
+const Menu = forwardRef((props, ref) => {
+    if(!ref) {
+        ref = createRef({});
+    }
 
-    let menu = useMemo(() => props.menu, [props.menu]);
-    let menuKeys = useMemo(() => Object.keys(menu), [props.menu]);
-    const [on, off, emit] = useContext(EmitterContext);
+    let menu = useMemo(() => props.menu, [props]);
+    let menuKeys = useMemo(() => Object.keys(menu), [menu]);
+
+    const { navigate } = useHelpers();
 
     useEffect(() => {
         console.log('Menu.jsx onMounted', menuKeys);
     }, [])
 
-    const handleVisit = (menuItem) => {
+    const manageActive = (target) => {
+        let links = [...ref.current.querySelectorAll('.menu-item')];
+        links.forEach((link) => {
+            link.classList.remove('active');
+            link.removeAttribute('disabled');
+        })
 
-        let defaults = {
-            form : {},
-            data: {},
-            method: 'get'
+        target.classList.add('active');
+        target.setAttribute('disabled', 'disabled');
+    }
+
+    const handleVisit = (e, menuItem) => {
+        let target = e.target;
+        manageActive(target);
+        navigate(menuItem)
+    }
+
+    const renderIcon = (MenuItem) => {
+        let iconClasses = [];
+
+        if(MenuItem.baseIconClass) {
+            iconClasses.push(MenuItem.baseIconClass);
         }
 
-        let obj = {
-            ...menuItem,
-            ...defaults
+        if(MenuItem.iconPrefix && MenuItem.icon) {
+            iconClasses.push(MenuItem.iconPrefix+'-'+MenuItem.icon);
         }
 
-        emit('adminify:router:change', obj);
+        return <i className={`${iconClasses.join(' ')}`}></i>
     }
     
     return <>
-        <ul className="nav flex-column">
+        <ul ref={ref} className="nav flex-column">
             {menuKeys.map((menuKey, index) => {
                 return <li key={index} className="nav-item">
                     {/* <Link replace href={menu[menuKey].url} className='nav-link'>{ menu[menuKey].label }</Link>  */}
-                    <button onClick={() => { handleVisit(menu[menuKey]) }} className='nav-link bg-transparent border-0'>{ menu[menuKey].label }</button> 
+                    <button onClick={(e) => { handleVisit(e, menu[menuKey]) }} data-index={index} className='nav-link bg-transparent border-0 menu-item'>
+                        {renderIcon(menu[menuKey])}
+                        { menu[menuKey].label }</button> 
                 </li>
             })}
         </ul>
     </>
-}
+})  
+export default Menu;

@@ -14,8 +14,9 @@ class FinderController extends Controller
 
         $resource = Str::title($type);
         $resoucable = adminify_get_class( singular($resource), ['app:adminify:models', 'app:models'], false);
+        $shareds = inertia()->getShared();
 
-        $multi = $request->useMultilang;
+        $multi = $shareds['useMultilang'];
         $lang = lang();
         $excludes = [
             '_method',
@@ -43,7 +44,6 @@ class FinderController extends Controller
         if(count($all) > 0) {
             foreach ($all as $key => $value) {
                 # code...
-
                 if($m->isTranslatableColumn($key) && $multi) {
                     $m = $m->where($key.'->'.$lang, $value);
                 }
@@ -65,11 +65,12 @@ class FinderController extends Controller
 
 
         $a = [
-            'models' => $m,
-            'status' => 'OK',
+            'results' => $m,
             'labelToShow' => $labelToShow
         ];
 
-        return response()->json($a);
+        return $this->toJson($a);
+
+        // return response()->json($a);
     }
 }

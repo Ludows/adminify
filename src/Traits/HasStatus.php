@@ -23,6 +23,12 @@ trait HasStatus
         return $this->{$this->status_key} == Statuses::TRASHED_ID;
     }
     public function getStatusAttribute() {
-        return model('Statuses')->where('id', $this->{$this->status_key})->first();
+
+        $the_value = $this->{$this->status_key};
+        if(empty($the_value)) {
+            return [];
+        }
+
+        return model('Statuses')->where('id', $the_value)->first();
     }
 }

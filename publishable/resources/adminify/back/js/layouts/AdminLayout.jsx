@@ -3,14 +3,13 @@ import React, { useEffect, createContext } from 'react'
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import TopPage from '../components/TopPage';
+import Loader from '../components/Loader';
 import Notifications from '../components/Notifications';
 import useGlobalStore from '../store/global';
 import { router } from '@inertiajs/react'
 
 import useEmitter from '../hooks/useEmitter';
 import useAxios from '../hooks/useAxios';
-import Route from '@/commons/js/Route';
-// import { useEventListener } from 'usehooks-ts'
 import { EmitterContext } from "../contexts/EmitterContext";
 
 import MediaPicker from '../components/Modal/MediaPicker';
@@ -20,14 +19,6 @@ export default function AdminLayout(component) {
     const [ready, setReadyState] = useGlobalStore(
         (state) => [state.ready, state.setReadyState],
     )
-    const [appData, setAppData] = useGlobalStore(
-        (state) => [state.data, state.commit],
-    )
-
-    const [translations, setTranslations] = useGlobalStore(
-        (state) => [state.translations, state.setTranslations],
-    )
-    const getAppData = useGlobalStore((state) => state.getAppData);
 
     const [on, off, emit] = useEmitter();
     const [createHttp, http] = useAxios();
@@ -39,7 +30,6 @@ export default function AdminLayout(component) {
         let default_config_router = {
             onSuccess: (page) => {
                 console.log('success', page);
-                setAppData({data : page.props})
                 emit("adminify:datas:updated", page.props);
             },
             onError : (errors) => {
@@ -70,40 +60,45 @@ export default function AdminLayout(component) {
 
     const basicAjaxHandler = (datas) => {
         console.log('adminify:ajax', datas);
-        if(datas.method && datas.url) {
-            createHttp(datas.url, {
-                method: datas.method,
-                data: datas.data ?? {},
+        let incoming_datas = datas;
+        if(incoming_datas.method && incoming_datas.url) {
+            createHttp(incoming_datas.url, {
+                method: incoming_datas.method,
+                data: incoming_datas.data ?? {},
                 headers : { 'X-Inertia' : true },
                 responseType : 'json',
-                timeout: 10000,
-                ...datas.config
+                ...incoming_datas.config
             });
 
             http((error, datas) => {
                 if(error) {
                     console.log('whoops', error);
-                    emit("adminify:datas:errors", error.response.data.errors);
+                    emit("adminify:ajax:errors", error.response.data.errors);
                     return false;
                 }
 
-                console.log('response', datas);
+                emit("adminify:ajax:result", {
+                    uuid : incoming_datas.data.uuid,
+                    ...datas.data
+                });
+
+                // console.log('response', datas);
             })
         }
     }
 
     const formSubmitHandler = (datas) => {
         console.log('adminify:submit', datas);
-        if(datas.form && datas.data) {
-            
-            console.log(datas.form.formOptions.method, datas.form.formOptions.url, datas.data)
 
-            createHttp(datas.form.formOptions.url, {
-                method: datas.form.formOptions.method,
+        if(datas.form && datas.data) {
+            let form = datas.form;
+            console.log(form.formOptions.method, form.formOptions.url, datas.data)
+
+            createHttp(form.formOptions.url, {
+                method: form.formOptions.method,
                 data: datas.data,
                 headers : { 'X-Inertia' : true },
                 responseType : 'json',
-                timeout: 10000
             });
 
             http((error, datas) => {
@@ -113,7 +108,10 @@ export default function AdminLayout(component) {
                     return false;
                 }
 
-                console.log('response', datas);
+                emit("adminify:submit:results", {
+                    form : form,
+                    data : datas.data
+                });
             })
         }
     }
@@ -121,8 +119,6 @@ export default function AdminLayout(component) {
     useEffect(() => {
         console.log('AdminLayout.jsx onMounted', component);
         if(component.children) {
-                setAppData({data : component.children.props})
-                setTranslations({translations: window['messages_'+ document.documentElement.getAttribute('lang') ]});
 
                 on('adminify:router:change', routerChangesHandler)
                 on('adminify:submit', formSubmitHandler)
@@ -141,7 +137,10 @@ export default function AdminLayout(component) {
 
     if(!ready) {
         return <>
-            TODO LOADING
+            LOADING
+            {/* <EmitterContext.Provider value={[on, off, emit]}>
+                <Loader static={true} />
+            </EmitterContext.Provider> */}
         </>
     }
 
@@ -156,12 +155,13 @@ export default function AdminLayout(component) {
                         <Header/>
                         <TopPage/>
                         {component.children}
-                        <Notifications/>
                     </div>
                 </div>
             </div>
             
+            <Notifications/>
             <MediaPicker/>
+            <Loader className="h-100 position-fixed"/>
         </EmitterContext.Provider>
     </>
 }

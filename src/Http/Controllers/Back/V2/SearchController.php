@@ -12,8 +12,10 @@ class SearchController extends Controller
 {
     public function index(Request $request) {
 
-        if(!empty($request->focus_search)) {
-            $key = $request->focus_search;
+        $shareds = inertia()->getShared();
+
+        if(!empty($shareds['focus_search'])) {
+            $key = $shareds['focus_search'];
         }
         else {
             $key = 'admin';

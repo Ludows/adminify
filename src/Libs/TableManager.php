@@ -131,11 +131,12 @@ class TableManager
         // dd($this->getRequest());
         $r = $this->getRequest();
         $m = $this->getModel();
+        $dropdown = !empty($this->getDropdownManagerClass()) ? $this->dropdownManager->getDropdown('dropdown_'.$m->id) : null;
 
         // dd($this->dropdownManager);
         return [
             'actions' => [
-                'dropdown' => !empty($this->getDropdownManagerClass()) ? $this->dropdownManager->getDropdown('dropdown_'.$m->id) : null,
+                'dropdown' => !empty($dropdown) ? $dropdown->getItems() : null,
             ],
             'need-translations' => [
                 'routes' => get_missing_translations_routes($m),
@@ -208,7 +209,6 @@ class TableManager
         $value = null;
 
         $default_vars = [
-            'model' => $m, 
             'is_fillable_attr' => $isFillableAttr,  
             'real_attr' => $realAttributeName, 
             'attr' => $name
@@ -259,6 +259,8 @@ class TableManager
         $table = $this;
         $cols = $this->getColumns();
 
+        
+
         foreach ($results as $result) {
             # code...
             // pass current model
@@ -302,6 +304,12 @@ class TableManager
         return $this;
     }
 
+    public function onBeforeQuery() {
+    }
+
+    public function onAfterQuery() {
+    }
+
     public function process($isRenderable = true) {
 
         $dropdownManagerClass = $this->getDropdownManagerClass();
@@ -309,8 +317,10 @@ class TableManager
         $m = new $modelClass;
         $this->setModel($m);
 
+        $this->onBeforeQuery();
         // perform the query
         $this->query();
+        $this->onAfterQuery();
 
         //bind the dropdown manager
         $models = $this->getResults();
@@ -360,7 +370,7 @@ class TableManager
             'name' => titled( lowercase( class_basename($modelClass) ) ),
             'table' => class_basename($this),
             'areas' => $areas,
-            'paginator' => $models
+            'paginator' => $models,
         ];
 
         $addtoVars = $this->addVarsToRender();
@@ -383,7 +393,6 @@ class TableManager
     }
     // public function list() {
     public function toArray() {
-        dd($this->process(false));
         return $this->process(false);
     }
     public function toJson() {

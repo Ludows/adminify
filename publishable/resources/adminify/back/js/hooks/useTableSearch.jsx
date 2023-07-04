@@ -1,12 +1,14 @@
 import React,{ useEffect, useRef, useContext } from 'react';
 import { EmitterContext } from "@/back/js/contexts/EmitterContext";
 import useAxios from '@/back/js/hooks/useAxios';
+import useHelpers from './useHelpers';
 import Route from '@/commons/js/Route';
 
 export default function useTableSearch(props = {}, additionalsDefaultsQueries = {}) {
 
     const [on, off, emit] = useContext(EmitterContext);
     let [createHttp, http] = useAxios();
+    const { onTableSearch, tableResults } = useHelpers();
 
     const defaultsQueryParams = useRef({
         page : 1,
@@ -43,23 +45,16 @@ export default function useTableSearch(props = {}, additionalsDefaultsQueries = 
                 return false;
             }
 
-            emit("adminify:table:results", {
+            tableResults({
                 result : datas.data.datas,
                 payload: defaultsQueryParams.current
             });
-
             // console.log('response', datas);
         })
 
     }
 
-    useEffect(() => {
-        on('adminify:table:search', triggerSearchHandler);
-
-        return () => {
-            off('adminify:table:search', triggerSearchHandler);
-        }
-    }, [])
+    onTableSearch(triggerSearchHandler, [])
 
     return [];
 }

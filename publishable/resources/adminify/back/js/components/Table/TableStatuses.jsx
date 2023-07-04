@@ -1,16 +1,16 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
-import useGlobalStore from '@/back/js/store/global';
-import { EmitterContext } from "@/back/js/contexts/EmitterContext";
+import useHelpers from '../../hooks/useHelpers';
+import useTranslations from '../../hooks/useTranslations';
 
 export default function TableStatuses(props) {
-    const getTranslation = useGlobalStore(state => state.getTranslation);
-    const [on, off, emit] = useContext(EmitterContext);
+    const { get } = useTranslations();
+    const { tableSearch } = useHelpers();
 
     const doSearch = (e) => {
         let input = e.target;
-        emit('adminify:table:search', {
+        tableSearch({
             status : parseInt(input.value.trim()),
         })
     }
@@ -20,10 +20,10 @@ export default function TableStatuses(props) {
     }, [])
 
     return <>
-            <FloatingLabel controlId="floatingSelect" label={getTranslation('admin.table.modules.statuses.select_status')}>
+            <FloatingLabel controlId="floatingSelect" label={get('admin.table.modules.statuses.select_status')}>
                 <Form.Select onChange={doSearch} aria-label="Floating label select example">
                     {props.datas.statuses.map((status, index) => {
-                        return <option value={status.id}>{getTranslation('admin.table.modules.statuses.'+status.name)}</option>
+                        return <option value={status.id}>{get('admin.table.modules.statuses.'+status.name)}</option>
                     })}
                     
                 </Form.Select>

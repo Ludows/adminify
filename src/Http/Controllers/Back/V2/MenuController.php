@@ -42,7 +42,15 @@ class MenuController extends Controller
         {
             $table = $this->table(MenuTable::class);
 
-            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
+            $views = $this->getPossiblesViews('Index');
+
+            // dd($table->toArray());
+
+
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'table' => $table->toArray()
+            ]);
         }
 
         /**
@@ -52,9 +60,17 @@ class MenuController extends Controller
             */
         public function create(Request $request, FormBuilder $formBuilder, MenuBuilder $menuBuilder)
         {
+            
+            $views = $this->getPossiblesViews('Create');
+
+            // dd($table->toArray());
 
 
-            return view("adminify::layouts.admin.pages.create", ['menuBuilder' => $menuBuilder]);
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'menubuilder' => $menuBuilder
+            ]);
+
         }
 
         /**
@@ -67,7 +83,12 @@ class MenuController extends Controller
             // dd($request);
             $form = $this->makeForm(CreateMenu::class);
             $menu = $this->menuRepository->addModel(new Menu())->create($form);
-            return $this->sendResponse($menu, 'menus.index', 'admin.typed_data.success');
+
+            return $this->toJson([
+                'message' => __('admin.typed_data.success'),
+                'entity' => $menu,
+                'route' => 'menus.index'
+            ]);
         }
 
         /**
@@ -96,11 +117,17 @@ class MenuController extends Controller
             $menuBuilder->setModel($menu);
             // dd($menuBuilder);
 
-            return view("adminify::layouts.admin.pages.edit", ['menuBuilder' => $menuBuilder]);
+            $views = $this->getPossiblesViews('Edit');
+
+            return $this->renderView($views, [
+                'model' => $menu,
+                'menubuilder' => $menuBuilder
+            ]);
         }
 
         public function checkEntity(Request $request) {
             $config = config('site-settings');
+            $shareds = inertia()->getShared();
             $type = $request->type;
             $id = $request->id;
             $ret = (object) [];
@@ -112,9 +139,9 @@ class MenuController extends Controller
                 $ret = $check;
             }
 
-            return response()->json([
+            return $this->toJson([
                 'item' => $check,
-                'multilang' => $request->useMultilang,
+                'multilang' => $shareds['useMultilang'],
                 'type' => $type
             ]);
         }

@@ -6,6 +6,14 @@ use Ludows\Adminify\Libs\BaseForm;
 
 class DeleteCrud extends BaseForm
 {
+    public function __construct() {
+        $newOptions = [
+            'method' => 'DELETE',
+            'url' => ''
+        ];
+
+        $this->formOptions = array_merge($this->formOptions, $newOptions);
+    }
     public function buildForm()
     {
         // Add fields here...

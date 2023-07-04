@@ -47,8 +47,14 @@ class PageController extends Controller
         public function index(FormBuilder $formBuilder, Request $request)
         {
             $table = $this->table(PageTable::class);
-            
-            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
+
+            $views = $this->getPossiblesViews('Index');
+
+
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'table' => $table->toArray()
+            ]);
         }
 
         /**
@@ -62,8 +68,14 @@ class PageController extends Controller
                 'method' => 'POST',
                 'url' => route('pages.store')
             ]);
+
+            $views = $this->getPossiblesViews('Create');
+
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'form' => $form->toArray()
+            ]);
             //
-            return view("adminify::layouts.admin.pages.create", ['form' => $form]);
         }
 
         /**
@@ -77,7 +89,12 @@ class PageController extends Controller
             $form = $this->makeForm(CreatePage::class);
             $page = $this->pageRepository->addModel(new Page())->create($form);
 
-            return $this->sendResponse($page, 'pages.index', 'admin.typed_data.success');
+            return $this->toJson([
+                'message' => __('admin.typed_data.success'),
+                'entity' => $page,
+                'route' => 'pages.index'
+            ]);
+
         }
 
         /**
@@ -106,8 +123,13 @@ class PageController extends Controller
                     'url' => route('pages.update', ['page' => $page->id]),
                     'model' => $page
                 ]);
+        
+            $views = $this->getPossiblesViews('Edit');
 
-            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
+            return $this->renderView($views, [
+                'model' => $page,
+                'form' => $form->toArray()
+            ]);
         }
 
         /**
@@ -140,7 +162,13 @@ class PageController extends Controller
                 $page = $this->pageRepository->addModel($page)->update($form, $page);
             // }
 
-            return $this->sendResponse($page, 'pages.index', 'admin.typed_data.updated');
+            return $this->toJson([
+                'message' => __('admin.typed_data.updated'),
+                'entity' => $page,
+                'route' => 'pages.index'
+            ]);
+
+            // return $this->sendResponse($page, 'pages.index', 'admin.typed_data.updated');
 
         }
 
@@ -155,7 +183,13 @@ class PageController extends Controller
             //
             $this->pageRepository->addModel($page)->delete($page);
 
+            return $this->toJson([
+                'message' => __('admin.typed_data.deleted'),
+                'entity' => $page,
+                'route' => 'pages.index'
+            ]);
+
             // redirect
-            return $this->sendResponse($page, 'pages.index', 'admin.typed_data.deleted');
+            // return $this->sendResponse($page, 'pages.index', 'admin.typed_data.deleted');
         }
 }

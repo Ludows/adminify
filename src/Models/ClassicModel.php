@@ -100,6 +100,7 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     public function __construct() {
         // dump($this->appends, $this->getFillable());
         parent::__construct();
+        $this->registerMultilangSwitch();
         $this->shouldAppendAs( $this->status_key , 'status');
         $this->shouldAppendAs( $this->userOwnerKey, 'user' );
         $this->shouldAppendAs( 'categories_id' , 'categories' );

@@ -42,7 +42,15 @@ class CategoryController extends Controller
         {
             $table = $this->table(CategoryTable::class);
 
-            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
+            $views = $this->getPossiblesViews('Index');
+
+            // dd($table->toArray());
+
+
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'table' => $table->toArray()
+            ]);
         }
 
         /**
@@ -58,7 +66,12 @@ class CategoryController extends Controller
                 'url' => route('categories.store')
             ]);
 
-            return view("adminify::layouts.admin.pages.create", ['form' => $form]);
+            $views = $this->getPossiblesViews('Create');
+
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'form' => $form->toArray()
+            ]);
         }
 
         /**
@@ -73,7 +86,12 @@ class CategoryController extends Controller
 
             $category = $this->categoryRepository->addModel(new Category())->create($form);
 
-            return $this->sendResponse($category, 'categories.index', 'admin.typed_data.success');
+            return $this->toJson([
+                'message' => __('admin.typed_data.success'),
+                'entity' => $category,
+                'route' => 'categories.index'
+            ]);
+
             // if($request->ajax()) {
             //     return response()->json([
             //         'category' => $category,
@@ -115,7 +133,13 @@ class CategoryController extends Controller
                 'model' => $category
             ]);
 
-            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
+            $views = $this->getPossiblesViews('Edit');
+
+            return $this->renderView($views, [
+                'model' => $category,
+                'form' => $form->toArray()
+            ]);
+
         }
 
         /**
@@ -137,8 +161,11 @@ class CategoryController extends Controller
 
             $this->categoryRepository->addModel($category)->update($form, $category);
 
-            return $this->sendResponse($category, 'categories.index', 'admin.typed_data.updated');
-
+            return $this->toJson([
+                'message' => __('admin.typed_data.success'),
+                'entity' => $category,
+                'route' => 'categories.index'
+            ]);
             // flash(__('admin.typed_data.updated'))->success();
             // return redirect()->route('categories.index');
         }
@@ -155,6 +182,10 @@ class CategoryController extends Controller
             $this->categoryRepository->addModel($category)->delete($category);
 
             //redirect
-            return $this->sendResponse($category, 'categories.index', 'admin.typed_data.deleted');
+            return $this->toJson([
+                'message' => __('admin.typed_data.deleted'),
+                'entity' => $category,
+                'route' => 'categories.index'
+            ]);
         }
 }

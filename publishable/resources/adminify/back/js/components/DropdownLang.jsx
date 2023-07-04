@@ -1,21 +1,21 @@
 import React, { useEffect, useMemo } from 'react';
-import useGlobalStore from '../store/global';
+import usePageProps from '../hooks/usePageProps';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { router } from '@inertiajs/react'
 
 export default function DropdownLang(props) {
 
-    const appData = useGlobalStore(state => state.getAppData);
+    const { get } = usePageProps();
     const currentLang = useMemo(() => {
-        return appData('currentLang');
+        return get('currentLang');
     }, [])
     
     const langs = useMemo(() => {
-        return appData('langs');
+        return get('langs');
     }, [])
 
     const isMultilang = useMemo(() => {
-        return appData('siteConfig').multilang == 0 ? false : true;
+        return get('siteConfig').multilang == 0 ? false : true;
     }, [])
 
     const changeUrl = (lang) => {

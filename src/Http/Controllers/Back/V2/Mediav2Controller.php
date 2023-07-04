@@ -47,8 +47,21 @@ class Mediav2Controller extends Controller
         */
         public function index(FormBuilder $formBuilder)
         {
-            $a = ['typed_files' => $this->mediaUploader->getListingTypedFiles(), 'dates' => $this->mediaUploader->getListingDates()];
-            return view("adminify::layouts.admin.pages.index", $a);
+            $listing =  $this->mediaUploader->getFiles();
+            $config = $this->mediaUploader->getConfig();
+            $dates = $this->mediaUploader->getListingDates();
+            $types = $this->mediaUploader->getListingTypedFiles();
+
+            $a = ['files' => $listing->files, 'thumbs' => $config['thumbs'], 'dates' => $dates, 'types' => $types];
+            
+            $views = $this->getPossiblesViews('Index');
+
+            // dd($table->toArray());
+
+
+            return $this->renderView($views, array_merge([
+                'model' => (object) [],
+            ], $a));
         }
 
         public function upload(Request $request) {

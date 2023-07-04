@@ -1,6 +1,6 @@
 <?php
 
-namespace Ludows\Adminify\Http\Controllers\Back;
+namespace Ludows\Adminify\Http\Controllers\Back\V2;
 
 use Illuminate\Http\Request;
 use App\Adminify\Http\Requests\CreateMenuRequest;
@@ -42,7 +42,15 @@ class MenuController extends Controller
         {
             $table = $this->table(MenuTable::class);
 
-            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
+            $views = $this->getPossiblesViews('Index');
+
+            // dd($table->toArray());
+
+
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'table' => $table->toArray()
+            ]);
         }
 
         /**
@@ -52,9 +60,15 @@ class MenuController extends Controller
             */
         public function create(Request $request, FormBuilder $formBuilder, MenuBuilder $menuBuilder)
         {
+            
+            $views = $this->getPossiblesViews('Create');
 
 
-            return view("adminify::layouts.admin.pages.create", ['menuBuilder' => $menuBuilder]);
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'menubuilder' => $menuBuilder->toArray()
+            ]);
+
         }
 
         /**
@@ -67,7 +81,12 @@ class MenuController extends Controller
             // dd($request);
             $form = $this->makeForm(CreateMenu::class);
             $menu = $this->menuRepository->addModel(new Menu())->create($form);
-            return $this->sendResponse($menu, 'menus.index', 'admin.typed_data.success');
+
+            return $this->toJson([
+                'message' => __('admin.typed_data.success'),
+                'entity' => $menu,
+                'route' => 'menus.index'
+            ]);
         }
 
         /**
@@ -96,11 +115,17 @@ class MenuController extends Controller
             $menuBuilder->setModel($menu);
             // dd($menuBuilder);
 
-            return view("adminify::layouts.admin.pages.edit", ['menuBuilder' => $menuBuilder]);
+            $views = $this->getPossiblesViews('Edit');
+
+            return $this->renderView($views, [
+                'model' => $menu,
+                'menubuilder' => $menuBuilder->toArray()
+            ]);
         }
 
         public function checkEntity(Request $request) {
             $config = config('site-settings');
+            $shareds = inertia()->getShared();
             $type = $request->type;
             $id = $request->id;
             $ret = (object) [];
@@ -112,27 +137,28 @@ class MenuController extends Controller
                 $ret = $check;
             }
 
-            return response()->json([
+            return $this->toJson([
                 'item' => $check,
-                'multilang' => $request->useMultilang,
+                'multilang' => $shareds['useMultilang'],
                 'type' => $type
             ]);
         }
 
 
-        public function setItemsToMenu(Request $request, $id, $type) {
+        public function setItemsToMenu(Request $request, $type) {
 
-            $config = get_site_key('menu-builder');
             // $type = $request->type;
-            $v = view();
-
-            $model = $config['models'][$type];
+            // $v = view();
+            $model = ucfirst($type);
             $m_str = adminify_get_class($model, ['app:models', 'app:adminify:models'], false);
+            if(empty($m_str)) {
+                abort(404);
+            }
             $m = new $m_str;
-            $enabled_features = get_site_key('enables_features');
+            // $enabled_features = get_site_key('enables_features');
 
             $three = [];
-            $html = [];
+            // $html = [];
 
             if($type == 'custom') {
                 $three[] = (object) [
@@ -158,16 +184,13 @@ class MenuController extends Controller
                 }
             }
 
-            foreach ($three as $b) {
-                # code...
-                $html[] = $v->make('adminify::layouts.admin.menubuilder.menu-item', ['mediaMode' => isset($enabled_features['media']) && $enabled_features['media'], 'item' => $b, 'type' => $type, 'new' => true, 'isCustom' => $type == 'custom'])->render();
-            }
+            // foreach ($three as $b) {
+            //     # code...
+            //     $html[] = $v->make('adminify::layouts.admin.menubuilder.menu-item', ['mediaMode' => isset($enabled_features['media']) && $enabled_features['media'], 'item' => $b, 'type' => $type, 'new' => true, 'isCustom' => $type == 'custom'])->render();
+            // }
 
-
-            return response()->json([
-                'html' => $html,
+            return $this->toJson([
                 'items' => $three,
-                'multilang' => $request->useMultilang,
                 'type' => $type
             ]);
 

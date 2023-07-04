@@ -1,5 +1,6 @@
 import React, {useMemo, useEffect, forwardRef} from 'react';
 import Form from 'react-bootstrap/Form';
+import useErrors from '../../hooks/useErrors';
 
 const SelectElement = forwardRef((props, ref) => {
   const field = useMemo(() => props.field, []);
@@ -31,7 +32,7 @@ const SelectElement = forwardRef((props, ref) => {
           {...register(field.name)}
         >
         
-        {choicesKeys.length > 0 && choicesKeys.map((key) => <option value={key}>{choices[key]}</option> )}
+        {choicesKeys.length > 0 && choicesKeys.map((key, i) => <option key={i} value={key}>{choices[key]}</option> )}
             
         </Form.Select>
         {field.help_block.text &&

@@ -23,7 +23,7 @@ const Categories = forwardRef((props, ref) => {
 
     return <>
         <td ref={ref}>
-            {renderContent(props.data.model['categories'])} 
+            {renderContent(props.model['categories'])} 
         </td>
     </>
 

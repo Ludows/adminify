@@ -39,7 +39,10 @@ class CopyController extends Controller
 
         $new_m->save();
 
-        return $this->sendResponseWith($new_m, url()->previous(), 'admin.typed_data.duplicated');
-
+        return $this->toJson([
+            'message' => __('admin.typed_data.duplicated'),
+            'entity' => $new_m,
+            'url' => url()->previous()
+        ]);
     }
 }

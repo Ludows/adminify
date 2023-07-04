@@ -7,6 +7,14 @@ use Kris\LaravelFormBuilder\Field;
 
 class CreateMenu extends BaseForm
 {
+    public function __construct() {
+        $newOptions = [
+            'method' => 'POST',
+            'url' => route('menus.store')
+        ];
+
+        $this->formOptions = array_merge($this->formOptions, $newOptions);
+    }
     public function buildForm()
     {
         // Add fields here...

@@ -1,15 +1,16 @@
-import React, { forwardRef, useEffect, useMemo, useState, useContext } from 'react';
+import React, { forwardRef, useEffect, useMemo, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import useErrors from '../../hooks/useErrors';
 import useMediaPicker from '@/back/js/hooks/useMediaPicker';
-
+import { useFormContext } from "react-hook-form";
 
 const MediaElement = forwardRef((props, ref) => {
-  const field = useMemo(() => props.field, []);
+  const field = useMemo(() => props.field, [props]);
   const register = useMemo(() => props.register, [props]);
-  const [selection, setSelection] = useState([]);
+  const [selection, setSelection] = useState( field.hasBootedMedia ? field.medias : []);
   const [isInvalid, error] = useErrors(field.name);
   const {show, hide, onSave} = useMediaPicker();
+  const { setValue } = useFormContext();
 
   const saveCallback = (datas) => {
     // console.log('saved callback',datas, field);
@@ -18,10 +19,12 @@ const MediaElement = forwardRef((props, ref) => {
     }
   }
 
+
+
   onSave(saveCallback);
 
   useEffect(() => {
-    console.log('MediaElement.jsx onMounted', props);
+    // console.log('MediaElement.jsx onMounted', props);
   }, [])
 
   const pluckSelection = () => {
@@ -32,6 +35,17 @@ const MediaElement = forwardRef((props, ref) => {
     }
     return ret;
   }
+
+  const pluckSelectionValue = useMemo(() => pluckSelection(), [selection]);
+
+  useEffect(() => {
+    setValue(field.name, pluckSelectionValue);
+  }, [selection])
+
+  
+
+  // console.log('pluckSelectionValue', pluckSelectionValue)
+
 
   const showMediaPicker = (e) => {
     e.preventDefault();
@@ -82,7 +96,7 @@ const MediaElement = forwardRef((props, ref) => {
           }
           
           <Form.Control type="hidden" isInvalid={isInvalid} {...field.attr}
-            {...register(field.name)} value={pluckSelection()} />
+            {...register(field.name)} defaultValue={pluckSelectionValue} />
 
           {field.help_block.text &&
             <Form.Text {...field.help_block.attr} as={field.help_block.tag} muted>

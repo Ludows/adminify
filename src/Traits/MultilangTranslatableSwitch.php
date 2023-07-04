@@ -8,8 +8,11 @@ namespace Ludows\Adminify\Traits;
   {
     public $translatable;
     public $neededTranslations = [];
-    public function __construct() {
-        parent::__construct();
+    // public function __construct() {
+    //     parent::__construct();
+        
+    // }
+    public function registerMultilangSwitch() {
         $multilang = config('site-settings.multilang');
         $this->translatable = $multilang && isset($this->MultilangTranslatableSwitch) ? $this->MultilangTranslatableSwitch : [];
     }

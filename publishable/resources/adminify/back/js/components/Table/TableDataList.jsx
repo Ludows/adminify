@@ -1,45 +1,43 @@
-import React,{ useEffect, useContext, useState } from 'react';
+import React,{ useState } from 'react';
 import useGlobalStore from '@/back/js/store/global';
 import Cell from '@/back/js/components/Table/Cell';
-import { EmitterContext } from "@/back/js/contexts/EmitterContext";
+import useHelpers from '../../hooks/useHelpers';
+import useTranslations from '../../hooks/useTranslations';
 
 export default function TableDataList(props) {
-    const getTranslation = useGlobalStore(state => state.getTranslation);
-    const [on, off, emit] = useContext(EmitterContext);
+    const { get } = useTranslations();
     const [rows, setRows] = useState(props.data.rows ?? []);
+    const [models, setModels] = useState(props.models ?? []);
+    const { onTableResults } = useHelpers();
 
     const handleResults = (datas) => {
+        console.log(datas)
+        setModels(datas.result.paginator.data);
         setRows(datas.result.rows);
     }
 
-    useEffect(() => {
-        console.log('TableDataList.jsx onMounted', props);
-        on('adminify:table:results', handleResults);
+    onTableResults(handleResults, [])
 
-        return () => {
-            off('adminify:table:results', handleResults);
-        }
-    }, [])
     return <>
         <tbody>
             
                 {rows.length > 0 &&
                     <>
-                        {rows.map((row, index) => {
+                        {rows.map((row, rIndex) => {
                             let component_keys = Object.keys(row);
-                            return <tr key={index}>
+                            return <tr key={rIndex}>
                                 {component_keys.map((value, index, array) => {
                                     if ( props.components[value]) {
                                         let Component =  props.components[value];
                                         if(value == 'actions') {
-                                            return <Component data={row[value]} actions={props.actions}/>   
+                                            return <Component key={index} model={models[rIndex]} data={row[value]} actions={props.actions}/>   
                                         }
                                         else {
-                                            return <Component data={row[value]}/>   
+                                            return <Component key={index} model={models[rIndex]} data={row[value]}/>   
                                         }                                                                             
                                     }
                                     else {
-                                        return <Cell data={row[value]} />
+                                        return <Cell key={index} model={models[rIndex]} data={row[value]} />
                                     }
                                 })}
                             </tr>
@@ -50,7 +48,7 @@ export default function TableDataList(props) {
                 {rows.length == 0 && 
                     <tr>
                         <td>
-                            {getTranslation('admin.table.modules.listings.no_datas')}
+                            {get('admin.table.modules.listings.no_datas')}
                         </td>
                     </tr>
                 }

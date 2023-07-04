@@ -1,21 +1,24 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState } from 'react';
 import ToastContainer from 'react-bootstrap/ToastContainer';
-import { EmitterContext } from "../contexts/EmitterContext";
 import Notification from './Notification';
+import useHelpers from '../hooks/useHelpers';
+
 export default function Notifications(props) {
     const [notifications, setNotifications] = useState([]);
-    const [on, off, emit] = useContext(EmitterContext);
+    const { onNotify } = useHelpers();
 
-    useEffect(() => {
-        let handleNotifications = (datas) => {
-
+    let handleNotifications = (datas) => {
+        console.log('onNotify...', datas);
+        let currentNotif = datas;
+        setNotifications((notifs) => [...notifs, currentNotif]);
+        if(currentNotif.useTimer) {
+            setTimeout(() => {
+                setNotifications((notifs) => notifs.filter((notif, index, array) => { return notif.uuid != currentNotif.uuid}));
+            }, currentNotif.time)
         }
-        on('adminify:notify', handleNotifications);
-
-        return () => {
-            off("adminify:notify", handleNotifications);
-        }
-    }, [])
+    }
+    onNotify(handleNotifications, []);
+   
 
     return <>
         <div

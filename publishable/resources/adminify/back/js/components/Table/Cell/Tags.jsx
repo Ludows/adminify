@@ -23,7 +23,7 @@ const Tags = forwardRef((props, ref) => {
 
     return <>
         <td ref={ref}>
-            {renderContent(props.data.model['tags'])} 
+            {renderContent(props.model['tags'])} 
         </td>
     </>
 

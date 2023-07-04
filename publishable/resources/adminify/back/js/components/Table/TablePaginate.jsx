@@ -1,15 +1,13 @@
-import React,{ useEffect, useState, useRef, useContext } from 'react';
-import Table from 'react-bootstrap/Table';
-import useGlobalStore from '@/back/js/store/global';
+import React,{ useState, useRef } from 'react';
 import Pagination from 'react-bootstrap/Pagination';
-import { EmitterContext } from "@/back/js/contexts/EmitterContext";
+import useHelpers from '../../hooks/useHelpers';
 
 export default function TablePaginate(props) {
-    const getTranslation = useGlobalStore(state => state.getTranslation);
     const [activeItem, setActiveItem] = useState(1);
     const previousPayload = useRef({});
     const [links, setLinks] = useState(props.data.links ?? []);
-    const [on, off, emit] = useContext(EmitterContext);
+    const { onTableResults, tableSearch } = useHelpers();
+
 
     const handleResults = (datas) => {
         console.log('update paginate', datas);
@@ -21,6 +19,9 @@ export default function TablePaginate(props) {
         previousPayload.current = datas.payload;
     }
 
+    onTableResults(handleResults, [])
+
+
     const doNavigate = (isActive = false, linkObject) => {
         if(isActive) {
             return false;
@@ -30,28 +31,10 @@ export default function TablePaginate(props) {
 
         setActiveItem( number );
 
-        emit('adminify:table:search', {
+        tableSearch({
             page : number
         })
-
-        // emit('adminify:ajax', {
-        //     method: 'get',
-        //     url : linkObject.url,
-        //     data : {},
-        //     config : {
-        //         headers : { 'X-Inertia' : true, 'X-Inertia-Version' : 'version' },
-        //     }
-        // })
-        
     }
-
-    useEffect(() => {
-        on('adminify:table:results', handleResults);
-        console.log('TablePaginate.jsx onMounted', props);
-        return () => {
-            off('adminify:table:results', handleResults);
-        }
-    }, [])
     return <>
         <Pagination>
             {links.map((link, index) => {

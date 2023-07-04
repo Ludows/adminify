@@ -362,6 +362,12 @@ if (! function_exists('lowercase')) {
     }
 }
 
+if (! function_exists('uppercase')) {
+    function uppercase($name = '') {
+        return Str::upper($name);
+    }
+}
+
 if(! function_exists('is_homepage') ) {
     function is_homepage($class) {
         // the relationship model

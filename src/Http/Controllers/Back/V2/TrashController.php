@@ -36,7 +36,12 @@ class TrashController extends Controller
 
             $m->save();
 
-            return $this->sendResponseWith($m, url()->previous(), 'admin.typed_data.updated');
+            return $this->toJson([
+                'entity' => $m,
+                'url' => url()->previous(),
+                'message' => 'admin.typed_data.updated'
+            ]);
+
         }
         else {
             return abort(403);

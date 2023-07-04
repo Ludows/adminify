@@ -18,8 +18,7 @@ class JoditType extends FormField {
         return array();
     }
 
-    public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
-    {
+    public function makeRenderableField($options = []) {
         $uniqid = Str::random(9);
         $options = array_merge($this->getOptions() , $options);
 
@@ -73,6 +72,13 @@ class JoditType extends FormField {
 
         $this->setOptions($options);
 
+        return $options;
+    }
+
+    public function render(array $options = [], $showLabel = true, $showField = true, $showError = true)
+    {
+        
+        $options = $this->makeRenderableField($options);
         // dd($options);
         // dd($this);
 

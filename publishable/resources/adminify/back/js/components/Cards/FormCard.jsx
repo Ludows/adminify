@@ -1,19 +1,16 @@
 import React, { useEffect } from 'react';
 import BaseForm from '@/back/js/components/BaseForm';
-import useGlobalStore from '@/back/js/store/global';
-
+import usePageProps from '../../hooks/usePageProps';
 export default function FormCard(props) {
-
-    const getTranslation = useGlobalStore(state => state.getTranslation);
-    const appData = useGlobalStore(state => state.getAppData);
+    const { get } = usePageProps();
 
     return <>
         <div className='card'>
             <div className='card-header'>
-                {appData('name')}
+                {get('name')}
             </div>
             <div className='card-body'>
-                <BaseForm form={appData('form')} />
+                <BaseForm form={get('form')} />
             </div>
         </div>
     </>

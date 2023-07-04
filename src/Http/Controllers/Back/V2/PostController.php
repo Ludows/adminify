@@ -53,6 +53,8 @@ class PostController extends Controller
 
             $views = $this->getPossiblesViews('Index');
 
+            // dd($table->toArray());
+
 
             return $this->renderView($views, [
                 'model' => (object) [],
@@ -144,7 +146,7 @@ class PostController extends Controller
                 $views = $this->getPossiblesViews('Edit');
 
                 return $this->renderView($views, [
-                    'model' => (object) [],
+                    'model' => $post,
                     'form' => $form->toArray()
                 ]);
             // }

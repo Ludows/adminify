@@ -48,7 +48,14 @@ class CommentController extends Controller
                 'showBtnCreate' => true,
             ]);
 
-            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
+            $views = $this->getPossiblesViews('Index');
+
+
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'table' => $table->toArray()
+            ]);
+
         }
 
         /**
@@ -64,9 +71,13 @@ class CommentController extends Controller
                     'url' => route('comments.store')
                 ]);
 
-                $this->addJS( asset('/adminify/back/js/comments.js') );
-    
-                return view("adminify::layouts.admin.pages.create", ['form' => $form]);
+                $views = $this->getPossiblesViews('Create');
+
+                return $this->renderView($views, [
+                    'model' => (object) [],
+                    'form' => $form->toArray()
+                ]);
+
             }
 
         /**
@@ -81,7 +92,12 @@ class CommentController extends Controller
 
             $comment = $this->commentRepository->addModel(new Comment())->create($form);
 
-            return $this->sendResponse($comment->commentsThree, 'comments.index', 'admin.typed_data.success', 'commentList');
+            return $this->toJson([
+                'message' => __('admin.typed_data.success'),
+                'three' => $comment->commentsThree,
+                'route' => 'comments.index'
+            ]);
+
         }
 
         /**
@@ -99,9 +115,12 @@ class CommentController extends Controller
                 'model' => $comment
             ]);
 
-            $this->addJS( asset('/adminify/back/js/comments.js') );
+            $views = $this->getPossiblesViews('Edit');
 
-            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
+            return $this->renderView($views, [
+                'model' => $category,
+                'form' => $form->toArray()
+            ]);
         }
 
         /**
@@ -119,7 +138,11 @@ class CommentController extends Controller
 
             $comment = $this->commentRepository->addModel($comment)->update($form, $comment);
 
-            return $this->sendResponse($comment->commentsThree, 'comments.index', 'admin.typed_data.updated', 'commentList');
+            return $this->toJson([
+                'message' => __('admin.typed_data.updated'),
+                'three' => $comment->commentsThree,
+                'route' => 'comments.index'
+            ]);
         }
 
         /**
@@ -137,6 +160,12 @@ class CommentController extends Controller
 
             $this->commentRepository->addModel($comment)->delete($comment);
 
-            return $this->sendResponse($model->commentsThree, 'comments.index', 'admin.typed_data.deleted', 'commentList');
+            return $this->toJson([
+                'message' => __('admin.typed_data.deleted'),
+                'three' => $model->commentsThree,
+                'route' => 'comments.index'
+            ]);
+
+            // return $this->sendResponse($model->commentsThree, 'comments.index', 'admin.typed_data.deleted', 'commentList');
         }
 }

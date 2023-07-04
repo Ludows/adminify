@@ -32,7 +32,14 @@ class SettingsController extends Controller
                 'url' => route('settings.store'),
             ]);
 
-            return view("adminify::layouts.admin.pages.index", ['form' => $form]);
+            $views = $this->getPossiblesViews('Index');
+
+
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'form' => $form->toArray()
+            ]);
+
         }
 
         /**
@@ -46,6 +53,10 @@ class SettingsController extends Controller
             $form = $this->makeForm(CreateSettings::class);
             $settings = $this->settingsRepository->CreateOrUpdate($form);
 
-            return $this->sendResponse($settings, 'settings.index', 'admin.typed_data.success');
+            return $this->toJson([
+                'message' => __('admin.typed_data.success'),
+                'entity' => $settings,
+                'route' => 'settings.index'
+            ]);
         }
 }

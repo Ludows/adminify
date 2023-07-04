@@ -43,7 +43,15 @@ class TemplatesController extends Controller
         {
             $table = $this->table(TemplatesTable::class);
 
-            return view("adminify::layouts.admin.pages.index", ["table" => $table]);
+            $views = $this->getPossiblesViews('Index');
+
+
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'table' => $table->toArray()
+            ]);
+
+            // return view("adminify::layouts.admin.pages.index", ["table" => $table]);
         }
 
         /**
@@ -59,7 +67,14 @@ class TemplatesController extends Controller
                 'url' => route('templates.store')
             ]);
 
-            return view("adminify::layouts.admin.pages.create", ['form' => $form]);
+            $views = $this->getPossiblesViews('Create');
+
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'form' => $form->toArray()
+            ]);
+
+            // return view("adminify::layouts.admin.pages.create", ['form' => $form]);
         }
 
         /**
@@ -74,7 +89,11 @@ class TemplatesController extends Controller
 
             $content_template = $this->templatesRepository->addModel(new Templates())->create($form);
 
-            return $this->sendResponse($content_template, 'templates.index', 'admin.typed_data.success');
+            return $this->toJson([
+                'message' => __('admin.typed_data.success'),
+                'entity' => $content_template,
+                'route' => 'templates.index'
+            ]);
         }
 
         /**
@@ -95,7 +114,12 @@ class TemplatesController extends Controller
                 'model' => $template
             ]);
 
-            return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
+            $views = $this->getPossiblesViews('Edit');
+
+            return $this->renderView($views, [
+                'model' => $template,
+                'form' => $form->toArray()
+            ]);
         }
 
         /**
@@ -116,7 +140,14 @@ class TemplatesController extends Controller
             ]);
 
             $this->templatesRepository->addModel($template)->update($form, $template);
-            return $this->sendResponse($template, 'templates.index', 'admin.typed_data.updated');
+
+            return $this->toJson([
+                'message' => __('admin.typed_data.updated'),
+                'entity' => $template,
+                'route' => 'templates.index'
+            ]);
+
+            // return $this->sendResponse($template, 'templates.index', 'admin.typed_data.updated');
         }
 
         public function setContent(Request $request) {
@@ -143,7 +174,13 @@ class TemplatesController extends Controller
             //
             $this->templatesRepository->delete($template);
 
+            return $this->toJson([
+                'message' => __('admin.typed_data.deleted'),
+                'entity' => $template,
+                'route' => 'templates.index'
+            ]);
+
             // redirect
-            return $this->sendResponse($template, 'templates.index', 'admin.typed_data.deleted');
+            // return $this->sendResponse($template, 'templates.index', 'admin.typed_data.deleted');
         }
 }

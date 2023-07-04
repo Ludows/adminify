@@ -32,7 +32,14 @@ class PwaController extends Controller
                 'url' => route('pwa.store'),
             ]);
 
-            return view("adminify::layouts.admin.pages.index", ['form' => $form]);
+            $views = $this->getPossiblesViews('Index');
+
+
+            return $this->renderView($views, [
+                'model' => (object) [],
+                'form' => $form->toArray()
+            ]);
+
         }
 
         /**
@@ -45,8 +52,13 @@ class PwaController extends Controller
             //
             $form = $this->makeForm(CreatePwa::class);
             $pwa = $this->PwaRepository->CreateOrUpdate($form);
-            // @todo process manifest
 
-            return $this->sendResponse($pwa, 'pwa.index', 'admin.typed_data.success');
+            return $this->toJson([
+                'message' => __('admin.typed_data.success'),
+                'entity' => $pwa,
+                'route' => 'pwa.index'
+            ]);
+
+            // return $this->sendResponse($pwa, 'pwa.index', 'admin.typed_data.success');
         }
 }

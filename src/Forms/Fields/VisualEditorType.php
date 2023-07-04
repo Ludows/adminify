@@ -55,6 +55,8 @@ class VisualEditorType extends FormField {
             }
         }
 
+        $options['visual_editor_options']['visual_element'] = 'visual-element-'. lowercase($uniqid);
+
         if(!$is_formbuilder_proto) {
             $options['attr']['id'] = 'visual_editor_id_'.$uniqid;
         }

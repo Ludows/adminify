@@ -1,16 +1,19 @@
 import React, { useEffect, useRef, useMemo } from 'react';
-import useGlobalStore from '../store/global';
 import Dropdown from 'react-bootstrap/Dropdown';
-import { router } from '@inertiajs/react'
 import Route from '@/commons/js/Route';
+import useHelpers from '../hooks/useHelpers';
+import usePageProps from '../hooks/usePageProps';
+import useTranslations from '../hooks/useTranslations';
 
 export default function DropdownUser(props) {
 
-    const appData = useGlobalStore(state => state.getAppData);
-    const getTranslation = useGlobalStore(state => state.getTranslation);
+    const { get } = usePageProps();
+    const { get: getTranslation } = useTranslations();
     const user = useMemo(() => {
-        return appData('user');
-    })
+        return get('user');
+    }, [props])
+    const { navigate } = useHelpers();
+    
     const mainLinks = useMemo(() => {
         return {
             'edit' : {
@@ -38,15 +41,15 @@ export default function DropdownUser(props) {
                 data : {}
             }
         }
-    })
+    }, [props])
 
     const changeUrl = (routeKey, objectRoute) => {
         console.log('DropdownUser.jsx changeUrl()', objectRoute);
         let routePath = Route(objectRoute.route, objectRoute.data);
         if(routePath) {
-            router.visit(routePath, {
+            navigate({
                 method : routeKey == 'logout' ? 'post' : 'get',
-                data: {}
+                url : routePath
             })
         }
         

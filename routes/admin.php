@@ -161,7 +161,7 @@ Route::prefix('admin')->middleware(['auth', 'role:administrator|editor|subscribe
 
     if(isset($c['menu']) && $c['menu']) {
         Route::resource('menus', 'Ludows\Adminify\Http\Controllers\Back\V2\MenuController', ['except' => ['show']]);
-        Route::post('menus/set-items-to-menu/{id}/{type}', 'Ludows\Adminify\Http\Controllers\Back\V2\MenuController@setItemsToMenu')->name('menus.setItemsToMenu');
+        Route::post('menus/set-items-to-menu/{type}', 'Ludows\Adminify\Http\Controllers\Back\V2\MenuController@setItemsToMenu')->name('menus.setItemsToMenu');
         Route::post('menus/remove-items-to-menu/{id}', 'Ludows\Adminify\Http\Controllers\Back\V2\MenuController@removeItemsToMenu')->name('menus.removeItemsToMenu');
         Route::post('menus/check-entity/{id}/{type}', 'Ludows\Adminify\Http\Controllers\Back\V2\MenuController@checkEntity')->name('menus.checkEntity');
     }

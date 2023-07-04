@@ -1,17 +1,27 @@
-import React, { useEffect, useState, useRef, useContext } from 'react';
+import React, { useEffect, useState, useRef, useMemo, useContext } from 'react';
 import useGlobalStore from '../../store/global';
 import { EmitterContext } from "../../contexts/EmitterContext";
 import Route from '@/commons/js/Route';
 import useAxios from '@/back/js/hooks/useAxios';
+import MediaPreviewer from './MediaPreviewer';
 
 export default function PreviewZone(props) {
     const getTranslation = useGlobalStore(state => state.getTranslation);
     const [on, off, emit] = useContext(EmitterContext);
-    const [activeMedia, setActiveMedia] = useState(null);
-    const previousMedia = useRef(null);
+    const [activeMedia, setActiveMedia] = useState(props.media ? props.media : null);
     const descriptionRef = useRef(null);
     const altRef = useRef(null);
     const [createHttp, http] = useAxios();
+
+    let { usePreviewer , useFormUpdate} = props;
+
+   if(!props.hasOwnProperty('usePreviewer')) {
+     usePreviewer = true;
+   }
+   
+   if(!props.hasOwnProperty('useFormUpdate')) {
+    useFormUpdate = true;
+   }
 
     const handleMediaState = (datas) => {
 
@@ -62,6 +72,7 @@ export default function PreviewZone(props) {
     useEffect(() => {
         on('adminify:mediapicker:show_media', handleMediaState)
         on('adminify:mediapicker:hide_media', handleMediaState)
+        console.log('PreviewZone.jsx mounted', props, usePreviewer)
         return () => {
             off("adminify:mediapicker:show_media", handleMediaState)
             off('adminify:mediapicker:hide_media', handleMediaState)
@@ -71,29 +82,13 @@ export default function PreviewZone(props) {
     return <>
         <div className={`col-12 col-lg-5 ${activeMedia ? '' : 'invisible'}`}>
             <div className="row">
-                <div className="col-12">
-                    {activeMedia &&
-                        
-                        <>
-                            {activeMedia.mime_type.startsWith('image/') &&
-                                <img className="img-fluid mb-3 rounded shadow-lg" alt="" src={activeMedia.path}/>
-                            }
-                            {activeMedia.mime_type.startsWith('video/') &&
-                                <video src={activeMedia.path} className="mb-3"></video>
-                            }
-                            {activeMedia.mime_type.startsWith('audio/') &&
-                                <audio controls src={activeMedia.path} className="mb-3"></audio>
-                            }
-                            {/* {activeMedia.current.mime_type.startsWith('audio/') &&
-                                <iframe src="" className="d-none mb-3 js-preview" id="iframeOriginal"></iframe>
-                            } */}
-                        </>
-                        
-                    }
-                </div>
+                {(activeMedia && usePreviewer) &&
+                    <div className="col-12">
+                            <MediaPreviewer media={activeMedia} />
+                    </div>
+                 }
+                 {(activeMedia && useFormUpdate) &&
                 <div class="col-12">
-                    {activeMedia &&
-                        <>
                             <div class="form-group">
                                 <textarea defaultValue={activeMedia.description} className="form-control" onKeyUp={handleMetadatasMedias} ref={descriptionRef} placeholder={getTranslation('admin.media.description')}></textarea>
                             </div>
@@ -101,11 +96,10 @@ export default function PreviewZone(props) {
                                 <input defaultValue={activeMedia.alt} type="text" className="form-control" onKeyUp={handleMetadatasMedias} ref={altRef} placeholder={getTranslation('admin.media.alt')}/>
                             </div>
 
-                            <button type="button" onClick={handleDeleteMedia} class="btn btn-danger">{getTranslation('admin.media.delete_image')}</button>
-                            <button type="button" class="btn btn-info">{getTranslation('admin.media.edit_media')}</button>
-                        </>
-                    }
+                            {/* <button type="button" onClick={handleDeleteMedia} class="btn btn-danger">{getTranslation('admin.media.delete_image')}</button>
+                            <button type="button" class="btn btn-info">{getTranslation('admin.media.edit_media')}</button>                     */}
                 </div>
+                }
             </div>
         </div>
     </>

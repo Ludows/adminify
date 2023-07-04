@@ -18,6 +18,11 @@
     public function getCategoriesAttribute() {
 
         $cat_ids = $this->getCategories( $this->{$this->meta_column_key_for_category} );
+
+        if(empty($cat_ids)) {
+            return [];
+        }
+
         $cats = model('Category')->whereIn('id', $cat_ids)->get();
         return $cats;
     }

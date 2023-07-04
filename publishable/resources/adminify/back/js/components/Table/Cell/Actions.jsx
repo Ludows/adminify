@@ -42,7 +42,7 @@ const Actions = forwardRef((props, ref) => {
         <Dropdown.Menu>
             {array.map(({Component, Vars}, index, array) => {
                 if(Vars.form) {
-                    return <Dropdown.Item>
+                    return <Dropdown.Item as="li">
                         <BaseForm form={Vars.form} />
                     </Dropdown.Item>
                 }
