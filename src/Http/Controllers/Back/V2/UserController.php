@@ -66,7 +66,7 @@ class UserController extends Controller
                 //
                 $form = $this->makeForm(CreateUser::class, [
                     'method' => 'POST',
-                    'url' => route('users.store')
+                    'url' => route('admin.users.store')
                 ]);
 
                 $views = $this->getPossiblesViews('Create');
@@ -93,7 +93,7 @@ class UserController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.success'),
                 'entity' => $user,
-                'route' => 'users.index'
+                'route' => 'admin.users.index'
             ]);
         }
 
@@ -108,7 +108,7 @@ class UserController extends Controller
                 //
                 $form = $this->makeForm(UpdateUser::class, [
                     'method' => 'PUT',
-                    'url' => route('users.update', ['user' => $user->id]),
+                    'url' => route('admin.users.update', ['user' => $user->id]),
                     'model' => $user
                 ]);
 
@@ -132,7 +132,7 @@ class UserController extends Controller
                 //
                 $form = $this->makeForm(UpdateUser::class, [
                     'method' => 'PUT',
-                    'url' => route('users.update', ['user' => $user->id]),
+                    'url' => route('admin.users.update', ['user' => $user->id]),
                     'model' => $user
                 ]);
 
@@ -141,7 +141,7 @@ class UserController extends Controller
                 return $this->toJson([
                     'message' => __('admin.typed_data.updated'),
                     'entity' => $user,
-                    'route' => 'users.index'
+                    'route' => 'admin.users.index'
                 ]);
 
             }
@@ -162,14 +162,14 @@ class UserController extends Controller
                 return $this->toJson([
                     'message' => __('admin.typed_data.deleted'),
                     'entity' => $user,
-                    'route' => 'users.index'
+                    'route' => 'admin.users.index'
                 ]);
             }
             public function showProfile(User $user, FormBuilder $formBuilder) {
 
                 $form = $this->makeForm(ShowProfile::class, [
                     'method' => 'POST',
-                    'url' => route('users.profile.store', ['user' => $user->id]),
+                    'url' => route('admin.users.profile.store', ['user' => $user->id]),
                     'model' => $user
                 ]);
 
@@ -194,7 +194,7 @@ class UserController extends Controller
                 return $this->toJson([
                     'message' => __('admin.typed_data.updated'),
                     'entity' => $user,
-                    'route' => 'users.index'
+                    'route' => 'admin.users.index'
                 ]);
 
                 // return $this->sendResponse($user, 'users.index', 'admin.typed_data.updated');

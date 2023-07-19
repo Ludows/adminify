@@ -13,11 +13,9 @@ class CreatePostRequest extends FormRequest
      */
     public function rules()
     {
-        $r = request();
         $a = [
             'title' => [
                 'required',
-                'string',
             ],
             'status_id' => [
                 'required'

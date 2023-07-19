@@ -13,7 +13,7 @@ class FinderController extends Controller
     public function index(Request $request, $type) {
 
         $resource = Str::title($type);
-        $resoucable = adminify_get_class( singular($resource), ['app:adminify:models', 'app:models'], false);
+        $resoucable = model( singular($resource) , false);
         $shareds = inertia()->getShared();
 
         $multi = $shareds['useMultilang'];

@@ -91,14 +91,16 @@ return [
 
     'assets' => [
         'backend' => array(
-            // adminify_asset('/adminify/back/css/extensions.css'),
-            // '/myuploads/routes.js',
-            // '/myuploads/traductions-'. lang() .'.js',
-            // adminify_asset('/myuploads/routes.js'),
-            // adminify_asset('/myuploads/traductions-'. lang() .'.js'),
-            // adminify_asset('/adminify/back/js/extensions.js'),
-            // adminify_asset('/adminify/back/js/extensions-call.js'),
-            // adminify_asset('/adminify/back/js/searchable.js'),
+            adminify_asset('/adminify/vendor/nucleo/css/nucleo.css'),
+            adminify_asset('/adminify/vendor/@fortawesome/fontawesome-free/css/all.min.css'),
+            adminify_asset('/adminify/back/css/argon.css'),
+            adminify_asset('/adminify/back/css/extensions.css'),
+            adminify_asset('/myuploads/routes.js'),
+            adminify_asset('/myuploads/traductions-'. lang() .'.js'),
+            adminify_asset('/adminify/back/js/extensions.js'),
+            adminify_asset('/adminify/back/js/extensions-call.js'),
+            adminify_asset('/adminify/back/js/argon.js'),
+            adminify_asset('/adminify/back/js/searchable.js'),
         ),
         'frontend' => array(
             adminify_asset('/myuploads/routes.js'),
@@ -234,24 +236,18 @@ return [
 
     // menu builder is automatic sync with multilang param.
     'menu-builder' => [
-        'paginate' => [
-            'limit' => 5,
+        'models' => [
+            'page' => 'Page',
+            'post' => 'Post',
+            'custom' => 'CustomLink'
         ],
-        'sidebar' => [
-            // 'custom' => 'CustomModel'
-        ],
-        // 'models' => [
-        //     'page' => 'Page',
-        //     'post' => 'Post',
-        //     'custom' => 'CustomLink'
-        // ],
-        // 'showAlways' => [
-        //     'custom' => [ // you can pass some field to build your form
-        //         'title' => ['type' => 'text', 'options' => []],
-        //         'url' => ['type' => 'text', 'options' => []],
-        //         'open_new_tab' => ['type' => 'checkbox', 'options' => []]
-        //     ]
-        // ]
+        'showAlways' => [
+            'custom' => [ // you can pass some field to build your form
+                'title' => ['type' => 'text', 'options' => []],
+                'url' => ['type' => 'text', 'options' => []],
+                'open_new_tab' => ['type' => 'checkbox', 'options' => []]
+            ]
+        ]
     ],
 
     'supported_locales' => [

@@ -30,7 +30,16 @@ class TableManager
         $this->showBtnCreate = true;
         $this->dropdownManager = null;
         $this->_inc_rows = 0;
+        $this->isSearch = false;
+        $this->searchDatas = [];
     }
+
+    public function setSearch($value = []) {
+        $this->isSearch = true;
+        $this->searchDatas = $value;
+        return $this;
+    }
+
     public function setColumns($value = []) {
         $this->columns = $value;
         return $this;
@@ -284,8 +293,8 @@ class TableManager
 
         $results = null;
 
-        if(isset($datas['results'])) {
-            $results = $datas['results'];
+        if($this->isSearch) {
+            $results = $this->search( $this->searchDatas );
         }
         else {
             if($request->useMultilang) {
@@ -308,6 +317,85 @@ class TableManager
     }
 
     public function onAfterQuery() {
+    }
+
+    public function search($datas = []) {
+        $pageInt = 1;
+        $config = get_site_key('tables');
+        $shareds = inertia()->getShared();
+
+        $modelClass = $this->getModelClass();
+        $m = new $modelClass;
+        $modelBase = $m;
+        
+        $is_multilang_model = is_translatable_model($m);
+        $useMultilang = $shareds['useMultilang'];
+        $lang = lang();
+
+        $columns = $m->getFillable();
+        $schemaBuilder = $m->getConnection()->getSchemaBuilder();
+        $translatableFields = [];
+        if($is_multilang_model) {
+            $translatableFields = $m->translatable;
+        }
+
+        if($config['searchType'] == 'fillable') {
+            $searchColumns = $m->getFillable();
+        }
+        else {
+            $searchColumns = $m->getColumnsListing();
+        }
+
+        $search = null;
+        if(!empty($datas['search'])) {
+            $search = $datas['search'];
+        }
+
+        if(!empty($datas['page'])) {
+            $pageInt = (int) $datas['page'];
+        }
+        $keys = [];
+        $restrictedBindings = ['title', 'slug'];
+
+        if(isset($datas['status']) && is_trashable_model($modelBase) && $datas['status'] != -1) {
+            $m = $m->where($modelBase->status_key, $datas['status']);
+        }
+
+        else if (is_trashable_model($modelBase) && $datas['status'] == -1) {
+            $m = $m->where($modelBase->status_key, '!=', status()::TRASHED_ID);
+        }
+
+        if($search != null) {
+            $i = 0;
+            foreach ($searchColumns as $column) {
+                # code...
+                if( $schemaBuilder->hasColumn($modelBase->getTable(), $column) && $column != $modelBase->status_key  ) {
+                    $binding = null;
+                    if($is_multilang_model && $useMultilang && in_array($column , $translatableFields)) {
+                        $binding = $column.'->'.$lang;
+                    }
+                    else {
+                        $binding = $column;
+                    }
+
+                    if(in_array($binding, $restrictedBindings)) {
+                       $m = $m->where($binding, 'like',  "%" . $search . "%");
+                    }
+                    else {
+                        $m = $m->orWhere($binding, 'like',  "%" . $search . "%");
+                    }
+
+                    $keys[] = $binding;
+
+                    $i++;
+                }
+            }
+        }
+
+
+        $results = $m->paginate($config['limit'], $config['searchType'] == 'fillable' ? ['*'] : $m->getColumnsListing(), lowercase( $datas['singular'] ), $pageInt)->withPath( route( 'admin.'. lowercase( plural($datas['singular']) ) .'.index') );
+
+        return $results;
     }
 
     public function process($isRenderable = true) {

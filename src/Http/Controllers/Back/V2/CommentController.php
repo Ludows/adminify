@@ -68,7 +68,7 @@ class CommentController extends Controller
                 //
                 $form = $this->makeForm(CreateComment::class, [
                     'method' => 'POST',
-                    'url' => route('comments.store')
+                    'url' => route('admin.comments.store')
                 ]);
 
                 $views = $this->getPossiblesViews('Create');
@@ -95,7 +95,7 @@ class CommentController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.success'),
                 'three' => $comment->commentsThree,
-                'route' => 'comments.index'
+                'route' => 'admin.comments.index'
             ]);
 
         }
@@ -111,7 +111,7 @@ class CommentController extends Controller
             //
             $form = $this->makeForm(UpdateComment::class, [
                 'method' => 'PUT',
-                'url' => route('comments.update', ['comment' => $comment->id]),
+                'url' => route('admin.comments.update', ['comment' => $comment->id]),
                 'model' => $comment
             ]);
 
@@ -141,7 +141,7 @@ class CommentController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.updated'),
                 'three' => $comment->commentsThree,
-                'route' => 'comments.index'
+                'route' => 'admin.comments.index'
             ]);
         }
 
@@ -163,7 +163,7 @@ class CommentController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.deleted'),
                 'three' => $model->commentsThree,
-                'route' => 'comments.index'
+                'route' => 'admin.comments.index'
             ]);
 
             // return $this->sendResponse($model->commentsThree, 'comments.index', 'admin.typed_data.deleted', 'commentList');

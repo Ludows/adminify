@@ -48,7 +48,6 @@ class PageController extends Controller
 
             $reflection = new ReflectionClass($page);
             $type = $reflection->getShortName();
-            $seo = is_content_type_model($page) ? $this->handleSeo($page) : null;
 
             $enabled_features = get_site_key('enables_features');
 
@@ -58,31 +57,34 @@ class PageController extends Controller
                 // unset($user->roles);
             }
 
-            $this->addViewsVars(['enabled_features' => $enabled_features, 'seo' => $seo, 'type' => lowercase($type), 'model' => $page, 'user' => $user, 'lang' => lang()]);
+            $this->addViewsVars(['enabled_features' => $enabled_features, 'type' => lowercase($type), 'model' => $page, 'user' => $user, 'lang' => lang()]);
             $defaults_view_vars = $this->getViewsVars();
 
             if(method_exists($this, 'beforePageRenderView')) {
                 call_user_func_array(array($this, 'beforePageRenderView'), $defaults_view_vars);
             }
 
+            $views = $this->getPossiblesViews('Front');
 
 
-            return $this->renderView("theme::". $request->theme .".index",  $this->getViewsVars());
+            return $this->renderView($views,  $this->getViewsVars());
         }
 
         public function getPages(Request $request) {
 
+            $inertia = inertia();
+            // dd($inertia);
+
             // dd($request->route()->getName(), $request->model );
-            $slug = $request->model;
+            $slug = $inertia->getShared('model');
             $reflection = new ReflectionClass($slug);
             $type = $reflection->getShortName();
-            $enabled_features = get_site_key('enables_features');
+            $enabled_features = $inertia->getShared('enabled_features');
 
             if(method_exists($this, 'bootingView')) {
-                call_user_func_array(array($this, 'bootingView'), $request);
+                call_user_func_array(array($this, 'bootingView'), [$request]);
             }
 
-            $seo = is_content_type_model($slug) ? $this->handleSeo($slug) : null;
 
             // dd(request());
 
@@ -92,15 +94,17 @@ class PageController extends Controller
                 // unset($user->roles);
             }
 
-            $this->addViewsVars(['enabled_features' => $enabled_features, 'seo' => $seo, 'type' => lowercase($type), 'model' => $slug, 'user' => $user, 'lang' => lang()]);
+            $this->addViewsVars(['enabled_features' => $enabled_features, 'type' => lowercase($type), 'model' => $slug, 'user' => $user, 'lang' => lang()]);
             $defaults_view_vars = $this->getViewsVars();
 
             if(method_exists($this, 'beforePageRenderView')) {
                 call_user_func_array(array($this, 'beforePageRenderView'), $defaults_view_vars);
             }
 
+            $views = $this->getPossiblesViews('Front');
 
-            return $this->renderView("theme::". $request->theme .".index",  $this->getViewsVars());
+
+            return $this->renderView($views,  $this->getViewsVars());
 
         }
 
@@ -115,7 +119,10 @@ class PageController extends Controller
 
             $this->addViewsVar('results', $result);
 
-            return view("theme::". $request->theme .".index", $this->getViewsVars());
+            $views = $this->getPossiblesViews('Search');
+
+
+            return $this->renderView($views, $this->getViewsVars());
         }
 
         public function validateForms(Request $request) {
@@ -214,6 +221,7 @@ class PageController extends Controller
                     $defaultResponse = $model;
                 }
             }
+
 
             return $defaultResponse;
         }

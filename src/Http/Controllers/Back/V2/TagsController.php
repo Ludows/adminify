@@ -59,7 +59,7 @@ class TagsController extends Controller
         {
             $form = $this->makeForm(CreateTagForm::class, [
                 'method' => 'POST',
-                'url' => route('tags.store')
+                'url' => route('admin.tags.store')
             ]);
 
             $views = $this->getPossiblesViews('Create');
@@ -86,7 +86,7 @@ class TagsController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.success'),
                 'entity' => $tag,
-                'route' => 'tags.index'
+                'route' => 'admin.tags.index'
             ]);
 
         }
@@ -106,7 +106,7 @@ class TagsController extends Controller
 
             $form = $this->makeForm(CreateTagForm::class, [
                 'method' => 'PUT',
-                'url' => route('tags.update', ['tag' => $tag->id]),
+                'url' => route('admin.tags.update', ['tag' => $tag->id]),
                 'model' => $tag
             ]);
             
@@ -131,7 +131,7 @@ class TagsController extends Controller
             //
             $form = $this->makeForm(CreateTagForm::class, [
                 'method' => 'PUT',
-                'url' => route('tags.update', ['traduction' => $tag->id]),
+                'url' => route('admin.tags.update', ['traduction' => $tag->id]),
                 'model' => $tag
             ]);
 
@@ -140,7 +140,7 @@ class TagsController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.updated'),
                 'entity' => $tag,
-                'route' => 'tags.index'
+                'route' => 'admin.tags.index'
             ]);
 
             // return $this->sendResponse($tag, 'tags.index', 'admin.typed_data.updated');
@@ -160,7 +160,7 @@ class TagsController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.deleted'),
                 'entity' => $tag,
-                'route' => 'tags.index'
+                'route' => 'admin.tags.index'
             ]);
 
             // redirect

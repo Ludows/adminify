@@ -63,7 +63,7 @@ class CategoryController extends Controller
             //
             $form = $this->makeForm(CreateCategory::class, [
                 'method' => 'POST',
-                'url' => route('categories.store')
+                'url' => route('admin.categories.store')
             ]);
 
             $views = $this->getPossiblesViews('Create');
@@ -89,7 +89,7 @@ class CategoryController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.success'),
                 'entity' => $category,
-                'route' => 'categories.index'
+                'route' => 'admin.categories.index'
             ]);
 
             // if($request->ajax()) {
@@ -129,7 +129,7 @@ class CategoryController extends Controller
 
             $form = $this->makeForm(UpdateCategory::class, [
                 'method' => 'PUT',
-                'url' => route('categories.update', ['category' => $category->id]),
+                'url' => route('admin.categories.update', ['category' => $category->id]),
                 'model' => $category
             ]);
 
@@ -164,7 +164,7 @@ class CategoryController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.success'),
                 'entity' => $category,
-                'route' => 'categories.index'
+                'route' => 'admin.categories.index'
             ]);
             // flash(__('admin.typed_data.updated'))->success();
             // return redirect()->route('categories.index');
@@ -185,7 +185,7 @@ class CategoryController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.deleted'),
                 'entity' => $category,
-                'route' => 'categories.index'
+                'route' => 'admin.categories.index'
             ]);
         }
 }

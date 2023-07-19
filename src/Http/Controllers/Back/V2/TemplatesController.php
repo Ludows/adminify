@@ -64,7 +64,7 @@ class TemplatesController extends Controller
             //
             $form = $this->makeForm(CreateTemplates::class, [
                 'method' => 'POST',
-                'url' => route('templates.store')
+                'url' => route('admin.templates.store')
             ]);
 
             $views = $this->getPossiblesViews('Create');
@@ -92,7 +92,7 @@ class TemplatesController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.success'),
                 'entity' => $content_template,
-                'route' => 'templates.index'
+                'route' => 'admin.templates.index'
             ]);
         }
 
@@ -110,7 +110,7 @@ class TemplatesController extends Controller
 
             $form = $this->makeForm(UpdateTemplates::class, [
                 'method' => 'PUT',
-                'url' => route('templates.update', ['template' => $template->id]),
+                'url' => route('admin.templates.update', ['template' => $template->id]),
                 'model' => $template
             ]);
 
@@ -144,7 +144,7 @@ class TemplatesController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.updated'),
                 'entity' => $template,
-                'route' => 'templates.index'
+                'route' => 'admin.templates.index'
             ]);
 
             // return $this->sendResponse($template, 'templates.index', 'admin.typed_data.updated');
@@ -177,7 +177,7 @@ class TemplatesController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.deleted'),
                 'entity' => $template,
-                'route' => 'templates.index'
+                'route' => 'admin.templates.index'
             ]);
 
             // redirect

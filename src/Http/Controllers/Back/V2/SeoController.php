@@ -54,7 +54,7 @@ class SeoController extends Controller
 
             $form = $this->makeForm(SeoForm::class, [
                 'method' => 'PUT',
-                'url' => route('seo.update', ['type' => $type, 'id' => $id]),
+                'url' => route('admin.seo.update', ['type' => $type, 'id' => $id]),
                 'model' => $model
             ]);
 

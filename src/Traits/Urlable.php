@@ -193,6 +193,16 @@
      public function getPreviousPathAttribute() {
 
      }
+     public function getFrontUrlAttribute() {
+          $className = class_basename($this);
+          $realName = lowercase( singular( $className ) );
+          $slug = str_replace('-', '_',  $this->slug);
+          $route  = null;
+          if(route_exist('frontend.'. $realName .'.'.$slug)) {
+               $route = route('frontend.'. $realName .'.'.$slug);
+          }
+          return $route;
+     }
      public function getUrlPathAttribute() {
         $parts = $this->url;
         return count($parts) > 0 ? url( join('/', $parts) ) : null;

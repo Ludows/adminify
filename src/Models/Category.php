@@ -44,16 +44,16 @@ class Category extends ContentTypeModel
       return \App\Adminify\Forms\UpdateCategory::class;
    }
    
-    public function getSearchResult() : SearchResult
-     {
-        $url = route('categories.edit', ['category' => $this->id]);
+   //  public function getSearchResult() : SearchResult
+   //   {
+   //      $url = route('categories.edit', ['category' => $this->id]);
 
-         return new \Spatie\Searchable\SearchResult(
-            $this,
-            $this->title,
-            $url
-         );
-     }
+   //       return new \Spatie\Searchable\SearchResult(
+   //          $this,
+   //          $this->title,
+   //          $url
+   //       );
+   //   }
    public function toFeedItem(): FeedItem {}
    public function media() {
       return $this->belongsTo(Media::class,'media_id', 'id');

@@ -39,20 +39,21 @@ class ContentTypesHook extends HookInterface {
             if($isContentType && $model->allowSitemap) {
                 $this->loadGenerateSitemap($model);
             }
+
         }
 
-        if(!empty($model) && in_array($hookName, $only_for_deleting)) {
-            $isContentType = is_content_type_model($model);
-            $this->syncToCache($model, true);
-            if($isContentType && $model->allowSitemap) {
-                $this->syncronizeUrl($model, true);
-                // $this->registrar->generate();
-                $this->handleFrontRegistrar();
-            }
-            if($isContentType && $model->allowSitemap) {
-                $this->loadGenerateSitemap($model);
-            }
-        }
+        // if(!empty($model) && in_array($hookName, $only_for_deleting)) {
+        //     $isContentType = is_content_type_model($model);
+        //     $this->syncToCache($model, true);
+        //     if($isContentType && $model->allowSitemap) {
+        //         $this->syncronizeUrl($model, true);
+        //         // $this->registrar->generate();
+        //         $this->handleFrontRegistrar();
+        //     }
+        //     if($isContentType && $model->allowSitemap) {
+        //         $this->loadGenerateSitemap($model);
+        //     }
+        // }
 
     }
     public function syncronizeUrl($context, $delete = false) {
@@ -114,13 +115,16 @@ class ContentTypesHook extends HookInterface {
 
         $currentLang = lang();
 
+
        // generate routes by locales..
        foreach ($locales as $key => $locale) {
         # code...
             $app->setLocale($locale);
             $routesStr = $this->registrar->generate();
 
+
             $pathFile = $this->registrar->config['appendTo'].$locale.'_'.$this->registrar->config['file_routes'];
+
 
             if(File::exists( $pathFile )) {
                 File::replace($pathFile,  $routesStr);
@@ -129,6 +133,7 @@ class ContentTypesHook extends HookInterface {
                 File::put($pathFile, $routesStr);
             }
         }
+
         $app->setLocale($currentLang);
     }
 

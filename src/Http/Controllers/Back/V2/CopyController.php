@@ -30,6 +30,10 @@ class CopyController extends Controller
             $new_m->title = $new_m->title. ' - Copy';
         }
 
+        if( method_exists($new_m, 'shouldGenerateSlug') ) {
+            $new_m->shouldGenerateSlug();
+        }
+
         $new_m->created_at = now();
         $new_m->updated_at = now();
 

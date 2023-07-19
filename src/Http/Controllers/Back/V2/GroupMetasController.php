@@ -66,7 +66,7 @@ class GroupMetasController extends Controller
         {
             $form = $this->makeForm(CreateGroupMetas::class, [
                 'method' => 'POST',
-                'url' => route('groupmetas.store')
+                'url' => route('admin.groupmetas.store')
             ]);
 
             $views = $this->getPossiblesViews('Create');
@@ -94,7 +94,7 @@ class GroupMetasController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.success'),
                 'entity' => $entity,
-                'route' => 'groupmetas.index'
+                'route' => 'admin.groupmetas.index'
             ]);
         }
 
@@ -121,7 +121,7 @@ class GroupMetasController extends Controller
             $Groupmeta->checkForTraduction();
                 $form = $this->makeForm(UpdateGroupMetas::class, [
                     'method' => 'PUT',
-                    'url' => route('groupmetas.update', ['groupmeta' => $Groupmeta->id]),
+                    'url' => route('admin.groupmetas.update', ['groupmeta' => $Groupmeta->id]),
                     'model' => $Groupmeta
                 ]);
             
@@ -154,7 +154,7 @@ class GroupMetasController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.updated'),
                 'entity' => $entity,
-                'route' => 'groupmetas.index'
+                'route' => 'admin.groupmetas.index'
             ]);
 
             // return $this->sendResponse($entity, 'groupmetas.index', 'admin.typed_data.updated');
@@ -178,7 +178,7 @@ class GroupMetasController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.deleted'),
                 'entity' => $Groupmeta,
-                'route' => 'groupmetas.index'
+                'route' => 'admin.groupmetas.index'
             ]);
         }
 }

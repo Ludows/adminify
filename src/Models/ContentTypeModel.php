@@ -51,7 +51,7 @@ abstract class ContentTypeModel extends ClassicModel
             $url = $this->urlpath;
         }
 
-        return $url;
+        return $url ?? '/';
     }
 
     public function getKeyFrontAttribute($key, $lang) {

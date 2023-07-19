@@ -90,7 +90,7 @@ class VisualEditorType extends FormField {
         }
 
         return array(
-            'preview' => route('editor.preview', $array),
+            'preview' => route('admin.editor.preview', $array),
         );
     }
 

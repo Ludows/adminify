@@ -81,7 +81,10 @@ class PostController extends Controller
             $form = $this->makeForm(CreatePost::class);
             $post = $this->postRepository->addModel(new Post())->create($form);
 
-            return $this->sendResponse($post, 'posts.index', 'admin.typed_data.success');
+            return $this->toRoute('posts.index', [
+                'message' => __('admin.typed_data.success'),
+                'entity' => $post
+            ]);
         }
 
         /**

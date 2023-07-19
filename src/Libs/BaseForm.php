@@ -10,9 +10,10 @@ class BaseForm extends Form {
     public $appendMetas = [];
     public $loadTypeMetas = 'after'; // before
     public function addSubmit($options = []) {
-        $r = $this->getRequest();
+        $r = inertia();
+        $shared = $r->getShared('isEdit');
 
-        $defaults = ['label' => !$r->isEdit ? __('admin.form.create') : __('admin.form.edit'), 'attr' => ['class' => 'btn btn-default']];
+        $defaults = ['label' => !$shared ? __('admin.form.create') : __('admin.form.edit'), 'attr' => ['class' => 'btn btn-default']];
 
         $this->add('submit', 'submit', array_merge($defaults, $options));
         
@@ -200,7 +201,8 @@ class BaseForm extends Form {
         return $this;
     }
     private function appendMetas($theClass = '') {
-        $request = request();
+        $inertia = inertia();
+        $shared = $inertia->getShared();
         $showGroup = true;
         $metaboxes = [];
         if(empty($theClass)) {
@@ -212,14 +214,14 @@ class BaseForm extends Form {
         }
 
         if((bool) $metaClass->allow_filtering) {
-            $showGroup = $metaClass->showGroup( !empty($request->model) ? $request->model : [] );
+            $showGroup = $metaClass->showGroup( !empty($shared['model']) ? $shared['model'] : [] );
         }
         if($showGroup) {
             $metabox_key = '_metabox_'.uuid(20);
             $metaboxes[] = $metabox_key;
             $this->add($metabox_key, $metaClass->getTypeField(), array_merge($metaClass->getDefaults(), [
                 'label' => $metaClass->getMetaboxTitle(),
-                'model' => !empty($request->model) ? $request->model : [],
+                'model' => !empty($shared['model']) ? $shared['model'] : [],
                 'wrapper' => [
                     'id' => $metabox_key,
                 ],

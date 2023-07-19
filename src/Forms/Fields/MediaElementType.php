@@ -104,10 +104,10 @@ class MediaElementType extends FormField {
         $b['media_element_options']['btn']['attr']['data-selector'] = view()->shared('is_formbuilder_proto') ? 'media-element-##SLOT##' : $sibling;
         $b['media_element_options']['uuid'] = $sibling;
         
-        if($b['hasBootedMedia']) {
-            $b['media_element_options']['btn']['attr']['class'] = $b['media_element_options']['btn']['attr']['class'].' d-none';
+        // if($b['hasBootedMedia']) {
+        //     $b['media_element_options']['btn']['attr']['class'] = $b['media_element_options']['btn']['attr']['class'].' d-none';
             
-        }
+        // }
 
 
         $options = array_merge($options, $b);

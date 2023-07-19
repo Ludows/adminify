@@ -70,8 +70,6 @@ class AdminifyServiceProvider extends ServiceProvider {
             $this->bootableDependencies($packages, $kernel);
         }
 
-        Paginator::useBootstrap();
-
         $this->registerDirectives();
 
         // dd(config('site-settings'));
@@ -153,27 +151,8 @@ class AdminifyServiceProvider extends ServiceProvider {
 
         $this->app->singleton('League\Glide\Server', function($app) {
 
-            // $filesystem = Storage::disk(config('lfm.disk'));
-
             $mediaService = app(MediaService::class);
-            // // dd($filesystem->getDriver(), $filesystem->exists('files/1/IMG_20220302_112930-removebg-preview.png'), config('lfm.disk') );
-            // $lfm = app()->make('UniSharp\LaravelFilemanager\LfmPath');
-            // $source_path_prefix = '';
-            // $path_image = request('path');
-
-
-
-            // // dd($lfm->files());
-
-            // foreach ($lfm->files() as $fileObject) {
-            //     # code...
-            //     // dd($fileObject->path('url'));
-            //     $url = $fileObject->path('url');
-            //     if($fileObject->name() == $path_image) {
-            //         $source_path_prefix = trim(str_replace($path_image, '', $url));
-            //         break;
-            //     }
-            // }
+            
 
             return ServerFactory::create([
                 'response' => new LaravelResponseFactory(app('request')),
@@ -245,7 +224,7 @@ class AdminifyServiceProvider extends ServiceProvider {
 
             if(isset($config) && $config['enable']) {
 
-                $routerBasicApi = Route::middleware('web');
+                $routerBasicApi = Route::middleware('api');
                 if($config['prefix'] != null) {
                     $routerBasicApi->prefix($config['prefix']);
                 }

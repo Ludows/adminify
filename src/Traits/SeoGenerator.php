@@ -16,7 +16,7 @@ namespace Ludows\Adminify\Traits;
    public function handleSeo($mixed) {
 
         $isModel = true;
-        $multilang = request()->useMultilang;
+        $multilang = is_multilang();
 
         if(is_array($mixed)) {
             $isModel = false;
@@ -134,6 +134,19 @@ namespace Ludows\Adminify\Traits;
         //JsonLd::addValue($key, $value);
         // JsonLd::setDescription($type); // description of twitter card tag
         // ; // add image url
+   }
+   public function grabSeo() {
+        $datas = '';
+        $seoService = app('seotools');
+
+        if(method_exists($seoService, 'generate')) {
+            $datas = $seoService->generate();
+        }
+        else {
+            $datas = '';
+        }
+
+        return $datas;
    }
    public function handleMedia($model) {
         // test from media key on model 

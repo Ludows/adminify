@@ -47,12 +47,18 @@ class LoginController extends Controller
     public function showLoginForm()
 
     {
-        $form = $this->form(ShowLoginForm::class, [
+        $form = $this->makeForm(ShowLoginForm::class, [
             'method' => 'POST',
             'url' => route('auth.login')
         ]);
 
-        return view('adminify::auth.login', ['form' => $form]);
+        $views = $this->getPossiblesViews('Login');
+        // view('adminify::auth.login', ['form' => $form])
+        
+        return $this->renderView($views, [
+            'model' => (object) [],
+            'form' => $form->toArray()
+        ]);
 
     }
 }

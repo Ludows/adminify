@@ -68,7 +68,7 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     {
        $tableName = $this->getTable();
 
-       $url = route( plural($tableName).'.edit', [ singular( $tableName ) => $this->id]);
+       $url = route('admin.'.plural($tableName).'.edit', [ singular( $tableName ) => $this->id]);
 
         return new \Spatie\Searchable\SearchResult(
            $this,
@@ -97,6 +97,12 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
         return $this;
     }
 
+    public function injectUrlWhenAvalaible() {
+        if(is_urlable_model($this) && $this->allowSitemap) {            
+            $this->append('front_url');
+        }
+    }
+
     public function __construct() {
         // dump($this->appends, $this->getFillable());
         parent::__construct();
@@ -105,6 +111,8 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
         $this->shouldAppendAs( $this->userOwnerKey, 'user' );
         $this->shouldAppendAs( 'categories_id' , 'categories' );
         $this->shouldAppendAs( $this->featured_column_media , 'media' );
+
+        $this->injectUrlWhenAvalaible();
     }
 
     public function defineCacheStrategy() {

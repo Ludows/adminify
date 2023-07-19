@@ -14,82 +14,76 @@ if(!empty($c) && $c['enable']) {
 
     // Route::prefix($c['prefix'])->group( function () use ($c, $features) {
 
-
-        if(isset($features['post']) && $features['post']) {
-            Route::resource('posts', 'App\Adminify\Http\Controllers\Api\PostController', [
-                'as' => $c['prefix'],
-                'except' => ['show']] )->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
-        }
-
-        if(isset($features['media']) && $features['media']) {
-            Route::resource('medias', 'App\Adminify\Http\Controllers\Api\MediaController', [
-                'as' => $c['prefix'],
-                'except' => ['show']])->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
-        }
-
-        if(isset($features['category']) && $features['category']) {
-            Route::resource('categories', 'App\Adminify\Http\Controllers\Api\CategoryController', [
-                'as' => $c['prefix'],
-                'except' => ['show']])->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
-        }
-
-        if(isset($features['page']) &&  $features['page']) {
-            Route::resource('pages', 'App\Adminify\Http\Controllers\Api\PageController', [
-                'as' => $c['prefix'],
-                'except' => ['show']])->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
-        }
-
-        if(isset($features['menu']) && $features['menu']) {
-
-        }
-
-        if(isset($features['comment']) && $features['comment']) {
-            Route::resource('comments', 'App\Adminify\Http\Controllers\Api\CommentController', [
-                'as' => $c['prefix'],
-                'except' => ['show' ]])->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
-        }
-
-        if(isset($features['setting']) && $features['setting']) {
-
-        }
-
-        if(isset($features['key_translation']) && $features['key_translation']) {
-            Route::resource('traductions', 'App\Adminify\Http\Controllers\Api\TranslationsController', [
-                'as' => $c['prefix'],
-                'except' => ['show']])->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
-        }
-
-        if(isset($features['email']) && $features['email']) {
-
-        }
-
-        if(isset($features['form']) && $features['form']) {
-
-        }
-    // });
-
-
-    //$config crud
-    if(count($c['crud']) > 0) {
-        foreach ($c['crud'] as $key => $classValue) {
-            # code...
-            Route::resource($key, $classValue, [
-                'as' => $c['prefix'],
-            ])->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
-
-        }
-    }
-    if(count($c['customRoutes']) > 0) {
-        $iterator_custom_routes = 0;
-        foreach ($c['customRoutes'] as $arrayValues) {
-            # code...
-            foreach ($arrayValues['verbs'] as $verb) {
-                # code...
-                Route::{$verb}($arrayValues['route'], $arrayValues['controller'])->name('api.custom_route_'.$iterator_custom_routes)->middleware(['api.verify_token', 'api.verify_abilities', 'multilang.basic']);
+        Route::group(['middleware' => 'auth:api'], function() use ($c, $features) {
+                if(isset($features['post']) && $features['post']) {
+                    Route::resource('posts', 'App\Adminify\Http\Controllers\Api\PostController', [
+                        'as' => $c['prefix'],
+                        'except' => ['show']] )->middleware(['api.verify_token', 'api.verify_abilities']);
+                }
+        
+                if(isset($features['media']) && $features['media']) {
+                    Route::resource('medias', 'App\Adminify\Http\Controllers\Api\MediaController', [
+                        'as' => $c['prefix'],
+                        'except' => ['show']])->middleware(['api.verify_token', 'api.verify_abilities']);
+                }
+        
+                if(isset($features['category']) && $features['category']) {
+                    Route::resource('categories', 'App\Adminify\Http\Controllers\Api\CategoryController', [
+                        'as' => $c['prefix'],
+                        'except' => ['show']])->middleware(['api.verify_token', 'api.verify_abilities']);
+                }
+        
+                if(isset($features['page']) &&  $features['page']) {
+                    Route::resource('pages', 'App\Adminify\Http\Controllers\Api\PageController', [
+                        'as' => $c['prefix'],
+                        'except' => ['show']])->middleware(['api.verify_token', 'api.verify_abilities']);
+                }
+        
+                if(isset($features['menu']) && $features['menu']) {
+        
+                }
+        
+                if(isset($features['comment']) && $features['comment']) {
+                    Route::resource('comments', 'App\Adminify\Http\Controllers\Api\CommentController', [
+                        'as' => $c['prefix'],
+                        'except' => ['show' ]])->middleware(['api.verify_token', 'api.verify_abilities']);
+                }
+        
+                if(isset($features['setting']) && $features['setting']) {
+        
+                }
+        
+                if(isset($features['key_translation']) && $features['key_translation']) {
+                    Route::resource('traductions', 'App\Adminify\Http\Controllers\Api\TranslationsController', [
+                        'as' => $c['prefix'],
+                        'except' => ['show']])->middleware(['api.verify_token', 'api.verify_abilities']);
+                }
+    
+            // });
+        
+        
+            //$config crud
+            if(count($c['crud']) > 0) {
+                foreach ($c['crud'] as $key => $classValue) {
+                    # code...
+                    Route::resource($key, $classValue, [
+                        'as' => $c['prefix'],
+                    ])->middleware(['api.verify_token', 'api.verify_abilities']);
+        
+                }
             }
-            $iterator_custom_routes++;
-        }
-    }
+            if(count($c['customRoutes']) > 0) {
+                $iterator_custom_routes = 0;
+                foreach ($c['customRoutes'] as $arrayValues) {
+                    # code...
+                    foreach ($arrayValues['verbs'] as $verb) {
+                        # code...
+                        Route::{$verb}($arrayValues['route'], $arrayValues['controller'])->name('api.custom_route_'.$iterator_custom_routes)->middleware(['api.verify_token', 'api.verify_abilities']);
+                    }
+                    $iterator_custom_routes++;
+                }
+            }
+        });
 
     $path_admin_file = base_path('routes/adminify_api.php');
 

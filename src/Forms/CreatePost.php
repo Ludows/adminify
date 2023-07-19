@@ -4,8 +4,6 @@ namespace Ludows\Adminify\Forms;
 
 use Ludows\Adminify\Libs\BaseForm;
 use Kris\LaravelFormBuilder\Field;
-use App\Adminify\Models\Category;
-use App\Adminify\Models\Tag;
 
 
 class CreatePost extends BaseForm
@@ -35,16 +33,14 @@ class CreatePost extends BaseForm
                 'form' => [
                     'namespace' => 'App\Adminify\Forms\CreateCategory',
                     'attributes' => [
-                        'url' => route('categories.store'),
+                        'url' => route('admin.categories.store'),
                         'method' => 'POST'
                     ]
                 ],
                 'attr' => ['multiple' => 'multiple'],
                 'label' => __('admin.form.categories_id'),
                 'select2options' => [
-                    'placeholder' => __('admin.select_category'),
-                    'multiple' => true,
-                    'width' => '100%'
+                    'placeholderValue' => __('admin.select_category'),
                 ]
             ]);
         }
@@ -53,9 +49,7 @@ class CreatePost extends BaseForm
                 'attr' => [],
                 'label' => __('admin.form.statuses'),
                 'select2options' => [
-                    'placeholder' => __('admin.table.modules.statuses.select_status'),
-                    'multiple' => false,
-                    'width' => '100%'
+                    'placeholderValue' => __('admin.table.modules.statuses.select_status'),
                 ]
             ]);
         if(isset($enabled_features['tag']) && $enabled_features['tag']) {
@@ -75,7 +69,7 @@ class CreatePost extends BaseForm
                 'form' => [
                     'namespace' => 'App\Adminify\Forms\CreateTag',
                     'attributes' => [
-                        'url' => route('tags.store'),
+                        'url' => route('admin.tags.store'),
                         'method' => 'POST'
                     ]
                 ],
@@ -84,9 +78,7 @@ class CreatePost extends BaseForm
                 'attr' => ['multiple' => 'multiple'],
                 'label' => __('admin.form.tags_id'),
                 'select2options' => [
-                    'placeholder' => __('admin.form.select_tag'),
-                    'multiple' => true,
-                    'width' => '100%'
+                    'placeholderValue' => __('admin.form.select_tag'),
                 ]
             ]);
         }   

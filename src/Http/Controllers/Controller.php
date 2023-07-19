@@ -7,7 +7,6 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
 
-use Ludows\Adminify\Traits\SeoGenerator;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 use Illuminate\Support\Facades\View;
@@ -18,7 +17,7 @@ use Inertia\Inertia;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, FormBuilderTrait, SeoGenerator;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, FormBuilderTrait;
 
     public $view_key_cache_prefix = 'front_view';
 
@@ -39,9 +38,49 @@ class Controller extends BaseController
             $possibles_names[] = $named;
         }
 
+        if(is_auth_routes()) {
+            $possibles_names[] = 'Auth';
+        }
+
         // @todo 
         if($shareds['isFront']) {
+            $classicFrontTpl = 'Front';
+            $classicOverrideTpl = 'Custom';
+            $currentFrontName = '';
+            $isHome = false;
+            
+            if($shareds['isHome']) {
+                $currentFrontName = 'Home';
+                $isHome = true;
+            }
+            if($shareds['isContentModel']) {
+                $currentFrontName = 'Content';
+            }
+            if($shareds['isBlogPage']) {
+                $currentFrontName = 'Posts';
+            }
+            if($shareds['isSearch']) {
+                $currentFrontName = 'Search';
+            }
+            if($shareds['isPage']) {
+                $currentFrontName = 'Page';
+            }
+            
 
+            if($shareds['model'] && !$isHome) {
+                $model = $shareds['model'];
+                $slug = $model->slug;
+                $id = $model->id;
+                $type = $shareds['type'];
+
+                $possibles_names[] = $currentFrontName.'-'.$id;
+                $possibles_names[] = $currentFrontName.'-'.$slug;
+                $possibles_names[] = $currentFrontName.'-'.$type;
+            }
+
+            $possibles_names[] = $classicFrontTpl.'-'.$classicOverrideTpl;
+            $possibles_names[] = $classicFrontTpl;
+            // $currentFrontName = 'Front';
         }
 
 
@@ -55,48 +94,18 @@ class Controller extends BaseController
     public function toRoute($routeName, $datas = []) {
         return to_route($routeName)->with($datas);
     }
-    public function sendResponse($model, $routeName, $traductionKey, $ajaxKey = 'model') {
-        $r = request();
-
-        if($r->ajax()) {
-            return response()->json([
-                $ajaxKey => $model,
-                'message' => __('admin.typed_data.success')
-            ]);
-        }
-        else {
-            flash(__($traductionKey))->success();
-            return redirect()->route($routeName);
-        }
-    }
-    public function sendResponseWith($model, $url, $traductionKey, $ajaxKey = 'model') {
-        $r = request();
-
-        if($r->ajax()) {
-            return response()->json([
-                $ajaxKey => $model,
-                'message' => __('admin.typed_data.success')
-            ]);
-        }
-        else {
-            flash(__($traductionKey))->success();
-            return redirect($url);
-        }
-    }
     public function makeForm($class = '', $options = [], $datas = []) {
 
+        $inertia = inertia();
         //mount the form
         $f = $this->form($class, $options, $datas);
 
         // merge to the request
-        merge_to_request('form', $f);
+        // merge_to_request('form', $f);
+        $inertia->share('form', $f);
 
         //mount metas if present for the page
         $this->appendMetas();
-
-        // merge to the view the form
-        view()->share('form', $f);
-
 
         return $f;
     }
@@ -176,9 +185,10 @@ class Controller extends BaseController
         return $this;
     }
     private function appendMetas() {
-        $request = request();
-        $currentRoute = $request->currentRouteName;
-        $currentForm = $request->form;
+        $inertia = inertia();
+        $shared = $inertia->getShared();
+        $currentRoute = $shared['currentRouteName'];
+        $currentForm = $shared['form'];
 
         //lets try to fetch all group meta with à specified page.name corresponding to the current view name :)
 
@@ -197,7 +207,7 @@ class Controller extends BaseController
                 $metaClass = app()->make($theClass);
 
                 if((bool) $meta->allow_filtering) {
-                    $showGroup = $metaClass->showGroup( !empty($request->model) ? $request->model : [] );
+                    $showGroup = $metaClass->showGroup( !empty($shared['model']) ? $shared['model'] : [] );
                 }
 
                 // dd($showGroup, (bool) $meta->allow_filtering);
@@ -206,7 +216,7 @@ class Controller extends BaseController
                     $metaboxes[] = $meta->uuid;
                     $currentForm->add('_'.$meta->uuid, $metaClass->getTypeField(), array_merge($metaClass->getDefaults(), [
                         'label' => $metaClass->getMetaboxTitle(),
-                        'model' => !empty($request->model) ? $request->model : [],
+                        'model' => !empty($shared['model']) ? $shared['model'] : [],
                         'wrapper' => [
                             'id' => $meta->uuid,
                         ],

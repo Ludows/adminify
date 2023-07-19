@@ -7,9 +7,10 @@ use Inertia\Middleware;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use ReflectionClass;
-use Spatie\Menu\Laravel\Menu;
-use Spatie\Menu\Laravel\Link;
 use Ludows\Adminify\Libs\AdminMenuService;
+use Illuminate\Support\Facades\Route;
+
+use Ludows\Adminify\Traits\SeoGenerator;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -22,15 +23,18 @@ class HandleInertiaRequests extends Middleware
     // protected $rootView = 'theme::featuring.layouts.app';
 
     public $base_params;
-    public $theme;
+    public $preventables_paths;
+
+    use SeoGenerator;
 
     public function __construct() {
         $this->base_params = [];
-        $this->theme = theme();
+        $this->preventables_paths = ['image.transform', 'theme.assets', 'editor.preview', 'forms.validate', 'manifest'];
     }
 
     public function getParam($key) {
-        return $this->base_params[$key];
+        $check = !empty($this->base_params[$key]);
+        return $check ? $this->base_params[$key] : null;
     }
     public function param($key, $value = null) {
         $this->base_params[$key] = $value;
@@ -70,11 +74,50 @@ class HandleInertiaRequests extends Middleware
             }
 
             if(method_exists($this, 'handleCustomSetting')) {
-                $this->handleCustomSetting($key, $value);
+                call_user_func_array(array($this, 'handleCustomSetting'), [$key, $value]);
             }
 
             $this->param($value->type, $value->data);
         }
+    }
+
+    public function handleRevisions($parameters = []) {
+        if( !empty($parameters['model']) && $parameters['isBack'] ) {
+            $this->param('revisions', $parameters['model']->revisions);
+        }
+    } 
+
+    public function handleBreadcrumb($currentRoute = '', $parameters = []) {
+        $ret = [];
+        $routeNameSpl = explode('.', $currentRoute);
+        $savePatron = $routeNameSpl;
+
+        if(is_admin()) {
+            $ret = ['admin.home.dashboard'];
+            array_pop($savePatron);
+            $patron = join('.', $savePatron);
+            // dd($savePatron, $routeNameSpl, $patron);
+
+            if(Route::has($patron.'.index')) {
+                $ret[] = $patron.'.index';
+            }
+    
+            if(Route::has($patron.'.create') && $parameters['isCreate']) {
+                $ret[] = $patron.'.create';
+            }
+    
+            if(Route::has($patron.'.edit') && $parameters['isEdit']) {
+                $ret[] = $patron.'.edit';
+            }
+        }
+        else {
+            if(method_exists($this, 'handleFrontBreadcrumb')) {
+                call_user_func_array(array($this, 'handleFrontBreadcrumb'), []);
+            }
+        }
+        
+        $this->param('breadcrumb', $ret);
+        return $ret;
     }
 
     public function handleMetas($parameters = []):void {
@@ -90,18 +133,22 @@ class HandleInertiaRequests extends Middleware
     }
 
     public function handleInertia(): string {
-        $isFront = is_front();
+        $isFront = is_front() && !is_auth_routes();
+        $viewResolver = view();
+        $frontViewExist = $viewResolver->exists('front::layouts.app');
+        $backViewExist = $viewResolver->exists('back::layouts.app');
+        $fallbackBackView = 'adminify::layouts.app';
+        // ->exists('category.custom.'.$category->slug)
         if(!is_installed()) {
             throw new Error('Adminify must be installed for Inertia');
         }
 
         $inertia_url = '';
-
         if($isFront) {
-            $inertia_url = 'theme::'.$this->theme.'.layouts.app';
+            $inertia_url = 'front::layouts.app';
         }
         else {
-            $inertia_url = 'adminify::layouts.app';
+            $inertia_url = $backViewExist ? 'back::layouts.app' : $fallbackBackView;
         }
 
 
@@ -109,6 +156,7 @@ class HandleInertiaRequests extends Middleware
     }
 
     public function handleMultilang($request, $config, $parameters):void {
+        $inertia = inertia();
         if($config['multilang']) {
 
             $langParameter = $request->get('lang');
@@ -116,7 +164,7 @@ class HandleInertiaRequests extends Middleware
             if($langParameter && $langParameter != $parameters['currentLocale']) {
                 //we update the value
                 App::setLocale($langParameter);
-                $parameters['currentLocale'] = $langParameter;
+                $inertia->share('currentLocale', $langParameter);
             }
         }
     }
@@ -167,104 +215,109 @@ class HandleInertiaRequests extends Middleware
 
     }
 
-    public function prepareSharedDatas($request): array {
+    public function bindModel($config = [], Request $request):void {
 
-        $config = config('site-settings');
-        $supported_locales = $config['supported_locales'];
         $route = $request->route();
-        $routeName = $request->route()->getName();
-        $prefix = $route->getPrefix();
+        $routeName = $route->getName();
         $isAdmin = is_admin();
-        $adminMenu = null;
-
-
-        $checkedKeys = [
-            'update',
-            'edit',
-            'destroy'
-        ];
-
-        $currentLocale = App::currentLocale();
+        $isMultilang = is_multilang();
+        $isFront = is_front();
+        $isAuthRoutes = is_auth_routes();
         $routeNameSpl = explode('.', $routeName);
-
-        if($isAdmin && !empty($prefix)) {
-            array_unshift($routeNameSpl , 'admin');
-        }
+        $model = null;
+        $parameters = $route->parameters();
 
         if($isAdmin) {
-            $adminMenu = $this->manageAdminMenu($request);
+            foreach ($routeNameSpl as $key => $partialRouteName) {
+                # code...
+                $singular = singular($partialRouteName);
+                $model = $route->parameter( $singular );
+                if(empty($model)) {
+                    $model = $route->parameter( $partialRouteName );
+                }
+                if(!empty($model)) {
+                    break;
+                }
+            }
+
+
+            // $this->setParam('model',  )
+            if(startsWith($routeName, 'savetraductions') && $isMultilang) {
+                $model = model($request->get('model'), false);
+                $model = new $model;
+                $model = $model->find($request->get('id'));
+            }
+            if($routeName == 'editor.preview') {
+
+                $isEditInEditor = !empty($request->type) && !empty($request->id);
+
+                // try to load the first one model
+                $model = model(titled($request->type));
+
+                if(empty($model)) {
+                    // however we try to load model in singular
+                    $model = model(titled(singular($request->type)));
+                }
+
+                // if you reedit a current model. We make sure that you bind the correct content.
+
+                if($isEditInEditor) {
+                    $model = $model->find($request->id);
+                }
+            }
         }
 
-        // making autoswitch back / front
-        $singular = singular($routeNameSpl['1']);
-        $model = \Route::current()->parameter($singular);
-        if(!$isAdmin && !is_auth_routes() && !in_array($routeName, ['image.transform', 'theme.assets', 'editor.preview', 'forms.validate'])) {
-            // dd($routeName,adminify_get_class( \Str::studly( $routeNameSpl['1'] ), ['app:models', 'app:adminify:models'], false ));
-            $theClass = adminify_get_class( \Str::studly( $routeNameSpl['1'] ), ['app:models', 'app:adminify:models'], false );
+        if($isFront && !$isAuthRoutes && !in_array($routeName, $this->preventables_paths)) {
+            // dd($routeNameSpl);
+            $theClass = model( \Str::studly( $routeNameSpl['1'] ), false);
+            if(empty($theClass)) {
+                $theClass = model( \Str::studly( $routeNameSpl['0'] ), false);
+            }
             $model = new $theClass();
             $model = $model->where('slug', str_replace('_', '-', $routeNameSpl['2']))->get()->first();
         }
 
-        if(startsWith($routeName, 'savetraductions') && $config['multilang']) {
+        if($isFront) {
+            if(empty($request->segments())) {
+                $settings = cache('homepage');
+    
+                if($settings == null) {
+                    $settings = setting('homepage');
+                }
+    
+                $model = model('Page', false);
+    
+                $model = $model::find( is_array($settings) ? $settings['model_id'] : $settings );
+            }
+            if($routeName == 'globalsearch') {
+                $searchpage = setting('searchpage');
+                $model = model('Page', true);
 
-            $model = adminify_get_class($request->get('model'), ['app:models', 'app:adminify:models'], false);
-            $model = new $model;
-            $model = $model->find($request->get('id'));
-
+                $model = $model->find($searchpage);
+            }
         }
 
-        if(!$isAdmin && empty($request->segments())) {
-            $settings = cache('homepage');
+        $this->param('model', $model);
 
-            if($settings == null) {
-                $settings = setting('homepage');
-            }
+    }
 
-            $model = adminify_get_class('Page', ['app:models', 'app:adminify:models'], false);
+    public function bindParameters($config = [], Request $request):void {
 
-            $model = $model::find( is_array($settings) ? $settings['model_id'] : $settings );
+        $currentLocale = App::currentLocale();
+        $model = $this->getParam('model');
+        $route = $request->route();
+        $routeName = $route->getName();
+        $prefix = $route->getPrefix();
+        $routeNameSpl = explode('.', $routeName);
+        $supported_locales = $config['supported_locales'];
+
+        if($prefix == '/admin') {
+            array_unshift($routeNameSpl, 'admin');
         }
 
-        if($routeName == 'globalsearch') {
-            $searchpage = setting('searchpage');
-            $model = adminify_get_class('Page', ['app:adminify:models', 'app:models'], true);
-
-            $model = $model->find($searchpage);
-        }
-
-        // dd(adminify_autoload());
-        // let's do the magic editor preview handling here model.
-        if($routeName == 'editor.preview') {
-
-            $isCreate = !empty($request->type) && empty($request->id);
-            $isEdit = !empty($request->type) && !empty($request->id);
-
-            // try to load the first one model
-            $model = adminify_get_class(titled($request->type), ['app:adminify:models', 'app:models'], true);
-
-            if(empty($model)) {
-                // however we try to load model in singular
-                $model = adminify_get_class(titled(singular($request->type)), ['app:adminify:models', 'app:models'], true);
-            }
-
-            // if you reedit a current model. We make sure that you bind the correct content.
-
-            if($isEdit) {
-                $model = $model->find($request->id);
-
-                // now we can check if is homepage for correct handle controller response :)
-                $isHome = is_homepage($model);
-            }
-
-            // if model is really empty. preview does not work properly. Throw Error.
-            if(empty($model)) {
-                throw new Error('Model with '.$request->type. 'cannot be found.');
-            }
-
-        }
 
         $isContentModel = !empty($model) ? is_content_type_model($model) : false;
-        $theme = $this->theme;
+        // $theme = $this->theme;
 
         $named = join('.',array_diff($routeNameSpl, ['index', 'edit', 'create']));
 
@@ -277,6 +330,7 @@ class HandleInertiaRequests extends Middleware
             $reflection = new ReflectionClass($model);
             $type = $reflection->getShortName();
         }
+
 
         $base_parameters = [
             "siteConfig" => $config,
@@ -306,44 +360,81 @@ class HandleInertiaRequests extends Middleware
             "user" => user(),
             "adminify_autoload" => adminify_autoload(),
             'isPreview' => $routeName == 'editor.preview',
-            'adminMenu' => $adminMenu,
             'isTemplate' => !empty($model) ? is_template($model) : false
         ];
 
-        if($isAdmin && $isContentModel && empty($theme)) {
-            throw new \Exception("Theme must be set in administration", $theme);
-        }
+        $this->params($base_parameters);
 
-        if( $isContentModel && is_front() || $base_parameters['isPreview']) {
+    }
+
+    public function bindSeo() {
+        $isFront = is_front();
+        $isBack = is_admin();
+        $route = request()->route();
+        $routeName = $route->getName();
+
+        $hasModel = !empty( $this->getParam('model') );
+        if($isBack) {
+            $resolver = [];
+            $resolver['title'] = __('admin.seo.title'); // todo parameter for change page
+            $resolver['description'] = __('admin.seo.description');
+            $resolver['keywords'] = __('admin.seo.keywords');
+            $resolver['robots'] = 'none';
+            $resolver['type'] = 'page';
+        }
+        if($isFront) {
+            $resolver = $this->getParam('model');
+        }
+        if(!in_array($routeName, $this->preventables_paths)) {
+            $this->handleSeo($resolver);
+            $seo = $this->grabSeo();
+            $this->param('seo', $seo);
+        }
+        else {
+            $this->param('seo', '\n');
+        }
+        // dd('seo', app('seotools.json-ld')->generate(true) );
+    }
+
+    public function bindFrontParameters($config = [], Request $request):void {
+
+        $isContentModel = $this->getParam('isContentModel');
+        $isPreview = $this->getParam('isPreview');
+        $model = $this->getParam('model');
+
+        $params = [];
+
+         if( $isContentModel && is_front() || $isPreview) {
             $posts = null;
             // si c'est la page de blog. Autoappend des posts.
             if(is_blogpage($model)) {
-                $posts = new \App\Adminify\Models\Post();
+                $hasModelForFetch = !empty(get_site_key('blog.model'));
+                $posts = $hasModelForFetch ? get_site_key('blog.model') : new \App\Adminify\Models\Post();
                 $posts = $posts->withStatus( status()::PUBLISHED_ID )->paginate( get_site_key('blog.paginate'), get_site_key('blog.columns'), get_site_key('blog.param') );
             }
             $topbarPref = get_user_preference('topbar');
             $topbarShow = false;
 
-            // get the current theme
-            if(empty($theme)) {
-                throw new \Exception("Theme must be set in administration", $theme);
-            }
+            // // get the current theme
+            // if(empty($theme)) {
+            //     throw new \Exception("Theme must be set in administration", $theme);
+            // }
 
             //dd($topbarPref);
-            if(!empty($topbarPref) && !$base_parameters['isPreview']) {
+            if(!empty($topbarPref) && !$isPreview) {
                 $topbarShow = (bool)$topbarPref;
             }
             // add specifics globals vars
-            $base_parameters['isHome'] = is_homepage($model);
-            $base_parameters['isSingle'] = is_single($model);
-            $base_parameters['isBlogPage'] = is_blogpage($model);
-            $base_parameters['isSearch'] = is_search($model);
-            $base_parameters['isPage'] = $base_parameters['isSearch'] ? false : is_page($model);
-            $base_parameters['posts'] = $posts;
-            $base_parameters['topbarShow'] = $topbarShow;
-            $base_parameters['theme'] = $theme;
+            $params['isHome'] = is_homepage($model);
+            $params['isSingle'] = is_single($model);
+            $params['isBlogPage'] = is_blogpage($model);
+            $params['isSearch'] = is_search($model);
+            $params['isPage'] = $params['isSearch'] ? false : is_page($model);
+            $params['posts'] = $posts;
+            $params['topbarShow'] = $topbarShow;
+            // $base_parameters['theme'] = $theme;
 
-            if($base_parameters['enabled_features']['pwa']) {
+            if($config['enables_features']['pwa']) {
                 $pwa = model('Pwa'); 
                 $settings = model('Settings');
                 
@@ -351,15 +442,63 @@ class HandleInertiaRequests extends Middleware
                 $results = $results->pluck('data', 'type')->toArray();
     
                 $results['_settings_pwa_icons'] = json_decode($results['_settings_pwa_icons'], true); 
-                $base_parameters['pwa'] = $results;
+                $params['pwa'] = $results;
             }
         }
 
+        $this->params($params);
+    }
+
+    public function prepareSharedDatas($request): array {
+
+        $config = config('site-settings');
+        $route = $request->route();
+        $routeName = $request->route()->getName();
+        $prefix = $route->getPrefix();
+        $isAdmin = is_admin();
+        $adminMenu = null;
+
+        $routeNameSpl = explode('.', $routeName);
+
+        if($isAdmin && !empty($prefix)) {
+            array_unshift($routeNameSpl , 'admin');
+        }
+
+        $this->bindModel($config, $request);
+ 
+        $this->bindParameters($config, $request);
+
+        $base_parameters = $this->getParams();
+
+
+        if($isAdmin) {
+            $adminMenu = $this->manageAdminMenu($request);
+        }
+
+        // dd($adminMenu, is_front());
+
+        $this->param('adminMenu', $adminMenu);
+
+        $this->bindFrontParameters($config, $request);
+
+        $this->bindSeo();
+
+        $this->handleBreadcrumb($routeName, $base_parameters);
+        $this->handleRevisions($base_parameters);
+
+
         if(method_exists($this, 'addParameters')) {
-            $this->addParameters();
+            call_user_func_array(array($this, 'addParameters'), [$this->getParams()]);
         }
 
         $this->handleMultilang($request, $config, $base_parameters);
+
+
+        foreach ($this->getParams() as $key => $value) {
+            # code...
+            $base_parameters[$key] = $value;
+        }
+
 
         return $base_parameters;
     }

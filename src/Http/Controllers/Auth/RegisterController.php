@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-use Kris\LaravelFormBuilder\FormBuilder;
 use Kris\LaravelFormBuilder\FormBuilderTrait;
 
 use App\Adminify\Forms\ShowRegisterForm;
@@ -65,12 +64,18 @@ class RegisterController extends Controller
 
     public function showRegistrationForm() {
 
-        $form = $this->form(ShowRegisterForm::class, [
+        $form = $this->makeForm(ShowRegisterForm::class, [
             'method' => 'POST',
             'url' => route('auth.register')
         ]);
 
-        return view('adminify::auth.register', ['form' => $form]);
+        $views = $this->getPossiblesViews('Register');
+        // view('adminify::auth.login', ['form' => $form])
+        
+        return $this->renderView($views, [
+            'model' => (object) [],
+            'form' => $form->toArray()
+        ]);
     }
 
     /**

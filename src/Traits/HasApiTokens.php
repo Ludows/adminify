@@ -8,6 +8,10 @@ use Carbon\Carbon;
 
 trait HasApiTokens
 {
+    public function tokens() {
+        return $this->hasMany(ApiToken::class, 'user_id', 'id');
+    }
+
     public function generateToken() {
         $c = get_site_key('restApi');
         $salt = Str::random(10);

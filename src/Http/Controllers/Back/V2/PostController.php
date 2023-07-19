@@ -72,7 +72,7 @@ class PostController extends Controller
             //
             $form = $this->makeForm(CreatePost::class, [
                 'method' => 'POST',
-                'url' => route('posts.store')
+                'url' => route('admin.posts.store')
             ]);
 
             $views = $this->getPossiblesViews('Create');
@@ -100,7 +100,7 @@ class PostController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.success'),
                 'entity' => $post,
-                'route' => 'posts.index'
+                'route' => 'admin.posts.index'
             ]);
         }
 
@@ -139,9 +139,10 @@ class PostController extends Controller
             // else {
                 $form = $this->makeForm(UpdatePost::class, [
                     'method' => 'PUT',
-                    'url' => route('posts.update', ['post' => $post->id]),
+                    'url' => route('admin.posts.update', ['post' => $post->id]),
                     'model' => $post
                 ]);
+
 
                 $views = $this->getPossiblesViews('Edit');
 
@@ -174,7 +175,7 @@ class PostController extends Controller
             // else {
                 $form = $this->makeForm(UpdatePost::class, [
                     'method' => 'PUT',
-                    'url' => route('posts.update', ['post' => $post->id]),
+                    'url' => route('admin.posts.update', ['post' => $post->id]),
                     'model' => $post
                 ]);
             // }
@@ -186,7 +187,12 @@ class PostController extends Controller
                $post = $this->postRepository->addModel($post)->update($form, $post);
             // }
 
-            return $this->sendResponse($post, 'posts.index', 'admin.typed_data.updated');
+            return $this->toJson([
+                'message' => __('admin.typed_data.updated'),
+                'entity' => $post,
+                'route' => 'admin.posts.index'
+            ]);
+
         }
 
         /**
@@ -201,7 +207,10 @@ class PostController extends Controller
             //
             $this->postRepository->delete($post);
 
-            // redirect
-            return $this->sendResponse($post, 'posts.index', 'admin.typed_data.deleted');
+            return $this->toJson([
+                'message' => __('admin.typed_data.deleted'),
+                'entity' => $post,
+                'route' => 'admin.posts.index'
+            ]);
         }
 }

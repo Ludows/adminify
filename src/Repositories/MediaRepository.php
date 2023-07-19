@@ -2,18 +2,19 @@
 
 namespace Ludows\Adminify\Repositories;
 
-use  Ludows\Adminify\Repositories\BaseRepository;
+use Ludows\Adminify\Repositories\BaseRepository;
 
 class MediaRepository extends BaseRepository
 {   
-    // public function beforeRun($model, $formValues, $type) {
+    public function afterRun($model, $formValues, $type) {
         
-    //     $map = new \League\MimeTypeDetection\GeneratedExtensionToMimeTypeMap();
+        if($type == 'create') {
+            $model->setThumbs([]);
+        }
 
-    //     $p = pathinfo($model->path);
-
-    //     $mimeType = $map->lookupMimeType($p['extension']);
-
-    //     $model->mime_type = $mimeType;
-    // }
+        if($type == 'destroy') {
+            $model->deleteThumbs([]);
+        }
+        
+    }
 }

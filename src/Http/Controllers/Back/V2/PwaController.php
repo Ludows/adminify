@@ -29,7 +29,7 @@ class PwaController extends Controller
 
             $form = $this->makeForm(CreatePwa::class, [
                 'method' => 'POST',
-                'url' => route('pwa.store'),
+                'url' => route('admin.pwa.store'),
             ]);
 
             $views = $this->getPossiblesViews('Index');
@@ -56,7 +56,7 @@ class PwaController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.success'),
                 'entity' => $pwa,
-                'route' => 'pwa.index'
+                'route' => 'admin.pwa.index'
             ]);
 
             // return $this->sendResponse($pwa, 'pwa.index', 'admin.typed_data.success');

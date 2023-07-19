@@ -11,6 +11,7 @@ use League\Glide\Urls\UrlBuilderFactory;
 use Illuminate\Support\Facades\Storage;
 use Ludows\Adminify\Libs\ThemeManager;
 use Ludows\Adminify\Libs\HookManager;
+use Illuminate\Support\Facades\Route;
 
 
 if (! function_exists('do_shortcode')) {
@@ -129,7 +130,8 @@ if(! function_exists('is_auth_routes')) {
         $isRunning = is_running_console();
         if(!$isRunning) {
             $r = request();
-            $split_route = $r->currentRouteSplitting;
+            $inertia = inertia();
+            $split_route = $inertia->getShared('currentRouteSplitting');
 
             if(empty($split_route)) {
                 // fallback when currentRouteSplitting is not defined
@@ -447,8 +449,8 @@ if(! function_exists('is_multilang') ) {
 }
 
 if(! function_exists('model')) {
-    function model($model_base_name) {
-        $cls = adminify_get_class($model_base_name, ['app:adminify:models', 'app:models'], true);
+    function model($model_base_name, $loadClass = true) {
+        $cls = adminify_get_class($model_base_name, ['app:adminify:models', 'app:models'], $loadClass);
         return $cls;
     }
 }
@@ -501,9 +503,9 @@ if(! function_exists('is_installed_stub')) {
 
 if(! function_exists('get_missing_langs')) {
     function get_missing_langs($model) {
-        $request = request();
+        $request = inertia();
         $langs = [];
-        if($request->useMultilang && is_translatable_model($model)) {
+        if($request->getShared('useMultilang') && is_translatable_model($model)) {
             $langs = $model->getNeededTranslations();
         }
         return $langs;
@@ -631,11 +633,7 @@ if(! function_exists('is_admin')) {
             'admin', 'login', 'register', 'password', 'email'
         ];
 
-        if(empty($request->currentRouteSplitting)) {
-            return in_array( $request->segment(1), $pathables_admin);
-        }
-
-        return in_array('admin', $request->currentRouteSplitting);
+        return in_array('admin', $request->segments());
     }
 }
 
@@ -654,19 +652,27 @@ if(! function_exists('is_editor_preview')) {
     }   
 }
 
+if(! function_exists('route_exist')) {
+    function route_exist($name = '') {
+        return Route::has($name);
+    }
+}
+
+
 if(! function_exists('is_front')) {
     function is_front() {
         $request = request();
+        $inertia = inertia();
 
         $pathables_admin = [
             'admin', 'login', 'register', 'password', 'email'
         ];
 
-        if(empty($request->currentRouteSplitting)) {
+        if(empty($inertia->getShared('currentRouteSplitting'))) {
             return !in_array( $request->segment(1), $pathables_admin);
         }
 
-        return !in_array('admin', $request->currentRouteSplitting);
+        return !in_array('admin', $inertia->getShared('currentRouteSplitting'));
     }
 }
 
@@ -767,23 +773,6 @@ if(!function_exists('settings')) {
     }
 }
 
-if (! function_exists('render_dropdowns')) {
-    function render_dropdowns($array) {
-        $i = 0;
-        foreach ($array as $a) {
-            # code...
-            return $a->render($i ? $i : null);
-            $i++;
-        }
-    }
-}
-
-if (! function_exists('render_dropdown')) {
-    function render_dropdown($class, $index) {
-        return $class->render($index ? $index : null);
-    }
-}
-
 if (! function_exists('check_traductions')) {
     function check_traductions($array) {
 
@@ -815,29 +804,6 @@ if (! function_exists('translate')) {
     }
 }
 
-if (! function_exists('menu_builder')) {
-    function menu_builder($class) {
-        return $class->render();
-    }
-}
-
-if(! function_exists('add_to_request')) {
-    function add_to_request($key, $value) {
-        $request = request();
-        $request->{$key} = $value;
-    }
-}
-
-if(! function_exists('merge_to_request')) {
-    function merge_to_request($key, $value) {
-        $request = request();
-        if($request->{$key}) {
-            $request->{$key} = $value;
-        }
-        $request->{$key} = $value;
-    }
-}
-
 if(! function_exists('is_translatable_model')) {
     function is_translatable_model($class) {
         return method_exists($class,'getMultilangTranslatableSwitch');
@@ -848,13 +814,14 @@ if(! function_exists('lang')) {
     function lang() {
         $isRunningConsole = is_running_console();
         $lang = app()->getLocale();
+        $inertia = inertia();
 
         if(!$isRunningConsole) {
             $request = request();
             // dd( $request, $lang);
             // we check to get lang from request. if not provided like commands. We take current locale as fallback.
-            if(!empty($request->lang)) {
-                $lang = $request->lang;
+            if(!empty($inertia) && $inertia->getShared('currentLang')) {
+                $lang = $inertia->getShared('currentLang');
             }
         }
 
@@ -1038,12 +1005,6 @@ if(!function_exists('theme_dir')) {
     }
 }
 
-if(!function_exists('breadcrumb')) {
-    function breadcrumb() {
-        return app()->make('Breadcrumbs');
-    }
-}
-
 if(! function_exists('get_content_types')) {
     function get_content_types() {
         $ret = [];
@@ -1070,24 +1031,6 @@ if(! function_exists('is_collection')) {
     function is_collection($param): bool
     {
         return (bool) (($param instanceof \Illuminate\Support\Collection) || ($param instanceof \Illuminate\Database\Eloquent\Collection));
-    }
-}
-
-if(! function_exists('format_revision')) {
-    function format_revision($data) {
-        $json_array = json_decode($data, true);
-        $config = get_site_key('revisions');
-        $str = '';
-
-        foreach ($json_array as $key => $value) {
-            # code...
-            if(!in_array($key, $config['escaped_keys']) && !empty($value)) {
-                $str .= '<b>'. $key .'</b><br>';
-                $str .= '<span>'. $value .'</span><br><br>';
-            }
-        }
-
-        return $str;
     }
 }
 

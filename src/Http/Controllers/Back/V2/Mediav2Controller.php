@@ -58,7 +58,6 @@ class Mediav2Controller extends Controller
 
             // dd($table->toArray());
 
-
             return $this->renderView($views, array_merge([
                 'model' => (object) [],
             ], $a));
@@ -79,7 +78,7 @@ class Mediav2Controller extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.success'),
                 'entity' => $entity,
-                'route' => 'medias.index'
+                'route' => 'admin.medias.index'
             ]);
 
         }
@@ -105,7 +104,7 @@ class Mediav2Controller extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.updated'),
                 'entity' => $media,
-                'route' => 'medias.index'
+                'route' => 'admin.medias.index'
             ]);
         }
 
@@ -116,7 +115,7 @@ class Mediav2Controller extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.deleted'),
                 'entity' => $media,
-                'route' => 'medias.index'
+                'route' => 'admin.medias.index'
             ]);
         }
 

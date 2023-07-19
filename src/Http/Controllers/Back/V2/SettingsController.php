@@ -29,7 +29,7 @@ class SettingsController extends Controller
 
             $form = $this->makeForm(CreateSettings::class, [
                 'method' => 'POST',
-                'url' => route('settings.store'),
+                'url' => route('admin.settings.store'),
             ]);
 
             $views = $this->getPossiblesViews('Index');
@@ -56,7 +56,7 @@ class SettingsController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.success'),
                 'entity' => $settings,
-                'route' => 'settings.index'
+                'route' => 'admin.settings.index'
             ]);
         }
 }

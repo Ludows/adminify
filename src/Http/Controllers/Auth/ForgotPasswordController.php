@@ -29,13 +29,18 @@ class ForgotPasswordController extends Controller
 
     {
 
-        $form = $this->form(ShowResetForm::class, [
+        $form = $this->makeForm(ShowResetForm::class, [
             'method' => 'POST',
             'url' => route('auth.password.email')
         ]);
 
-        return view('adminify::auth.passwords.email', ['form' => $form]);
-
+        $views = $this->getPossiblesViews('ForgotPassword');
+        // view('adminify::auth.login', ['form' => $form])
+        
+        return $this->renderView($views, [
+            'model' => (object) [],
+            'form' => $form->toArray()
+        ]);
     }
 
 

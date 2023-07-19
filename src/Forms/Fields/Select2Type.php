@@ -16,8 +16,11 @@ class Select2Type extends FormField {
 
     public function setDefaultsSelect2() {
         return array(
-            'multiple' => true,
-            'width' => '100%'
+            'allowHTML' => false,
+            'removeItemButton' => true,
+            'placeholderValue' => '',
+            'paste' => false,
+            'items' => [],
         );
     }
 
@@ -102,6 +105,7 @@ class Select2Type extends FormField {
         $options['modal_attributes']['id'] = Str::slug('select2_modale_'.$uniqid);
         $formbuilder = app()->make('laravel-form-builder');
 
+
         $b = [
             'isAjax' => $isAjax,
             'sibling' => $sibling,
@@ -122,9 +126,44 @@ class Select2Type extends FormField {
             $b['modalForm'] = $b['modalForm']->toArray();
         }
 
-       
+        $selected = $options['selected'];
+
+        
 
         $options = array_merge($options, $b);
+        
+
+        // if(!empty($selected)) {
+
+        //     if(is_string($selected)) {
+        //         $options['select2options'] = array_merge($options['select2options'], [
+        //             'items' => [$selected]
+        //         ]);
+        //     }
+        //     if(is_array($selected)) {
+        //         $options['select2options'] = array_merge($options['select2options'], [
+        //             'items' => $selected
+        //         ]);
+        //     }
+        //     if(is_integer($selected)) {
+        //         $options['select2options'] = array_merge($options['select2options'], [
+        //             'items' => [$selected]
+        //         ]);
+        //     }
+        //     if(is_collection($selected)) {
+        //         $options['select2options'] = array_merge($options['select2options'], [
+        //             'items' => $selected->pluck('id')
+        //         ]);
+        //     }
+
+        // }
+
+        // dump($options, $selected);
+
+
+
+
+        // dd($options['select2options']);
 
         $this->setOptions($options);
 

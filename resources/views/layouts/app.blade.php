@@ -17,8 +17,8 @@
     <body class="{{ $class ?? '' }}">
         @inertia
         @hook('assets.js')
-        <script src="{{asset('/myuploads/routes.js')}}"></script>
-        <script src="{{ asset('/myuploads/traductions-'. $page['props']['currentLang'] .'.js') }}"></script>
+            <script src="{{asset('/myuploads/routes.js')}}"></script>
+            <script src="{{ asset('/myuploads/traductions-'. $page['props']['currentLang'] .'.js') }}"></script>
         @stack('js')
     </body>
 </html>

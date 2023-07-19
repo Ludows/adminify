@@ -20,8 +20,8 @@ class DropdownsManager
 
     public function setDefaults() {
         return [
-            'template' => 'adminify::layouts.admin.actionable.dropdown-item',
-            'vars' => []
+            'Component' => 'dropdown-item',
+            'Vars' => []
         ];
     }
     public function getRequest() {
@@ -80,6 +80,9 @@ class DropdownsManager
     public function setDefaultsActions() {
         $r = $this->getRequest();
         $models = $this->getModels();
+        $inertia = inertia();
+        $shareds = $inertia->getShared();
+
 
         $form = app('Kris\LaravelFormBuilder\FormBuilder');
 
@@ -89,51 +92,85 @@ class DropdownsManager
             $plurial = plural($singular);
 
             $this->add('dropdown_'.$m->id, [
-                'template' => 'adminify::layouts.admin.dropdowns.extends.edit',
-                'vars' => [
-                    'url' => route($plurial.'.edit', [$singular => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
+                'Component' => 'edit-item',
+                'Vars' => [
+                    'url' => route('admin.'.$plurial.'.edit', [$singular => $m->id, 'lang' => $shareds['useMultilang'] ? $shareds['currentLang'] : '']),
                     'name' => $plurial
                 ]
             ]);
 
             if(is_trashable_model($m) && $m->{$m->status_key} != status()::TRASHED_ID) {
+                $trashForm = $form->create(DeleteCrud::class, [
+                    'method' => 'POST',
+                    'url' => route('admin.trash', ['type' => titled($singular), 'id' => $m->id])
+                ]);
+
+                $trashForm->modify('submit', 'submit', [
+                    'label' => __('admin.trash')
+                ]);
+
                 $this->add('dropdown_'.$m->id, [
-                    'template' => 'adminify::layouts.admin.dropdowns.extends.trash',
-                    'vars' => [
-                        'url' => route('trash', ['type' => titled($singular), 'id' => $m->id]),
-                        'name' => $plurial
+                    'Component' => 'trash-item',
+                    'Vars' => [
+                        'form' => $trashForm->toArray(),
+                        'name' => 'trash'
+                    ]
+                ]);
+            }
+
+            if(is_trashable_model($m) && $m->{$m->status_key} != status()::PUBLISHED_ID) {
+                $updateStatusForm = $form->create(DeleteCrud::class, [
+                    'method' => 'PUT',
+                    'url' => route('admin.trash', ['type' => titled($singular), 'id' => $m->id])
+                ]);
+
+                $updateStatusForm->modify('submit', 'submit', [
+                    'label' => __('admin.update_status_published')
+                ]);
+
+                $this->add('dropdown_'.$m->id, [
+                    'Component' => 'update-item',
+                    'Vars' => [
+                        'form' => $updateStatusForm->toArray(),
+                        'name' => 'update-status'
                     ]
                 ]);
             }
 
             if(is_content_type_model($m) && $m->allowSitemap) {
                 $this->add('dropdown_'.$m->id, [
-                    'template' => 'adminify::layouts.admin.dropdowns.extends.seo',
-                    'vars' => [
-                        'url' => route('seo.edit', ['type' => titled($singular), 'id' => $m->id, 'lang' => $r->useMultilang ? $r->lang : '']),
+                    'Component' => 'seo-item',
+                    'Vars' => [
+                        'url' => route('admin.seo.edit', ['type' => titled($singular), 'id' => $m->id, 'lang' => $shareds['useMultilang'] ? $shareds['currentLang'] : '']),
                         'name' => 'seo'
                     ]
                 ]);
             }
+
+            $copyForm = $form->create(CopyCrud::class, [
+                'method' => 'POST',
+                'url' => route('admin.copy.entity', [ 'type' => lowercase($singular), 'id' => $m->id])
+            ]);
+
+            $deleteForm = $form->create(DeleteCrud::class, [
+                'method' => 'DELETE',
+                'url' => route('admin.'.$plurial.'.destroy', [$singular => $m->id]),
+            ]);
             
 
             $this->add('dropdown_'.$m->id, [
-                'template' => 'adminify::layouts.admin.dropdowns.extends.copy',
-                'vars' => [
-                    'form' => $form->create(CopyCrud::class, [
-                        'method' => 'POST',
-                        'url' => route('copy.entity', [ 'type' => lowercase($singular), 'id' => $m->id])
-                    ])
+                'Component' => 'copy-item',
+                'Vars' => [
+                    'form' => $copyForm->toArray(),
+                    'name' => 'copy'
                 ]
             ]);
 
             $this->add('dropdown_'.$m->id, [
-                'template' => 'adminify::layouts.admin.dropdowns.extends.delete',
-                'vars' => [
-                    'form' => $form->create(DeleteCrud::class, [
-                        'method' => 'DELETE',
-                        'url' => route($plurial.'.destroy', [$singular => $m->id])
-                    ])
+                'Component' => 'delete-item',
+                'Vars' => [
+                    'form' => $deleteForm->toArray(),
+                    'name' => 'delete'
                 ]
             ]);
         }

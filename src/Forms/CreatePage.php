@@ -38,7 +38,7 @@ class CreatePage extends BaseForm
                 'form' => [
                     'namespace' => 'App\Adminify\Forms\CreateCategory',
                     'attributes' => [
-                        'url' => route('categories.store'),
+                        'url' => route('admin.categories.store'),
                         'method' => 'POST'
                     ]
                 ],

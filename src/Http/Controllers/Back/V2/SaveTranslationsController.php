@@ -50,7 +50,7 @@ class SaveTranslationsController extends Controller
                 if($clsForm) {
                     $form = $formBuilder->create(SaveMissingTraductions::class, [
                         'method' => 'PUT',
-                        'url' => route('savetraductions.update', ['savetraduction' => $id, 'lang' => $actualLang]),
+                        'url' => route('admin.savetraductions.update', ['savetraduction' => $id, 'lang' => $actualLang]),
                     ], [
                         'id' => $id,
                         'type' => $modelStr,

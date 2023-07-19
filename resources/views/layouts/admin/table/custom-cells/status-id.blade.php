@@ -1,1 +1,0 @@
-<td> {{ __('admin.table.modules.statuses.'.$model->status->name) }} </td>

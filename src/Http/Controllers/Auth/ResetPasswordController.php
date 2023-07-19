@@ -39,14 +39,19 @@ class ResetPasswordController extends Controller
     public function showResetForm(Request $request)
 
     {
-        $form = $this->form(ShowResetForm::class, [
+
+        $form = $this->makeForm(ShowResetForm::class, [
             'method' => 'POST',
             'url' => route('auth.password.update')
         ]);
 
-        return view('adminify::auth.passwords.reset')->with(
-            ['form' => $form]
-        );
+        $views = $this->getPossiblesViews('PasswordResets');
+        // view('adminify::auth.login', ['form' => $form])
+        
+        return $this->renderView($views, [
+            'model' => (object) [],
+            'form' => $form->toArray()
+        ]);
     }
 
 }

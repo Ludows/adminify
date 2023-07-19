@@ -123,7 +123,7 @@ class MediaService {
             $pageInt = (int) $inputs['page'];
         }
 
-        $paginator = $query->latest()->paginate($config['limit'], ['*'], 'page', $pageInt)->withPath( route('medias.index') );
+        $paginator = $query->latest()->paginate($config['limit'], ['*'], 'page', $pageInt)->withPath( route('admin.medias.index') );
 
 
         return (object) [

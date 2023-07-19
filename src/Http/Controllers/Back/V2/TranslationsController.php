@@ -64,7 +64,7 @@ class TranslationsController extends Controller
         {
             $form = $this->makeForm(FormsCreateTranslation::class, [
                 'method' => 'POST',
-                'url' => route('traductions.store')
+                'url' => route('admin.traductions.store')
             ]);
 
             $views = $this->getPossiblesViews('Create');
@@ -91,7 +91,7 @@ class TranslationsController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.success'),
                 'entity' => $traduction,
-                'route' => 'traductions.index'
+                'route' => 'admin.traductions.index'
             ]);
         }
 
@@ -121,7 +121,7 @@ class TranslationsController extends Controller
 
             $form = $this->makeForm(UpdateTranslation::class, [
                 'method' => 'PUT',
-                'url' => route('traductions.update', ['traduction' => $traduction->id]),
+                'url' => route('admin.traductions.update', ['traduction' => $traduction->id]),
                 'model' => $traduction
             ]);
 
@@ -146,7 +146,7 @@ class TranslationsController extends Controller
             //
             $form = $this->makeForm(UpdateTranslation::class, [
                 'method' => 'PUT',
-                'url' => route('traductions.update', ['traduction' => $traduction->id]),
+                'url' => route('admin.traductions.update', ['traduction' => $traduction->id]),
                 'model' => $traduction
             ]);
 
@@ -155,7 +155,7 @@ class TranslationsController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.updated'),
                 'entity' => $traduction,
-                'route' => 'traductions.index'
+                'route' => 'admin.traductions.index'
             ]);
         }
 
@@ -173,7 +173,7 @@ class TranslationsController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.deleted'),
                 'entity' => $traduction,
-                'route' => 'traductions.index'
+                'route' => 'admin.traductions.index'
             ]);
         }
 }

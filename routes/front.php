@@ -5,17 +5,12 @@ $c = config('site-settings.restApi');
 $headless = config('site-settings.headless');
 $features = config('site-settings.enables_features');
 $front_registrar = null;
-$themeManager = null;
 
 if(is_installed()) {
-    $themeManager = theme_manager();
     $front_registrar = front_registrar();
 
     if(!empty($c) && request()->segment(1) != $c['prefix'] || !empty($c) && $headless) {
-        Route::middleware('multilang.basic')->group(function ($router) use ($c, $themeManager, $features, $front_registrar) {
-
-            $theme = theme();
-
+        Route::group([], function ($router) use ($c, $features, $front_registrar) {
             $router->get('/images/{folder?}/{path}', 'App\Adminify\Http\Controllers\Front\ImageController@show')->name('image.transform');
             $router->get('/images/{path}', 'App\Adminify\Http\Controllers\Front\ImageController@show')->name('image.transform');
             // $router->get('/', 'App\Adminify\Http\Controllers\Front\PageController@index')->name('pages.front.index');
@@ -30,17 +25,8 @@ if(is_installed()) {
                 }
             }
 
-            if(!empty($theme)) {
-                $router->get('/theme/{folder}/{filename}', 'App\Adminify\Http\Controllers\Front\ImageController@themeAssets')->name('theme.assets');
-            }
-
             if(isset($features['form']) && $features['form']) {
                 $router->post('/forms/validate/', 'App\Adminify\Http\Controllers\Front\PageController@validateForms')->name('forms.validate');
-            }
-
-            if(is_installed()) {
-                $fileRoutes_in_themes = $themeManager->getFileRoutes('front');
-                include($fileRoutes_in_themes);
             }
 
         });

@@ -44,8 +44,6 @@ class MenuController extends Controller
 
             $views = $this->getPossiblesViews('Index');
 
-            // dd($table->toArray());
-
 
             return $this->renderView($views, [
                 'model' => (object) [],
@@ -63,12 +61,10 @@ class MenuController extends Controller
             
             $views = $this->getPossiblesViews('Create');
 
-            // dd($table->toArray());
-
 
             return $this->renderView($views, [
                 'model' => (object) [],
-                'menubuilder' => $menuBuilder
+                'menubuilder' => $menuBuilder->toArray()
             ]);
 
         }
@@ -87,7 +83,7 @@ class MenuController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.success'),
                 'entity' => $menu,
-                'route' => 'menus.index'
+                'route' => 'admin.menus.index'
             ]);
         }
 
@@ -121,7 +117,7 @@ class MenuController extends Controller
 
             return $this->renderView($views, [
                 'model' => $menu,
-                'menubuilder' => $menuBuilder
+                'menubuilder' => $menuBuilder->toArray()
             ]);
         }
 
@@ -147,19 +143,20 @@ class MenuController extends Controller
         }
 
 
-        public function setItemsToMenu(Request $request, $id, $type) {
+        public function setItemsToMenu(Request $request, $type) {
 
-            $config = get_site_key('menu-builder');
             // $type = $request->type;
-            $v = view();
-
-            $model = $config['models'][$type];
+            // $v = view();
+            $model = ucfirst($type);
             $m_str = adminify_get_class($model, ['app:models', 'app:adminify:models'], false);
+            if(empty($m_str)) {
+                abort(404);
+            }
             $m = new $m_str;
-            $enabled_features = get_site_key('enables_features');
+            // $enabled_features = get_site_key('enables_features');
 
             $three = [];
-            $html = [];
+            // $html = [];
 
             if($type == 'custom') {
                 $three[] = (object) [
@@ -167,34 +164,38 @@ class MenuController extends Controller
                     'url' => $request->input('url'),
                     'slug' => Str::slug( $request->input('title'), '-' ),
                     'open_new_tab' => $request->input('open_new_tab') ? true : false,
-                    'overwrite_title' => ''
+                    'overwrite_title' => '',
+                    'childs' => []
                 ];
             }
             else {
                 $items = $request->input('items');
 
                 if(is_string($items)) {
-                    $three[] = $m->find($items);
+                    $m = $m->find($items);
+                    $m = $m->setAttribute('children', []);
+
+                    $three[] = $m;
                 }
 
                 if(is_array($items)) {
                     foreach ($items as $item) {
                         # code...
-                        $three[] = $m->find($item);
+                        $m = $m->find($item);
+                        $m = $m->setAttribute('children', []);
+
+                        $three[] = $m;
                     }
                 }
             }
 
-            foreach ($three as $b) {
-                # code...
-                $html[] = $v->make('adminify::layouts.admin.menubuilder.menu-item', ['mediaMode' => isset($enabled_features['media']) && $enabled_features['media'], 'item' => $b, 'type' => $type, 'new' => true, 'isCustom' => $type == 'custom'])->render();
-            }
+            // foreach ($three as $b) {
+            //     # code...
+            //     $html[] = $v->make('adminify::layouts.admin.menubuilder.menu-item', ['mediaMode' => isset($enabled_features['media']) && $enabled_features['media'], 'item' => $b, 'type' => $type, 'new' => true, 'isCustom' => $type == 'custom'])->render();
+            // }
 
-
-            return response()->json([
-                'html' => $html,
+            return $this->toJson([
                 'items' => $three,
-                'multilang' => $request->useMultilang,
                 'type' => $type
             ]);
 

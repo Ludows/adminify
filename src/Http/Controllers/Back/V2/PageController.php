@@ -50,7 +50,6 @@ class PageController extends Controller
 
             $views = $this->getPossiblesViews('Index');
 
-
             return $this->renderView($views, [
                 'model' => (object) [],
                 'table' => $table->toArray()
@@ -66,7 +65,7 @@ class PageController extends Controller
         {
             $form = $this->makeForm(CreatePage::class, [
                 'method' => 'POST',
-                'url' => route('pages.store')
+                'url' => route('admin.pages.store')
             ]);
 
             $views = $this->getPossiblesViews('Create');
@@ -92,7 +91,7 @@ class PageController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.success'),
                 'entity' => $page,
-                'route' => 'pages.index'
+                'route' => 'admin.pages.index'
             ]);
 
         }
@@ -120,7 +119,7 @@ class PageController extends Controller
             $page->checkForTraduction();
                 $form = $this->makeForm(UpdatePage::class, [
                     'method' => 'PUT',
-                    'url' => route('pages.update', ['page' => $page->id]),
+                    'url' => route('admin.pages.update', ['page' => $page->id]),
                     'model' => $page
                 ]);
         
@@ -165,7 +164,7 @@ class PageController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.updated'),
                 'entity' => $page,
-                'route' => 'pages.index'
+                'route' => 'admin.pages.index'
             ]);
 
             // return $this->sendResponse($page, 'pages.index', 'admin.typed_data.updated');
@@ -186,7 +185,7 @@ class PageController extends Controller
             return $this->toJson([
                 'message' => __('admin.typed_data.deleted'),
                 'entity' => $page,
-                'route' => 'pages.index'
+                'route' => 'admin.pages.index'
             ]);
 
             // redirect
