@@ -1,0 +1,10 @@
+<?php
+
+namespace {{namespace}};
+
+use Ludows\Adminify\Libs\BaseForm;
+
+class {{class}} extends BaseForm
+{
+    public function buildForm() {}
+}

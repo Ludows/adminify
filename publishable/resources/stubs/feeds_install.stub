@@ -1,0 +1,7 @@
+<?php
+
+namespace {{namespace}};
+
+use Ludows\Adminify\Feeds\Site as {{class}}FeedManager;
+
+class Site extends {{class}}FeedManager {}

@@ -1,0 +1,14 @@
+<?php
+namespace {{namespace}};
+
+use Ludows\Adminify\Libs\DropdownsManager;
+use Ludows\Adminify\Forms\DeleteCrud;
+
+use Illuminate\Support\Str;
+
+class {{class}} extends DropdownsManager
+{
+    public function handle() {
+        parent::handle();
+    }
+}

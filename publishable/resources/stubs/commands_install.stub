@@ -1,0 +1,7 @@
+<?php
+
+namespace {{namespace}};
+
+use Ludows\Adminify\Commands\{{class}} as {{class}}Command;
+
+class {{class}} extends {{class}}Command {}

@@ -1,0 +1,14 @@
+<?php
+
+namespace {{namespace}};
+
+use Ludows\Adminify\Libs\TableManager;
+
+class {{class}} extends TableManager {
+    public function getDropdownManagerClass() {
+        return \App\Dropdowns\{{model}}Dropdown::class;
+    }
+    public function getModelClass() {
+        return \{{rootNamespace}}Models\{{model}}::class;
+    }
+}

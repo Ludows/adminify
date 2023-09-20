@@ -2,7 +2,11 @@
 
 namespace Ludows\Adminify;
 
+
 class Adminify
 {
-    // Build your next great package.
+    public $command = null;
+
+    // Build wonderful things
+    
 }

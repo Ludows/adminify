@@ -1,0 +1,10 @@
+<?php
+
+namespace {{namespace}};
+
+use Kris\LaravelFormBuilder\Field;
+
+use Ludows\Adminify\Forms\{{class}} as {{class}}BaseForm;
+
+class {{class}} extends {{class}}BaseForm
+{}

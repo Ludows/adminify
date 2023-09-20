@@ -1,0 +1,19 @@
+<?php
+
+namespace {{namespace}};
+
+use MrAtiebatie\Repository;
+use  Ludows\Adminify\Repositories\BaseRepository;
+
+class {{model}}Repository extends BaseRepository
+{
+    // Define your internals relationship columns. The repository does'nt make treatments for this columns
+    public $internal_relations_columns = [];
+
+    // Define your externals relationship columns. The repository does'nt make treatments for this columns
+    // ex : tables pivot
+    public $external_relations_columns = [];
+
+    // Your can Define your Manipulation datas here
+    public $filters_on = [];
+}

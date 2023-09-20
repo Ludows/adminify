@@ -1,0 +1,34 @@
+<?php
+
+namespace {{namespace}};
+
+use Ludows\Adminify\Models\ClassicModel;
+use Spatie\Feed\FeedItem;
+use Spatie\Menu\Laravel\Link;
+use Spatie\Searchable\SearchResult;
+
+class {{class}} extends ClassicModel
+{
+    public $showInMenu = true;
+    public function getLinks($menuBuilder, $arrayDatas) {}
+    public $searchable_label = 'title';
+
+    public $MultilangTranslatableSwitch = [];
+
+    public function getSearchResult() : SearchResult
+     {
+        // $url = route('categories.edit', ['category' => $this->id]);
+
+        //  return new \Spatie\Searchable\SearchResult(
+        //     $this,
+        //     $this->title,
+        //     $url
+        //  );
+    }
+    public function toFeedItem(): FeedItem {}
+
+    // if you want to specify your columns for listings search. It's here
+    public function getColumnsListing() {
+        return [];
+    }
+}

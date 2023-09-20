@@ -1,0 +1,12 @@
+<?php
+
+namespace {{namespace}};
+
+use Ludows\Adminify\Libs\ShortcodeBaseRender;
+use Thunder\Shortcode\Shortcode\ShortcodeInterface;
+
+class {{class}} extends ShortcodeBaseRender {
+    public function render(ShortcodeInterface $s) {
+        return '@todo';
+    }
+}

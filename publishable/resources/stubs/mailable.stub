@@ -1,0 +1,33 @@
+<?php
+
+namespace {{namespace}};
+
+use Ludows\Adminify\Libs\MailableTemplateBase;
+
+class {{class}} extends MailableTemplateBase
+{
+    public function __construct()
+    {
+
+    }
+
+    public static function getHtmlTemplate() {
+        return '';
+    }
+    public static function getSubject() {
+        return 'Your subject here';
+    }
+    
+    public function getHtmlLayout(): string
+    {
+        /**
+         * In your application you might want to fetch the layout from an external file or Blade view.
+         * 
+         * External file: `return file_get_contents(storage_path('mail-layouts/main.html'));`
+         * 
+         * Blade view: `return view('mailLayouts.main', $data)->render();`
+         */
+        
+        return '';
+    }
+}

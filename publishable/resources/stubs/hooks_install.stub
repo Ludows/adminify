@@ -1,0 +1,9 @@
+<?php
+
+namespace {{namespace}};
+
+use Ludows\Adminify\Hooks\{{class}} as {{class}}Base;
+
+class {{class}} extends {{class}}Base {
+    
+}
