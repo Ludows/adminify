@@ -1,0 +1,54 @@
+{
+    "name": "ludows/adminify",
+    "description": "It's a basic admin CMS",
+    "keywords": [
+        "ludows",
+        "adminify"
+    ],
+    "homepage": "https://github.com/ludows/adminify",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Ludovic Cointrel",
+            "email": "theartist768@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "illuminate/support": "^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^6.0",
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Ludows\\Adminify\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ludows\\Adminify\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ludows\\Adminify\\AdminifyServiceProvider"
+            ],
+            "aliases": {
+                "Adminify": "Ludows\\Adminify\\AdminifyFacade"
+            }
+        }
+    }
+}
