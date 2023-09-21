@@ -14,12 +14,9 @@ use Ludows\Adminify\Commands\CreateController;
 use Ludows\Adminify\Commands\CreateApiController;
 use Ludows\Adminify\Commands\CreateRepository;
 use Ludows\Adminify\Commands\DoInstallEnv;
-use Ludows\Adminify\Commands\CreateInterfacable;
-use Ludows\Adminify\Commands\CreateInterfacableBlock;
 use Ludows\Adminify\Commands\GenerateAdminifyContainer;
 use Ludows\Adminify\Commands\CreateMetas;
 use Ludows\Adminify\Commands\CreateFrontForms;
-use Ludows\Adminify\Commands\CreateShortcode;
 use Ludows\Adminify\Commands\FlushCacheQuery;
 use Ludows\Adminify\Commands\CreateDatabase;
 use Ludows\Adminify\Commands\ScafoldEnvironnements;
@@ -34,7 +31,6 @@ use Ludows\Adminify\Commands\CreateHook;
 use Illuminate\Support\Facades\Route;
 
 use Illuminate\Contracts\Http\Kernel; // add kernel
-use Ludows\Adminify\View\Components\Modal;
 
 use Ludows\Adminify\Libs\HookManager;
 
@@ -45,12 +41,6 @@ use League\Glide\Signatures\SignatureFactory;
 
 use Ludows\Adminify\Libs\SitemapRender;
 use Ludows\Adminify\Libs\MediaService;
-use Illuminate\Pagination\Paginator;
-
-use Illuminate\Support\Facades\Blade;
-
-// use Illuminate\Support\Facades\Storage;
-
 
 class AdminifyServiceProvider extends ServiceProvider {
 
@@ -69,14 +59,11 @@ class AdminifyServiceProvider extends ServiceProvider {
             $packages = require_once(__DIR__.'/../config/packagelist.php');
             $this->bootableDependencies($packages, $kernel);
         }
-
-        $this->registerDirectives();
-
         // dd(config('site-settings'));
 
         $this->registerPublishables();
 
-        $this->loadApiRoutes();
+        $this->loadRoutes();
 
         $this->mergeConfigFrom(
             __DIR__.'/../config/site-settings.php', 'adminify'
@@ -88,36 +75,6 @@ class AdminifyServiceProvider extends ServiceProvider {
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'adminify');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
-    }
-
-    public function registerDirectives() {
-
-        Blade::directive('routeis', function ($expression) {
-            return "<?php if (fnmatch({$expression}, Route::currentRouteName())) : ?>";
-        });
-
-        Blade::directive('endrouteis', function ($expression) {
-            return '<?php endif; ?>';
-        });
-
-        Blade::directive('routeisnot', function ($expression) {
-            return "<?php if (! fnmatch({$expression}, Route::currentRouteName())) : ?>";
-        });
-
-        Blade::directive('endrouteisnot', function ($expression) {
-            return '<?php endif; ?>';
-        });
-
-        Blade::directive('hook', function ($arguments) {
-            $args = explode(',', $arguments);
-            $trimmed_args = array_map('trim', $args);
-
-            if(count($trimmed_args) < 2) {
-                $trimmed_args[1] = null;
-            }
-
-            return "<?php echo app('HookManager')->exec(". join(', ', $trimmed_args) ."); ?>";
-        });
     }
 
     public function loadCustomViewsPaths() {
@@ -142,7 +99,6 @@ class AdminifyServiceProvider extends ServiceProvider {
     public function register() {
 
         // Register the service the package provides.
-        define('IS_ADMINIFY', true);
 
         $this->app->singleton('adminify', function($app) {
 
@@ -177,14 +133,6 @@ class AdminifyServiceProvider extends ServiceProvider {
             return new HookManager();
         });
 
-        $this->app->bind('ThemeManager', function () {
-            return new \Ludows\Adminify\Libs\ThemeManager();
-        });
-
-        $this->loadViewComponentsAs('adminify', [
-            Modal::class,
-        ]);
-
         $this->registerCommands();
     }
 
@@ -217,7 +165,7 @@ class AdminifyServiceProvider extends ServiceProvider {
         }
     }
 
-    private function loadApiRoutes() {
+    private function loadRoutes() {
         $config = config('site-settings.restApi');
 
         // $this->routes(function () use ($config) {
@@ -330,7 +278,7 @@ class AdminifyServiceProvider extends ServiceProvider {
             ScafoldEnvironnements::class,
             CreateRepository::class,
             CreateController::class,
-            CreateApiController::class,
+            // CreateApiController::class,
             CreateCrud::class,
             DoInstallEnv::class,
             CreateModel::class,
@@ -340,11 +288,8 @@ class AdminifyServiceProvider extends ServiceProvider {
             InstallPackages::class,
             RouteList::class,
             CreateTranslations::class,
-            CreateInterfacable::class,
-            CreateInterfacableBlock::class,
             CreateMetas::class,
             CreateFrontForms::class,
-            CreateShortcode::class,
             FlushCacheQuery::class,
             CreateHook::class
         ]);
