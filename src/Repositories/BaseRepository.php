@@ -152,56 +152,7 @@ class BaseRepository extends BaseRepo
             call_user_func_array(array($this, 'beforeRun'), array($model, $formValues,  $type));
         }
 
-        // if($request->loadEditor && get_site_key('editor.handleAssetsGeneration') == 'before' && in_array(singular(class_basename($model)), $request->bindedEditorKeys)) {
-        //     $this->handleAssetsGeneration($model, 'before');
-        //     $this->createEditorSaveFile($model);
-        // }
-
-        // $this->hookManager->run($hooks[0], $model);
-
-        // if(count($this->internal_relations_columns) > 0) {
-        //     foreach ($this->internal_relations_columns as $relationable) {
-        //         # code...
-
-        //         $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $relationable, 'get##PLACEHOLDER##Relationship');
-
-        //         if(method_exists($this, $namedMethod)) {
-        //             call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
-        //         }
-
-        //     }
-        // }
-
-        // if(count($this->filters_on) > 0) {
-        //     foreach ($this->filters_on as $filterable) {
-        //         $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $filterable, 'get##PLACEHOLDER##Filter');
-
-        //         if(method_exists($this, $namedMethod)) {
-        //             call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
-        //         }
-        //     }
-        // }
-
-
         $model->save();
-
-
-        // now the model has been created or updated. We can chain all external relationships
-
-        // if(count($this->external_relations_columns) > 0) {
-        //     foreach ($this->external_relations_columns as $relationable) {
-        //         # code...
-
-        //         $namedMethod = $this->getNamedFunctionPattern('##PLACEHOLDER##', $relationable, 'getExternal##PLACEHOLDER##Relationship');
-
-        //         if(method_exists($this, $namedMethod)) {
-        //             call_user_func_array(array($this, $namedMethod), array($model, $formValues,  $type));
-        //         }
-
-        //     }
-        // }
-
-        // $this->hookManager->run($hooks[1], $model);
 
         if(method_exists($this, 'afterRun')) {
             call_user_func_array(array($this, 'afterRun'), array($model, $formValues,  $type));
@@ -214,29 +165,6 @@ class BaseRepository extends BaseRepo
 
         return $model;
     }
-    // public function getSlugProcess($model, $formValues, $type) {
-
-    //     $fillable = $model->getFillable();
-    //     if(in_array('title', $fillable)) {
-    //         $model->slug = Str::slug($formValues['title']);
-    //     }
-    //     return $model;
-    // }
-
-    // public function getMediaIdRelationship($model, $formValues, $type) {
-    //     if(isset($formValues['media_id']) && $formValues['media_id'] != 0) {
-    //         $id = (int) $formValues['media_id'];
-
-    //         $m = Media::where('id', $id)->first();
-    //         if($m != null) {
-    //             $model->media_id = $m->id;
-    //         }
-    //         else {
-    //             $model->media_id = 0;
-    //         }
-    //     }
-    //     // return $model;
-    // }
 
     public function create($mixed) {
         $m = $this->getProcessDb($mixed, $this->model ?? null, 'create');

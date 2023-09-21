@@ -91,20 +91,20 @@ return [
 
     'assets' => [
         'backend' => array(
-            adminify_asset('/adminify/vendor/nucleo/css/nucleo.css'),
-            adminify_asset('/adminify/vendor/@fortawesome/fontawesome-free/css/all.min.css'),
-            adminify_asset('/adminify/back/css/argon.css'),
-            adminify_asset('/adminify/back/css/extensions.css'),
-            adminify_asset('/myuploads/routes.js'),
-            adminify_asset('/myuploads/traductions-'. lang() .'.js'),
-            adminify_asset('/adminify/back/js/extensions.js'),
-            adminify_asset('/adminify/back/js/extensions-call.js'),
-            adminify_asset('/adminify/back/js/argon.js'),
-            adminify_asset('/adminify/back/js/searchable.js'),
+            // adminify_asset('/adminify/vendor/nucleo/css/nucleo.css'),
+            // adminify_asset('/adminify/vendor/@fortawesome/fontawesome-free/css/all.min.css'),
+            // adminify_asset('/adminify/back/css/argon.css'),
+            // adminify_asset('/adminify/back/css/extensions.css'),
+            // adminify_asset('/myuploads/routes.js'),
+            // adminify_asset('/myuploads/traductions-'. lang() .'.js'),
+            // adminify_asset('/adminify/back/js/extensions.js'),
+            // adminify_asset('/adminify/back/js/extensions-call.js'),
+            // adminify_asset('/adminify/back/js/argon.js'),
+            // adminify_asset('/adminify/back/js/searchable.js'),
         ),
         'frontend' => array(
-            adminify_asset('/myuploads/routes.js'),
-            adminify_asset('/myuploads/traductions-'. lang() .'.js'),
+            // adminify_asset('/myuploads/routes.js'),
+            // adminify_asset('/myuploads/traductions-'. lang() .'.js'),
         ),
         'vitejs' => true,
         'inputs' => is_running_console() ? [] : (is_admin() ? array('backend') : array('frontend'))
@@ -177,7 +177,6 @@ return [
         ],
         'mail:before_send' => [],
         'mail:after_send' => [],
-        'after_form_page' => \App\Adminify\Hooks\RevisionShowHook::class
     ],
 
     'sitemap' => [
@@ -226,12 +225,6 @@ return [
 
     'revisions' => [
         'escaped_keys' => ['id', 'slug']
-    ],
-
-    'shortcodes' => [
-        'form' => \App\Adminify\Shortcodes\FormShortcode::class,
-        'template' => \App\Adminify\Shortcodes\TemplateShortcode::class,
-        'frontify-form' => \App\Adminify\Shortcodes\FrontifyFormShortcode::class,
     ],
 
     // menu builder is automatic sync with multilang param.
@@ -309,10 +302,5 @@ return [
             //     'controller' => 'MyAwesomeClass@getKeys'
             //  ]
         ]
-    ],
-
-    'interfaces' => [
-        'home' => \App\Adminify\Interfacable\DashboardManager::class,
-        'formbuilder' => \App\Adminify\Interfacable\FormBuilderManager::class,
     ],
 ];
