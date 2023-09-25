@@ -13,11 +13,11 @@ use Illuminate\Support\Facades\View;
 use App\Adminify\Models\GroupMeta;
 use Error;
 use Inertia\Inertia;
-
+use Ludows\Adminify\Traits\SetupRouting;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, FormBuilderTrait;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, FormBuilderTrait, SetupRouting;
 
     public $view_key_cache_prefix = 'front_view';
 
