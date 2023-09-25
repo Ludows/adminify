@@ -1,7 +1,0 @@
-<?php
-
-namespace {{namespace}};
-
-use Ludows\Adminify\Interfacable\Blocks\{{class}} as {{class}}Base;
-
-class {{class}} extends {{class}}Base {}

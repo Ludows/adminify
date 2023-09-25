@@ -13,46 +13,6 @@ use Ludows\Adminify\Libs\ThemeManager;
 use Ludows\Adminify\Libs\HookManager;
 use Illuminate\Support\Facades\Route;
 
-
-if (! function_exists('do_shortcode')) {
-    function do_shortcode($shortcodeName, $parameters = []) {
-        $shortcodes = config('site-settings.shortcodes');
-
-        if(empty($shortcodes[$shortcodeName])) {
-            return '';
-        }
-
-        $shortcode = $shortcodes[$shortcodeName];
-        $text = '['. $shortcodeName;
-
-        if(count($parameters) > 0) {
-            foreach ($parameters as $parameterName => $value) {
-                # code...
-                $text .= ' '.$parameterName.'="'.$value.'"';
-            }
-        }
-
-        $text .= ']';
-
-        $shortcodeClass = new $shortcode([
-            'text' => $text,
-            'shortcodeName' => $shortcodeName,
-            'shortcodeClass' => $shortcode
-        ]);
-
-        return $shortcodeClass->parsed;
-    }
-}
-
-if (! function_exists('parse_shortcode')) {
-    function parse_shortcode($string = '') {
-        $parser = new ShortcodeFacade();
-        $result = $parser->parse($string);
-        //dd($result);
-        return $result;
-    }
-}
-
 if(! function_exists('is_closure') ) {
     function is_closure($t) {
         return $t instanceof \Closure;
@@ -463,44 +423,6 @@ if(! function_exists('is_trashable_model')  ) {
     }
 }
 
-if(! function_exists('set_recursive_finder')) {
-    function set_recursive_finder($path, $wantedFile, $params = []) {
-        $rii = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path));
-
-        $ret = $params['startValue'];
-        foreach ($rii as $file)
-            if ($file->isDir()) {
-                set_recursive_finder($file, $wantedFile, $params);
-            }
-
-            if($file->getPathname() == $wantedFile) {
-                $ret = $params['endValue'] ?? $file->getPathname();
-            }
-
-        return $ret;
-    }
-}
-
-
-if(! function_exists('search_stubs_install')) {
-    function search_stubs_install($path, $wantedFile) {
-        $ret = set_recursive_finder($path, $wantedFile, [
-            'startValue' => null,
-        ]);
-        return $ret;
-    }
-}
-
-if(! function_exists('is_installed_stub')) {
-    function is_installed_stub($path, $wantedFile) {
-        $ret = set_recursive_finder($path, $wantedFile, [
-            'startValue' => false,
-            'endValue' => true,
-        ]);
-        return $ret;
-    }
-}
-
 if(! function_exists('get_missing_langs')) {
     function get_missing_langs($model) {
         $request = inertia();
@@ -603,21 +525,6 @@ if(! function_exists('package_path')) {
     }
 }
 
-if(! function_exists('theme_path')) {
-    function theme_path($path = '') {
-        $ret = null;
-        $isInstalled = is_installed();
-        if($isInstalled) {
-            $ret = get_site_key('themes.root_path').$path;
-        }
-        else {
-            $ret = base_path( env('MIX_ADMINIFY_THEME_ROOT_FOLDER') ).$path;
-        }
-
-        return $ret;
-    }
-}
-
 if(! function_exists('get_site_key')) {
     function get_site_key($key = '') {
         return config('site-settings.'.$key);
@@ -705,22 +612,6 @@ if(! function_exists('get_missing_translations_routes') ) {
     }
 }
 
-if (! function_exists('get_shortcode')) {
-    function get_shortcode($string = '') {
-        $ret_s = null;
-        $name = $string;
-        $shortcodes = config('site-settings.shortcodes');
-
-        if(isset($shortcodes[$name])) {
-            $ret_s = [
-                'name' => $name,
-                'class' => $shortcodes[$name]
-            ];
-        }
-        return $ret_s;
-    }
-}
-
 if(! function_exists('forget_cache')) {
     function forget_cache($key) {
         Cache::forget($key);
@@ -736,20 +627,6 @@ if(!function_exists('cache_exist')) {
 if(!function_exists('cache_flush')) {
     function cache_flush() {
         Cache::flush();
-    }
-}
-
-if (! function_exists('is_shortcode')) {
-    function is_shortcode($string = '') {
-
-        $isShortcode = false;
-        $name = $string;
-        $shortcodes = config('site-settings.shortcodes');
-
-        if(!empty($shortcodes[$name])) {
-            $isShortcode = true;
-        }
-        return $isShortcode;
     }
 }
 
@@ -963,29 +840,6 @@ if(!function_exists('status')) {
     }
 }
 
-if(! function_exists('theme')) {
-    function theme() {
-        $isInstalled = is_installed();
-        if(!$isInstalled) {
-            return env('THEME_NAME_ON_INSTALL');
-        }
-        return setting('theme');
-    }
-}
-
-if(!function_exists('theme_url')) {
-    function theme_url($string = '') {
-        return url(env('MIX_ADMINIFY_THEME_ROOT_FOLDER').DIRECTORY_SEPARATOR.theme().$string);
-    }
-}
-
-if(! function_exists('theme_manager')) {
-    function theme_manager() {
-        return new ThemeManager();
-    }
-}
-
-
 if(! function_exists('hook_manager')) {
     function hook_manager() {
         return new HookManager();
@@ -996,12 +850,6 @@ if(!function_exists('is_installed')) {
     function is_installed() {
         $pathable_extends = app_path('Adminify');
         return file_exists($pathable_extends) && is_dir($pathable_extends);
-    }
-}
-
-if(!function_exists('theme_dir')) {
-    function theme_dir($string = '') {
-        return theme_path( DIRECTORY_SEPARATOR.theme().$string );
     }
 }
 

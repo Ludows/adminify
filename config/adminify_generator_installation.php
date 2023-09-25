@@ -74,30 +74,6 @@ return [
             'postfix'             => '',
             'directory_namespace' => true,
         ],
-        'adminify:install:interfacable' => [
-            'namespace'           => '\Adminify\Interfacable',
-            'path'                => './app/Adminify/Interfacable/',
-            'postfix'             => '',
-            'directory_namespace' => true,
-        ],
-        'adminify:install:interfacable:blocks' => [
-            'namespace'           => '\Adminify\Interfacable\Blocks',
-            'path'                => './app/Adminify/Interfacable/Blocks/',
-            'postfix'             => '',
-            'directory_namespace' => true,
-        ],
-        'adminify:install:interfacable:blocks:formbuilder' => [
-            'namespace'           => '\Adminify\Interfacable\Blocks\FormBuilder',
-            'path'                => './app/Adminify/Interfacable/Blocks/FormBuilder/',
-            'postfix'             => '',
-            'directory_namespace' => true,
-        ],
-        'adminify:install:interfacable:blocks:editor' => [
-            'namespace'           => '\Adminify\Interfacable\Blocks\Editor',
-            'path'                => './app/Adminify/Interfacable/Blocks/Editor/',
-            'postfix'             => '',
-            'directory_namespace' => true,
-        ],
         'adminify:install:listeners' => [
             'namespace'           => '\Adminify\Listeners',
             'path'                => './app/Adminify/Listeners/',
@@ -134,18 +110,6 @@ return [
             'postfix'             => '',
             'directory_namespace' => true,
         ],
-        'adminify:install:shortcodes' => [
-            'namespace'           => '\Adminify\Shortcodes',
-            'path'                => './app/Adminify/Shortcodes/',
-            'postfix'             => '',
-            'directory_namespace' => true,
-        ],
-        'adminify:install:widgets' => [
-            'namespace'           => '\Adminify\Widgets',
-            'path'                => './app/Adminify/Widgets/',
-            'postfix'             => '',
-            'directory_namespace' => true,
-        ],
     ],
     'stubs' => [
         'adminify:install:commands'         => base_path() . '/resources/stubs/commands_install.stub',
@@ -160,17 +124,11 @@ return [
         'adminify:install:http:controllers:front' => base_path() . '/resources/stubs/ctrl_front_install.stub',
         'adminify:install:http:middleware' => base_path() . '/resources/stubs/mdlware_install.stub',
         'adminify:install:http:requests' => base_path() . '/resources/stubs/requests_install.stub',
-        'adminify:install:interfacable' => base_path() . '/resources/stubs/interfacable_install.stub',
-        'adminify:install:interfacable:blocks' => base_path() . '/resources/stubs/interfacable_block_install.stub',
-        'adminify:install:interfacable:blocks:formbuilder' => base_path() . '/resources/stubs/fb_interfacable_block_install.stub',
-        'adminify:install:interfacable:blocks:editor' => base_path() . '/resources/stubs/editor_interfacable_block_install.stub',
         'adminify:install:listeners' => base_path() . '/resources/stubs/listeners_install.stub',
         'adminify:install:mails' => base_path() . '/resources/stubs/mails_install.stub',
         'adminify:install:models' => base_path() . '/resources/stubs/models_install.stub',
         'adminify:install:repositories' => base_path() . '/resources/stubs/repositories_install.stub',
         'adminify:install:tables' => base_path() . '/resources/stubs/tables_install.stub',
         'adminify:install:forms:fields' => base_path() . '/resources/stubs/form_fields_install.stub',
-        'adminify:install:shortcodes' => base_path() . '/resources/stubs/shortcodes_install.stub',
-        'adminify:install:widgets' => base_path() . '/resources/stubs/widgets_install.stub'
     ]
 ];
