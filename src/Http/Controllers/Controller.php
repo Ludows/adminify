@@ -14,10 +14,11 @@ use App\Adminify\Models\GroupMeta;
 use Error;
 use Inertia\Inertia;
 use Ludows\Adminify\Traits\SetupRouting;
+use Ludows\Adminify\Traits\TableManagerable;
 
 class Controller extends BaseController
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, FormBuilderTrait, SetupRouting;
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests, FormBuilderTrait, SetupRouting, TableManagerable;
 
     public $view_key_cache_prefix = 'front_view';
 

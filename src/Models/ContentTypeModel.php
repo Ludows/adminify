@@ -69,29 +69,4 @@ abstract class ContentTypeModel extends ClassicModel
             'authorName' => $this->author->{$this->authorable_column},
         ]);
     }
-    public function getRenderContentAttribute() {
-
-        $content = $this->content;
-
-        $shortcodes = parse_shortcode($content);
-
-        if(!empty($shortcodes)) {
-            foreach ($shortcodes as $shortcode) {
-                # code...
-                if(is_shortcode($shortcode->getName())) {
-                    $s = get_shortcode($shortcode->getName());
-
-                    $shortcodeClass = new $s['class']([
-                        'text' => $content,
-                        'shortcodeName' => $s['name'],
-                        'shortcodeClass' => $s['class']
-                    ]);
-
-                    $content = $shortcodeClass->parsed;
-                }
-            }
-        }
-
-        return $content;
-    }
 }

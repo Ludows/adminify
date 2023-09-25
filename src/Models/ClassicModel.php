@@ -21,6 +21,7 @@ use Ludows\Adminify\Traits\QueryCachable;
 use Ludows\Adminify\Traits\GenerateSlug;
 use Ludows\Adminify\Traits\HasInteractsWithMediaLibrary;
 use Ludows\Adminify\Traits\Commentable;
+use Ludows\Adminify\Traits\HasAppendables;
 use Ludows\Adminify\Traits\HasUser;
 use Ludows\Adminify\Traits\HasRevisions;
 use Ludows\Adminify\Traits\HasSettings;
@@ -58,6 +59,7 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
     use HasSettings;
     use HasCategoriesRelations;
     use HasTagsRelations;
+    use HasAppendables;
 
     public function newEloquentBuilder($query)
     {
@@ -75,26 +77,6 @@ abstract class ClassicModel extends Model implements Searchable, Feedable
            $this->{$this->searchable_label},
            $url
         );
-    }
-
-    public function shouldAppendAs($name = '', $attrName = '') {
-        $filables = $this->getFillable();
-
-        if(in_array($name, $filables)) {
-            $this->appends[] = $attrName;
-        }
-    }
-    public function addAppends($array = []) {
-        if(is_array($array)) {
-            foreach ($array as $key => $value) {
-                # code...
-                $this->addAppend($value);
-            }
-        }
-    }
-    public function addAppend($name = '') {
-        $this->appends[] = $name;
-        return $this;
     }
 
     public function injectUrlWhenAvalaible() {

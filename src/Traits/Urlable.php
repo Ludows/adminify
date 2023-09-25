@@ -190,9 +190,6 @@
 
           return $a;
      }
-     public function getPreviousPathAttribute() {
-
-     }
      public function getFrontUrlAttribute() {
           $className = class_basename($this);
           $realName = lowercase( singular( $className ) );
