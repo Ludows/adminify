@@ -38,8 +38,6 @@ class ScafoldEnvironnements extends Command
      */
     public function handle()
     {
-        $theme_root_path = theme_path();
-        $package_vendor_path = $this->pathFromPackageScafold();
         $dest_Path = $this->createPathFromResources();
         $tasks = $this->option('task') ?? [];
         $dest_folders = [];
