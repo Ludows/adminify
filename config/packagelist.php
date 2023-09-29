@@ -33,21 +33,6 @@ return array(
         ),
         (object) array(
             'beforePublish' => [],
-            'name' => 'diglactic/laravel-breadcrumbs',
-            'publish' => null,
-            'autoload' => (object) [
-                'providers' => [],
-                'middlewares' => [],
-                'aliases' => []
-            ],
-            'config' => (object) [
-                'file' => '/../../config/breadcrumbs',
-                'name' => 'breadcrumbs',
-            ],
-            'afterPublish' => [],
-        ),
-        (object) array(
-            'beforePublish' => [],
             'name' => 'kris/laravel-form-builder',
             'publish' => null,
             'autoload' => (object) [
@@ -62,34 +47,6 @@ return array(
             'config' => (object) [
                 'file' => '/../../config/laravel-form-builder',
                 'name' => 'laravel-form-builder',
-            ],
-            'afterPublish' => [],
-        ),
-        (object) array(
-            'beforePublish' => [],
-            'name' => 'laracasts/flash',
-            'publish' => (object) [
-                'tag' => false,
-                'force' => false,
-                'sibling' => 'Laracasts\Flash\FlashServiceProvider'
-            ],
-            'autoload' => (object) [
-                'providers' => [],
-                'middlewares' => [],
-                'aliases' => []
-            ],
-            'config' => null,
-            'afterPublish' => [],
-        ),
-        (object) array(
-            'beforePublish' => [],
-            'name' => 'mratiebatie/laravel-repositories',
-            'publish' => null,
-            'config' => null,
-            'autoload' => (object) [
-                'providers' => [],
-                'middlewares' => [],
-                'aliases' => []
             ],
             'afterPublish' => [],
         ),
@@ -202,18 +159,6 @@ return array(
                 'middlewares' => [],
                 'aliases' => []
             ],
-            'config' => null,
-            'afterPublish' => [],
-        ),
-        (object) array(
-            'beforePublish' => [],
-            'name' => 'thunderer/shortcode',
-            'autoload' => (object) [
-                'providers' => [],
-                'middlewares' => [],
-                'aliases' => []
-            ],
-            'publish' => null,
             'config' => null,
             'afterPublish' => [],
         ),
