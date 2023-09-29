@@ -45,7 +45,8 @@ class InstallPackages extends Command
             'adminify:install:libs',
             'adminify:install:traits',
             'adminify:install:view',
-            'adminify:install:theme_structure',
+            // 'adminify:install:theme_structure',
+            'adminify:install:scafold_structure',
             'adminify:install:http:controllers:back:v2'
         ];
         $this->excludesFiles = [
