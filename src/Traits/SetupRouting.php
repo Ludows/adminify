@@ -9,13 +9,27 @@
   {
      //
 
-     abstract function theModel();
-     abstract function theRepository();
-     abstract function theTable();
-     abstract function createForm();
-     abstract function updateForm();
-     abstract function createFormRequest();
-     abstract function updateFormRequest();
+     public function theModel() {
+        return null;
+     }
+     public function theRepository() {
+        return null;
+     }
+     public function theTable() {
+        return null;
+     }
+     public function createForm() {
+        return null;
+     }
+     public function updateForm() {
+        return null;
+     }
+     public function createFormRequest() {
+        return null;
+     }
+     public function updateFormRequest() {
+        return null;
+     }
 
      public function index() {
           $table = $this->table( $this->theTable() );
