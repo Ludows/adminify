@@ -20,6 +20,27 @@ use Ludows\Adminify\Http\Controllers\Controller;
 
 class {{class}} extends Controller
 {
+    public function theModel() {
+        return {{model}}::class;
+     }
+     public function theRepository() {
+        return {{model}}Repository::class;
+     }
+     public function theTable() {
+        return {{model}}Tables::class;
+     }
+     public function createForm() {
+        return Create{{model}}Form::class;
+     }
+     public function updateForm() {
+        return Update{{model}}Form::class;
+     }
+     public function createFormRequest() {
+        return Create{{model}}Request::class;
+     }
+     public function updateFormRequest() {
+        return Update{{model}}Request::class;
+     }
 }
 
 

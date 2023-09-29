@@ -33,6 +33,8 @@ class CategoryController extends Controller
         $this->middleware(['permission:read|edit_categories'], ['only' => ['edit', 'update']]);
         $this->middleware(['permission:read|delete_categories'], ['only' => ['destroy']]);
     }
+
+    
     /**
         * Display a listing of the resource.
         *
