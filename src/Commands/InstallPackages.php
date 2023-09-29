@@ -39,6 +39,9 @@ class InstallPackages extends Command
 
         $this->packages = require_once(__DIR__.'/../../config/packagelist.php');
         $this->tasks = require_once(__DIR__.'/../../config/coretasks.php');
+        $this->deletes = [
+            app_path('Models/User.php')
+        ];
         $this->excludesTasks = [
             'adminify:install:facades',
             'adminify:install:helpers',
@@ -95,7 +98,7 @@ class InstallPackages extends Command
         if(in_array('*', $cleanedTasks)  || in_array('coreinstall', $cleanedTasks)) {
             $this->info('Handle Adminify core instalation...');
             $this->handleCoreTasks();
-
+            $this->handleCoreDeletes();
             
         }
         if(in_array('*', $cleanedTasks)  || in_array('stubs', $cleanedTasks)) {
@@ -243,6 +246,23 @@ class InstallPackages extends Command
             //second publish my preconfigured files config
             $this->handleConfig($dependency);
 
+        }
+    }
+    public function handleCoreDeletes($log = true) {
+        foreach ($this->deletes as $deleteTask) {
+            # code...
+            if(\File::exists($deleteTask)){
+                File::delete($deleteTask);
+            }
+
+            if(File::isDirectory($deleteTask)) {
+                File::deleteDirectory($deleteTask);
+            }
+
+
+            if($log) {
+                $this->info('Handle File delete:  '. $deleteTask);
+            }
         }
     }
     public function handleCoreTasks($log = true) {
