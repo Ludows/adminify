@@ -274,7 +274,7 @@ return [
 
     // this is possible for all website ( front and back )
     'restApi' => [
-        'enable' => true, // resets to false to disable entierely rest api
+        'enable' => false, // resets to false to disable entierely rest api
         'prefix' => 'api', // use prefix
         'domain' => null, // to set a domain, just replace by your domain,
         'token_name' => 'api-token',
