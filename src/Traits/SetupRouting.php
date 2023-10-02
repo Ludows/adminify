@@ -75,14 +75,14 @@
                 ]);
             }
     
-            /**
-                * Display the specified resource.
-                *
-                * @param  int  $id
-                * @return Response
-                */
-            public function show($id)
-            {}
+            // /**
+            //     * Display the specified resource.
+            //     *
+            //     * @param  int  $id
+            //     * @return Response
+            //     */
+            // public function show($id)
+            // {}
     
             /**
                 * Show the form for editing the specified resource.
