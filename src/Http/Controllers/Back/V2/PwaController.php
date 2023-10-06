@@ -24,7 +24,7 @@ class PwaController extends Controller
         $this->middleware(['permission:read|edit_settings'], ['only' => ['edit', 'update']]);
         $this->middleware(['permission:read|delete_settings'], ['only' => ['destroy']]);
     }
-    public function index(Pwa $pwa, FormBuilder $formBuilder, Request $request)
+    public function showIndexPage(Pwa $pwa, FormBuilder $formBuilder, Request $request)
         {
 
             $form = $this->makeForm(CreatePwa::class, [
@@ -47,7 +47,7 @@ class PwaController extends Controller
             *
             * @return Response
             */
-        public function store(SavePwa $request)
+        public function handleStore(SavePwa $request)
         {
             //
             $form = $this->makeForm(CreatePwa::class);

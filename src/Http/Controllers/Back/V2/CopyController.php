@@ -10,7 +10,7 @@ class CopyController extends Controller
     public function __construct() {
         $this->middleware(['permission:read|set_to_trash'], ['only' => ['index']]);
     }
-    public function index(Request $request, $type, $id) {
+    public function showIndexPage(Request $request, $type, $id) {
 
 
         // $type = $request->type;

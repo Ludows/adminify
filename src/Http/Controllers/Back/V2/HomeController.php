@@ -32,7 +32,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index(DashboardService $DashboardService)
+    public function showIndexPage(DashboardService $DashboardService)
     {
 
         $request = request();

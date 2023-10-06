@@ -7,7 +7,7 @@ use App\Adminify\Http\Controllers\Controller;
 
 class ListingController extends Controller
 {
-    public function index(Request $request) {
+    public function showIndexPage(Request $request) {
 
         // @todo in table manager method search
         $datas = $request->all();

@@ -50,11 +50,11 @@ class TrashController extends Controller
         }
     }
 
-    public function update(Request $request, $type, $id) {
+    public function handleUpdate(Request $request, $type, $id) {
         return $this->makeStatusRequest($type, $id, status()::PUBLISHED_ID);
     }
 
-    public function index(Request $request, $type, $id) {
+    public function showIndexPage(Request $request, $type, $id) {
         return $this->makeStatusRequest($type, $id, status()::TRASHED_ID);
     }
 }

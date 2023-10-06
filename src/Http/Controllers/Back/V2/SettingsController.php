@@ -24,7 +24,7 @@ class SettingsController extends Controller
         $this->middleware(['permission:read|edit_settings'], ['only' => ['edit', 'update']]);
         $this->middleware(['permission:read|delete_settings'], ['only' => ['destroy']]);
     }
-    public function index(Settings $settings, FormBuilder $formBuilder, Request $request)
+    public function showIndexPage(Settings $settings, FormBuilder $formBuilder, Request $request)
         {
 
             $form = $this->makeForm(CreateSettings::class, [
@@ -47,7 +47,7 @@ class SettingsController extends Controller
             *
             * @return Response
             */
-        public function store(SaveSettings $request)
+        public function handleStore(SaveSettings $request)
         {
             //
             $form = $this->makeForm(CreateSettings::class);

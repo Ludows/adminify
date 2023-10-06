@@ -39,7 +39,7 @@ class TranslationsController extends Controller
         *
         * @return Response
         */
-        public function index(Request $request, FormBuilder $formBuilder)
+        public function showIndexPage(Request $request, FormBuilder $formBuilder)
         {
 
             $table = $this->table(TranslationTable::class);
@@ -60,7 +60,7 @@ class TranslationsController extends Controller
             *
             * @return Response
             */
-        public function create(FormBuilder $formBuilder)
+        public function showCreatePage(FormBuilder $formBuilder)
         {
             $form = $this->makeForm(FormsCreateTranslation::class, [
                 'method' => 'POST',
@@ -82,7 +82,7 @@ class TranslationsController extends Controller
             *
             * @return Response
             */
-        public function store(CreateTranslationRequest $request)
+        public function handleStore(CreateTranslationRequest $request)
         {
             //
             $form = $this->makeForm(FormsCreateTranslation::class);
@@ -101,7 +101,7 @@ class TranslationsController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function show($id)
+        public function showPage($id)
         {
             //
         }
@@ -112,7 +112,7 @@ class TranslationsController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function edit(Traductions $traduction, FormBuilder $formBuilder)
+        public function showEditPage(Traductions $traduction, FormBuilder $formBuilder)
         {
             // Etonnant laravel ne comprends pas l'object Traduction.
 
@@ -141,7 +141,7 @@ class TranslationsController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(Traductions $traduction, FormBuilder $formBuilder, UpdateTranslationRequest $request)
+        public function handleUpdate(Traductions $traduction, FormBuilder $formBuilder, UpdateTranslationRequest $request)
         {
             //
             $form = $this->makeForm(UpdateTranslation::class, [
@@ -165,7 +165,7 @@ class TranslationsController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function destroy(Traductions $traduction)
+        public function handleDestroy(Traductions $traduction)
         {
             //
             $this->translationRepository->addModel($traduction)->delete($traduction);

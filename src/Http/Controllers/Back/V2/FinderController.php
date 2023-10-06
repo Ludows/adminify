@@ -10,7 +10,7 @@ use Ludows\Adminify\Libs\SitemapRender;
 
 class FinderController extends Controller
 {
-    public function index(Request $request, $type) {
+    public function showIndexPage(Request $request, $type) {
 
         $resource = Str::title($type);
         $resoucable = model( singular($resource) , false);

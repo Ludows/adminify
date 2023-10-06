@@ -25,7 +25,7 @@ class PageController extends Controller
         *
         * @return Response
         */
-        public function index(Request $request)
+        public function showIndexPage(Request $request)
         {
             if(method_exists($this, 'bootingView')) {
                 call_user_func_array(array($this, 'bootingView'), $request);

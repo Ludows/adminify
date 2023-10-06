@@ -42,7 +42,7 @@ class GroupMetasController extends Controller
             $this->repo = $repo;
         }
 
-        public function index(FormBuilder $formBuilder, Request $request)
+        public function showIndexPage(FormBuilder $formBuilder, Request $request)
         {
             $table = $this->table(GroupMetasTable::class);
 
@@ -62,7 +62,7 @@ class GroupMetasController extends Controller
             *
             * @return Response
             */
-        public function create(FormBuilder $formBuilder)
+        public function showCreatePage(FormBuilder $formBuilder)
         {
             $form = $this->makeForm(CreateGroupMetas::class, [
                 'method' => 'POST',
@@ -82,7 +82,7 @@ class GroupMetasController extends Controller
             *
             * @return Response
             */
-        public function store(CreateGroupMetasRequest $request)
+        public function handleStore(CreateGroupMetasRequest $request)
         {
             //
             $form = $this->makeForm(CreateGroupMetas::class);
@@ -104,7 +104,7 @@ class GroupMetasController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function show($id)
+        public function showPage($id)
         {
             //
         }
@@ -115,7 +115,7 @@ class GroupMetasController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function edit(GroupMeta $Groupmeta, FormBuilder $formBuilder, Request $request)
+        public function showEditPage(GroupMeta $Groupmeta, FormBuilder $formBuilder, Request $request)
         {
             //
             $Groupmeta->checkForTraduction();
@@ -143,7 +143,7 @@ class GroupMetasController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(UpdateGroupMetasRequest $request, GroupMeta $Groupmeta)
+        public function handleUpdate(UpdateGroupMetasRequest $request, GroupMeta $Groupmeta)
         {
             //
             $seo = null;
@@ -167,7 +167,7 @@ class GroupMetasController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function destroy(GroupMeta $Groupmeta)
+        public function handleDestroy(GroupMeta $Groupmeta)
         {
             //
             $this->repo->addModel($Groupmeta)->delete($Groupmeta);

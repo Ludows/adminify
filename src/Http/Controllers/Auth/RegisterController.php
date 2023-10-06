@@ -84,7 +84,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    public function showCreatePage(array $data)
     {
         // $configRest = get_site_key('restApi');
         // $tokenizable_roles = $configRest['token_capacities'];

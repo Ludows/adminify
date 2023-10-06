@@ -45,7 +45,7 @@ class Mediav2Controller extends Controller
         *
         * @return Response
         */
-        public function index(FormBuilder $formBuilder)
+        public function showIndexPage(FormBuilder $formBuilder)
         {
             $listing =  $this->mediaUploader->getFiles();
             $config = $this->mediaUploader->getConfig();
@@ -94,7 +94,7 @@ class Mediav2Controller extends Controller
             return $this->toJson(['files' => $listing->files, 'thumbs' => $config['thumbs'], 'dates' => $dates, 'types' => $types]);
         }
 
-        public function update(Media $media, Request $request)
+        public function handleUpdate(Media $media, Request $request)
         {
             //
             $inputs = $request->all();
@@ -108,7 +108,7 @@ class Mediav2Controller extends Controller
             ]);
         }
 
-        public function destroy(Media $media)
+        public function handleDestroy(Media $media)
         {
 
             $this->mediaUploader->setModel($media)->destroy();
@@ -118,99 +118,4 @@ class Mediav2Controller extends Controller
                 'route' => 'admin.medias.index'
             ]);
         }
-
-        // /**
-        //     * Show the form for creating a new resource.
-        //     *
-        //     * @return Response
-        //     */
-        // public function create(FormBuilder $formBuilder)
-        // {
-        //     $form = $this->makeForm(CreateMedia::class, [
-        //         'method' => 'POST',
-        //         'url' => route('medias.store')
-        //     ]);
-        //     //
-        //     return view("adminify::layouts.admin.pages.create", ['form' => $form]);
-        // }
-
-        // /**
-        //     * Store a newly created resource in storage.
-        //     *
-        //     * @return Response
-        //     */
-        // public function store(CreateMediaRequest $request)
-        // {
-        //         // we pass context and request
-        //         $form = $this->form(CreateMedia::class);
-
-        //         // the create method return the media created
-        //         $media = $this->mediaRepository->addModel(new Media())->create($form);
-        //         return $this->sendResponse($media, 'medias.index', 'admin.typed_data.success');
-        // }
-
-        // /**
-        //     * Display the specified resource.
-        //     *
-        //     * @param  int  $id
-        //     * @return Response
-        //     */
-        // public function show($id)
-        // {
-        //     //
-        // }
-
-        // /**
-        //     * Show the form for editing the specified resource.
-        //     *
-        //     * @param  int  $id
-        //     * @return Response
-        //     */
-        // public function edit(Media $media, FormBuilder $formBuilder)
-        // {
-        //     //
-        //     $form = $this->makeForm(UpdateMedia::class, [
-        //         'method' => 'PUT',
-        //         'url' => route('medias.update', ['media' => $media->id]),
-        //         'model' => $media
-        //     ]);
-
-        //     return view("adminify::layouts.admin.pages.edit", ['form' => $form]);
-        // }
-
-        // /**
-        //     * Update the specified resource in storage.
-        //     *
-        //     * @param  int  $id
-        //     * @return Response
-        //     */
-        // public function update(Media $media, UpdateMediaRequest $request)
-        // {
-        //     //
-
-        //     $form = $this->makeForm(UpdateMedia::class, [
-        //         'method' => 'PUT',
-        //         'url' => route('medias.update', ['media' => $media->id]),
-        //         'model' => $media
-        //     ]);
-
-        //     $this->mediaRepository->addModel($media)->update($form, $media);
-
-        //     return $this->sendResponse($media, 'medias.index', 'admin.typed_data.updated');
-        // }
-
-        // /**
-        //     * Remove the specified resource from storage.
-        //     *
-        //     * @param  int  $id
-        //     * @return Response
-        //     */
-        // public function destroy(Media $media)
-        // {
-
-        //     app('UniSharp\LaravelFilemanager\Controllers\DeleteController')->getDelete();
-
-        //     $this->mediaRepository->addModel($media)->delete($media);
-        //     return $this->sendResponse($media, 'medias.index', 'admin.typed_data.deleted');
-        // }
-}
+    }

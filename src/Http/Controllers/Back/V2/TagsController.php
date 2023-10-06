@@ -36,7 +36,7 @@ class TagsController extends Controller
         *
         * @return Response
         */
-        public function index(Request $request, FormBuilder $formBuilder)
+        public function showIndexPage(Request $request, FormBuilder $formBuilder)
         {
 
             $table = $this->table(TagTable::class);
@@ -55,7 +55,7 @@ class TagsController extends Controller
             *
             * @return Response
             */
-        public function create(FormBuilder $formBuilder)
+        public function showCreatePage(FormBuilder $formBuilder)
         {
             $form = $this->makeForm(CreateTagForm::class, [
                 'method' => 'POST',
@@ -77,7 +77,7 @@ class TagsController extends Controller
             *
             * @return Response
             */
-        public function store(CreateTagRequest $request)
+        public function handleStore(CreateTagRequest $request)
         {
             //
             $form = $this->makeForm(CreateTagForm::class);
@@ -97,7 +97,7 @@ class TagsController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function edit(TagModel $tag, FormBuilder $formBuilder)
+        public function showEditPage(TagModel $tag, FormBuilder $formBuilder)
         {
             // Etonnant laravel ne comprends pas l'object Traduction.
 
@@ -126,7 +126,7 @@ class TagsController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(TagModel $tag, FormBuilder $formBuilder, UpdateTagRequest $request)
+        public function handleUpdate(TagModel $tag, FormBuilder $formBuilder, UpdateTagRequest $request)
         {
             //
             $form = $this->makeForm(CreateTagForm::class, [
@@ -152,7 +152,7 @@ class TagsController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function destroy(TagModel $tag)
+        public function handleDestroy(TagModel $tag)
         {
             //
             $this->tagRepository->addModel($tag)->delete($tag);

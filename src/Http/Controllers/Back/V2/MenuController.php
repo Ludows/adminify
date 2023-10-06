@@ -38,7 +38,7 @@ class MenuController extends Controller
         *
         * @return Response
         */
-        public function index(Request $request, FormBuilder $formBuilder)
+        public function showIndexPage(Request $request, FormBuilder $formBuilder)
         {
             $table = $this->table(MenuTable::class);
 
@@ -56,7 +56,7 @@ class MenuController extends Controller
             *
             * @return Response
             */
-        public function create(Request $request, FormBuilder $formBuilder, MenuBuilder $menuBuilder)
+        public function showCreatePage(Request $request, FormBuilder $formBuilder, MenuBuilder $menuBuilder)
         {
             
             $views = $this->getPossiblesViews('Create');
@@ -74,7 +74,7 @@ class MenuController extends Controller
             *
             * @return Response
             */
-        public function store(CreateMenuRequest $request, FormBuilder $formBuilder)
+        public function handleStore(CreateMenuRequest $request, FormBuilder $formBuilder)
         {
             // dd($request);
             $form = $this->makeForm(CreateMenu::class);
@@ -93,7 +93,7 @@ class MenuController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function show($id)
+        public function showPage($id)
         {
             //
         }
@@ -104,7 +104,7 @@ class MenuController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function edit(Menu $menu, MenuBuilder $menuBuilder)
+        public function showEditPage(Menu $menu, MenuBuilder $menuBuilder)
         {
 
             $menu->checkForTraduction();
@@ -233,7 +233,7 @@ class MenuController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(MenuBuilder $menuBuilder,Menu $menu,  Request $request, FormBuilder $formBuilder)
+        public function handleUpdate(MenuBuilder $menuBuilder,Menu $menu,  Request $request, FormBuilder $formBuilder)
         {
             $fields = $request->all();
             $menuThree = json_decode($fields['menuthree'], true);
@@ -249,7 +249,7 @@ class MenuController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function destroy(MenuBuilder $menuBuilder,Menu $menu,  Request $request, FormBuilder $formBuilder)
+        public function handleDestroy(MenuBuilder $menuBuilder,Menu $menu,  Request $request, FormBuilder $formBuilder)
         {
             //
 

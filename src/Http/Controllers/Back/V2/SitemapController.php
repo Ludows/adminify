@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Response;
 use Ludows\Adminify\Libs\SitemapRender;
 class SitemapController extends Controller
 {
-    public function index(Request $request, SitemapRender $sitemap) {
+    public function showIndexPage(Request $request, SitemapRender $sitemap) {
 
        $part = $request->part ?? '';
        $content_types = get_content_types();

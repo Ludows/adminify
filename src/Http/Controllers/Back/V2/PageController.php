@@ -44,7 +44,7 @@ class PageController extends Controller
             $this->middleware(['permission:read|delete_pages'], ['only' => ['destroy']]);
         }
 
-        public function index(FormBuilder $formBuilder, Request $request)
+        public function showIndexPage(FormBuilder $formBuilder, Request $request)
         {
             $table = $this->table(PageTable::class);
 
@@ -61,7 +61,7 @@ class PageController extends Controller
             *
             * @return Response
             */
-        public function create(FormBuilder $formBuilder)
+        public function showCreatePage(FormBuilder $formBuilder)
         {
             $form = $this->makeForm(CreatePage::class, [
                 'method' => 'POST',
@@ -82,7 +82,7 @@ class PageController extends Controller
             *
             * @return Response
             */
-        public function store(CreatePageRequest $request)
+        public function handleStore(CreatePageRequest $request)
         {
             //
             $form = $this->makeForm(CreatePage::class);
@@ -102,7 +102,7 @@ class PageController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function show($id)
+        public function showPage($id)
         {
             //
         }
@@ -113,7 +113,7 @@ class PageController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function edit(Page $page, FormBuilder $formBuilder, Request $request)
+        public function showEditPage(Page $page, FormBuilder $formBuilder, Request $request)
         {
             //
             $page->checkForTraduction();
@@ -137,7 +137,7 @@ class PageController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(UpdatePageRequest $request, Page $page)
+        public function handleUpdate(UpdatePageRequest $request, Page $page)
         {
             //
             // $isSeo = $request->exists('_seo');
@@ -177,7 +177,7 @@ class PageController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function destroy(Page $page)
+        public function handleDestroy(Page $page)
         {
             //
             $this->pageRepository->addModel($page)->delete($page);

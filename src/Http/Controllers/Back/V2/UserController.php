@@ -42,7 +42,7 @@ class UserController extends Controller
      * @param  \App\Models\User  $model
      * @return \Illuminate\View\View
      */
-    public function index(User $model, FormBuilder $formBuilder)
+    public function showIndexPage(User $model, FormBuilder $formBuilder)
     {
 
             $table = $this->table(UserTable::class);
@@ -61,7 +61,7 @@ class UserController extends Controller
             *
             * @return Response
             */
-            public function create(FormBuilder $formBuilder)
+            public function showCreatePage(FormBuilder $formBuilder)
             {
                 //
                 $form = $this->makeForm(CreateUser::class, [
@@ -84,7 +84,7 @@ class UserController extends Controller
             *
             * @return Response
             */
-        public function store(CreateUserRequest $request)
+        public function handleStore(CreateUserRequest $request)
         {
             //
             $form = $this->makeForm(CreateUser::class);
@@ -103,7 +103,7 @@ class UserController extends Controller
             * @param  int  $id
             * @return Response
             */
-            public function edit(User $user, FormBuilder $formBuilder)
+            public function showEditPage(User $user, FormBuilder $formBuilder)
             {
                 //
                 $form = $this->makeForm(UpdateUser::class, [
@@ -127,7 +127,7 @@ class UserController extends Controller
             * @param  int  $id
             * @return Response
             */
-            public function update(User $user, UserUpdateRequest $request)
+            public function handleUpdate(User $user, UserUpdateRequest $request)
             {
                 //
                 $form = $this->makeForm(UpdateUser::class, [
@@ -151,7 +151,7 @@ class UserController extends Controller
             * @param  int  $id
             * @return Response
             */
-            public function destroy(User $user)
+            public function handleDestroy(User $user)
             {
                 //
                 //

@@ -39,7 +39,7 @@ class TemplatesController extends Controller
         *
         * @return Response
         */
-        public function index(FormBuilder $formBuilder, Request $request)
+        public function showIndexPage(FormBuilder $formBuilder, Request $request)
         {
             $table = $this->table(TemplatesTable::class);
 
@@ -59,7 +59,7 @@ class TemplatesController extends Controller
             *
             * @return Response
             */
-        public function create(FormBuilder $formBuilder)
+        public function showCreatePage(FormBuilder $formBuilder)
         {
             //
             $form = $this->makeForm(CreateTemplates::class, [
@@ -82,7 +82,7 @@ class TemplatesController extends Controller
             *
             * @return Response
             */
-        public function store(CreateTemplatesRequest $request)
+        public function handleStore(CreateTemplatesRequest $request)
         {
             // we pass context and request
             $form = $this->makeForm(CreateTemplates::class);
@@ -102,7 +102,7 @@ class TemplatesController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function edit(FormBuilder $formBuilder, Templates $template, Request $request)
+        public function showEditPage(FormBuilder $formBuilder, Templates $template, Request $request)
         {
             //
             $template->checkForTraduction();
@@ -128,7 +128,7 @@ class TemplatesController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(Templates $template, UpdateTemplatesRequest $request)
+        public function handleUpdate(Templates $template, UpdateTemplatesRequest $request)
         {
             //
 
@@ -169,7 +169,7 @@ class TemplatesController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function destroy(Templates $template)
+        public function handleDestroy(Templates $template)
         {
             //
             $this->templatesRepository->delete($template);

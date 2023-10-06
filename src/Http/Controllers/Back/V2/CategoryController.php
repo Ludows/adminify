@@ -40,7 +40,7 @@ class CategoryController extends Controller
         *
         * @return Response
         */
-        public function index(FormBuilder $formBuilder, Request $request)
+        public function showIndexPage(FormBuilder $formBuilder, Request $request)
         {
             $table = $this->table(CategoryTable::class);
 
@@ -60,7 +60,7 @@ class CategoryController extends Controller
             *
             * @return Response
             */
-        public function create(FormBuilder $formBuilder)
+        public function showCreatePage(FormBuilder $formBuilder)
         {
             //
             $form = $this->makeForm(CreateCategory::class, [
@@ -81,7 +81,7 @@ class CategoryController extends Controller
             *
             * @return Response
             */
-        public function store(CreateCategoryRequest $request)
+        public function handleStore(CreateCategoryRequest $request)
         {
             // we pass context and request
             $form = $this->makeForm(CreateCategory::class);
@@ -112,7 +112,7 @@ class CategoryController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function show($id)
+        public function showPage($id)
         {
             //
         }
@@ -123,7 +123,7 @@ class CategoryController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function edit(FormBuilder $formBuilder, Category $category, Request $request)
+        public function showEditPage(FormBuilder $formBuilder, Category $category, Request $request)
         {
             //
             $category->checkForTraduction();
@@ -150,7 +150,7 @@ class CategoryController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(Category $category, UpdateCategoryRequest $request)
+        public function handleUpdate(Category $category, UpdateCategoryRequest $request)
         {
             //
 
@@ -178,7 +178,7 @@ class CategoryController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function destroy(Category $category)
+        public function handleDestroy(Category $category)
         {
             //
             $this->categoryRepository->addModel($category)->delete($category);

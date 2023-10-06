@@ -41,7 +41,7 @@ class CommentController extends Controller
             $this->middleware(['permission:read|edit_comments'], ['only' => ['edit', 'update']]);
             $this->middleware(['permission:read|delete_comments'], ['only' => ['destroy']]);
         }
-        public function index(Request $request, FormBuilder $formBuilder)
+        public function showIndexPage(Request $request, FormBuilder $formBuilder)
         {
             //
             $table = $this->table(CommentTable::class, [
@@ -63,7 +63,7 @@ class CommentController extends Controller
             *
             * @return Response
             */
-            public function create(FormBuilder $formBuilder)
+            public function showCreatePage(FormBuilder $formBuilder)
             {
                 //
                 $form = $this->makeForm(CreateComment::class, [
@@ -85,7 +85,7 @@ class CommentController extends Controller
             *
             * @return Response
             */
-        public function store(CreateCommentRequest $request)
+        public function handleStore(CreateCommentRequest $request)
         {
             // we pass context and request
             $form = $this->makeForm(CreateComment::class);
@@ -106,7 +106,7 @@ class CommentController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function edit(FormBuilder $formBuilder, Comment $comment, Request $request)
+        public function showEditPage(FormBuilder $formBuilder, Comment $comment, Request $request)
         {
             //
             $form = $this->makeForm(UpdateComment::class, [
@@ -129,7 +129,7 @@ class CommentController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(UpdateCommentRequest $request, Comment $comment)
+        public function handleUpdate(UpdateCommentRequest $request, Comment $comment)
         {
             //
             $form = $this->makeForm(UpdateComment::class, [
@@ -151,7 +151,7 @@ class CommentController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function destroy(Request $request, Comment $comment)
+        public function handleDestroy(Request $request, Comment $comment)
         {
             //
 

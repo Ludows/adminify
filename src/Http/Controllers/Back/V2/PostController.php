@@ -46,7 +46,7 @@ class PostController extends Controller
         *
         * @return Response
         */
-        public function index(FormBuilder $formBuilder, Request $request)
+        public function showIndexPage(FormBuilder $formBuilder, Request $request)
         {
             
             $table = $this->table(PostTable::class);
@@ -67,7 +67,7 @@ class PostController extends Controller
             *
             * @return Response
             */
-        public function create(FormBuilder $formBuilder)
+        public function showCreatePage(FormBuilder $formBuilder)
         {
             //
             $form = $this->makeForm(CreatePost::class, [
@@ -90,7 +90,7 @@ class PostController extends Controller
             *
             * @return Response
             */
-        public function store(CreatePostRequest $request)
+        public function handleStore(CreatePostRequest $request)
         // public function store(Request $request)
         {
             //
@@ -110,7 +110,7 @@ class PostController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function show($id)
+        public function showPage($id)
         {
             //
         }
@@ -121,22 +121,8 @@ class PostController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function edit(Post $post, FormBuilder $formBuilder, Request $request)
+        public function showEditPage(Post $post, FormBuilder $formBuilder, Request $request)
         {
-            //
-            // dd($request->exists('seo'));
-
-            // $post->checkForTraduction();
-            // $post->flashForMissing();
-
-            // if($request->exists('seo')) {
-            //     $form = $formBuilder->create(SeoForm::class, [
-            //         'method' => 'PUT',
-            //         'url' => route('posts.update', ['post' => $post->id]),
-            //         'model' => $post
-            //     ]);
-            // }
-            // else {
                 $form = $this->makeForm(UpdatePost::class, [
                     'method' => 'PUT',
                     'url' => route('admin.posts.update', ['post' => $post->id]),
@@ -150,7 +136,6 @@ class PostController extends Controller
                     'model' => $post,
                     'form' => $form->toArray()
                 ]);
-            // }
         }
 
         /**
@@ -159,7 +144,7 @@ class PostController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(Post $post, UpdatePostRequest $request)
+        public function handleUpdate(Post $post, UpdatePostRequest $request)
         {
             //
             // $isSeo = $request->exists('_seo');
@@ -201,7 +186,7 @@ class PostController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function destroy(Post $post)
+        public function handleDestroy(Post $post)
         {
             //
             //

@@ -26,7 +26,7 @@ class SaveTranslationsController extends Controller
             * @param  int  $id
             * @return Response
             */
-            public function edit(FormBuilder $formBuilder , Request $request)
+            public function showEditPage(FormBuilder $formBuilder , Request $request)
             {
 
                 $modelStr = $request->get('model');
@@ -67,7 +67,7 @@ class SaveTranslationsController extends Controller
                 return view("adminify::layouts.admin.pages.edit", $return_view);
             }
 
-        public function update(Request $request)
+        public function handleUpdate(Request $request)
         {
             //
             $all = $request->all();

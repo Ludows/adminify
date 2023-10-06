@@ -30,7 +30,7 @@ class SeoController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function edit(Seo $seo, FormBuilder $formBuilder, Request $request, $type, $id)
+        public function showEditPage(Seo $seo, FormBuilder $formBuilder, Request $request, $type, $id)
         {
             // Etonnant laravel ne comprends pas l'object Traduction.
 
@@ -74,7 +74,7 @@ class SeoController extends Controller
             * @param  int  $id
             * @return Response
             */
-        public function update(Seo $seo, FormBuilder $formBuilder, Request $request, $type, $id)
+        public function handleUpdate(Seo $seo, FormBuilder $formBuilder, Request $request, $type, $id)
         {
             //
 
