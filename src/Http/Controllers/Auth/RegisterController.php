@@ -86,8 +86,8 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $configRest = get_site_key('restApi');
-        $tokenizable_roles = $configRest['token_capacities'];
+        // $configRest = get_site_key('restApi');
+        // $tokenizable_roles = $configRest['token_capacities'];
         $default_role = get_site_key('default_role_on_registration');
 
         $u = new User();
@@ -100,7 +100,7 @@ class RegisterController extends Controller
 
         $u->assignRole($default_role);
 
-        $u->createToken($configRest['token_name'], $tokenizable_roles[$default_role]);
+        // $u->createToken($configRest['token_name'], $tokenizable_roles[$default_role]);
 
         return $u;
     }
