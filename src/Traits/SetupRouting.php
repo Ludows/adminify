@@ -2,9 +2,8 @@
 
   namespace Ludows\Adminify\Traits;
   use Illuminate\Http\Request;
-  use Illuminate\Foundation\Http\FormRequest;
+  use Illuminate\Foundation\Http\FormRequest; 
 
-  use App\Adminify\Models\Url;
   trait SetupRouting
   {
      //
@@ -31,7 +30,29 @@
         return null;
      }
 
-     public function index() {
+    public function index() {
+        return app()->call([$this, 'showIndexPage']);
+    }
+    public function create() {
+        return app()->call([$this, 'showCreatePage']);
+    }
+    public function store() {
+        return app()->call([$this, 'handleStore']);
+    }
+    public function show() {
+        return app()->call([$this, 'showPage']);
+    }
+    public function edit() {
+        return app()->call([$this, 'showEditPage']);
+    }
+    public function update() {
+        return app()->call([$this, 'handleUpdate']);
+    }
+    public function destroy() {
+         return app()->call([$this, 'handleDestroy']);
+    }
+
+     public function showIndexPage() {
           $table = $this->table( $this->theTable() );
 
           $views = $this->getPossiblesViews('Index');
@@ -49,7 +70,7 @@
             *
             * @return Response
             */
-            public function store(Request $request)
+            public function handleStore(Request $request)
             {
                 $createFormRequest = $this->createFormRequest();
 
@@ -75,14 +96,14 @@
                 ]);
             }
     
-            // /**
-            //     * Display the specified resource.
-            //     *
-            //     * @param  int  $id
-            //     * @return Response
-            //     */
-            // public function show($id)
-            // {}
+            /**
+                * Display the specified resource.
+                *
+                * @param  int  $id
+                * @return Response
+                */
+            public function showPage($id)
+            {}
     
             /**
                 * Show the form for editing the specified resource.
@@ -90,7 +111,7 @@
                 * @param  int  $id
                 * @return Response
                 */
-            public function edit($resource_id)
+            public function showEditPage($resource_id)
             {
                 $model = $this->theModel();
                 $Ressource = $model->findOrFail($resource_id);
@@ -139,7 +160,7 @@
                 * @param  int  $id
                 * @return Response
                 */
-            public function update($resource_id, Request $request)
+            public function handleUpdate($resource_id, Request $request)
             {
                 //
                 $model = $this->theModel();
@@ -180,7 +201,7 @@
                 * @param  int  $id
                 * @return Response
                 */
-            public function destroy($resource_id)
+            public function handleDestroy($resource_id)
             {
                 $model = $this->theModel();
                 $Ressource = $model->findOrFail($resource_id);
