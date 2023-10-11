@@ -1,6 +1,6 @@
 <?php
 
-namespace Ludows\Adminify\Http\Controllers\Back\V2;
+namespace Ludows\Adminify\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
 use App\Adminify\Http\Requests\CreateCategoryRequest;
