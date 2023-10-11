@@ -39,7 +39,7 @@
     public function store() {
         return app()->call([$this, 'handleStore']);
     }
-    public function show() {
+    public function show(Request $request) {
         return app()->call([$this, 'showPage']);
     }
     public function edit() {

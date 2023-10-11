@@ -10,7 +10,7 @@ use File;
 
 class SearchController extends Controller
 {
-    public function index(Request $request) {
+    public function showIndexPage(Request $request) {
 
         $shareds = inertia()->getShared();
 
