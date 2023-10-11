@@ -31,25 +31,32 @@
      }
 
     public function index() {
-        return app()->call([$this, 'showIndexPage'], [], 'defaultShowIndexPage');
+        $class = get_class($this);
+        return app()->call($class.'@'.'showIndexPage', [], 'defaultShowIndexPage');
     }
     public function create() {
-        return app()->call([$this, 'showCreatePage'], [], 'defaultShowCreatePage');
+        $class = get_class($this);
+        return app()->call($class.'@'.'showCreatePage', [], 'defaultShowCreatePage');
     }
     public function store() {
-        return app()->call([$this, 'handleStore'], [], 'defaultHandleStore');
+        $class = get_class($this);
+        return app()->call($class.'@'.'handleStore', [], 'defaultHandleStore');
     }
     public function show(Request $request) {
-        return app()->call([$this, 'showPage'], [], 'defaultShowPage');
+        $class = get_class($this);
+        return app()->call($class.'@'.'showPage', [], 'defaultShowPage');
     }
     public function edit() {
-        return app()->call([$this, 'showEditPage'], [], 'defaultShowEditPage');
+        $class = get_class($this);
+        return app()->call($class.'@'.'showEditPage', [], 'defaultShowEditPage');
     }
     public function update() {
-        return app()->call([$this, 'handleUpdate'], [], 'defaultHandleUpdate');
+        $class = get_class($this);
+        return app()->call($class.'@'.'handleUpdate', [], 'defaultHandleUpdate');
     }
     public function destroy() {
-         return app()->call([$this, 'handleDestroy'], [], 'defaultHandleDestroy');
+        $class = get_class($this);
+         return app()->call($class.'@'.'handleDestroy', [], 'defaultHandleDestroy');
     }
 
      public function defaultShowIndexPage() {

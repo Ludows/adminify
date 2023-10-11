@@ -129,16 +129,6 @@ class CreateSettings extends BaseForm
                 'multiple' => false,
                 'width' => '100%'
             ]
-        ])
-        ->add('theme', 'select2', [
-            'empty_value' => __('admin.form.select_theme', ['entity' => 'theme']),
-            'choices' => $this->formatThemesChoices(),
-            'selected' => $theme,
-            'label' => __('admin.form.select_theme'),
-            'select2options' => [
-                'multiple' => false,
-                'width' => '100%'
-            ]
         ]);
 
         if(isset($enabled_features['comment']) && $enabled_features['comment']) {
@@ -211,17 +201,5 @@ class CreateSettings extends BaseForm
         $mediaModel = app('App\Adminify\Models\Media');
 
         return $mediaModel->find($id);
-    }
-    public function formatThemesChoices() {
-       $results = [];
-       if(file_exists(theme_path())) {
-            $dirs = File::directories(theme_path());
-            foreach ($dirs as $dir) {
-                # code...
-                $dirName = basename($dir);
-                $results[$dirName] = $dirName;
-            }
-       }
-       return $results;
     }
 }
