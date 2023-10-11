@@ -1,110 +1,106 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
-import useGlobalStore from '../store/global';
-import useRoute from '@/commons/js/useRoute';
-import { createAxios } from '@/helpers/index';
-import { router } from '@inertiajs/react'
+import React, { useEffect, createRef, forwardRef, useRef } from 'react';
+import useRoute from '../hooks/useRoute';
 
-import { Portal } from 'react-portal';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import Form from 'react-bootstrap/Form';
-import ListGroup from 'react-bootstrap/ListGroup';
+import useHelpers from '../hooks/useHelpers';
+import useTranslations from '../hooks/useTranslations';
+import useRouterEvents from '../hooks/useRouterEvents';
+import { Button } from 'react-bootstrap';
 
- 
-export default function TopLeftHeader(props) {
+import { useLocalStorage } from 'usehooks-ts';
 
-    const getTranslation = useGlobalStore(state => state.getTranslation);
-    let [route] = useRoute('home.dashboard', {});
-    let [routeSearchable] = useRoute('searchable', {});
-    let { previousRequest, current } = useRef(null);
-
-    const [show, setShow] = useState(false);
-    const [list, setList] = useState([]);
+const TopLeftHeader = forwardRef((props, ref) => {
     
-    const listKeys = useMemo(() => {
-        return Object.keys(list);
-    }, [list]);
+    if(!ref) {
+        ref = createRef({});
+    }
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const { get } = useTranslations();
+    let {get:route} = useRoute();
+    const { navigate, modal, createCustomRenderer, fire, event } = useHelpers();
+    const { onSuccess } = useRouterEvents();
+    const btnDashboardRef = useRef({});
+
+    const [expanded, saveExpanded] = useLocalStorage("isExpanded", false);
+    const [toggle, saveToggle] = useLocalStorage("isToggled", false);
+
 
     useEffect(() => {
         console.log('TopLeftHeader.jsx onMounted');
     }, [])
 
-    const handleKeyUp = async(event) => {
-        console.log('TopLeftHeader.jsx handleKeyUp()')
-
-        let value = event.target.value;
-
-        if(value.length < 4) {
-            setList([]);
-            return false;
-        }
-
-        let http = createAxios(routeSearchable, {
-            method: 'POST',
-            data : {
-                query : value.trim().toLowerCase()
-            }
-        })
+    onSuccess(({detail}) => {
         
-        try {
-            let result = await http;
-            console.log('TopLeftHeader.jsx handleKeyUp() result', result.data.response)
-            setList(result.data.response)
-        } catch (error) {
-            console.log('TopLeftHeader.jsx handleKeyUp() error', error)
+        if(window.location.pathname == '/admin/dashboard') {
+            btnDashboardRef.current.setAttribute('disabled', 'disabled');
         }
+        else {
+            btnDashboardRef.current.removeAttribute('disabled');
+        }
+
+        // btnDashboardRef
+
+    }, [])
+
+    let customRender = createCustomRenderer(null, props, ref);
+
+    if(customRender) {
+        return customRender;
+    }
+
+    let dashboardRoute = route('admin.home.dashboard', {});
+    
+    const handleShowModal = () => {
+        modal('globalsearch', {
+            show: true,
+        })
     }
 
     const HandleGo = (item) => {
-        router.visit(item.url, {
-            method : 'get',
+        navigate({
+            url: item.url,
+            method: 'get',
+            form: {},
             data: {}
         })
     }
 
-    // {{ route('home.dashboard') }}
-    // {{ __('admin.root') }}
-    return <>
-        <div className="">
-            <a className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href={route}>{getTranslation('admin.root')}</a>
-            <a href="#" className="btn btn-default btn-sm rounded" onClick={handleShow}>
-                <i className="bi bi-search"></i>
-            </a>
-            
-            <Portal>
-                <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>{getTranslation('admin.global_search')}</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <FloatingLabel
-                            controlId="floatingInput"
-                            label={getTranslation('admin.search')}
-                            className="mb-3"
-                        >
-                            <Form.Control type="text" onKeyUp={handleKeyUp} placeholder="name@example.com" />
-                        </FloatingLabel>
+    const handleExpand = (e) => {
+        saveExpanded(!expanded)
+    }
+    
+    const handleToggle = (e) => {
+        saveToggle(!toggle)
+    }
 
-                        <ListGroup>
-                            {listKeys.map((listKey, index) => (
-                                <>
-                                    <p key={index}>{getTranslation('admin.menuback.'+listKey)}</p>      
-                                    {list[listKey].map((item, indexListItem) => (
-                                        <ListGroup.Item key={indexListItem} action onClick={() => {HandleGo(item)}}>
-                                           {item.title}
-                                        </ListGroup.Item>
-                                    ))}
-                                </>                             
-                            ))}
-                            
-                        </ListGroup>
-                    </Modal.Body>
-                </Modal>
-            </Portal>
-        </div>
-    </>
-}
+    event('adminify:sidebar', (datas) => {
+        if(datas.needClose) {
+            saveExpanded(!expanded)
+            saveToggle(!toggle)
+        }
+    })
+
+    useEffect(() => {
+        fire('adminify:sidebar', {
+            isExpanded: expanded,
+            isToggled : toggle,
+        })
+    }, [expanded, toggle])
+
+
+
+    return <div ref={ref} className="d-flex align-items-center">
+                <Button variant='outline-dark' active={toggle} className="h4 mb-0 d-inline-block d-lg-none text-uppercase me-3" onClick={handleToggle}>
+                    {!toggle ? <i class="bi bi-list"></i> : <i class="bi bi-x-circle"></i>}
+                </Button>
+                <Button variant='outline-dark' active={expanded} className="h4 mb-0 d-none d-lg-inline-block text-uppercase me-3" onClick={handleExpand}>
+                    <i class="bi bi-list"></i>
+                </Button>
+                
+                <button ref={btnDashboardRef} className="h4 mb-0 btn btn-outline-secondary text-uppercase d-none d-lg-inline-block" onClick={() => {HandleGo({url : dashboardRoute})}} href="#"><i class="bi bi-house-door-fill"></i></button>
+                <a href="#" className="btn btn-outline-primary btn-sm rounded ms-3" onClick={handleShowModal}>
+                    <i className="bi bi-search"></i>
+                </a>
+            </div>
+})
+
+export default TopLeftHeader;

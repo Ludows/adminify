@@ -1,18 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, forwardRef, createRef } from 'react';
 import TopLeftHeader from './TopLeftHeader';
 import TopRightHeader from './TopRightHeader';
-export default function Header({props}) {
+import useHelpers from '../hooks/useHelpers';
+
+const Header = forwardRef((props, ref) => {
 
     useEffect(() => {
         console.log('Header.jsx onMounted');
     }, [])
 
-    return <>
-       <nav className="navbar navbar-top navbar-expand-md bg-gradient-primary" id="navbar-main">
-            <div className="container-fluid">
-              <TopLeftHeader />
-              <TopRightHeader />
-            </div>
-        </nav>
-    </>
-}
+    if(!ref) {
+        ref = createRef({});
+    }
+    
+    const { createCustomRenderer } = useHelpers();
+    
+    let customRender = createCustomRenderer(null, props, ref);
+
+    if(customRender) {
+        return customRender;
+    }
+
+    return <nav ref={ref} className="navbar navbar-top navbar-expand-md bg-white border-bottom border-light shadow-sm" id="navbar-main">
+                <div className="container-fluid">
+                <TopLeftHeader />
+                <TopRightHeader />
+                </div>
+            </nav>
+});
+
+export default Header;

@@ -1,29 +1,30 @@
-import React, {useMemo, useEffect} from 'react';
+import React, {useMemo, useEffect, forwardRef, createRef} from 'react';
 import Button from 'react-bootstrap/Button';
+import useHelpers from '../../hooks/useHelpers';
 
-export default function SubmitElement(props) {
-  const field = useMemo(() => props.field, []);
+const SubmitElement = forwardRef((props, ref) => {
+  const field = useMemo(() => props.field, [props]);
+  const { createCustomRenderer } = useHelpers();
+
+  if(!ref) {
+    ref = createRef({});
+  }
 
   useEffect(() => {
-    console.log('SubmitElement.jsx onMounted', props);
+    // console.log('SubmitElement.jsx onMounted', props);
   }, [])
 
-  return <>
-      <div {...field.wrapper}>
-        <Button {...field.attr} type={field.type}>
-          {field.label}
-        </Button>
-        {/* <Form.Control
-          id={field.name}
-          type={field.type}
-          value={field.value}
-          {...field.attr}
-        />
-        {field.help_block.text &&
-          <Form.Text {...field.help_block.attr} as={field.help_block.tag} muted>
-            {field.help_block.text}
-          </Form.Text>
-        } */}
-      </div>
-  </>  
-}
+  let customRenderer = createCustomRenderer(null, props, ref);
+
+  if(customRenderer) {
+    return customRenderer;
+  }
+
+  return <div ref={ref} {...field.wrapper}>
+            <Button {...field.attr} type={field.type}>
+              {field.label}
+            </Button>
+        </div>
+});
+
+export default SubmitElement;

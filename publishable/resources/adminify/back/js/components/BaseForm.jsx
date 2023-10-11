@@ -1,72 +1,145 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, forwardRef, createRef } from 'react';
+import { FormProvider } from "react-hook-form";
 import Form from 'react-bootstrap/Form';
+import useFormComponentRegistrar from '../hooks/useFormComponentRegistrar'
+import useHelpers from '../hooks/useHelpers';
+import useTranslations from '../hooks/useTranslations';
+// import useGlobalStore from '../store/global';
 
-import TextElement from '@/back/js/components/Form/TextElement';
-import MediaElement from '@/back/js/components/Form/MediaElement';
-import SubmitElement from '@/back/js/components/Form/SubmitElement';
-import ChoiceElement from '@/back/js/components/Form/ChoiceElement';
-import VisualEditorElement from '@/back/js/components/Form/VisualEditorElement';
-
-export default function BaseForm(props) {
-
-    const fields = useMemo(() => props.form.fields);
-    const fieldKeys = useMemo(() => Object.keys(fields));
-
-    const Fields = useMemo(() => {
-        let registered_components = {};
-        let listed_components = {};
-
-        let coreFields = {
-            'text' : TextElement,
-            'hidden' : TextElement,
-            'media_element' : MediaElement,
-            'visual_editor' : VisualEditorElement,
-            'submit' : SubmitElement,
-            'select2' : ChoiceElement,
-        }
-
-        if(props.registerComponents && typeof props.registerComponents === "function") {
-            let results_register_components = props.registerComponents(props);
-            if(results_register_components && typeof results_register_components === "object") {
-                registered_components = results_register_components;
-            }
-        }
-
-        listed_components = Object.assign({}, coreFields, registered_components);
-
-        console.log('Avalaibles components', listed_components);
-
-
-        return listed_components;
-    }, [fields])
-
-    const fieldAdapter = () => {
-        console.log("todo");
+const BaseForm = forwardRef((props, ref) => {
+    if(!ref) {
+        ref = createRef({});
     }
+    const { get } = useTranslations();
+    const fields = useMemo(() => props.form.fields, []);
+    const formUniqueId = useMemo(() => props.form.uuid, []);
+    // const errors = useMemo(() => Object.keys(props.errors).length > 0 ? props.errors.form_errors : {});
+    const fieldKeys = useMemo(() => Object.keys(fields));
+    const usePrompt = useMemo(() => { return props.usePrompt != undefined ? props.usePrompt : false }, [props]);
+    const useNotify = useMemo(() => { return props.useNotify != undefined ? props.useNotify : true}, [props]);
+    const useLoader = useMemo(() => { return props.useLoader != undefined ? props.useLoader : true}, [props]);
+    
+    const promptConfig = useMemo(() => {
+        let def = {
+            icon : 'question',
+            title : get('admin.prompt_question'),
+            
+        }
 
-    const getRenderer = (key, field) => {
+        let promptOveride = props.promptConfig ? props.promptConfig : {}
 
-        let Component = Fields[field.type];
-        
-        if(Component) {
-            return <Component key={key} field={field} />
+        return {...def, ...promptOveride }
+    }, [props]);
+    // const [on, off, emit] = useContext(EmitterContext);
+    const { render, formMethods } = useFormComponentRegistrar(props, props.registerComponents);
+    const { submit, onSubmitResults, route, navigate, loader, notify, onErrors, onAppUpdated, swal, createCustomRenderer } = useHelpers();
+
+    const defaultPromptCb = (err, result, data) => {
+        if(result.isConfirmed) {
+            submit({
+                ...props,
+                data,
+            });
+        }
+    }
+    const promptCb = useMemo(() => { return props.onPrompt ? props.onPrompt : defaultPromptCb }, [props]);
+
+    const onSubmit = (data, event) => {
+        console.log('data from form', data);
+        if(usePrompt) {
+            swal(promptConfig, promptCb, data);
         }
         else {
-            console.warn('Form FieldType '+ field.type + ' is not recognized. Have you registered this one ?');
+            submit({
+                ...props,
+                data,
+            });
+        }
+        
+    };
+
+    const onDefaultErrorsBehaviour = (datas) => {
+        if(useLoader) {
+            loader({
+                show: false
+            })
+        }   
+    }
+
+    const defaultSubmitBehaviour = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        console.log('defaultSubmitBehaviour', props, useLoader);
+        if(useLoader) {
+            loader({
+                show: true
+            })
+        }
+
+        return formMethods.handleSubmit(onSubmit)(e);
+    }
+
+    const defaultSubmitResultsBehaviour = (datas) => {
+        if(formUniqueId == datas.form.uuid) {
+            console.log('success', datas);
+
+            let hasUrlKey = datas.data.hasOwnProperty('url');
+            let path = '/';
+            if( hasUrlKey ) {
+                path = datas.data.url;
+            }
+            else {
+                path = route( datas.data.route, {});
+            }
+
+            if(useNotify) {
+                notify({
+                    data : datas.data,
+                });
+            }
+        
+            navigate({
+                method : 'get',
+                url : path,
+            })
         }
     }
 
+    onSubmitResults(props.onSubmitResults && typeof props.onSubmitResults == 'function' ? props.onSubmitResults : defaultSubmitResultsBehaviour, []);
+    onErrors(props.onErrors && typeof props.onErrors == 'function' ? props.onErrors : onDefaultErrorsBehaviour, [])
+    
+    onAppUpdated((datas) => {      
+        if(useLoader) {
+            loader({
+                show: false
+            })
+        }  
+    })
 
-    if(props.override) {
-        return <>
-            {props.override}
-        </>
+    const renderCustom = (props, ref) => {
+        let CustomComponent = props.render;
+        return <CustomComponent ref={ref} fields={fields} renderField={render} {...props} />
     }
-    return <>
-        <Form {...props.form.formOptions}>
-            {fieldKeys.map((fieldKey, index) => (
-                getRenderer(index, fields[fieldKey])
-            ))}
-        </Form>
-    </>
-}
+
+    let customRenderer = createCustomRenderer(renderCustom, props, ref)
+
+    if(customRenderer) {
+        // customRenderer = renderCustom();
+        return <FormProvider {...formMethods}>
+                    <Form onSubmit={props.onSubmit && typeof props.onSubmit == 'function' ? props.onSubmit : defaultSubmitBehaviour} {...props.form.formOptions}>
+                        {customRenderer}
+                    </Form>
+                </FormProvider>
+        
+    }
+    return <FormProvider {...formMethods}>
+                <Form onSubmit={props.onSubmit && typeof props.onSubmit == 'function' ? props.onSubmit : defaultSubmitBehaviour} {...props.form.formOptions}>
+                    {fieldKeys.map((fieldKey, index) => (
+                        render(index, fields[fieldKey])
+                    ))}
+                </Form>
+            </FormProvider>
+})
+
+export default BaseForm;

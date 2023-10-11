@@ -11,12 +11,10 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         @viteReactRefresh
         @vite(['resources/adminify/back/js/extensions.js', 'resources/adminify/back/js/app.jsx', 'resources/adminify/back/sass/extensions.scss', 'resources/adminify/back/sass/app.scss'])
-        @hook('assets.css')
         @stack('css')
     </head>
     <body class="{{ $class ?? '' }}">
         @inertia
-        @hook('assets.js')
             <script src="{{asset('/myuploads/routes.js')}}"></script>
             <script src="{{ asset('/myuploads/traductions-'. $page['props']['currentLang'] .'.js') }}"></script>
         @stack('js')

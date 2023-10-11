@@ -1,12 +1,12 @@
-import TableListing from '@/back/js/components/TableListing';
-import useGlobalStore from '@/back/js/store/global';
+import TableListing from '../components/Table/TableListing';
+import usePageProps from '../hooks/usePageProps';
 import React from 'react';
 
 export default function Index(props) {
 
-    const appData = useGlobalStore((state) => state.getAppData);
+    const { get } = usePageProps();
+    let table = get('table');
+    
 
-    return <>
-        <TableListing datas={ appData('table') } />
-    </>
+    return <TableListing datas={table} />
 }

@@ -6,6 +6,231 @@
 //     "danger": teal
 // );
 
+$bootstrap-icons-font-dir : "~bootstrap-icons/font/fonts/";
+
 @import "~bootstrap-icons/font/bootstrap-icons";
+
+@import "~bootstrap/scss/functions";
+
 /* import bootstrap to set changes */
+@import "variables";
+@import "variables-dark";
+
 @import "~bootstrap/scss/bootstrap";
+
+.card-header {
+    background-color: transparent;
+}
+
+.form-group {
+    margin-bottom: $spacer;
+}
+
+// changes for colors btn texts
+$changes_colors : primary, secondary, info, success, danger, info, dark;
+
+@each $color in $changes_colors {
+    .btn-#{$color} {
+        color: $white;
+        &:hover {
+            color: $white;
+        }
+    }
+    .btn-outline-#{$color} {
+        &:hover {
+            color: $white;
+        }
+    }
+}
+
+.form-group label {
+    font-weight: 600;
+    color: $black;
+    margin-bottom: 10px;
+}
+
+.loader-adminify {
+    &.is-fixed {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top:0;
+        bottom: 0;
+        z-index: 4;
+    }
+    .loading_state {
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.sidebar.sidebar-admin {
+    width: 100px;
+    background-color: $white;
+    overflow: hidden;
+    border-right: 1px solid darken($light, 5%);
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 2;
+    transition: .25s all ease-in-out;
+
+    .nav-item {
+        // width: 100%;
+        // text-align: center;
+    }
+    .menu {
+        // width: 350px;
+        .menu-item {
+            width: 350px;
+            // text-align: center;
+        }
+    }
+
+    .logo {
+        word-break: break-all;
+        text-align: center;
+        transition: .25s all ease-in-out;
+    }
+
+    .menu-item-text {
+        opacity: 0;
+        margin-left: 15px;
+        display: none;
+        @media (max-width:992px) {
+            opacity: 1;
+            display: inline-block;
+        }
+    }
+
+    @media(min-width:993px) {
+        &.is-hovered, &.is-expanded {
+            width: 350px;
+            
+            .menu {
+                .menu-item {
+                    text-align: left;
+                }
+            }
+    
+            .logo {
+                text-align: left;
+            }
+    
+            .menu-item-text {
+                opacity: 1;
+                transition: .2s all ease;
+                display: inline-block;
+            }
+    
+            + .content {
+                padding-left: 350px;
+            }
+        }
+    
+        &.is-running {
+            // .menu-item-text {
+            //     display: inline-block!important;
+            // }
+            .menu {
+                .menu-item {
+                    // text-align: left;
+                }
+            }
+            .logo {
+                text-align: left;
+            }
+        }
+    }
+    
+
+    @media (max-width:992px) {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0;
+        width: auto;
+
+        &.is-toggled {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .logo {
+            text-align: left;
+        }
+        .menu {
+            justify-content: left;
+        }
+    }
+}
+
+.menu {
+    .menu-item {
+        box-shadow:none;
+        &:hover, &:focus {
+            background-color: $light;
+        }
+        &.active {
+            background-color: $primary;
+            color: $white;
+        }
+        @media (max-width:992px) {
+            text-align: left;
+        }
+    }
+
+    .btn-admin-menu {
+        border: 1px solid transparent;
+        color: $black;
+    }
+}
+
+.logo {
+    border-color: darken($light, 5%)!important;
+}
+
+.content {
+    padding-left: 100px;
+    transition: .25s all ease-in-out;
+    @media (max-width:992px) {
+        padding-left: 0;
+    }
+}
+
+.notification-control {
+    width:25%;
+    position: absolute;
+    z-index: 4;
+    &.left {
+        left: 0;
+        padding-left: 15px;
+    }
+    &.right {
+        right: 0;
+        padding-right: 15px;
+    }
+    &.bottom {
+        bottom: 0;
+        padding-bottom: 15px;
+    }
+}
+
+.remove-media-icon {
+    top:5px;
+    right: 20px;
+    position: absolute;
+    z-index: 2;
+}
+
+.mediaItem {
+    border: 2px solid $white;
+    &.active {
+        border: 2px solid $primary;
+    }
+}

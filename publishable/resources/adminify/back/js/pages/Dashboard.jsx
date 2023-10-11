@@ -1,16 +1,21 @@
 import React, { useEffect } from 'react';
-import useGlobalStore from '../store/global';
-export default function Dashboard({props}) {
+import usePageProps from '../hooks/usePageProps';
+import DashboardCard from '../components/Cards/DashboardCard';
+export default function Dashboard() {
 
-    const appData = useGlobalStore((state) => state.getAppData);
+    const { get } = usePageProps();
+    const datas = get('blocks');
     
     useEffect(() => {
-        console.log('Dashboard.jsx onMounted', appData());
+        console.log('Dashboard.jsx onMounted', datas);
     }, [])
 
-    return <>
-        <div className='tata'>
-            TATA
-        </div>
-    </>
+    return <div className='row'>
+                {Object.keys(datas).map((key, index, array) => {
+                    return <div key={index} className='col-12 col-lg-4 mb-3'>
+                        <DashboardCard namedBloc={key} singleParam={ datas[key]['singleParam'] } labelShow={ datas[key]['labelShow'] } data={datas[key]['model']} />
+                    </div>
+                    
+                })}
+            </div>
 }

@@ -1,51 +1,114 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 
 import Header from '../components/Header';
 import Sidebar from '../components/Sidebar';
 import TopPage from '../components/TopPage';
-import useGlobalStore from '../store/global';
+import Loader from '../components/Loader';
+import Notifications from '../components/Notifications';
+import Menu from '../components/Menu';
+import usePageProps from '../hooks/usePageProps';
+import { TailSpin } from 'react-loader-spinner';
+
+
+import useAdminifyDefaults from '../hooks/useAdminifyDefaults';
+import useAnimations from '../hooks/useAnimations';
+import useRouterEvents from '../hooks/useRouterEvents';
+import { AdminifyContext } from "../contexts/AdminifyContext";
+
+import MediaPicker from '../components/Modal/MediaPicker';
+import GlobalSearch from '../components/Modal/GlobalSearch';
+import SidebarAdmin from '../components/Custom/SidebarAdmin';
 
 export default function AdminLayout(component) {
     
-    const [ready, setReadyState] = useGlobalStore(
-        (state) => [state.ready, state.setReadyState],
-    )
-    const [appData, setAppData] = useGlobalStore(
-        (state) => [state.data, state.commit],
-    )
+    const [ready, setReadyState] = useState(false);
 
-    const [translations, setTranslations] = useGlobalStore(
-        (state) => [state.translations, state.setTranslations],
-    )
-    const getAppData = useGlobalStore((state) => state.getAppData);
+    const { on, off, emit, onRouterChange, onAjax, onFormSubmit  } = useAdminifyDefaults();
+    const { get } = usePageProps();
+    const { onStart, onBefore, onNavigate, onSuccess } = useRouterEvents();
+    const { animate, register } = useAnimations();
+    const rightCol = useRef({})
+
+    onRouterChange()
+    onAjax()
+    onFormSubmit()
+
+    emit('adminify:start', {});
+
+    onBefore((e) => {
+        animate('fadeout', [rightCol.current]);
+    }, [])
+
+    onSuccess((e) => {
+        animate('fadein', [rightCol.current]);
+    })
+
+    // getHead();
 
     useEffect(() => {
         console.log('AdminLayout.jsx onMounted', component);
+        
         if(component.children) {
-                setAppData({data : component.children.props})
-                setTranslations({translations: window['messages_'+ document.documentElement.getAttribute('lang') ]});
-                setReadyState({ ready :  true})   
+            setReadyState(true);
+            emit('adminify:ready', {});
+        }
+
+        return () => {
+            setReadyState(false) ;
         }
     }, [])
 
     if(!ready) {
         return <>
-            TODO LOADING
+            LOADING
+            {/* <EmitterContext.Provider value={[on, off, emit]}>
+                <Loader static={true} />
+            </EmitterContext.Provider> */}
         </>
     }
 
-    return <>
-        <div className='container-fluid h-100 g-0'>
-            <div className='row h-100'>
-                <div className='col-12 col-lg-3 d-none d-lg-block'>
-                    <Sidebar/>
+    let adminMenu = get('adminMenu');
+
+    let methodsToProvide = {
+        on, 
+        off, 
+        emit,
+        animate,
+        registerAnimation :register
+    }
+
+
+    return  <AdminifyContext.Provider value={methodsToProvide}>
+                <div className='container-fluid h-100 g-0'>
+                    <div className='row h-100 g-0'>
+                        <div className='col-12 bg-light'>
+                            <Sidebar render={SidebarAdmin} className="sidebar-admin shadow-sm" children={ <Menu menu={adminMenu} /> }/>
+                            <div ref={rightCol} className='content'>
+                                <Header/>
+                                <div className='p-4'>
+                                    <TopPage/>
+                                    {component.children}
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className='col-12 col-lg-9 bg-primary'>
-                    <Header/>
-                    <TopPage/>
-                    {component.children}
-                </div>
-            </div>
-        </div>
-    </>
+                
+                <Notifications/>
+                <MediaPicker/>
+                <GlobalSearch/>
+                <Loader center={true} className="h-100 position-fixed" children={ 
+                        <TailSpin
+                            height="100"
+                                width="100"
+                                radius="6"
+                                color="#4fa94d"
+                                secondaryColor=''
+                                ariaLabel="revolving-dot-loading"
+                                wrapperStyle={{}}
+                                wrapperClass="loading_state"
+                                visible={true}
+                            /> } />
+            </AdminifyContext.Provider>
 }
