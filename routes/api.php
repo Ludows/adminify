@@ -7,34 +7,34 @@ $features = config('site-settings.enables_features');
 
 if(!empty($c) && $c['enable']) {
 
-    Route::get('/', '\Ludows\Adminify\Http\Controllers\Api\ListingController@index')->name('routelist');
-    Route::post('/token', '\Ludows\Adminify\Http\Controllers\Api\TokenController@getToken')->name('api.token');
-    Route::post('/token/verify', '\Ludows\Adminify\Http\Controllers\Api\TokenController@verifyToken')->name('api.token.verify');
-    Route::post('/token/refresh', '\Ludows\Adminify\Http\Controllers\Api\TokenController@refreshToken')->name('api.token.refresh');
+    Route::get('/', 'App\Adminify\Http\Controllers\Api\ListingController@index')->name('routelist');
+    Route::post('/token', 'App\Adminify\Http\Controllers\Api\TokenController@getToken')->name('api.token');
+    Route::post('/token/verify', 'App\Adminify\Http\Controllers\Api\TokenController@verifyToken')->name('api.token.verify');
+    Route::post('/token/refresh', 'App\Adminify\Http\Controllers\Api\TokenController@refreshToken')->name('api.token.refresh');
 
     // Route::prefix($c['prefix'])->group( function () use ($c, $features) {
 
         Route::middleware(['auth:api', 'api.verify_token', 'api.verify_abilities'])->group(function() use ($c, $features) {
                 if(isset($features['post']) && $features['post']) {
-                    Route::resource('posts', '\Ludows\Adminify\Http\Controllers\Api\PostController', [
+                    Route::resource('posts', 'App\Adminify\Http\Controllers\Api\PostController', [
                         'as' => $c['prefix'],
                         'except' => ['show']] );
                 }
         
                 if(isset($features['media']) && $features['media']) {
-                    Route::resource('medias', '\Ludows\Adminify\Http\Controllers\Api\MediaController', [
+                    Route::resource('medias', 'App\Adminify\Http\Controllers\Api\MediaController', [
                         'as' => $c['prefix'],
                         'except' => ['show']]);
                 }
         
                 if(isset($features['category']) && $features['category']) {
-                    Route::resource('categories', '\Ludows\Adminify\Http\Controllers\Api\CategoryController', [
+                    Route::resource('categories', 'App\Adminify\Http\Controllers\Api\CategoryController', [
                         'as' => $c['prefix'],
                         'except' => ['show']]);
                 }
         
                 if(isset($features['page']) &&  $features['page']) {
-                    Route::resource('pages', '\Ludows\Adminify\Http\Controllers\Api\PageController', [
+                    Route::resource('pages', 'App\Adminify\Http\Controllers\Api\PageController', [
                         'as' => $c['prefix'],
                         'except' => ['show']]);
                 }
@@ -44,7 +44,7 @@ if(!empty($c) && $c['enable']) {
                 }
         
                 if(isset($features['comment']) && $features['comment']) {
-                    Route::resource('comments', '\Ludows\Adminify\Http\Controllers\Api\CommentController', [
+                    Route::resource('comments', 'App\Adminify\Http\Controllers\Api\CommentController', [
                         'as' => $c['prefix'],
                         'except' => ['show' ]]);
                 }
@@ -54,7 +54,7 @@ if(!empty($c) && $c['enable']) {
                 }
         
                 if(isset($features['key_translation']) && $features['key_translation']) {
-                    Route::resource('traductions', '\Ludows\Adminify\Http\Controllers\Api\TranslationsController', [
+                    Route::resource('traductions', 'App\Adminify\Http\Controllers\Api\TranslationsController', [
                         'as' => $c['prefix'],
                         'except' => ['show']]);
                 }
