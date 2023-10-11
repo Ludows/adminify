@@ -31,28 +31,28 @@
      }
 
     public function index() {
-        return app()->call([$this, 'showIndexPage']);
+        return app()->call([$this, 'showIndexPage'], [], 'defaultShowIndexPage');
     }
     public function create() {
-        return app()->call([$this, 'showCreatePage']);
+        return app()->call([$this, 'showCreatePage'], [], 'defaultShowCreatePage');
     }
     public function store() {
-        return app()->call([$this, 'handleStore']);
+        return app()->call([$this, 'handleStore'], [], 'defaultHandleStore');
     }
     public function show(Request $request) {
-        return app()->call([$this, 'showPage']);
+        return app()->call([$this, 'showPage'], [], 'defaultShowPage');
     }
     public function edit() {
-        return app()->call([$this, 'showEditPage']);
+        return app()->call([$this, 'showEditPage'], [], 'defaultShowEditPage');
     }
     public function update() {
-        return app()->call([$this, 'handleUpdate']);
+        return app()->call([$this, 'handleUpdate'], [], 'defaultHandleUpdate');
     }
     public function destroy() {
-         return app()->call([$this, 'handleDestroy']);
+         return app()->call([$this, 'handleDestroy'], [], 'defaultHandleDestroy');
     }
 
-     public function showIndexPage() {
+     public function defaultShowIndexPage() {
           $table = $this->table( $this->theTable() );
 
           $views = $this->getPossiblesViews('Index');
@@ -70,7 +70,7 @@
             *
             * @return Response
             */
-            public function handleStore(Request $request)
+            public function defaultHandleStore(Request $request)
             {
                 $createFormRequest = $this->createFormRequest();
 
@@ -102,7 +102,7 @@
                 * @param  int  $id
                 * @return Response
                 */
-            public function showPage($id)
+            public function defaultShowPage($id)
             {}
     
             /**
@@ -111,7 +111,7 @@
                 * @param  int  $id
                 * @return Response
                 */
-            public function showEditPage($resource_id)
+            public function defaultShowEditPage($resource_id)
             {
                 $model = $this->theModel();
                 $Ressource = $model->findOrFail($resource_id);
@@ -160,7 +160,7 @@
                 * @param  int  $id
                 * @return Response
                 */
-            public function handleUpdate($resource_id, Request $request)
+            public function defaultHandleUpdate($resource_id, Request $request)
             {
                 //
                 $model = $this->theModel();
@@ -201,7 +201,7 @@
                 * @param  int  $id
                 * @return Response
                 */
-            public function handleDestroy($resource_id)
+            public function defaultHandleDestroy($resource_id)
             {
                 $model = $this->theModel();
                 $Ressource = $model->findOrFail($resource_id);
