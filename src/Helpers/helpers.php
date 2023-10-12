@@ -493,23 +493,29 @@ if(! function_exists('get_urlpath')) {
     }
 }
 
+if(! function_exists('is_instance_of')) {
+    function is_instance_of($mixed, $baseInstance) {
+        return $mixed instanceof $baseInstance;
+    }
+}
+
+
 if(! function_exists('user')) {
     function user() {
-        $request = request();
-        //multilang basic middleware appends automatic to the request the current user;
-        if(empty($request->user)) {
-            $userLoggued = auth()->user();
-
-            if(empty($userLoggued)) {
-                $roleModel = app('App\Adminify\Models\Role');
-                $userLoggued = app('App\Adminify\Models\User')->find($roleModel::GUEST);
+        $inertia = inertia();
+        // let try to get user from inertia for preventing unnessary hit to db.
+        $currentUser = $inertia->getShared('user');
+        if(empty($currentUser) && !is_model($currentUser)) {
+            // now we fetch from auth current user.
+            $currentUser = auth()->user();
+            if(empty($currentUser) && !is_model($currentUser)) {
+                // no user, switch to guest user.
+                $roleModel = model('Role', false);
+                $currentUser = model('User')->find($roleModel::GUEST);
             }
+            $inertia->share('user', $currentUser);
         }
-        else {
-            $userLoggued = $request->user;
-        }
-
-        return $userLoggued;
+        return $currentUser;
     }
 }
 
@@ -881,6 +887,14 @@ if(! function_exists('is_collection')) {
         return (bool) (($param instanceof \Illuminate\Support\Collection) || ($param instanceof \Illuminate\Database\Eloquent\Collection));
     }
 }
+
+if(! function_exists('is_model')) {
+    function is_model($param): bool
+    {
+        return (bool) (($param instanceof \Illuminate\Database\Eloquent\Model));
+    }
+}
+
 
 if(!function_exists('is_route')) {
     function is_route($routeName = '', $array = []) {

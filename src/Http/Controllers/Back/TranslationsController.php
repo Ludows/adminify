@@ -47,7 +47,7 @@ class TranslationsController extends Controller
             $views = $this->getPossiblesViews('Index');
 
 
-            return $this->renderView($views, [
+            return $this->renderView('Index', [
                 'model' => (object) [],
                 'table' => $table->toArray()
             ]);
@@ -67,9 +67,7 @@ class TranslationsController extends Controller
                 'url' => route('admin.traductions.store')
             ]);
 
-            $views = $this->getPossiblesViews('Create');
-
-            return $this->renderView($views, [
+            return $this->renderView('Create', [
                 'model' => (object) [],
                 'form' => $form->toArray()
             ]);
@@ -125,9 +123,7 @@ class TranslationsController extends Controller
                 'model' => $traduction
             ]);
 
-            $views = $this->getPossiblesViews('Edit');
-
-            return $this->renderView($views, [
+            return $this->renderView('Edit', [
                 'model' => $traduction,
                 'form' => $form->toArray()
             ]);

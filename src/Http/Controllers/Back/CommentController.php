@@ -48,10 +48,8 @@ class CommentController extends Controller
                 'showBtnCreate' => true,
             ]);
 
-            $views = $this->getPossiblesViews('Index');
 
-
-            return $this->renderView($views, [
+            return $this->renderView('Index', [
                 'model' => (object) [],
                 'table' => $table->toArray()
             ]);
@@ -71,9 +69,8 @@ class CommentController extends Controller
                     'url' => route('admin.comments.store')
                 ]);
 
-                $views = $this->getPossiblesViews('Create');
 
-                return $this->renderView($views, [
+                return $this->renderView('Create', [
                     'model' => (object) [],
                     'form' => $form->toArray()
                 ]);
@@ -115,9 +112,8 @@ class CommentController extends Controller
                 'model' => $comment
             ]);
 
-            $views = $this->getPossiblesViews('Edit');
 
-            return $this->renderView($views, [
+            return $this->renderView('Edit', [
                 'model' => $category,
                 'form' => $form->toArray()
             ]);

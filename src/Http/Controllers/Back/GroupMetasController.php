@@ -46,12 +46,7 @@ class GroupMetasController extends Controller
         {
             $table = $this->table(GroupMetasTable::class);
 
-            $views = $this->getPossiblesViews('Index');
-
-            // dd($table->toArray());
-
-
-            return $this->renderView($views, [
+            return $this->renderView('Index', [
                 'model' => (object) [],
                 'table' => $table->toArray()
             ]);
@@ -69,9 +64,8 @@ class GroupMetasController extends Controller
                 'url' => route('admin.groupmetas.store')
             ]);
 
-            $views = $this->getPossiblesViews('Create');
 
-            return $this->renderView($views, [
+            return $this->renderView('Create', [
                 'model' => (object) [],
                 'form' => $form->toArray()
             ]);
@@ -125,9 +119,7 @@ class GroupMetasController extends Controller
                     'model' => $Groupmeta
                 ]);
             
-            $views = $this->getPossiblesViews('Edit');
-
-            return $this->renderView($views, [
+            return $this->renderView('Edit', [
                 'model' => $Groupmeta,
                 'form' => $form->toArray()
             ]);

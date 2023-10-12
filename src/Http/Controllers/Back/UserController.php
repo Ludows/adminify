@@ -47,10 +47,7 @@ class UserController extends Controller
 
             $table = $this->table(UserTable::class);
 
-            $views = $this->getPossiblesViews('Index');
-
-
-            return $this->renderView($views, [
+            return $this->renderView('Index', [
                 'model' => (object) [],
                 'table' => $table->toArray()
             ]);
@@ -69,9 +66,7 @@ class UserController extends Controller
                     'url' => route('admin.users.store')
                 ]);
 
-                $views = $this->getPossiblesViews('Create');
-
-                return $this->renderView($views, [
+                return $this->renderView('Create', [
                     'model' => (object) [],
                     'form' => $form->toArray()
                 ]);
@@ -112,9 +107,7 @@ class UserController extends Controller
                     'model' => $user
                 ]);
 
-                $views = $this->getPossiblesViews('Edit');
-
-                return $this->renderView($views, [
+                return $this->renderView('Edit', [
                     'model' => $user,
                     'form' => $form->toArray()
                 ]);
@@ -173,9 +166,7 @@ class UserController extends Controller
                     'model' => $user
                 ]);
 
-                $views = $this->getPossiblesViews('Edit');
-
-                return $this->renderView($views, [
+                return $this->renderView('Edit', [
                     'model' => $user,
                     'form' => $form->toArray()
                 ]);

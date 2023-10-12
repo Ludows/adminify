@@ -51,12 +51,10 @@ class PostController extends Controller
             
             $table = $this->table(PostTable::class);
 
-            $views = $this->getPossiblesViews('Index');
-
             // dd($table->toArray());
 
 
-            return $this->renderView($views, [
+            return $this->renderView('Index', [
                 'model' => (object) [],
                 'table' => $table->toArray()
             ]);
@@ -75,11 +73,10 @@ class PostController extends Controller
                 'url' => route('admin.posts.store')
             ]);
 
-            $views = $this->getPossiblesViews('Create');
 
             // dd($form->toArray());
 
-            return $this->renderView($views, [
+            return $this->renderView('Create', [
                 'model' => (object) [],
                 'form' => $form->toArray()
             ]);
@@ -130,9 +127,7 @@ class PostController extends Controller
                 ]);
 
 
-                $views = $this->getPossiblesViews('Edit');
-
-                return $this->renderView($views, [
+                return $this->renderView('Edit', [
                     'model' => $post,
                     'form' => $form->toArray()
                 ]);

@@ -27,37 +27,14 @@ class PageController extends Controller
         */
         public function showIndexPage(Request $request)
         {
+            return $this->processPages($request);
+        }
+
+        protected function processPages(Request $request) {
             if(method_exists($this, 'bootingView')) {
-                call_user_func_array(array($this, 'bootingView'), $request);
+                call_user_func_array(array($this, 'bootingView'), [$request]);
             }
 
-            $settings = cache('homepage');
-
-            if($settings == null) {
-                $settings = setting('homepage');
-            }
-
-            if( empty($settings) ) {
-                abort(404);
-            }
-
-
-
-            $page = Page::find( is_array($settings) ? $settings['model_id'] : $settings );
-
-
-            $reflection = new ReflectionClass($page);
-            $type = $reflection->getShortName();
-
-            $enabled_features = get_site_key('enables_features');
-
-            $user = user();
-            if($user != null) {
-                $user->mainRole = $user->roles->first();
-                // unset($user->roles);
-            }
-
-            $this->addViewsVars(['enabled_features' => $enabled_features, 'type' => lowercase($type), 'model' => $page, 'user' => $user, 'lang' => lang()]);
             $defaults_view_vars = $this->getViewsVars();
 
             if(method_exists($this, 'beforePageRenderView')) {
@@ -71,42 +48,7 @@ class PageController extends Controller
         }
 
         public function getPages(Request $request) {
-
-            $inertia = inertia();
-            // dd($inertia);
-
-            // dd($request->route()->getName(), $request->model );
-            $slug = $inertia->getShared('model');
-
-            $reflection = new ReflectionClass($slug);
-            $type = $reflection->getShortName();
-            $enabled_features = $inertia->getShared('enabled_features');
-
-            if(method_exists($this, 'bootingView')) {
-                call_user_func_array(array($this, 'bootingView'), [$request]);
-            }
-
-
-            // dd(request());
-
-            $user = user();
-            if($user != null) {
-                $user->mainRole = $user->roles->first();
-                // unset($user->roles);
-            }
-
-            $this->addViewsVars(['enabled_features' => $enabled_features, 'type' => lowercase($type), 'model' => $slug, 'user' => $user, 'lang' => lang()]);
-            $defaults_view_vars = $this->getViewsVars();
-
-            if(method_exists($this, 'beforePageRenderView')) {
-                call_user_func_array(array($this, 'beforePageRenderView'), $defaults_view_vars);
-            }
-
-            $views = $this->getPossiblesViews('Front');
-
-
-            return $this->renderView($views,  $this->getViewsVars());
-
+            return $this->processPages($request);
         }
 
         public function search(Request $request) {
@@ -121,7 +63,6 @@ class PageController extends Controller
             $this->addViewsVar('results', $result);
 
             $views = $this->getPossiblesViews('Search');
-
 
             return $this->renderView($views, $this->getViewsVars());
         }

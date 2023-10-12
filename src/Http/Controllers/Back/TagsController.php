@@ -41,10 +41,8 @@ class TagsController extends Controller
 
             $table = $this->table(TagTable::class);
 
-            $views = $this->getPossiblesViews('Index');
 
-
-            return $this->renderView($views, [
+            return $this->renderView('Index', [
                 'model' => (object) [],
                 'table' => $table->toArray()
             ]);
@@ -62,9 +60,7 @@ class TagsController extends Controller
                 'url' => route('admin.tags.store')
             ]);
 
-            $views = $this->getPossiblesViews('Create');
-
-            return $this->renderView($views, [
+            return $this->renderView('Create', [
                 'model' => (object) [],
                 'form' => $form->toArray()
             ]);
@@ -110,9 +106,7 @@ class TagsController extends Controller
                 'model' => $tag
             ]);
             
-            $views = $this->getPossiblesViews('Edit');
-
-            return $this->renderView($views, [
+            return $this->renderView('Edit', [
                 'model' => $tag,
                 'form' => $form->toArray()
             ]);

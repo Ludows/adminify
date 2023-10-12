@@ -56,9 +56,8 @@ class HomeController extends Controller
 
         $DashboardService->load();
 
-        $views = $this->getPossiblesViews('Dashboard');
 
-        return $this->renderView( $views, [
+        return $this->renderView('Dashboard', [
             'model' => (object) [],
             'blocks' => $DashboardService->getBlocks()
         ]);

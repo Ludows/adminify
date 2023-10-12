@@ -32,10 +32,8 @@ class SettingsController extends Controller
                 'url' => route('admin.settings.store'),
             ]);
 
-            $views = $this->getPossiblesViews('Index');
 
-
-            return $this->renderView($views, [
+            return $this->renderView('Index', [
                 'model' => (object) [],
                 'form' => $form->toArray()
             ]);

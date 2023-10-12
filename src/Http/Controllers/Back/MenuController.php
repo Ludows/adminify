@@ -42,10 +42,8 @@ class MenuController extends Controller
         {
             $table = $this->table(MenuTable::class);
 
-            $views = $this->getPossiblesViews('Index');
 
-
-            return $this->renderView($views, [
+            return $this->renderView('Index', [
                 'model' => (object) [],
                 'table' => $table->toArray()
             ]);
@@ -59,10 +57,8 @@ class MenuController extends Controller
         public function showCreatePage(Request $request, FormBuilder $formBuilder, MenuBuilder $menuBuilder)
         {
             
-            $views = $this->getPossiblesViews('Create');
 
-
-            return $this->renderView($views, [
+            return $this->renderView('Create', [
                 'model' => (object) [],
                 'menubuilder' => $menuBuilder->toArray()
             ]);
@@ -113,9 +109,8 @@ class MenuController extends Controller
             $menuBuilder->setModel($menu);
             // dd($menuBuilder);
 
-            $views = $this->getPossiblesViews('Edit');
 
-            return $this->renderView($views, [
+            return $this->renderView('Edit', [
                 'model' => $menu,
                 'menubuilder' => $menuBuilder->toArray()
             ]);

@@ -58,9 +58,7 @@ class SeoController extends Controller
                 'model' => $model
             ]);
 
-            $views = $this->getPossiblesViews('Edit');
-
-            return $this->renderView($views, [
+            return $this->renderView('Edit', [
                 'model' => $seo,
                 'form' => $form->toArray()
             ]);

@@ -82,6 +82,7 @@ class HandleInertiaRequests extends Middleware
     }
 
     public function handleRevisions($parameters = []) {
+        // dd($parameters['model']);
         if( !empty($parameters['model']) && $parameters['isBack'] ) {
             $this->param('revisions', $parameters['model']->revisions);
         }
@@ -227,22 +228,41 @@ class HandleInertiaRequests extends Middleware
         $model = null;
 
         $parameters = $route->parameters();
+        $hasParameters = count($parameters) > 0;
 
-        
 
-        if($isAdmin) {
+        if($hasParameters) {
+            // if parameters, we will try to bind the model if present
             foreach ($routeNameSpl as $key => $partialRouteName) {
                 # code...
                 $singular = singular($partialRouteName);
                 $model = $route->parameter( $singular );
-                if(empty($model)) {
+                if(empty($model) && !is_model($model)) {
                     $model = $route->parameter( $partialRouteName );
                 }
-                if(!empty($model)) {
+                if(!empty($model) && is_model($model)) {
                     break;
                 }
             }
+        }
 
+        // strategy for route generated..
+        if(!$hasParameters && in_array('frontend', $routeNameSpl)) {
+            // route name matching strategy..
+            $theClass = model( \Str::studly( $routeNameSpl['1'] ), false);
+            if(empty($theClass)) {
+                $theClass = model( \Str::studly( $routeNameSpl['0'] ), false);
+            }
+            $model = new $theClass();
+            $model = $model->where('slug', str_replace('_', '-', $routeNameSpl['2']))->get()->first();
+            
+            if(empty($model)) {
+                abort(404);
+            }
+        }
+        
+        
+        if($isAdmin) {
 
             // $this->setParam('model',  )
             if(startsWith($routeName, 'savetraductions') && $isMultilang) {
@@ -269,16 +289,6 @@ class HandleInertiaRequests extends Middleware
             }
         }
 
-        if($isFront && !$isAuthRoutes && !in_array($routeName, $this->preventables_paths)) {
-            // dd($routeNameSpl);
-            $theClass = model( \Str::studly( $routeNameSpl['1'] ), false);
-            if(empty($theClass)) {
-                $theClass = model( \Str::studly( $routeNameSpl['0'] ), false);
-            }
-            $model = new $theClass();
-            $model = $model->where('slug', str_replace('_', '-', $routeNameSpl['2']))->get()->first();
-        }
-
         if($isFront) {
             if(empty($request->segments())) {
                 $settings = cache('homepage');
@@ -290,6 +300,10 @@ class HandleInertiaRequests extends Middleware
                 $model = model('Page', false);
     
                 $model = $model::find( is_array($settings) ? $settings['model_id'] : $settings );
+
+                if($model->isEmpty()) {
+                    abort(404);
+                }
             }
             if($routeName == 'globalsearch') {
                 $searchpage = setting('searchpage');
@@ -298,6 +312,8 @@ class HandleInertiaRequests extends Middleware
                 $model = $model->find($searchpage);
             }
         }
+        
+        // dd('bounded model', $model);
 
         $this->param('model', $model);
 
@@ -313,14 +329,16 @@ class HandleInertiaRequests extends Middleware
         $routeNameSpl = explode('.', $routeName);
         $supported_locales = $config['supported_locales'];
         $isEditorRoute = $routeName == 'admin.editor.preview';
+        $type = null;
+        $user = user();
+        $mainRole = $user->roles->first();
+
+        // if($prefix == '/admin') {
+        //     array_unshift($routeNameSpl, 'admin');
+        // }
 
 
-        if($prefix == '/admin') {
-            array_unshift($routeNameSpl, 'admin');
-        }
-
-
-        $isContentModel = !empty($model) ? is_content_type_model($model) : false;
+        $isContentModel = !empty($model) && is_model($model) ? is_content_type_model($model) : false;
         // $theme = $this->theme;
 
         $named = join('.',array_diff($routeNameSpl, ['index', 'edit', 'create']));
@@ -330,7 +348,7 @@ class HandleInertiaRequests extends Middleware
             $named = $named[ count($named) - 1 ];
         }
 
-        if(!empty($model)) {
+        if(!empty($model) && is_model($model)) {
             $reflection = new ReflectionClass($model);
             $type = $reflection->getShortName();
         }
@@ -358,13 +376,14 @@ class HandleInertiaRequests extends Middleware
             "isContentModel" => $isContentModel,
             "isIndex" => strpos($routeName, '.index') != false ? true : false,
             "model" => $model,
-            "type" => $type ?? null,
+            "type" =>  lowercase($type),
             "enabled_features" => config('site-settings.enables_features'),
             "form" => null,
-            "user" => user(),
+            "user" => $user,
+            "userMainRole" => $mainRole,
             "adminify_autoload" => adminify_autoload(),
             'isPreview' => $isEditorRoute,
-            'isTemplate' => !empty($model) ? is_template($model) : false
+            'isTemplate' => !empty($model) && is_model($model) ? is_template($model) : false
         ];
 
         $this->params($base_parameters);
@@ -391,7 +410,7 @@ class HandleInertiaRequests extends Middleware
         if($isFront) {
             $resolver = $this->getParam('model');
         }
-        if(!in_array($routeName, $this->preventables_paths)) {
+        if(!empty($resolver) && !in_array($routeName, $this->preventables_paths)) {
             $this->handleSeo($resolver);
             $seo = $this->grabSeo();
             $this->param('seo', $seo);

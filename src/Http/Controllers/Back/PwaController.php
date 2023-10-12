@@ -32,10 +32,8 @@ class PwaController extends Controller
                 'url' => route('admin.pwa.store'),
             ]);
 
-            $views = $this->getPossiblesViews('Index');
 
-
-            return $this->renderView($views, [
+            return $this->renderView('Index', [
                 'model' => (object) [],
                 'form' => $form->toArray()
             ]);

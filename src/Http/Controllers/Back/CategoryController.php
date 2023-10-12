@@ -44,12 +44,10 @@ class CategoryController extends Controller
         {
             $table = $this->table(CategoryTable::class);
 
-            $views = $this->getPossiblesViews('Index');
-
             // dd($table->toArray());
 
 
-            return $this->renderView($views, [
+            return $this->renderView('Index', [
                 'model' => (object) [],
                 'table' => $table->toArray()
             ]);
@@ -68,9 +66,8 @@ class CategoryController extends Controller
                 'url' => route('admin.categories.store')
             ]);
 
-            $views = $this->getPossiblesViews('Create');
 
-            return $this->renderView($views, [
+            return $this->renderView('Create', [
                 'model' => (object) [],
                 'form' => $form->toArray()
             ]);
@@ -135,9 +132,7 @@ class CategoryController extends Controller
                 'model' => $category
             ]);
 
-            $views = $this->getPossiblesViews('Edit');
-
-            return $this->renderView($views, [
+            return $this->renderView('Edit', [
                 'model' => $category,
                 'form' => $form->toArray()
             ]);

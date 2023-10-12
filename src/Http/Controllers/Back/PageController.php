@@ -48,9 +48,8 @@ class PageController extends Controller
         {
             $table = $this->table(PageTable::class);
 
-            $views = $this->getPossiblesViews('Index');
 
-            return $this->renderView($views, [
+            return $this->renderView('Index', [
                 'model' => (object) [],
                 'table' => $table->toArray()
             ]);
@@ -68,9 +67,8 @@ class PageController extends Controller
                 'url' => route('admin.pages.store')
             ]);
 
-            $views = $this->getPossiblesViews('Create');
 
-            return $this->renderView($views, [
+            return $this->renderView('Create', [
                 'model' => (object) [],
                 'form' => $form->toArray()
             ]);
@@ -123,9 +121,7 @@ class PageController extends Controller
                     'model' => $page
                 ]);
         
-            $views = $this->getPossiblesViews('Edit');
-
-            return $this->renderView($views, [
+            return $this->renderView('Edit', [
                 'model' => $page,
                 'form' => $form->toArray()
             ]);

@@ -43,10 +43,8 @@ class TemplatesController extends Controller
         {
             $table = $this->table(TemplatesTable::class);
 
-            $views = $this->getPossiblesViews('Index');
 
-
-            return $this->renderView($views, [
+            return $this->renderView('Index', [
                 'model' => (object) [],
                 'table' => $table->toArray()
             ]);
@@ -67,9 +65,7 @@ class TemplatesController extends Controller
                 'url' => route('admin.templates.store')
             ]);
 
-            $views = $this->getPossiblesViews('Create');
-
-            return $this->renderView($views, [
+            return $this->renderView('Create', [
                 'model' => (object) [],
                 'form' => $form->toArray()
             ]);
@@ -114,9 +110,7 @@ class TemplatesController extends Controller
                 'model' => $template
             ]);
 
-            $views = $this->getPossiblesViews('Edit');
-
-            return $this->renderView($views, [
+            return $this->renderView('Edit', [
                 'model' => $template,
                 'form' => $form->toArray()
             ]);

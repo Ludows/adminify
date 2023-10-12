@@ -54,11 +54,9 @@ class Mediav2Controller extends Controller
 
             $a = ['files' => $listing->files, 'thumbs' => $config['thumbs'], 'dates' => $dates, 'types' => $types];
             
-            $views = $this->getPossiblesViews('Index');
-
             // dd($table->toArray());
 
-            return $this->renderView($views, array_merge([
+            return $this->renderView('Index', array_merge([
                 'model' => (object) [],
             ], $a));
         }

@@ -20,7 +20,6 @@ class MediaManipulationController extends Controller
     }
 
     public function showIndexPage(Request $request , $id) {
-        $views = $this->getPossiblesViews('Index');
         $media = model('Media');
         $media = $media->find($id);
 
@@ -31,7 +30,7 @@ class MediaManipulationController extends Controller
         // dd($table->toArray());
 
 
-        return $this->renderView($views, [
+        return $this->renderView('Index', [
             'model' => (object) [],
             'thumbs' => $media->thumbs
             // 'table' => $table->toArray()

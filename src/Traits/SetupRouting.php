@@ -30,33 +30,73 @@
         return null;
      }
 
+     protected function prepareParameters() {
+        $params = [];
+        $result = [];
+        $defaults = request()->route()->parameters();
+
+        // getRouteKeyName
+        foreach ($defaults as $key => $value) {
+            # code...
+            $titled = titled($key);
+            $model = model($titled);
+            if(is_model($model)) {
+                $modelBinding = $model->getRouteKeyName();
+                $model = $modelBinding == 'id' ? $model->findOrFail($value) : $model->where($modelBinding, $value)->firstOrFail();
+                if(is_model($model)) {
+                    $defaults[$key] = $model;
+                    inertia()->share('model', $model);
+                }
+            }
+        }
+
+        if(method_exists($this, 'addParameters')) {
+            $class = get_class($this);
+            $result = app()->call($class.'@'.'addParameters', $defaults);
+            if(is_array($result)) {
+                $params = array_merge($defaults, $result);
+            }
+        }
+        else {
+            $params = array_merge($defaults, $result);
+        }
+
+        return $params;
+     }
+
     public function index() {
         $class = get_class($this);
-        return app()->call($class.'@'.'showIndexPage', [], 'defaultShowIndexPage');
+        $params = $this->prepareParameters();
+        return app()->call($class.'@'.'showIndexPage', $params, 'defaultShowIndexPage');
     }
     public function create() {
         $class = get_class($this);
-        return app()->call($class.'@'.'showCreatePage', [], 'defaultShowCreatePage');
+        $params = $this->prepareParameters();
+        return app()->call($class.'@'.'showCreatePage', $params, 'defaultShowCreatePage');
     }
     public function store() {
         $class = get_class($this);
-        return app()->call($class.'@'.'handleStore', [], 'defaultHandleStore');
+        $params = $this->prepareParameters();
+        return app()->call($class.'@'.'handleStore', $params, 'defaultHandleStore');
     }
     public function show(Request $request) {
         $class = get_class($this);
-        return app()->call($class.'@'.'showPage', [], 'defaultShowPage');
+        $params = $this->prepareParameters();
+        return app()->call($class.'@'.'showPage', $params, 'defaultShowPage');
     }
     public function edit() {
         $class = get_class($this);
-        return app()->call($class.'@'.'showEditPage', [], 'defaultShowEditPage');
+        $params = $this->prepareParameters();
+        return app()->call($class.'@'.'showEditPage', $params, 'defaultShowEditPage');
     }
     public function update() {
         $class = get_class($this);
-        return app()->call($class.'@'.'handleUpdate', [], 'defaultHandleUpdate');
+        $params = $this->prepareParameters();
+        return app()->call($class.'@'.'handleUpdate', $params, 'defaultHandleUpdate');
     }
     public function destroy() {
         $class = get_class($this);
-         return app()->call($class.'@'.'handleDestroy', [], 'defaultHandleDestroy');
+         return app()->call($class.'@'.'handleDestroy', $params, 'defaultHandleDestroy');
     }
 
      public function defaultShowIndexPage() {

@@ -7,8 +7,10 @@ use Error;
 use Kris\LaravelFormBuilder\Form;
 
 class BaseForm extends Form {
+    private $cache = [];
     public $appendMetas = [];
     public $loadTypeMetas = 'after'; // before
+
     public function addSubmit($options = []) {
         $r = inertia();
         $shared = $r->getShared('isEdit');
@@ -135,7 +137,12 @@ class BaseForm extends Form {
     }
     public function getStatuses() {
         $hasModel = $this->getModel();
-        $statuses = app('App\Adminify\Models\Statuses')->where('id' , '!=', 3)->pluck('name' ,'id');
+
+        if(!empty($this->cache['statuses'])) {
+            return $this->cache['statuses'];
+        }
+
+        $statuses = model('Statuses')->where('id' , '!=', 3)->pluck('name' ,'id');
         $selecteds = [];
 
         $statuses = $statuses->all();
@@ -144,42 +151,69 @@ class BaseForm extends Form {
             # code...
             $statuses[$statusId] = __('admin.table.modules.statuses.'.$status);
         }
+
+        $this->cache['statuses'] = $statuses;
+
         return $statuses;
     }
     public function getRoles() {
-        $request = $this->getRequest();
-        $roleModel = app('App\Adminify\Models\Role');
+        if(!empty($this->cache['roles'])) {
+            return $this->cache['roles'];
+        }
 
-        $user = $request->user ?? null;
+        $roleModel = model('Role');
 
-        $roles = $roleModel::get()->pluck('name' ,'id');
+        $roles = $roleModel->get()->pluck('name' ,'id');
+
+        $this->cache['roles'] = $roles->toArray();
 
         return $roles->toArray();
     }
     public function getPages() {
         $pages = '';
-        
-        $pages = app('App\Adminify\Models\Page')::get()->pluck('title' ,'id');
+
+        if(!empty($this->cache['pages'])) {
+            return $this->cache['pages']->toArray();
+        }
+       
+        $pages = model('Page')->get()->pluck('title' ,'id');
+
+        $this->cache['pages'] = $pages;
 
         return $pages->toArray();
     }
     public function getPosts() {
         $posts = '';
+        if(!empty($this->cache['posts'])) {
+            return $this->cache['posts']->toArray();
+        }
         
-        $posts = app('App\Adminify\Models\Post')::get()->pluck('title' ,'id');
+        $posts = model('Post')->get()->pluck('title' ,'id');
+        
+        $this->cache['posts'] = $posts;
 
         return $posts->toArray();
     }
     public function getCategories() {
         $cats = '';
         
-        $cats = app('App\Adminify\Models\Category')::get()->pluck('title' ,'id');
+        if(!empty($this->cache['categories'])) {
+            return $this->cache['categories']->toArray();
+        }
+        
+        $cats = model('Category')->get()->pluck('title' ,'id');
+
+        $this->cache['categories'] = $cats;
 
         return $cats->toArray();
     }
     public function getTags() {
-        $hasModel = $this->getModel();
-        $tags = app('App\Adminify\Models\Tag')::get()->pluck('title' ,'id');
+
+        if(!empty($this->cache['tags'])) {
+            return $this->cache['tags']->toArray();
+        }
+
+        $tags = model('Tag')->get()->pluck('title' ,'id');
 
         return $tags->toArray();
     }
